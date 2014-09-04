@@ -157,7 +157,6 @@ public class Constants {
 
     public static final String INVERSE_ASSOCIATION_LABEL = "Incoming Associations";
     public static final String INVERSE_ASSOCIATION_LABEL_2 = "pointing from other concepts to the current concept";
-    //public static final String INVERSE_ASSOCIATION_DESCRIPTION_LABEL = "(True for the other concept’s relationship to the current concept.)";
 
     public static final String INVERSE_ASSOCIATION_DESCRIPTION_LABEL = "(True for the other concept's relationship to the current concept.)";
 
@@ -171,21 +170,6 @@ public class Constants {
     public static final String DEFAULT_NCBO_WIDGET_INFO = "NCI_Thesaurus|http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#|NCIT;";
 
     public static final String[] NAV_TYPE_VALUES = {"terminologies", "mappings", "valuesets"};
-
-/*
-Role Relationships pointing from the current concept to other concepts:
-(True for the current concept and its descendants, may be inherited from parent(s).)
-
-Associations pointing from the current concept to other concepts:
-(True for the current concept.)
-
-Incoming Role Relationships pointing from other concepts to the current concept:
-(True for the other concept and its descendants, may be inherited from its parent(s).)
-
-Incoming Associations pointing from other concepts to the current concept:
-(True for the other concept’s relationship to the current concept.)
-
-*/
 
 
     /**

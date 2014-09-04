@@ -251,6 +251,7 @@ public class DataUtils {
 
     public String _ncitURL = null;
 
+    private static Vector _sortedOntologies = null;
 
     // ==================================================================================
 
@@ -281,6 +282,8 @@ public class DataUtils {
 
 
 		updateListOfCodingSchemeVersionsUsedInResolutionHashMap();
+
+		_sortedOntologies = getSortedOntologies();
 	}
 
 	public static void setAPIKey(String apikey) {
@@ -6228,21 +6231,25 @@ if (lbSvc == null) {
     private static void updateListOfCodingSchemeVersionsUsedInResolutionHashMap() {
 		if (_listOfCodingSchemeVersionsUsedInResolutionHashMap == null) return;
 
-		Iterator it = _listOfCodingSchemeVersionsUsedInResolutionHashMap.keySet().iterator();
-		while (it.hasNext()) {
-			String cs_name = (String) it.next();
-			HashMap hmap = (HashMap) _listOfCodingSchemeVersionsUsedInResolutionHashMap.get(cs_name);
-			//Iterator it2 = hmap.keySet().iterator();
-			Iterator it2 = hmap.entrySet().iterator();
-			while (it2.hasNext()) {
-				//String uri = (String) it2.next();
-				//String version = (String) hmap.get(uri);
-				Entry entry = (Entry) it2.next();
-				String uri = (String) entry.getKey();
-				String version = (String) entry.getValue();
-				String coding_scheme_name = (String) _uri2CodingSchemeNameHashMap.get(uri);
-				hmap.put(coding_scheme_name, version);
+		try {
+			Iterator it = _listOfCodingSchemeVersionsUsedInResolutionHashMap.keySet().iterator();
+			while (it.hasNext()) {
+				String cs_name = (String) it.next();
+				HashMap hmap = (HashMap) _listOfCodingSchemeVersionsUsedInResolutionHashMap.get(cs_name);
+				if (hmap == null) hmap = new HashMap();
+				Iterator it2 = hmap.entrySet().iterator();
+				while (it2.hasNext()) {
+					Entry entry = (Entry) it2.next();
+					String uri = (String) entry.getKey();
+					String version = (String) entry.getValue();
+					String coding_scheme_name = (String) _uri2CodingSchemeNameHashMap.get(uri);
+					hmap.put(coding_scheme_name, version);
+				}
+				//KLO, 081114
+				_listOfCodingSchemeVersionsUsedInResolutionHashMap.put(cs_name, hmap);
 			}
+		} catch (Exception ex) {
+			System.out.println("WARNING: updateListOfCodingSchemeVersionsUsedInResolutionHashMap throws exceptions.");
 		}
 	}
 
@@ -6562,5 +6569,47 @@ if (lbSvc == null) {
 		}
 		return SortUtils.quickSort(v);
    }
+
+   public static Vector getSortedOntologies() {
+	   if (_sortedOntologies != null) return _sortedOntologies;
+
+	   Vector display_name_vec = new Vector();
+	   List ontology_list = DataUtils.getOntologyList();
+	   int num_vocabularies = ontology_list.size();
+
+	   for (int i = 0; i < ontology_list.size(); i++) {
+			SelectItem item = (SelectItem) ontology_list.get(i);
+			String value = (String) item.getValue();
+			String label = (String) item.getLabel();
+
+			String scheme = DataUtils.key2CodingSchemeName(value);
+			String short_scheme_name = DataUtils.uri2CodingSchemeName(scheme);
+
+			String version = DataUtils.key2CodingSchemeVersion(value);
+			String display_name = DataUtils.getMetadataValue(short_scheme_name, version, "display_name");
+			if (DataUtils.isNull(display_name)) {
+			   display_name = DataUtils.getLocalName(scheme);
+			}
+			String sort_category = DataUtils.getMetadataValue(scheme, version, "vocabulary_sort_category");
+			if (sort_category == null) {
+				sort_category = "0";
+			}
+
+	        OntologyInfo info = new OntologyInfo(short_scheme_name, display_name, version, label, sort_category);
+			display_name_vec.add(info);
+	   }
+
+	   for (int i = 0; i < display_name_vec.size(); i++) {
+		    OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+		    if (!DataUtils.isNull(info.getTag()) && info.getTag().compareToIgnoreCase("PRODUCTION") == 0) {
+			    Vector w = DataUtils.getNonProductionOntologies(display_name_vec, info.getCodingScheme());
+			    if (w.size() > 0) {
+			        info.setHasMultipleVersions(true);
+			    }
+		    }
+	   }
+	   return display_name_vec;
+    }
+
 }
 

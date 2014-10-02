@@ -171,6 +171,8 @@ public class Constants {
 
     public static final String[] NAV_TYPE_VALUES = {"terminologies", "mappings", "valuesets"};
 
+    public static final String[] NCIT_OR_NCIM = {"NCI Thesaurus", "NCI Metathesaurus"};
+
 
     /**
      * Constructor

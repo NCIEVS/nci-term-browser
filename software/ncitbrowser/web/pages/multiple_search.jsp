@@ -328,6 +328,12 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
  
                         boolean isMapping = DataUtils.isMapping(scheme, version);
                         if (!isMapping) {
+                        
+				String indent = "&nbsp;&nbsp;&nbsp;&nbsp;";
+				if (info.isProduction()) {
+				    indent = "";
+				}                         
+                        
 				String http_scheme = null;
 				String http_version = null;
 				
@@ -339,7 +345,7 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
 
         <% 
           //if (sort_category != curr_sort_category.intValue()) { 
-          if (!blank_line_added && !DataUtils.isNCIT_OR_NCIM(display_name)) { 
+          if (indent.length() == 0 && !blank_line_added && !DataUtils.isNCIT_OR_NCIM(display_name)) { 
         %>
           <tr><td width="25px">&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
         <% 
@@ -357,10 +363,7 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
 				
 				String checkedStr = checked ? "checked" : "";
 				
-				String indent = "&nbsp;&nbsp;&nbsp;&nbsp;";
-				if (info.isProduction()) {
-				    indent = "";
-				} 				
+				
 				
 				%>
 

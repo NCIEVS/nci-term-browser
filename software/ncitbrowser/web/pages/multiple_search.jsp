@@ -285,7 +285,8 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
 
 		  for (int k = 0; k < display_name_vec.size(); k++) { 
 		     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(k);
-		     
+		     //[NCITERM-641] User session is mixed up on Tomcat.
+		     info.setSelected(false);
 		     if (ontologiesToSearchOnStr.indexOf(info.getLabel()) != -1) {
 			 info.setSelected(true);
 		     }		     

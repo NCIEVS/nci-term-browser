@@ -111,6 +111,9 @@ public class UserSessionBean extends Object {
         _selectedPageSize = "50";
     }
 
+    public void setAction_coding_scheme(String action_coding_scheme) {
+		this.action_coding_scheme = action_coding_scheme;
+	}
 
     public String getContextPath() {
         if (contextPath == null) {
@@ -2443,15 +2446,12 @@ response.setContentType("text/html;charset=utf-8");
             matchText = matchText.trim();
 
         request.getSession().setAttribute("matchText", matchText);
-
         String matchAlgorithm = HTTPUtils.cleanXSS((String) request.getParameter("algorithm"));
         String searchTarget = HTTPUtils.cleanXSS((String) request.getParameter("searchTarget"));
-
         request.getSession().setAttribute("searchTarget", searchTarget);
         request.getSession().setAttribute("algorithm", matchAlgorithm);
 
         String[] ontology_list = request.getParameterValues("ontology_list");
-
         StringBuffer buf = new StringBuffer();
         buf.append("|");
         if (ontology_list != null) {
@@ -2461,10 +2461,9 @@ response.setContentType("text/html;charset=utf-8");
 			}
 	    }
 	    String ontologiesToSearchOnStr = buf.toString();
-
-
 	    Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
 		String action_cs = action_coding_scheme;
+		action_coding_scheme = null;
 		for (int i = 0; i < display_name_vec.size(); i++) {
 		     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
 
@@ -2484,6 +2483,9 @@ response.setContentType("text/html;charset=utf-8");
 				 info.setVisible(true);
 			 }
 		}
+
+		String ontologiesToExpandStr = getOntologiesToExpandStr(display_name_vec);
+		request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr);
         request.getSession().setAttribute("display_name_vec", display_name_vec);
         request.getSession().setAttribute("ontologiesToSearchOnStr", ontologiesToSearchOnStr);
 		return "multiple_search";
@@ -2523,6 +2525,7 @@ response.setContentType("text/html;charset=utf-8");
 	    Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
 
 		String action_cs = action_coding_scheme;
+		action_coding_scheme = null;
 
 		for (int i = 0; i < display_name_vec.size(); i++) {
 		     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
@@ -2541,9 +2544,10 @@ response.setContentType("text/html;charset=utf-8");
 			 } else if (action_cs != null && action_cs.compareTo(info.getCodingScheme()) == 0 && !info.isProduction()) {
 				 info.setVisible(false);
 			 }
-
-
 		}
+
+		String ontologiesToExpandStr = getOntologiesToExpandStr(display_name_vec);
+		request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr);
         request.getSession().setAttribute("display_name_vec", display_name_vec);
         request.getSession().setAttribute("ontologiesToSearchOnStr", ontologiesToSearchOnStr);
 		return "multiple_search";
@@ -2589,11 +2593,9 @@ response.setContentType("text/html;charset=utf-8");
     public void showListener(ActionEvent evt) {
         FacesContext ctx = FacesContext.getCurrentInstance();
         String action_cs_index_str = (String) ctx.getExternalContext().getRequestParameterMap().get("action_cs_index");
-
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
-
 
         int k = Integer.parseInt(action_cs_index_str);
         int show_counter = 0;
@@ -2956,4 +2958,18 @@ response.setContentType("text/html;charset=utf-8");
 
     }
 
+    public String getOntologiesToExpandStr(Vector display_name_vec) {
+		StringBuffer buf = new StringBuffer();
+		String ontologiesToExpandStr = null;
+		buf.append("|");
+		if (display_name_vec != null) {
+			for (int i = 0; i < display_name_vec.size(); i++) {
+				 OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+			     if (info.getExpanded()) {
+					 buf.append(info.getLabel() + "|");
+				 }
+			}
+		}
+		return buf.toString();
+	}
 }

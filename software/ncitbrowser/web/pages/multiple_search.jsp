@@ -128,11 +128,12 @@ if (ontologiesToSearchOnStr == null) {
     request.getSession().setAttribute("ontologiesToSearchOnStr", ontologiesToSearchOnStr);
 }
 
+//String action = HTTPUtils.cleanXSS((String) request.getParameter("action"));
+String action = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("action"));
 
-
-String action = HTTPUtils.cleanXSS((String) request.getParameter("action"));
 if (action != null) {
     String action_cs = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
+    
     if (action.compareTo("show") == 0) {
 	for (int i = 0; i < display_name_vec.size(); i++) {
 	     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
@@ -147,6 +148,7 @@ if (action != null) {
 
 		 if (action_cs != null && action_cs.compareTo(info.getCodingScheme()) == 0 && info.getHasMultipleVersions()) {
 		     info.setExpanded(true);
+		     
 		 } else if (action_cs != null && action_cs.compareTo(info.getCodingScheme()) == 0 && !info.isProduction()) {
 			 info.setVisible(true);
 		 }
@@ -282,20 +284,29 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
                 //if (display_name_vec == null) {
                   display_name_vec = DataUtils.getSortedOntologies();
 
+String ontologiesToExpandStr = (String) request.getSession().getAttribute("ontologiesToExpandStr");
+if (ontologiesToExpandStr == null) {
+    ontologiesToExpandStr = "|";
+}
+
 		  for (int k = 0; k < display_name_vec.size(); k++) { 
 		     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(k);
 		     //[NCITERM-641] User session is mixed up on Tomcat.
 		     info.setSelected(false);
 		     if (ontologiesToSearchOnStr.indexOf(info.getLabel()) != -1) {
 			 info.setSelected(true);
-		     }		     
+		     }
 		  }
 
  		  for (int k = 0; k < display_name_vec.size(); k++) { 
  		     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(k);
- 		     if (!info.isProduction()) {
- 		          info.setSelected(false);
- 		     }		     
+ 		     //if (!info.isProduction()) {
+ 		          //info.setSelected(false);
+ 		     //}
+ 		     info.setExpanded(false);
+		     if (ontologiesToExpandStr.indexOf(info.getLabel()) != -1) {
+			 info.setExpanded(true);
+		     }
 		  }
 	  
                   Collections.sort(display_name_vec, new OntologyInfo.ComparatorImpl());
@@ -414,19 +425,17 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
 				   <%
 				   String cs_nm = info.getCodingScheme();
 				   if (info.isProduction() && info.getHasMultipleVersions() && !info.getExpanded()) {
-				   
 				       show_counter++;
-				   
+			   
 				   %>    
 
                   &nbsp&nbsp; 
                   <font color="red">
 
 
-
-
 <h:commandLink styleClass="textbodyred" id="show" value="[show other versions]"
     action="#{userSessionBean.showOtherVersions}" actionListener="#{userSessionBean.showListener}"  immediate="true"> 
+     
     
 <%
 if (show_counter == 1) {

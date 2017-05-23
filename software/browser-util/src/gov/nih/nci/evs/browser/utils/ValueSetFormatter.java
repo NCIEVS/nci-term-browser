@@ -810,7 +810,10 @@ public class ValueSetFormatter {
         StringBuffer buf = new StringBuffer();
 		Vector w = resolve(vsd_uri, version, source, fields, codes, maxReturn);
 		HashMap fieldValueHmap = new HashMap();
-		buf.append("<table width=\"900\">");
+        //[NCITERM-759] Term Browser: Rel 2.10: Values page table is formatted incorrectly
+		buf.append("<table class=\"datatable_960\">").append("\n");
+
+		//buf.append("<table width=\"900\">");
 		for (int k=0; k<fields.size(); k++) {
 			String field = (String) fields.elementAt(k);
 			buf.append("<th class=\"textbody\" align=\"left\">").append("\n");

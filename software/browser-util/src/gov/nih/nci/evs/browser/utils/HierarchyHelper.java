@@ -83,6 +83,8 @@ public class HierarchyHelper {
 	private int format = 0;
     private boolean show_code = true;
 
+    private String INDENT = "";
+
     public HierarchyHelper() {
 	}
 
@@ -99,6 +101,11 @@ public class HierarchyHelper {
         this.format = format;
         initialize(v, format);
 	}
+
+	public void set_indent(String indent) {
+		this.INDENT = indent;
+	}
+
 
 	public void set_show_code(boolean bool) {
 		this.show_code = bool;
@@ -134,7 +141,6 @@ public class HierarchyHelper {
 	}
 
 	private void initialize(Vector v, int format) {
-		System.out.println("\nInstantiating HierarchyHelper...");
 		long ms0 = System.currentTimeMillis();
 		long ms = System.currentTimeMillis();
         this._parent2childcodesMap = createparent2childcodesMap(v, format);
@@ -415,7 +421,7 @@ public class HierarchyHelper {
 	}
 
 	public void printTree(String code, int level) {
-		String indent = "";
+		String indent = INDENT;
 		for (int i=0; i<level; i++) {
 			indent = indent + "\t";
 		}
@@ -456,7 +462,7 @@ public class HierarchyHelper {
 	}
 
 	public void printTree(PrintWriter pw, String code, int level) {
-		String indent = "";
+		String indent = INDENT;
 		for (int i=0; i<level; i++) {
 			indent = indent + "\t";
 		}
@@ -485,6 +491,57 @@ public class HierarchyHelper {
 				printTree(pw, child_code, level+1);
 			}
 		}
+	}
+
+	public static int TRAVERSE_UP = 1;
+	public static int TRAVERSE_DOWN = 0;
+
+	public void traverse(PrintWriter pw, String code) {
+        traverse(pw, code, TRAVERSE_UP);
+	}
+
+	public void traverse(PrintWriter pw, String code, int direction) {
+		Stack stack = new Stack();
+		stack.push("0|"+code);
+        while (!stack.isEmpty()) {
+			String s = (String) stack.pop();
+			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(s);
+			String level_str = (String) u.elementAt(0);
+			int level = Integer.parseInt(level_str);
+			String curr_code = (String) u.elementAt(1);
+
+			String label = getLabel(curr_code);
+			String indent = "";
+			for (int i=0; i<level; i++) {
+				indent = indent + "\t";
+			}
+			pw.println(indent + label + " (" + curr_code + ")");
+
+            Vector w = null;
+            if (direction == TRAVERSE_UP) {
+            	w = getSuperclassCodes(curr_code);
+		    } else {
+				w = getSubclassCodes(curr_code);
+			}
+
+            if (w != null) {
+				level = level + 1;
+				for (int j=0; j<w.size(); j++) {
+					String next_code = (String) w.elementAt(j);
+					String t = "" + level + "|" + next_code;
+					stack.push(t);
+				}
+		    }
+		}
+	}
+
+	public void addRoot(String code, String label) {
+		if (roots == null) {
+			findRootAndLeafNodes();
+		}
+		if (roots.contains(code)) return;
+		roots.add(code);
+		code2LabelMap.put(code, label);
 	}
 
     public static void main(String[] args) {

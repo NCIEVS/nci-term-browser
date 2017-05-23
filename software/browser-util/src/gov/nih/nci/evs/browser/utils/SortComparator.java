@@ -206,7 +206,7 @@ public class SortComparator implements Comparator<Object> {
             return 0;
         key1 = getKey(object1, _sort_option).toLowerCase();
         key2 = getKey(object2, _sort_option).toLowerCase();
-
+/*
         key1 = replaceCharacter(key1, ' ', '~');
         key1 = replaceCharacter(key1, '|', ' ');
         key1 = replaceCharacter(key1, '$', ' ');
@@ -214,7 +214,7 @@ public class SortComparator implements Comparator<Object> {
         key2 = replaceCharacter(key2, ' ', '~');
         key2 = replaceCharacter(key2, '|', ' ');
         key2 = replaceCharacter(key2, '$', ' ');
-
+*/
         return key1.compareTo(key2);
     }
 }

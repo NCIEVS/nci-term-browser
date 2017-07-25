@@ -43,6 +43,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
+<script src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js"></script>
 <%
 JSPUtils.JSPHeaderInfo prop_info = new JSPUtils.JSPHeaderInfo(request);
 String prop_dictionary = prop_info.dictionary;
@@ -596,5 +597,6 @@ if (!StringUtils.isNull(b)) {
       </div> <!-- End center-page_960 -->
       
    </f:view>
+<script type="text/javascript">_satellite.pageBottom();</script>
 </body>
 </html>

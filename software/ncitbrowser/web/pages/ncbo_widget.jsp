@@ -34,6 +34,7 @@ if (url == null) {
 <%
 }
 %>	
+<script type="text/javascript">_satellite.pageBottom();</script>
 </body>
 </html>
 

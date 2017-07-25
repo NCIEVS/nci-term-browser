@@ -177,7 +177,7 @@ public class SortComparator implements Comparator<Object> {
 		}
 	    return t;
 	}
-*/
+
     private String replaceCharacter(String s, char from, char to) {
 		if (s == null) return null;
 		int ascii_from = (int) from;
@@ -195,7 +195,7 @@ public class SortComparator implements Comparator<Object> {
 		}
 	    return t.toString();
 	}
-
+	*/
 
     public int compare(Object object1, Object object2) {
         // case insensitive sort

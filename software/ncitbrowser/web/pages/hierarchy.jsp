@@ -629,5 +629,6 @@ if (DataUtils.isNull(ontology_display_name)) {
       </div>
     </div>
   </f:view>
+<script type="text/javascript">_satellite.pageBottom();</script>
 </body>
 </html>

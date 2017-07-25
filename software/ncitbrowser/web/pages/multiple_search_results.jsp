@@ -648,5 +648,6 @@ _logger.debug("Total page rendering delay (millisec.): " + delay);
 %>
 </f:view>
 <br/>
+<script type="text/javascript">_satellite.pageBottom();</script>
 </body>
 </html>

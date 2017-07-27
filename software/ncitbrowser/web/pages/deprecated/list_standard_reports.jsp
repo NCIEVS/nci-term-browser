@@ -4,5 +4,6 @@
     <jsp:param name="content_title" value="NCI Thesaurus: Standard Reports"/>
     <jsp:param name="content_page" value="/pages/contents/_list_standard_reports.jsp"/>
   </jsp:forward>
+<script type="text/javascript">_satellite.pageBottom();</script>
  </body>
 </html>

@@ -79,6 +79,11 @@ request.getSession().removeAttribute("m");
   <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_followscroll.js"></script>
   <script language="JavaScript">
   
+	    function trim(x) {
+	        return x.replace(/^\s+|\s+$/gm,'');
+	    }
+
+
   	    function show_others(csn) {
   	      var checkedStr = "";
   	      var target = "";
@@ -92,6 +97,13 @@ request.getSession().removeAttribute("m");
   		    checkedStr = checkedStr + checkedObj[i].value + "|";
   		}
   	      }
+  	      
+  	      checkedStr = trim(checkedStr);
+  	      if (checkedStr.endsWith("|")) {
+  	          checkedStr = checkedStr.substring(0, checkedStr.length-1); 
+  	      }
+  	      
+  	      
   
   	          var searchTargetObj = document.forms["searchTerm"].searchTarget;
   		  for (var j=0; j<searchTargetObj.length; j++) {
@@ -128,6 +140,11 @@ window.location.href = "/ncitbrowser/ajax?action=show&csn="+ csn +"&matchText=" 
   		}
   	      }
   
+    	      checkedStr = trim(checkedStr);
+    	      if (checkedStr.endsWith("|")) {
+    	          checkedStr = checkedStr.substring(0, checkedStr.length-1); 
+  	      }
+  	      
   	          var searchTargetObj = document.forms["searchTerm"].searchTarget;
   		  for (var j=0; j<searchTargetObj.length; j++) {
   		      if (searchTargetObj[j].checked == true) {

@@ -176,11 +176,13 @@ public class ValueSetDefinitionConfig {
 
 		if (vsd_config_file == null) {
 			System.out.println("ERROR: Unable to find system property " + VALUE_SET_REPORT_CONFIG);
-		} else {
-			vsd_config_file_dir = new File(vsd_config_file).getParent();
-			valueSetConfigHashMap = readValueSetDefinitionConfigFile(vsd_config_file);
-			System.out.println("ValueSetDefinitionConfig initialization run time (ms): " + (System.currentTimeMillis() - ms));
+		    String user_dir = System.getProperty("user.dir");
+            System.out.println("Try user.dir" + user_dir);
+            vsd_config_file = user_dir + File.separator + "value_set_report_config.txt";
 		}
+		vsd_config_file_dir = new File(vsd_config_file).getParent();
+		valueSetConfigHashMap = readValueSetDefinitionConfigFile(vsd_config_file);
+		System.out.println("ValueSetDefinitionConfig initialization run time (ms): " + (System.currentTimeMillis() - ms));
 
 		if (valueSetConfigHashMap.containsKey(uri)) {
 			return (ValueSetConfig) valueSetConfigHashMap.get(uri);

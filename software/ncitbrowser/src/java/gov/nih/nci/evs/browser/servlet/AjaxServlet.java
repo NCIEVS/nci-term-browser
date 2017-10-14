@@ -363,12 +363,13 @@ if (display_name_vec == null) {
 
         // Determine request by attributes
         String action = HTTPUtils.cleanXSS(request.getParameter("action"));//
-
-        if (action.equals("export_vsrc")) {
+        if (action.equals("export_to_excel")) {
+            exportToExcelAction(request, response);
+        } else if (action.equals("export_to_csv")) {
+            exportToCSVAction(request, response);
+        } else if (action.equals("export_vsrc")) {
             export_vsrc(request, response);
-        }
-
-        if (action.compareTo("show") == 0) {
+        } else if (action.compareTo("show") == 0) {
             show_other_versions(request, true);
 
 				 try {
@@ -2269,32 +2270,32 @@ if (show_released_file_button) {
       //out.println("                    </td></tr>");
 
 
-if (DataUtils.isNull(vsd_uri)) {
+		if (DataUtils.isNull(vsd_uri)) {
 
-      out.println("            <tr class=\"textbody\">");
-      out.println("              <td class=\"textbody\" align=\"left\"  width=\"700\" nowrap>");
-      out.println("");
+			  out.println("            <tr class=\"textbody\">");
+			  out.println("              <td class=\"textbody\" align=\"left\"  width=\"700\" nowrap>");
+			  out.println("");
 
-//v2.9 modification;
-    mode = (String) request.getParameter("mode");
-    if (mode == null) {
-		mode = (String) request.getSession().getAttribute("mode");
-	}
+		//v2.9 modification;
+			mode = (String) request.getParameter("mode");
+			if (mode == null) {
+				mode = (String) request.getSession().getAttribute("mode");
+			}
 
-String tree_views = JSPUtils.getValueSetTreeViews(Integer.parseInt(mode), contextPath);
-out.println(tree_views);
+		String tree_views = JSPUtils.getValueSetTreeViews(Integer.parseInt(mode), contextPath);
+		out.println(tree_views);
 
-      out.println("              </td>");
-      out.println("");
-      out.println("              <td align=\"right\">");
-      out.println("               <font size=\"1\" color=\"red\" align=\"right\">");
-      out.println("                 <a href=\"javascript:printPage()\"><img src=\"/ncitbrowser/images/printer.bmp\" border=\"0\" alt=\"Send to Printer\"><i>Send to Printer</i></a>");
-      out.println("               </font>");
+			  out.println("              </td>");
+			  out.println("");
+			  out.println("              <td align=\"right\">");
+			  out.println("               <font size=\"1\" color=\"red\" align=\"right\">");
+			  out.println("                 <a href=\"javascript:printPage()\"><img src=\"/ncitbrowser/images/printer.bmp\" border=\"0\" alt=\"Send to Printer\"><i>Send to Printer</i></a>");
+			  out.println("               </font>");
 
 
-      out.println("              </td>");
-      out.println("            </tr>");
-}
+			  out.println("              </td>");
+			  out.println("            </tr>");
+		}
 
 
       out.println("          </table>");
@@ -2363,25 +2364,29 @@ out.flush();
       out.println("          </div> <!-- popupContentArea -->");
       out.println("");
 
- // add released file content:
-if (!show_released_file_button) {
-	if (!DataUtils.isNull(vsd_uri)) {
-		  writeExportForm(out, vsd_uri);
-		  out.println("");
-		  out.println("<div class=\"tabTableContentContainer\">");
-		  out.println("<table border=\"0\" width=\"900\">");
-		  out.println("	<tr><td>");
-		  out.println("	<div style=\"float:left;width:360px;\">");
-		  String content = getReleasedFileContent(vsd_uri);
-		  out.println(content);
-		  out.println("	</div>");
-		  out.println("	</td></tr>");
-		  out.println("</table>");
-		  out.println("</div>");
-		  out.println("");
-		  out.println("");
-	}
-}
+		 // add released file content:
+		if (!show_released_file_button) {
+			if (!DataUtils.isNull(vsd_uri)) {
+				  writeExportForm(out, vsd_uri);
+				  out.println("");
+				  out.println("<div class=\"tabTableContentContainer\">");
+				  out.println("<table border=\"0\" width=\"900\">");
+				  out.println("	<tr><td>");
+				  out.println("	<div style=\"float:left;width:360px;\">");
+
+					ResolvedValueSetIteratorHolder rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
+					request.getSession().setAttribute("rvsi", rvsi);
+					String content = getResolvedValueSetContent(rvsi);
+
+				  out.println(content);
+				  out.println("	</div>");
+				  out.println("	</td></tr>");
+				  out.println("</table>");
+				  out.println("</div>");
+				  out.println("");
+				  out.println("");
+			}
+		}
 
       out.println("");
       out.println("<div class=\"textbody\">");
@@ -2425,8 +2430,6 @@ if (!show_released_file_button) {
       out.println("");
       out.println("  </div> <!-- center-page -->");
       out.println("");
-
-
 
       addHiddenForm(out, checked_vocabularies, partial_checked_vocabularies);
 
@@ -4927,13 +4930,79 @@ out.flush();
 		return table_content_buf.toString();
 	}
 
-    public String getReleasedFileContent(String vsd_uri) {
-		ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
-		String content = getReleasedFileContent(vsc);
-		return content;
+    public String getReleasedFileContent(ResolvedValueSetIteratorHolder rvsi) {
+		if (rvsi == null) return null;
+		String content = getResolvedValueSetContent(rvsi);
+        return content;
 	}
 
-    public String getReleasedFileContent(ValueSetConfig vsc) { //String vsd_uri) {
+    public ResolvedValueSetIteratorHolder constructResolvedValueSetIteratorHolder(String vsd_uri) {
+		ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
+		return constructResolvedValueSetIteratorHolder(vsc);
+	}
+
+    public ResolvedValueSetIteratorHolder constructResolvedValueSetIteratorHolder(ValueSetConfig vsc) {
+		String table_content = null;
+		StringBuffer table_content_buf = new StringBuffer();
+
+		ResolvedValueSetIteratorHolder rvsi = null;
+
+		String filename = vsc.getReportURI();
+		String excelfile = ValueSetDefinitionConfig.getValueSetDownloadFilename(vsc);
+		FTPDownload.download(vsc.getReportURI(), excelfile);
+		Vector u = ValueSetDefinitionConfig.interpretExtractionRule(vsc.getExtractionRule());
+		int col = -1;
+		int sheet = -1;
+		String code = null;
+
+		if (u == null || (u.size() != 2 && u.size() != 3)) {
+			System.out.println("Data not found.");
+			return null;
+		} else {
+			sheet = Integer.parseInt((String) u.elementAt(0)) - 1;
+			if (u.size() == 2) {
+				code = (String) u.elementAt(1);
+			} else if (u.size() == 3) {
+				col = Integer.parseInt((String) u.elementAt(1)) - 1;
+				code = (String) u.elementAt(2);
+			}
+			int startIndex = ExcelUtil.getHSSFStartRow(excelfile, sheet, col, code);
+			boolean cdisc = false;
+			if (vsc.getExtractionRule() != null && !vsc.getExtractionRule().endsWith(":all")) {
+				String header = ExcelUtil.getHSSFHeader(excelfile, sheet);
+				if (header != null && header.indexOf(Constants.CDISC_SUBMISSION_VALUE) != -1) {
+					startIndex = startIndex - 1;
+					cdisc = true;
+				}
+			}
+			if (startIndex != -1) {
+				try {
+					String url = "/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus";
+					String ncit_production_version = csdu.getVocabularyVersionByTag(Constants.NCI_THESAURUS, "PRODUCTION");
+					if (ncit_production_version != null) {
+						url = url + "&version=" + ncit_production_version;
+					}
+					LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCI_THESAURUS, ncit_production_version, code);
+					url = url + "&ns=" + ns;
+					rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, url, cdisc);
+    				return rvsi;
+
+    				//String content = getResolvedValueSetContent(rvsi);
+                    //return content;
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+		//String msg = Constants.NO_VALUE_SET_REPORT_AVAILABLE;
+		//return(msg);
+
+		return null;
+	}
+
+
+    public String getReleasedFileContent(ValueSetConfig vsc) {
 		String table_content = null;
 		StringBuffer table_content_buf = new StringBuffer();
 		String filename = vsc.getReportURI();
@@ -4995,14 +5064,12 @@ out.flush();
 		out.println("                              <table border=\"0\" width=\"900\" >");
 		out.println("                                    <td align=\"right\">");
 
-        out.println("<a href=\"/ncitbrowser/ajax?action=export_file_to_excel&dictionary=<%=dictionary%>\">Export Excel</a>");
-
+        out.println("<a href=\"/ncitbrowser/ajax?action=export_to_excel\">Export Excel</a>");
 		out.println("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"http://www.microsoft.com/downloads/details.aspx?FamilyID=1cd6acf9-ce06-4e1c-8dcf-f33f669dbc3a&amp;DisplayLang=en\" target=\"_blank\"><img");
 		out.println("     src=\"/ncitbrowser/images/link_xls.gif\" width=\"16\"");
 		out.println("     height=\"16\" border=\"0\"");
 		out.println("alt=\"Download Plugin Microsoft Excel Viewer\" /></a>");
-
-        out.println("<a href=\"/ncitbrowser/ajax?action=export_file_to_csv&dictionary=<%=dictionary%>\">Export CSV</a>");
+        out.println("<a href=\"/ncitbrowser/ajax?action=export_to_csv\">Export CSV</a>");
 
 		out.println("                                    </td>");
 		out.println("                                 </tr>");
@@ -5019,4 +5086,94 @@ out.flush();
 		out.println("                     <input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"j_id1:j_id2\" />");
 		out.println("</h:form>");
 	}
+
+    public void exportToCSVAction(HttpServletRequest request, HttpServletResponse response) {
+        StringBuffer sb = new StringBuffer();
+		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+		System.out.println("vsd_uri: " + vsd_uri);
+		ResolvedValueSetIteratorHolder rvsi = (ResolvedValueSetIteratorHolder) request.getSession().getAttribute("rvsi");
+		if (rvsi != null) {
+			Vector w = rvsi.extractRawDataFromTableContent();
+			if (w != null) {
+				try {
+					w = rvsi.tableContent2CSV(w);
+					for (int k=0; k<w.size(); k++) {
+						String t = (String) w.elementAt(k);
+						sb.append(t);
+						sb.append("\n");
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+			    }
+			}
+		}
+		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
+		System.out.println("vsd_name: " + vsd_name);
+		vsd_name = "resolved_" + vsd_name + ".csv";
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ vsd_name);
+
+		response.setContentLength(sb.length());
+
+		try {
+			ServletOutputStream ouputStream = response.getOutputStream();
+			ouputStream.write(sb.toString().getBytes("UTF8"), 0, sb.length());
+			ouputStream.flush();
+			ouputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			sb.append("WARNING: Export to CVS action failed.");
+		}
+		FacesContext.getCurrentInstance().responseComplete();
+	}
+
+
+    public void exportToExcelAction(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+			System.out.println("vsd_uri: " + vsd_uri);
+    		response.setContentType("application/vnd.ms-excel");
+			String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
+			System.out.println("vsd_name: " + vsd_name);
+			vsd_name = vsd_name.replaceAll(" ", "_");
+			vsd_name = vsd_name + ".xls";
+
+		    response.setHeader("Content-Disposition", "attachment; filename="
+					+ vsd_name);
+
+            StringBuffer sb = new StringBuffer();
+
+			ResolvedValueSetIteratorHolder rvsi = (ResolvedValueSetIteratorHolder) request.getSession().getAttribute("rvsi");
+			List list = null;
+			if (rvsi != null) {
+				list = rvsi.getResolvedValueSetList();
+			    sb.append(rvsi.getOpenTableTag("rvs_table"));
+				String first_line = (String) list.get(0);
+			    first_line = first_line.replaceAll("td", "th");
+			    sb.append(first_line);
+
+				for (int k=1; k<list.size(); k++) {
+					String line = (String) list.get(k);
+					line = ResolvedValueSetIteratorHolder.removeHyperlinks(line);
+					sb.append(line);
+				}
+				sb.append(rvsi.getCloseTableTag());
+			}
+
+			String outputstr = sb.toString();
+			response.setContentLength(outputstr.length());
+
+			ServletOutputStream ouputStream = response.getOutputStream();
+			ouputStream.write(outputstr.getBytes("UTF8"), 0, outputstr.length());
+			ouputStream.flush();
+			ouputStream.close();
+
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+
+		FacesContext.getCurrentInstance().responseComplete();
+	}
+
 }

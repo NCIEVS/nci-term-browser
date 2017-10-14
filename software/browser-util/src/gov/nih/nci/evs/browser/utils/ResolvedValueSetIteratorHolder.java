@@ -284,7 +284,7 @@ public class ResolvedValueSetIteratorHolder {
             }
         }
 
-        out.append("<table id=\"" + "rvs_table" + "\" width=\"900\" class=\"mt\">\n");
+        out.append("<table id=\"" + "rvs_table" + "\" width=\"915\" class=\"mt\">\n");
         tr(sheet.getRow(0));
         StringBuffer buf = new StringBuffer();
         tr(sheet.getRow(0), buf);
@@ -345,7 +345,7 @@ public class ResolvedValueSetIteratorHolder {
             }
         }
 
-        out.append("<table id=\"" + "rvs_table" + "\" width=\"900\" class=\"mt\">\n");
+        out.append("<table id=\"" + "rvs_table" + "\" width=\"915\" class=\"mt\">\n");
         tr(sheet.getRow(0));
         StringBuffer buf = new StringBuffer();
         tr(sheet.getRow(0), buf);

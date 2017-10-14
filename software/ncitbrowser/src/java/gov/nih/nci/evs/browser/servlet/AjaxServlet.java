@@ -127,6 +127,9 @@ import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
 
 public final class AjaxServlet extends HttpServlet {
     private static Logger _logger = Logger.getLogger(AjaxServlet.class);
+    CodingSchemeDataUtils csdu = null;
+    boolean show_released_file_button = false;
+
     /**
      * local constants
      */
@@ -141,7 +144,8 @@ public final class AjaxServlet extends HttpServlet {
      *         problems occur during initialisation
      */
     public void init() throws ServletException {
-
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		csdu = new CodingSchemeDataUtils(lbSvc);
     }
 
     /**
@@ -1822,6 +1826,29 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
       out.println("");
 
 
+      out.println("<style>");
+      out.println(".outer {position:relative}");
+      out.println(".inner {");
+      out.println("  overflow-x:scroll;");
+      out.println("  overflow-y:scroll;");
+      out.println("  width:900px;");
+      out.println("  margin-left:5px;");
+      out.println("  height:500px;");
+      out.println("}");
+      out.println("</style>");
+      out.println("");
+      out.println("");
+      out.println("<style type=\"text/css\">");
+      out.println("    body, .mt {padding:0px;font-family: Tahoma, sans-serif;font-size: 0.9em;}");
+      out.println("    body {margin:0px;}");
+      out.println("    p {margin:30px 0px 30px 0px;}");
+      out.println("    table.mt {border-width: 1px;border-spacing:0px ;border-style: solid;border-color: #cfcfcf;border-collapse: collapse;background-color: transparent;}");
+      out.println("    table.mt th {border-width: 1px;padding: 1px;border-style: solid;border-color: #cfcfcf;white-space: nowrap; background-color: #afafaf;text-align:left;}");
+      out.println("    table.mt td {border-width: 1px;padding: 1px;border-style: solid;border-color: #cfcfcf;text-align: left;vertical-align:middle;}");
+      out.println("    .frc {background: #efefef;}");
+      out.println("</style>");
+      out.println("");
+
 /*
 if (mode != null && mode.compareTo(Constants.MODE_COLLAPSE) == 0) {
 	// to be modified: -- collapse_all method
@@ -2167,24 +2194,6 @@ out.print("/pages/subset.jsf\">NCI Thesaurus Subsets</a> page).");
 		  if (isValueSet) {
 			  out.println("            <tr class=\"textbody\">");
 
-/*
-			  out.println("                      <td>");
-			  out.println("                         <div class=\"texttitle-blue\">Welcome</div>");
-			  out.println("                      </td>");
-			  out.println("                      <td class=\"dataCellText\" align=\"right\">");
-
-//out.println("<a href=\"/ncitbrowser/ajax?action=download&vsd_uri=" + vsd_uri + "\">Report</a>");
-//out.println("&nbsp;&nbsp;&nbsp;&nbsp;");
-
-			  out.println("<a href=\"/ncitbrowser/ajax?action=values&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/values.gif\" alt=\"Values\" border=\"0\" tabindex=\"2\"></a>");
-			  out.println("&nbsp;");
-			  out.println("<a href=\"/ncitbrowser/ajax?action=versions&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/versions.gif\" alt=\"Versions\" border=\"0\" tabindex=\"2\"></a>");
-			  out.println("&nbsp;");
-			  out.println("<a href=\"/ncitbrowser/ajax?action=xmldefinitions&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/xmldefinitions.gif\" alt=\"XML Definition\" border=\"0\" tabindex=\"2\"></a>");
-
-              out.println("                      </td>");
-*/
-
       out.println("                      <td>");
       out.println("                         <div class=\"texttitle-blue\">Welcome</div>");
       out.println("                      </td>");
@@ -2193,21 +2202,24 @@ out.print("/pages/subset.jsf\">NCI Thesaurus Subsets</a> page).");
 
 
 ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
+if (show_released_file_button) {
 
-if (vsc != null && !DataUtils.isNullOrBlank(vsc.getReportURI())) {
+	if (vsc != null && !DataUtils.isNullOrBlank(vsc.getReportURI())) {
 
-      out.println("<table>");
-      out.println("<tr><td>");
-      out.println("<a href=\"/ncitbrowser/ajax?action=download&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/released_file.gif\" alt=\"Value Set Released Files (FTP Server)\" border=\"0\" tabindex=\"2\"></a>");
-      out.println("</td>");
-      out.println("</tr>");
-      out.println("</table>");
+		  out.println("<table>");
+		  out.println("<tr><td>");
+		  out.println("<a href=\"/ncitbrowser/ajax?action=download&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/released_file.gif\" alt=\"Value Set Released Files (FTP Server)\" border=\"0\" tabindex=\"2\"></a>");
+		  out.println("</td>");
+		  out.println("</tr>");
+		  out.println("</table>");
 
 
+	} else {
+		  out.println("&nbsp;");
+	}
 } else {
-	  out.println("&nbsp;");
+      out.println("&nbsp;");
 }
-
       out.println("                      </td>");
       out.println("");
       out.println("                      <td>");
@@ -2347,10 +2359,30 @@ if (DataUtils.isNull(vsd_uri)) {
 stu.printFormFooter(out);
 out.flush();
 
-
       out.println("");
       out.println("          </div> <!-- popupContentArea -->");
       out.println("");
+
+ // add released file content:
+if (!show_released_file_button) {
+	if (!DataUtils.isNull(vsd_uri)) {
+		  writeExportForm(out, vsd_uri);
+		  out.println("");
+		  out.println("<div class=\"tabTableContentContainer\">");
+		  out.println("<table border=\"0\" width=\"900\">");
+		  out.println("	<tr><td>");
+		  out.println("	<div style=\"float:left;width:360px;\">");
+		  String content = getReleasedFileContent(vsd_uri);
+		  out.println(content);
+		  out.println("	</div>");
+		  out.println("	</td></tr>");
+		  out.println("</table>");
+		  out.println("</div>");
+		  out.println("");
+		  out.println("");
+	}
+}
+
       out.println("");
       out.println("<div class=\"textbody\">");
       out.println("<!-- footer -->");
@@ -2362,28 +2394,7 @@ out.flush();
       out.println("    <li><a href=\"http://www.cancer.gov/policies/page3\" target=\"_blank\" alt=\"National Cancer Institute Accessibility\">Accessibility</a> |</li>");
       out.println("    <li><a href=\"http://www.cancer.gov/policies/page6\" target=\"_blank\" alt=\"National Cancer Institute FOIA\">FOIA</a></li>");
       out.println("  </ul>");
-      /*
-      out.println("  <p>");
-      out.println("    A Service of the National Cancer Institute<br />");
-      out.println("    <img src=\"/ncitbrowser/images/external-footer-logos.gif\"");
-      out.println("      alt=\"External Footer Logos\" width=\"238\" height=\"34\" border=\"0\"");
-      out.println("      usemap=\"#external-footer\" />");
-      out.println("  </p>");
-      out.println("  <map id=\"external-footer\" name=\"external-footer\">");
-      out.println("    <area shape=\"rect\" coords=\"0,0,46,34\"");
-      out.println("      href=\"http://www.cancer.gov\" target=\"_blank\"");
-      out.println("      alt=\"National Cancer Institute\" />");
-      out.println("    <area shape=\"rect\" coords=\"55,1,99,32\"");
-      out.println("      href=\"http://www.hhs.gov/\" target=\"_blank\"");
-      out.println("      alt=\"U.S. Health &amp; Human Services\" />");
-      out.println("    <area shape=\"rect\" coords=\"103,1,147,31\"");
-      out.println("      href=\"http://www.nih.gov/\" target=\"_blank\"");
-      out.println("      alt=\"National Institutes of Health\" />");
-      out.println("    <area shape=\"rect\" coords=\"148,1,235,33\"");
-      out.println("      href=\"http://www.usa.gov/\" target=\"_blank\"");
-      out.println("      alt=\"USA.gov\" />");
-      out.println("  </map>");
-      */
+
 
       out.println("<center>");
       out.println("<a href=\"http://www.hhs.gov/\" alt=\"U.S. Department of Health and Human Services\">");
@@ -2415,8 +2426,15 @@ out.flush();
       out.println("  </div> <!-- center-page -->");
       out.println("");
 
+
+
       addHiddenForm(out, checked_vocabularies, partial_checked_vocabularies);
 
+      out.println("");
+      out.println("        <script type=\"text/javascript\">");
+      out.println("            fxheaderInit('rvs_table',300,1,0);");
+      out.println("            fxheader();");
+      out.println("        </script>");
 
       out.println("</body>");
       out.println("</html>");
@@ -3545,28 +3563,6 @@ out.flush();
       out.println("    <li><a href=\"http://www.cancer.gov/policies/page3\" target=\"_blank\" alt=\"National Cancer Institute Accessibility\">Accessibility</a> |</li>");
       out.println("    <li><a href=\"http://www.cancer.gov/policies/page6\" target=\"_blank\" alt=\"National Cancer Institute FOIA\">FOIA</a></li>");
       out.println("  </ul>");
-      /*
-      out.println("  <p>");
-      out.println("    A Service of the National Cancer Institute<br />");
-      out.println("    <img src=\"/ncitbrowser/images/external-footer-logos.gif\"");
-      out.println("      alt=\"External Footer Logos\" width=\"238\" height=\"34\" border=\"0\"");
-      out.println("      usemap=\"#external-footer\" />");
-      out.println("  </p>");
-      out.println("  <map id=\"external-footer\" name=\"external-footer\">");
-      out.println("    <area shape=\"rect\" coords=\"0,0,46,34\"");
-      out.println("      href=\"http://www.cancer.gov\" target=\"_blank\"");
-      out.println("      alt=\"National Cancer Institute\" />");
-      out.println("    <area shape=\"rect\" coords=\"55,1,99,32\"");
-      out.println("      href=\"http://www.hhs.gov/\" target=\"_blank\"");
-      out.println("      alt=\"U.S. Health &amp; Human Services\" />");
-      out.println("    <area shape=\"rect\" coords=\"103,1,147,31\"");
-      out.println("      href=\"http://www.nih.gov/\" target=\"_blank\"");
-      out.println("      alt=\"National Institutes of Health\" />");
-      out.println("    <area shape=\"rect\" coords=\"148,1,235,33\"");
-      out.println("      href=\"http://www.usa.gov/\" target=\"_blank\"");
-      out.println("      alt=\"USA.gov\" />");
-      out.println("  </map>");
-      */
 
       out.println("<center>");
       out.println("<a href=\"http://www.hhs.gov/\" alt=\"U.S. Department of Health and Human Services\">");
@@ -4892,5 +4888,135 @@ out.flush();
 			String t = (String) v.elementAt(i);
 			System.out.println(t);
 		}
+	}
+
+    public String getResolvedValueSetContent(ResolvedValueSetIteratorHolder rvsi) {
+        Vector matched_concept_codes = new Vector();//(Vector) request.getSession().getAttribute("matched_concept_codes");
+		String table_content = "";
+		StringBuffer table_content_buf = new StringBuffer();
+		boolean bool_val;
+		if (rvsi != null) {
+			table_content_buf.append(rvsi.getOpenTableTag("rvs_table"));
+			List list = rvsi.getResolvedValueSetList();
+			boolean filter = false;
+			if (matched_concept_codes != null && matched_concept_codes.size() > 0) {
+				filter = true;
+			}
+			String first_line = (String) list.get(0);
+			first_line = first_line.replaceAll("td", "th");
+			table_content_buf.append(first_line);
+
+			for (int k=1; k<list.size(); k++) {
+				String line = (String) list.get(k);
+				boolean include = true;
+				if (filter) {
+					include = false;
+					for (int m=0; m<matched_concept_codes.size(); m++) {
+						String matched_concept_code = (String) matched_concept_codes.elementAt(m);
+						if (line.indexOf(matched_concept_code) != -1) {
+							include = true;
+							break;
+						}
+					}
+				}
+				if (include) table_content_buf.append(line);
+			}
+		}
+		table_content_buf.append(rvsi.getCloseTableTag());
+		table_content = table_content_buf.toString();
+		return table_content_buf.toString();
+	}
+
+    public String getReleasedFileContent(String vsd_uri) {
+		ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
+		String content = getReleasedFileContent(vsc);
+		return content;
+	}
+
+    public String getReleasedFileContent(ValueSetConfig vsc) { //String vsd_uri) {
+		String table_content = null;
+		StringBuffer table_content_buf = new StringBuffer();
+		String filename = vsc.getReportURI();
+		String excelfile = ValueSetDefinitionConfig.getValueSetDownloadFilename(vsc);
+		FTPDownload.download(vsc.getReportURI(), excelfile);
+		Vector u = ValueSetDefinitionConfig.interpretExtractionRule(vsc.getExtractionRule());
+		int col = -1;
+		int sheet = -1;
+		String code = null;
+
+		if (u == null || (u.size() != 2 && u.size() != 3)) {
+			System.out.println("Data not found.");
+			return "Data not found.";
+		} else {
+			sheet = Integer.parseInt((String) u.elementAt(0)) - 1;
+			if (u.size() == 2) {
+				code = (String) u.elementAt(1);
+			} else if (u.size() == 3) {
+				col = Integer.parseInt((String) u.elementAt(1)) - 1;
+				code = (String) u.elementAt(2);
+			}
+			int startIndex = ExcelUtil.getHSSFStartRow(excelfile, sheet, col, code);
+			boolean cdisc = false;
+			if (vsc.getExtractionRule() != null && !vsc.getExtractionRule().endsWith(":all")) {
+				String header = ExcelUtil.getHSSFHeader(excelfile, sheet);
+				if (header != null && header.indexOf(Constants.CDISC_SUBMISSION_VALUE) != -1) {
+					startIndex = startIndex - 1;
+					cdisc = true;
+				}
+			}
+			if (startIndex != -1) {
+				try {
+					String url = "/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus";
+					String ncit_production_version = csdu.getVocabularyVersionByTag(Constants.NCI_THESAURUS, "PRODUCTION");
+					if (ncit_production_version != null) {
+						url = url + "&version=" + ncit_production_version;
+					}
+					LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCI_THESAURUS, ncit_production_version, code);
+					url = url + "&ns=" + ns;
+					ResolvedValueSetIteratorHolder rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, url, cdisc);
+    				String content = getResolvedValueSetContent(rvsi);
+                    return content;
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+		String msg = Constants.NO_VALUE_SET_REPORT_AVAILABLE;
+		return(msg);
+	}
+
+	public void writeExportForm(PrintWriter out, String vsd_uri) {
+		out.println("<hr></hr>");
+		out.println("<h:form id=\"valueSetSearchResultsForm\" styleClass=\"search-form\" acceptcharset=\"UTF-8\">");
+		out.println("                     <table border=\"0\">");
+		out.println("                        <tr>");
+		out.println("                           <td>");
+		out.println("                              <table border=\"0\" width=\"900\" >");
+		out.println("                                    <td align=\"right\">");
+
+        out.println("<a href=\"/ncitbrowser/ajax?action=export_file_to_excel&dictionary=<%=dictionary%>\">Export Excel</a>");
+
+		out.println("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"http://www.microsoft.com/downloads/details.aspx?FamilyID=1cd6acf9-ce06-4e1c-8dcf-f33f669dbc3a&amp;DisplayLang=en\" target=\"_blank\"><img");
+		out.println("     src=\"/ncitbrowser/images/link_xls.gif\" width=\"16\"");
+		out.println("     height=\"16\" border=\"0\"");
+		out.println("alt=\"Download Plugin Microsoft Excel Viewer\" /></a>");
+
+        out.println("<a href=\"/ncitbrowser/ajax?action=export_file_to_csv&dictionary=<%=dictionary%>\">Export CSV</a>");
+
+		out.println("                                    </td>");
+		out.println("                                 </tr>");
+		out.println("                              </table>");
+		out.println("                           </td>");
+		out.println("                        </tr>");
+		out.println("                        <tr class=\"textbody\">");
+		out.println("                           <td><b>Concepts</b>:</td>");
+		out.println("                        </tr>");
+		out.println("                     </table>");
+		out.println("                     <input type=\"hidden\" name=\"vsd_uri\" id=\"vsd_uri\" value=\"" + vsd_uri + "\">");
+		out.println("                     <input type=\"hidden\" name=\"from_download\" id=\"from_download\" value=\"true\">");
+		out.println("                     <input type=\"hidden\" name=\"referer\" id=\"referer\" value=\"N/A\">");
+		out.println("                     <input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"j_id1:j_id2\" />");
+		out.println("</h:form>");
 	}
 }

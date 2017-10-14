@@ -288,6 +288,7 @@ public class SimpleTreeUtils {
 
 
   public void printSelectAllOrNoneLinks(PrintWriter out, boolean checkbox) {
+	  out.println("<font face=\"verdana\" size=\"1\">");
       out.println("<div id=\"expandcontractdiv\">");
       out.println("<a href=\"#\" onclick=\"expand_all();\" tabindex=\"1\" >Expand all</a>");
       out.println("&nbsp;");
@@ -311,6 +312,7 @@ public class SimpleTreeUtils {
 		  out.println("<a href=\"#\" onclick=\"select_none();\" " + getTabIndex() + ">Uncheck all</a>");
       }
       out.println("</div>");
+      out.println("<font>");
   }
 
 

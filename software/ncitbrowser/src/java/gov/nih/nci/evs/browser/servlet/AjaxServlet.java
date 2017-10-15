@@ -5111,7 +5111,7 @@ out.flush();
 		}
 		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
 		vsd_name = vsd_name.replaceAll(" ", "_");
-		vsd_name = vsd_name + ".csv";
+		vsd_name = vsd_name + ".txt";
 		System.out.println("vsd_name: " + vsd_name);
 
 		response.setContentType("text/csv");

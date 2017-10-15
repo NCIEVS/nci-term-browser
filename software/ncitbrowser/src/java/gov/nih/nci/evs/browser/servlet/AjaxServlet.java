@@ -5057,19 +5057,19 @@ out.flush();
 
 	public void writeExportForm(PrintWriter out, String vsd_uri) {
 		out.println("<hr></hr>");
-		out.println("<h:form id=\"valueSetSearchResultsForm\" styleClass=\"search-form\" acceptcharset=\"UTF-8\">");
+		//out.println("<h:form id=\"valueSetSearchResultsForm\" styleClass=\"search-form\" acceptcharset=\"UTF-8\">");
 		out.println("                     <table border=\"0\">");
 		out.println("                        <tr>");
 		out.println("                           <td>");
 		out.println("                              <table border=\"0\" width=\"900\" >");
 		out.println("                                    <td align=\"right\">");
 
-        out.println("<a href=\"/ncitbrowser/ajax?action=export_to_excel\">Export Excel</a>");
+        out.println("<a href=\"/ncitbrowser/ajax?action=export_to_excel&from_download=true&vsd_uri=" + vsd_uri + "\">Export Excel</a>");
 		out.println("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"http://www.microsoft.com/downloads/details.aspx?FamilyID=1cd6acf9-ce06-4e1c-8dcf-f33f669dbc3a&amp;DisplayLang=en\" target=\"_blank\"><img");
 		out.println("     src=\"/ncitbrowser/images/link_xls.gif\" width=\"16\"");
 		out.println("     height=\"16\" border=\"0\"");
 		out.println("alt=\"Download Plugin Microsoft Excel Viewer\" /></a>");
-        out.println("<a href=\"/ncitbrowser/ajax?action=export_to_csv\">Export CSV</a>");
+        out.println("<a href=\"/ncitbrowser/ajax?action=export_to_csv&from_download=true&vsd_uri=" + vsd_uri + "\">Export CSV</a>");
 
 		out.println("                                    </td>");
 		out.println("                                 </tr>");
@@ -5080,11 +5080,13 @@ out.flush();
 		out.println("                           <td><b>Concepts</b>:</td>");
 		out.println("                        </tr>");
 		out.println("                     </table>");
+		/*
 		out.println("                     <input type=\"hidden\" name=\"vsd_uri\" id=\"vsd_uri\" value=\"" + vsd_uri + "\">");
 		out.println("                     <input type=\"hidden\" name=\"from_download\" id=\"from_download\" value=\"true\">");
 		out.println("                     <input type=\"hidden\" name=\"referer\" id=\"referer\" value=\"N/A\">");
 		out.println("                     <input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"j_id1:j_id2\" />");
 		out.println("</h:form>");
+		*/
 	}
 
     public void exportToCSVAction(HttpServletRequest request, HttpServletResponse response) {
@@ -5108,8 +5110,10 @@ out.flush();
 			}
 		}
 		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
+		vsd_name = vsd_name.replaceAll(" ", "_");
+		vsd_name = vsd_name + ".csv";
 		System.out.println("vsd_name: " + vsd_name);
-		vsd_name = "resolved_" + vsd_name + ".csv";
+
 		response.setContentType("text/csv");
 		response.setHeader("Content-Disposition", "attachment; filename="
 				+ vsd_name);
@@ -5123,7 +5127,7 @@ out.flush();
 			ouputStream.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			sb.append("WARNING: Export to CVS action failed.");
+			//sb.append("WARNING: Export to CVS action failed.");
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 	}
@@ -5135,9 +5139,9 @@ out.flush();
 			System.out.println("vsd_uri: " + vsd_uri);
     		response.setContentType("application/vnd.ms-excel");
 			String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
-			System.out.println("vsd_name: " + vsd_name);
 			vsd_name = vsd_name.replaceAll(" ", "_");
 			vsd_name = vsd_name + ".xls";
+			System.out.println("vsd_name: " + vsd_name);
 
 		    response.setHeader("Content-Disposition", "attachment; filename="
 					+ vsd_name);

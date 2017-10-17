@@ -5064,12 +5064,12 @@ out.flush();
 		out.println("                              <table border=\"0\" width=\"900\" >");
 		out.println("                                    <td align=\"right\">");
 
-        out.println("<a href=\"/ncitbrowser/ajax?action=export_to_excel&from_download=true&vsd_uri=" + vsd_uri + "\">Export Excel</a>");
+        out.println("<a href=\"/ncitbrowser/ajax?action=export_to_excel&from_download=true&vsd_uri=" + vsd_uri + "\"><font face=\"verdana\" size=\"1\">Export Excel</font></a>");
 		out.println("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"http://www.microsoft.com/downloads/details.aspx?FamilyID=1cd6acf9-ce06-4e1c-8dcf-f33f669dbc3a&amp;DisplayLang=en\" target=\"_blank\"><img");
 		out.println("     src=\"/ncitbrowser/images/link_xls.gif\" width=\"16\"");
 		out.println("     height=\"16\" border=\"0\"");
 		out.println("alt=\"Download Plugin Microsoft Excel Viewer\" /></a>");
-        out.println("<a href=\"/ncitbrowser/ajax?action=export_to_csv&from_download=true&vsd_uri=" + vsd_uri + "\">Export CSV</a>");
+        out.println("<a href=\"/ncitbrowser/ajax?action=export_to_csv&from_download=true&vsd_uri=" + vsd_uri + "\"><font face=\"verdana\" size=\"1\">Export CSV</font></a>");
 
 		out.println("                                    </td>");
 		out.println("                                 </tr>");

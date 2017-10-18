@@ -142,7 +142,11 @@ public class ValueSetDefinitionConfig {
 
     public static String getValueSetURI(String code) {
 		if (code == null) return null;
-		return (String) code2URIHashMap.get(code);
+		if (code2URIHashMap.containsKey(code)) {
+		    return (String) code2URIHashMap.get(code);
+		} else {
+			return code;
+		}
 	}
 
     public static HashMap readValueSetDefinitionConfigFile(String file) {

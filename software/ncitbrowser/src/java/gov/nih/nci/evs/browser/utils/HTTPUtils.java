@@ -539,7 +539,8 @@ public class HTTPUtils {
 						}
 					}
 				}
-
+/*
+temporarily commented out
 			    if (name.compareTo("vsd_uri") == 0) {
 					value = (String) request.getParameter(name);
 					if (!DataUtils.isNull(value)) {
@@ -555,7 +556,7 @@ public class HTTPUtils {
 					    }
 					}
 				}
-
+*/
                 Boolean issearchFormParameter = isSearchFormParameter(name);
                 // 09182015
                 if (issearchFormParameter != null && issearchFormParameter.equals(Boolean.TRUE)) {

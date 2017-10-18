@@ -405,8 +405,10 @@ public class DataUtils {
 	}
 
     public static List getOntologyList() {
-        if (_ontologies == null)
+        if (_ontologies == null) {
             setCodingSchemeMap();
+		}
+		System.out.println("(*) _ontologies: " + _ontologies.size());
         return _ontologies;
     }
 
@@ -1072,9 +1074,10 @@ public class DataUtils {
 		return valueSetHierarchy;
 	}
 
+
+/*  old implementation
     private static void initializeValueSetHierarchy() {
 		//if (hasNoValueSet || valueSetHierarchyInitialized) return;
-
 
 		if (valueSetHierarchyInitialized) return;
 		long ms_0 = System.currentTimeMillis();
@@ -1082,14 +1085,6 @@ public class DataUtils {
 
 		_VSDName2URIHashMap = getVSDName2URIHashMap();
 
-/*
-		_logger.debug("Initializing Value Set Metadata ...");
-		Vector v = getValueSetDefinitionMetadata();
-		if (v == null || v.size() == 0) {
-			hasNoValueSet = true;
-			return;
-		}
-*/
 		_logger.debug("Done Initializing Value Set Metadata ...");
 		_logger.debug("\tInitializing ValueSetHierarchy ...");
 
@@ -1133,6 +1128,11 @@ public class DataUtils {
 			_logger.debug("\t(*) sourceValueSetTree == null??? ...");
 		} else {
 			TreeItem root = (TreeItem) sourceValueSetTree.get("<Root>");
+
+			System.out.println("Source value set tree:");
+			TreeItem.printTree(root, 0, false);
+
+
 			sourceValueSetTreeStringBuffer = new StringBuffer();
 			//new ValueSetCacheUtils().printTree(sourceValueSetTreeStringBuffer, root, Constants.STANDARD_VIEW, Boolean.TRUE);
 			SimpleTreeUtils stu = new SimpleTreeUtils(_vocabularyNameSet);
@@ -1149,16 +1149,13 @@ public class DataUtils {
         System.out.println("Constructing terminologyValueSetTree ...");
         ms = System.currentTimeMillis();
 		terminologyValueSetTree = valueSetHierarchy.getCodingSchemeValueSetTree(null, null);
-		/*
-		if (terminologyValueSetTree == null) {
-			_logger.debug("\t(*) terminologyValueSetTree == null??? ...");
-		} else {
-			TreeItem root = (TreeItem) terminologyValueSetTree.get("<Root>");
-			terminologyValueSetTreeStringBuffer = new StringBuffer();
-			new ValueSetCacheUtils().printTree(terminologyValueSetTreeStringBuffer, root, Constants.TERMINOLOGY_VIEW, Boolean.TRUE);
-	    }
-	    */
+
 		TreeItem root = (TreeItem) terminologyValueSetTree.get("<Root>");
+
+		System.out.println("Terminology value set tree:");
+		TreeItem.printTree(root, 0, false);
+
+
 		terminologyValueSetTreeStringBuffer = new StringBuffer();
 
 		// new ValueSetCacheUtils().printTree(terminologyValueSetTreeStringBuffer, root, Constants.TERMINOLOGY_VIEW, Boolean.TRUE);
@@ -1172,6 +1169,44 @@ public class DataUtils {
 		System.out.println("initializeValueSetHierarchy run time (ms): " + (System.currentTimeMillis() - ms_0));
 
 	}
+*/
+
+    private static void initializeValueSetHierarchy() {
+		//if (hasNoValueSet || valueSetHierarchyInitialized) return;
+        System.out.println("initializeValueSetHierarchy ...");
+		if (valueSetHierarchyInitialized) return;
+		long ms = System.currentTimeMillis();
+		_VSDName2URIHashMap = getVSDName2URIHashMap();
+		//Iterator it = _VSDName2URIHashMap.keySet().iterator();
+		_logger.debug("Done getVSDName2URIHashMap ...");
+		_logger.debug("\tInitializing ValueSetHierarchy ...");
+
+		ms = System.currentTimeMillis();
+        LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+        LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+        ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+        vsdURI2MetadataHashMap = vsmdu.getValueSetDefinitionMetadata();
+		if (vsdURI2MetadataHashMap == null || vsdURI2MetadataHashMap.keySet().size() == 0) {
+			hasNoValueSet = true;
+			return;
+		}
+		System.out.println("getValueSetDefinitionMetadata run time (ms): " + (System.currentTimeMillis() - ms));
+        System.out.println("Instantiate ValueSetTreeUtils...");
+        ms = System.currentTimeMillis();
+        ValueSetTreeUtils util = new ValueSetTreeUtils(lbSvc);
+		sourceValueSetTree = util.getSourceValueSetTree();
+		terminologyValueSetTree = util.getTerminologyValueSetTree();
+
+		sourceValueSetTreeStringBuffer = util.getSourceValueSetTreeStringBuffer();
+		terminologyValueSetTreeStringBuffer = util.getTerminologyValueSetTreeStringBuffer();
+
+		_sourceValueSetTreeKey2TreeItemMap = util.getSourceValueSetTreeKey2TreeItemMap();
+		_terminologyValueSetDescriptionHashMap = util.getTerminologyValueSetDescriptionHashMap();
+
+		sourceValueSetCheckboxid2NodeIdMap = util.getSourceValueSetCheckboxid2NodeIdMap();
+		//terminologyValueSetCheckboxid2NodeIdMap = util.getTerminologyValueSetCheckboxid2NodeIdMap();
+        System.out.println("ValueSetTreeUtils run time (ms): " + (System.currentTimeMillis() - ms));
+    }
 
 //////////////////////////////////////////////////////////
 // to be modified
@@ -6597,6 +6632,8 @@ if (lbSvc == null) {
 	   Vector display_name_vec = new Vector();
 	   List ontology_list = getOntologyList();
 	   int num_vocabularies = ontology_list.size();
+
+	   System.out.println("(*) num_vocabularies: " + num_vocabularies);
 
 	   for (int i = 0; i < ontology_list.size(); i++) {
 			SelectItem item = (SelectItem) ontology_list.get(i);

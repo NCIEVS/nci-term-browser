@@ -1544,11 +1544,14 @@ if (action.compareTo("xmldefinitions") == 0) {
 
     public void create_vs_tree(HttpServletRequest request, HttpServletResponse response, int view) {
 		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+		//KLO, 10182017
+		if (vsd_uri != null) {
+			if (vsd_uri.indexOf("http") == -1) {
+				vsd_uri = ValueSetDefinitionConfig.getValueSetURI(vsd_uri);
+			}
+		}
 		create_vs_tree(request, response, view, vsd_uri);
 	}
-
-
-
 
 
 //////////////////////////
@@ -1617,8 +1620,14 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 			vsd = DataUtils.findValueSetDefinitionByURI(vsd_uri);
 			if (vsd != null) {
 					vsd_name = vsd.getValueSetDefinitionName();
+					System.out.println(vsd_name);
 					isValueSet = true;
-					vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
+
+					//KLO, 10182017
+					//vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
+
+					vsd_description = vsd.getEntityDescription().getContent();
+
 			} else {
 					Entity entity = DataUtils.getConceptByCode(Constants.TERMINOLOGY_VALUE_SET_NAME, null, vsd_uri);
 					if (entity != null) {

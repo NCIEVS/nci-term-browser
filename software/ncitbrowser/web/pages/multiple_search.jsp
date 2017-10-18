@@ -211,9 +211,10 @@ window.location.href = "/ncitbrowser/ajax?action=hide&csn="+ csn +"&matchText=" 
 
 Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
 if (display_name_vec == null) {
+     System.out.println("(*) multiple_search.jsp calling DataUtils.getSortedOntologies() ...");
      display_name_vec = DataUtils.getSortedOntologies();
-     
 }
+System.out.println("(*) multiple_search.jsp display_name_vec: " + display_name_vec.size());
 
 String browserType = request.getHeader("User-Agent");
 

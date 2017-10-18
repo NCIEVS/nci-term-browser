@@ -1,5 +1,7 @@
 package gov.nih.nci.evs.browser.utils;
 
+import gov.nih.nci.evs.browser.properties.*;
+
 import org.lexevs.dao.database.service.valuesets.*;
 
 import java.io.Serializable;
@@ -62,7 +64,6 @@ public class LexEVSTreeItem2TreeItem {
 
 	public static TreeItem toTreeItem(LexEVSTreeItem lexevs_ti) {
 		if (lexevs_ti == null) return null;
-		//TreeItem ti = new TreeItem(lexevs_ti.get_code(), lexevs_ti.get_text(), lexevs_ti.get_ns(), lexevs_ti.get_id(), lexevs_ti.get_auis());
 		TreeItem ti = new TreeItem(lexevs_ti.get_code(), lexevs_ti.get_text(), null, lexevs_ti.get_id(), lexevs_ti.get_auis());
 
 		ti._expandable = false;
@@ -75,6 +76,29 @@ public class LexEVSTreeItem2TreeItem {
 				ti._expandable = true;
 			}
 		}
+		ti = replaceCodeByURI(ti);
 		return ti;
 	}
+
+	public static TreeItem replaceCodeByURI(TreeItem ti_0) {
+		if (ti_0 == null) return null;
+		String code = ti_0._code;
+		String uri = ValueSetDefinitionConfig.getValueSetURI(code);
+		TreeItem ti = new TreeItem(uri, ti_0._text, null, ti_0._id, ti_0._auis);
+
+		ti._expandable = false;
+		for (String association : ti_0._assocToChildMap.keySet()) {
+			List<TreeItem> children = ti_0._assocToChildMap.get(association);
+			new SortUtils().quickSort(children);
+			for (int i=0; i<children.size(); i++) {
+				TreeItem childItem = (TreeItem) children.get(i);
+				TreeItem child_ti = replaceCodeByURI(childItem);
+				ti.addChild(association, child_ti);
+				ti._expandable = true;
+			}
+		}
+		return ti;
+	}
+
+
 }

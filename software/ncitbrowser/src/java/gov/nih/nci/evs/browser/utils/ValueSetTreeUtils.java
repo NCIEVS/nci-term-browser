@@ -225,7 +225,7 @@ public class ValueSetTreeUtils {
 			Map<String, LexEVSTreeItem> terminology_items = service.getSourceDefinedTree();
 			LexEVSTreeItem terminology_item = terminology_items.get(ValueSetHierarchyServiceImpl.ROOT);
 			TreeItem ti = LexEVSTreeItem2TreeItem.toTreeItem(terminology_item);
-
+			ti = LexEVSTreeItem2TreeItem.placeNCItAsFirstNode(ti);
 			terminologyValueSetTree = new HashMap();
 			terminologyValueSetTree.put("<Root>", ti);
 

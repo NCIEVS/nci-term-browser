@@ -100,5 +100,29 @@ public class LexEVSTreeItem2TreeItem {
 		return ti;
 	}
 
-
+	public static TreeItem placeNCItAsFirstNode(TreeItem ti_0) {
+		if (ti_0 == null) return null;
+		TreeItem ti = new TreeItem(ti_0._code, ti_0._text, null, ti_0._id, ti_0._auis);
+		ti._expandable = false;
+		for (String association : ti_0._assocToChildMap.keySet()) {
+			List<TreeItem> children = ti_0._assocToChildMap.get(association);
+			List list = new ArrayList();
+			for (int i=0; i<children.size(); i++) {
+				TreeItem childItem = (TreeItem) children.get(i);
+				if (childItem._text.compareTo("NCI Thesaurus") == 0) {
+					ti.addChild(association, childItem);
+					ti._expandable = true;
+				} else {
+					list.add(childItem);
+				}
+			}
+			//new SortUtils().quickSort(list);
+			for (int k=0; k<list.size(); k++) {
+				TreeItem childItem3 = (TreeItem) list.get(k);
+				//ti.addChild(association, sort(childItem3));
+				ti.addChild(association, childItem3);
+			}
+		}
+		return ti;
+	}
 }

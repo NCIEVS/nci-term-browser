@@ -143,10 +143,30 @@ public class ValueSetTreeUtils {
 			ex.printStackTrace();
 		}
     }
-
+/*
 	public void initialize() throws Exception{
 		long ms = System.currentTimeMillis();
 		service = ((LexEVSApplicationService)lbSvc).getLexEVSSourceAssertedValueSetHierarchyServices();
+		service.setLexBIGService(lbSvc);
+		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(ValueSetHierarchyService.SCHEME, "PRODUCTION");
+		service.preprocessSourceHierarchyData(ValueSetHierarchyService.SCHEME, prod_version, ValueSetHierarchyService.HIERARCHY, ValueSetHierarchyService.SOURCE,ValueSetHierarchyService.PUBLISH_DESIGNATION, ValueSetHierarchyService.ROOT_CODE);
+	    constructSourceValueSetTree();
+	    constructTerminologyValueSetTree();
+	}
+*/
+    public SourceAssertedValueSetHierarchyServicesImpl createSourceAssertedValueSetHierarchyServices(String serviceUrl) {
+		if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareTo("null") == 0) {
+			return (SourceAssertedValueSetHierarchyServicesImpl) SourceAssertedValueSetHierarchyServicesImpl.defaultInstance();
+		} else {
+			service = ((LexEVSApplicationService)lbSvc).getLexEVSSourceAssertedValueSetHierarchyServices();
+		}
+		return service;
+	}
+
+	public void initialize() throws Exception{
+		long ms = System.currentTimeMillis();
+        String serviceUrl = RemoteServerUtil.getServiceURL();
+        service = createSourceAssertedValueSetHierarchyServices(serviceUrl);
 		service.setLexBIGService(lbSvc);
 		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(ValueSetHierarchyService.SCHEME, "PRODUCTION");
 		service.preprocessSourceHierarchyData(ValueSetHierarchyService.SCHEME, prod_version, ValueSetHierarchyService.HIERARCHY, ValueSetHierarchyService.SOURCE,ValueSetHierarchyService.PUBLISH_DESIGNATION, ValueSetHierarchyService.ROOT_CODE);

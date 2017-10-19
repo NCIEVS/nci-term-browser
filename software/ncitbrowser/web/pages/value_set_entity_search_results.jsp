@@ -15,6 +15,8 @@
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 <%@ page import="org.lexgrid.valuesets.LexEVSValueSetDefinitionServices" %>
 <%@ page import="org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator" %>
+<%@ page import="org.LexGrid.valueSets.ValueSetDefinition" %>
+
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js" ></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js" ></script>
@@ -64,7 +66,10 @@
     }
   </script>
 </head>
+<!--
 <body onLoad="document.forms.valueSetSearchForm.matchText.focus();">
+-->
+<body>
   <script type="text/javascript" src="<%= request.getContextPath() %>/js/wz_tooltip.js"></script>
   <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_centerwindow.js"></script>
   <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_followscroll.js"></script>
@@ -122,6 +127,8 @@ if (checked_vocabularies != null) {
     Vector selected_vocabularies_names = DataUtils.uri2CodingSchemeName(selected_vocabularies);
     selected_vocabularies_link = JSPUtils.getPopUpWindow(selected_vocabularies_names, "Selected Value Sets");
 }
+
+System.out.println("checked_vocabularies: " + checked_vocabularies);
 
 //String partial_checked_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("partial_checked_vocabularies"));
 
@@ -525,12 +532,21 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
       String entity_cs = null;
       String entity_cs_version = null;
 
-
+System.out.println("vsd_uri: " + vsd_uri);
+/*
     String vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
     if (vsd_description == null) {
 	vsd_description = "DESCRIPTION NOT AVAILABLE";
     }
-	    
+*/
+
+String vsd_description = "DESCRIPTION NOT AVAILABLE";
+if (vsd_uri != null) {
+	ValueSetDefinition vsd = DataUtils.findValueSetDefinitionByURI(vsd_uri);
+	if (vsd != null) {
+	     vsd_description = vsd.getEntityDescription().getContent();
+	}
+}
 
 HashMap hmap = new HashMap();
 HashSet hset = new HashSet();

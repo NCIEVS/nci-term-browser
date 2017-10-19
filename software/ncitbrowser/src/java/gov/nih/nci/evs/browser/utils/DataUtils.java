@@ -1206,6 +1206,25 @@ public class DataUtils {
 		sourceValueSetCheckboxid2NodeIdMap = util.getSourceValueSetCheckboxid2NodeIdMap();
 		//terminologyValueSetCheckboxid2NodeIdMap = util.getTerminologyValueSetCheckboxid2NodeIdMap();
         System.out.println("ValueSetTreeUtils run time (ms): " + (System.currentTimeMillis() - ms));
+
+
+//testing 10192017:
+        valueSetHierarchy = new ValueSetHierarchy(lbSvc,
+                                   vsd_service,
+                                   _localName2FormalNameHashMap,
+                                   _codingSchemeName2URIHashMap);
+
+		//valueSetHierarchy.preprocessSourceHierarchyData();
+		System.out.println("valueSetHierarchy.getValueSetParticipationHashSet() ...");
+		_valueSetParticipationHashSet = valueSetHierarchy.getValueSetParticipationHashSet();
+		System.out.println("Done valueSetHierarchy.getValueSetParticipationHashSet() ...");
+		//valueSetHierarchy.createVSDSource2VSDsMap();
+        //System.out.println("Done valueSetHierarchy.initializeCS2vsdURIs_map() ...");
+
+        System.out.println("valueSetHierarchy.initializeCS2vsdURIs_map() ...");
+		valueSetHierarchy.initializeCS2vsdURIs_map();
+		_logger.debug("Done initializing initializeCS2vsdURIs_map ...");
+
     }
 
 //////////////////////////////////////////////////////////

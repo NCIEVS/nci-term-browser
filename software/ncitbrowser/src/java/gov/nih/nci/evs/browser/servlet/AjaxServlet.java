@@ -1616,6 +1616,7 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 		ValueSetDefinition vsd = null;
 
         String vsd_description =  "DESCRIPTION NOT AVAILABLE";
+
 		if (vsd_uri != null) {
 			vsd = DataUtils.findValueSetDefinitionByURI(vsd_uri);
 			if (vsd != null) {

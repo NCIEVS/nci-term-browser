@@ -66,10 +66,7 @@
     }
   </script>
 </head>
-<!--
 <body onLoad="document.forms.valueSetSearchForm.matchText.focus();">
--->
-<body>
   <script type="text/javascript" src="<%= request.getContextPath() %>/js/wz_tooltip.js"></script>
   <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_centerwindow.js"></script>
   <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_followscroll.js"></script>
@@ -544,7 +541,8 @@ String vsd_description = "DESCRIPTION NOT AVAILABLE";
 if (vsd_uri != null) {
 	ValueSetDefinition vsd = DataUtils.findValueSetDefinitionByURI(vsd_uri);
 	if (vsd != null) {
-	     vsd_description = vsd.getEntityDescription().getContent();
+	     //vsd_description = vsd.getEntityDescription().getContent();
+	     vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
 	     System.out.println("vsd.getEntityDescription().getContent(): " + vsd_description);
 	}
 }

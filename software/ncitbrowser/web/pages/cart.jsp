@@ -14,7 +14,10 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/search.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/dropdown.js"></script>
 </head>
+<!--
 <body onLoad="javascript:popupMessage();document.forms.searchTerm.matchText.focus();">
+-->
+<body>
    <script type="text/javascript" src="<%=request.getContextPath()%>/js/wz_tooltip.js"></script>
    <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_centerwindow.js"></script>
    <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_followscroll.js"></script>

@@ -133,7 +133,7 @@ public class ValueSetSearchUtils
 
     private LexBIGService lbSvc = null;
     LexEVSResolvedValueSetService lrvs = null;
-    CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+    CodingSchemeDataUtils csdu = null;
 
     private String serviceUrl = null;
 

@@ -565,6 +565,9 @@ for (int i=0; i<list.size(); i++) {
       
       String vocabulary_name = (String) DataUtils.getFormalName(entity_cs);
       
+      //[NCITERM-770] Missing coding scheme version in value set search results.
+      entity_cs_version = (String) rcr.getCodingSchemeVersion(); 
+      /*
       entity_cs_version = null;//(String) rcr.getCodingSchemeVersion(); 
       
       if (hmap.containsKey(name + "|" + entity_cs)) {
@@ -576,6 +579,7 @@ for (int i=0; i<list.size(); i++) {
 	   }           
            hmap.put(name + "|" + entity_cs, entity_cs_version);
       }
+      */
       
       String cs_name_and_version = vocabulary_name + " (" +  entity_cs_version + ")";
 

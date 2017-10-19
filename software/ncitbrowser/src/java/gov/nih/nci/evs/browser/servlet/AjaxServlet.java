@@ -1624,9 +1624,8 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 					isValueSet = true;
 
 					//KLO, 10182017
-					//vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
-
-					vsd_description = vsd.getEntityDescription().getContent();
+					vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
+					//vsd_description = vsd.getEntityDescription().getContent();
 
 			} else {
 					Entity entity = DataUtils.getConceptByCode(Constants.TERMINOLOGY_VALUE_SET_NAME, null, vsd_uri);

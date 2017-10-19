@@ -545,6 +545,7 @@ if (vsd_uri != null) {
 	ValueSetDefinition vsd = DataUtils.findValueSetDefinitionByURI(vsd_uri);
 	if (vsd != null) {
 	     vsd_description = vsd.getEntityDescription().getContent();
+	     System.out.println("vsd.getEntityDescription().getContent(): " + vsd_description);
 	}
 }
 

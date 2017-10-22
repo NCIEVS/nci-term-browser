@@ -276,6 +276,8 @@ public class DataUtils {
 
     public static HashMap vsdURI2MetadataHashMap = null;
 
+    public static HashMap _csNamespace2URIHashMap = null;
+
     // ==================================================================================
 
     public DataUtils() {
@@ -712,11 +714,15 @@ public class DataUtils {
         _RVSCSURI2VersionHashMap = new HashMap();
         _formalName2DisplayNameHashMap = new HashMap();
 
+        _csNamespace2URIHashMap = new HashMap();
+
         Vector nv_vec = new Vector();
         boolean includeInactive = false;
+        CodingSchemeDataUtils csdu = null;
 
         try {
             LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+            csdu = new CodingSchemeDataUtils(lbSvc);
 
             if (lbSvc == null) {
                 _logger
@@ -851,6 +857,15 @@ public class DataUtils {
                         _codingSchemeName2URIHashMap.put(cs.getCodingSchemeName(), cs.getCodingSchemeURI());
 
                         boolean isMapping = isMapping(cs.getCodingSchemeName(), representsVersion);
+
+                        if (!isMapping) {
+							Vector ns_vec = csdu.getNamespaceNames(cs.getCodingSchemeName(), null);
+							for (int i2=0; i2<ns_vec.size(); i2++) {
+								String ns = (String) ns_vec.elementAt(i2);
+								_csNamespace2URIHashMap.put(ns, cs.getCodingSchemeURI());
+							}
+						}
+
                          _isMappingHashMap.put(cs.getCodingSchemeName(), Boolean.valueOf(isMapping));
 
                         String[] localnames = cs.getLocalName();
@@ -5330,8 +5345,12 @@ if (lbSvc == null) {
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
 			ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
-			String name = vsd.getValueSetDefinitionName();
-            vSDName2URIHashMap.put(name, uri);
+			if (vsd != null) {
+				String name = vsd.getValueSetDefinitionName();
+				vSDName2URIHashMap.put(name, uri);
+			} else {
+				System.out.println("WARNING: VSD not found for vsd_uri: " + uri);
+			}
 		}
 		return vSDName2URIHashMap;
 	}
@@ -6306,11 +6325,12 @@ if (lbSvc == null) {
 		}
 	}
 
-    public static String findVersionOfCodingSchemeUsedInValueSetResolution(String value_set_name, String coding_scheme_name) {
+    public static String findVersionOfCodingSchemeUsedInValueSetResolution(String value_set_name, String cs_ns) {
 		if (_listOfCodingSchemeVersionsUsedInResolutionHashMap == null) return null;
 		HashMap hmap = (HashMap) _listOfCodingSchemeVersionsUsedInResolutionHashMap.get(value_set_name);
 		if (hmap == null) return null;
-		return (String) hmap.get(coding_scheme_name);
+		String cs_uri = getCodingSchemeURIbyNS(cs_ns);
+		return (String) hmap.get(cs_uri);
 	}
 
 
@@ -6999,6 +7019,9 @@ if (lbSvc == null) {
 		return (String) v.elementAt(0);
 	}
 
+
+
+
 /*
 	public static Vector getValueSetDefinitionMetadata() {
 		if (_valueSetDefinitionMetadata != null) return _valueSetDefinitionMetadata;
@@ -7113,6 +7136,13 @@ if (lbSvc == null) {
 	}
 	*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static String getCodingSchemeURIbyNS(String ns) {
+		if (_csNamespace2URIHashMap.containsKey(ns)) {
+			return (String) _csNamespace2URIHashMap.get(ns);
+		}
+		return null;
+	}
 
     public static void main(String[] args) {
         String scheme = "NCI Thesaurus";

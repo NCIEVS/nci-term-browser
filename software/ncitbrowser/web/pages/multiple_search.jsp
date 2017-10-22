@@ -214,8 +214,6 @@ if (display_name_vec == null) {
      System.out.println("(*) multiple_search.jsp calling DataUtils.getSortedOntologies() ...");
      display_name_vec = DataUtils.getSortedOntologies();
 }
-System.out.println("(*) multiple_search.jsp display_name_vec: " + display_name_vec.size());
-
 String browserType = request.getHeader("User-Agent");
 
 //   Modifications:

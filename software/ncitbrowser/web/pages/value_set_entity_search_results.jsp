@@ -530,22 +530,12 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
       String entity_cs_version = null;
 
 System.out.println("vsd_uri: " + vsd_uri);
-/*
+
     String vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
     if (vsd_description == null) {
 	vsd_description = "DESCRIPTION NOT AVAILABLE";
     }
-*/
 
-String vsd_description = "DESCRIPTION NOT AVAILABLE";
-if (vsd_uri != null) {
-	ValueSetDefinition vsd = DataUtils.findValueSetDefinitionByURI(vsd_uri);
-	if (vsd != null) {
-	     //vsd_description = vsd.getEntityDescription().getContent();
-	     vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
-	     System.out.println("vsd.getEntityDescription().getContent(): " + vsd_description);
-	}
-}
 
 HashMap hmap = new HashMap();
 HashSet hset = new HashSet();

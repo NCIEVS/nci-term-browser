@@ -205,6 +205,8 @@
                 <filter token="ncbo_api_key" value="${ncbo_api_key}"/>
                 <filter token="ncbo_widget_info" value="${ncbo_widget_info}"/>
                 <filter token="owl_role_quantifiers" value="${owl_role_quantifiers}"/>
+                <filter token="ncit.mapping.url" value="${ncit.mapping.url}"/>
+              
             </filterset>
             <resources>
                 <file file="${bda.conf.dir}/${webapp.prop.file}"/>
@@ -288,6 +290,7 @@
                 <filter token="ncit.url" value="${ncit.url}"/>
                 <filter token="ncim.url" value="${ncim.url}"/>
                 <filter token="lex.evs.api.url" value="${lex.evs.api.url}"/>
+                <filter token="ncit.mapping.url" value="${ncit.mapping.url}"/>
                 <filter token="lg.config.file" value="${lg.config.file}"/>
                 <filter token="application.data.path" value="${application.data.path}"/>
                 <filter token="mail.smtp.server" value="${mail.smtp.server}"/>

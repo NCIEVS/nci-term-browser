@@ -52,6 +52,7 @@ import org.LexGrid.LexBIG.DataModel.Collections.CodingSchemeRenderingList;
 import org.LexGrid.LexBIG.DataModel.InterfaceElements.CodingSchemeRendering;
 import org.LexGrid.LexBIG.DataModel.Collections.NameAndValueList;
 import org.LexGrid.LexBIG.DataModel.Core.NameAndValue;
+import org.LexGrid.codingSchemes.CodingScheme;
 
 
 public class UIUtils {
@@ -1106,6 +1107,38 @@ public class UIUtils {
 		return createTable(w);
 	}
 
+
+	public String getOtherMappingString(String page_url) {
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+
+		StringBuffer buf = new StringBuffer();
+		buf.append("<hr></hr><p></p>").append("\n");
+        buf.append("<table class=\"termstable_960\" border=\"0\">").append("\n");
+        buf.append("<tr><td class=\"textbody\">Other Mappings:</td><td></td></tr>").append("\n");
+
+		Vector v = FTPDownload.extractMappingsFromURL(page_url);
+		for (int i=0; i<v.size(); i++) {
+			String line = (String) v.elementAt(i);
+			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line, '|');
+			String cs_name = (String) u.elementAt(0);
+			CodingScheme cs = csdu.resolveCodingScheme(cs_name);
+			if (cs == null) {
+				String name = (String) u.elementAt(1);
+				String display_name = (String) u.elementAt(2);
+				String url = (String) u.elementAt(3);
+				buf.append("<tr>").append("\n");
+				buf.append("<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").append("\n");
+				buf.append("<a href=\"/ncitbrowser/ajax?action=export_to_text&uri=" + url + "\">").append("\n");
+				buf.append(	name + ": " + display_name ).append("\n");
+				buf.append("</a>").append("\n");
+				buf.append("</td>").append("\n");
+				buf.append("<td>&nbsp;</td>").append("\n");
+				buf.append("</tr>").append("\n");
+			}
+		}
+		buf.append("</table>");
+        return buf.toString();
+	}
 /*
     public static void main(String [] args) {
         boolean testLocal = true;

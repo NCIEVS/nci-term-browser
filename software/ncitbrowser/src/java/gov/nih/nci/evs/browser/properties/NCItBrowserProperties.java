@@ -145,6 +145,9 @@ public class NCItBrowserProperties {
     private static String _owl_role_quantifiers = null;
     private static String _application_version = null;
 
+    public static final String NCIT_MAPPING_URL = "NCIT_MAPPING_URL";
+    private static String _ncit_mapping_url = null;
+
 
     /**
      * Private constructor for singleton pattern.
@@ -186,6 +189,10 @@ public class NCItBrowserProperties {
 				_browserProperties
 					.getProperty(_browserProperties.EVS_SERVICE_URL);
 			// _logger.info("EVS_SERVICE_URL: " + service_url);
+
+			_ncit_mapping_url =
+				_browserProperties
+					.getProperty(_browserProperties.NCIT_MAPPING_URL);
 
 			_application_version =
 				_browserProperties
@@ -544,5 +551,7 @@ public class NCItBrowserProperties {
 		return _service_url;
 	}
 
-
+	public static String getNCItMappingURL() {
+		return _ncit_mapping_url;
+	}
 }

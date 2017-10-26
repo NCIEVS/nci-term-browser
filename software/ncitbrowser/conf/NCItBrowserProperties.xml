@@ -600,6 +600,11 @@
                  <value>@owl_role_quantifiers@</value>
         </ConfigurableItem>
         
+         <ConfigurableItem>
+                 <key>NCIT_MAPPING_URL</key>
+                 <value>@ncit.mapping.url@</value>
+        </ConfigurableItem>       
+        
         //OWL_ROLE_QUALIFIER_LIST
         
         

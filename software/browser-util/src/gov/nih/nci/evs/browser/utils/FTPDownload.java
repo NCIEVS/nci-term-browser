@@ -203,12 +203,69 @@ public class FTPDownload {
    }
 
 
-   public static void main (String[] args) {
-	  String uri = "http://evs.nci.nih.gov/ftp1/FDA/CDRH/FDA-CDRH_NCIt_Subsets.txt";
-	  uri = "ftp://ftp1.nci.nih.gov/pub/cacore/EVS/CDISC/SDTM/SDTM Terminology.xls";
-	  if (args.length == 1) {
-		  uri = args[0];
-	  }
-	  download(uri);
-   }
+	public static Vector tearPage(String page_url) {
+		URL url;
+		Vector w = new Vector();
+		try {
+			url = new URL(page_url);
+			URLConnection conn = url.openConnection();
+			BufferedReader br = new BufferedReader(
+                               new InputStreamReader(conn.getInputStream()));
+			String inputLine;
+			while ((inputLine = br.readLine()) != null) {
+				w.add(inputLine);
+			}
+			br.close();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        return w;
+	}
+
+    public static Vector extractMappingsFromURL(String page_url) {
+		Vector v = new Vector();
+		Vector w = tearPage(page_url);
+		for (int i=0; i<w.size(); i++) {
+			String line = (String) w.elementAt(i);
+			String line_lower = line.toLowerCase();
+			if (line_lower.indexOf("href") != -1 && line_lower.indexOf("mapping.txt") != -1) {
+				int n = line.lastIndexOf("</a>");
+				String s1 = line.substring(0, n);
+				n = s1.lastIndexOf(">");
+				s1 = s1.substring(n+1, s1.length());
+				s1 = s1.replace(".txt", "");
+
+				n = line.lastIndexOf("</a>");
+				String s2 = line.substring(n+4, line.length());
+				s2 = s2.trim();
+				n = s2.indexOf(" ");
+				s2 = s2.substring(0, n);
+				String s0 = s1;
+
+				n = s1.indexOf("-");
+				if (n != -1) {
+					s1 = s1.substring(0, n) + " to " + s1.substring(n+1, s1.length());
+			    }
+
+				s1 = s1.replaceAll("-", " ");
+				s1 = s1.replaceAll("_", " ");
+				String s3 = s1;
+				s3 = s3.replaceAll(" ", "_");
+				v.add(s3 + "|" + s1 + "|" + s1 + " (" + s2 + ")|" + page_url + "/" + s0 + ".txt");
+			}
+		}
+		return v;
+	}
+
+
+    public static void main (String[] args) {
+		String uri = "http://evs.nci.nih.gov/ftp1/FDA/CDRH/FDA-CDRH_NCIt_Subsets.txt";
+		uri = "ftp://ftp1.nci.nih.gov/pub/cacore/EVS/CDISC/SDTM/SDTM Terminology.xls";
+		if (args.length == 1) {
+		    uri = args[0];
+		}
+		download(uri);
+    }
 }

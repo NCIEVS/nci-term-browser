@@ -521,6 +521,14 @@ if (mapping_scheme_and_version.compareTo("") == 0 && mapping_cs_knt == 1) {
 }
 %>
 
+<%
+}
+String other_mappings = DataUtils.get_FILE_BASED_MAPPING_STRING();
+%>
+
+<%=other_mappings%>
+
+
           </div> <!-- end tabTableContentContainer -->
           <%@ include file="/pages/templates/nciFooter.jsp"%>
         </div> <!-- end Page content -->

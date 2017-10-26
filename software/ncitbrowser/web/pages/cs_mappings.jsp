@@ -451,9 +451,8 @@ if (mapping_scheme_and_version.compareTo("") == 0 && mapping_cs_knt == 1) {
                 </tr>
           </table>
           
-<%
-}
-%>
+
+
 
           </div> <!-- end tabTableContentContainer -->
           <%@ include file="/pages/templates/nciFooter.jsp"%>

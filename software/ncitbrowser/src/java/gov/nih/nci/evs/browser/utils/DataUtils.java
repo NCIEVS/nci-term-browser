@@ -128,7 +128,8 @@ import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.ActiveOption;
 public class DataUtils {
     private static Logger _logger = Logger.getLogger(DataUtils.class);
     private static Set _vocabularyNameSet = null;
-
+    private static String NCIT_MAPPING_URL = "https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings";
+    private static String FILE_BASED_MAPPING_STRING = null;
     private static LocalNameList _noopList = new LocalNameList();
     private int _maxReturn = 5000;
     private Connection _con;
@@ -286,8 +287,22 @@ public class DataUtils {
 
     static {
 		System.out.println("Initialization ...");
+
 		long ms0 = System.currentTimeMillis();
 		long ms = System.currentTimeMillis();
+
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		UIUtils uiUtils = new UIUtils(lbSvc);
+
+		String ncit_mapping_url = NCItBrowserProperties.getNCItMappingURL();
+
+System.out.println("DataUtils ncit_mapping_url: " + ncit_mapping_url);
+
+		if (ncit_mapping_url == null) {
+			ncit_mapping_url = NCIT_MAPPING_URL;
+		}
+
+		FILE_BASED_MAPPING_STRING = uiUtils.getOtherMappingString(ncit_mapping_url);
 
 		VALUE_SET_TAB_AVAILABLE = isCodingSchemeAvailable(Constants.TERMINOLOGY_VALUE_SET_NAME);
 
@@ -410,7 +425,6 @@ public class DataUtils {
         if (_ontologies == null) {
             setCodingSchemeMap();
 		}
-		System.out.println("(*) _ontologies: " + _ontologies.size());
         return _ontologies;
     }
 
@@ -6671,9 +6685,6 @@ if (lbSvc == null) {
 	   Vector display_name_vec = new Vector();
 	   List ontology_list = getOntologyList();
 	   int num_vocabularies = ontology_list.size();
-
-	   System.out.println("(*) num_vocabularies: " + num_vocabularies);
-
 	   for (int i = 0; i < ontology_list.size(); i++) {
 			SelectItem item = (SelectItem) ontology_list.get(i);
 			String value = (String) item.getValue();
@@ -7144,14 +7155,17 @@ if (lbSvc == null) {
 		return null;
 	}
 
+	public static String get_FILE_BASED_MAPPING_STRING() {
+		System.out.println(FILE_BASED_MAPPING_STRING);
+		return FILE_BASED_MAPPING_STRING;
+	}
+
     public static void main(String[] args) {
         String scheme = "NCI Thesaurus";
         String version = null;
         // Breast Carcinoma (Code C4872)
         String code = "C4872";
-
         DataUtils test = new DataUtils();
-
         //HashMap hmap = test.getRelationshipHashMap(scheme, version, code);
         //test.dumpRelationshipHashMap(hmap);
 

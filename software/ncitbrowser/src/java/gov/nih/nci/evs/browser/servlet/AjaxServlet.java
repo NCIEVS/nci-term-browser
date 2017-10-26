@@ -367,6 +367,8 @@ if (display_name_vec == null) {
             exportToExcelAction(request, response);
         } else if (action.equals("export_to_csv")) {
             exportToCSVAction(request, response);
+        } else if (action.equals("export_to_text")) {
+            exportToTextAction(request, response);
         } else if (action.equals("export_vsrc")) {
             export_vsrc(request, response);
         } else if (action.compareTo("show") == 0) {
@@ -5189,4 +5191,36 @@ out.flush();
 		FacesContext.getCurrentInstance().responseComplete();
 	}
 
+
+    public void exportToTextAction(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String uri = HTTPUtils.cleanXSS((String) request.getParameter("uri"));
+			System.out.println("uri: " + uri);
+    		response.setContentType("text/html");
+    		int n = uri.lastIndexOf("/");
+			String mapping_name = uri.substring(n+1, uri.length());
+			System.out.println("mapping_name: " + mapping_name);
+		    response.setHeader("Content-Disposition", "attachment; filename="
+					+ mapping_name);
+
+            StringBuffer sb = new StringBuffer();
+            Vector v = FTPDownload.tearPage(uri);
+			for (int k=1; k<v.size(); k++) {
+				String line = (String) v.elementAt(k);
+				sb.append(line).append("\n");
+			}
+			String outputstr = sb.toString();
+			response.setContentLength(outputstr.length());
+
+			ServletOutputStream ouputStream = response.getOutputStream();
+			ouputStream.write(outputstr.getBytes("UTF8"), 0, outputstr.length());
+			ouputStream.flush();
+			ouputStream.close();
+
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+
+		FacesContext.getCurrentInstance().responseComplete();
+	}
 }

@@ -29,6 +29,7 @@
 %>
 <%
   int mapping_cs_knt = 0;
+  String other_mappings = DataUtils.get_FILE_BASED_MAPPING_STRING();
 
   String mapping_scheme_and_version = (String) request.getSession().getAttribute("scheme_and_version");
   if (mapping_scheme_and_version == null) {
@@ -521,13 +522,7 @@ if (mapping_scheme_and_version.compareTo("") == 0 && mapping_cs_knt == 1) {
 }
 %>
 
-<%
-}
-String other_mappings = DataUtils.get_FILE_BASED_MAPPING_STRING();
-%>
-
 <%=other_mappings%>
-
 
           </div> <!-- end tabTableContentContainer -->
           <%@ include file="/pages/templates/nciFooter.jsp"%>

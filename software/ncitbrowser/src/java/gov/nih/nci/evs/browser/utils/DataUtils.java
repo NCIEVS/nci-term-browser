@@ -7156,7 +7156,6 @@ if (lbSvc == null) {
 	}
 
 	public static String get_FILE_BASED_MAPPING_STRING() {
-		System.out.println(FILE_BASED_MAPPING_STRING);
 		return FILE_BASED_MAPPING_STRING;
 	}
 

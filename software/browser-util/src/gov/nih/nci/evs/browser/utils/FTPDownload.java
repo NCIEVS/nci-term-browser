@@ -223,7 +223,7 @@ public class FTPDownload {
 		}
         return w;
 	}
-
+/*
     public static Vector extractMappingsFromURL(String page_url) {
 		Vector v = new Vector();
 		Vector w = tearPage(page_url);
@@ -254,6 +254,72 @@ public class FTPDownload {
 				String s3 = s1;
 				s3 = s3.replaceAll(" ", "_");
 				v.add(s3 + "|" + s1 + "|" + s1 + " (" + s2 + ")|" + page_url + "/" + s0 + ".txt");
+			}
+		}
+		return v;
+	}
+*/
+
+    public static Vector extractMappingsFromURL(String page_url) {
+		Vector v = new Vector();
+		Vector w = tearPage(page_url);
+		for (int i=0; i<w.size(); i++) {
+			String line = (String) w.elementAt(i);
+			String line_lower = line.toLowerCase();
+
+			if (line_lower.indexOf("href") != -1 && line_lower.indexOf("/</a>") != -1) {
+				int n = line.lastIndexOf("</a>");
+				String s1 = line.substring(0, n);
+				n = s1.lastIndexOf(">");
+				s1 = s1.substring(n+1, s1.length());
+				if (s1.indexOf("archive") == -1) {
+					//System.out.println("subfolder: " + s1);
+					String sub_page_url = page_url + "/" + s1;
+					Vector sub_v = extractMappingsFromURL(sub_page_url);
+					v.addAll(sub_v);
+				}
+			} else if (line_lower.indexOf("href") != -1 && (line_lower.indexOf("mapping.txt") != -1 || line_lower.indexOf("mappings.txt") != -1)) {
+				int n = line.lastIndexOf("</a>");
+				String s1 = line.substring(0, n);
+				n = s1.lastIndexOf(">");
+				s1 = s1.substring(n+1, s1.length());
+				s1 = s1.replace(".txt", "");
+				n = line.lastIndexOf("</a>");
+				String s2 = line.substring(n+4, line.length());
+				s2 = s2.trim();
+				n = s2.indexOf(" ");
+				s2 = s2.substring(0, n);
+				String s0 = s1;
+				n = s1.indexOf("-");
+				if (n != -1) {
+					s1 = s1.substring(0, n) + " to " + s1.substring(n+1, s1.length());
+			    }
+				s1 = s1.replaceAll("-", " ");
+				s1 = s1.replaceAll("_", " ");
+				String s3 = s1;
+				s3 = s3.replaceAll(" ", "_");
+				v.add(s3 + "|" + s1 + "|" + s1 + " (" + s2 + ")|" + page_url + "/" + s0 + ".txt");
+			} else if (line_lower.indexOf("href") != -1 && (line_lower.indexOf("mapping.xls") != -1 || line_lower.indexOf("mappings.xls") != -1)) {
+				int n = line.lastIndexOf("</a>");
+				String s1 = line.substring(0, n);
+				n = s1.lastIndexOf(">");
+				s1 = s1.substring(n+1, s1.length());
+				s1 = s1.replace(".xls", "");
+				n = line.lastIndexOf("</a>");
+				String s2 = line.substring(n+4, line.length());
+				s2 = s2.trim();
+				n = s2.indexOf(" ");
+				s2 = s2.substring(0, n);
+				String s0 = s1;
+				n = s1.indexOf("-");
+				if (n != -1) {
+					s1 = s1.substring(0, n) + " to " + s1.substring(n+1, s1.length());
+			    }
+				s1 = s1.replaceAll("-", " ");
+				s1 = s1.replaceAll("_", " ");
+				String s3 = s1;
+				s3 = s3.replaceAll(" ", "_");
+				v.add(s3 + "|" + s1 + "|" + s1 + " (" + s2 + ")|" + page_url + "/" + s0 + ".xls");
 			}
 		}
 		return v;

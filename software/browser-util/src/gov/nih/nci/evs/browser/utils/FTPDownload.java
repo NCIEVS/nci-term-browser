@@ -264,6 +264,9 @@ public class FTPDownload {
 			    }
 				String s3 = s1;
 				s3 = s3.replaceAll(" ", "_");
+				if (page_url.endsWith("/")) {
+					page_url = page_url.substring(0, page_url.length()-1);
+				}
 				v.add(s3 + "|" + s1 + "|" + s1 + " (" + s2 + ")|" + page_url + "/" + s0 + ".txt");
 			} else if (line_lower.indexOf("href") != -1 && (line_lower.indexOf("mapping.xls") != -1 || line_lower.indexOf("mappings.xls") != -1)) {
 				int n = line.lastIndexOf("</a>");
@@ -287,6 +290,9 @@ public class FTPDownload {
 			    }
 				String s3 = s1;
 				s3 = s3.replaceAll(" ", "_");
+				if (page_url.endsWith("/")) {
+					page_url = page_url.substring(0, page_url.length()-1);
+				}
 				v.add(s3 + "|" + s1 + "|" + s1 + " (" + s2 + ")|" + page_url + "/" + s0 + ".xls");
 			}
 		}

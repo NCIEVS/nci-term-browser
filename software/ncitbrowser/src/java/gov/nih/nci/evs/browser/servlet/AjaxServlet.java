@@ -5208,7 +5208,7 @@ out.flush();
 
 				StringBuffer sb = new StringBuffer();
 				Vector v = FTPDownload.tearPage(uri);
-				for (int k=1; k<v.size(); k++) {
+				for (int k=0; k<v.size(); k++) {
 					String line = (String) v.elementAt(k);
 					sb.append(line).append("\n");
 				}

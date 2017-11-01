@@ -273,7 +273,6 @@ public class FTPDownload {
 				n = s1.lastIndexOf(">");
 				s1 = s1.substring(n+1, s1.length());
 				if (s1.indexOf("archive") == -1) {
-					//System.out.println("subfolder: " + s1);
 					String sub_page_url = page_url + "/" + s1;
 					sub_page_url = sub_page_url.substring(0, sub_page_url.length()-1);
 					Vector sub_v = extractMappingsFromURL(sub_page_url);
@@ -291,7 +290,7 @@ public class FTPDownload {
 				n = s2.indexOf(" ");
 				s2 = s2.substring(0, n);
 				String s0 = s1;
-				n = s1.indexOf("-");
+				n = s1.lastIndexOf("-");
 				if (n != -1) {
 					s1 = s1.substring(0, n) + " to " + s1.substring(n+1, s1.length());
 			    }
@@ -312,7 +311,7 @@ public class FTPDownload {
 				n = s2.indexOf(" ");
 				s2 = s2.substring(0, n);
 				String s0 = s1;
-				n = s1.indexOf("-");
+				n = s1.lastIndexOf("-");
 				if (n != -1) {
 					s1 = s1.substring(0, n) + " to " + s1.substring(n+1, s1.length());
 			    }

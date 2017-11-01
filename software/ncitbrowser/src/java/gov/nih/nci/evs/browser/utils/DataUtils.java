@@ -129,6 +129,7 @@ public class DataUtils {
     private static Logger _logger = Logger.getLogger(DataUtils.class);
     private static Set _vocabularyNameSet = null;
     private static String NCIT_MAPPING_URL = "https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings";
+    private static Vector NCIT_MAPPING_DATA = null;
     private static String FILE_BASED_MAPPING_STRING = null;
     private static LocalNameList _noopList = new LocalNameList();
     private int _maxReturn = 5000;
@@ -302,6 +303,7 @@ System.out.println("DataUtils ncit_mapping_url: " + ncit_mapping_url);
 			ncit_mapping_url = NCIT_MAPPING_URL;
 		}
 
+        NCIT_MAPPING_DATA = FTPDownload.extractMappingsFromURL(ncit_mapping_url);
 		FILE_BASED_MAPPING_STRING = uiUtils.getOtherMappingString(ncit_mapping_url);
 
 		VALUE_SET_TAB_AVAILABLE = isCodingSchemeAvailable(Constants.TERMINOLOGY_VALUE_SET_NAME);
@@ -6950,6 +6952,31 @@ if (lbSvc == null) {
 		return false;
 	}
 
+	public static String getMappingFileFormat(String mapping_uri) {
+		if (NCIT_MAPPING_DATA == null) return null;
+		String format = "txt";
+		for (int i=0; i<NCIT_MAPPING_DATA.size(); i++) {
+			String line = (String) NCIT_MAPPING_DATA.elementAt(i);
+			if (line.indexOf(mapping_uri) != -1) {
+				if (line.endsWith(".txt")) return "txt";
+				else if (line.endsWith(".xls")) return "xls";
+			}
+		}
+		return null;
+	}
+
+	public static String getMappingFileName(String mapping_uri) {
+		if (NCIT_MAPPING_DATA == null) return null;
+		String format = "txt";
+		for (int i=0; i<NCIT_MAPPING_DATA.size(); i++) {
+			String line = (String) NCIT_MAPPING_DATA.elementAt(i);
+			if (line.indexOf(mapping_uri) != -1) {
+				int n = line.lastIndexOf("/");
+				return line.substring(n+1, line.length());
+			}
+		}
+		return null;
+	}
 /*
     public static HashMap getCodingSchemeValueSetSubTree(String scheme) {
 		//if (terminologyValueSetTree == null) {

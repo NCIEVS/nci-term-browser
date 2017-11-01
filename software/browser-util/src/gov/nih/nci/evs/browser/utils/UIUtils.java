@@ -1128,7 +1128,7 @@ public class UIUtils {
 				String url = (String) u.elementAt(3);
 				buf.append("<tr>").append("\n");
 				buf.append("<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").append("\n");
-				buf.append("<a href=\"/ncitbrowser/ajax?action=export_to_text&uri=" + url + "\">").append("\n");
+				buf.append("<a href=\"/ncitbrowser/ajax?action=export_mapping&uri=" + url + "\">").append("\n");
 				buf.append(	name + ": " + display_name ).append("\n");
 				buf.append("</a>").append("\n");
 				buf.append("</td>").append("\n");

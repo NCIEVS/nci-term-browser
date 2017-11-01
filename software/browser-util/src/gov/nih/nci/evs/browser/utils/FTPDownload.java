@@ -275,6 +275,7 @@ public class FTPDownload {
 				if (s1.indexOf("archive") == -1) {
 					//System.out.println("subfolder: " + s1);
 					String sub_page_url = page_url + "/" + s1;
+					sub_page_url = sub_page_url.substring(0, sub_page_url.length()-1);
 					Vector sub_v = extractMappingsFromURL(sub_page_url);
 					v.addAll(sub_v);
 				}

@@ -5224,7 +5224,13 @@ out.flush();
                 File file = new File(outputfile);
 				FTPDownload.downloadExcel(uri, outputfile);
 			    response.setContentType("application/xls");
-				response.addHeader("Content-Disposition", "attachment; filename=test.xls");
+
+				int n = uri.lastIndexOf("/");
+				String mapping_name = uri.substring(n+1, uri.length());
+				System.out.println("mapping_name: " + mapping_name);
+				response.setHeader("Content-Disposition", "attachment; filename="
+						+ mapping_name);
+
 				response.setContentLength((int) file.length());
 				try {
 					FileInputStream fileInputStream = new FileInputStream(file);

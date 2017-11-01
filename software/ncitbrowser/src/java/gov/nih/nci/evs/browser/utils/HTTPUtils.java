@@ -69,8 +69,7 @@ public class HTTPUtils {
     private static final int MIN_FONT_SIZE = 22;
     private static final int MAX_STR_LEN = 18;
 
-    //public static final int ABS_MAX_STR_LEN = 40;
-    public static final int ABS_MAX_STR_LEN = 100;
+    public static final int ABS_MAX_STR_LEN = 200;
 
     /**
      * Remove potentially bad XSS syntax

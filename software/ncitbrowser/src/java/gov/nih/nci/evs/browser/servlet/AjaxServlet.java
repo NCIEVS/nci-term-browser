@@ -1627,7 +1627,12 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 					isValueSet = true;
 
 					//KLO, 10182017
-					vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
+					if (DataUtils.getValueSetHierarchy() != null) {
+						vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
+						System.out.println("vsd_description: " + vsd_description);
+					} else {
+						System.out.println("WARNING: DataUtils.getValueSetHierarchy() = null.");
+					}
 					//vsd_description = vsd.getEntityDescription().getContent();
 
 			} else {
@@ -2214,6 +2219,10 @@ out.print("/pages/subset.jsf\">NCI Thesaurus Subsets</a> page).");
 
 
 ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
+
+System.out.println("vsd_uri: " + vsd_uri);
+
+
 if (show_released_file_button) {
 
 	if (vsc != null && !DataUtils.isNullOrBlank(vsc.getReportURI())) {

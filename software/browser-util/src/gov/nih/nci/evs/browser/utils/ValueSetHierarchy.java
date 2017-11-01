@@ -145,6 +145,8 @@ public class ValueSetHierarchy {
 
 		try {
 			valueSetDefinitionURIList = vsd_service.listValueSetDefinitionURIs();
+			System.out.println("valueSetDefinitionURIList size: " + valueSetDefinitionURIList.size());
+
 		} catch (Exception ex) {
             System.out.println("ERROR: vsd_service.listValueSetDefinitionURIs() failed.");
 		}
@@ -225,6 +227,11 @@ public class ValueSetHierarchy {
 
 
     public String getValueSetDecription(String uri) {
+		// 11012017
+		if (_valueSetDefinitionURI2VSD_map == null) {
+			System.out.println("WARNING: ValueSetHierarchy _valueSetDefinitionURI2VSD_map = NULL???");
+			return null;
+		}
 		ValueSetDefinition vsd = (ValueSetDefinition) _valueSetDefinitionURI2VSD_map.get(uri);
 		if (vsd == null) {
 		    return null;
@@ -232,6 +239,7 @@ public class ValueSetHierarchy {
 		if (vsd.getEntityDescription() == null) {
 			return null;
 		}
+		System.out.println("vsd.getEntityDescription().getContent(): " + vsd.getEntityDescription().getContent());
 		return vsd.getEntityDescription().getContent();
 	}
 

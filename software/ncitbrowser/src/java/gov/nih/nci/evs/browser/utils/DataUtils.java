@@ -1204,7 +1204,7 @@ System.out.println("DataUtils ncit_mapping_url: " + ncit_mapping_url);
 
     private static void initializeValueSetHierarchy() {
 		//if (hasNoValueSet || valueSetHierarchyInitialized) return;
-        System.out.println("initializeValueSetHierarchy ...");
+        System.out.println("DataUtils initializeValueSetHierarchy ...");
 		if (valueSetHierarchyInitialized) return;
 		long ms = System.currentTimeMillis();
 		_VSDName2URIHashMap = getVSDName2URIHashMap();
@@ -1240,10 +1240,12 @@ System.out.println("DataUtils ncit_mapping_url: " + ncit_mapping_url);
 
 
 //testing 10192017:
+        System.out.println("Instantiating valueSetHierarchy ...");
         valueSetHierarchy = new ValueSetHierarchy(lbSvc,
                                    vsd_service,
                                    _localName2FormalNameHashMap,
                                    _codingSchemeName2URIHashMap);
+        System.out.println("Done with instantiating valueSetHierarchy ...");
 
 		//valueSetHierarchy.preprocessSourceHierarchyData();
 		System.out.println("valueSetHierarchy.getValueSetParticipationHashSet() ...");

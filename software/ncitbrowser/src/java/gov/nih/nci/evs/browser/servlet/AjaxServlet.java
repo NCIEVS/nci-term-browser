@@ -5215,13 +5215,16 @@ out.flush();
 				response.setHeader("Content-Disposition", "attachment; filename="
 						+ mapping_name);
 
+				String outputstr = FTPDownload.tear_page(uri);
+                /*
 				StringBuffer sb = new StringBuffer();
 				Vector v = FTPDownload.tearPage(uri);
 				for (int k=0; k<v.size(); k++) {
 					String line = (String) v.elementAt(k);
-					sb.append(line).append("\n\r");
+					sb.append(line).append("\n");
 				}
 				String outputstr = sb.toString();
+				*/
 				response.setContentLength(outputstr.length());
 				ServletOutputStream ouputStream = response.getOutputStream();
 				ouputStream.write(outputstr.getBytes("UTF8"), 0, outputstr.length());

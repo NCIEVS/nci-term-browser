@@ -202,7 +202,6 @@ public class FTPDownload {
 
    }
 
-
 	public static Vector tearPage(String page_url) {
 		URL url;
 		Vector w = new Vector();
@@ -213,7 +212,7 @@ public class FTPDownload {
                                new InputStreamReader(conn.getInputStream()));
 			String inputLine;
 			while ((inputLine = br.readLine()) != null) {
-				w.add(inputLine);
+				w.add(inputLine + "\r\n");
 			}
 			br.close();
 		} catch (MalformedURLException e) {
@@ -299,72 +298,27 @@ public class FTPDownload {
 		return v;
 	}
 
-	/*
-    public static Vector extractMappingsFromURL(String page_url) {
-		Vector v = new Vector();
-		Vector w = tearPage(page_url);
-		for (int i=0; i<w.size(); i++) {
-			String line = (String) w.elementAt(i);
-			String line_lower = line.toLowerCase();
 
-			if (line_lower.indexOf("href") != -1 && line_lower.indexOf("/</a>") != -1) {
-				int n = line.lastIndexOf("</a>");
-				String s1 = line.substring(0, n);
-				n = s1.lastIndexOf(">");
-				s1 = s1.substring(n+1, s1.length());
-				if (s1.indexOf("archive") == -1) {
-					String sub_page_url = page_url + "/" + s1;
-					sub_page_url = sub_page_url.substring(0, sub_page_url.length()-1);
-					Vector sub_v = extractMappingsFromURL(sub_page_url);
-					v.addAll(sub_v);
-				}
-			} else if (line_lower.indexOf("href") != -1 && (line_lower.indexOf("mapping.txt") != -1 || line_lower.indexOf("mappings.txt") != -1)) {
-				int n = line.lastIndexOf("</a>");
-				String s1 = line.substring(0, n);
-				n = s1.lastIndexOf(">");
-				s1 = s1.substring(n+1, s1.length());
-				s1 = s1.replace(".txt", "");
-				n = line.lastIndexOf("</a>");
-				String s2 = line.substring(n+4, line.length());
-				s2 = s2.trim();
-				n = s2.indexOf(" ");
-				s2 = s2.substring(0, n);
-				String s0 = s1;
-				n = s1.lastIndexOf("-");
-				if (n != -1) {
-					s1 = s1.substring(0, n) + " to " + s1.substring(n+1, s1.length());
-			    }
-				s1 = s1.replaceAll("-", " ");
-				s1 = s1.replaceAll("_", " ");
-				String s3 = s1;
-				s3 = s3.replaceAll(" ", "_");
-				v.add(s3 + "|" + s1 + "|" + s1 + " (" + s2 + ")|" + page_url + "/" + s0 + ".txt");
-			} else if (line_lower.indexOf("href") != -1 && (line_lower.indexOf("mapping.xls") != -1 || line_lower.indexOf("mappings.xls") != -1)) {
-				int n = line.lastIndexOf("</a>");
-				String s1 = line.substring(0, n);
-				n = s1.lastIndexOf(">");
-				s1 = s1.substring(n+1, s1.length());
-				s1 = s1.replace(".xls", "");
-				n = line.lastIndexOf("</a>");
-				String s2 = line.substring(n+4, line.length());
-				s2 = s2.trim();
-				n = s2.indexOf(" ");
-				s2 = s2.substring(0, n);
-				String s0 = s1;
-				n = s1.lastIndexOf("-");
-				if (n != -1) {
-					s1 = s1.substring(0, n) + " to " + s1.substring(n+1, s1.length());
-			    }
-				s1 = s1.replaceAll("-", " ");
-				s1 = s1.replaceAll("_", " ");
-				String s3 = s1;
-				s3 = s3.replaceAll(" ", "_");
-				v.add(s3 + "|" + s1 + "|" + s1 + " (" + s2 + ")|" + page_url + "/" + s0 + ".xls");
+	public static String tear_page(String page_url) {
+		URL url;
+		StringBuffer buf = new StringBuffer();
+		try {
+			url = new URL(page_url);
+			URLConnection conn = url.openConnection();
+			BufferedReader br = new BufferedReader(
+                               new InputStreamReader(conn.getInputStream()));
+			String inputLine;
+			while ((inputLine = br.readLine()) != null) {
+				buf.append(inputLine + "\r\n");
 			}
+			br.close();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return v;
+        return buf.toString();
 	}
-	*/
 
 
     public static void main (String[] args) {
@@ -373,6 +327,7 @@ public class FTPDownload {
 		if (args.length == 1) {
 		    uri = args[0];
 		}
-		download(uri);
+		String s = tear_page(uri);
+		System.out.println(s);
     }
 }

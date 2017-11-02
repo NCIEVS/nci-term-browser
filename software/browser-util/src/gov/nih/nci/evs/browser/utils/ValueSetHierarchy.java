@@ -156,6 +156,7 @@ public class ValueSetHierarchy {
 			this.vocabularyNameSet = localName2FormalNameHashMap.keySet();
 		}
         this.codingSchemeName2URIHashMap = codingSchemeName2URIHashMap;
+        _valueSetDefinitionURI2VSD_map = createValueSetDefinitionURI2VSD_map();
 
         //initialize();
     }

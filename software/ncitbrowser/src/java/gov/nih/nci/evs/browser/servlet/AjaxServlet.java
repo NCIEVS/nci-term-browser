@@ -5219,7 +5219,7 @@ out.flush();
 				Vector v = FTPDownload.tearPage(uri);
 				for (int k=0; k<v.size(); k++) {
 					String line = (String) v.elementAt(k);
-					sb.append(line).append("\n");
+					sb.append(line).append("\n\r");
 				}
 				String outputstr = sb.toString();
 				response.setContentLength(outputstr.length());

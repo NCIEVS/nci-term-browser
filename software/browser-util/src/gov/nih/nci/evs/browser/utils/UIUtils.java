@@ -1114,7 +1114,7 @@ public class UIUtils {
 		StringBuffer buf = new StringBuffer();
 		buf.append("<hr></hr><p></p>").append("\n");
         buf.append("<table class=\"termstable_960\" border=\"0\">").append("\n");
-        buf.append("<tr><td class=\"textbody\">Other Mappings available for download:</td><td></td></tr>").append("\n");
+        buf.append("<tr><td class=\"textbody\">Other mappings available for download:</td><td></td></tr>").append("\n");
 
 		Vector v = FTPDownload.extractMappingsFromURL(page_url);
 		for (int i=0; i<v.size(); i++) {
@@ -1131,6 +1131,15 @@ public class UIUtils {
 				buf.append("<a href=\"/ncitbrowser/ajax?action=export_mapping&uri=" + url + "\">").append("\n");
 				buf.append(	name + ": " + display_name ).append("\n");
 				buf.append("</a>").append("\n");
+
+if (url.endsWith(".xls")) {
+	  buf.append("&nbsp;&nbsp;");
+      buf.append("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"http://www.microsoft.com/downloads/details.aspx?FamilyID=1cd6acf9-ce06-4e1c-8dcf-f33f669dbc3a&amp;DisplayLang=en\" target=\"_blank\"><img").append("\n");
+      buf.append("     src=\"ncitbrowser/images/link_xls.gif\" width=\"16\"").append("\n");
+      buf.append("     height=\"16\" border=\"0\"").append("\n");
+      buf.append("alt=\"Download Plugin Microsoft Excel Viewer\" /></a>").append("\n");
+}
+
 				buf.append("</td>").append("\n");
 				buf.append("<td>&nbsp;</td>").append("\n");
 				buf.append("</tr>").append("\n");

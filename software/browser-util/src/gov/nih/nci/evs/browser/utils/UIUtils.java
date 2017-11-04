@@ -1114,7 +1114,7 @@ public class UIUtils {
 		StringBuffer buf = new StringBuffer();
 		buf.append("<hr></hr><p></p>").append("\n");
         buf.append("<table class=\"termstable_960\" border=\"0\">").append("\n");
-        buf.append("<tr><td class=\"textbody\">Other Mappings:</td><td></td></tr>").append("\n");
+        buf.append("<tr><td class=\"textbody\">Other Mappings available for download:</td><td></td></tr>").append("\n");
 
 		Vector v = FTPDownload.extractMappingsFromURL(page_url);
 		for (int i=0; i<v.size(); i++) {

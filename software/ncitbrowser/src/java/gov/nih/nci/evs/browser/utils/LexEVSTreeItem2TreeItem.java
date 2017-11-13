@@ -64,7 +64,7 @@ public class LexEVSTreeItem2TreeItem {
 
 	public static TreeItem toTreeItem(LexEVSTreeItem lexevs_ti) {
 		if (lexevs_ti == null) return null;
-		TreeItem ti = new TreeItem(lexevs_ti.get_code(), lexevs_ti.get_text(), null, lexevs_ti.get_id(), lexevs_ti.get_auis());
+		TreeItem ti = new TreeItem(lexevs_ti.get_code(), lexevs_ti.get_text(), lexevs_ti.get_ns(), lexevs_ti.get_id(), lexevs_ti.get_auis());
 
 		ti._expandable = false;
 		for (String association : lexevs_ti._assocToChildMap.keySet()) {
@@ -102,7 +102,7 @@ public class LexEVSTreeItem2TreeItem {
 
 	public static TreeItem placeNCItAsFirstNode(TreeItem ti_0) {
 		if (ti_0 == null) return null;
-		TreeItem ti = new TreeItem(ti_0._code, ti_0._text, null, ti_0._id, ti_0._auis);
+		TreeItem ti = new TreeItem(ti_0._code, ti_0._text, ti_0._ns, ti_0._id, ti_0._auis);
 		ti._expandable = false;
 		for (String association : ti_0._assocToChildMap.keySet()) {
 			List<TreeItem> children = ti_0._assocToChildMap.get(association);

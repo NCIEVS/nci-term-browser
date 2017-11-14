@@ -530,7 +530,9 @@ public class ResolvedValueSetIteratorHolder {
             // Within the merging region - skip the cell.
             return;
         }
-        out.append("<td ");
+        //11142017
+        //out.append("<td>");
+        out.append("<td valign=\"top\">");
         if (colspan > 1) {
             out.append("colspan='").append(colspan).append("' ");
         }

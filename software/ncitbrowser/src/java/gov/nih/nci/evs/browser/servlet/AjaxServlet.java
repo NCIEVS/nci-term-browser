@@ -2387,16 +2387,18 @@ out.flush();
 		 // add released file content:
 		if (!show_released_file_button) {
 			if (!DataUtils.isNull(vsd_uri)) {
+
+				ResolvedValueSetIteratorHolder rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
+				request.getSession().setAttribute("rvsi", rvsi);
+				String content = getResolvedValueSetContent(rvsi);
+
+				if (content != null && content.length > 0) {
 				  writeExportForm(out, vsd_uri);
 				  out.println("");
 				  out.println("<div class=\"tabTableContentContainer\">");
 				  out.println("<table border=\"0\" width=\"900\">");
 				  out.println("	<tr><td>");
 				  out.println("	<div style=\"float:left;width:360px;\">");
-
-					ResolvedValueSetIteratorHolder rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
-					request.getSession().setAttribute("rvsi", rvsi);
-					String content = getResolvedValueSetContent(rvsi);
 
 				  out.println(content);
 				  out.println("	</div>");
@@ -2405,6 +2407,7 @@ out.flush();
 				  out.println("</div>");
 				  out.println("");
 				  out.println("");
+			    }
 			}
 		}
 
@@ -5077,7 +5080,6 @@ out.flush();
 
 	public void writeExportForm(PrintWriter out, String vsd_uri) {
 		out.println("<hr></hr>");
-		//out.println("<h:form id=\"valueSetSearchResultsForm\" styleClass=\"search-form\" acceptcharset=\"UTF-8\">");
 		out.println("                     <table border=\"0\">");
 		out.println("                        <tr>");
 		out.println("                           <td>");

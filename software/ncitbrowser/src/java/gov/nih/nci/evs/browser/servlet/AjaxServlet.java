@@ -1861,7 +1861,7 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
       out.println("    p {margin:30px 0px 30px 0px;}");
       out.println("    table.mt {border-width: 1px;border-spacing:0px ;border-style: solid;border-color: #cfcfcf;border-collapse: collapse;background-color: transparent;}");
       out.println("    table.mt th {border-width: 1px;padding: 1px;border-style: solid;border-color: #cfcfcf;white-space: nowrap; background-color: #afafaf;text-align:left;}");
-      out.println("    table.mt td {border-width: 1px;padding: 1px;border-style: solid;border-color: #cfcfcf;text-align: left;vertical-align:middle;}");
+      out.println("    table.mt td {border-width: 1px;padding: 1px;border-style: solid;border-color: #cfcfcf;text-align: left;vertical-align:top;}");
       out.println("    .frc {background: #efefef;}");
       out.println("</style>");
       out.println("");

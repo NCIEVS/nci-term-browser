@@ -530,9 +530,7 @@ public class ResolvedValueSetIteratorHolder {
             // Within the merging region - skip the cell.
             return;
         }
-        //11142017
-        //out.append("<td ");
-        out.append("<td valign=\"top\" ");
+        out.append("<td ");
         if (colspan > 1) {
             out.append("colspan='").append(colspan).append("' ");
         }
@@ -541,9 +539,6 @@ public class ResolvedValueSetIteratorHolder {
             return;
         }
 
-        final HSSFCellStyle style = cell.getCellStyle();
-
-        /*
         out.append("style='");
         final HSSFCellStyle style = cell.getCellStyle();
         // Text alignment
@@ -560,7 +555,6 @@ public class ResolvedValueSetIteratorHolder {
         default:
             break;
         }
-        */
 
         // Font style, size and weight
         final HSSFFont font = style.getFont(book);

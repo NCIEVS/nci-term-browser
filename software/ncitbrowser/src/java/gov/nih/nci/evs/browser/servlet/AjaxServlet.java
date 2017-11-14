@@ -2391,7 +2391,11 @@ out.flush();
 				ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
 				String filename = vsc.getReportURI();
 
-                if (filename != null && filename.compareToIgnoreCase("null") != 0) {
+				if (filename != null) {
+					filename = filename.trim();
+				}
+
+                 if (!DataUtils.isNull(filename) && filename.length() > 0) {
 					ResolvedValueSetIteratorHolder rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
 					request.getSession().setAttribute("rvsi", rvsi);
 

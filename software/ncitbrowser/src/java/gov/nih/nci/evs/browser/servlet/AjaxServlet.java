@@ -2392,7 +2392,7 @@ out.flush();
 				request.getSession().setAttribute("rvsi", rvsi);
 				String content = getResolvedValueSetContent(rvsi);
 
-				if (content != null && content.length > 0) {
+				if (content != null && content.length() > 0) {
 				  writeExportForm(out, vsd_uri);
 				  out.println("");
 				  out.println("<div class=\"tabTableContentContainer\">");

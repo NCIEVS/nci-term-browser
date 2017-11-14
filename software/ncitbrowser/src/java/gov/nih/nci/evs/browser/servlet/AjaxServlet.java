@@ -2411,6 +2411,7 @@ out.flush();
 			}
 		}
 
+      out.flush();
       out.println("");
       out.println("<div class=\"textbody\">");
       out.println("<!-- footer -->");
@@ -2465,6 +2466,7 @@ out.flush();
       out.println("</body>");
       out.println("</html>");
       out.println("");
+      out.flush();
   }
 
 

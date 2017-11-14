@@ -531,8 +531,8 @@ public class ResolvedValueSetIteratorHolder {
             return;
         }
         //11142017
-        //out.append("<td>");
-        out.append("<td valign=\"top\">");
+        //out.append("<td ");
+        out.append("<td valign=\"top\" ");
         if (colspan > 1) {
             out.append("colspan='").append(colspan).append("' ");
         }
@@ -540,6 +540,10 @@ public class ResolvedValueSetIteratorHolder {
             out.append("/>\n");
             return;
         }
+
+        final HSSFCellStyle style = cell.getCellStyle();
+
+        /*
         out.append("style='");
         final HSSFCellStyle style = cell.getCellStyle();
         // Text alignment
@@ -556,6 +560,8 @@ public class ResolvedValueSetIteratorHolder {
         default:
             break;
         }
+        */
+
         // Font style, size and weight
         final HSSFFont font = style.getFont(book);
         if (font.getBoldweight() == HSSFFont.BOLDWEIGHT_BOLD) {

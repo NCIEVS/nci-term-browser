@@ -2387,12 +2387,12 @@ out.flush();
 		 // add released file content:
 		if (!show_released_file_button) {
 			if (!DataUtils.isNull(vsd_uri)) {
-
 				ResolvedValueSetIteratorHolder rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
 				request.getSession().setAttribute("rvsi", rvsi);
-				String content = getResolvedValueSetContent(rvsi);
+				List list = rvsi.getResolvedValueSetList();
+				if (list != null && list.size() > 0) {
 
-				if (content != null && content.length() > 0) {
+				  String content = getResolvedValueSetContent(rvsi);
 				  writeExportForm(out, vsd_uri);
 				  out.println("");
 				  out.println("<div class=\"tabTableContentContainer\">");

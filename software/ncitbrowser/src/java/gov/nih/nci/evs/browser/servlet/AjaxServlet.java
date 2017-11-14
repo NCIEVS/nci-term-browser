@@ -2387,26 +2387,29 @@ out.flush();
 		 // add released file content:
 		if (!show_released_file_button) {
 			if (!DataUtils.isNull(vsd_uri)) {
-				ResolvedValueSetIteratorHolder rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
-				request.getSession().setAttribute("rvsi", rvsi);
-				List list = rvsi.getResolvedValueSetList();
-				if (list != null && list.size() > 0) {
 
-				  String content = getResolvedValueSetContent(rvsi);
-				  writeExportForm(out, vsd_uri);
-				  out.println("");
-				  out.println("<div class=\"tabTableContentContainer\">");
-				  out.println("<table border=\"0\" width=\"900\">");
-				  out.println("	<tr><td>");
-				  out.println("	<div style=\"float:left;width:360px;\">");
+				ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
+				String filename = vsc.getReportURI();
 
-				  out.println(content);
-				  out.println("	</div>");
-				  out.println("	</td></tr>");
-				  out.println("</table>");
-				  out.println("</div>");
-				  out.println("");
-				  out.println("");
+                if (filename != null && filename.compareToIgnoreCase("null") != 0) {
+					ResolvedValueSetIteratorHolder rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
+					request.getSession().setAttribute("rvsi", rvsi);
+
+					String content = getResolvedValueSetContent(rvsi);
+					writeExportForm(out, vsd_uri);
+					out.println("");
+					out.println("<div class=\"tabTableContentContainer\">");
+					out.println("<table border=\"0\" width=\"900\">");
+					out.println("	<tr><td>");
+					out.println("	<div style=\"float:left;width:360px;\">");
+
+					out.println(content);
+					out.println("	</div>");
+					out.println("	</td></tr>");
+					out.println("</table>");
+					out.println("</div>");
+					out.println("");
+					out.println("");
 			    }
 			}
 		}

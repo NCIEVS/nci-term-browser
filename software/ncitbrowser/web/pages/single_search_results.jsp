@@ -29,7 +29,7 @@
 %>
 <f:view>
   <!-- Begin Skip Top Navigation -->
-    <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+    <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation --> 
   <%@ include file="/pages/templates/header.jsp" %>
   <div class="center-page_960">
@@ -39,7 +39,7 @@
       <%@ include file="/pages/templates/content-header.jsp" %>
       <!-- Page content -->
       <div class="pagecontent">
-        <a name="evs-content" id="evs-content"></a>
+        <a name="evs-content" id="evs-content" tabindex="-1"></a>
         <%
           Vector v = (Vector) request.getAttribute("search_results");
     boolean bool_val;
@@ -91,7 +91,7 @@
         %>
         <table class="datatable_960" border="0" width="100%">
           <tr>
-            <table>
+            <table role='presentation'>
               <tr>
                 <td class="texttitle-blue">Result for:</td>
                 <td class="texttitle-gray"><%=matchText%></td>

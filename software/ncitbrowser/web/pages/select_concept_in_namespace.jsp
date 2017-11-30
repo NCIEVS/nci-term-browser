@@ -42,7 +42,7 @@ String sel_dictionary = HTTPUtils.cleanXSS((String) request.getParameter("dictio
 %>
 <f:view>
   <!-- Begin Skip Top Navigation -->
-    <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+    <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation --> 
 
 
@@ -94,7 +94,7 @@ if (DataUtils.isNCIT(vocabulary_name)) {
 %>
       <!-- Page content -->
       <div class="pagecontent">
-        <a name="evs-content" id="evs-content"></a>
+        <a name="evs-content" id="evs-content" tabindex="-1"></a>
         <%
     String message = null;
     if (list.size() == 0) {
@@ -108,7 +108,7 @@ if (DataUtils.isNCIT(vocabulary_name)) {
     %>
         <table width="900px">
           <tr>
-            <table>
+            <table role='presentation'>
               <tr>
                 <td class="texttitle-blue">Multiple concepts found in <%=sel_dictionary%> with code:</td>
                 <td class="texttitle-gray"><%=sel_code%></td>

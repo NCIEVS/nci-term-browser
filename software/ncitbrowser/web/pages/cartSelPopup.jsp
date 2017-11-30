@@ -14,7 +14,7 @@
 <f:view>
 <div class="pagecontent">   
    <h:form id="popupForm" acceptcharset="UTF-8">
-      <table border="0">
+      <table border="0" role='presentation'>
          <tr>
             <td align="left"><b>Select export versions</b></td>
          </tr>

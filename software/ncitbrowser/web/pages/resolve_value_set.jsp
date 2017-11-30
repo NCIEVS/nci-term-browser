@@ -40,7 +40,7 @@
   %>
   <f:view>
     <!-- Begin Skip Top Navigation -->
-      <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+      <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
     <!-- End Skip Top Navigation -->  
     <%@ include file="/pages/templates/header.jsp" %>
     <div class="center-page_960">
@@ -73,12 +73,12 @@ String prev_cs_urn = "";
 
 %>
         <div class="pagecontent">
-          <a name="evs-content" id="evs-content"></a>
+          <a name="evs-content" id="evs-content" tabindex="-1"></a>
           <%-- 0 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
           <div class="tabTableContentContainer">
           
           
-          <table>
+          <table role='presentation'>
             <tr>
             <td class="texttitle-blue">Resolve Value Set:&nbsp;<%=vsd_uri%></td>
             </tr>
@@ -185,7 +185,7 @@ int lcv = i+1;
                       onclick="javascript:cursor_wait();"
                       image="#{valueSetSearch_requestContextPath}/images/continue.gif"
                       alt="Resolve"
-                      tabindex="2">
+                      tabindex="1">
                     </h:commandButton>
                   </td></tr>
                   

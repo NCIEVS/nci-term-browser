@@ -320,6 +320,34 @@ public class FTPDownload {
         return buf.toString();
 	}
 
+	public static Vector downloadPage(String page_url) {
+		try {
+			URL url = new URL(page_url);
+			return downloadPage(url);
+		} catch (Exception ex) {
+			return null;
+		}
+    }
+
+	public static Vector downloadPage(URL url) {
+		Vector v = new Vector();
+		try {
+			URLConnection conn = url.openConnection();
+			BufferedReader br = new BufferedReader(
+                               new InputStreamReader(conn.getInputStream()));
+			String inputLine;
+			while ((inputLine = br.readLine()) != null) {
+				v.add(inputLine);
+			}
+			br.close();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        return v;
+	}
+
 
     public static void main (String[] args) {
 		String uri = "http://evs.nci.nih.gov/ftp1/FDA/CDRH/FDA-CDRH_NCIt_Subsets.txt";

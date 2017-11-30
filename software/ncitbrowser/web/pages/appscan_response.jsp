@@ -32,7 +32,7 @@
 <script type="text/javascript" src="/ncitbrowser/js/tip_centerwindow.js"></script>
 <script type="text/javascript" src="/ncitbrowser/js/tip_followscroll.js"></script>
 
-     <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+     <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
 
 <div style='clear:both;margin-top:-5px;padding:8px;height:32px;color:white;background-color:#C31F40'>
   <a href="http://www.cancer.gov" target="_blank">
@@ -85,7 +85,7 @@
 </div>
 
 
-<table cellspacing="0" cellpadding="0" border="0">
+<table cellspacing="0" cellpadding="0" role='presentation'>
   <tr>
 
 
@@ -126,7 +126,7 @@
   <tr>
     <td align="left" valign="bottom">
       <a href="#" onclick="javascript:window.open('/ncitbrowser/pages/source_help_info-termbrowser.jsf',
-        '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="13">
+        '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="1">
         Sources</a>
 
 
@@ -135,7 +135,7 @@
 
     </td>
     <td align="right" valign="bottom">
-      <a href="/ncitbrowser/pages/help.jsf" tabindex="16">Help</a>
+      <a href="/ncitbrowser/pages/help.jsf" tabindex="2">Help</a>
     </td>
     <td width="7"></td>
   </tr>
@@ -148,7 +148,7 @@
 
 
 <div class="bluebar">
-  <table border="0" cellspacing="0" cellpadding="0">
+  <table border="0" cellspacing="0" cellpadding="0" role='presentation'>
     <tr>
       <td><div class="quicklink-status">
 
@@ -161,24 +161,24 @@
         onmouseover="document.quicklinksimg.src='/ncitbrowser/images/quicklinks-active.gif';"
         onmouseout="document.quicklinksimg.src='/ncitbrowser/images/quicklinks-inactive.gif';">
         <li>
-          <a href="#" tabindex="-1"><img src="/ncitbrowser/images/quicklinks-inactive.gif" width="162"
+          <a href="#" tabindex="3"><img src="/ncitbrowser/images/quicklinks-inactive.gif" width="162"
             height="18" border="0" name="quicklinksimg" alt="Quick Links" />
           </a>
           <ul>
-            <li><a href="http://evs.nci.nih.gov/" tabindex="-1" target="_blank"
+            <li><a href="http://evs.nci.nih.gov/" tabindex="4" target="_blank"
               alt="Enterprise Vocabulary Services">EVS Home</a></li>
-            <li><a href="http://ncim.nci.nih.gov/ncimbrowser" tabindex="-1" target="_blank"
+            <li><a href="http://ncim.nci.nih.gov/ncimbrowser" tabindex="5" target="_blank"
               alt="NCI Metathesaurus">NCI Metathesaurus Browser</a></li>
 
-            <li><a href="/ncitbrowser/index.jsp" tabindex="-1"
+            <li><a href="/ncitbrowser/index.jsp" tabindex="6"
               alt="NCI Thesaurus Browser">NCI Thesaurus Browser</a></li>
 
 
             <li>
-              <a href="/ncitbrowser/termbrowser.jsf" tabindex="-1" alt="NCI Term Browser">NCI Term Browser</a>
+              <a href="/ncitbrowser/termbrowser.jsf" tabindex="7" alt="NCI Term Browser">NCI Term Browser</a>
             </li>
 
-            <li><a href="http://www.cancer.gov/cancertopics/terminologyresources" tabindex="-1" target="_blank"
+            <li><a href="http://www.cancer.gov/cancertopics/terminologyresources" tabindex="8" target="_blank"
               alt="NCI Terminology Resources">NCI Terminology Resources</a></li>
 
 

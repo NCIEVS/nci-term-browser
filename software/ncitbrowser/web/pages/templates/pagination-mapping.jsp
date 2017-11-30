@@ -4,7 +4,7 @@
 
 
 <FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/mapping.jsf?nav_type=mappings" >
-  <table>
+  <table role='presentation'>
     <tr>
       <td class="textbody" align=left>
          <b>Results <%=istart_str%>-<%=iend_str%> of&nbsp;<%=match_size%></b>

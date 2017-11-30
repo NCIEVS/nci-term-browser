@@ -337,7 +337,7 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 
 <f:view>
   <!-- Begin Skip Top Navigation -->
-    <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+    <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation --> 
   <%@ include file="/pages/templates/header.jsp" %>
   <div class="center-page_960">
@@ -398,9 +398,9 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 
         <tr valign="top" align="left">
         <td align="left" class="textbody">
-                     <input type="radio" name="valueset_search_algorithm" value="contains"   <%=check__c%> alt="Contains" checked tabindex="3"  onclick="onVSAlgorithmChanged();">Contains
-                     <input type="radio" name="valueset_search_algorithm" value="exactMatch" <%=check__e%> alt="Exact Match"  tabindex="3">Exact Match&nbsp;
-                     <input type="radio" name="valueset_search_algorithm" value="startsWith" <%=check__s%> alt="Begins With"  tabindex="3"  onclick="onVSAlgorithmChanged();">Begins With&nbsp;
+                     <input type="radio" name="valueset_search_algorithm" value="contains"   <%=check__c%> alt="Contains" checked tabindex="4"  onclick="onVSAlgorithmChanged();"><label for="contains">Contains</label>
+                     <input type="radio" name="valueset_search_algorithm" value="exactMatch" <%=check__e%> alt="Exact Match"  tabindex="5"><label for="exactMatch">Exact Match&nbsp;</label>
+                     <input type="radio" name="valueset_search_algorithm" value="startsWith" <%=check__s%> alt="Begins With"  tabindex="6"  onclick="onVSAlgorithmChanged();"><label for="startsWith">Begins With&nbsp;</label>
         </td>  
         </tr>
 
@@ -409,8 +409,8 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
         </tr>
         <tr valign="top" align="left">
           <td align="left" class="textbody">
-                <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Name" <%=check_n%>  alt="Name" checked tabindex="4"  >Name&nbsp;
-                <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Code" <%=check_cd%> alt="Code" tabindex="4" onclick="onVSCodeButtonPressed();">Code&nbsp;
+                <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Name" <%=check_n%>  alt="Name" checked tabindex="7"  ><label for="names">Name&nbsp;</label>
+                <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Code" <%=check_cd%> alt="Code" tabindex="8" onclick="onVSCodeButtonPressed();"><label for="codes">Code&nbsp;</label>
           </td>
         </tr>
       </table>
@@ -447,7 +447,7 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
       <!-- Page content -->
       <div class="pagecontent">
 <div>
-          <a name="evs-content" id="evs-content"></a>
+          <a name="evs-content" id="evs-content" tabindex="-1"></a>
          
             <% if (!DataUtils.isNullOrBlank(message)) {
 		      if (message.compareToIgnoreCase("No match found.") == 0) {
@@ -470,7 +470,7 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 
 
 
-          <table>
+          <table role='presentation'>
 
 
  <h:form id="valueSetSearchResultsForm" styleClass="search-form" acceptcharset="UTF-8">  
@@ -481,7 +481,7 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
                    <table width="900px">
                    
 			  <tr><td>
-			    <table>
+			    <table role='presentation'>
 			      <tr>
 				<td class="texttitle-blue">Result for:</td>
 				<td class="texttitle-gray"><%=matchText%></td>

@@ -1,7 +1,7 @@
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 <%@ page import="gov.nih.nci.evs.browser.common.*" %>
 
-<table cellspacing="0" cellpadding="0" border="0">
+<table cellspacing="0" cellpadding="0" role='presentation'>
   <tr>
     <%
     

@@ -2,7 +2,7 @@
 
 
 <FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/resolved_value_set_search_results.jsf?" >
-  <table>
+  <table role='presentation'>
     <tr>
       <td class="textbody" align=left>
         <b>Results <%=istart_str%>-<%=iend_str%> of&nbsp;<%=match_size%></b>

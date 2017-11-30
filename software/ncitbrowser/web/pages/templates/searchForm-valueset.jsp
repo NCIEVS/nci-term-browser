@@ -97,7 +97,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
 
 <input type="hidden" id="nav_type" name="nav_type" value="valuesets" />
 
-<table>
+<table role='presentation'>
   <tr><td> 
 
 <%
@@ -118,7 +118,7 @@ if (_selectValueSetSearchOption.compareTo("CodingScheme") == 0) {
 	    onFocus="active = true"
 	    onBlur="active = false"
 	    onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-	    tabindex="1"/>
+	    tabindex="2"/>
 <%
 }
 %>  
@@ -129,24 +129,24 @@ if (_selectValueSetSearchOption.compareTo("CodingScheme") == 0) {
 	      image="#{valueSetSearch_requestContextPath}/images/search.gif"
           styleClass="searchbox-btn"
 	      alt="Search concepts in value set"
-	      tabindex="2">
+	      tabindex="3">
 	    </h:commandButton>
 
 	    <h:outputLink
 	    value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp"
-	    tabindex="3">
+	    tabindex="4">
 	    <h:graphicImage value="/images/search-help.gif" styleClass="searchbox-btn" alt="Search Help"
 	    style="border-width:0;"/>
 	  </h:outputLink> 
   </td></tr>
    
    		  <tr><td>
-   		  <table border="0" cellspacing="0" cellpadding="0">
+   		  <table border="0" cellspacing="0" cellpadding="0" role='presentation'>
 
 		    <tr valign="top" align="left"><td align="left" class="textbody">
-		      <input type="radio" name="valueset_search_algorithm" value="contains" alt="Contains" <%=_check__c%> tabindex="3">Contains
-		      <input type="radio" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=_check__e%> tabindex="3">Exact Match&nbsp;
-		      <input type="radio" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=_check__s%> tabindex="3">Begins With&nbsp;
+		      <input type="radio" name="valueset_search_algorithm" value="contains" alt="Contains" <%=_check__c%> tabindex="5"><label for="contains">Contains</label>
+		      <input type="radio" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=_check__e%> tabindex="6"><label for="exactMatch">Exact Match&nbsp;</label>
+		      <input type="radio" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=_check__s%> tabindex="7"><label for="startsWith">Begins With&nbsp;</label>
 		    </td></tr>
 		    
 
@@ -158,13 +158,13 @@ if (_selectValueSetSearchOption.compareTo("CodingScheme") == 0) {
    		  
    		     <tr valign="top" align="left"><td align="left" class="textbody">
  				          <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Code" <%=_check_code%> 
- 				              alt="Code" tabindex="1" onclick="javascript:refresh()" >Code&nbsp;
+ 				              alt="Code" tabindex="8" onclick="javascript:refresh()" ><label for="codes">Code&nbsp;</label>
  				          <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Name" <%=_check_name%> 
- 				              alt="Name" tabindex="1" onclick="javascript:refresh()" >Name&nbsp;
+ 				              alt="Name" tabindex="9" onclick="javascript:refresh()" ><label for="names">Name&nbsp;</label>
  				          <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Source" <%=_check_src%> 
- 				              alt="Source" tabindex="1" onclick="javascript:refresh()" >Source&nbsp;
+ 				              alt="Source" tabindex="10" onclick="javascript:refresh()" >Source&nbsp;
  				          <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="CodingScheme" <%=_check_cs%> 
-                                              alt="Coding Scheme" tabindex="1" onclick="javascript:refresh()" >Terminology
+                                              alt="Coding Scheme" tabindex="11" onclick="javascript:refresh()" >Terminology
                      </td></tr>
 		    
 		    

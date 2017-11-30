@@ -65,8 +65,8 @@
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
         <input type="radio" name="valueset_search_algorithm" id="contains" value="contains" alt="Contains" <%=check_c%> tabindex="4" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="contains">Contains</label>
-        <input type="radio" name="valueset_search_algorithm" id="exactMatch" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="4"/><label for="exactMatch">Exact Match&nbsp;</label>
-        <input type="radio" name="valueset_search_algorithm" id="startsWith" value="startsWith" alt="Begins With" <%=check_s%> tabindex="4" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="startsWith">Begins With&nbsp;</label>
+        <input type="radio" name="valueset_search_algorithm" id="exactMatch" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="5"/><label for="exactMatch">Exact Match&nbsp;</label>
+        <input type="radio" name="valueset_search_algorithm" id="startsWith" value="startsWith" alt="Begins With" <%=check_s%> tabindex="6" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="startsWith">Begins With&nbsp;</label>
       </td>
     </tr>  
     
@@ -82,8 +82,8 @@
 
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
-        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Name" alt="Name" <%=check_n%> tabindex="5"/><label for="names">Name&nbsp;</label>
-        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Code" alt="Code" <%=check_cd%> tabindex="5" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
+        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Name" alt="Name" <%=check_n%> tabindex="7"/><label for="names">Name&nbsp;</label>
+        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Code" alt="Code" <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
       </td>
     </tr>
   

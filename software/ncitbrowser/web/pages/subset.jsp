@@ -72,7 +72,7 @@ float: left;
 <body onLoad="document.forms.searchTerm.matchText.focus();">
 <f:view>
   <!-- Begin Skip Top Navigation -->
-    <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+    <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation --> 
   <%@ include file="/pages/templates/header.jsp" %>
   <div class="center-page_960">
@@ -82,7 +82,7 @@ float: left;
       <%@ include file="/pages/templates/content-header.jsp" %>
       <!-- Page content -->
       <div class="pagecontent">
-        <a name="evs-content" id="evs-content"></a>
+        <a name="evs-content" id="evs-content" tabindex="-1"></a>
         <div class="texttitle-blue">NCI Thesaurus Subsets</div>
         <hr>
         <p>

@@ -44,7 +44,7 @@
   <body>
 
     <!-- Begin Skip Top Navigation -->
-      <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+      <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
 
   <div id="popupContainer">
       <!-- nci popup banner -->
@@ -89,7 +89,7 @@
         </div>
       <% } %>
 
-<a name="evs-content" id="evs-content"></a>      
+<a name="evs-content" id="evs-content" tabindex="-1"></a>      
       
       <jsp:include page="<%=content_page%>" />
     </div>

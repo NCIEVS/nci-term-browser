@@ -123,7 +123,7 @@
    <%!private static Logger _logger = Utils.getJspLogger("value_set_search_results.jsp");%>
    <f:view>
       <!-- Begin Skip Top Navigation -->
-      <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</a>
+      <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</a>
       <!-- End Skip Top Navigation -->
       <%@ include file="/pages/templates/header.jsp"%>
       <div class="center-page_960">
@@ -292,8 +292,8 @@ if (!DataUtils.isNullOrBlank(vsd_uri)) {
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
         <input type="radio" name="valueset_search_algorithm" id="contains" value="contains" alt="Contains" <%=check_c%> tabindex="4" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="contains">Contains</label>
-        <input type="radio" name="valueset_search_algorithm" id="exactMatch" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="4"/><label for="exactMatch">Exact Match&nbsp;</label>
-        <input type="radio" name="valueset_search_algorithm" id="startsWith" value="startsWith" alt="Begins With" <%=check_s%> tabindex="4" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="startsWith">Begins With&nbsp;</label>
+        <input type="radio" name="valueset_search_algorithm" id="exactMatch" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="5"/><label for="exactMatch">Exact Match&nbsp;</label>
+        <input type="radio" name="valueset_search_algorithm" id="startsWith" value="startsWith" alt="Begins With" <%=check_s%> tabindex="6" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="startsWith">Begins With&nbsp;</label>
       </td>
     </tr>  
     
@@ -309,8 +309,8 @@ if (!DataUtils.isNullOrBlank(vsd_uri)) {
 
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
-        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Name" alt="Name" <%=check_n%> tabindex="5"/><label for="names">Name&nbsp;</label>
-        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Code" alt="Code" <%=check_cd%> tabindex="5" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
+        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Name" alt="Name" <%=check_n%> tabindex="7"/><label for="names">Name&nbsp;</label>
+        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Code" alt="Code" <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
       </td>
     </tr>
   
@@ -416,7 +416,7 @@ if (matched_concept_codes != null && matched_concept_codes.size() > 0) {
             
             <div class="pagecontent"> 
             
-               <a name="evs-content" id="evs-content"></a>               
+               <a name="evs-content" id="evs-content" tabindex="-1"></a>               
                   <div class="tabTableContentContainer">
                   <h:form id="valueSetSearchResultsForm" styleClass="search-form" acceptcharset="UTF-8">
                      <%
@@ -427,7 +427,7 @@ if (matched_concept_codes != null && matched_concept_codes.size() > 0) {
                      <%
                         } else {
                      %>
-                     <table border="0">
+                     <table border="0" role='presentation'>
                         <tr>
                            <td>
                               <table border="0" width="900" >
@@ -497,7 +497,7 @@ if (vsc != null && !DataUtils.isNullOrBlank(vsc.getReportURI())) {
 %>
 	<td align=right>
 	<a href="/ncitbrowser/ajax?action=download&vsd_uri=<%=vsd_uri%>">
-	<img src="/ncitbrowser/images/released_file.gif" alt="Value Set Released Files (FTP Server)" border="0" tabindex="2"></a>
+	<img src="/ncitbrowser/images/released_file.gif" alt="Value Set Released Files (FTP Server)" border="0" tabindex="9"></a>
 	</td>
 	
 <%
@@ -564,7 +564,7 @@ if (rvsi != null && show_pagination) {
                
  <FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/ajax" >
  
-  <table>
+  <table role='presentation'>
     <tr>
       <td class="textbody" align=left>
     

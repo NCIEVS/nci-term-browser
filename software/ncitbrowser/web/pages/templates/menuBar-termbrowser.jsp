@@ -45,7 +45,7 @@
     
    <% } else { %> 
       <a href="#" onclick="javascript:window.open('<%=request.getContextPath() %>/pages/source_help_info-termbrowser.jsf',
-        '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="13">
+        '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="1">
         Sources</a> 
    
    <% } %> 
@@ -53,16 +53,16 @@
       <% if (hasValueSet) { %>
         |
         <!--
-        <a href="<%= request.getContextPath() %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(_dictionaryName)%>&version=<%=HTTPUtils.cleanXSS(_menubar_tb_version)%>" tabindex="15">Value Sets</a>
+        <a href="<%= request.getContextPath() %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(_dictionaryName)%>&version=<%=HTTPUtils.cleanXSS(_menubar_tb_version)%>" tabindex="2">Value Sets</a>
         -->
         
-        <a href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=HTTPUtils.cleanXSS(_dictionaryName)%>&version=<%=HTTPUtils.cleanXSS(_menubar_tb_version)%>" tabindex="15">Value Sets</a>
+        <a href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=HTTPUtils.cleanXSS(_dictionaryName)%>&version=<%=HTTPUtils.cleanXSS(_menubar_tb_version)%>" tabindex="3">Value Sets</a>
       
       <% } %>
       
       <% if (hasMapping) { %>
         |
-          <a href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=HTTPUtils.cleanXSS(_dictionaryName)%>&version=<%=HTTPUtils.cleanXSS(_menubar_tb_version)%>" tabindex="15">Maps</a>      
+          <a href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=HTTPUtils.cleanXSS(_dictionaryName)%>&version=<%=HTTPUtils.cleanXSS(_menubar_tb_version)%>" tabindex="4">Maps</a>      
       <% } %>     
          
    
@@ -70,13 +70,13 @@
    
       <c:choose>	
         <c:when test="${sessionScope.CartActionBean.count>0}">
-          | <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="14">Cart</a>
+          | <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="5">Cart</a>
         </c:when>
       </c:choose> 
       <%= VisitedConceptUtils.getDisplayLink(request, true) %> 
     </td>
     <td align="right" valign="bottom">
-      <a href="<%= request.getContextPath() %>/pages/help.jsf" tabindex="16">Help</a>
+      <a href="<%= request.getContextPath() %>/pages/help.jsf" tabindex="6">Help</a>
     </td>
     <td width="7"></td>
   </tr>

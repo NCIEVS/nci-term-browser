@@ -41,7 +41,7 @@ String search_results_dictionary = DataUtils.getCSName(info.dictionary);
 %>
 <f:view>
   <!-- Begin Skip Top Navigation -->
-    <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+    <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation --> 
 
 <%  
@@ -92,7 +92,7 @@ if (search_results_dictionary == null || search_results_dictionary.compareTo("NC
 %>
       <!-- Page content -->
       <div class="pagecontent">
-        <a name="evs-content" id="evs-content"></a>
+        <a name="evs-content" id="evs-content" tabindex="-1"></a>
         <%
 
 key = (String) request.getSession().getAttribute("key");
@@ -348,7 +348,7 @@ if (expected_count != actual_count) {
 
         <table class="datatable_960" border="0" width="100%">
           <tr>
-            <table>
+            <table role='presentation'>
               <tr>
                 <td class="texttitle-blue">Result for:</td>
                 <td class="texttitle-gray"><%=matchText%></td>

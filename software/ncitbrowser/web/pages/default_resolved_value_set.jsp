@@ -76,7 +76,7 @@
    <%!private static Logger _logger = Utils.getJspLogger("value_set_search_results.jsp");%>
    <f:view>
       <!-- Begin Skip Top Navigation -->
-      <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</a>
+      <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</a>
       <!-- End Skip Top Navigation -->
       <%@ include file="/pages/templates/header.jsp"%>
       <div class="center-page_960">
@@ -216,7 +216,7 @@
             -->
             <div class="pagecontent"> 
             
-               <a name="evs-content" id="evs-content"></a>               
+               <a name="evs-content" id="evs-content" tabindex="-1"></a>               
                   <div class="tabTableContentContainer">
                   <h:form id="valueSetSearchResultsForm" styleClass="search-form" acceptcharset="UTF-8">
                      <%
@@ -227,14 +227,14 @@
                      <%
                         } else {
                      %>
-                     <table border="0">
+                     <table border="0" role='presentation'>
                         <tr>
                            <td>
                               <table border="0" width="900" >
                                  <tr>
                                     <td align="left" class="texttitle-blue">Value Set:&nbsp;<%=vsd_uri%>
 &nbsp;
-<a href="/ncitbrowser/ajax?action=download&vsd_uri=<%=vsd_uri%>"><img src="/ncitbrowser/images/released_file.gif" alt="Value Set Released Files (FTP Server)" border="0" tabindex="2"></a>
+<a href="/ncitbrowser/ajax?action=download&vsd_uri=<%=vsd_uri%>"><img src="/ncitbrowser/images/released_file.gif" alt="Value Set Released Files (FTP Server)" border="0" tabindex="1"></a>
 </td>                                   
                                     <td align="right">
                                        <h:commandLink

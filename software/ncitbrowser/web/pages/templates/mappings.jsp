@@ -91,10 +91,10 @@ if (type != null && type.compareTo("all") == 0) {
                         
 %> 
           <b>Mapping through NCI Metathesaurus:</b>
-          <table>
+          <table role='presentation'>
           <tr>
               <td>
-                  <table>
+                  <table role='presentation'>
 <%                        
  			for(int lcv=0; lcv<meta_cui_vec.size(); lcv++) {
  			       String meta_cui = (String) meta_cui_vec.elementAt(lcv);

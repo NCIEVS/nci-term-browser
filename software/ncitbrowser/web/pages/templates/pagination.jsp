@@ -4,7 +4,7 @@
 <%@ page import="gov.nih.nci.evs.browser.properties.NCItBrowserProperties" %>
 
 <FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/search_results.jsf?" >
-  <table>
+  <table role='presentation'>
     <tr>
       <td class="textbody" align=left>
     

@@ -307,7 +307,7 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
 
 <f:view>
   <!-- Begin Skip Top Navigation -->
-    <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+    <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation --> 
   <%@ include file="/pages/templates/header.jsp" %>
   <div class="center-page_960">
@@ -355,8 +355,8 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
         <input type="radio" name="algorithm" id="contains" value="contains" alt="Contains"  tabindex="4" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="contains">Contains</label>
-        <input type="radio" name="algorithm" id="exactMatch" value="exactMatch" alt="Exact Match" checked tabindex="4"/><label for="exactMatch">Exact Match&nbsp;</label>
-        <input type="radio" name="algorithm" id="startsWith" value="startsWith" alt="Begins With"  tabindex="4" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="startsWith">Begins With&nbsp;</label>
+        <input type="radio" name="algorithm" id="exactMatch" value="exactMatch" alt="Exact Match" checked tabindex="5"/><label for="exactMatch">Exact Match&nbsp;</label>
+        <input type="radio" name="algorithm" id="startsWith" value="startsWith" alt="Begins With"  tabindex="6" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="startsWith">Begins With&nbsp;</label>
       </td>
     </tr>
     
@@ -369,9 +369,9 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
     </tr>
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
-        <input type="radio" name="searchTarget" id="names" value="names" alt="Names" checked tabindex="5"/><label for="names">Name&nbsp;</label>
-        <input type="radio" name="searchTarget" id="codes" value="codes" alt="Code"  tabindex="5" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
-        <input type="radio" name="searchTarget" id="properties" value="properties" alt="Properties"  tabindex="5"/><label for="properties">Property</label>
+        <input type="radio" name="searchTarget" id="names" value="names" alt="Names" checked tabindex="7"/><label for="names">Name&nbsp;</label>
+        <input type="radio" name="searchTarget" id="codes" value="codes" alt="Code"  tabindex="8" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
+        <input type="radio" name="searchTarget" id="properties" value="properties" alt="Properties"  tabindex="9"/><label for="properties">Property</label>
       </td>
     </tr>
 
@@ -400,12 +400,12 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
   <tr>
     <td align="left" valign="bottom">
       <a href="#" onclick="javascript:window.open('/ncitbrowser/pages/source_help_info-termbrowser.jsf',
-        '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="13">
+        '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="10">
         Sources</a> 
        
     </td>
     <td align="right" valign="bottom">
-      <a href="/ncitbrowser/pages/help.jsf" tabindex="16">Help</a>
+      <a href="/ncitbrowser/pages/help.jsf" tabindex="11">Help</a>
     </td>
     <td width="7"></td>
   </tr>
@@ -467,12 +467,12 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
       <!-- Page content -->
       <div class="pagecontent">
         <div id="contentArea">
-          <a name="evs-content" id="evs-content"></a>
+          <a name="evs-content" id="evs-content" tabindex="-1"></a>
 
 
           <%-- 0 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
           
-          <table border="0">
+          <table border="0" role='presentation'>
           
             <% if (message != null) { %>
               <tr class="textbodyred"><td>
@@ -509,21 +509,21 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/values.gif"
                           alt="Values"
-                          tabindex="3">
+                          tabindex="12">
                         </h:commandButton>                  
                         &nbsp;
                         <h:commandButton id="versions" value="versions" action="#{valueSetBean.selectCSVersionAction}"
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/versions.gif"
                           alt="Versions"
-                          tabindex="2">
+                          tabindex="13">
                         </h:commandButton>
                         &nbsp;
                         <h:commandButton id="xmldefinition" value="xmldefinition" action="#{valueSetBean.exportVSDToXMLAction}"
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/xmldefinitions.gif"
                           alt="XML Definition"
-                          tabindex="2">
+                          tabindex="14">
                         </h:commandButton>                      
                       </td>
                       

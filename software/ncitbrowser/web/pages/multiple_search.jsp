@@ -277,7 +277,7 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
 %>
 <f:view>
   <!-- Begin Skip Top Navigation -->
-    <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+    <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation --> 
   <%@ include file="/pages/templates/header.jsp" %>
   <div class="center-page_960">
@@ -290,7 +290,7 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
         
         <!-- Page content -->
         <div class="pagecontent">
-          <a name="evs-content" id="evs-content"></a>
+          <a name="evs-content" id="evs-content" tabindex="-1"></a>
           
           <%-- 1 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
           
@@ -298,36 +298,36 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
 
 
 <!-- modification starts------------------------------------------------------------------------------------------------>
-<table border="0">
+<table border="0" role='presentation'>
     <tr>
         <td width="650px" >
           <!--
           <table class="termstable_960" border="0">
           -->
-          <table border="0">
+          <table border="0" role='presentation'>
                 <tr>
                   <td>
                   <img src="<%= request.getContextPath() %>/images/AllbutNCIm.gif"
-                    name="selectAllButNCIm" alt="selectAllButNCIm" tabindex="112"
+                    name="selectAllButNCIm" alt="selectAllButNCIm" tabindex="1"
                     onClick="checkAllButOne(document.searchTerm.ontology_list, 'Metathesaurus')" />
 
                   &nbsp;&nbsp; 
                   <img src="<%= request.getContextPath() %>/images/selectAll.gif"
-                    name="selectAll" alt="selectAll" tabindex="111"
+                    name="selectAll" alt="selectAll" tabindex="2"
                     onClick="checkAll(document.searchTerm.ontology_list)" />
 
                   &nbsp;&nbsp; 
                   <h:commandButton id="clear" value="clearall"
                     action="#{userSessionBean.clearAll}"
                     image="#{requestContextPath}/images/clear.gif"
-                    alt="reset" tabindex="113">
+                    alt="reset" tabindex="3">
                   </h:commandButton>
                   
                   &nbsp;&nbsp; 
                   <h:commandButton id="multi_search" value="Search"
                     action="#{userSessionBean.multipleSearchAction}"
                     image="#{requestContextPath}/images/search.gif"
-                    alt="Search" tabindex="114">
+                    alt="Search" tabindex="4">
                   </h:commandButton>
                   </td>
                 </tr>
@@ -366,7 +366,7 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
           <!--
           <table class="termstable_960" border="0">
           -->
-          <table border="0">
+          <table border="0" role='presentation'>
               <tr>
               <%
                 List ontology_list = DataUtils.getOntologyList();
@@ -583,26 +583,26 @@ if (ontologiesToExpandStr == null) {
                 <tr>
                   <td>
                     <img src="<%= request.getContextPath() %>/images/AllbutNCIm.gif"
-                    name="selectAllExceptNCIm" alt="selectAllButNCIm" tabindex="116" 
+                    name="selectAllExceptNCIm" alt="selectAllButNCIm" tabindex="5" 
                     onClick="checkAllButOne(document.searchTerm.ontology_list, 'Metathesaurus')" />
 
                   &nbsp;&nbsp; 
                     <img src="<%= request.getContextPath() %>/images/selectAll.gif"
-                    name="selectAll" alt="selectAll" tabindex="115"
+                    name="selectAll" alt="selectAll" tabindex="6"
                     onClick="checkAll(document.searchTerm.ontology_list)" />
                     
                   &nbsp;&nbsp; 
                   <h:commandButton id="clearall" value="clearall"
                     action="#{userSessionBean.clearAll}"
                     image="#{requestContextPath}/images/clear.gif"
-                    alt="reset" tabindex="117" >
+                    alt="reset" tabindex="7" >
                   </h:commandButton>
                   
                   &nbsp;&nbsp; 
                   <h:commandButton id="multipleSearch" value="Search"
                     action="#{userSessionBean.multipleSearchAction}"
                     image="#{requestContextPath}/images/search.gif"
-                    alt="Search" tabindex="118">
+                    alt="Search" tabindex="8">
                   </h:commandButton>
                   
                   </td>

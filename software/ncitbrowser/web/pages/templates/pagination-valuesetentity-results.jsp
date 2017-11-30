@@ -11,7 +11,7 @@ if (iend_int > match_size_int) {
 
 
 <FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/value_set_entity_search_results.jsf?" >
-  <table>
+  <table role='presentation'>
     <tr>
       <td class="textbody" align=left>
         <b>Results <%=istart_str%>-<%=iend_str%> of&nbsp;<%=match_size%></b>

@@ -700,7 +700,7 @@ body {
 
 <f:view>
   <!-- Begin Skip Top Navigation -->
-  <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+  <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation --> 
   <%@ include file="/pages/templates/header.jsp" %>
   <div class="center-page_960">
@@ -744,7 +744,7 @@ body {
                     onFocus="active = true"
                     onBlur="active = false"
                     onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-                    tabindex="1"/>
+                    tabindex="2"/>
                 <% } %>  
                 
                 <h:commandButton id="valueset_search" value="Search" action="#{valueSetBean.valueSetSearchAction}"
@@ -752,12 +752,12 @@ body {
                   image="#{valueSetSearch_requestContextPath}/images/search.gif"
                     styleClass="searchbox-btn"
                   alt="Search"
-                  tabindex="2">
+                  tabindex="3">
                 </h:commandButton>
                 
                 <h:outputLink
                   value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp"
-                  tabindex="3">
+                  tabindex="4">
                   <h:graphicImage value="/images/search-help.gif" styleClass="searchbox-btn" alt="Search Help"
                     style="border-width:0;"/>
                 </h:outputLink> 
@@ -770,9 +770,9 @@ body {
     
         <tr valign="top" align="left">
         <td align="left" class="textbody">  
-                     <input type="radio" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=check__e%> tabindex="3">Exact Match&nbsp;
-                     <input type="radio" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="3">Begins With&nbsp;
-                     <input type="radio" name="valueset_search_algorithm" value="contains" alt="Contains" <%=check__c%> tabindex="3">Contains
+                     <input type="radio" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=check__e%> tabindex="5"><label for="exactMatch">Exact Match&nbsp;</label>
+                     <input type="radio" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="6"><label for="startsWith">Begins With&nbsp;</label>
+                     <input type="radio" name="valueset_search_algorithm" value="contains" alt="Contains" <%=check__c%> tabindex="7"><label for="contains">Contains</label>
         </td>
         </tr>
         <%
@@ -784,9 +784,9 @@ body {
         <tr valign="top" align="left">
           <td align="left" class="textbody">     
                 <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Code" <%=check_code%> 
-                  alt="Code" tabindex="1" >Code&nbsp;
+                  alt="Code" tabindex="8" ><label for="codes">Code&nbsp;</label>
                 <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Name" <%=check_name%> 
-                  alt="Name" tabindex="1" >Name
+                  alt="Name" tabindex="9" ><label for="names">Name&nbsp;</label>
           </td>
         </tr>  
       </table>
@@ -824,7 +824,7 @@ Search or browse a value set from its home page, or search all value sets at onc
 </p>       
       
         <div id="popupContentArea">
-          <a name="evs-content" id="evs-content"></a>
+          <a name="evs-content" id="evs-content" tabindex="-1"></a>
   
           <table width="580px" cellpadding="3" cellspacing="0" border="0">
           

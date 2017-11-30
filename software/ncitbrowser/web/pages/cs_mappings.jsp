@@ -91,7 +91,7 @@ String warning_msg = (String) request.getSession().getAttribute("warning");
 %>
 <f:view>
   <!-- Begin Skip Top Navigation -->
-    <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+    <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation --> 
   <%@ include file="/pages/templates/header.jsp" %>
   
@@ -247,12 +247,12 @@ String algorithm = gov.nih.nci.evs.browser.utils.HTTPUtils.cleanXSS((String) req
     else
       check_c = "checked";
   %>
-  <table border="0" cellspacing="0" cellpadding="0">
+  <table border="0" cellspacing="0" cellpadding="0" role='presentation'>
     <tr valign="top" align="left">
       <td align="left" class="textbody">
         <input type="radio" name="algorithm" value="contains" alt="Contains" <%=check_c%> tabindex="4">Contains&nbsp;
-        <input type="radio" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="4">Exact Match&nbsp;
-        <input type="radio" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="4">Begins With&nbsp;
+        <input type="radio" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="5"><label for="exactMatch">Exact Match&nbsp;</label>
+        <input type="radio" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="6"><label for="startsWith">Begins With&nbsp;</label>
         <%
           String searchTarget = (String) request.getSession().getAttribute("searchTarget");
           String check_n = "", check_cd = "", check_p = "" , check_r ="";
@@ -272,10 +272,10 @@ String algorithm = gov.nih.nci.evs.browser.utils.HTTPUtils.cleanXSS((String) req
     </tr>
     <tr valign="top" align="left">
       <td align="left" class="textbody">
-        <input type="radio" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="5">Name&nbsp;
-        <input type="radio" name="searchTarget" value="names" alt="Names" <%=check_cd%> tabindex="5">Code&nbsp;
-        <input type="radio" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="5">Property&nbsp;
-        <input type="radio" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="5">Relationship&nbsp;
+        <input type="radio" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="7"><label for="names">Name&nbsp;</label>
+        <input type="radio" name="searchTarget" value="names" alt="Names" <%=check_cd%> tabindex="8"><label for="codes">Code&nbsp;</label>
+        <input type="radio" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="9"><label for="searchTarget2">Property&nbsp;</label>
+        <input type="radio" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="10">Relationship&nbsp;
       </td>
     </tr>
   </table>
@@ -305,7 +305,7 @@ String algorithm = gov.nih.nci.evs.browser.utils.HTTPUtils.cleanXSS((String) req
         
         <!-- Page content -->
         <div class="pagecontent">
-          <a name="evs-content" id="evs-content"></a>
+          <a name="evs-content" id="evs-content" tabindex="-1"></a>
           
           <%-- 1 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
           

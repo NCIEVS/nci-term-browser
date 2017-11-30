@@ -76,7 +76,7 @@
     <td align="left">
       <% if (menubar_isMapping) { %>
         <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-        <a href="<%=request.getContextPath() %>/pages/mapping.jsf?dictionary=<%=menubar_dictionary%>&version=<%=menubar_version%>" tabindex="11">
+        <a href="<%=request.getContextPath() %>/pages/mapping.jsf?dictionary=<%=menubar_dictionary%>&version=<%=menubar_version%>" tabindex="1">
           Mapping</a>
       <% } else if (tree_access_allowed) { %>
         <% if (showMenuItems) { 
@@ -85,7 +85,7 @@
 		  }        
         %>
           <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-          <a href="#" onclick="javascript:window.open('<%=request.getContextPath() %>/pages/hierarchy.jsf?dictionary=<%=hdr_dictionary0%>&version=<%=menubar_version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="12">
+          <a href="#" onclick="javascript:window.open('<%=request.getContextPath() %>/pages/hierarchy.jsf?dictionary=<%=hdr_dictionary0%>&version=<%=menubar_version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="2">
             Hierarchy</a>
         <% } %>
         
@@ -94,21 +94,21 @@
       <% if (hasValueSet) { %>
         <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
 
-        <a href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=menubar_dictionary%>&version=<%=menubar_version%>" tabindex="15">Value Sets</a>
+        <a href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=menubar_dictionary%>&version=<%=menubar_version%>" tabindex="3">Value Sets</a>
       
       
       <% } %>
       
       <% if (hasMapping) { %>
           <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-          <a href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=menubar_dictionary%>&version=<%=menubar_version%>" tabindex="15">Maps</a>      
+          <a href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=menubar_dictionary%>&version=<%=menubar_version%>" tabindex="4">Maps</a>      
       <% } %>
       
  
       <c:choose>
         <c:when test="${sessionScope.CartActionBean.count>0}">
           <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-          <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="14">Cart</a>
+          <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="5">Cart</a>
         </c:when>
       </c:choose>    
 
@@ -118,7 +118,7 @@
     
     
     <td align="right">
-      <a href="<%= request.getContextPath() %>/pages/help.jsf" tabindex="16">Help</a>
+      <a href="<%= request.getContextPath() %>/pages/help.jsf" tabindex="6">Help</a>
     </td>
     <td width="7"></td>
   </tr>

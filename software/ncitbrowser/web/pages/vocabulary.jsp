@@ -46,7 +46,7 @@
       src="<%=request.getContextPath()%>/js/tip_followscroll.js"></script>
     <f:view>
     <!-- Begin Skip Top Navigation -->
-      <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+      <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
     <!-- End Skip Top Navigation -->     
       <%
 JSPUtils.JSPHeaderInfoMore info = new JSPUtils.JSPHeaderInfoMore(request);
@@ -195,7 +195,7 @@ request.getSession().removeAttribute("m");
             <%@ include file="/pages/templates/quickLink.jsp" %>
             <!-- end Quick links bar -->
             <div class="pagecontent">
-              <a name="evs-content" id="evs-content"></a>
+              <a name="evs-content" id="evs-content" tabindex="-1"></a>
               <p><%= helper.getReviewAndAcceptMessage() %></p>
               <textarea cols="87" rows="15" readonly align="left"><%= helper.getLicenseMessages(87) %></textarea>
               <p><%= helper.getButtonMessage() %></p>
@@ -290,7 +290,7 @@ if (display_release_date) {
                               </a>
                          <% } else if (tree_access_allowed) { %>
                               <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-                              <a href="#" onclick="javascript:window.open('<%=request.getContextPath()%>/pages/hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="12">
+                              <a href="#" onclick="javascript:window.open('<%=request.getContextPath()%>/pages/hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="1">
                                 Hierarchy </a>
                          <% } %>       
                                 
@@ -298,16 +298,16 @@ if (display_release_date) {
       <% if (hasValueSet) { %>
         <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
         <!--
-        <a href="<%= request.getContextPath() %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="15">Value Sets</a>
+        <a href="<%= request.getContextPath() %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="2">Value Sets</a>
         -->
-        <a href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="15">Value Sets</a>
+        <a href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="3">Value Sets</a>
 
 
       <% } %>
       
       <% if (hasMapping) { %>
           <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-          <a href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="15">Maps</a>      
+          <a href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="4">Maps</a>      
       <% } %>                                
                                 
 
@@ -315,14 +315,14 @@ if (display_release_date) {
                          <c:choose>   
                            <c:when test="${sessionScope.CartActionBean.count>0}">
                              <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-                             <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="14">Cart</a>
+                             <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="5">Cart</a>
                            </c:when>
                          </c:choose> 
 
                          <%= VisitedConceptUtils.getDisplayLink(request, isPipeDisplayed) %>
                       </td>
                       <td align="right">
-                        <a href="<%=request.getContextPath()%>/pages/help.jsf" tabindex="16">Help</a>
+                        <a href="<%=request.getContextPath()%>/pages/help.jsf" tabindex="6">Help</a>
                       </td>
                       <td width="7"></td>
                     </tr>

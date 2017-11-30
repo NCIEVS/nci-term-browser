@@ -240,7 +240,7 @@
   %>
   <f:view>
     <!-- Begin Skip Top Navigation -->
-      <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+      <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
     <!-- End Skip Top Navigation -->  
     <%@ include file="/pages/templates/header.jsp" %>
     <div class="center-page_960">
@@ -407,8 +407,8 @@
  
 %>
         <div class="pagecontent">
-          <a name="evs-content" id="evs-content"></a>
-          <table>
+          <a name="evs-content" id="evs-content" tabindex="-1"></a>
+          <table role='presentation'>
             <tr>
             <td class="texttitle-blue">Advanced Search</td>
             </tr>
@@ -424,7 +424,7 @@
  <h:form id="advancedSearchForm" styleClass="search-form" acceptcharset="UTF-8">            
                
                
-                <table>
+                <table role='presentation'>
                   <tr><td>
                     <input CLASS="searchbox-input" name="matchText" value="<%=HTTPUtils.cleanXSS(search_string)%>" 
                            onkeypress="return submitEnter('advancedSearchForm:adv_search',event)" tabindex="1">
@@ -436,21 +436,17 @@
                     </h:commandButton>
                   </td></tr>
                   <tr><td>
-                     <table border="0" cellspacing="0" cellpadding="0">
+                     <table border="0" cellspacing="0" cellpadding="0" role='presentation'>
                     <tr valign="top" align="left"><td align="left" class="textbody">
-                      <input type="radio" name="adv_search_algorithm" value="contains" alt="Contains" <%=check__c%> tabindex="3" onclick="refresh_algorithm()"; >Contains
-                      <input type="radio" name="adv_search_algorithm" value="exactMatch" alt="Exact Match" <%=check__e%> tabindex="3" onclick="refresh_algorithm()"; >Exact Match&nbsp;
-                      <input type="radio" name="adv_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="3" onclick="refresh_algorithm()"; >Begins With&nbsp;
+                      <input type="radio" name="adv_search_algorithm" value="contains" alt="Contains" <%=check__c%> tabindex="3" onclick="refresh_algorithm()"; ><label for="contains">Contains</label>
+                      <input type="radio" name="adv_search_algorithm" value="exactMatch" alt="Exact Match" <%=check__e%> tabindex="4" onclick="refresh_algorithm()"; ><label for="exactMatch">Exact Match&nbsp;</label>
+                      <input type="radio" name="adv_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="5" onclick="refresh_algorithm()"; ><label for="startsWith">Begins With&nbsp;</label>
                       
 <%
-String luceneSearch = "<a href=\"#\" onmouseover=\"Tip('<h4>Match Algorithm</h4><table><tr><td>Wildcard (multiple characters)</b>: heart*</td></tr><tr>       <td><b>Wildcard (single character)</b>: he?rt</td></tr><tr><td><b>Fussy match</b>: heart~</td></tr><tr><td><b>Boolean</b>: heart AND attack</td></tr><td><b>Boosting</b>: heart^5 AND attack</td></tr><tr><td><b>Negation</b>: heart -attack</td></tr><tr><td><b>Code Field</b>: code:118797008 AND heart</td></tr></table>')\" onmouseout=\"UnTip()\" >Lucene Search</a>";
+String luceneSearch = "<a href=\"#\" onmouseover=\"Tip('<h4>Match Algorithm</h4><table role='presentation'><tr><td>Wildcard (multiple characters)</b>: heart*</td></tr><tr>       <td><b>Wildcard (single character)</b>: he?rt</td></tr><tr><td><b>Fussy match</b>: heart~</td></tr><tr><td><b>Boolean</b>: heart AND attack</td></tr><td><b>Boosting</b>: heart^5 AND attack</td></tr><tr><td><b>Negation</b>: heart -attack</td></tr><tr><td><b>Code Field</b>: code:118797008 AND heart</td></tr></table>')\" onmouseout=\"UnTip()\" >Lucene Search</a>";
 %>
                       
-                      <input type="radio" name="adv_search_algorithm" value="lucene" alt="Lucene" <%=check__b%> tabindex="3" onclick="refresh_algorithm()"; >
-                      <!--
-                      <%=luceneSearch%>
-                      -->
-                      Lucene
+                      <input type="radio" name="adv_search_algorithm" value="lucene" alt="Lucene" <%=check__b%> tabindex="6" onclick="refresh_algorithm()"; ><label for="lucene">Lucene</label>
                     </td></tr>
                   </table>
                 </td></tr>
@@ -462,7 +458,7 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
 
                 <tr><td>
                   <h:outputLabel id="rel_search_source_Label" value="Source" styleClass="textbody">
-                    <select id="adv_search_source" name="adv_search_source" size="1" tabindex="4">
+                    <select id="adv_search_source" name="adv_search_source" size="1" tabindex="7">
                     <%
                       Vector src_vec = OntologyBean.getSupportedSources(adv_search_vocabulary, adv_search_version);
                       t = "ALL";
@@ -524,16 +520,16 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
                 </td></tr>
 
                 <tr valign="top" align="left"><td align="left" class="textbody">
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Name" alt="Name" <%=check_n2%> onclick="javascript:refresh()" tabindex="5">Name&nbsp;
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Code" alt="Code" <%=check_c2%> onclick="refresh_code()" tabindex="5">Code&nbsp;
+                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Name" alt="Name" <%=check_n2%> onclick="javascript:refresh()" tabindex="8"><label for="names">Name&nbsp;</label>
+                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Code" alt="Code" <%=check_c2%> onclick="refresh_code()" tabindex="9"><label for="codes">Code&nbsp;</label>
 
 <%
 if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
  
      
 %>
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Property" alt="Property" <%=check_p2%> onclick="javascript:refresh()" tabindex="5">Property&nbsp;
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Relationship" alt="Relationship" <%=check_r2%> onclick="javascript:refresh()" tabindex="5">Relationship
+                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Property" alt="Property" <%=check_p2%> onclick="javascript:refresh()" tabindex="10"><label for="searchTarget2">Property&nbsp;</label>
+                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Relationship" alt="Relationship" <%=check_r2%> onclick="javascript:refresh()" tabindex="11"><label for="searchTarget3">Relationship</label>
 <%
 } else {
 %>
@@ -548,7 +544,7 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
                 </td></tr>
 
                 <tr><td>
-                  <table>
+                  <table role='presentation'>
                   <% if (selectSearchOption.equals("Property")) { %>
                     <input type="hidden" name="rel_search_association" id="rel_search_association" value="<%=HTTPUtils.cleanXSS(rel_search_association)%>">
                     <input type="hidden" name="rel_search_rela" id="rel_search_rela" value="<%=HTTPUtils.cleanXSS(rel_search_rela)%>">
@@ -559,7 +555,7 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
                       <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                       <td>
                         <h:outputLabel id="selectPropertyLabel" value="Select one:" styleClass="textbody">
-                          <select id="selectProperty" name="selectProperty" size="1" tabindex="6">
+                          <select id="selectProperty" name="selectProperty" size="1" tabindex="12">
                           <%
                             t = "ALL";
                             if (t.compareTo(selectProperty) == 0) {
@@ -639,8 +635,8 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
                       <td>&nbsp;</td>
                    <td class="textbody">
                       with a
-                        <input type="radio" id="direction" name="direction" value="source" alt="Source" <%=check_source%> tabindex="5"/>source&nbsp;
-                        <input type="radio" id="direction" name="direction" value="target" alt="Target" <%=check_target%> tabindex="5"/>target&nbsp; 
+                        <input type="radio" id="direction" name="direction" value="source" alt="Source" <%=check_source%> tabindex="13"/>source&nbsp;
+                        <input type="radio" id="direction" name="direction" value="target" alt="Target" <%=check_target%> tabindex="14"/>target&nbsp; 
                         concept name matching the search criteria specified above.
                    </td>
                 </tr> 
@@ -648,7 +644,7 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
                 <tr>
                     <td>&nbsp;</td>
                     <td class="textbody">
-                         <table>
+                         <table role='presentation'>
                              <tr><td class="textbody">
                                 Example: [<i>Finger</i>]-->(<i>Anatomic_Structure_Is_Physical_Part_Of</i>)-->[<i>Hand</i>]. 
                              </td></tr>
@@ -704,7 +700,7 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") == 0 && selectSearchOptio
 
 <tr><td>
 <p>
-<table>
+<table role='presentation'>
    <tr><td class="textbody">&nbsp;Examples:</td></tr>
    <tr>
        <td class="textbody">&nbsp;&nbsp;

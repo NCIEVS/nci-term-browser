@@ -209,7 +209,7 @@ if (vsd_vec != null && vsd_vec.size() == 1) {
 
 <f:view>
   <!-- Begin Skip Top Navigation -->
-    <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+    <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation --> 
   <%@ include file="/pages/templates/header.jsp" %>
   <div class="center-page_960">
@@ -425,8 +425,8 @@ if (vsd_vec != null && vsd_vec.size() == 1) {
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
         <input type="radio" name="algorithm" id="contains" value="contains" alt="Contains" <%=check_c%> tabindex="4" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="contains">Contains</label>
-        <input type="radio" name="algorithm" id="exactMatch" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="4"/><label for="exactMatch">Exact Match&nbsp;</label>
-        <input type="radio" name="algorithm" id="startsWith" value="startsWith" alt="Begins With" <%=check_s%> tabindex="4" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="startsWith">Begins With&nbsp;</label>
+        <input type="radio" name="algorithm" id="exactMatch" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="5"/><label for="exactMatch">Exact Match&nbsp;</label>
+        <input type="radio" name="algorithm" id="startsWith" value="startsWith" alt="Begins With" <%=check_s%> tabindex="6" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="startsWith">Begins With&nbsp;</label>
       </td>
     </tr>
     
@@ -441,9 +441,9 @@ if (vsd_vec != null && vsd_vec.size() == 1) {
     </tr>
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
-        <input type="radio" name="searchTarget" id="names" value="names" alt="Names" <%=check_n%> tabindex="5"/><label for="names">Name&nbsp;</label>
-        <input type="radio" name="searchTarget" id="codes" value="codes" alt="Code" <%=check_cd%> tabindex="5" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
-        <input type="radio" name="searchTarget" id="properties" value="properties" alt="Properties" <%=check_p%> tabindex="5"/><label for="properties">Property</label>
+        <input type="radio" name="searchTarget" id="names" value="names" alt="Names" <%=check_n%> tabindex="7"/><label for="names">Name&nbsp;</label>
+        <input type="radio" name="searchTarget" id="codes" value="codes" alt="Code" <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
+        <input type="radio" name="searchTarget" id="properties" value="properties" alt="Properties" <%=check_p%> tabindex="9"/><label for="properties">Property</label>
       </td>
     </tr>
 
@@ -490,7 +490,7 @@ if (vd_uri != null) {
                     value=""
                     disabled="disabled" 
                     onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-                    tabindex="1"/>
+                    tabindex="10"/>
                 <% } else { %>
                   <input CLASS="searchbox-input-2"
                     name="matchText"
@@ -498,7 +498,7 @@ if (vd_uri != null) {
                     onFocus="active = true"
                     onBlur="active = false"
                     onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-                    tabindex="1"/>
+                    tabindex="11"/>
                 <% } %>  
                 
                 <h:commandButton id="valueset_search" value="Search" action="#{valueSetBean.valueSetSearchAction}"
@@ -506,12 +506,12 @@ if (vd_uri != null) {
                   image="#{valueSetSearch_requestContextPath}/images/search.gif"
                     styleClass="searchbox-btn"
                   alt="Search value sets containing matched concepts"
-                  tabindex="2">
+                  tabindex="12">
                 </h:commandButton>
                 
                 <h:outputLink
                   value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp"
-                  tabindex="3">
+                  tabindex="13">
                   <h:graphicImage value="/images/search-help.gif" styleClass="searchbox-btn" alt="Search Help"
                     style="border-width:0;"/>
                 </h:outputLink> 
@@ -524,9 +524,9 @@ if (vd_uri != null) {
     
         <tr valign="top" align="left">
         <td align="left" class="textbody">  
-                     <input type="radio" id="valueset_search_algorithm" name="valueset_search_algorithm" value="contains" alt="Contains" <%=check__c%> tabindex="3">Contains
-                     <input type="radio" id="valueset_search_algorithm" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=check__e%> tabindex="3">Exact Match&nbsp;
-                     <input type="radio" id="valueset_search_algorithm" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="3">Begins With&nbsp;
+                     <input type="radio" id="valueset_search_algorithm" name="valueset_search_algorithm" value="contains" alt="Contains" <%=check__c%> tabindex="14"><label for="contains">Contains</label>
+                     <input type="radio" id="valueset_search_algorithm" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=check__e%> tabindex="15"><label for="exactMatch">Exact Match&nbsp;</label>
+                     <input type="radio" id="valueset_search_algorithm" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="16"><label for="startsWith">Begins With&nbsp;</label>
         </td>
         </tr>
         <%
@@ -539,11 +539,11 @@ if (vd_uri != null) {
           <td align="left" class="textbody"> 
           
                 <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Name" <%=check_name%> 
-                  alt="Name" tabindex="1" onclick="javascript:refresh()" >Name&nbsp;
+                  alt="Name" tabindex="17" onclick="javascript:refresh()" ><label for="names">Name&nbsp;</label>
           
           
                 <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Code" <%=check_code%> 
-                  alt="Code" tabindex="1" onclick="javascript:refresh()" >Code
+                  alt="Code" tabindex="18" onclick="javascript:refresh()" ><label for="codes">Code&nbsp;</label>
           </td>
         </tr>
       </table>
@@ -579,12 +579,12 @@ if (vd_uri != null) {
       <!-- Page content -->
       <div class="pagecontent">
         <div id="contentArea">
-          <a name="evs-content" id="evs-content"></a>
+          <a name="evs-content" id="evs-content" tabindex="-1"></a>
 
 
           <%-- 0 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
           
-          <table border="0">
+          <table border="0" role='presentation'>
             <% if (vsd_vec != null && vsd_vec.size() > 1) { %>     
                 <tr>
                   <td class="texttitle-blue">Matched Value Sets:</td>
@@ -611,21 +611,21 @@ if (vd_uri != null) {
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/values.gif"
                           alt="Values"
-                          tabindex="3">
+                          tabindex="19">
                         </h:commandButton>                  
                         &nbsp;
                         <h:commandButton id="versions" value="versions" action="#{valueSetBean.selectCSVersionAction}"
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/versions.gif"
                           alt="Versions"
-                          tabindex="2">
+                          tabindex="20">
                         </h:commandButton>
                         &nbsp;
                         <h:commandButton id="xmldefinition" value="xmldefinition" action="#{valueSetBean.exportVSDToXMLAction}"
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/xmldefinitions.gif"
                           alt="XML Definition"
-                          tabindex="2">
+                          tabindex="21">
                         </h:commandButton>                      
                       </td>
                     </tr>
@@ -781,21 +781,21 @@ if (vsd_vec != null && vsd_vec.size() == 1) {
                        onclick="javascript:cursor_wait();"
                        image="#{valueSetSearch_requestContextPath}/images/values.gif"
                        alt="Values"
-                       tabindex="3">
+                       tabindex="22">
                      </h:commandButton>                  
                    &nbsp;
                      <h:commandButton id="versions" value="versions" action="#{valueSetBean.selectCSVersionAction}"
                        onclick="javascript:cursor_wait();"
                        image="#{valueSetSearch_requestContextPath}/images/versions.gif"
                        alt="Versions"
-                       tabindex="2">
+                       tabindex="23">
                      </h:commandButton>
                    &nbsp;
                      <h:commandButton id="xmldefinition" value="xmldefinition" action="#{valueSetBean.exportVSDToXMLAction}"
                        onclick="javascript:cursor_wait();"
                        image="#{valueSetSearch_requestContextPath}/images/xmldefinitions.gif"
                        alt="XML Definition"
-                       tabindex="2">
+                       tabindex="24">
                      </h:commandButton>
                   </td></tr>
 

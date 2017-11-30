@@ -67,7 +67,7 @@ if (license_display_value != null && (license_display_value.compareTo("show") ==
 
 
 %>
-  <table border="0">
+  <table border="0" role='presentation'>
     <tr>
       <td class="textbody" width="388px" valign="top" align="left">
       <%
@@ -127,7 +127,7 @@ if (license_display_value != null && (license_display_value.compareTo("show") ==
 
 
       <td valign="top" align="right">
-        <table border="0">
+        <table border="0" role='presentation'>
           <tr valign="top">
             <td width="10px"></td>
             <td width="77px">

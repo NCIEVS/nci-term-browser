@@ -76,7 +76,7 @@
 
   <f:view>
     <!-- Begin Skip Top Navigation -->
-      <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+      <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
     <!-- End Skip Top Navigation -->  
     <%@ include file="/pages/templates/header.jsp" %>
     <div class="center-page_960">
@@ -155,12 +155,12 @@ request.getSession().setAttribute("matchText", match_text);
                 <h:graphicImage value="/images/search-help.gif" alt="Search Help"
                 style="border-width:0;" />
               </h:outputLink>
-              <table border="0" cellspacing="0" cellpadding="0">
+              <table border="0" cellspacing="0" cellpadding="0" role='presentation'>
                 <tr valign="top" align="left">
                   <td align="left" class="textbody">
-        <input type="radio" id="contains"   name="algorithm" value="contains"   alt="Contains"    <%=check_c%> tabindex="4" onclick="onAlgorithmChanged('searchTerm');">Contains&nbsp;
-        <input type="radio" id="exactMatch" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="4">Exact Match&nbsp;
-        <input type="radio" id="startsWith" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="4" onclick="onAlgorithmChanged('searchTerm');">Begins With&nbsp;
+        <input type="radio" id="contains"   name="algorithm" value="contains"   alt="Contains"    <%=check_c%> tabindex="1" onclick="onAlgorithmChanged('searchTerm');">Contains&nbsp;
+        <input type="radio" id="exactMatch" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="2"><label for="exactMatch">Exact Match&nbsp;</label>
+        <input type="radio" id="startsWith" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="3" onclick="onAlgorithmChanged('searchTerm');"><label for="startsWith">Begins With&nbsp;</label>
                   </td>
                 </tr>
                 <tr align="left">
@@ -169,10 +169,10 @@ request.getSession().setAttribute("matchText", match_text);
                 <tr valign="top" align="left">
                   <td align="left" class="textbody">
                   
-        <input type="radio" id="names" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="5">Name&nbsp;
-        <input type="radio" id="codes" name="searchTarget" value="codes" alt="Codes" <%=check_cd%> tabindex="5" onclick="onCodeButtonPressed('searchTerm');">Code&nbsp;
-        <input type="radio" id="properties" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="5">Property&nbsp;
-        <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="5">Relationship&nbsp;
+        <input type="radio" id="names" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="4"><label for="names">Name&nbsp;</label>
+        <input type="radio" id="codes" name="searchTarget" value="codes" alt="Codes" <%=check_cd%> tabindex="5" onclick="onCodeButtonPressed('searchTerm');"><label for="codes">Code&nbsp;</label>
+        <input type="radio" id="properties" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="6"><label for="searchTarget2">Property&nbsp;</label>
+        <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="7">Relationship&nbsp;
 
 
 <input type="hidden" name="selected_vocabularies" id="selected_vocabularies" value="<%=ontologiesToSearchOnStr%>">
@@ -196,7 +196,7 @@ request.getSession().setAttribute("matchText", match_text);
     <!-- end Quick links bar -->
     <!-- Page content -->
     <div class="pagecontent">
-      <a name="evs-content" id="evs-content"></a>
+      <a name="evs-content" id="evs-content" tabindex="-1"></a>
       
       
       <%
@@ -317,7 +317,7 @@ String next_page_num_str = Integer.toString(next_page_num);
         <table width="900px">
           <tr>
             <td>
-              <table>
+              <table role='presentation'>
                 <tr>
                   <td class="texttitle-blue">Result for:</td>
                   <td class="texttitle-gray"><%=match_text%></td>

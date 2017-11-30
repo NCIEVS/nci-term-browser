@@ -35,7 +35,7 @@
 <body onLoad="document.forms.searchTerm.matchText.focus();">
 <f:view>
     <!-- Begin Skip Top Navigation -->
-      <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+      <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
     <!-- End Skip Top Navigation --> 
   <%
   JSPUtils.JSPHeaderInfoMore info = new JSPUtils.JSPHeaderInfoMore(request);
@@ -181,54 +181,54 @@
           <% Boolean[] isPipeDisplayed = new Boolean[] { Boolean.FALSE }; %>
           <% if (vocabulary_home_isMapping) { %>
             <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-            <a href="<%=request.getContextPath() %>/pages/mapping.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_dictionary)%>&version=<%=menubar_version%>" tabindex="11">
+            <a href="<%=request.getContextPath() %>/pages/mapping.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_dictionary)%>&version=<%=menubar_version%>" tabindex="1">
               Mapping</a>
 
           <% } else if (tree_access_allowed) { %>
             <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-            <a href="#" onclick="javascript:window.open('<%=request.getContextPath() %>/pages/hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="12">
+            <a href="#" onclick="javascript:window.open('<%=request.getContextPath() %>/pages/hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');" tabindex="2">
               Hierarchy</a>
           <% } %>
 
       <% if (hasValueSet) { %>
         <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-        <a href="<%= request.getContextPath() %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_dictionary)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="15">Value Sets</a>
+        <a href="<%= request.getContextPath() %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_dictionary)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="3">Value Sets</a>
       <% } %>
       
       <% if (hasMapping) { %>
           <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-          <a href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_dictionary)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="15">Maps</a>      
+          <a href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_dictionary)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="4">Maps</a>      
       <% } %>
       
  <!--   
     
           <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-          <a href="<%= request.getContextPath() %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_dictionary)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="15">
+          <a href="<%= request.getContextPath() %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_dictionary)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="5">
             Value Sets</a>
       
           <% if (map_scheme_vec != null && map_scheme_vec.size() > 0) { %>
             <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-            <a href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_dictionary)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="15">
+            <a href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_dictionary)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>" tabindex="6">
               Maps</a>      
           <% } %>      
  -->   
           <c:choose>	
             <c:when test="${sessionScope.CartActionBean.count>0}">
               <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-              <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="14">Cart</a>
+              <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="7">Cart</a>
             </c:when>
           </c:choose>
 
 <!--          
           <% if (menubar_scheme0.compareTo("NCI Thesaurus") == 0) { %>
             <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-            <a href="<%= request.getContextPath() %>/pages/subset.jsf" tabindex="15">Subsets</a>
+            <a href="<%= request.getContextPath() %>/pages/subset.jsf" tabindex="8">Subsets</a>
           <% } %>
 -->          
           <%= VisitedConceptUtils.getDisplayLink(request, isPipeDisplayed) %>
         </td>
         <td align="right">
-          <a href="<%= request.getContextPath() %>/pages/help.jsf" tabindex="16">Help</a>
+          <a href="<%= request.getContextPath() %>/pages/help.jsf" tabindex="9">Help</a>
         </td>
         <td width="7"></td>
       </tr>
@@ -242,7 +242,7 @@
 <%@ include file="/pages/templates/quickLink.jsp" %>
 <!-- end Quick links bar -->
 <div class="pagecontent">
-      <a name="evs-content" id="evs-content"></a>
+      <a name="evs-content" id="evs-content" tabindex="-1"></a>
       <%@ include file="/pages/templates/welcome-other.jsp" %>
       <%@ include file="/pages/templates/nciFooter.jsp" %>
       <!-- end Page content -->

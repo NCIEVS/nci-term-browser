@@ -22,7 +22,7 @@
   <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
   <f:view>
   <!-- Begin Skip Top Navigation -->
-    <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
+    <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
   <!-- End Skip Top Navigation -->  
 
   <div id="popupContainer">
@@ -45,7 +45,7 @@
         </table>
         <div><img src="<%=basePath%>/images/termbrowser_popup_banner.gif" width="612" height="56" alt="NCI Thesaurus" title="" border="0" /></div>
         <div id="popupContentArea">
-          <a name="evs-content" id="evs-content"></a>
+          <a name="evs-content" id="evs-content" tabindex="-1"></a>
           <!-- Term Type content -->
           <table width="580px" cellpadding="3" cellspacing="0" border="0">
             <tr class="pageTitle">

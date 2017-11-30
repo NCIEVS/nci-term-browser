@@ -23,7 +23,7 @@
    <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_followscroll.js"></script>
    <f:view>
       <!-- Begin Skip Top Navigation -->
-      <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</a>
+      <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">skip navigation links</a>
       <!-- End Skip Top Navigation -->
       <h:form id="conceptForm" acceptcharset="UTF-8">
          <script language="javascript" type="text/javascript">
@@ -86,7 +86,7 @@
                <%@ include file="/pages/templates/content-header-no-searchbox.jsp"%>
                <!-- Page content -->
                <div class="pagecontent">
-                  <a name="evs-content" id="evs-content"></a>
+                  <a name="evs-content" id="evs-content" tabindex="-1"></a>
                   <table border="0" width="700px">
                      <%
                      	String message = (String) request.getSession().getAttribute("message");
@@ -101,7 +101,7 @@
                      %>
                      <tr>
                         <td>
-                           <table border="0">
+                           <table border="0" role='presentation'>
                               <tr>
                                  <td class="texttitle-blue">Cart</td>
                                  <td class="texttitle-gray">(<h:outputText value="#{CartActionBean.count}" />)</td>

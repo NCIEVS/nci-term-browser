@@ -20,7 +20,7 @@ String next_page_num_str = Integer.toString(next_page_num);
 
 
 <FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/resolved_value_set.jsf?nav_type=valuesets" >
-  <table>
+  <table role='presentation'>
     <tr>
       <td class="textbody" align=left>
     

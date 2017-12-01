@@ -205,21 +205,6 @@
             <input type="radio" name="algorithm" value="contains"   alt="Contains"    <%=check_c%> tabindex="4" onclick="onAlgorithmChanged('searchTerm');"><label for="contains">Contains</label>
             <input type="radio" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="5"><label for="exactMatch">Exact Match&nbsp;</label>
             <input type="radio" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="6" onclick="onAlgorithmChanged('searchTerm');"><label for="startsWith">Begins With&nbsp;</label>
-            
-            <!--
-            <input type="radio" name="algorithm" id="algorithm1"
-               value="exactMatch" alt="Exact Match" <%=HTTPUtils.cleanXSS(check_e)%>
-               tabindex="7" />
-            <label for="algorithm1">Exact Match&nbsp;</label>
-            <input type="radio" name="algorithm" id="algorithm2" value="startsWith" alt="Begins With"
-               <%=HTTPUtils.cleanXSS(check_s)%> tabindex="8" onclick="onAlgorithmChanged('searchTerm');"/>
-            <label for="algorithm2">Begins With&nbsp;</label>
-            <input type="radio" name="algorithm" id="algorithm3" value="contains" alt="Contains" <%=HTTPUtils.cleanXSS(check_c)%>
-               tabindex="9" onclick="onAlgorithmChanged('searchTerm');"/>
-            <label for="algorithm3">Contains</label>
-            -->
-            
-            
          </td>
       </tr>
       <tr align="left">
@@ -229,30 +214,11 @@
       <tr valign="top" align="left">
          <td align="left" class="textbody" colspan="2">
 
-	  <input type="radio" id="searchTarget" name="searchTarget" value="names"         alt="Name"         <%=check_n%>  tabindex="10"><label for="names">Name&nbsp;</label>
-	  <input type="radio" id="searchTarget" name="searchTarget" value="codes"         alt="Code"         <%=check_cd%> tabindex="11" onclick="onCodeButtonPressed('searchTerm');" ><label for="codes">Code&nbsp;</label>
-	  <input type="radio" id="searchTarget" name="searchTarget" value="properties"    alt="Property"     <%=check_p%>  tabindex="12"><label for="searchTarget2">Property&nbsp;</label>
-	  <input type="radio" id="searchTarget" name="searchTarget" value="relationships" alt="Relationship" <%=check_r%>  tabindex="13"><label for="searchTarget3">Relationship</label>
-         
-            <!--
-            <input type="radio" name="searchTarget" id="searchTarget"
-               value="names" alt="Names" <%=HTTPUtils.cleanXSS(check_n)%> tabindex="14" />
-            <label for="searchTarget0">Name&nbsp;</label> 
-            
-            <input type="radio" name="searchTarget" id="searchTarget"
-               value="codes" alt="Codes" <%=HTTPUtils.cleanXSS(check_cd)%> tabindex="15" onclick="onCodeButtonPressed('searchTerm');" />
-            <label for="searchTarget1">Code&nbsp;</label> 
-            
-            <input type="radio" name="searchTarget" id="searchTarget"
-               value="properties" alt="Properties" <%=HTTPUtils.cleanXSS(check_p)%>
-               tabindex="16" />
-            <label for="searchTarget2">Property&nbsp;</label>   
-            <input type="radio" name="searchTarget" id="searchTarget"
-               value="relationships" alt="Relationships" <%=HTTPUtils.cleanXSS(check_r)%>
-               tabindex="17" />
-            <label for="searchTarget3">Relationship</label> 
-            -->
-            
+	  <input type="radio" id="names" name="searchTarget" value="names"         alt="Name"         <%=check_n%>  tabindex="10"><label for="names">Name&nbsp;</label>
+	  <input type="radio" id="codes" name="searchTarget" value="codes"         alt="Code"         <%=check_cd%> tabindex="11" onclick="onCodeButtonPressed('searchTerm');" ><label for="codes">Code&nbsp;</label>
+	  <input type="radio" id="properties" name="searchTarget" value="properties"    alt="Property"     <%=check_p%>  tabindex="12"><label for="properties">Property&nbsp;</label>
+	  <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationship" <%=check_r%>  tabindex="13"><label for="relationships">Relationship</label>
+           
          </td>
       </tr>
       <tr>

@@ -82,8 +82,8 @@
 
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
-        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Name" alt="Name" <%=check_n%> tabindex="7"/><label for="names">Name&nbsp;</label>
-        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Code" alt="Code" <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
+        <input type="radio" name="selectValueSetSearchOption" id="Name" value="Name" alt="Name" <%=check_n%> tabindex="7"/><label for="Name">Name&nbsp;</label>
+        <input type="radio" name="selectValueSetSearchOption" id="Code" value="Code" alt="Code" <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="Code">Code&nbsp;</label>
       </td>
     </tr>
   

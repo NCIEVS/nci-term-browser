@@ -290,7 +290,7 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
         
         <!-- Page content -->
         <div class="pagecontent">
-          <a name="evs-content" id="evs-content" tabindex="-1"></a>
+          <a name="evs-content" id="evs-content" tabindex="1"></a>
           
           <%-- 1 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
           
@@ -308,26 +308,26 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
                 <tr>
                   <td>
                   <img src="<%= request.getContextPath() %>/images/AllbutNCIm.gif"
-                    name="selectAllButNCIm" alt="selectAllButNCIm" tabindex="1"
+                    name="selectAllButNCIm" alt="selectAllButNCIm" tabindex="2"
                     onClick="checkAllButOne(document.searchTerm.ontology_list, 'Metathesaurus')" />
 
                   &nbsp;&nbsp; 
                   <img src="<%= request.getContextPath() %>/images/selectAll.gif"
-                    name="selectAll" alt="selectAll" tabindex="2"
+                    name="selectAll" alt="selectAll" tabindex="3"
                     onClick="checkAll(document.searchTerm.ontology_list)" />
 
                   &nbsp;&nbsp; 
                   <h:commandButton id="clear" value="clearall"
                     action="#{userSessionBean.clearAll}"
                     image="#{requestContextPath}/images/clear.gif"
-                    alt="reset" tabindex="3">
+                    alt="reset" tabindex="4">
                   </h:commandButton>
                   
                   &nbsp;&nbsp; 
                   <h:commandButton id="multi_search" value="Search"
                     action="#{userSessionBean.multipleSearchAction}"
                     image="#{requestContextPath}/images/search.gif"
-                    alt="Search" tabindex="4">
+                    alt="Search" tabindex="5">
                   </h:commandButton>
                   </td>
                 </tr>
@@ -583,26 +583,26 @@ if (ontologiesToExpandStr == null) {
                 <tr>
                   <td>
                     <img src="<%= request.getContextPath() %>/images/AllbutNCIm.gif"
-                    name="selectAllExceptNCIm" alt="selectAllButNCIm" tabindex="5" 
+                    name="selectAllExceptNCIm" alt="selectAllButNCIm" tabindex="6" 
                     onClick="checkAllButOne(document.searchTerm.ontology_list, 'Metathesaurus')" />
 
                   &nbsp;&nbsp; 
                     <img src="<%= request.getContextPath() %>/images/selectAll.gif"
-                    name="selectAll" alt="selectAll" tabindex="6"
+                    name="selectAll" alt="selectAll" tabindex="7"
                     onClick="checkAll(document.searchTerm.ontology_list)" />
                     
                   &nbsp;&nbsp; 
                   <h:commandButton id="clearall" value="clearall"
                     action="#{userSessionBean.clearAll}"
                     image="#{requestContextPath}/images/clear.gif"
-                    alt="reset" tabindex="7" >
+                    alt="reset" tabindex="8" >
                   </h:commandButton>
                   
                   &nbsp;&nbsp; 
                   <h:commandButton id="multipleSearch" value="Search"
                     action="#{userSessionBean.multipleSearchAction}"
                     image="#{requestContextPath}/images/search.gif"
-                    alt="Search" tabindex="8">
+                    alt="Search" tabindex="9">
                   </h:commandButton>
                   
                   </td>

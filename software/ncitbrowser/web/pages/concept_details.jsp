@@ -486,7 +486,7 @@ if (!StringUtils.isNull(b)) {
 %>
                   </h:form>  
  
-               <a name="evs-content" id="evs-content" tabindex="-1"></a>
+               <a name="evs-content" id="evs-content" tabindex="2"></a>
                <table border="0" cellpadding="0" cellspacing="0" width="100%">
                   <tr>
                   <%

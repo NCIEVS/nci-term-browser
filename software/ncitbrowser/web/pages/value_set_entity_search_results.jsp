@@ -398,9 +398,9 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 
         <tr valign="top" align="left">
         <td align="left" class="textbody">
-                     <input type="radio" name="valueset_search_algorithm" value="contains"   <%=check__c%> alt="Contains" checked tabindex="4"  onclick="onVSAlgorithmChanged();"><label for="contains">Contains</label>
-                     <input type="radio" name="valueset_search_algorithm" value="exactMatch" <%=check__e%> alt="Exact Match"  tabindex="5"><label for="exactMatch">Exact Match&nbsp;</label>
-                     <input type="radio" name="valueset_search_algorithm" value="startsWith" <%=check__s%> alt="Begins With"  tabindex="6"  onclick="onVSAlgorithmChanged();"><label for="startsWith">Begins With&nbsp;</label>
+                     <input type="radio" id="contains" name="valueset_search_algorithm" value="contains"   <%=check__c%> alt="Contains" checked tabindex="4"  onclick="onVSAlgorithmChanged();"><label for="contains">Contains</label>
+                     <input type="radio" id="exactMatch" name="valueset_search_algorithm" value="exactMatch" <%=check__e%> alt="Exact Match"  tabindex="5"><label for="exactMatch">Exact Match&nbsp;</label>
+                     <input type="radio" id="startsWith" name="valueset_search_algorithm" value="startsWith" <%=check__s%> alt="Begins With"  tabindex="6"  onclick="onVSAlgorithmChanged();"><label for="startsWith">Begins With&nbsp;</label>
         </td>  
         </tr>
 
@@ -447,7 +447,7 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
       <!-- Page content -->
       <div class="pagecontent">
 <div>
-          <a name="evs-content" id="evs-content" tabindex="-1"></a>
+          <a name="evs-content" id="evs-content" tabindex="9"></a>
          
             <% if (!DataUtils.isNullOrBlank(message)) {
 		      if (message.compareToIgnoreCase("No match found.") == 0) {

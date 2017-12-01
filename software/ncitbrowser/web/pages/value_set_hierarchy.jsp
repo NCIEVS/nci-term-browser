@@ -516,7 +516,7 @@ Search or browse each from its home page, or search all value sets at once from 
           </table>
           
           
-        <a name="evs-content" id="evs-content" tabindex="-1"></a>
+        <a name="evs-content" id="evs-content" tabindex="1"></a>
 
 
           <!-- Tree content -->

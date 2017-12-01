@@ -770,9 +770,9 @@ body {
     
         <tr valign="top" align="left">
         <td align="left" class="textbody">  
-                     <input type="radio" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=check__e%> tabindex="5"><label for="exactMatch">Exact Match&nbsp;</label>
-                     <input type="radio" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="6"><label for="startsWith">Begins With&nbsp;</label>
-                     <input type="radio" name="valueset_search_algorithm" value="contains" alt="Contains" <%=check__c%> tabindex="7"><label for="contains">Contains</label>
+                     <input type="radio" id="exactMatch" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=check__e%> tabindex="5"><label for="exactMatch">Exact Match&nbsp;</label>
+                     <input type="radio" id="startsWith" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="6"><label for="startsWith">Begins With&nbsp;</label>
+                     <input type="radio" id="contains" name="valueset_search_algorithm" value="contains" alt="Contains" <%=check__c%> tabindex="7"><label for="contains">Contains</label>
         </td>
         </tr>
         <%
@@ -824,7 +824,7 @@ Search or browse a value set from its home page, or search all value sets at onc
 </p>       
       
         <div id="popupContentArea">
-          <a name="evs-content" id="evs-content" tabindex="-1"></a>
+          <a name="evs-content" id="evs-content" tabindex="10"></a>
   
           <table width="580px" cellpadding="3" cellspacing="0" border="0">
           

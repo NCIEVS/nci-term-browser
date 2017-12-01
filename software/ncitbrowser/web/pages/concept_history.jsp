@@ -75,7 +75,7 @@
       </div>
       <!-- end nci popup banner -->
       <div id="popupMainArea">
-        <a name="evs-content" id="evs-content" tabindex="-1"></a>      
+        <a name="evs-content" id="evs-content" tabindex="1"></a>      
         <table class="evsLogoBg" cellspacing="0" cellpadding="0" border="0">
         <tr>
           <td valign="top">

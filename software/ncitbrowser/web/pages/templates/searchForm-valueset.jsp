@@ -144,9 +144,9 @@ if (_selectValueSetSearchOption.compareTo("CodingScheme") == 0) {
    		  <table border="0" cellspacing="0" cellpadding="0" role='presentation'>
 
 		    <tr valign="top" align="left"><td align="left" class="textbody">
-		      <input type="radio" name="valueset_search_algorithm" value="contains" alt="Contains" <%=_check__c%> tabindex="5"><label for="contains">Contains</label>
-		      <input type="radio" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=_check__e%> tabindex="6"><label for="exactMatch">Exact Match&nbsp;</label>
-		      <input type="radio" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=_check__s%> tabindex="7"><label for="startsWith">Begins With&nbsp;</label>
+		      <input type="radio" id="contains" name="valueset_search_algorithm" value="contains" alt="Contains" <%=_check__c%> tabindex="5"><label for="contains">Contains</label>
+		      <input type="radio" id="exactMatch" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=_check__e%> tabindex="6"><label for="exactMatch">Exact Match&nbsp;</label>
+		      <input type="radio" id="startsWith" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=_check__s%> tabindex="7"><label for="startsWith">Begins With&nbsp;</label>
 		    </td></tr>
 		    
 

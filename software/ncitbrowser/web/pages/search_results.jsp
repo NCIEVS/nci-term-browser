@@ -92,7 +92,7 @@ if (search_results_dictionary == null || search_results_dictionary.compareTo("NC
 %>
       <!-- Page content -->
       <div class="pagecontent">
-        <a name="evs-content" id="evs-content" tabindex="-1"></a>
+        <a name="evs-content" id="evs-content" tabindex="1"></a>
         <%
 
 key = (String) request.getSession().getAttribute("key");

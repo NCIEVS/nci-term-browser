@@ -196,7 +196,7 @@ request.getSession().setAttribute("matchText", match_text);
     <!-- end Quick links bar -->
     <!-- Page content -->
     <div class="pagecontent">
-      <a name="evs-content" id="evs-content" tabindex="-1"></a>
+      <a name="evs-content" id="evs-content" tabindex="8"></a>
       
       
       <%

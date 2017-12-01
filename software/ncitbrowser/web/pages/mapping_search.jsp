@@ -354,7 +354,7 @@ String algorithm = gov.nih.nci.evs.browser.utils.HTTPUtils.cleanXSS((String) req
         
         <!-- Page content -->
         <div class="pagecontent">
-          <a name="evs-content" id="evs-content" tabindex="-1"></a>
+          <a name="evs-content" id="evs-content" tabindex="11"></a>
           
           <%-- 1 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
           

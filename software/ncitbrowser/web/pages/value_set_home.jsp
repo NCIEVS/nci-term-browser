@@ -467,7 +467,7 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
       <!-- Page content -->
       <div class="pagecontent">
         <div id="contentArea">
-          <a name="evs-content" id="evs-content" tabindex="-1"></a>
+          <a name="evs-content" id="evs-content" tabindex="12"></a>
 
 
           <%-- 0 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
@@ -509,21 +509,21 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/values.gif"
                           alt="Values"
-                          tabindex="12">
+                          tabindex="13">
                         </h:commandButton>                  
                         &nbsp;
                         <h:commandButton id="versions" value="versions" action="#{valueSetBean.selectCSVersionAction}"
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/versions.gif"
                           alt="Versions"
-                          tabindex="13">
+                          tabindex="14">
                         </h:commandButton>
                         &nbsp;
                         <h:commandButton id="xmldefinition" value="xmldefinition" action="#{valueSetBean.exportVSDToXMLAction}"
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/xmldefinitions.gif"
                           alt="XML Definition"
-                          tabindex="14">
+                          tabindex="15">
                         </h:commandButton>                      
                       </td>
                       

@@ -195,7 +195,7 @@ _logger.debug("mapping_search_results.jsp version: " + mapping_version);
       
       <!-- Page content -->
       <div class="pagecontent">
-	    <a name="evs-content" id="evs-content" tabindex="-1"></a>
+	    <a name="evs-content" id="evs-content" tabindex="1"></a>
 
 
                               <table class="textbody" border="0" width="100%">

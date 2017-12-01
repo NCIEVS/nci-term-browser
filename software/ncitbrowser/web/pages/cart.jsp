@@ -86,7 +86,7 @@
                <%@ include file="/pages/templates/content-header-no-searchbox.jsp"%>
                <!-- Page content -->
                <div class="pagecontent">
-                  <a name="evs-content" id="evs-content" tabindex="-1"></a>
+                  <a name="evs-content" id="evs-content" tabindex="1"></a>
                   <table border="0" width="700px">
                      <%
                      	String message = (String) request.getSession().getAttribute("message");

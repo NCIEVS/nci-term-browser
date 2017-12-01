@@ -70,7 +70,7 @@
       <!-- end Quick links bar -->
       <!-- Page content -->
       <div class="pagecontent">
-        <a name="evs-content" id="evs-content" tabindex="-1"></a>
+        <a name="evs-content" id="evs-content" tabindex="1"></a>
         <p <%=fontColor%>><%= helper.getReviewAndAcceptMessage() %></p>
         <% if (rendered) { %>
           <textarea cols="87" rows="15" readonly align="left"><%= helper.getLicenseMessages(87) %></textarea>

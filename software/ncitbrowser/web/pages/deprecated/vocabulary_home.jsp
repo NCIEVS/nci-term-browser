@@ -242,7 +242,7 @@
 <%@ include file="/pages/templates/quickLink.jsp" %>
 <!-- end Quick links bar -->
 <div class="pagecontent">
-      <a name="evs-content" id="evs-content" tabindex="-1"></a>
+      <a name="evs-content" id="evs-content" tabindex="10"></a>
       <%@ include file="/pages/templates/welcome-other.jsp" %>
       <%@ include file="/pages/templates/nciFooter.jsp" %>
       <!-- end Page content -->

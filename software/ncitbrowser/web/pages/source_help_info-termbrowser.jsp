@@ -45,7 +45,7 @@
         </table>
         <div><img src="<%=basePath%>/images/termbrowser_popup_banner.gif" width="612" height="56" alt="NCI Thesaurus" title="" border="0" /></div>
         <div id="popupContentArea">
-          <a name="evs-content" id="evs-content" tabindex="-1"></a>
+          <a name="evs-content" id="evs-content" tabindex="1"></a>
           <!-- Term Type content -->
           <table width="580px" cellpadding="3" cellspacing="0" border="0">
             <tr class="pageTitle">

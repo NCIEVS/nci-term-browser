@@ -134,7 +134,7 @@
         <div id="main-area_960">
           <%@ include file="/pages/templates/content-header.jsp" %>
           <div class="pagecontent">
-            <a name="evs-content" id="evs-content" tabindex="-1"></a>
+            <a name="evs-content" id="evs-content" tabindex="1"></a>
             <div class="texttitle-blue">Contact Us</div>
             <hr></hr>
 

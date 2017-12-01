@@ -56,7 +56,7 @@
       <!-- end Quick links bar -->
       <!-- Page content -->
       <div class="pagecontent">
-      	<a name="evs-content" id="evs-content" tabindex="-1"></a>
+      	<a name="evs-content" id="evs-content" tabindex="1"></a>
         <p>
           To access <b><%=display_name%></b>, please review and accept the copyright/license statement below:
         </p>

@@ -202,9 +202,9 @@
    <table border="0" cellspacing="0" cellpadding="0" width="340px">
       <tr valign="top" align="left">
          <td align="left" class="textbody" colspan="2">
-            <input type="radio" name="algorithm" value="contains"   alt="Contains"    <%=check_c%> tabindex="4" onclick="onAlgorithmChanged('searchTerm');"><label for="contains">Contains</label>
-            <input type="radio" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="5"><label for="exactMatch">Exact Match&nbsp;</label>
-            <input type="radio" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="6" onclick="onAlgorithmChanged('searchTerm');"><label for="startsWith">Begins With&nbsp;</label>
+            <input type="radio" id="contains" name="algorithm" value="contains"   alt="Contains"    <%=check_c%> tabindex="4" onclick="onAlgorithmChanged('searchTerm');"><label for="contains">Contains</label>
+            <input type="radio" id="exactMatch" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="5"><label for="exactMatch">Exact Match&nbsp;</label>
+            <input type="radio" id="startsWith" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="6" onclick="onAlgorithmChanged('searchTerm');"><label for="startsWith">Begins With&nbsp;</label>
          </td>
       </tr>
       <tr align="left">
@@ -214,10 +214,10 @@
       <tr valign="top" align="left">
          <td align="left" class="textbody" colspan="2">
 
-	  <input type="radio" id="names" name="searchTarget" value="names"         alt="Name"         <%=check_n%>  tabindex="10"><label for="names">Name&nbsp;</label>
-	  <input type="radio" id="codes" name="searchTarget" value="codes"         alt="Code"         <%=check_cd%> tabindex="11" onclick="onCodeButtonPressed('searchTerm');" ><label for="codes">Code&nbsp;</label>
-	  <input type="radio" id="properties" name="searchTarget" value="properties"    alt="Property"     <%=check_p%>  tabindex="12"><label for="properties">Property&nbsp;</label>
-	  <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationship" <%=check_r%>  tabindex="13"><label for="relationships">Relationship</label>
+	  <input type="radio" id="names" name="searchTarget" value="names"         alt="Name"         <%=check_n%>  tabindex="7"><label for="names">Name&nbsp;</label>
+	  <input type="radio" id="codes" name="searchTarget" value="codes"         alt="Code"         <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('searchTerm');" ><label for="codes">Code&nbsp;</label>
+	  <input type="radio" id="properties" name="searchTarget" value="properties"    alt="Property"     <%=check_p%>  tabindex="9"><label for="properties">Property&nbsp;</label>
+	  <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationship" <%=check_r%>  tabindex="10"><label for="relationships">Relationship</label>
            
          </td>
       </tr>
@@ -246,7 +246,7 @@
                   <td valign="middle" align="left">
                      <a class="global-nav"
                         href="<%=request.getContextPath()%>/pages/value_set_entity_search_results.jsf?key=<%=HTTPUtils.cleanXSS(search_key)%>&page_number=<%=page_number%>&vse=<%=vse%>"
-                        tabindex="18" title="Back to search results">Back to search results</a>
+                        tabindex="11" title="Back to search results">Back to search results</a>
                   </td>
                   <% 
                   } else {              
@@ -255,7 +255,7 @@
 			  <td valign="middle" align="left">
 			     <a class="global-nav"
 				href="<%=request.getContextPath()%>/pages/search_results.jsf?dictionary=<%=HTTPUtils.cleanXSS(vocab_name)%>&version=<%=HTTPUtils.cleanXSS(srchform_version)%>&key=<%=HTTPUtils.cleanXSS(search_key)%>&page_number=<%=page_number%>"
-				tabindex="19" title="Back to search results">Back to search results</a>
+				tabindex="12" title="Back to search results">Back to search results</a>
 			  </td>
 			  <% 
 			  } else {
@@ -263,7 +263,7 @@
 			  <td valign="middle" align="left">
 			     <a class="global-nav"
 				href="<%=request.getContextPath()%>/pages/multiple_search_results.jsf?key=<%=HTTPUtils.cleanXSS(search_key)%>&page_number=<%=page_number%>"
-				tabindex="20" title="Back to search results">Back to search results</a>
+				tabindex="13" title="Back to search results">Back to search results</a>
 			  </td>
 			  <%  
 			  }
@@ -274,7 +274,7 @@
                   <td valign="middle" align="right">
                      <a class="textbodyredsmall"
                         href="<%=request.getContextPath()%>/pages/advanced_search.jsf?dictionary=<%=HTTPUtils.cleanXSS(vocab_name)%>&version=<%=HTTPUtils.cleanXSS(srchform_version)%>"
-                        tabindex="21" title="Advanced Search"> Advanced Search </a>
+                        tabindex="14" title="Advanced Search"> Advanced Search </a>
                   </td>
                </tr>
             </table>

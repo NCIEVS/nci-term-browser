@@ -67,7 +67,7 @@ if (vocabulary_version != null) {
       <%@ include file="/pages/templates/content-header-other.jsp" %>
       <!-- Page content -->
       <div class="pagecontent">
-        <a name="evs-content" id="evs-content" tabindex="-1"></a>
+        <a name="evs-content" id="evs-content" tabindex="1"></a>
         <%@ include file="/pages/templates/welcome.jsp" %>
         <%@ include file="/pages/templates/nciFooter.jsp" %>
       </div>

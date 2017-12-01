@@ -101,7 +101,7 @@ boolean bool_val;
 
 %>
         <div class="pagecontent">
-          <a name="evs-content" id="evs-content" tabindex="-1"></a>
+          <a name="evs-content" id="evs-content" tabindex="1"></a>
           
           <%-- 0 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
           

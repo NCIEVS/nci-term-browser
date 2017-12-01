@@ -94,7 +94,7 @@ if (DataUtils.isNCIT(vocabulary_name)) {
 %>
       <!-- Page content -->
       <div class="pagecontent">
-        <a name="evs-content" id="evs-content" tabindex="-1"></a>
+        <a name="evs-content" id="evs-content" tabindex="1"></a>
         <%
     String message = null;
     if (list.size() == 0) {

@@ -50,7 +50,7 @@
           <!-- Page content -->
           <div class="pagecontent">
           
-            <a name="evs-content" id="evs-content" tabindex="-1"></a>  
+            <a name="evs-content" id="evs-content" tabindex="1"></a>  
           
             <jsp:include page="<%=content_page%>" />
             

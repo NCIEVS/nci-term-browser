@@ -41,7 +41,7 @@
     <%@ include file="/pages/templates/content-header-no-searchbox.jsp" %>
       <!-- Page content -->
       <div class="pagecontent">
-        <a name="evs-content" id="evs-content" tabindex="-1"></a>
+        <a name="evs-content" id="evs-content" tabindex="1"></a>
         <!-- ======================================= -->
         <!--                 HELP CONTENT            -->
         <!-- ======================================= -->

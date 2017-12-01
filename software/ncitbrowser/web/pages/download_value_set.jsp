@@ -416,7 +416,7 @@ if (matched_concept_codes != null && matched_concept_codes.size() > 0) {
             
             <div class="pagecontent"> 
             
-               <a name="evs-content" id="evs-content" tabindex="-1"></a>               
+               <a name="evs-content" id="evs-content" tabindex="9"></a>               
                   <div class="tabTableContentContainer">
                   <h:form id="valueSetSearchResultsForm" styleClass="search-form" acceptcharset="UTF-8">
                      <%
@@ -497,7 +497,7 @@ if (vsc != null && !DataUtils.isNullOrBlank(vsc.getReportURI())) {
 %>
 	<td align=right>
 	<a href="/ncitbrowser/ajax?action=download&vsd_uri=<%=vsd_uri%>">
-	<img src="/ncitbrowser/images/released_file.gif" alt="Value Set Released Files (FTP Server)" border="0" tabindex="9"></a>
+	<img src="/ncitbrowser/images/released_file.gif" alt="Value Set Released Files (FTP Server)" border="0" tabindex="10"></a>
 	</td>
 	
 <%

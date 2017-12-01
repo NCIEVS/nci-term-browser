@@ -216,7 +216,7 @@
             -->
             <div class="pagecontent"> 
             
-               <a name="evs-content" id="evs-content" tabindex="-1"></a>               
+               <a name="evs-content" id="evs-content" tabindex="1"></a>               
                   <div class="tabTableContentContainer">
                   <h:form id="valueSetSearchResultsForm" styleClass="search-form" acceptcharset="UTF-8">
                      <%
@@ -234,7 +234,7 @@
                                  <tr>
                                     <td align="left" class="texttitle-blue">Value Set:&nbsp;<%=vsd_uri%>
 &nbsp;
-<a href="/ncitbrowser/ajax?action=download&vsd_uri=<%=vsd_uri%>"><img src="/ncitbrowser/images/released_file.gif" alt="Value Set Released Files (FTP Server)" border="0" tabindex="1"></a>
+<a href="/ncitbrowser/ajax?action=download&vsd_uri=<%=vsd_uri%>"><img src="/ncitbrowser/images/released_file.gif" alt="Value Set Released Files (FTP Server)" border="0" tabindex="2"></a>
 </td>                                   
                                     <td align="right">
                                        <h:commandLink

@@ -579,7 +579,7 @@ if (vd_uri != null) {
       <!-- Page content -->
       <div class="pagecontent">
         <div id="contentArea">
-          <a name="evs-content" id="evs-content" tabindex="-1"></a>
+          <a name="evs-content" id="evs-content" tabindex="19"></a>
 
 
           <%-- 0 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
@@ -611,21 +611,21 @@ if (vd_uri != null) {
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/values.gif"
                           alt="Values"
-                          tabindex="19">
+                          tabindex="20">
                         </h:commandButton>                  
                         &nbsp;
                         <h:commandButton id="versions" value="versions" action="#{valueSetBean.selectCSVersionAction}"
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/versions.gif"
                           alt="Versions"
-                          tabindex="20">
+                          tabindex="21">
                         </h:commandButton>
                         &nbsp;
                         <h:commandButton id="xmldefinition" value="xmldefinition" action="#{valueSetBean.exportVSDToXMLAction}"
                           onclick="javascript:cursor_wait();"
                           image="#{valueSetSearch_requestContextPath}/images/xmldefinitions.gif"
                           alt="XML Definition"
-                          tabindex="21">
+                          tabindex="22">
                         </h:commandButton>                      
                       </td>
                     </tr>
@@ -781,21 +781,21 @@ if (vsd_vec != null && vsd_vec.size() == 1) {
                        onclick="javascript:cursor_wait();"
                        image="#{valueSetSearch_requestContextPath}/images/values.gif"
                        alt="Values"
-                       tabindex="22">
+                       tabindex="23">
                      </h:commandButton>                  
                    &nbsp;
                      <h:commandButton id="versions" value="versions" action="#{valueSetBean.selectCSVersionAction}"
                        onclick="javascript:cursor_wait();"
                        image="#{valueSetSearch_requestContextPath}/images/versions.gif"
                        alt="Versions"
-                       tabindex="23">
+                       tabindex="24">
                      </h:commandButton>
                    &nbsp;
                      <h:commandButton id="xmldefinition" value="xmldefinition" action="#{valueSetBean.exportVSDToXMLAction}"
                        onclick="javascript:cursor_wait();"
                        image="#{valueSetSearch_requestContextPath}/images/xmldefinitions.gif"
                        alt="XML Definition"
-                       tabindex="24">
+                       tabindex="25">
                      </h:commandButton>
                   </td></tr>
 

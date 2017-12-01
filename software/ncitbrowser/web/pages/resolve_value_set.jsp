@@ -73,7 +73,7 @@ String prev_cs_urn = "";
 
 %>
         <div class="pagecontent">
-          <a name="evs-content" id="evs-content" tabindex="-1"></a>
+          <a name="evs-content" id="evs-content" tabindex="1"></a>
           <%-- 0 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
           <div class="tabTableContentContainer">
           
@@ -185,7 +185,7 @@ int lcv = i+1;
                       onclick="javascript:cursor_wait();"
                       image="#{valueSetSearch_requestContextPath}/images/continue.gif"
                       alt="Resolve"
-                      tabindex="1">
+                      tabindex="2">
                     </h:commandButton>
                   </td></tr>
                   

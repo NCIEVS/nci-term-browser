@@ -66,7 +66,7 @@
 
       <!-- Page content -->
       <div class="pagecontent">
-        <a name="evs-content" id="evs-content" tabindex="-1"></a>
+        <a name="evs-content" id="evs-content" tabindex="1"></a>
         <%
           String message = (String) request.getSession().getAttribute("message");
           request.getSession().removeAttribute("message");

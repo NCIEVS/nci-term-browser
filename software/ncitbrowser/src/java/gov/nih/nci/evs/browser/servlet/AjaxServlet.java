@@ -1423,7 +1423,7 @@ if (action.compareTo("xmldefinitions") == 0) {
       println(out, "      <!-- end nci popup banner -->");
       println(out, "      <div id=\"popupMainArea\">");
       println(out, "        <a name=\"evs-content\" id=\"evs-content\"></a>");
-      println(out, "        <table class=\"evsLogoBg\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
+      println(out, "        <table class=\"evsLogoBg\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" role='presentation'>");
       println(out, "        <tr>");
       println(out, "          <td valign=\"top\">");
       println(out, "            <a href=\"http://evs.nci.nih.gov/\" target=\"_blank\" alt=\"Enterprise Vocabulary Services\">");
@@ -1467,7 +1467,7 @@ if (action.compareTo("xmldefinitions") == 0) {
 
       println(out, "");
       println(out, "        <div id=\"popupContentArea\">");
-      println(out, "          <table width=\"580px\" cellpadding=\"3\" cellspacing=\"0\" border=\"0\">");
+      println(out, "          <table width=\"580px\" cellpadding=\"3\" cellspacing=\"0\" border=\"0\" role='presentation'>");
       println(out, "            <tr class=\"textbody\">");
       println(out, "              <td class=\"pageTitle\" align=\"left\">");
       println(out, "                " + display_name + " Hierarchy");
@@ -1944,7 +1944,7 @@ if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
       out.println("</div>");
       out.println("");
       out.println("");
-      out.println("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
+      out.println("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" role='presentation'>");
       out.println("  <tr>");
       out.println("    <td width=\"5\"></td>");
       out.println("    <td><a href=\"/ncitbrowser/pages/multiple_search.jsf?nav_type=terminologies\">");
@@ -2004,7 +2004,7 @@ if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
       out.println("            <input type=\"hidden\" id=\"value_set_home\" name=\"value_set_home\" value=\"true\" />");
       out.println("            <input type=\"hidden\" name=\"vsd_uri\" value=\"" + vsd_uri + "\" />");
 
-      out.println("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin: 2px\" >");
+      out.println("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin: 2px\" role='presentation'>");
       out.println("  <tr valign=\"top\" align=\"left\">");
       out.println("    <td align=\"left\" class=\"textbody\">");
       out.println("");
@@ -2025,7 +2025,7 @@ if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
       out.println("");
       out.println("  <tr valign=\"top\" align=\"left\">");
       out.println("    <td>");
-      out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin: 0px\">");
+      out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin: 0px\" role='presentation'>");
       out.println("");
       out.println("        <tr valign=\"top\" align=\"left\">");
       out.println("        <td align=\"left\" class=\"textbody\">");
@@ -2069,7 +2069,7 @@ if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
       out.println("          <!-- end Search box -->");
       out.println("          <!-- Global Navigation -->");
       out.println("");
-      out.println("<table class=\"global-nav\" border=\"0\" width=\"100%\" height=\"37px\" cellpadding=\"0\" cellspacing=\"0\">");
+      out.println("<table class=\"global-nav\" border=\"0\" width=\"100%\" height=\"37px\" cellpadding=\"0\" cellspacing=\"0\" role='presentation'>");
       out.println("  <tr>");
       out.println("    <td align=\"left\" valign=\"bottom\">");
       out.println("      <a href=\"#\" onclick=\"javascript:window.open('/ncitbrowser/pages/source_help_info-termbrowser.jsf',");
@@ -2127,7 +2127,7 @@ if (!DataUtils.isNull(vsd_uri)) {
       out.println("      <!-- Quick links bar -->");
       out.println("");
       out.println("<div class=\"bluebar\">");
-      out.println("  <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+      out.println("  <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
       out.println("  <tr>");
       out.println("    <td><div class=\"quicklink-status\">&nbsp;</div></td>");
       out.println("    <td>");
@@ -2145,7 +2145,7 @@ if (!DataUtils.isNull(vsd_uri)) {
 
       if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
       out.println("    <div class=\"redbar\">");
-      out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+      out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
       out.println("        <tr>");
       out.println("          <td class=\"lexevs-status\">");
       out.println("            " + ServerMonitorThread.getInstance().getMessage());
@@ -2196,8 +2196,6 @@ out.print("/pages/subset.jsf\">NCI Thesaurus Subsets</a> page).");
       out.println("          <a name=\"evs-content\" id=\"evs-content\"></a>");
       out.println("");
 
-      //out.println("          <table width=\"580px\" cellpadding=\"3\" cellspacing=\"0\" border=\"0\">");
-
       out.println("      <table class=\"datatableValueSet_960\" summary=\"\" cellpadding=\"3\" cellspacing=\"0\" border=\"0\" width=\"100%\">");
 
       //out.println("                    <tr><td colspan=\"2\">");
@@ -2227,7 +2225,7 @@ if (show_released_file_button) {
 
 	if (vsc != null && !DataUtils.isNullOrBlank(vsc.getReportURI())) {
 
-		  out.println("<table>");
+		  out.println("<table role='presentation'>");
 		  out.println("<tr><td>");
 		  out.println("<a href=\"/ncitbrowser/ajax?action=download&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/released_file.gif\" alt=\"Value Set Released Files (FTP Server)\" border=\"0\" tabindex=\"2\"></a>");
 		  out.println("</td>");
@@ -2244,7 +2242,7 @@ if (show_released_file_button) {
       out.println("                      </td>");
       out.println("");
       out.println("                      <td>");
-      out.println("<table>");
+      out.println("<table role='presentation'>");
       //out.println("<tr><td>CTS2 Value Sets (Online Term Server/Browser)</td></tr>");
       out.println("<tr><td>");
 
@@ -2403,7 +2401,7 @@ out.flush();
 					writeExportForm(out, vsd_uri);
 					out.println("");
 					out.println("<div class=\"tabTableContentContainer\">");
-					out.println("<table border=\"0\" width=\"900\">");
+					out.println("<table border=\"0\" width=\"900\" role='presentation'>");
 					out.println("	<tr><td>");
 					out.println("	<div style=\"float:left;width:360px;\">");
 
@@ -3103,7 +3101,7 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
       out.println("</div>");
       out.println("");
       out.println("");
-      out.println("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
+      out.println("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" role='presentation'>");
       out.println("  <tr>");
       out.println("    <td width=\"5\"></td>");
 
@@ -3260,7 +3258,7 @@ if (DataUtils.isNull(matchText)) {
       out.println("");
       out.println("");
       out.println("");
-      out.println("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin: 2px\" >");
+      out.println("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin: 2px\" role='presentation'>");
       out.println("  <tr valign=\"top\" align=\"left\">");
       out.println("    <td align=\"left\" class=\"textbody\">");
       out.println("");
@@ -3281,7 +3279,7 @@ if (DataUtils.isNull(matchText)) {
       out.println("");
       out.println("  <tr valign=\"top\" align=\"left\">");
       out.println("    <td>");
-      out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin: 0px\">");
+      out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin: 0px\" role='presentation'>");
 
       out.println("        <tr valign=\"top\" align=\"left\">");
       out.println("        <td align=\"left\" class=\"textbody\">");
@@ -3468,7 +3466,7 @@ if (DataUtils.isNull(matchText)) {
       out.println("      <!-- Quick links bar -->");
       out.println("");
       out.println("<div class=\"bluebar\">");
-      out.println("  <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+      out.println("  <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
       out.println("  <tr>");
       out.println("    <td><div class=\"quicklink-status\">&nbsp;</div></td>");
       out.println("    <td>");
@@ -3487,7 +3485,7 @@ if (DataUtils.isNull(matchText)) {
 
       if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
 		  out.println("    <div class=\"redbar\">");
-		  out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
+		  out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
 		  out.println("        <tr>");
 		  out.println("          <td class=\"lexevs-status\">");
 		  out.println("            " + ServerMonitorThread.getInstance().getMessage());
@@ -3516,7 +3514,7 @@ if (DataUtils.isNull(matchText)) {
       out.println("        <div id=\"popupContentArea\">");
       out.println("          <a name=\"evs-content\" id=\"evs-content\"></a>");
       out.println("");
-      out.println("          <table width=\"580px\" cellpadding=\"3\" cellspacing=\"0\" border=\"0\">");
+      out.println("          <table width=\"580px\" cellpadding=\"3\" cellspacing=\"0\" border=\"0\" role='presentation'>");
       out.println("");
       out.println("");
       out.println("");
@@ -5089,10 +5087,10 @@ out.flush();
 
 	public void writeExportForm(PrintWriter out, String vsd_uri) {
 		out.println("<hr></hr>");
-		out.println("                     <table border=\"0\">");
+		out.println("                     <table border=\"0\" role='presentation'>");
 		out.println("                        <tr>");
 		out.println("                           <td>");
-		out.println("                              <table border=\"0\" width=\"900\" >");
+		out.println("                              <table border=\"0\" width=\"900\" role='presentation'>");
 		out.println("                                    <td align=\"right\">");
 
         out.println("<a href=\"/ncitbrowser/ajax?action=export_to_excel&from_download=true&vsd_uri=" + vsd_uri + "\"><font face=\"verdana\" size=\"1\">Export Excel</font></a>");

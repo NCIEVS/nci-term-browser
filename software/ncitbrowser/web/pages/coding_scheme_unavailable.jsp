@@ -123,7 +123,7 @@
 
 
 
-<table class="global-nav" border="0" width="100%" height="33px" cellpadding="0" cellspacing="0">
+<table class="global-nav" border="0" width="100%" height="33px" cellpadding="0" cellspacing="0" role='presentation'>
   <tr>
     <td align="left" valign="bottom">
       <a href="#" onclick="javascript:window.open('/ncitbrowser/pages/source_help_info-termbrowser.jsf',

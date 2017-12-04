@@ -42,7 +42,7 @@
       <!-- end nci popup banner -->
       <div id="popupMainArea">
       
-        <table class="evsLogoBg" cellspacing="3" cellpadding="0" border="0" width="570px">
+        <table class="evsLogoBg" cellspacing="3" cellpadding="0" border="0" width="570px" role='presentation'>
         <tr>
           <td valign="top">
             <a href="http://evs.nci.nih.gov/" target="_blank" alt="Enterprise Vocabulary Services">
@@ -94,7 +94,7 @@
 
 
           <!-- Term Type content -->
-          <table width="580px" cellpadding="3" cellspacing="0" border="0">
+          <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
              <tr><td class="pageTitle">
                 <b>You are now leaving the term browser website.</b>
             </td></tr>

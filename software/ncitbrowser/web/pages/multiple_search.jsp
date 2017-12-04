@@ -302,7 +302,7 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
     <tr>
         <td width="650px" >
           <!--
-          <table class="termstable_960" border="0">
+          <table class="termstable_960" border="0" role='presentation'>
           -->
           <table border="0" role='presentation'>
                 <tr>
@@ -364,7 +364,7 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
             
             
           <!--
-          <table class="termstable_960" border="0">
+          <table class="termstable_960" border="0" role='presentation'>
           -->
           <table border="0" role='presentation'>
               <tr>
@@ -415,7 +415,7 @@ if (ontologiesToExpandStr == null) {
                
                 %>
                   <td class="textbody">
-                    <table border="0" cellpadding="0" cellspacing="0">
+                    <table border="0" cellpadding="0" cellspacing="0" role='presentation'>
                       <%
                      
   int hide_counter = 0; 
@@ -624,7 +624,7 @@ if (ontologiesToExpandStr == null) {
      </td>
 
      <td valign="top" width="300px" align="right">
-        <table border="0" >
+        <table border="0"  role='presentation'>
           <tr valign="top">
             <td width="10px"></td>
             <td>

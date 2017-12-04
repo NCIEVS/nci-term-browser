@@ -287,7 +287,7 @@ if (!DataUtils.isNullOrBlank(vsd_uri)) {
 
 
 
-  <table border="0" cellspacing="0" cellpadding="0" width="340px">
+  <table border="0" cellspacing="0" cellpadding="0" width="340px" role='presentation'>
 
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
@@ -317,7 +317,7 @@ if (!DataUtils.isNullOrBlank(vsd_uri)) {
     
     <tr><td height="5px;"></td></tr>
     <tr><td colspan="2">
-      <table border="0" cellspacing="0" cellpadding="0" width="100%">
+      <table border="0" cellspacing="0" cellpadding="0" width="100%" role='presentation'>
         <tr valign="top">
 
     <input type="hidden" name="referer" id="referer" value="<%=HTTPUtils.getRefererParmEncode(request)%>" />
@@ -430,7 +430,7 @@ if (matched_concept_codes != null && matched_concept_codes.size() > 0) {
                      <table border="0" role='presentation'>
                         <tr>
                            <td>
-                              <table border="0" width="900" >
+                              <table border="0" width="900"  role='presentation'>
                                  <tr>
                                     <td align="left" class="texttitle-blue">Value Set:&nbsp;<%=vsd_uri%></td>
                                     <td align="right">
@@ -487,7 +487,7 @@ ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
 
 %>
 <td>
-<table border="0" width="95%">
+<table border="0" width="95%" role='presentation'>
 <tr class="textbody">
 <td align=left><b>Concepts</b>:</td>
 
@@ -522,7 +522,7 @@ if (vsc != null && !DataUtils.isNullOrBlank(vsc.getReportURI())) {
 
             <div style="float:left;width:360px;">
             <!--
-                        <table id="rvs_table" width="900" class="mt">
+                        <table id="rvs_table" width="900" class="mt" role='presentation'>
              -->
   
 <!-- Insert table here -->

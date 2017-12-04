@@ -175,7 +175,7 @@
         menubar_version = menubar_version.replaceAll(" ", "%20");
       }
     %>
-    <table class="global-nav" border="0" width="100%" cellpadding="0" cellspacing="0">
+    <table class="global-nav" border="0" width="100%" cellpadding="0" cellspacing="0" role='presentation'>
       <tr>
         <td>
           <% Boolean[] isPipeDisplayed = new Boolean[] { Boolean.FALSE }; %>

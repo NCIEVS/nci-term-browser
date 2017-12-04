@@ -198,7 +198,7 @@ _logger.debug("mapping_search_results.jsp version: " + mapping_version);
 	    <a name="evs-content" id="evs-content" tabindex="1"></a>
 
 
-                              <table class="textbody" border="0" width="100%">
+                              <table class="textbody" border="0" width="100%" role='presentation'>
                                  <tr >
                                     <td align="left">&nbsp;&nbsp;</td>
                                     <td align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -357,7 +357,7 @@ if (map_rank_applicable != null && map_rank_applicable.compareTo("false") == 0) 
 }
 
 %>
-          <table class="datatable_960">
+          <table class="datatable_960" role='presentation'>
 
           <th class="dataTableHeader" width="100px" scope="col" align="left">Source</th>
 

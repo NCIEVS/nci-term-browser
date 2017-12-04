@@ -83,7 +83,7 @@ String prev_cs_urn = "";
 
  <h:form id="resolveValueSetForm" styleClass="search-form" acceptcharset="UTF-8">            
                
-              <table class="dataTable" summary="" cellpadding="3" cellspacing="0" border="0">
+              <table class="dataTable" summary="" cellpadding="3" cellspacing="0" border="0" role='presentation'>
                 <tr>                
                    <th class="dataTableHeader" scope="col" align="left" width="25px">&nbsp;</th>
                    <th class="dataTableHeader" scope="col" align="left">Coding Scheme</th>

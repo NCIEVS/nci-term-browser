@@ -34,7 +34,7 @@
       (String) request.getAttribute("globalNavHeight"), 33);
 %>
 
-<table class="global-nav" border="0" width="100%" height="<%=globalNavHeight%>px" cellpadding="0" cellspacing="0">
+<table class="global-nav" border="0" width="100%" height="<%=globalNavHeight%>px" cellpadding="0" cellspacing="0" role='presentation'>
   <tr>
     <td align="left" valign="bottom">
     

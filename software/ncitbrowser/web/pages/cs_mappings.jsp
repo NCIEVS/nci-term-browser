@@ -353,14 +353,14 @@ if (hide_ontology_list == null || hide_ontology_list.compareTo("false") == 0) {
             </span>
             
             
-            <table class="termstable_960" border="0">
+            <table class="termstable_960" border="0" role='presentation'>
   
                
                 <tr><td class="textbody"><%=cs_mappings_dictionary%> mappings:</td></tr>
                 
                 <tr>
                   <td class="textbody">
-                    <table border="0" cellpadding="0" cellspacing="0">
+                    <table border="0" cellpadding="0" cellspacing="0" role='presentation'>
                       <%
                       int mapping_cs_knt = 0;
                       for (int i = 0; i < mapping_schemes.size(); i++) {
@@ -437,7 +437,7 @@ if (mapping_scheme_and_version.compareTo("") == 0 && mapping_cs_knt == 1) {
 
 <p></p>
 
-          <table class="termstable_960" border="0">
+          <table class="termstable_960" border="0" role='presentation'>
                 <tr>
                   <td>
 

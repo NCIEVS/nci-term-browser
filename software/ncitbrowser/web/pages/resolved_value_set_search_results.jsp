@@ -208,7 +208,7 @@ String key = (String) request.getSession().getAttribute("key");
  
      
       %>
-        <table width="900px">
+        <table width="900px" role='presentation'>
 <%
 	      if (!DataUtils.isNull(message)) {
 		    if (message.startsWith("No match found")) {
@@ -259,7 +259,7 @@ if (!no_match) {
 
           <tr>
             <td class="textbody">
-              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
+              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
                 <th class="dataTableHeader" scope="col" align="left">Concept</th>
                 <th class="dataTableHeader" scope="col" align="left">Vocabulary</th>
                 <%

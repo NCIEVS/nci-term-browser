@@ -351,7 +351,7 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
     <input id="resolvedValueSetSearchForm:resolvedvalueset_search" type="image" src="/ncitbrowser/images/search.gif" name="resolvedValueSetSearchForm:resolvedvalueset_search" accesskey="13" alt="Search Value Set" onclick="javascript:cursor_wait();" tabindex="2" class="searchbox-btn" /><a href="/ncitbrowser/pages/help.jsf#searchhelp" tabindex="3"><img src="/ncitbrowser/images/search-help.gif" alt="Search Help" style="border-width:0;" class="searchbox-btn" /></a>
     
 
-  <table border="0" cellspacing="0" cellpadding="0" width="340px">
+  <table border="0" cellspacing="0" cellpadding="0" width="340px" role='presentation'>
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
         <input type="radio" name="algorithm" id="contains" value="contains" alt="Contains"  tabindex="4" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="contains">Contains</label>
@@ -396,7 +396,7 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
           
           <!-- Global Navigation -->
 
-<table class="global-nav" border="0" width="100%" height="33px" cellpadding="0" cellspacing="0">
+<table class="global-nav" border="0" width="100%" height="33px" cellpadding="0" cellspacing="0" role='presentation'>
   <tr>
     <td align="left" valign="bottom">
       <a href="#" onclick="javascript:window.open('/ncitbrowser/pages/source_help_info-termbrowser.jsf',
@@ -494,7 +494,7 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
       
             <tr class="textbody"><td>
                 <div id="message" class="textbody">
-                   <table border="0" width="100%">
+                   <table border="0" width="100%" role='presentation'>
                     <tr>
                       <td>
                          <div class="texttitle-blue">Welcome</div>
@@ -544,7 +544,7 @@ System.out.println("(*) value_set_home.jsp vsd_uri: " + vsd_uri);
             </td></tr>
             
             <tr><td>
-		 <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
+		 <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
                      <tr><td>
 			      <p class="dataCellText">
 			      <%=vsd_description%>

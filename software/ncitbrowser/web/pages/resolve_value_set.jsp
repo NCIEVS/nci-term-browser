@@ -96,7 +96,7 @@ String prev_cs_urn = "";
 
  <h:form id="resolveValueSetForm" styleClass="search-form" acceptcharset="UTF-8">            
                
-              <table class="dataTable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
+              <table class="dataTable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
                 <th class="dataTableHeader" scope="col" align="left">&nbsp;</th>
                 <th class="dataTableHeader" scope="col" align="left">Coding Scheme</th>
                 <th class="dataTableHeader" scope="col" align="left">Version</th>

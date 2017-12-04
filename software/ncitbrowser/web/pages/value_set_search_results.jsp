@@ -421,7 +421,7 @@ if (vsd_vec != null && vsd_vec.size() == 1) {
       <h:graphicImage value="/images/search-help.gif" style="border-width:0;" styleClass="searchbox-btn" alt="Search Help" />
     </h:outputLink>
 
-  <table border="0" cellspacing="0" cellpadding="0" width="340px">
+  <table border="0" cellspacing="0" cellpadding="0" width="340px" role='presentation'>
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
         <input type="radio" name="algorithm" id="contains" value="contains" alt="Contains" <%=check_c%> tabindex="4" onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"/><label for="contains">Contains</label>
@@ -481,7 +481,7 @@ if (vd_uri != null) {
           
 <h:form id="valueSetSearchForm" styleClass="search-form" acceptcharset="UTF-8">      
               <%-- <div class="textbody"> --%>
-<table border="0" cellspacing="0" cellpadding="0" style="margin: 2px" >
+<table border="0" cellspacing="0" cellpadding="0" style="margin: 2px"  role='presentation'>
   <tr valign="top" align="left">
     <td align="left" class="textbody">  
                 <% if (selectValueSetSearchOption.compareTo("CodingScheme") == 0) { %>
@@ -520,7 +520,7 @@ if (vd_uri != null) {
   
   <tr valign="top" align="left">
     <td>
-      <table border="0" cellspacing="0" cellpadding="0" style="margin: 0px">
+      <table border="0" cellspacing="0" cellpadding="0" style="margin: 0px" role='presentation'>
     
         <tr valign="top" align="left">
         <td align="left" class="textbody">  
@@ -600,7 +600,7 @@ if (vd_uri != null) {
             <tr class="textbody"><td>
               <% if (vsd_vec != null && vsd_vec.size() == 1) { %>
                 <div id="message" class="textbody">
-                   <table border="0" width="700px">
+                   <table border="0" width="700px" role='presentation'>
                     <tr>
                       <td>
                          <div class="texttitle-blue">Welcome</div>
@@ -653,7 +653,7 @@ if (vd_uri != null) {
  %>
 
  
-              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
+              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
 
 <%
 if (vsd_vec != null && vsd_vec.size() > 1) {

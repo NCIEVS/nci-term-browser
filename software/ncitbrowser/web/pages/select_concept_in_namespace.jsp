@@ -106,7 +106,7 @@ if (DataUtils.isNCIT(vocabulary_name)) {
     <%
     } else {
     %>
-        <table width="900px">
+        <table width="900px" role='presentation'>
           <tr>
             <table role='presentation'>
               <tr>
@@ -122,7 +122,7 @@ if (DataUtils.isNCIT(vocabulary_name)) {
           <tr>
             <td class="textbody">
             
-              <table class="dataTable" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
+              <table class="dataTable" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
                 <%
 
 HashMap concept_status_hmap = DataUtils.getPropertyValuesInBatch(list, "Concept_Status");

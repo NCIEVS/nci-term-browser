@@ -11,7 +11,7 @@
 
 %>
 <div id="message" class="textbody">
-  <table border="0" width="700px"><tr>
+  <table border="0" width="700px" role='presentation'><tr>
     <td><div class="texttitle-blue">Welcome</div></td>
 
     <!-- <td><div class="texttitle-blue-rightJust">Version: <%=HTTPUtils.cleanXSS(vocablary_version_value) %></div></td> -->

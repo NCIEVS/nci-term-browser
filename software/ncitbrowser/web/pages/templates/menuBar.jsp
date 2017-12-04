@@ -71,7 +71,7 @@
       
      
 %>
-<table class="global-nav" border="0" width="100%" height="15px" <%=adjustedHeight%> cellpadding="0" cellspacing="0">
+<table class="global-nav" border="0" width="100%" height="15px" <%=adjustedHeight%> cellpadding="0" cellspacing="0" role='presentation'>
   <tr valign="bottom">
     <td align="left">
       <% if (menubar_isMapping) { %>

@@ -105,7 +105,7 @@
               <div class="searchbox-bottom"><img src="<%=basePath%>/images/searchbox-bottom.gif" width="352" height="2" alt="SearchBox Bottom" /></div>
               <!-- end Search box -->
               <!-- Global Navigation -->
-              <table class="global-nav" border="0" width="100%" cellpadding="0" cellspacing="0">
+              <table class="global-nav" border="0" width="100%" cellpadding="0" cellspacing="0" role='presentation'>
                 <tr>
                   <td>
 
@@ -203,7 +203,7 @@
                   }
                 }
           %>
-          <table border="0" width="700px">
+          <table border="0" width="700px" role='presentation'>
             <tr>
               <td class="texttitle-blue"><%=HTTPUtils.cleanXSS(name)%> (Code <%=HTTPUtils.cleanXSS(code)%>)</td>
               <% VisitedConceptUtils.add(request, dictionary, vers, code, name); %>

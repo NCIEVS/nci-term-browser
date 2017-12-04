@@ -87,7 +87,7 @@
                <!-- Page content -->
                <div class="pagecontent">
                   <a name="evs-content" id="evs-content" tabindex="1"></a>
-                  <table border="0" width="700px">
+                  <table border="0" width="700px" role='presentation'>
                      <%
                      	String message = (String) request.getSession().getAttribute("message");
                  			if (message != null) {
@@ -160,7 +160,7 @@
                      </tr>
                   </table>
                   <hr />
-                  <table class="datatable" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
+                  <table class="datatable" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
                      <tr>
                         <th class="dataTableHeader" scope="col" align="left" width="20px">&nbsp;</th>
                         <th class="dataTableHeader" scope="col" align="left">Concept</th>

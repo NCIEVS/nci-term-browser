@@ -69,7 +69,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><b><a name="introduction">Introduction</a></b></td>
               <td align="right">
@@ -83,7 +83,7 @@
             <b>NCI Enterprise Vocabulary Services (EVS)</b> provides 
             terminology content, tools, and services to NCI and the 
             biomedical research community.
-			<table class="textbody" border="0" cellspacing="0" cellpadding="0">
+			<table class="textbody" border="0" cellspacing="0" cellpadding="0" role='presentation'>
 			  <tr>
 			    <td><%=tab2%></td>
 			    <td><li>
@@ -123,7 +123,7 @@
             and the browser interface:
           </p>
 
-          <table class="textbody" border="0" cellspacing="0" cellpadding="0">
+          <table class="textbody" border="0" cellspacing="0" cellpadding="0" role='presentation'>
             <tr>
               <td><%=tab2%></td><td><li><b>Bold:</b></li></td>
               <td><%=tab%></td><td>Browser links, buttons, page tabs, and drop-down boxes.</td>
@@ -144,7 +144,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><a name="homePage"><b>NCI Term Browser Home Page</b></a></td>
               <td align="right">
@@ -210,7 +210,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><a name="terminologies"><b>Terminologies Tab</b></a></td>
               <td align="right">
@@ -239,7 +239,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><h2><a name="sources">Sources</a></h2></td>
               <td align="right">
@@ -278,7 +278,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><h2><a name="searchBox">Using the Search Box</a></h2></td>
               <td align="right">
@@ -386,7 +386,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><h2><a name="searchResults">Search Results</a></h2></td>
               <td align="right">
@@ -442,7 +442,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><h2><a name="searchingOther">Searching Other/Multiple Versions of a Terminology</a></h2></td>
               <td align="right">
@@ -487,7 +487,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><h2><a name="advancedSearch">Advanced Search</a></h2></td>
               <td align="right">
@@ -533,7 +533,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><h2><a name="conceptDetails">Concept Details</a></h2></td>
               <td align="right">
@@ -609,7 +609,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><h2><a name="additionalLinks">Additional Links for Individual Terminologies</a></h2></td>
               <td align="right">
@@ -654,7 +654,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><h2><a name="cartAndExport">Cart and Export Functionality</a></h2></td>
               <td align="right">
@@ -727,7 +727,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><a name="valueSetsTab"><b>Value Sets Tab</b></a></td>
               <td align="right">
@@ -878,7 +878,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><h2><a name="valueSetsSearchBox">Using the Search Box</a></h2></td>
               <td align="right">
@@ -935,7 +935,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><a name="mappingsTab"><b>Mappings Tab</b></a></td>
               <td align="right">
@@ -993,7 +993,7 @@
         <%-- -------------------------------------------------------------- --%>        
         <div class="textbody">
           <br/>
-          <table width="920px" cellpadding="0" cellspacing="0" border="0">
+          <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
             <tr>
               <td><h2><a name="mappingSearchBox">Using the Search Box</a></h2></td>
               <td align="right">

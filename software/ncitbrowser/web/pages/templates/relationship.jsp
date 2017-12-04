@@ -97,7 +97,7 @@ if (ns_curr == null || ns_curr.compareTo("null") == 0 || ns_curr.compareTo("unde
     String child_table_str = null;
         
 %>
-  <table class="datatable_960" border="0" width="100%">
+  <table class="datatable_960" border="0" width="100%" role='presentation'>
     <tr>
       <td class="textsubtitle-blue" align="left">
       
@@ -218,7 +218,7 @@ if (type != null && type.compareTo("all") == 0) {
 		<p>
 		    <b>Mapping relationships:</b>
 		<br/>
-		<table class="dataTable">
+		<table class="dataTable" role='presentation'>
 			       <tr>
 				 <td>
 		

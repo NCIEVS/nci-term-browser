@@ -54,7 +54,7 @@ if (display_release_date) {
 
 
     <div class="searchbox">
-        <table border="0" height="90px" width="100%" class="global-nav">
+        <table border="0" height="90px" width="100%" class="global-nav" role='presentation'>
           <tr>
             <td valign="middle" align="center">
               <a href="<%=request.getContextPath()%>/pages/vocabulary.jsf?dictionary=<%=HTTPUtils.cleanXSS(info.dictionary)%>">Simple Search</a>

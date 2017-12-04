@@ -41,7 +41,7 @@
 
 
  %>
-  <table border="0" width="708px">
+  <table border="0" width="708px" role='presentation'>
 
  <%
          Vector meta_cui_vec = null;
@@ -157,7 +157,7 @@ if (list != null && list.size() > 0) {
            
 %>        
     <p></p>Mapping Source: <%=DataUtils.encodeTerm(mapping_cs_name)%>
-          <table class="datatable_960">
+          <table class="datatable_960" role='presentation'>
 
           <th class="dataTableHeader" width="100px" scope="col" align="left">Source</th>
 
@@ -319,7 +319,7 @@ if (list != null && list.size() > 0) {
 %>
       
     <p></p>Mapping Source: <%=DataUtils.encodeTerm(mapping_cs_name)%>
-          <table class="datatable_960">
+          <table class="datatable_960" role='presentation'>
 
           <th class="dataTableHeader" width="100px" scope="col" align="left">Source</th>
 

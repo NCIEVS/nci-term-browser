@@ -33,7 +33,7 @@
       </div>
       <!-- end nci popup banner -->
       <div id="popupMainArea">
-        <table class="evsLogoBg" cellspacing="3" cellpadding="0" border="0" width="570px">
+        <table class="evsLogoBg" cellspacing="3" cellpadding="0" border="0" width="570px" role='presentation'>
         <tr>
           <td valign="top">
             <a href="http://evs.nci.nih.gov/" target="_blank" alt="Enterprise Vocabulary Services">
@@ -47,7 +47,7 @@
         <div id="popupContentArea">
           <a name="evs-content" id="evs-content" tabindex="1"></a>
           <!-- Term Type content -->
-          <table width="580px" cellpadding="3" cellspacing="0" border="0">
+          <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
             <tr class="pageTitle">
               <td align="left">
                 <b>Sources</b>
@@ -60,7 +60,7 @@
             </tr>
           </table>
           <hr/>
-          <table width="580px" cellpadding="3" cellspacing="0" border="0">
+          <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
             <tr class="textbody"><td align="left">
 
 <p>
@@ -114,7 +114,7 @@ subject to the conditions specified at
             </td></tr>
           </table>
           <br/>
-          <table width="580px" cellpadding="3" cellspacing="0" border="0">
+          <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
             <tr class="dataRowDark">
               <th scope="col" align="left">Source</th>
               <th scope="col" align="left">&nbsp;</th>

@@ -7,7 +7,7 @@
   JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
 %>
 <div id="message" class="textbody">
-  <table border="0" width="700px"><tr>
+  <table border="0" width="700px" role='presentation'><tr>
     <td><div class="texttitle-blue">Welcome</div></td>
     
     <%

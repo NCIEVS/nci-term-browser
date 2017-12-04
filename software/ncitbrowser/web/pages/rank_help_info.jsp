@@ -32,7 +32,7 @@
       </div>
       <!-- end nci popup banner -->
       <div id="popupMainArea">
-        <table class="evsLogoBg" cellspacing="3" cellpadding="0" border="0" width="570px">
+        <table class="evsLogoBg" cellspacing="3" cellpadding="0" border="0" width="570px" role='presentation'>
         <tr>
           <td valign="top">
             <a href="http://evs.nci.nih.gov/" target="_blank" alt="Enterprise Vocabulary Services">
@@ -48,7 +48,7 @@
           <!-- Term Type content -->
           
           
-          <table width="580px" cellpadding="3" cellspacing="0" border="0">
+          <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
             <tr class="pageTitle">
               <td align="left">
                 <b>Map Rank</b>
@@ -61,7 +61,7 @@
             </tr>
           </table>
           <hr/>
-          <table width="580px" cellpadding="3" cellspacing="0" border="0">
+          <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
             <tr class="textbody"><td align="left">
 <p>
 Certain generated map sets will make use of a map rank to provide additional information regarding the quality of individual maps within the set. It can be thought of as a score, where the a value of 1 indicates a highest quality map within the set and higher numbers indicate increasingly lower quality maps. The intention is to provide applications with as much information as possible (e.g. every known connection between two vocabularies) while also providing them the ability to choose a “quality threshold” below which lower quality maps will not be considered. The threshold must be tuned for each use case.

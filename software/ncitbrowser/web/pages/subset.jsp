@@ -117,7 +117,7 @@ float: left;
           site. 
           Below are five important subset collections currently presented on these Cancer.gov Web pages:
         </p>
-        <table width="670px" border="0">
+        <table width="670px" border="0" role='presentation'>
           <tr>
             <td>
               <a href="http://www.cancer.gov/cancertopics/terminologyresources/CDISC" target="_blank"

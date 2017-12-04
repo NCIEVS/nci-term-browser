@@ -474,7 +474,7 @@
       <!-- end nci popup banner -->
       <div id="popupMainArea">
         <a name="evs-content" id="evs-content" tabindex="1"></a>
-        <table class="evsLogoBg" cellspacing="0" cellpadding="0" border="0">
+        <table class="evsLogoBg" cellspacing="0" cellpadding="0" border="0" role='presentation'>
         <tr>
           <td valign="top">
             <a href="http://evs.nci.nih.gov/" target="_blank" alt="Enterprise Vocabulary Services">
@@ -561,7 +561,7 @@ if (DataUtils.isNCIT(hierarchy_schema)) {
 %>
 
         <div id="popupContentArea">
-          <table width="580px" cellpadding="3" cellspacing="0" border="0">
+          <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
             <tr class="textbody">
               <td class="pageTitle" align="left">
                 <%=HTTPUtils.cleanXSS(display_name)%> Hierarchy

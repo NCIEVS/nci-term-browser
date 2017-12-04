@@ -346,7 +346,7 @@ if (expected_count != actual_count) {
 
         %>
 
-        <table class="datatable_960" border="0" width="100%">
+        <table class="datatable_960" border="0" width="100%" role='presentation'>
           <tr>
             <table role='presentation'>
               <tr>
@@ -375,7 +375,7 @@ if (expected_count != actual_count) {
           </tr>
           <tr>
             <td class="textbody">
-              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
+              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
 
 <%
 if (isMapping || isExtension) {

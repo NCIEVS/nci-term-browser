@@ -373,7 +373,7 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
             <input type="hidden" id="partial_checked_vocabularies" name="partial_checked_vocabularies" value="" />
             <input type="hidden" id="value_set_home" name="value_set_home" value="true" />
             <input type="hidden" name="vsd_uri" value="null" />
-<table border="0" cellspacing="0" cellpadding="0" style="margin: 2px" >
+<table border="0" cellspacing="0" cellpadding="0" style="margin: 2px"  role='presentation'>
   <tr valign="top" align="left">
     <td align="left" class="textbody">
 
@@ -394,7 +394,7 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 
   <tr valign="top" align="left">
     <td>
-      <table border="0" cellspacing="0" cellpadding="0" style="margin: 0px">
+      <table border="0" cellspacing="0" cellpadding="0" style="margin: 0px" role='presentation'>
 
         <tr valign="top" align="left">
         <td align="left" class="textbody">
@@ -478,7 +478,7 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
             <tr class="textbody"><td>
                 <div id="message" class="textbody">
                 
-                   <table width="900px">
+                   <table width="900px" role='presentation'>
                    
 			  <tr><td>
 			    <table role='presentation'>
@@ -507,7 +507,7 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
     <input type="hidden" name="valueset" value="<%=vsd_uri%>">&nbsp;</input>
 
  
-    <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
+    <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
        <th class="dataTableHeader" scope="col" align="left">Value Set</th>
         <th class="dataTableHeader" scope="col" align="left">Vocabulary</th>
         <!--

@@ -54,7 +54,7 @@
       </div>
       <!-- end nci popup banner -->
       <div id="popupMainArea_Elastic">
-        <table class="evsLogoBg" cellspacing="0" cellpadding="0" border="0">
+        <table class="evsLogoBg" cellspacing="0" cellpadding="0" border="0" role='presentation'>
         <tr>
           <td valign="top">
             <a href="http://evs.nci.nih.gov/" target="_blank">
@@ -68,7 +68,7 @@
       
       <% if (is_display_app_logo) { %>
         <div>
-          <table background="<%=basePath%>/images/termbrowser_popup_banner-middle.gif" cellspacing="0" cellpadding="0" border="0">
+          <table background="<%=basePath% role='presentation'>/images/termbrowser_popup_banner-middle.gif" cellspacing="0" cellpadding="0" border="0">
             <tr>
               <td width="1">
                 <% if (hierarchy_schema == null) { %>

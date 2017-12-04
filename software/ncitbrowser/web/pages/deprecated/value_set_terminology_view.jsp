@@ -727,7 +727,7 @@ body {
 
 
               <%-- <div class="textbody"> --%>
-<table border="0" cellspacing="0" cellpadding="0" style="margin: 2px" >
+<table border="0" cellspacing="0" cellpadding="0" style="margin: 2px"  role='presentation'>
   <tr valign="top" align="left">
     <td align="left" class="textbody">  
                 <% if (selectValueSetSearchOption.compareTo("CodingScheme") == 0) { %>
@@ -766,7 +766,7 @@ body {
   
   <tr valign="top" align="left">
     <td>
-      <table border="0" cellspacing="0" cellpadding="0" style="margin: 0px">
+      <table border="0" cellspacing="0" cellpadding="0" style="margin: 0px" role='presentation'>
     
         <tr valign="top" align="left">
         <td align="left" class="textbody">  
@@ -826,7 +826,7 @@ Search or browse a value set from its home page, or search all value sets at onc
         <div id="popupContentArea">
           <a name="evs-content" id="evs-content" tabindex="10"></a>
   
-          <table width="580px" cellpadding="3" cellspacing="0" border="0">
+          <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
           
             <% if (message != null) { request.getSession().removeAttribute("message"); %>
               <tr class="textbodyred"><td>

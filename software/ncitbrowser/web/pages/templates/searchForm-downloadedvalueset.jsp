@@ -60,7 +60,7 @@
 
 
 
-  <table border="0" cellspacing="0" cellpadding="0" width="340px">
+  <table border="0" cellspacing="0" cellpadding="0" width="340px" role='presentation'>
 
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
@@ -90,7 +90,7 @@
     
     <tr><td height="5px;"></td></tr>
     <tr><td colspan="2">
-      <table border="0" cellspacing="0" cellpadding="0" width="100%">
+      <table border="0" cellspacing="0" cellpadding="0" width="100%" role='presentation'>
         <tr valign="top">
 
     <input type="hidden" name="referer" id="referer" value="<%=HTTPUtils.getRefererParmEncode(request)%>" />

@@ -502,7 +502,7 @@ Search or browse each from its home page, or search all value sets at once from 
        <div id="popupContentArea">
      
 
-          <table width="580px" cellpadding="3" cellspacing="0" border="0">
+          <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
             <tr class="textbody">
               <td class="pageTitle" align="left">
                 <%=HTTPUtils.cleanXSS(search_results_dictionary)%> Value Sets

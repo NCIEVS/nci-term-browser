@@ -279,7 +279,7 @@ if (display_release_date) {
                     src="<%=basePath%>/images/searchbox-bottom.gif" width="352"
                     height="2" alt="SearchBox Bottom" /></div>
                   <!-- end Search box -->
-                  <table class="global-nav" border="0" width="100%" cellpadding="0" cellspacing="0">
+                  <table class="global-nav" border="0" width="100%" cellpadding="0" cellspacing="0" role='presentation'>
                     <tr>
                       <td>
                          <% Boolean[] isPipeDisplayed = new Boolean[] { Boolean.FALSE }; %>

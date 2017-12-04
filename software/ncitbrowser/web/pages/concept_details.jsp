@@ -332,7 +332,7 @@ String short_name = cs_name;
                   <h:form style="margin:0px 0px 0px 0px;" acceptcharset="UTF-8"> 
                   
                   
-                  <table border="0" width="920px" style="margin:0px 0px 0px 0px;">
+                  <table border="0" width="920px" style="margin:0px 0px 0px 0px;" role='presentation'>
                      <tr class="global-nav"> 
                         <td width="25%"></td>                       
                         <td align="right" width="75%">
@@ -487,7 +487,7 @@ if (!StringUtils.isNull(b)) {
                   </h:form>  
  
                <a name="evs-content" id="evs-content" tabindex="2"></a>
-               <table border="0" cellpadding="0" cellspacing="0" width="100%">
+               <table border="0" cellpadding="0" cellspacing="0" width="100%" role='presentation'>
                   <tr>
                   <%
                   if (namespace_list != null && namespace_list.size() > 1) {

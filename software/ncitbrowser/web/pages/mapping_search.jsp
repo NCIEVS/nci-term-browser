@@ -403,14 +403,14 @@ or search from there.  It is not yet possible to search more than one mapping da
             </span>
             
             
-            <table class="termstable_960" border="0">
+            <table class="termstable_960" border="0" role='presentation'>
   
                
                 <tr><td class="textbody">Mappings:</td></tr>
                 
                 <tr>
                   <td class="textbody">
-                    <table border="0" cellpadding="0" cellspacing="0">
+                    <table border="0" cellpadding="0" cellspacing="0" role='presentation'>
                       <%
                       
                       for (int i = 0; i < display_name_vec.size(); i++) {
@@ -501,7 +501,7 @@ if (mapping_scheme_and_version.compareTo("") == 0 && mapping_cs_knt == 1) {
     if (mapping_cs_knt > 0) {
 %>  
 
-          <table class="termstable_960" border="0">
+          <table class="termstable_960" border="0" role='presentation'>
                 <tr>
                   <td>
 

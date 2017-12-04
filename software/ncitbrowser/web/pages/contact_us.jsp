@@ -153,7 +153,7 @@ if (errorMsg != null && errorMsg.compareTo("") != 0) {
   </div>
   <br/>
 
-  <table class="textbody">
+  <table class="textbody" role='presentation'>
     <tr>
       <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
       <td>Telephone:</td>

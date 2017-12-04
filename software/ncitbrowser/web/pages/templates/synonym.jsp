@@ -13,7 +13,7 @@ boolean display_subsource = true; // turned on or off
   if (type.compareTo("synonym") == 0 || type.compareTo("all") == 0)
   {
     %>
-  <table border="0" width="100%">
+  <table border="0" width="100%" role='presentation'>
     <tr>
       <td class="textsubtitle-blue" align="left">
       
@@ -60,7 +60,7 @@ if (type != null && type.compareTo("all") == 0) {
     </tr>
   </table>
     <div>
-      <table class="datatable_960" border="0" width="100%">
+      <table class="datatable_960" border="0" width="100%" role='presentation'>
         <tr>
           <th class="dataTableHeader" scope="col" align="left">Term</th>
           <th class="dataTableHeader" scope="col" align="left">Source

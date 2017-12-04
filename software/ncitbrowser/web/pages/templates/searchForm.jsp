@@ -199,7 +199,7 @@
       <h:graphicImage value="/images/search-help.gif" alt="Search Help"
          style="border-width:0;" styleClass="searchbox-btn" />
    </h:outputLink>
-   <table border="0" cellspacing="0" cellpadding="0" width="340px">
+   <table border="0" cellspacing="0" cellpadding="0" width="340px" role='presentation'>
       <tr valign="top" align="left">
          <td align="left" class="textbody" colspan="2">
             <input type="radio" id="contains" name="algorithm" value="contains"   alt="Contains"    <%=check_c%> tabindex="4" onclick="onAlgorithmChanged('searchTerm');"><label for="contains">Contains</label>
@@ -230,7 +230,7 @@
                Boolean hideAdvancedSearchLink = (Boolean) request.getAttribute("hideAdvancedSearchLink");
                if (!is_a_mapping && (hideAdvancedSearchLink == null || !hideAdvancedSearchLink)) {
             %>
-            <table border="0" cellspacing="0" cellpadding="0" width="100%">
+            <table border="0" cellspacing="0" cellpadding="0" width="100%" role='presentation'>
                <tr valign="top">
                <%
                if (DataUtils.isNull(search_key)) {

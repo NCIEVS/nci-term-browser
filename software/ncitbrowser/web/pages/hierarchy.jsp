@@ -10,14 +10,14 @@
 <!-- Note: This tree is used in Hierarchy (ex. NCIt home page) and 
   View in Hierarchy (ex. Concept Detail page) features. -->
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js" ></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js"></script>
 <%
   String basePath = request.getContextPath();
 %>

@@ -346,7 +346,7 @@ if (expected_count != actual_count) {
 
         %>
 
-        <table class="datatable_960" border="0" width="100%" role='presentation'>
+        <table class="datatable_960" border="0" width="100%">
           <tr>
             <table role='presentation'>
               <tr>
@@ -375,7 +375,7 @@ if (expected_count != actual_count) {
           </tr>
           <tr>
             <td class="textbody">
-              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
+              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
 
 <%
 if (isMapping || isExtension) {
@@ -525,11 +525,11 @@ HashMap concept_status_hmap = DataUtils.getPropertyValuesInBatch(list, "Concept_
           if (PropertyData.isConceptEntity(rcr)) {
 		  if (con_status == null) {
 		  %>
-		     <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=search_results_dictionary%>&version=<%=search_results_version%>&ns=<%=ns%>&code=<%=code%>&key=<%=key%>&b=1&n=<%=page_number%>" ><%=DataUtils.encodeTerm(name)%></a>
+		     <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=search_results_dictionary%>&version=<%=search_results_version%>&ns=<%=ns%>&code=<%=code%>&key=<%=key%>&b=1&n=<%=page_number%>"><%=DataUtils.encodeTerm(name)%></a>
 		  <%
 		  } else {
 		  %>
-		     <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=search_results_dictionary%>&version=<%=search_results_version%>&ns=<%=ns%>&code=<%=code%>&key=<%=key%>&b=1&n=<%=page_number%>" ><%=DataUtils.encodeTerm(name)%></a>&nbsp;(<%=con_status%>)
+		     <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=search_results_dictionary%>&version=<%=search_results_version%>&ns=<%=ns%>&code=<%=code%>&key=<%=key%>&b=1&n=<%=page_number%>"><%=DataUtils.encodeTerm(name)%></a>&nbsp;(<%=con_status%>)
 		  <%
 		  }
           } else {

@@ -18,14 +18,14 @@
 <%@ page import="org.LexGrid.valueSets.ValueSetDefinition" %>
 
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js" ></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/dropdown.js"></script>
 
 <% String vsBasePath = request.getContextPath(); %>
@@ -409,8 +409,8 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
         </tr>
         <tr valign="top" align="left">
           <td align="left" class="textbody">
-                <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Name" <%=check_n%>  alt="Name" checked tabindex="7"  ><label for="names">Name&nbsp;</label>
-                <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Code" <%=check_cd%> alt="Code" tabindex="8" onclick="onVSCodeButtonPressed();"><label for="codes">Code&nbsp;</label>
+                <input type="radio" id="names" name="selectValueSetSearchOption" value="Name" <%=check_n%>  alt="Name" checked tabindex="7"><label for="names">Name&nbsp;</label>
+                <input type="radio" id="codes" name="selectValueSetSearchOption" value="Code" <%=check_cd%> alt="Code" tabindex="8" onclick="onVSCodeButtonPressed();"><label for="codes">Code&nbsp;</label>
           </td>
         </tr>
       </table>
@@ -507,7 +507,7 @@ String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
     <input type="hidden" name="valueset" value="<%=vsd_uri%>">&nbsp;</input>
 
  
-    <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
+    <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
        <th class="dataTableHeader" scope="col" align="left">Value Set</th>
         <th class="dataTableHeader" scope="col" align="left">Vocabulary</th>
         <!--
@@ -604,11 +604,11 @@ for (int i=0; i<list.size(); i++) {
 			 if (DataUtils.isNull(entity_cs_version) || entity_cs_version.compareTo("") == 0) {
 			     //String entity_cs_nm = DataUtils.getCSName(entity_cs);
 			 %>
-			     <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=entity_cs_nm%>&ns=<%=entity_cs_nm%>&code=<%=entity_code%>&key=<%=itr_key%>&b=1&n=<%=page_number%>&vse=1" ><%=DataUtils.encodeTerm(entity_name)%></a>
+			     <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=entity_cs_nm%>&ns=<%=entity_cs_nm%>&code=<%=entity_code%>&key=<%=itr_key%>&b=1&n=<%=page_number%>&vse=1"><%=DataUtils.encodeTerm(entity_name)%></a>
                          <%
                          } else {
                          %>
-			     <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=entity_cs_nm%>&version=<%=entity_cs_version%>&ns=<%=entity_cs_nm%>&code=<%=entity_code%>&key=<%=itr_key%>&b=1&n=<%=page_number%>&vse=1" ><%=DataUtils.encodeTerm(entity_name)%></a>
+			     <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=entity_cs_nm%>&version=<%=entity_cs_version%>&ns=<%=entity_cs_nm%>&code=<%=entity_code%>&key=<%=itr_key%>&b=1&n=<%=page_number%>&vse=1"><%=DataUtils.encodeTerm(entity_name)%></a>
                          <%
                          }
                          %>

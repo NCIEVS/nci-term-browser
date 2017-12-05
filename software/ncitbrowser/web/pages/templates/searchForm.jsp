@@ -215,7 +215,7 @@
          <td align="left" class="textbody" colspan="2">
 
 	  <input type="radio" id="names" name="searchTarget" value="names"         alt="Name"         <%=check_n%>  tabindex="7"><label for="names">Name&nbsp;</label>
-	  <input type="radio" id="codes" name="searchTarget" value="codes"         alt="Code"         <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('searchTerm');" ><label for="codes">Code&nbsp;</label>
+	  <input type="radio" id="codes" name="searchTarget" value="codes"         alt="Code"         <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('searchTerm');"><label for="codes">Code&nbsp;</label>
 	  <input type="radio" id="properties" name="searchTarget" value="properties"    alt="Property"     <%=check_p%>  tabindex="9"><label for="properties">Property&nbsp;</label>
 	  <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationship" <%=check_r%>  tabindex="10"><label for="relationships">Relationship</label>
            

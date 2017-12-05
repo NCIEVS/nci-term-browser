@@ -3,7 +3,7 @@
 <%@ page import="gov.nih.nci.evs.browser.bean.IteratorBeanManager" %>
 <%@ page import="gov.nih.nci.evs.browser.properties.NCItBrowserProperties" %>
 
-<FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/search_results.jsf?" >
+<FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/search_results.jsf?">
   <table role='presentation'>
     <tr>
       <td class="textbody" align=left>

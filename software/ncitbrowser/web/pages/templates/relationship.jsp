@@ -97,7 +97,7 @@ if (ns_curr == null || ns_curr.compareTo("null") == 0 || ns_curr.compareTo("unde
     String child_table_str = null;
         
 %>
-  <table class="datatable_960" border="0" width="100%" role='presentation'>
+  <table class="datatable_960" border="0" width="100%">
     <tr>
       <td class="textsubtitle-blue" align="left">
       

@@ -290,7 +290,7 @@ if (captcha_option.compareTo("default") == 0) {
       value="submit"
       image="/images/submit.gif"
       action="#{userSessionBean.contactUs}"
-      alt="submit" >
+      alt="submit">
     </h:commandButton>
     
 <input type="hidden" name="alt_captcha_option" id="alt_captcha_option" value="<%=alt_captcha_option%>">

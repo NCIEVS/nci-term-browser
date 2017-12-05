@@ -443,7 +443,7 @@
                       <input type="radio" id="startsWith" name="adv_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="6" onclick="refresh_algorithm()"; ><label for="startsWith">Begins With&nbsp;</label>
                       
 <%
-String luceneSearch = "<a href=\"#\" onmouseover=\"Tip('<h4>Match Algorithm</h4><table role='presentation'><tr><td>Wildcard (multiple characters)</b>: heart*</td></tr><tr>       <td><b>Wildcard (single character)</b>: he?rt</td></tr><tr><td><b>Fussy match</b>: heart~</td></tr><tr><td><b>Boolean</b>: heart AND attack</td></tr><td><b>Boosting</b>: heart^5 AND attack</td></tr><tr><td><b>Negation</b>: heart -attack</td></tr><tr><td><b>Code Field</b>: code:118797008 AND heart</td></tr></table>')\" onmouseout=\"UnTip()\" >Lucene Search</a>";
+String luceneSearch = "<a href=\"#\" onmouseover=\"Tip('<h4>Match Algorithm</h4><table role='presentation'><tr><td>Wildcard (multiple characters)</b>: heart*</td></tr><tr>       <td><b>Wildcard (single character)</b>: he?rt</td></tr><tr><td><b>Fussy match</b>: heart~</td></tr><tr><td><b>Boolean</b>: heart AND attack</td></tr><td><b>Boosting</b>: heart^5 AND attack</td></tr><tr><td><b>Negation</b>: heart -attack</td></tr><tr><td><b>Code Field</b>: code:118797008 AND heart</td></tr></table>')\" onmouseout=\"UnTip()\">Lucene Search</a>";
 %>
                       
                       <input type="radio" id="lucene" name="adv_search_algorithm" value="lucene" alt="Lucene" <%=check__b%> tabindex="7" onclick="refresh_algorithm()"; ><label for="lucene">Lucene</label>
@@ -520,16 +520,16 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
                 </td></tr>
 
                 <tr valign="top" align="left"><td align="left" class="textbody">
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Name" alt="Name" <%=check_n2%> onclick="javascript:refresh()" tabindex="9"><label for="names">Name&nbsp;</label>
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Code" alt="Code" <%=check_c2%> onclick="refresh_code()" tabindex="10"><label for="codes">Code&nbsp;</label>
+                  <input type="radio" id="names" name="selectSearchOption" value="Name" alt="Name" <%=check_n2%> onclick="javascript:refresh()" tabindex="9"><label for="names">Name&nbsp;</label>
+                  <input type="radio" id="codes" name="selectSearchOption" value="Code" alt="Code" <%=check_c2%> onclick="refresh_code()" tabindex="10"><label for="codes">Code&nbsp;</label>
 
 <%
 if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
  
      
 %>
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Property" alt="Property" <%=check_p2%> onclick="javascript:refresh()" tabindex="11"><label for="searchTarget2">Property&nbsp;</label>
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Relationship" alt="Relationship" <%=check_r2%> onclick="javascript:refresh()" tabindex="12"><label for="searchTarget3">Relationship</label>
+                  <input type="radio" id="searchTarget2" name="selectSearchOption" value="Property" alt="Property" <%=check_p2%> onclick="javascript:refresh()" tabindex="11"><label for="searchTarget2">Property&nbsp;</label>
+                  <input type="radio" id="searchTarget3" name="selectSearchOption" value="Relationship" alt="Relationship" <%=check_r2%> onclick="javascript:refresh()" tabindex="12"><label for="searchTarget3">Relationship</label>
 <%
 } else {
 %>
@@ -635,8 +635,8 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
                       <td>&nbsp;</td>
                    <td class="textbody">
                       with a
-                        <input type="radio" id="direction" name="direction" value="source" alt="Source" <%=check_source%> tabindex="14"/><label for="source">source&nbsp;</label>
-                        <input type="radio" id="direction" name="direction" value="target" alt="Target" <%=check_target%> tabindex="15"/>target&nbsp; 
+                        <input type="radio" id="source" name="direction" value="source" alt="Source" <%=check_source%> tabindex="14"/><label for="source">source&nbsp;</label>
+                        <input type="radio" id="target" name="direction" value="target" alt="Target" <%=check_target%> tabindex="15"/>target&nbsp; 
                         concept name matching the search criteria specified above.
                    </td>
                 </tr> 

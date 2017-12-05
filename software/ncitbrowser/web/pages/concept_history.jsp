@@ -25,7 +25,7 @@
     <link rel="shortcut icon" href="<%= request.getContextPath() %>/favicon.ico" type="image/x-icon" />
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/script.js"></script>
   </head>
-  <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
+  <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
   <%
     LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
     HistoryUtils historyUtils = new HistoryUtils(lbSvc);
@@ -97,7 +97,7 @@
               </td>
               <td align="right">
                 <font size="1" color="red" align="right">
-                  <a href="javascript:printPage()"><img src="<%= request.getContextPath() %>/images/printer.bmp" border="0" alt="Send to Printer" ><i>Send to Printer</i></a>
+                  <a href="javascript:printPage()"><img src="<%= request.getContextPath() %>/images/printer.bmp" border="0" alt="Send to Printer"><i>Send to Printer</i></a>
                 </font>
               </td>
             </tr>

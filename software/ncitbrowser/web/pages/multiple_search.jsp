@@ -300,7 +300,7 @@ String unsupported_vocabulary_message = (String) request.getSession().getAttribu
 <!-- modification starts------------------------------------------------------------------------------------------------>
 <table border="0" role='presentation'>
     <tr>
-        <td width="650px" >
+        <td width="650px">
           <!--
           <table class="termstable_960" border="0" role='presentation'>
           -->
@@ -595,7 +595,7 @@ if (ontologiesToExpandStr == null) {
                   <h:commandButton id="clearall" value="clearall"
                     action="#{userSessionBean.clearAll}"
                     image="#{requestContextPath}/images/clear.gif"
-                    alt="reset" tabindex="8" >
+                    alt="reset" tabindex="8">
                   </h:commandButton>
                   
                   &nbsp;&nbsp; 

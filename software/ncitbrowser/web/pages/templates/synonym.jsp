@@ -60,7 +60,7 @@ if (type != null && type.compareTo("all") == 0) {
     </tr>
   </table>
     <div>
-      <table class="datatable_960" border="0" width="100%" role='presentation'>
+      <table class="datatable_960" border="0" width="100%">
         <tr>
           <th class="dataTableHeader" scope="col" align="left">Term</th>
           <th class="dataTableHeader" scope="col" align="left">Source

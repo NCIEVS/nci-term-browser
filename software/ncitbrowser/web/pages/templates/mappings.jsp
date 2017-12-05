@@ -157,7 +157,7 @@ if (list != null && list.size() > 0) {
            
 %>        
     <p></p>Mapping Source: <%=DataUtils.encodeTerm(mapping_cs_name)%>
-          <table class="datatable_960" role='presentation'>
+          <table class="datatable_960">
 
           <th class="dataTableHeader" width="100px" scope="col" align="left">Source</th>
 
@@ -319,7 +319,7 @@ if (list != null && list.size() > 0) {
 %>
       
     <p></p>Mapping Source: <%=DataUtils.encodeTerm(mapping_cs_name)%>
-          <table class="datatable_960" role='presentation'>
+          <table class="datatable_960">
 
           <th class="dataTableHeader" width="100px" scope="col" align="left">Source</th>
 

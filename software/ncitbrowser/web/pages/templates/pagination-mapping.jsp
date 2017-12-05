@@ -3,7 +3,7 @@
 <%@ page import="gov.nih.nci.evs.browser.properties.NCItBrowserProperties" %>
 
 
-<FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/mapping.jsf?nav_type=mappings" >
+<FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/mapping.jsf?nav_type=mappings">
   <table role='presentation'>
     <tr>
       <td class="textbody" align=left>

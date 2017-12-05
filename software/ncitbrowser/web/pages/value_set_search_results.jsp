@@ -16,14 +16,14 @@
 <%@ page import="org.LexGrid.concepts.Entity" %>
 
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js" ></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/dropdown.js"></script>
 
 <% String vsBasePath = request.getContextPath(); %>
@@ -524,9 +524,9 @@ if (vd_uri != null) {
     
         <tr valign="top" align="left">
         <td align="left" class="textbody">  
-                     <input type="radio" id="valueset_search_algorithm" name="valueset_search_algorithm" value="contains" alt="Contains" <%=check__c%> tabindex="14"><label for="contains">Contains</label>
-                     <input type="radio" id="valueset_search_algorithm" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=check__e%> tabindex="15"><label for="exactMatch">Exact Match&nbsp;</label>
-                     <input type="radio" id="valueset_search_algorithm" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="16"><label for="startsWith">Begins With&nbsp;</label>
+                     <input type="radio" id="valueset_search_algorithm1" name="valueset_search_algorithm" value="contains" alt="Contains" <%=check__c%> tabindex="14"><label for="valueset_search_algorithm1">Contains</label>
+                     <input type="radio" id="valueset_search_algorithm2" name="valueset_search_algorithm" value="exactMatch" alt="Exact Match" <%=check__e%> tabindex="15"><label for="valueset_search_algorithm2">Exact Match&nbsp;</label>
+                     <input type="radio" id="valueset_search_algorithm3" name="valueset_search_algorithm" value="startsWith" alt="Begins With" <%=check__s%> tabindex="16"><label for="valueset_search_algorithm3">Begins With&nbsp;</label>
         </td>
         </tr>
         <%
@@ -538,12 +538,12 @@ if (vd_uri != null) {
         <tr valign="top" align="left">
           <td align="left" class="textbody"> 
           
-                <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Name" <%=check_name%> 
-                  alt="Name" tabindex="17" onclick="javascript:refresh()" ><label for="names">Name&nbsp;</label>
+                <input type="radio" id="selectValueSetSearchOption1" name="selectValueSetSearchOption" value="Name" <%=check_name%> 
+                  alt="Name" tabindex="17" onclick="javascript:refresh()"><label for="selectValueSetSearchOption1">Name&nbsp;</label>
           
           
-                <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Code" <%=check_code%> 
-                  alt="Code" tabindex="18" onclick="javascript:refresh()" ><label for="codes">Code&nbsp;</label>
+                <input type="radio" id="selectValueSetSearchOption2" name="selectValueSetSearchOption" value="Code" <%=check_code%> 
+                  alt="Code" tabindex="18" onclick="javascript:refresh()"><label for="selectValueSetSearchOption2">Code&nbsp;</label>
           </td>
         </tr>
       </table>
@@ -653,7 +653,7 @@ if (vd_uri != null) {
  %>
 
  
-              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
+              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
 
 <%
 if (vsd_vec != null && vsd_vec.size() > 1) {

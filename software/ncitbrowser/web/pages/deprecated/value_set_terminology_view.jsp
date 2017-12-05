@@ -16,14 +16,14 @@
 <!-- Note: This tree is used in Value Sets tab. -->
 
 <!--
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js" ></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/dropdown.js"></script>
 -->
 
@@ -784,9 +784,9 @@ body {
         <tr valign="top" align="left">
           <td align="left" class="textbody">     
                 <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Code" <%=check_code%> 
-                  alt="Code" tabindex="8" ><label for="codes">Code&nbsp;</label>
+                  alt="Code" tabindex="8"><label for="codes">Code&nbsp;</label>
                 <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Name" <%=check_name%> 
-                  alt="Name" tabindex="9" ><label for="names">Name&nbsp;</label>
+                  alt="Name" tabindex="9"><label for="names">Name&nbsp;</label>
           </td>
         </tr>  
       </table>

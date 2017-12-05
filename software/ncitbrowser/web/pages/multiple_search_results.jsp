@@ -171,8 +171,8 @@ request.getSession().setAttribute("matchText", match_text);
                   
         <input type="radio" id="names" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="4"><label for="names">Name&nbsp;</label>
         <input type="radio" id="codes" name="searchTarget" value="codes" alt="Codes" <%=check_cd%> tabindex="5" onclick="onCodeButtonPressed('searchTerm');"><label for="codes">Code&nbsp;</label>
-        <input type="radio" id="properties" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="6"><label for="searchTarget2">Property&nbsp;</label>
-        <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="7">Relationship&nbsp;
+        <input type="radio" id="properties" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="6"><label for="properties">Property&nbsp;</label>
+        <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="7"><label for="relationships">Relationship&nbsp;</label>
 
 
 <input type="hidden" name="selected_vocabularies" id="selected_vocabularies" value="<%=ontologiesToSearchOnStr%>">
@@ -349,7 +349,7 @@ String next_page_num_str = Integer.toString(next_page_num);
 
           <tr>
             <td class="textbody">
-              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
+              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
 <%
 
 if (size > 0) {
@@ -539,7 +539,7 @@ HashMap concept_status_hmap = DataUtils.getPropertyValuesInBatch(list, "Concept_
                if (PropertyData.isConceptEntity(rcr)) {
           
           %>
-               <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=vocabulary_name_encoded%><%=version_parameter%>&ns=<%=ns%>&code=<%=code%>&key=<%=itr_key%>&m=1&b=1&n=<%=page_number%>" ><%=DataUtils.encodeTerm(name)%></a>
+               <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=vocabulary_name_encoded%><%=version_parameter%>&ns=<%=ns%>&code=<%=code%>&key=<%=itr_key%>&m=1&b=1&n=<%=page_number%>"><%=DataUtils.encodeTerm(name)%></a>
           <%
                } else {
                
@@ -564,7 +564,7 @@ HashMap concept_status_hmap = DataUtils.getPropertyValuesInBatch(list, "Concept_
           <%
           if (DataUtils.isNCIT(vocabulary_name)) {
           %>
-               <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=vocabulary_name_encoded%><%=version_parameter%>&ns=<%=ns%>&code=<%=code%>&key=<%=itr_key%>&m=1&b=1&n=<%=page_number%>" ><%=DataUtils.encodeTerm(name)%></a>&nbsp;(<%=con_status%>)
+               <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=vocabulary_name_encoded%><%=version_parameter%>&ns=<%=ns%>&code=<%=code%>&key=<%=itr_key%>&m=1&b=1&n=<%=page_number%>"><%=DataUtils.encodeTerm(name)%></a>&nbsp;(<%=con_status%>)
           <%
           } else if (vocabulary_name.compareToIgnoreCase("NCI MetaThesaurus") == 0) {
                String meta_url = _ncimUrl + "/ConceptReport.jsp?dictionary=NCI%20MetaThesaurus&code=" + code;
@@ -575,7 +575,7 @@ HashMap concept_status_hmap = DataUtils.getPropertyValuesInBatch(list, "Concept_
                if (PropertyData.isConceptEntity(rcr)) {
 
           %>
-               <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=vocabulary_name_encoded%><%=version_parameter%>&ns=<%=ns%>&code=<%=code%>&key=<%=itr_key%>&m=1&b=1&n=<%=page_number%>" ><%=DataUtils.encodeTerm(name)%></a>&nbsp;(<%=con_status%>)
+               <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=vocabulary_name_encoded%><%=version_parameter%>&ns=<%=ns%>&code=<%=code%>&key=<%=itr_key%>&m=1&b=1&n=<%=page_number%>"><%=DataUtils.encodeTerm(name)%></a>&nbsp;(<%=con_status%>)
           <%
                } else {
           %>

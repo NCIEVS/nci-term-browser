@@ -10,7 +10,7 @@ if (iend_int > match_size_int) {
 %>
 
 
-<FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/value_set_entity_search_results.jsf?" >
+<FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/value_set_entity_search_results.jsf?">
   <table role='presentation'>
     <tr>
       <td class="textbody" align=left>

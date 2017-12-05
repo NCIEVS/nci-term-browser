@@ -464,7 +464,7 @@ else if (concept_status != null && concept_status.compareToIgnoreCase("Retired C
         } else {
            
 %>
-            <table class="datatable_960" role='presentation'>
+            <table class="datatable_960">
            
                 <b>NCI Metathesaurus CUI:</b>
 <%                
@@ -506,7 +506,7 @@ else if (concept_status != null && concept_status.compareToIgnoreCase("Retired C
 <b>Synonyms &amp; Abbreviations:</b>
 <a href="<%=request.getContextPath() %>/pages/concept_details.jsf?dictionary=<%=scheme%>&code=<%=id%>&type=synonym">(see Synonym Details)</a>
 
-<table class="datatable_960" role='presentation'>
+<table class="datatable_960">
 <%
     HashSet hset2 = new HashSet();
     Vector synonym_values = new Vector();
@@ -588,7 +588,7 @@ if (!hasExternalSourceCodes) {
 } else {
 %>
   <b>External Source Codes:&nbsp;</b>
-  <table class="datatable_960" role='presentation'>
+  <table class="datatable_960">
   
    <col width="20%">
    <col width="80%">
@@ -705,7 +705,7 @@ if (!hasOtherProperties) {
           if (isDefined.equals(Boolean.TRUE)) is_defined = "Yes";
     %>
 	  <b>Additional Concept Data:</b>&nbsp;
-	  <table class="datatable_960" role='presentation'>
+	  <table class="datatable_960">
 	    <tr class="dataRowLight">
 	      <td><%=defined_label%>&nbsp;<%=is_defined%></td>
 	      <td>&nbsp;</td>
@@ -727,7 +727,7 @@ if (!hasOtherProperties) {
     String bookmark_title = prop_dictionary + "%20" + concept_id;
 %>
 <p>
-   <table class="datatable_960" border="0" cellpadding="0" cellspacing="0" width="700px" role='presentation'>
+   <table class="datatable_960" border="0" cellpadding="0" cellspacing="0" width="700px">
       <tr>
          <td class="dataRowLight">URL: <%=url%></td>
       </tr>

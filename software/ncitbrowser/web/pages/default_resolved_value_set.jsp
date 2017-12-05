@@ -343,7 +343,7 @@
 			<%   
 			} else {
                         %>
-                              <table class="datatable_960" summary="Data Table" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
+                              <table class="datatable_960" summary="Data Table" cellpadding="3" cellspacing="0" border="0" width="100%">
                                  <th class="dataTableHeader" scope="col" align="left">Code</th>
                                  <th class="dataTableHeader" scope="col" align="left">Name</th>
                                  <th class="dataTableHeader" scope="col" align="left">Vocabulary</th>

@@ -89,7 +89,7 @@
           String prev_page_num_str = Integer.toString(prev_page_num);
           String next_page_num_str = Integer.toString(next_page_num);
         %>
-        <table class="datatable_960" border="0" width="100%" role='presentation'>
+        <table class="datatable_960" border="0" width="100%">
           <tr>
             <table role='presentation'>
               <tr>
@@ -108,7 +108,7 @@
           </tr>
           <tr>
             <td class="textbody">
-              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%" role='presentation'>
+              <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
                 <%
                   for (int i=istart; i<iend; i++) {
                     if (i >= 0 && i<v.size()) {
@@ -130,7 +130,7 @@
                       }
                       %>
                           <td class="dataCellText">
-                            <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=Constants.CODING_SCHEME_NAME%>&ns=NCI_Thesaurus&code=<%=code%>" ><%=DataUtils.encodeTerm(name)%></a>
+                            <a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=Constants.CODING_SCHEME_NAME%>&ns=NCI_Thesaurus&code=<%=code%>"><%=DataUtils.encodeTerm(name)%></a>
                           </td>
                         </tr>
                       <%

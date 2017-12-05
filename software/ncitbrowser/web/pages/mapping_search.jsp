@@ -323,8 +323,8 @@ String algorithm = gov.nih.nci.evs.browser.utils.HTTPUtils.cleanXSS((String) req
       <td align="left" class="textbody">
         <input type="radio" id="names" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="7"><label for="names">Name&nbsp;</label>
         <input type="radio" id="codes" name="searchTarget" value="codes" alt="Codes" <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('mappingSearch');"><label for="codes">Code&nbsp;</label>
-        <input type="radio" id="properties" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="9"><label for="searchTarget2">Property&nbsp;</label>
-        <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="10">Relationship&nbsp;
+        <input type="radio" id="properties" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="9"><label for="properties">Property&nbsp;</label>
+        <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="10"><label for="relationships">Relationship&nbsp;</label>
       </td>
     </tr>
   </table>

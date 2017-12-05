@@ -520,16 +520,16 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
                 </td></tr>
 
                 <tr valign="top" align="left"><td align="left" class="textbody">
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Name" alt="Name" <%=check_n2%> onclick="javascript:refresh()" tabindex="9"><label for="names">Name&nbsp;</label>
+                  <input type="radio" id="searchTarget0" name="selectSearchOption" value="Name" alt="Name" <%=check_n2%> onclick="javascript:refresh()" tabindex="9"><label for="searchTarget0">Name&nbsp;</label>
 
 <%
 if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
  
      
 %>
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Code" alt="Code" <%=check_c2%> onclick="refresh_code()" tabindex="10"><label for="codes">Code&nbsp;</label>
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Property" alt="Property" <%=check_p2%> onclick="javascript:refresh()" tabindex="11"><label for="searchTarget2">Property&nbsp;</label>
-                  <input type="radio" id="selectSearchOption" name="selectSearchOption" value="Relationship" alt="Relationship" <%=check_r2%> onclick="javascript:refresh()" tabindex="12"><label for="searchTarget3">Relationship</label>
+                  <input type="radio" id="searchTarget1" name="selectSearchOption" value="Code" alt="Code" <%=check_c2%> onclick="refresh_code()" tabindex="10"><label for="searchTarget1">Code&nbsp;</label>
+                  <input type="radio" id="searchTarget2" name="selectSearchOption" value="Property" alt="Property" <%=check_p2%> onclick="javascript:refresh()" tabindex="11"><label for="searchTarget2">Property&nbsp;</label>
+                  <input type="radio" id="searchTarget3" name="selectSearchOption" value="Relationship" alt="Relationship" <%=check_r2%> onclick="javascript:refresh()" tabindex="12"><label for="searchTarget3">Relationship</label>
 <%
 } else {
 %>
@@ -635,8 +635,8 @@ if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) {
                       <td>&nbsp;</td>
                    <td class="textbody">
                       with a
-                        <input type="radio" id="direction" name="direction" value="source" alt="Source" <%=check_source%> tabindex="14"/><label for="source">source&nbsp;</label>
-                        <input type="radio" id="direction" name="direction" value="target" alt="Target" <%=check_target%> tabindex="15"/><label for="target">target&nbsp;</label>
+                        <input type="radio" id="source" name="direction" value="source" alt="Source" <%=check_source%> tabindex="14"/><label for="source">source&nbsp;</label>
+                        <input type="radio" id="target" name="direction" value="target" alt="Target" <%=check_target%> tabindex="15"/><label for="target">target&nbsp;</label>
                         concept name matching the search criteria specified above.
                    </td>
                 </tr> 

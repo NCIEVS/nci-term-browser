@@ -158,13 +158,13 @@ if (_selectValueSetSearchOption.compareTo("CodingScheme") == 0) {
    		  
    		     <tr valign="top" align="left"><td align="left" class="textbody">
  				          <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Code" <%=_check_code%> 
- 				              alt="Code" tabindex="8" onclick="javascript:refresh()" ><label for="codes">Code&nbsp;</label>
+ 				              alt="Code" tabindex="8" onclick="javascript:refresh()"><label for="codes">Code&nbsp;</label>
  				          <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Name" <%=_check_name%> 
- 				              alt="Name" tabindex="9" onclick="javascript:refresh()" ><label for="names">Name&nbsp;</label>
+ 				              alt="Name" tabindex="9" onclick="javascript:refresh()"><label for="names">Name&nbsp;</label>
  				          <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="Source" <%=_check_src%> 
- 				              alt="Source" tabindex="10" onclick="javascript:refresh()" >Source&nbsp;
+ 				              alt="Source" tabindex="10" onclick="javascript:refresh()">Source&nbsp;
  				          <input type="radio" id="selectValueSetSearchOption" name="selectValueSetSearchOption" value="CodingScheme" <%=_check_cs%> 
-                                              alt="Coding Scheme" tabindex="11" onclick="javascript:refresh()" >Terminology
+                                              alt="Coding Scheme" tabindex="11" onclick="javascript:refresh()">Terminology
                      </td></tr>
 		    
 		    

@@ -272,9 +272,6 @@ if (!DataUtils.isNullOrBlank(vsd_uri)) {
     }
      
 %>
-<!--  
-<form id="resolvedValueSetSearchForm" name="resolvedValueSetSearchForm" method="post" action="/ncitbrowser/ajax?action=search_value_set" class="search-form" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded">
--->
 <form id="resolvedValueSetSearchForm" name="resolvedValueSetSearchForm" method="post" action="/ncitbrowser/ajax?action=search_downloaded_value_set" class="search-form" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded">
 
 <input type="hidden" name="resolvedValueSetSearchForm" value="resolvedValueSetSearchForm" />
@@ -309,8 +306,8 @@ if (!DataUtils.isNullOrBlank(vsd_uri)) {
 
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
-        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Name" alt="Name" <%=check_n%> tabindex="7"/><label for="names">Name&nbsp;</label>
-        <input type="radio" name="selectValueSetSearchOption" id="selectValueSetSearchOption" value="Code" alt="Code" <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
+        <input type="radio" name="selectValueSetSearchOption" id="names" value="Name" alt="Name" <%=check_n%> tabindex="7"/><label for="names">Name&nbsp;</label>
+        <input type="radio" name="selectValueSetSearchOption" id="codes" value="Code" alt="Code" <%=check_cd%> tabindex="8" onclick="onCodeButtonPressed('resolvedValueSetSearchForm');" /><label for="codes">Code&nbsp;</label>
       </td>
     </tr>
   
@@ -562,7 +559,7 @@ if (rvsi != null && show_pagination) {
                
                
                
- <FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/ajax" >
+ <FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/ajax">
  
   <table role='presentation'>
     <tr>

@@ -357,7 +357,7 @@ if (map_rank_applicable != null && map_rank_applicable.compareTo("false") == 0) 
 }
 
 %>
-          <table class="datatable_960" role='presentation'>
+          <table class="datatable_960">
 
           <th class="dataTableHeader" width="100px" scope="col" align="left">Source</th>
 

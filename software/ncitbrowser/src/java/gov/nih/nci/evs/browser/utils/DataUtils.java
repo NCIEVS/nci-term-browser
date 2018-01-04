@@ -1224,7 +1224,8 @@ System.out.println("DataUtils ncit_mapping_url: " + ncit_mapping_url);
 		System.out.println("getValueSetDefinitionMetadata run time (ms): " + (System.currentTimeMillis() - ms));
         System.out.println("Instantiate ValueSetTreeUtils...");
         ms = System.currentTimeMillis();
-        ValueSetTreeUtils util = new ValueSetTreeUtils(lbSvc);
+        String serviceUrl = RemoteServerUtil.getServiceUrl();
+        ValueSetTreeUtils util = new ValueSetTreeUtils(lbSvc, serviceUrl);
 		sourceValueSetTree = util.getSourceValueSetTree();
 		terminologyValueSetTree = util.getTerminologyValueSetTree();
 

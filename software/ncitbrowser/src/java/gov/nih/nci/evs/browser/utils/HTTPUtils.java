@@ -800,4 +800,67 @@ temporarily commented out
         return Boolean.TRUE;
 	}
 
+    //HTTPUtils.preserveHTTPRequestParameterValues(request);
+	public static void preserveHTTPRequestParameterValues(HttpServletRequest request) {
+		Object attr_1 = request.getSession().getAttribute("adv_search_algorithm");
+		if (attr_1 != null && attr_1 instanceof String) {
+			request.getSession().setAttribute("adv_search_algorithm", (String) attr_1);
+		}
+
+		Object attr_2 = request.getSession().getAttribute("algorithm");
+		if (attr_2 != null && attr_2 instanceof String) {
+			request.getSession().setAttribute("algorithm", (String) attr_2);
+		}
+
+		Object attr_3 = request.getSession().getAttribute("direction");
+		if (attr_3 != null && attr_3 instanceof String) {
+			request.getSession().setAttribute("direction", (String) attr_3);
+		}
+
+		Object attr_4 = request.getSession().getAttribute("matchText");
+		if (attr_4 != null && attr_4 instanceof String) {
+			request.getSession().setAttribute("matchText", (String) attr_4);
+		}
+
+		Object attr_5 = request.getSession().getAttribute("ontology_list");
+		if (attr_5 != null && attr_5 instanceof String) {
+			request.getSession().setAttribute("ontology_list", (String) attr_5);
+		}
+
+		Object attr_6 = request.getSession().getAttribute("scheme_and_version");
+		if (attr_6 != null && attr_6 instanceof String) {
+			request.getSession().setAttribute("scheme_and_version", (String) attr_6);
+		}
+
+		Object attr_7 = request.getSession().getAttribute("searchTarget");
+		if (attr_7 != null && attr_7 instanceof String) {
+			request.getSession().setAttribute("searchTarget", (String) attr_7);
+		}
+
+		Object attr_8 = request.getSession().getAttribute("selectSearchOption");
+		if (attr_8 != null && attr_8 instanceof String) {
+			request.getSession().setAttribute("selectSearchOption", (String) attr_8);
+		}
+
+		Object attr_9 = request.getSession().getAttribute("selectValueSetSearchOption");
+		if (attr_9 != null && attr_9 instanceof String) {
+			request.getSession().setAttribute("selectValueSetSearchOption", (String) attr_9);
+		}
+
+		Object attr_10 = request.getSession().getAttribute("subject");
+		if (attr_10 != null && attr_10 instanceof String) {
+			request.getSession().setAttribute("subject", (String) attr_10);
+		}
+
+		Object attr_11 = request.getSession().getAttribute("valueset");
+		if (attr_11 != null && attr_11 instanceof String) {
+			request.getSession().setAttribute("valueset", (String) attr_11);
+		}
+
+		Object attr_12 = request.getSession().getAttribute("valueset_search_algorithm");
+		if (attr_12 != null && attr_12 instanceof String) {
+			request.getSession().setAttribute("valueset_search_algorithm", (String) attr_12);
+		}
+	}
+
 }

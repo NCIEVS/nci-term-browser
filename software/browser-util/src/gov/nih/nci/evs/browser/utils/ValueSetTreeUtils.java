@@ -299,7 +299,7 @@ public class ValueSetTreeUtils {
 			LexEVSTreeItem terminology_item = terminology_items.get(ValueSetHierarchyServiceImpl.ROOT);
 
 //a temporary patch:
-terminology_item = mergeLexEVSTreeBranches(terminology_item);
+//terminology_item = mergeLexEVSTreeBranches(terminology_item);
 
 
 			TreeItem ti = LexEVSTreeItem2TreeItem.toTreeItem(terminology_item);

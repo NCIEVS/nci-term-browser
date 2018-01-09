@@ -6,6 +6,8 @@ import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.apache.log4j.*;
 import org.LexGrid.valueSets.ValueSetDefinition;
 import org.LexGrid.LexBIG.Impl.Extensions.tree.model.LexEvsTreeNode;
+import org.lexevs.dao.database.service.valuesets.LexEVSTreeItem;
+
 
 import gov.nih.nci.evs.browser.bean.*;
 
@@ -126,6 +128,13 @@ public class SortComparator implements Comparator<Object> {
             if (sort_option == SORT_BY_CODE)
                 return node.getCode();
             return node.getEntityDescription();
+	    }
+
+        else if (c instanceof LexEVSTreeItem) {
+            LexEVSTreeItem node = (LexEVSTreeItem) c;
+            if (sort_option == SORT_BY_CODE)
+                return node.get_id();
+            return node.get_text();
 
         } else if (c instanceof DelimitedString) {
 			DelimitedString s = (DelimitedString) c;

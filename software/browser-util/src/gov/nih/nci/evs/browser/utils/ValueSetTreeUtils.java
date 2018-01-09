@@ -230,11 +230,78 @@ public class ValueSetTreeUtils {
 		}
     }
 
+    public LexEVSTreeItem sortLexEVSTreeItem(LexEVSTreeItem item) {
+		for (String association : item._assocToChildMap.keySet()) {
+			List<LexEVSTreeItem> children = item._assocToChildMap.get(association);
+			new SortUtils().quickSort(children);
+			for (int i=0; i<children.size(); i++) {
+				LexEVSTreeItem childItem = (LexEVSTreeItem) children.get(i);
+				sortLexEVSTreeItem(childItem);
+			}
+		}
+		return item;
+	}
+
+    public LexEVSTreeItem mergeLexEVSTreeNodes(LexEVSTreeItem item1, LexEVSTreeItem item2) {
+		for (String association : item2._assocToChildMap.keySet()) {
+			List<LexEVSTreeItem> children = item2._assocToChildMap.get(association);
+			HashSet hset = new HashSet();
+			String duplicate_root_text = "";
+			for (int i=0; i<children.size(); i++) {
+				LexEVSTreeItem childItem = (LexEVSTreeItem) children.get(i);
+				item1.addChild(association, childItem);
+			}
+		}
+		return item1;
+	}
+
+    public LexEVSTreeItem mergeLexEVSTreeBranches(LexEVSTreeItem lexevs_ti) {
+		if (lexevs_ti == null) return null;
+		String duplicate_root_text = null;
+		for (String association : lexevs_ti._assocToChildMap.keySet()) {
+			List<LexEVSTreeItem> children = lexevs_ti._assocToChildMap.get(association);
+			HashSet hset = new HashSet();
+			for (int i=0; i<children.size(); i++) {
+				LexEVSTreeItem childItem = (LexEVSTreeItem) children.get(i);
+				if (hset.contains(childItem.get_text())) {
+					duplicate_root_text = childItem.get_text();
+					break;
+				} else {
+					hset.add(childItem.get_text());
+				}
+			}
+		}
+		Vector root_nodes = new Vector();
+		if (duplicate_root_text != null) {
+			root_nodes = new Vector();
+			for (String association : lexevs_ti._assocToChildMap.keySet()) {
+				List<LexEVSTreeItem> children = lexevs_ti._assocToChildMap.get(association);
+				for (int i=0; i<children.size(); i++) {
+					LexEVSTreeItem childItem = (LexEVSTreeItem) children.get(i);
+					if (childItem.get_text().compareTo(duplicate_root_text) == 0) {
+						root_nodes.add(childItem);
+						if (root_nodes.size() == 2) break;
+					}
+				}
+			}
+		}
+		LexEVSTreeItem first_node = (LexEVSTreeItem) root_nodes.elementAt(0);
+		LexEVSTreeItem second_node = (LexEVSTreeItem) root_nodes.elementAt(1);
+		LexEVSTreeItem merged_node = mergeLexEVSTreeNodes(first_node, second_node);
+		merged_node = sortLexEVSTreeItem(merged_node);
+		return merged_node;
+	}
+
     public void constructTerminologyValueSetTree() {
         long ms = System.currentTimeMillis();
         try {
 			Map<String, LexEVSTreeItem> terminology_items = service.getSourceDefinedTree();
 			LexEVSTreeItem terminology_item = terminology_items.get(ValueSetHierarchyServiceImpl.ROOT);
+
+//a temporary patch:
+terminology_item = mergeLexEVSTreeBranches(terminology_item);
+
+
 			TreeItem ti = LexEVSTreeItem2TreeItem.toTreeItem(terminology_item);
 			ti = LexEVSTreeItem2TreeItem.placeNCItAsFirstNode(ti);
 			terminologyValueSetTree = new HashMap();

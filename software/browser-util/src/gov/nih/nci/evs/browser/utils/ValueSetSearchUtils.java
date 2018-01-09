@@ -151,6 +151,13 @@ public class ValueSetSearchUtils
         this.csdu = new CodingSchemeDataUtils(lbSvc);
 	}
 
+    public ValueSetSearchUtils(LexBIGService lbSvc, String serviceUrl) {
+		this.lbSvc = lbSvc;
+		this.serviceUrl = serviceUrl;
+        this.lrvs = new LexEVSResolvedValueSetServiceImpl(lbSvc);
+        this.csdu = new CodingSchemeDataUtils(lbSvc);
+	}
+
     public void setServiceUrl(String serviceUrl) {
 		this.serviceUrl = serviceUrl;
 	}

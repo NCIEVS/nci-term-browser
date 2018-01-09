@@ -2541,7 +2541,8 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 
           String checked_vocabularies = construct_checked_vocabularies_string();
 		  LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-          ResolvedConceptReferencesIterator iterator = new ValueSetSearchUtils(lbSvc).searchResolvedValueSetCodingSchemes(checked_vocabularies,
+		  String serviceUrl = RemoteServerUtil.getServiceUrl();
+          ResolvedConceptReferencesIterator iterator = new ValueSetSearchUtils(lbSvc, serviceUrl).searchResolvedValueSetCodingSchemes(checked_vocabularies,
               matchText, simpleSearchOption, algorithm);
 
           if (iterator == null) {
@@ -2806,12 +2807,8 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
         if (selectValueSetSearchOption.compareTo("Name") == 0) {
 			searchOption = SimpleSearchUtils.BY_NAME;
 		}
-
-
-        //ResolvedConceptReferencesIteratorWrapper wrapper = new ValueSetSearchUtils().searchResolvedValueSetCodingSchemes(checked_vocabularies,
-        //    matchText, searchOption, algorithm);
-
-        ResolvedConceptReferencesIterator iterator = new ValueSetSearchUtils(lbSvc).searchResolvedValueSetCodingSchemes(checked_vocabularies,
+        String serviceUrl = RemoteServerUtil.getServiceUrl();
+        ResolvedConceptReferencesIterator iterator = new ValueSetSearchUtils(lbSvc, serviceUrl).searchResolvedValueSetCodingSchemes(checked_vocabularies,
             matchText, searchOption, algorithm);
 
         if (iterator == null) {
@@ -4830,10 +4827,9 @@ out.flush();
         request.getSession().setAttribute("searchTarget", selectValueSetSearchOption);
         request.getSession().setAttribute("matchText_RVS", matchText);
 
-        //ResolvedConceptReferencesIteratorWrapper wrapper = new ValueSetSearchUtils().searchResolvedValueSetCodingSchemes(checked_vocabularies,
-        //    matchText, searchOption, algorithm);
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-        ResolvedConceptReferencesIterator iterator = new ValueSetSearchUtils(lbSvc).searchResolvedValueSetCodingSchemes(checked_vocabularies,
+        String serviceUrl = RemoteServerUtil.getServiceUrl();
+        ResolvedConceptReferencesIterator iterator = new ValueSetSearchUtils(lbSvc, serviceUrl).searchResolvedValueSetCodingSchemes(checked_vocabularies,
             matchText, searchOption, algorithm);
 
         if (iterator == null) {

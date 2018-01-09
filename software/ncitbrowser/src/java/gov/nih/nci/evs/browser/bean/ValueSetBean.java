@@ -1160,16 +1160,9 @@ public class ValueSetBean {
                 iterator = iteratorBean.getIterator();
             } else {
 
-
-
                 iterator =
-                    //new ValueSetSearchUtils(lbSvc).searchByCode(
 					vssu.searchByCode(
 				        vsd_uri, csVersinList, matchText, maxToReturn);
-/*
-			    iterator = new ValueSetSearchUtils(lbSvc).searchResolvedValueSetCodingSchemes(vsd_uri,
-				    matchText, 1, matchAlgorithm);
-*/
 
                     if (iterator != null) {
                         iteratorBean = new IteratorBean(iterator);
@@ -1183,12 +1176,7 @@ public class ValueSetBean {
                 iteratorBean = iteratorBeanManager.getIteratorBean(key);
                 iterator = iteratorBean.getIterator();
             } else {
-                //ResolvedConceptReferencesIteratorWrapper wrapper =
-                //    new ValueSetSearchUtils().searchByName(
-				//        vsd_uri, matchText, matchAlgorithm, maxToReturn);
-
                 iterator =
-                    //new ValueSetSearchUtils(lbSvc).searchByName(
 					vssu.searchByName(
 				        vsd_uri, csVersinList, matchText, matchAlgorithm, maxToReturn);
 
@@ -1208,13 +1196,7 @@ public class ValueSetBean {
                 iterator = iteratorBean.getIterator();
             } else {
 				boolean excludeDesignation = true;
-				/*
-                ResolvedConceptReferencesIteratorWrapper wrapper =
-                    new ValueSetSearchUtils().searchByProperties(
-				        vsd_uri, matchText, excludeDesignation, matchAlgorithm, maxToReturn);
-                */
                 iterator =
-                    //new ValueSetSearchUtils(lbSvc).searchByProperties(
 					createValueSetSearchUtils().searchByProperties(
 				        vsd_uri, matchText, excludeDesignation, matchAlgorithm, maxToReturn);
 
@@ -1329,7 +1311,6 @@ public class ValueSetBean {
 			checked_vocabularies = vsd_uri;
 		}
         ResolvedConceptReferencesIterator iterator
-            //= new ValueSetSearchUtils(lbSvc).searchResolvedValueSetCodingSchemes(checked_vocabularies,
             = createValueSetSearchUtils().searchResolvedValueSetCodingSchemes(checked_vocabularies,
             matchText, searchOption, algorithm);
 

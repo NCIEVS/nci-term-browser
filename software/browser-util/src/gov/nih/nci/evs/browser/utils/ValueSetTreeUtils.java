@@ -229,7 +229,7 @@ public class ValueSetTreeUtils {
 			 }
 		}
     }
-
+//////////////////////////////////
     public LexEVSTreeItem sortLexEVSTreeItem(LexEVSTreeItem item) {
 		for (String association : item._assocToChildMap.keySet()) {
 			List<LexEVSTreeItem> children = item._assocToChildMap.get(association);
@@ -242,7 +242,7 @@ public class ValueSetTreeUtils {
 		return item;
 	}
 
-    public LexEVSTreeItem mergeLexEVSTreeNodes(LexEVSTreeItem item1, LexEVSTreeItem item2) {
+    public LexEVSTreeItem mergeLexEVSTreeBranches(LexEVSTreeItem item1, LexEVSTreeItem item2) {
 		for (String association : item2._assocToChildMap.keySet()) {
 			List<LexEVSTreeItem> children = item2._assocToChildMap.get(association);
 			HashSet hset = new HashSet();
@@ -255,7 +255,8 @@ public class ValueSetTreeUtils {
 		return item1;
 	}
 
-    public LexEVSTreeItem mergeLexEVSTreeBranches(LexEVSTreeItem lexevs_ti) {
+
+    public String find_duplicate_root_text(LexEVSTreeItem lexevs_ti) {
 		if (lexevs_ti == null) return null;
 		String duplicate_root_text = null;
 		for (String association : lexevs_ti._assocToChildMap.keySet()) {
@@ -263,6 +264,7 @@ public class ValueSetTreeUtils {
 			HashSet hset = new HashSet();
 			for (int i=0; i<children.size(); i++) {
 				LexEVSTreeItem childItem = (LexEVSTreeItem) children.get(i);
+				System.out.println(childItem.get_text());
 				if (hset.contains(childItem.get_text())) {
 					duplicate_root_text = childItem.get_text();
 					break;
@@ -271,37 +273,59 @@ public class ValueSetTreeUtils {
 				}
 			}
 		}
-		Vector root_nodes = new Vector();
-		if (duplicate_root_text != null) {
-			root_nodes = new Vector();
+		return duplicate_root_text;
+	}
+
+
+    public LexEVSTreeItem mergeLexEVSTreeBranches(LexEVSTreeItem lexevs_ti) {
+		if (lexevs_ti == null) return null;
+		String duplicate_root_text = find_duplicate_root_text(lexevs_ti);
+		while (duplicate_root_text != null) {
+			System.out.println("duplicate_root_text: " + duplicate_root_text);
+			Vector root_nodes = new Vector();
 			for (String association : lexevs_ti._assocToChildMap.keySet()) {
+				root_nodes = new Vector();
+				int index = -1;
 				List<LexEVSTreeItem> children = lexevs_ti._assocToChildMap.get(association);
 				for (int i=0; i<children.size(); i++) {
 					LexEVSTreeItem childItem = (LexEVSTreeItem) children.get(i);
 					if (childItem.get_text().compareTo(duplicate_root_text) == 0) {
 						root_nodes.add(childItem);
-						if (root_nodes.size() == 2) break;
+						if (root_nodes.size() == 1) {
+							index = i;
+						}
+						if (root_nodes.size() > 1) break;
 					}
 				}
+				LexEVSTreeItem first_node = (LexEVSTreeItem) root_nodes.elementAt(0);
+				LexEVSTreeItem second_node = (LexEVSTreeItem) root_nodes.elementAt(1);
+				first_node = mergeLexEVSTreeBranches(first_node, second_node);
+				children.set(index, first_node);
+				children.remove(second_node);
 			}
+			duplicate_root_text = find_duplicate_root_text(lexevs_ti);
 		}
-		LexEVSTreeItem first_node = (LexEVSTreeItem) root_nodes.elementAt(0);
-		LexEVSTreeItem second_node = (LexEVSTreeItem) root_nodes.elementAt(1);
-		LexEVSTreeItem merged_node = mergeLexEVSTreeNodes(first_node, second_node);
-		merged_node = sortLexEVSTreeItem(merged_node);
-		return merged_node;
+		lexevs_ti = sortLexEVSTreeItem(lexevs_ti);
+		return lexevs_ti;
+	}
+
+
+	public Map<String, LexEVSTreeItem> modifySourceDefinedTree(Map<String, LexEVSTreeItem> items) {
+		LexEVSTreeItem lexevs_ti = items.get(ValueSetHierarchyServiceImpl.ROOT);
+		lexevs_ti = mergeLexEVSTreeBranches(lexevs_ti);
+		HashMap<String, LexEVSTreeItem> map = new HashMap<String, LexEVSTreeItem>();
+		map.put(ValueSetHierarchyServiceImpl.ROOT, lexevs_ti);
+		return map;
 	}
 
     public void constructTerminologyValueSetTree() {
         long ms = System.currentTimeMillis();
         try {
 			Map<String, LexEVSTreeItem> terminology_items = service.getSourceDefinedTree();
-			LexEVSTreeItem terminology_item = terminology_items.get(ValueSetHierarchyServiceImpl.ROOT);
-
 //a temporary patch:
-//terminology_item = mergeLexEVSTreeBranches(terminology_item);
+			terminology_items = modifySourceDefinedTree(terminology_items);
 
-
+			LexEVSTreeItem terminology_item = terminology_items.get(ValueSetHierarchyServiceImpl.ROOT);
 			TreeItem ti = LexEVSTreeItem2TreeItem.toTreeItem(terminology_item);
 			ti = LexEVSTreeItem2TreeItem.placeNCItAsFirstNode(ti);
 			terminologyValueSetTree = new HashMap();

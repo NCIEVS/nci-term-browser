@@ -297,7 +297,7 @@ public class DataUtils {
 
 		String ncit_mapping_url = NCItBrowserProperties.getNCItMappingURL();
 
-System.out.println("DataUtils ncit_mapping_url: " + ncit_mapping_url);
+//System.out.println("DataUtils ncit_mapping_url: " + ncit_mapping_url);
 
 		if (ncit_mapping_url == null) {
 			ncit_mapping_url = NCIT_MAPPING_URL;

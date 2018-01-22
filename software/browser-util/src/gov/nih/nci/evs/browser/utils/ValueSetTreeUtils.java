@@ -323,7 +323,7 @@ public class ValueSetTreeUtils {
         try {
 			Map<String, LexEVSTreeItem> terminology_items = service.getSourceDefinedTree();
 //a temporary patch:
-			terminology_items = modifySourceDefinedTree(terminology_items);
+//			terminology_items = modifySourceDefinedTree(terminology_items);
 
 			LexEVSTreeItem terminology_item = terminology_items.get(ValueSetHierarchyServiceImpl.ROOT);
 			TreeItem ti = LexEVSTreeItem2TreeItem.toTreeItem(terminology_item);

@@ -216,9 +216,9 @@ public class FTPDownload {
 			}
 			br.close();
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
         return w;
 	}

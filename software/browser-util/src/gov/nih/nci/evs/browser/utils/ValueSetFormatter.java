@@ -63,6 +63,7 @@ import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
 import static gov.nih.nci.evs.browser.common.Constants.*;
 import org.LexGrid.naming.Mappings.*;
 import org.LexGrid.naming.SupportedSource;
+import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
@@ -77,6 +78,7 @@ public class ValueSetFormatter {
 	String serviceUrl = null;
 	LexEVSValueSetDefinitionServices vsd_service = null;
 	CodingSchemeDataUtils csdu = null;
+	ConceptDetails cd = null;
 	public static int MAX_RETURN = 250;
 
 	private String uri;
@@ -109,6 +111,9 @@ public class ValueSetFormatter {
 	private static String NCI_METATHESAURUS_CUI = "NCI Metathesaurus CUI";
 
 	private static String UMLS_CUI = "UMLS CUI";
+	private static String CDISC = "CDISC";
+	private static String NCI_SOURCE = "NCI";
+	private static String TYPE_AB = "AB";
 
 	private static String[] TYPES = {NCIT_CONCEPT_CODE,
 	                                 SOURCE_PREFERRED_TERM,
@@ -164,6 +169,7 @@ public class ValueSetFormatter {
         csdu = new CodingSchemeDataUtils(lbSvc);
 	    vsmdu = new ValueSetMetadataUtils(vsd_service);
         uiUtils = new UIUtils();
+        cd = new ConceptDetails(lbSvc);
 	}
 
 	public ValueSetFormatter(
@@ -420,12 +426,18 @@ public class ValueSetFormatter {
 	}
 
     public String parseProperty(String line, String type, String source) {
+		return parseProperty(line, type, source, null);
+	}
+
+
+    public String parseProperty(String line, String type, String source, String fullSynTermName) {
 		if (line == null) return null;
 		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line);
 		if (type.compareTo(NCIT_CONCEPT_CODE) == 0) {
 			String code = (String) u.elementAt(0);
 			return code;
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		} else if (type.compareTo(SOURCE_PREFERRED_TERM) == 0) {
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
@@ -433,12 +445,23 @@ public class ValueSetFormatter {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
 					String src = (String) hmap.get("source");
-					if (form != null && form.compareTo("PT") == 0 && src != null && src.compareTo(source) == 0) {
-						String term_name = (String) hmap.get("prop_value");
-						return term_name;
+					String source_code = (String) hmap.get("source-code");
+					if (fullSynTermName == null) {
+						if (form != null && form.compareTo("PT") == 0 && src != null && src.compareTo(source) == 0) {
+							String term_name = (String) hmap.get("prop_value");
+							return term_name;
+						}
+					} else {
+						//Prostate Specific Antigen|PT|CDISC|SDTM-LBTEST|null
+						if (form != null && form.compareTo("PT") == 0 && src != null && src.compareTo(source) == 0
+						    && source_code != null && source_code.compareTo(fullSynTermName) == 0) {
+							String term_name = (String) hmap.get("prop_value");
+							return term_name;
+						}
 					}
 				}
 			}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		} else if (type.compareTo(SOURCE_PREFERRED_TERM_SOURCE_CODE) == 0) {
 			StringBuffer buf = new StringBuffer();
@@ -692,6 +715,11 @@ public class ValueSetFormatter {
 	}
 
     public String formatLine(Vector fields, HashMap fieldValueHmap, boolean isEven) {
+		return formatLine(fields, fieldValueHmap, isEven, null);
+	}
+
+
+    public String formatLine(Vector fields, HashMap fieldValueHmap, boolean isEven, String fullSynTermName) {
 		String key = null;
 		String value = "";
         StringBuffer buf = new StringBuffer();
@@ -717,24 +745,7 @@ public class ValueSetFormatter {
 				}
 				buf.append(hyperlink);
 		    } else {
-				/*
-				buf.append("<table>");
-				for (int n=0; n<w.size(); n++) {
-					String s = (String) w.elementAt(n);
-					buf.append("<tr class=\"textbody\"><td>" + s + "</tr></td>");
-				}
-				buf.append("</table>");
-				*/
-
 				String table = UIUtils.createTable(w);
-				/*
-				buf.append("<table>");
-				for (int n=0; n<w.size(); n++) {
-					String s = (String) w.elementAt(n);
-					buf.append("<tr class=\"textbody\"><td>" + s + "</tr></td>");
-				}
-				buf.append("</table>");
-				*/
 				buf.append(table);
 			}
 			buf.append("</td>");
@@ -803,7 +814,15 @@ public class ValueSetFormatter {
 		return generate(vsd_uri, version, source, fields, codes, MAX_RETURN);
 	}
 
+
 	public String generate(String vsd_uri, String version, String source, Vector fields, Vector codes, int maxReturn) {
+        String fullSynTermName = null;
+		if (source != null && source.compareTo(CDISC) == 0) {
+			String vs_code = getValueSetCode(vsd_uri);
+            if (vs_code != null) {
+			   fullSynTermName = getFullSynTermName(Constants.NCI_THESAURUS, version, vs_code, NCI_SOURCE, TYPE_AB);
+		    }
+		}
 		if (codes == null) {
 		    codes = csdu.getCodesInCodingScheme(vsd_uri, null);
 		}
@@ -830,11 +849,12 @@ public class ValueSetFormatter {
 			String line = (String) w.elementAt(i);
 			for (int k=0; k<fields.size(); k++) {
 				String type = (String) fields.elementAt(k);
-				String value = parseProperty(line, type, source);
+				//String value = parseProperty(line, type, source);
+				String value = parseProperty(line, type, source, fullSynTermName);
 				fieldValueHmap.put(type, value);
 			}
 			boolean isEven = UIUtils.isEven(i);
-			String formatted_line = formatLine(fields, fieldValueHmap, isEven);
+			String formatted_line = formatLine(fields, fieldValueHmap, isEven, fullSynTermName);
 			buf.append(formatted_line).append("\n");
 		}
 		buf.append("</table>");
@@ -879,6 +899,15 @@ public class ValueSetFormatter {
 		if (codes == null) {
 		    codes = csdu.getCodesInCodingScheme(vsd_uri, null);
 		}
+
+        String fullSynTermName = null;
+		if (source != null && source.compareTo(CDISC) == 0) {
+			String vs_code = getValueSetCode(vsd_uri);
+            if (vs_code != null) {
+			   fullSynTermName = getFullSynTermName(Constants.NCI_THESAURUS, version, vs_code, NCI_SOURCE, TYPE_AB);
+		    }
+		}
+
 		HashMap fieldValueHmap = new HashMap();
         Vector retvec = new Vector();
 		Vector w = resolve(vsd_uri, version, source, fields, codes, codes.size());
@@ -895,7 +924,7 @@ public class ValueSetFormatter {
 			String line = (String) w.elementAt(i);
 			for (int k=0; k<fields.size(); k++) {
 				String type = (String) fields.elementAt(k);
-				String value = parseProperty(line, type, source);
+				String value = parseProperty(line, type, source, fullSynTermName);
 				fieldValueHmap.put(type, value);
 			}
 			String formatted_line = formatLine(fields, fieldValueHmap);
@@ -1060,10 +1089,73 @@ public class ValueSetFormatter {
 				}
 			}
 		}
+		/*
 		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
 		Vector fields = formatter.getDefaultFields(non_ncit_source);
 		rvs_tbl = formatter.generate(defaultCodingScheme, null, supported_source, fields, codes, codes.size());
+		*/
+		Vector fields = getDefaultFields(non_ncit_source);
+		rvs_tbl = generate(vsd_uri, null, supported_source, fields, codes, codes.size());
 		return rvs_tbl;
 	}
 
+	public String getValueSetCode(String vsd_uri) {
+		int n = vsd_uri.lastIndexOf("/");
+		if (n == -1) return null;
+		return vsd_uri.substring(n+1, vsd_uri.length());
+	}
+
+	public String getFullSynTermName(String scheme, String version, String code, String source, String type) {
+        Vector v = cd.getSynonyms(scheme, version, null, code);
+        String name = null;
+        for (int i=0; i<v.size(); i++) {
+			String t = (String) v.elementAt(i);
+			if (t.indexOf("|AB|NCI|") != -1) {
+				name = t.substring(0, t.indexOf("|AB|NCI|"));
+				break;
+			}
+		}
+		return name;
+	}
+
+	public String getSourcePT(String scheme, String version, String code, String source, String target) {
+        Vector v = cd.getSynonyms(scheme, version, null, code);
+        //gov.nih.nci.evs.browser.utils.StringUtils.dumpVector("synonyms", v);
+        //|PT|CDISC|SDTM-LBTESTCD|
+        for (int i=0; i<v.size(); i++) {
+			String t = (String) v.elementAt(i);
+			int n = t.indexOf("|PT|" + source + "|" + target);
+			if (n != -1) {
+				return t.substring(0, n);
+			}
+		}
+		return null;
+	}
+
+
+	public static void main(String[] args) {
+		LexBIGService lbSvc = null;//RemoteServerUtil.createLexBIGService();
+		LexEVSValueSetDefinitionServices vsd_service = null;//RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+
+		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
+		String vsd_uri = "http://evs.nci.nih.gov/valueset/C67154";
+
+		String scheme = "NCI_Thesaurus";
+		String version = null;
+		String nci_source = "NCI";
+		String type = "AB";
+		String code = "C17634";
+		code = "C81956";
+
+		String vs_code = formatter.getValueSetCode(vsd_uri);
+		System.out.println(vs_code);
+		String fullSynTermName = formatter.getFullSynTermName(scheme, version, vs_code, nci_source, type);
+		System.out.println(fullSynTermName);
+		String source = "CDISC";
+	    String source_pt = formatter.getSourcePT(scheme, version, code, source, fullSynTermName);
+	    System.out.println(source_pt);
+
+	    String rvs_tbl = formatter.get_rvs_tbl(vsd_uri);
+	    System.out.println(rvs_tbl);
+	}
 }

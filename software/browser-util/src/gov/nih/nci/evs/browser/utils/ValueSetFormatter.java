@@ -2,7 +2,6 @@ package gov.nih.nci.evs.browser.utils;
 
 import gov.nih.nci.evs.browser.bean.*;
 import gov.nih.nci.evs.browser.common.*;
-
 import gov.nih.nci.evs.browser.bean.MappingData;
 import gov.nih.nci.evs.browser.common.Constants;
 import gov.nih.nci.evs.browser.properties.*;
@@ -461,6 +460,21 @@ public class ValueSetFormatter {
 					}
 				}
 			}
+			// if not found
+            for (int i=0; i<u.size(); i++) {
+				String t = (String) u.elementAt(i);
+				if (t.startsWith("name")) {
+					HashMap hmap = lineSegment2HashMap(t);
+					String form = (String) hmap.get("form");
+					String src = (String) hmap.get("source");
+					//String source_code = (String) hmap.get("source-code");
+					if (form != null && form.compareTo("PT") == 0 && src != null && src.compareTo(source) == 0) {
+						String term_name = (String) hmap.get("prop_value");
+						return term_name;
+					}
+				}
+			}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		} else if (type.compareTo(SOURCE_PREFERRED_TERM_SOURCE_CODE) == 0) {
@@ -820,7 +834,7 @@ public class ValueSetFormatter {
 		if (source != null && source.compareTo(CDISC) == 0) {
 			String vs_code = getValueSetCode(vsd_uri);
             if (vs_code != null) {
-			   fullSynTermName = getFullSynTermName(Constants.NCI_THESAURUS, version, vs_code, NCI_SOURCE, TYPE_AB);
+			   fullSynTermName = getFullSynTermName(Constants.NCI_THESAURUS, null, vs_code, NCI_SOURCE, TYPE_AB);
 		    }
 		}
 		if (codes == null) {
@@ -899,27 +913,22 @@ public class ValueSetFormatter {
 		if (codes == null) {
 		    codes = csdu.getCodesInCodingScheme(vsd_uri, null);
 		}
-
         String fullSynTermName = null;
 		if (source != null && source.compareTo(CDISC) == 0) {
 			String vs_code = getValueSetCode(vsd_uri);
             if (vs_code != null) {
-			   fullSynTermName = getFullSynTermName(Constants.NCI_THESAURUS, version, vs_code, NCI_SOURCE, TYPE_AB);
+			    try {
+			    	fullSynTermName = getFullSynTermName(Constants.NCI_THESAURUS, null, vs_code, NCI_SOURCE, TYPE_AB);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					return null;
+				}
 		    }
 		}
-
 		HashMap fieldValueHmap = new HashMap();
         Vector retvec = new Vector();
 		Vector w = resolve(vsd_uri, version, source, fields, codes, codes.size());
 		StringBuffer buf = new StringBuffer();
-		for (int k=0; k<fields.size(); k++) {
-			String field = (String) fields.elementAt(k);
-			buf.append(field);
-			if (k <fields.size()-1) {
-				buf.append("|");
-			}
-		}
-		retvec.add(buf.toString());
 		for (int i=0; i<w.size(); i++) {
 			String line = (String) w.elementAt(i);
 			for (int k=0; k<fields.size(); k++) {
@@ -1148,13 +1157,13 @@ public class ValueSetFormatter {
 		code = "C81956";
 
 		String vs_code = formatter.getValueSetCode(vsd_uri);
+		//CDISC SDTM Laboratory Test Name Terminology (Code C67154)
 		System.out.println(vs_code);
-		String fullSynTermName = formatter.getFullSynTermName(scheme, version, vs_code, nci_source, type);
+		String fullSynTermName = formatter.getFullSynTermName(Constants.NCI_THESAURUS, null, vs_code, nci_source, type);
 		System.out.println(fullSynTermName);
 		String source = "CDISC";
 	    String source_pt = formatter.getSourcePT(scheme, version, code, source, fullSynTermName);
 	    System.out.println(source_pt);
-
 	    String rvs_tbl = formatter.get_rvs_tbl(vsd_uri);
 	    System.out.println(rvs_tbl);
 	}

@@ -188,7 +188,7 @@ public class Constants {
     public static final String VALUE_SET_URI_PREFIX_OLD = "http://ncit";
 
     public static final String[] NCIT_OR_NCIM = {"NCI Thesaurus", "NCI_Thesaurus", "NCI Metathesaurus", "NCI_Metathesaurus"};
-    public static final String[] NCIT_NAMES = {"NCI Thesaurus", "NCI_Thesaurus", "NCIT"};
+    public static final String[] NCIT_NAMES = {"NCI Thesaurus", "NCI_Thesaurus", "NCIT", "Thesaurus"};
 
     public static final String[] TRUE_OR_FALSE = {"true", "false"};
 

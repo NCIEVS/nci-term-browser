@@ -341,7 +341,7 @@ if (has_released_file) {
 				LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 				LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 				ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
-				System.out.println("resolved_value_set.jsp calling formatter.get_rvs_tbl " + vsd_uri);
+				//System.out.println("resolved_value_set.jsp calling formatter.get_rvs_tbl " + vsd_uri);
 				rvs_tbl = formatter.get_rvs_tbl(vsd_uri);
 			}
 

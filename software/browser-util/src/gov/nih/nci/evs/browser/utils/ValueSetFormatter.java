@@ -1141,6 +1141,11 @@ public class ValueSetFormatter {
 	}
 
 
+	public String getValueSetDefinitionMetadata(String vsd_uri) {
+		if (vsd_uri == null) return null;
+		return vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+	}
+
 	public static void main(String[] args) {
 
 		System.out.println("=========================");
@@ -1149,7 +1154,7 @@ public class ValueSetFormatter {
 
 		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
 		String vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C67154";
-
+/*
 		System.out.println(vsd_uri);
 
 		String scheme = "NCI_Thesaurus";
@@ -1166,10 +1171,41 @@ public class ValueSetFormatter {
 		String source = "CDISC";
 	    String source_pt = formatter.getSourcePT(scheme, version, code, source, fullSynTermName);
 	    System.out.println("source_pt: " + source_pt);
+*/
+
+	    String metadata = formatter.getValueSetDefinitionMetadata(vsd_uri);
+	    System.out.println(metadata);
+		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+		String name = (String) u.elementAt(0);
+		String valueset_uri = (String) u.elementAt(1);
+		String description = (String) u.elementAt(2);
+		String concept_domain = (String) u.elementAt(3);
+		String sources = (String) u.elementAt(4);
+		String supportedsources = (String) u.elementAt(5);
+		String supportedsource = null;
+		String defaultCodingScheme = (String) u.elementAt(6);
+		System.out.println(name);
+		System.out.println(valueset_uri);
+		System.out.println(description);
+		System.out.println(concept_domain);
+		System.out.println(sources);
+		System.out.println(supportedsources);
+		System.out.println(defaultCodingScheme);
+
+
+
+
+	    /*
+
 
 	    String rvs_tbl = formatter.get_rvs_tbl(vsd_uri);
 	    Vector u = new Vector();
 	    u.add(rvs_tbl);
 	    Utils.saveToFile("VS_C67154.txt", u);
+	    */
+
+
 	}
 }
+//C81982
+//https://nciterms65-dev.nci.nih.gov/ncitbrowser/pages/concept_details.jsf?dictionary=NCI_Thesaurus&version=18.01dVS&code=C81982&ns=null&type=synonym&key=null&b=1&n=0&vse=null

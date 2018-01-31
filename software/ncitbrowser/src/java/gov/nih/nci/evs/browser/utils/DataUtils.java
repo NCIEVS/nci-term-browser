@@ -3761,7 +3761,7 @@ if (lbSvc == null) {
             return cs;
         } catch (Exception ex) {
             _logger.error("(*) Unable to resolveCodingScheme " + formalname);
-            _logger.error("(*) \tMay require security token. ");
+            //_logger.error("(*) \tMay require security token. ");
 
         }
         return null;

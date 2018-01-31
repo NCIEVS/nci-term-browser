@@ -341,14 +341,17 @@ if (has_released_file) {
 				LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 				LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 				ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
+				System.out.println("resolved_value_set.jsp calling formatter.get_rvs_tbl " + vsd_uri);
 				rvs_tbl = formatter.get_rvs_tbl(vsd_uri);
 			}
 
 			if (rvs_tbl != null) {
+			    System.out.println("rvs_tbl != null");
 			%>	
 			   <%=rvs_tbl%>
 			<%   
 			} else {
+			    System.out.println("rvs_tbl = null -- display the standard NCIt format.");
                         %>
                               <table class="datatable_960" summary="Data Table" cellpadding="3" cellspacing="0" border="0" width="100%">
                                  <th class="dataTableHeader" scope="col" align="left">Code</th>

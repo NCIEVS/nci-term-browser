@@ -1147,7 +1147,7 @@ public class ValueSetFormatter {
 		LexEVSValueSetDefinitionServices vsd_service = null;//RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 
 		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
-		String vsd_uri = "http://evs.nci.nih.gov/valueset/C67154";
+		String vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C67154";
 
 		String scheme = "NCI_Thesaurus";
 		String version = null;

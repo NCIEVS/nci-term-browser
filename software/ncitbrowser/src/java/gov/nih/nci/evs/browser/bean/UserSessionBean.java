@@ -625,6 +625,7 @@ if (!retval) {
 
                 try {
 					// temporary fix for: [NCITERM-682] Contains search failed on search strings containing a colon character.
+					//[NCITERM-779] Searching on the single colon character (':') failed.
 					String matchTextStr = matchText;
 					if (matchAlgorithm.compareTo("contains") == 0) {
 						// KLO 01/31/2018
@@ -2300,9 +2301,13 @@ System.out.println("(*) advancedSearchAction SearchUtils(lbSvc).searchByAssociat
 
         } else if (searchType != null && searchType.compareTo("Name") == 0) {
 			// temporary fix for: [NCITERM-682] Contains search failed on search strings containing a colon character.
+			//[NCITERM-779] Searching on the single colon character (':') failed.
 			String matchTextStr = matchText;
 			if (matchAlgorithm.compareTo("contains") == 0) {
-				matchTextStr = matchTextStr.replaceAll(":", " ");
+				// KLO 01/31/2018
+				if (matchTextStr.compareTo(":") != 0) {
+					matchTextStr = matchTextStr.replaceAll(":", " ");
+				}
 			}
 
             searchFields =

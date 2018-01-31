@@ -503,7 +503,8 @@ public class ConceptDetails {
                 if (addQualifiers) {
                     String qualifiers = getPropertyQualfierValues(p);
                     if (qualifiers.compareTo("") != 0) {
-                        t = t + " (" + getPropertyQualfierValues(p) + ")";
+                        //t = t + " (" + getPropertyQualfierValues(p) + ")";
+                        t = t + " (" + qualifiers + ")";
                     }
                 }
 

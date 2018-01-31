@@ -627,7 +627,10 @@ if (!retval) {
 					// temporary fix for: [NCITERM-682] Contains search failed on search strings containing a colon character.
 					String matchTextStr = matchText;
 					if (matchAlgorithm.compareTo("contains") == 0) {
-						matchTextStr = matchTextStr.replaceAll(":", " ");
+						// KLO 01/31/2018
+						if (matchTextStr.compareTo(":") != 0) {
+							matchTextStr = matchTextStr.replaceAll(":", " ");
+						}
 					}
 					if (SimpleSearchUtils.isSimpleSearchSupported(matchAlgorithm, SimpleSearchUtils.NAMES)) {
 						iterator = new SimpleSearchUtils(lbSvc).search(schemes, versions, matchTextStr, SimpleSearchUtils.BY_NAME, matchAlgorithm);

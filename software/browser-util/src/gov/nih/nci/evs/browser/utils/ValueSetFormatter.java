@@ -1120,11 +1120,19 @@ public class ValueSetFormatter {
 
 	public String getSourcePT(String scheme, String version, String code, String source, String target) {
         Vector v = cd.getSynonyms(scheme, version, null, code);
-        //gov.nih.nci.evs.browser.utils.StringUtils.dumpVector("synonyms", v);
+        gov.nih.nci.evs.browser.utils.StringUtils.dumpVector("synonyms", v);
         //|PT|CDISC|SDTM-LBTESTCD|
         for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 			int n = t.indexOf("|PT|" + source + "|" + target);
+			if (n != -1) {
+				return t.substring(0, n);
+			}
+		}
+
+        for (int i=0; i<v.size(); i++) {
+			String t = (String) v.elementAt(i);
+			int n = t.indexOf("|PT|" + source);
 			if (n != -1) {
 				return t.substring(0, n);
 			}
@@ -1136,8 +1144,8 @@ public class ValueSetFormatter {
 	public static void main(String[] args) {
 
 		System.out.println("=========================");
-		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-		LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+		LexBIGService lbSvc = null;//RemoteServerUtil.createLexBIGService();
+		LexEVSValueSetDefinitionServices vsd_service = null;//RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 
 		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
 		String vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C67154";
@@ -1149,7 +1157,7 @@ public class ValueSetFormatter {
 		String nci_source = "NCI";
 		String type = "AB";
 		String code = "C17634";
-		code = "C81956";
+		code = "C81982";
 
 		String vs_code = formatter.getValueSetCode(vsd_uri);
 		System.out.println(vs_code);
@@ -1163,6 +1171,5 @@ public class ValueSetFormatter {
 	    Vector u = new Vector();
 	    u.add(rvs_tbl);
 	    Utils.saveToFile("VS_C67154.txt", u);
-
 	}
 }

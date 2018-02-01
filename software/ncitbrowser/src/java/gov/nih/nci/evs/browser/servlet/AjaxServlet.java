@@ -1581,24 +1581,6 @@ request.getSession().setAttribute("mode", mode);
 	    request.getSession().removeAttribute("dictionary");
 	    request.getSession().removeAttribute("version");
 
-/*
-String checked_valuesets = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("checked_vocabularies"));
-
-if (DataUtils.isNullOrBlank(checked_valuesets)) {
-	checked_valuesets = find_checked_value_sets(request);
-}
-*/
-
-/*
-String checked_valuesets = get_checked_vocabularies(request);//HTTPUtils.cleanXSS((String) request.getSession().getAttribute("checked_vocabularies"));
-Vector selected_valuesets = null;
-if (!DataUtils.isNullOrBlank(checked_valuesets)) {
-	request.getSession().setAttribute("checked_vocabularies", checked_valuesets);
-	selected_valuesets = DataUtils.parseData(checked_valuesets, ",");
-	stu.setSelectedNodes(selected_valuesets);
-}
-*/
-
 
 //[NCITERM-745] Top node of value sets deselected after search.
 String checked_valuesets = get_checked_vocabularies(request);//HTTPUtils.cleanXSS((String) request.getSession().getAttribute("checked_vocabularies"));
@@ -1701,8 +1683,6 @@ if (DataUtils.isNull(vsd_uri)) {
 
 	  out.println("<script type=\"text/javascript\" src=\"/ncitbrowser/js/event_simulate.js\"></script>");
 	  out.println("<script type=\"text/javascript\" src=\"/ncitbrowser/js/value_set_tree_navigation.js\"></script>");
-
-
 
       out.println("<!--Additional custom style rules for this example:-->");
       out.println("<style type=\"text/css\">");
@@ -1839,6 +1819,29 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
 	option_code = "";
 }
       out.println("");
+
+
+      out.println("<style>");
+      out.println("html, body{ box-sizing:border-box}");
+      out.println("*, *:before, *:after{ box-sizing:inherit}");
+      out.println("");
+      out.println(".table-scroll{");
+      out.println("	position:relative;");
+      out.println("	margin:auto;");
+      out.println("	padding-left:9em;");
+      out.println("	width:100%;");
+      out.println("	overflow:auto;");
+      out.println("	height:200px;");
+      out.println("	overflow-y:scroll;");
+      out.println("}");
+      out.println(".table-wrap{");
+      out.println("	margin-left:-9em;");
+      out.println("	outline:1px solid;");
+      out.println("	outline-offset:-1px;");
+      out.println("	overflow:auto;");
+      out.println("}");
+      out.println("</style>");
+
       out.println("</head>");
       out.println("");
 
@@ -1866,14 +1869,6 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
       out.println("</style>");
       out.println("");
 
-/*
-if (mode != null && mode.compareTo(Constants.MODE_COLLAPSE) == 0) {
-	// to be modified: -- collapse_all method
-	  out.println("<body onLoad=\"collapse_all();\">");
-} else {
-      out.println("<body onLoad=\"document.forms.valueSetSearchForm.matchText.focus();\">");
-}
-*/
 
 if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
 	// to be modified: -- collapse_all method
@@ -1902,28 +1897,6 @@ if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
       out.println("      alt=\"National Cancer Institute\"/>");
       out.println("  </a>");
 
-      /*
-      out.println("  <a href=\"http://www.cancer.gov\" target=\"_blank\">");
-      out.println("    <img src=\"/ncitbrowser/images/logotype.gif\"");
-      out.println("      width=\"556\" height=\"39\" border=\"0\"");
-      out.println("      alt=\"National Cancer Institute\"/>");
-      out.println("  </a>");
-      out.println("  <a href=\"http://www.cancer.gov\" target=\"_blank\">");
-      out.println("    <img src=\"/ncitbrowser/images/spacer.gif\"");
-      out.println("      width=\"60\" height=\"39\" border=\"0\"");
-      out.println("      alt=\"National Cancer Institute\" class=\"print-header\"/>");
-      out.println("  </a>");
-      out.println("  <a href=\"http://www.nih.gov\" target=\"_blank\" >");
-      out.println("    <img src=\"/ncitbrowser/images/tagline_nologo.gif\"");
-      out.println("      width=\"219\" height=\"39\" border=\"0\"");
-      out.println("      alt=\"U.S. National Institutes of Health\"/>");
-      out.println("  </a>");
-      out.println("  <a href=\"http://www.cancer.gov\" target=\"_blank\">");
-      out.println("    <img src=\"/ncitbrowser/images/cancer-gov.gif\"");
-      out.println("      width=\"125\" height=\"39\" border=\"0\"");
-      out.println("      alt=\"www.cancer.gov\"/>");
-      out.println("  </a>");
-      */
       out.println("</div>");
       out.println("<!-- end nci banner -->");
       out.println("");
@@ -2052,15 +2025,6 @@ if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
 
       out.println("                <input type=\"hidden\" id=\"nav_type\" name=\"nav_type\" value=\"valuesets\" />");
       out.println("                <input type=\"hidden\" id=\"view\" name=\"view\" value=\"source\" />");
-      //out.println("                <input type=\"hidden\" id=\"matchText\" name=\"matchText\" value=\"" + matchText + "\" />");
-
-      //out.println("");
-
-      //out.println("<input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"j_id22:j_id23\" />");
-//KLO 071514
-      //out.println("</form>");
-
-      //addHiddenForm(out, checked_vocabularies, partial_checked_vocabularies);
 
       out.println("          </div> <!-- searchbox -->");
 
@@ -2085,13 +2049,6 @@ if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
           out.write("/pages/cart.jsf\" tabindex=\"14\">Cart</a>\r\n");
  }
 
-/*
-if (!DataUtils.isNull(vsd_uri)) {
-		  out.write("|");
-		  out.write("&nbsp;");
-		  out.println("<a href=\"/ncitbrowser/ajax?action=download&vsd_uri=" + vsd_uri + "\" tabindex=\"15\" >Report</a>\r\n");
-}
-*/
 
 //KLO, 022612
 	  out.println(" \r\n");
@@ -2398,20 +2355,31 @@ out.flush();
 					request.getSession().setAttribute("rvsi", rvsi);
 
 					String content = getResolvedValueSetContent(rvsi);
+
+
+      out.println("            <div class=\"pagecontent\">");
+      out.println("               <a name=\"evs-content\" id=\"evs-content\"></a>");
+      out.println("                  <div class=\"tabTableContentContainer\">");
+      out.println("");
+      out.println("                  <div class=\"table-scroll\">");
+      out.println("	                 <div class=\"table-wrap\">");
+
+
 					writeExportForm(out, vsd_uri);
-					out.println("");
-					out.println("<div class=\"tabTableContentContainer\">");
+					//out.println("<div class=\"tabTableContentContainer\">");
+
 					out.println("<table border=\"0\" width=\"900\" role='presentation'>");
 					out.println("	<tr><td>");
 					out.println("	<div style=\"float:left;width:360px;\">");
 
 					out.println(content);
+
 					out.println("	</div>");
 					out.println("	</td></tr>");
 					out.println("</table>");
+
+					out.println("</div></div>");
 					out.println("</div>");
-					out.println("");
-					out.println("");
 			    }
 			}
 		}
@@ -3914,14 +3882,6 @@ out.flush();
 			request.getSession().setAttribute("resolved_vs_key", key);
 
 			try {
-				/*
-				String defaultCodingScheme = DataUtils.getValueSetDefaultCodingScheme(vsd_uri);
-                String nextJSP = "/pages/modified_resolved_value_set.jsf";
-				if (!DataUtils.isNCIT(defaultCodingScheme)) {
-					//nextJSP = "/pages/default_resolved_value_set.jsf?vsd_uri="+vsd_uri;
-					nextJSP = "/pages/resolved_value_set.jsf";
-				}
-				*/
 				String nextJSP = "/pages/resolved_value_set.jsf";
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 				dispatcher.forward(request,response);
@@ -5082,11 +5042,11 @@ out.flush();
 	}
 
 	public void writeExportForm(PrintWriter out, String vsd_uri) {
-		out.println("<hr></hr>");
 		out.println("                     <table border=\"0\" role='presentation'>");
 		out.println("                        <tr>");
 		out.println("                           <td>");
-		out.println("                              <table border=\"0\" width=\"900\" role='presentation'>");
+		out.println("                              <table border=\"0\" width=\"870\" role='presentation'>");
+		out.println("                                 <tr>");
 		out.println("                                    <td align=\"right\">");
 
         out.println("<a href=\"/ncitbrowser/ajax?action=export_to_excel&from_download=true&vsd_uri=" + vsd_uri + "\"><font face=\"verdana\" size=\"1\">Export Excel</font></a>");
@@ -5101,17 +5061,8 @@ out.flush();
 		out.println("                              </table>");
 		out.println("                           </td>");
 		out.println("                        </tr>");
-		out.println("                        <tr class=\"textbody\">");
-		out.println("                           <td><b>Concepts</b>:</td>");
-		out.println("                        </tr>");
 		out.println("                     </table>");
-		/*
-		out.println("                     <input type=\"hidden\" name=\"vsd_uri\" id=\"vsd_uri\" value=\"" + vsd_uri + "\">");
-		out.println("                     <input type=\"hidden\" name=\"from_download\" id=\"from_download\" value=\"true\">");
-		out.println("                     <input type=\"hidden\" name=\"referer\" id=\"referer\" value=\"N/A\">");
-		out.println("                     <input type=\"hidden\" name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"j_id1:j_id2\" />");
-		out.println("</h:form>");
-		*/
+
 	}
 
     public void exportToCSVAction(HttpServletRequest request, HttpServletResponse response) {

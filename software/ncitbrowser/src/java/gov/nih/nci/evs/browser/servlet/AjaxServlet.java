@@ -1568,9 +1568,6 @@ String mode = HTTPUtils.cleanXSS((String) request.getParameter("mode"));
 if (mode == null) {
 	mode = (String) request.getSession().getAttribute("mode");
 }
-//if (mode == null) {
-//	mode = Constants.MODE_COLLAPSE;
-//}
 request.getSession().setAttribute("mode", mode);
 
         stu.setUrl(request.getContextPath() + "ajax?action=create_src_vs_tree&mode=" + mode);
@@ -1678,9 +1675,6 @@ if (DataUtils.isNull(vsd_uri)) {
       out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/fonts/fonts-min.css\" />");
       out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/treeview/assets/skins/sam/treeview.css\" />");
       out.println("");
-
-
-
 	  out.println("<script type=\"text/javascript\" src=\"/ncitbrowser/js/event_simulate.js\"></script>");
 	  out.println("<script type=\"text/javascript\" src=\"/ncitbrowser/js/value_set_tree_navigation.js\"></script>");
 
@@ -1753,8 +1747,6 @@ if (DataUtils.isNull(option)) {
 	option = "Name";
 }
 request.getSession().setAttribute("selectValueSetSearchOption", option);
-
-
 
 String algorithm = HTTPUtils.cleanXSS((String) request.getParameter("valueset_search_algorithm"));
 if (DataUtils.isNull(algorithm)) {
@@ -1888,8 +1880,8 @@ if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
       out.println("  <!-- End Skip Top Navigation -->");
       out.println("");
       out.println("<!-- nci banner -->");
-      //out.println("<div class=\"ncibanner\">");
-      out.println("<div style='clear:both;margin-top:-5px;padding:8px;height:32px;color:white;background-color:#C31F40'>");
+      //out.println("<div class=\"ncibanner\">");  height:32px
+      out.println("<div style='clear:both;margin-top:-5px;padding:8px;height:47px;color:white;background-color:#C31F40'>");
 
       out.println("  <a href=\"http://www.cancer.gov\" target=\"_blank\">");
       out.println("    <img src=\"/ncitbrowser/images/banner-red.png\"");

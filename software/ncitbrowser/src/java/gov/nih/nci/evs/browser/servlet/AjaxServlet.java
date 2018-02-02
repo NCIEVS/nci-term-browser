@@ -1820,7 +1820,7 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
       out.println(".table-scroll{");
       out.println("	position:relative;");
       out.println("	margin:auto;");
-      out.println("	padding-left:9em;");
+      //out.println("	padding-left:9em;");
       out.println("	width:100%;");
       out.println("	overflow:auto;");
       out.println("	height:300px;");
@@ -2354,7 +2354,7 @@ out.flush();
       out.println("                  <div class=\"tabTableContentContainer\">");
       out.println("");
       out.println("                  <div class=\"table-scroll\">");
-      out.println("	                 <div class=\"table-wrap\">");
+      //out.println("	                 <div class=\"table-wrap\">");
 
 
 					writeExportForm(out, vsd_uri);
@@ -2371,7 +2371,7 @@ out.flush();
 					out.println("</table>");
 
 					out.println("</div></div>");
-					out.println("</div>");
+					//out.println("</div>");
 			    }
 			}
 		}

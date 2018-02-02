@@ -1823,7 +1823,7 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
       out.println("	padding-left:9em;");
       out.println("	width:100%;");
       out.println("	overflow:auto;");
-      out.println("	height:200px;");
+      out.println("	height:300px;");
       out.println("	overflow-y:scroll;");
       out.println("}");
       out.println(".table-wrap{");

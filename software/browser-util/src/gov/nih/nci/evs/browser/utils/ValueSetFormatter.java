@@ -439,6 +439,7 @@ public class ValueSetFormatter {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		} else if (type.compareTo(SOURCE_PREFERRED_TERM) == 0) {
+			String term_name_found = null;
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
 				if (t.startsWith("name")) {
@@ -461,6 +462,22 @@ public class ValueSetFormatter {
 					}
 				}
 			}
+			if (term_name_found == null) {
+				for (int i=0; i<u.size(); i++) {
+					String t = (String) u.elementAt(i);
+					if (t.startsWith("name")) {
+						HashMap hmap = lineSegment2HashMap(t);
+						String form = (String) hmap.get("form");
+						String src = (String) hmap.get("source");
+						if (form != null && form.compareTo("PT") == 0 && src != null && src.compareTo(source) == 0) {
+							String term_name = (String) hmap.get("prop_value");
+							return term_name;
+						}
+					}
+				}
+			}
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		} else if (type.compareTo(SOURCE_PREFERRED_TERM_SOURCE_CODE) == 0) {
@@ -1154,6 +1171,7 @@ public class ValueSetFormatter {
 
 		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
 		String vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C67154";
+		vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C66731";
 /*
 		System.out.println(vsd_uri);
 
@@ -1172,7 +1190,7 @@ public class ValueSetFormatter {
 	    String source_pt = formatter.getSourcePT(scheme, version, code, source, fullSynTermName);
 	    System.out.println("source_pt: " + source_pt);
 */
-
+/*
 	    String metadata = formatter.getValueSetDefinitionMetadata(vsd_uri);
 	    System.out.println(metadata);
 		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
@@ -1191,21 +1209,19 @@ public class ValueSetFormatter {
 		System.out.println(sources);
 		System.out.println(supportedsources);
 		System.out.println(defaultCodingScheme);
-
-
-
-
-	    /*
-
+*/
 
 	    String rvs_tbl = formatter.get_rvs_tbl(vsd_uri);
 	    Vector u = new Vector();
-	    u.add(rvs_tbl);
-	    Utils.saveToFile("VS_C67154.txt", u);
-	    */
 
+	    u.add("<html>");
+	    u.add("<head>");
+	    u.add("</head>");
+	    u.add("<body>");
+	    u.add(rvs_tbl);
+	    u.add("</body>");
+	    u.add("</html>");
+	    Utils.saveToFile("VS_C66731_02052018_v2.html", u);
 
 	}
 }
-//C81982
-//https://nciterms65-dev.nci.nih.gov/ncitbrowser/pages/concept_details.jsf?dictionary=NCI_Thesaurus&version=18.01dVS&code=C81982&ns=null&type=synonym&key=null&b=1&n=0&vse=null

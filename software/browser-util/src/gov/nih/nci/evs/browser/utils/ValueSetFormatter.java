@@ -1163,6 +1163,28 @@ public class ValueSetFormatter {
 		return vsmdu.getValueSetDefinitionMetadata(vsd_uri);
 	}
 
+    public void generateHTML(String vsd_uri) {
+		generateHTML(vsd_uri, null);
+	}
+
+    public void generateHTML(String vsd_uri, String outputfile) {
+		if (outputfile == null) {
+			int n = vsd_uri.lastIndexOf("/");
+			outputfile = "RVS_" + vsd_uri.substring(n+1, vsd_uri.length()) + ".html";
+			System.out.println(outputfile);
+		}
+	    String rvs_tbl = get_rvs_tbl(vsd_uri);
+	    Vector u = new Vector();
+	    u.add("<html>");
+	    u.add("<head>");
+	    u.add("</head>");
+	    u.add("<body>");
+	    u.add(rvs_tbl);
+	    u.add("</body>");
+	    u.add("</html>");
+	    Utils.saveToFile(outputfile, u);
+	}
+
 	public static void main(String[] args) {
 
 		System.out.println("=========================");

@@ -57,6 +57,12 @@ import org.LexGrid.LexBIG.LexBIGService.CodedNodeGraph;
 
 
 public class ConceptDetails {
+	private String SOURCE_CODE = "source-code";
+	private String SOURCE_DATE = "source-date";
+	private String SUBSOURCE_NAME = "subsource-name";
+	private String SOURCE = "source";
+	private String TERM_TYPE = "term-type";
+
 	private int _maxReturn = -1;
 
     private static Logger _logger = Logger.getLogger(ConceptDetails.class);
@@ -1631,6 +1637,256 @@ public class ConceptDetails {
 		return w;
 	}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public String property2String(Property p) {
+		StringBuffer buf = new StringBuffer();
+		buf.append(p.getValue().getContent());
+		PropertyQualifier[] qualifiers = p.getPropertyQualifier();
+		StringBuffer qual_buf = new StringBuffer();
+		if (qualifiers != null && qualifiers.length>0) {
+			for (int j=0; j<qualifiers.length; j++) {
+				PropertyQualifier q = qualifiers[j];
+				String qualifier_name = q.getPropertyQualifierName();
+				String qualifier_value = q.getValue().getContent();
+				qual_buf.append(qualifier_name).append("=").append(qualifier_value);
+				qual_buf.append("$");
+			}
+		}
+
+		Source[] sources = p.getSource();
+		if (sources != null && sources.length > 0) {
+			Source src = sources[0];
+			String term_source = src.getContent();
+			qual_buf.append("source").append("=").append(term_source);
+			qual_buf.append("$");
+		}
+
+		if (p instanceof org.LexGrid.concepts.Presentation) {
+			Presentation presentation = (Presentation) p;
+			String term_type = presentation.getRepresentationalForm();
+			if (term_type != null) {
+				qual_buf.append("term-type").append("=").append(term_type);
+			}
+		}
+
+		buf.append("|").append(qual_buf);
+		String line = buf.toString();
+		if (line.endsWith("$")) {
+			line = line.substring(0, line.length()-1);
+		}
+		if (line.endsWith("|")) {
+			line = line.substring(0, line.length()-1);
+		}
+		return line;
+    }
+
+
+    public void dumpPropertyHashMap(HashMap propertyHashMap) {
+		if (propertyHashMap == null) return;
+		Iterator it = propertyHashMap.keySet().iterator();
+		while (it.hasNext()) {
+			String code = (String) it.next();
+			System.out.println("\n" + code);
+			HashMap hmap = (HashMap) propertyHashMap.get(code);
+			Iterator it2 = hmap.keySet().iterator();
+			while (it2.hasNext()) {
+				String key = (String) it2.next();
+				Vector values = (Vector) hmap.get(key);
+				for (int k=0; k<values.size(); k++) {
+					String value = (String) values.elementAt(k);
+					System.out.println("\t" + key + ":" + value);
+				}
+			}
+		}
+	}
+
+	public HashMap constructPropertyHashMap(Entity e) {
+		HashMap hmap = new HashMap();
+		//key:   prop_name
+		//value: Vector(prop_value|qual-name=qual-value$qual-name=qual-value$...)
+		Presentation[] presentations = e.getPresentation();
+        for (int i = 0; i < presentations.length; i++) {
+            Presentation p = presentations[i];
+            String prop_name = p.getPropertyName();
+            Vector v = new Vector();
+            if (hmap.containsKey(prop_name)) {
+				v = (Vector) hmap.get(prop_name);
+			}
+			String value = property2String(p);
+			v.add(value);
+			hmap.put(prop_name, v);
+		}
+
+
+		Property[] properties = e.getProperty();
+        for (int i = 0; i < properties.length; i++) {
+            Property p = properties[i];
+            String prop_name = p.getPropertyName();
+            Vector v = new Vector();
+            if (hmap.containsKey(prop_name)) {
+				v = (Vector) hmap.get(prop_name);
+			}
+			String value = property2String(p);
+			v.add(value);
+			hmap.put(prop_name, v);
+		}
+
+		Definition[] definitions = e.getDefinition();
+        for (int i = 0; i < definitions.length; i++) {
+            Definition p = definitions[i];
+            String prop_name = p.getPropertyName();
+            Vector v = new Vector();
+            if (hmap.containsKey(prop_name)) {
+				v = (Vector) hmap.get(prop_name);
+			}
+			String value = property2String(p);
+			v.add(value);
+			hmap.put(prop_name, v);
+		}
+
+		Comment[] comments = e.getComment();
+        for (int i = 0; i < comments.length; i++) {
+            Comment p = comments[i];
+            String prop_name = p.getPropertyName();
+            Vector v = new Vector();
+            if (hmap.containsKey(prop_name)) {
+				v = (Vector) hmap.get(prop_name);
+			}
+			String value = property2String(p);
+			v.add(value);
+			hmap.put(prop_name, v);
+		}
+
+		return hmap;
+	}
+
+    public HashMap getPropertyValuesForCodes(String scheme, String version,
+        Vector codes, Vector property_names) {
+        try {
+            CodingSchemeVersionOrTag versionOrTag =
+                new CodingSchemeVersionOrTag();
+            versionOrTag.setVersion(version);
+
+            ConceptReferenceList crefs =
+                createConceptReferenceList(codes, scheme);
+
+            CodedNodeSet cns = null;
+
+            try {
+                cns = lbSvc.getCodingSchemeConcepts(scheme, versionOrTag);
+                if (cns == null) return null;
+            } catch (Exception e1) {
+                e1.printStackTrace();
+                return null;
+            }
+
+            try {
+				cns = cns.restrictToCodes(crefs);
+                LocalNameList propertyNames = new LocalNameList();
+                for (int i=0; i<property_names.size(); i++) {
+					String property_name = (String) property_names.elementAt(i);
+                	propertyNames.addEntry(property_name);
+				}
+                CodedNodeSet.PropertyType[] propertyTypes = new CodedNodeSet.PropertyType[4];
+				propertyTypes[0] = CodedNodeSet.PropertyType.PRESENTATION;
+				propertyTypes[1] = CodedNodeSet.PropertyType.DEFINITION;
+				propertyTypes[2] = CodedNodeSet.PropertyType.GENERIC;
+				propertyTypes[3] = CodedNodeSet.PropertyType.COMMENT;
+
+                SortOptionList sortOptions = null;
+                LocalNameList filterOptions = null;
+                boolean resolveObjects = true;
+                int maxToReturn = -1;
+
+                ResolvedConceptReferencesIterator iterator =
+                    cns.resolve(sortOptions, filterOptions, propertyNames, propertyTypes, resolveObjects);
+                if (iterator == null) return null;
+                HashMap code2PropHashMap = new HashMap();
+                while (iterator.hasNext()) {
+                    ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
+                    Entity c = rcr.getReferencedEntry();
+					HashMap hmap = constructPropertyHashMap(c);
+					code2PropHashMap.put(c.getEntityCode(), hmap);
+				}
+                return code2PropHashMap;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public HashMap string2HashMap(String qualifier) {
+		HashMap qual_hmap = new HashMap();
+		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(qualifier, '$');
+		for (int i=0; i<u.size(); i++) {
+			String t = (String) u.elementAt(i);
+			Vector u2 = gov.nih.nci.evs.browser.utils.StringUtils.parseData(t, '=');
+			String qual_name = (String) u2.elementAt(0);
+			String qual_value = (String) u2.elementAt(1);
+			qual_hmap.put(qual_name, qual_value);
+		}
+		return qual_hmap;
+	}
+
+
+    public Vector getMatchedPropertyValue(HashMap hmap, String property_name, String source, String term_type,
+                                          String qualifier_name, String qualifier_value) {
+
+		if (hmap == null) return null;
+		Vector w = new Vector();
+		Iterator it = hmap.keySet().iterator();
+
+		while (it.hasNext()) {
+			String prop_name = (String) it.next();
+			Vector prop_values = (Vector) hmap.get(prop_name);
+			if (prop_name.compareTo(property_name) == 0) {
+
+				for (int k=0; k<prop_values.size(); k++) {
+					boolean matched = true;
+					String value = (String) prop_values.elementAt(k);
+					Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(value, '|');
+					String prop_value = (String) u.elementAt(0);
+					if (u.size() > 1) {
+						String qualifier_str = (String) u.elementAt(1);
+						HashMap qual_hmap = string2HashMap(qualifier_str);
+						if (source != null) {
+							if (qual_hmap.containsKey(SOURCE)) {
+								String s = (String) qual_hmap.get(SOURCE);
+								if (s.compareTo(source) != 0) {
+									matched = false;
+								}
+							}
+						}
+						if (term_type != null) {
+							if (qual_hmap.containsKey(TERM_TYPE)) {
+								String s = (String) qual_hmap.get(TERM_TYPE);
+								if (s.compareTo(term_type) != 0) {
+									matched = false;
+								}
+							}
+						}
+
+						if (qualifier_name != null) {
+							if (qual_hmap.containsKey(qualifier_name)) {
+								String s = (String) qual_hmap.get(qualifier_name);
+								if (s.compareTo(qualifier_value) != 0) {
+									matched = false;
+								}
+							}
+						}
+					}
+					if (matched) {
+						w.add(prop_value);
+					}
+				}
+			}
+		}
+		return w;
+	}
 
 
 }

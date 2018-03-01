@@ -2247,6 +2247,10 @@ if (show_released_file_button) {
 			mode = (String) request.getParameter("mode");
 			if (mode == null) {
 				mode = (String) request.getSession().getAttribute("mode");
+				//
+				if (mode == null) {
+					mode = "0";
+				}
 			}
 
 		String tree_views = JSPUtils.getValueSetTreeViews(Integer.parseInt(mode), contextPath);

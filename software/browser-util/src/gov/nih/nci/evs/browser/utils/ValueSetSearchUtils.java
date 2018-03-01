@@ -893,11 +893,13 @@ public class ValueSetSearchUtils
 		return scsvrl;
 	}
 
+/*
     public static void main(String [] args) {
 		try {
 
-			LexBIGService lbSvc = LexBIGServiceImpl.defaultInstance();
+			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();//LexBIGServiceImpl.defaultInstance();
 			ValueSetSearchUtils test = new ValueSetSearchUtils(lbSvc);
+			test.setServiceUrl(RemoteServerUtil.getServiceURL());
 
 			String vsd_uri = "http://evs.nci.nih.gov/valueset/C54453";
 			String matchText = "red";
@@ -984,6 +986,6 @@ public class ValueSetSearchUtils
 		}
 
 	}
-
+*/
 }
 

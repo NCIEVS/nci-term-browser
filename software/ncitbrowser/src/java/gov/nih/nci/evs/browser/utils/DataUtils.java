@@ -1265,6 +1265,8 @@ public class DataUtils {
 	    } catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		// KLO 03152018
+		valueSetHierarchyInitialized = true;
         System.out.println("ValueSetTreeUtils run time (ms): " + (System.currentTimeMillis() - ms));
 
 

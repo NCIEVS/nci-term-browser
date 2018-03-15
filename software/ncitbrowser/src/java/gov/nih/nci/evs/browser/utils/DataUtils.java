@@ -1230,11 +1230,10 @@ public class DataUtils {
         ValueSetMetadataUtils vsmdu = null;
         try {
 			vsmdu = new ValueSetMetadataUtils(vsd_service);
-
+            vsdURI2MetadataHashMap = vsmdu.getValueSetDefinitionMetadata();
 			if (vsdURI2MetadataHashMap == null) {
 				_logger.debug("WARNING: vsmdu.getValueSetDefinitionMetadata() returns null.");
 			} else {
-				vsdURI2MetadataHashMap = vsmdu.getValueSetDefinitionMetadata();
 				if (vsdURI2MetadataHashMap.keySet().size() == 0) {
 					hasNoValueSet = true;
 					//return;

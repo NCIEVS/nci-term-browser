@@ -96,6 +96,7 @@ public class CodingSchemeDataUtils {
     public void dumpVector(String label, Vector v) {
 		System.out.println("\n" + label + ":");
 		if (v == null) return;
+		if (v == null) return;
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 			int j=i+1;
@@ -133,6 +134,7 @@ public class CodingSchemeDataUtils {
 		Vector v = new Vector();
         try {
 			SupportedSource[] sources = cs.getMappings().getSupportedSource();
+			if (sources == null) return null;
 			for (int i=0; i<sources.length; i++)
 			{
 				v.add(sources[i].getLocalId());
@@ -148,6 +150,7 @@ public class CodingSchemeDataUtils {
 		if (cs == null) return null;
         Vector<SupportedProperty> v = new Vector<SupportedProperty>();
 	    SupportedProperty[] properties = cs.getMappings().getSupportedProperty();
+		if (properties == null) return null;
 		for (int i=0; i<properties.length; i++)
 		{
 		     SupportedProperty sp = (SupportedProperty) properties[i];
@@ -242,6 +245,7 @@ public class CodingSchemeDataUtils {
 		Vector v = new Vector();
         try {
 			SupportedPropertyQualifier[] qualifiers = cs.getMappings().getSupportedPropertyQualifier();
+			if (qualifiers == null) return null;
 			for (int i=0; i<qualifiers.length; i++)
 			{
 				v.add(qualifiers[i].getLocalId());
@@ -262,6 +266,7 @@ public class CodingSchemeDataUtils {
 		if (cs == null) return null;
         Vector<String> v = new Vector<String>();
 	    SupportedAssociation[] assos = cs.getMappings().getSupportedAssociation();
+		if (assos == null) return null;
 		for (int i=0; i<assos.length; i++)
 		{
 		     SupportedAssociation sa = (SupportedAssociation) assos[i];
@@ -275,6 +280,7 @@ public class CodingSchemeDataUtils {
         try {
 			org.LexGrid.naming.SupportedAssociationQualifier[] supportedAssociationQualifiers
 			    = cs.getMappings().getSupportedAssociationQualifier();
+			if (supportedAssociationQualifiers == null) return null;
 			if (supportedAssociationQualifiers == null) return null;
 			for (int i=0; i<supportedAssociationQualifiers.length; i++)
 			{
@@ -292,6 +298,7 @@ public class CodingSchemeDataUtils {
 		Vector v = new Vector();
         try {
 			SupportedEntityType[] types = cs.getMappings().getSupportedEntityType();
+			if (types == null) return null;
 			for (int i=0; i<types.length; i++)
 			{
 				v.add(types[i].getLocalId());
@@ -343,6 +350,7 @@ public class CodingSchemeDataUtils {
 			//List<CodingScheme> choices = new ArrayList<CodingScheme>();
 			LexEVSResolvedValueSetService lrvs = new LexEVSResolvedValueSetServiceImpl(lbSvc);
 			List<CodingScheme> schemes = lrvs.listAllResolvedValueSets();
+			if (schemes == null) return null;
 			for (int i = 0; i < schemes.size(); i++) {
 				CodingScheme cs = schemes.get(i);
 				int j = i+1;
@@ -400,6 +408,7 @@ public class CodingSchemeDataUtils {
                  return null;
              }
              CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+             if (csrs == null) return null;
              for (int i = 0; i < csrs.length; i++) {
                  int j = i + 1;
                  CodingSchemeRendering csr = csrs[i];
@@ -466,6 +475,7 @@ public class CodingSchemeDataUtils {
                  return null;
              }
              CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+             if (csrs == null) return null;
              for (int i = 0; i < csrs.length; i++) {
                  int j = i + 1;
                  CodingSchemeRendering csr = csrs[i];
@@ -497,6 +507,7 @@ public class CodingSchemeDataUtils {
 
                      try {
                          CodingScheme cs = lbSvc.resolveCodingScheme(formalname, vt);
+						 if (cs == null) return null;
 						 if (isMapping(cs.getCodingSchemeName(), representsVersion)) {
 						     w.add(cs.getCodingSchemeName() + "|" + representsVersion + "|" + cs.getFormalName() + "|" + cs.getCodingSchemeURI());
 						 }
@@ -521,6 +532,7 @@ public class CodingSchemeDataUtils {
         try {
             CodingSchemeRenderingList lcsrl = lbSvc.getSupportedCodingSchemes();
             CodingSchemeRendering[] csra = lcsrl.getCodingSchemeRendering();
+            if (csra == null) return null;
             for (int i = 0; i < csra.length; i++) {
                 CodingSchemeRendering csr = csra[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
@@ -603,6 +615,7 @@ public class CodingSchemeDataUtils {
             versionOrTag.setVersion(version);
         try {
             String[] ids = getHierarchyIDs(codingScheme, versionOrTag);
+            if (ids == null) return null;
             if (ids.length > 0)
                 return ids[0];
         } catch (Exception e) {
@@ -764,6 +777,7 @@ public class CodingSchemeDataUtils {
         try {
             CodingSchemeRenderingList lcsrl = lbSvc.getSupportedCodingSchemes();
             CodingSchemeRendering[] csra = lcsrl.getCodingSchemeRendering();
+            if (csra == null) return null;
             for (int i = 0; i < csra.length; i++) {
                 CodingSchemeRendering csr = csra[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
@@ -775,6 +789,7 @@ public class CodingSchemeDataUtils {
 					if (version == null) return Constants.PRODUCTION;
 
 					String representsVersion = css.getRepresentsVersion();
+                    if (representsVersion == null) return null;
                     if (representsVersion.compareTo(version) == 0) {
 						RenderingDetail rd = csr.getRenderingDetail();
 						CodingSchemeTagList cstl = rd.getVersionTags();
@@ -818,6 +833,7 @@ public class CodingSchemeDataUtils {
                 return null;
             }
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -852,6 +868,7 @@ public class CodingSchemeDataUtils {
                 return null;
             }
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -862,6 +879,7 @@ public class CodingSchemeDataUtils {
 
                 if (isActive != null && isActive.equals(Boolean.TRUE)) {
                 	String uri = css.getCodingSchemeURI();
+                	if (uri == null) return null;
                 	if (uri.compareTo(urn) == 0) {
 						String representsVersion = css.getRepresentsVersion();
 
@@ -905,6 +923,7 @@ public class CodingSchemeDataUtils {
                 return v;
 			}
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 CodingSchemeRendering csr = csrs[i];
                 Boolean isActive =
@@ -912,6 +931,7 @@ public class CodingSchemeDataUtils {
                         CodingSchemeVersionStatus.ACTIVE);
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
                 String formalname = css.getFormalName();
+                if (formalname == null) return null;
                 if (formalname.compareTo(codingSchemeName) == 0 || css.getCodingSchemeURI().compareTo(codingSchemeName) == 0
                     || css.getLocalName().compareTo(codingSchemeName) == 0) {
                     String representsVersion = css.getRepresentsVersion();
@@ -942,8 +962,10 @@ public class CodingSchemeDataUtils {
         try {
             CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
             Relations[] relations = cs.getRelations();
+            if (relations == null) return null;
             for (int i = 0; i < relations.length; i++) {
                 Relations relation = relations[i];
+                if (relation == null) return null;
                 if (relation.getContainerName().compareToIgnoreCase("roles") == 0
                     || relation.getContainerName().compareToIgnoreCase(
                         "relations") == 0) {
@@ -974,6 +996,7 @@ public class CodingSchemeDataUtils {
             }
 
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -1184,6 +1207,7 @@ public class CodingSchemeDataUtils {
 		Relations relation = cs.getRelations(0);
 
 		Boolean bool_obj = relation.isIsMapping();
+		if (bool_obj == null) return null;
 		if (bool_obj == null || bool_obj.equals(Boolean.FALSE)) {
 			return null;
 		}
@@ -1356,8 +1380,10 @@ public class CodingSchemeDataUtils {
                 for (int i = 0; i < associations.length; i++) {
                     Association assoc = associations[i];
                     String assoName = assoc.getAssociationName();
+                    if (assoName == null) return null;
                     if (assoName.compareTo("equivalentClass") == 0) {
 						AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+						if (acl == null) return null;
 						for (int j = 0; j < acl.length; j++) {
 							AssociatedConcept ac = acl[j];
 							String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());
@@ -1403,6 +1429,7 @@ public class CodingSchemeDataUtils {
                     rcrl.getResolvedConceptReference();
                 for (int i = 0; i < rcra.length; i++) {
                     ResolvedConceptReference rcr = rcra[i];
+				    if (rcr == null) return null;
 				    String t = rcr.getEntityDescription().getContent() + "|"+ rcr.getCode() + "|"+ rcr.getCodingSchemeName()
 					+ "|" + rcr.getCodeNamespace();
                     v.add(t);
@@ -1448,6 +1475,7 @@ public class CodingSchemeDataUtils {
         line = line + node.getEntityCode() + "|";
         line = line + node.getEntityCodeNamespace() + "|";
 		Presentation[] prsentations = node.getPresentation();
+		if (prsentations == null) return null;
 		for (int i = 0; i < prsentations.length; i++) {
 			StringBuffer buf = new StringBuffer();
 			Presentation presentation = prsentations[i];
@@ -1474,12 +1502,14 @@ public class CodingSchemeDataUtils {
 				buf.append("source").append("=").append(src).append("$");
 		    }
 		    String t = buf.toString();
+		    if (t == null) return null;
 		    if (t.length() > 0) {
 				t = t.substring(0, t.length()-1);
 			}
 		    line = line + t + "|";
 		}
 		Definition[] definitions = node.getDefinition();
+		if (definitions == null) return null;
 		for (int i = 0; i < definitions.length; i++) {
 			Definition definition = definitions[i];
 			StringBuffer buf = new StringBuffer();
@@ -1504,6 +1534,7 @@ public class CodingSchemeDataUtils {
 				buf.append("source").append("=").append(src).append("$");
 		    }
 		    String t = buf.toString();
+		    if (t == null) return null;
 		    if (t.length() > 0) {
 				t = t.substring(0, t.length()-1);
 			}
@@ -1511,6 +1542,7 @@ public class CodingSchemeDataUtils {
 		}
 
 		Comment[] comments = node.getComment();
+		if (comments == null) return null;
 		for (int i = 0; i < comments.length; i++) {
 			Comment comment = comments[i];
 			StringBuffer buf = new StringBuffer();
@@ -1535,6 +1567,7 @@ public class CodingSchemeDataUtils {
 				buf.append("source").append("=").append(src).append("$");
 		    }
 		    String t = buf.toString();
+		    if (t == null) return null;
 		    if (t.length() > 0) {
 				t = t.substring(0, t.length()-1);
 			}
@@ -1543,6 +1576,7 @@ public class CodingSchemeDataUtils {
 
 
 		Property[] properties = node.getProperty();
+		if (properties == null) return null;
 		for (int i = 0; i < properties.length; i++) {
 			Property property = properties[i];
 			StringBuffer buf = new StringBuffer();
@@ -1567,6 +1601,7 @@ public class CodingSchemeDataUtils {
 				buf.append("source").append("=").append(src).append("$");
 		    }
 		    String t = buf.toString();
+		    if (t == null) return null;
 		    if (t.length() > 0) {
 				t = t.substring(0, t.length()-1);
 			}

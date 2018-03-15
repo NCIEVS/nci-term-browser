@@ -105,6 +105,7 @@ public class StandardFtpReportInfo {
         if (propertyValue == null)
             return null;
         String[] values = Utils.toStrings(propertyValue, ";", false);
+        if (values == null) return null;
         if (values.length == 1 && values[0].trim().startsWith("$"))
             return null;
         if (values.length < 3) {
@@ -120,6 +121,7 @@ public class StandardFtpReportInfo {
 
         Vector<Integer> ncitColumns = new Vector<Integer>();
         String[] values2 = Utils.toStrings(values[2], " ", false);
+        if (values2 == null) return null;
         for (int i = 0; i < values2.length; ++i) {
             try {
                 int col = Integer.parseInt(values2[i]);
@@ -141,8 +143,10 @@ public class StandardFtpReportInfo {
     public static StandardFtpReportInfo getByName(
         Vector<StandardFtpReportInfo> list, String name) {
         Iterator<StandardFtpReportInfo> iterator = list.iterator();
+        if (iterator == null) return null;
         while (iterator.hasNext()) {
             StandardFtpReportInfo info = iterator.next();
+            if (info == null) return null;
             if (info.getName().equals(name))
                 return info;
         }

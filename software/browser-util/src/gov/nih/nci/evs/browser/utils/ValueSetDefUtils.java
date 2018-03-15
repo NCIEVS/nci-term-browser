@@ -156,6 +156,7 @@ public class ValueSetDefUtils {
 		String user_dir = System.getProperty("user.dir");
 		String dir_pathname = user_dir + File.separator + directory_name;
 		File dir = new File(dir_pathname);
+		if (dir == null) return;
 		if (!dir.exists()) {
 			System.out.println("Creating directory: " + directory_name);
 			boolean result = false;

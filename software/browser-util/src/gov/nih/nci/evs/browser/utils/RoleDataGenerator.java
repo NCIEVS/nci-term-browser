@@ -211,6 +211,7 @@ public class RoleDataGenerator {
 		String[] roledata = new String[v.size()];
 		Vector lines = new Vector();
 		Iterator it = name2id.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String name = (String) it.next();
 			if (names.contains(name)) {
@@ -231,6 +232,7 @@ public class RoleDataGenerator {
 	public HashMap getRoleId2NameMap(String scheme, String version) {
         HashMap hmap = new HashMap();
 		ResolvedConceptReferenceList rcrlist = getEntities(scheme, version, ASSOCIATION);
+		if (rcrlist == null) return null;
 		for (int i=0; i<rcrlist.getResolvedConceptReferenceCount(); i++) {
 			ResolvedConceptReference rcr = (ResolvedConceptReference) rcrlist.getResolvedConceptReference(i);
 			if (rcr.getEntityDescription() != null) {
@@ -246,6 +248,7 @@ public class RoleDataGenerator {
 		if (hmap == null) return null;
 		HashMap inverseMap = new HashMap();
 		Iterator it = hmap.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			String value = (String) hmap.get(key);
@@ -267,6 +270,7 @@ public class RoleDataGenerator {
             version = "OWL2Asserted 16.12x";
             System.out.println(scheme + " (" + version + ")");
             String[] data = test.generateRoleData(scheme, version);
+			if (data == null) return;
 			for (int i=0; i<data.length; i++) {
 				String line = data[i];
 				pw.println(line);

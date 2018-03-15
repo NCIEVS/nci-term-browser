@@ -121,6 +121,17 @@
             <%
                 String row = (String) rows.elementAt(i);
                 Vector cols = StringUtils.parseData(row, "|");
+                // Send redirect:
+                if (cols == null) {
+                	try {
+                		String error_msg = "WARNING: The server encountered an unexpected error (file: concept_history.jsp, code: 1, var: cols).";
+                		request.getSession().setAttribute("error_msg", error_msg);
+                		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+                		response.sendRedirect(redirectURL);				 
+                	} catch (Exception ex) {
+                		ex.printStackTrace();
+                	}
+                }
                 for (int j=0; j<cols.size(); ++j) {
                   Object cell = cols.elementAt(j);
                   String iFormat = "", iFormatEnd = "";

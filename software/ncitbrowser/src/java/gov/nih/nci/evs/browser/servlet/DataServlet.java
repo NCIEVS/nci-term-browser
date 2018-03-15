@@ -163,6 +163,7 @@ public final class DataServlet extends HttpServlet {
         Entity c = conceptDetails.getConceptByCode(scheme, version, code);
         if (c != null) {
             Vector v = conceptDetails.getConceptPropertyValues(c, "NCI_META_CUI");
+            if (v == null) return null;
             if (v == null || v.size() == 0) {
 				return conceptDetails.getConceptPropertyValues(c, "UMLS_CUI");
 			}        }
@@ -215,6 +216,7 @@ public final class DataServlet extends HttpServlet {
 
 			if (ncim_entity != null) {
 				org.LexGrid.commonTypes.Property[] properties = ncim_entity.getPresentation();
+				if (properties == null) return null;
 				for (int i = 0; i < properties.length; i++) {
 					Property p = (Property) properties[i];
 					String t = p.getValue().getContent();
@@ -223,6 +225,7 @@ public final class DataServlet extends HttpServlet {
 
 						Source src = sources[0];
 						String src_abbr = src.getContent();
+						if (src_abbr == null) return null;
 						if (src_abbr.compareTo(src_abbrev) == 0) {
 							syn_1 = p.getValue().getContent();
 						} else if (src_abbr.compareTo("NCI") == 0) {
@@ -257,6 +260,7 @@ public final class DataServlet extends HttpServlet {
 				if (ncit_entity != null) {
 					target_concept_name = ncit_entity.getEntityDescription().getContent();
 					org.LexGrid.concepts.Definition[] properties = ncit_entity.getDefinition();
+					if (properties == null) return null;
 					for (int i = 0; i < properties.length; i++) {
 						Definition p = (Definition) properties[i];
 						String t = p.getValue().getContent();
@@ -264,6 +268,7 @@ public final class DataServlet extends HttpServlet {
 						if (sources != null && sources.length > 0) {
 							Source src = sources[0];
 							String src_abbr = src.getContent();
+							if (src_abbr == null) return null;
 							if (src_abbr.compareTo("NCI") == 0) {
 								nci_def = p.getValue().getContent();
 								JSONObject obj = nciDefinition2JSONObject(src_abbrev, src_code, nci_code, target_concept_name, nci_def);

@@ -232,6 +232,7 @@ public class MappingUtils {
 			if (cs == null) return null;
 
 			java.util.Enumeration<? extends Relations> relations = cs.enumerateRelations();
+			if (relations == null) return null;
 			while (relations.hasMoreElements()) {
 				Relations relation = (Relations) relations.nextElement();
 				Boolean isMapping = relation.getIsMapping();
@@ -270,11 +271,13 @@ public class MappingUtils {
 		try {
 			CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
 			Relations[] relations = cs.getRelations();
+			if (relations == null) return null;
 			for (int i = 0; i < relations.length; i++) {
 				Relations relation = relations[i];
                 Boolean isMapping = relation.isIsMapping();
                 if (isMapping != null && isMapping.equals(Boolean.TRUE)) {
 					AssociationPredicate[] associationPredicates = relation.getAssociationPredicate();
+					if (associationPredicates == null) return null;
 					for (int j=0; j<associationPredicates.length; j++) {
 						AssociationPredicate associationPredicate = associationPredicates[j];
 						String name = associationPredicate.getAssociationName();

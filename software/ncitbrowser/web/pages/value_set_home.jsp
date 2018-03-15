@@ -45,6 +45,17 @@
   
     function refresh() {      
       var selectValueSetSearchOptionObj = document.forms["valueSetSearchForm"].selectValueSetSearchOption;
+      // Send redirect:
+      if (selectValueSetSearchOptionObj == null) {
+      	try {
+      		String error_msg = "WARNING: The server encountered an unexpected error (file: value_set_home.jsp, code: 1, var: selectValueSetSearchOptionObj).";
+      		request.getSession().setAttribute("error_msg", error_msg);
+      		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+      		response.sendRedirect(redirectURL);				 
+      	} catch (Exception ex) {
+      		ex.printStackTrace();
+      	}
+      }
       for (var i=0; i<selectValueSetSearchOptionObj.length; i++) {
         if (selectValueSetSearchOptionObj[i].checked) {
             selectValueSetSearchOption = selectValueSetSearchOptionObj[i].value;
@@ -72,6 +83,17 @@
     
     function onCodeButtonPressed(formname) {
           var algorithmObj = document.forms[formname].algorithm;
+          // Send redirect:
+          if (algorithmObj == null) {
+          	try {
+          		String error_msg = "WARNING: The server encountered an unexpected error (file: value_set_home.jsp, code: 2, var: algorithmObj).";
+          		request.getSession().setAttribute("error_msg", error_msg);
+          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+          		response.sendRedirect(redirectURL);				 
+          	} catch (Exception ex) {
+          		ex.printStackTrace();
+          	}
+          }
 	  for (var j=0; j<algorithmObj.length; j++) {
 		  algorithm = algorithmObj[j].value;
 		  if (algorithm == "exactMatch") {
@@ -83,6 +105,17 @@
 
     function getSearchTarget(formname) {
           var searchTargetObj = document.forms[formname].searchTarget;
+          // Send redirect:
+          if (searchTargetObj == null) {
+          	try {
+          		String error_msg = "WARNING: The server encountered an unexpected error (file: value_set_home.jsp, code: 3, var: searchTargetObj).";
+          		request.getSession().setAttribute("error_msg", error_msg);
+          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+          		response.sendRedirect(redirectURL);				 
+          	} catch (Exception ex) {
+          		ex.printStackTrace();
+          	}
+          }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 	      if (searchTargetObj[j].checked == true) {
 	          return searchTargetObj[j].value;

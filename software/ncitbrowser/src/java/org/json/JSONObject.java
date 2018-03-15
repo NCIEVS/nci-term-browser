@@ -358,6 +358,7 @@ public class JSONObject implements Serializable {
 // Shave off trailing zeros and decimal point, if possible.
 
         String s = Double.toString(d);
+        if (s == null) return null;
         if (s.indexOf('.') > 0 && s.indexOf('e') < 0 && s.indexOf('E') < 0) {
             while (s.endsWith("0")) {
                 s = s.substring(0, s.length() - 1);
@@ -397,6 +398,7 @@ public class JSONObject implements Serializable {
      */
     public boolean getBoolean(String key) throws JSONException {
         Object o = get(key);
+        if (o == null) return false;
         if (o.equals(Boolean.FALSE) ||
                 (o instanceof String &&
                 ((String)o).equalsIgnoreCase("false"))) {
@@ -562,6 +564,7 @@ public class JSONObject implements Serializable {
     public JSONArray names() {
         JSONArray ja = new JSONArray();
         Iterator  keys = keys();
+        if (keys == null) return null;
         while (keys.hasNext()) {
             ja.put(keys.next());
         }
@@ -584,6 +587,7 @@ public class JSONObject implements Serializable {
 // Shave off trailing zeros and decimal point, if possible.
 
         String s = n.toString();
+        if (s == null) return null;
         if (s.indexOf('.') > 0 && s.indexOf('e') < 0 && s.indexOf('E') < 0) {
             while (s.endsWith("0")) {
                 s = s.substring(0, s.length() - 1);

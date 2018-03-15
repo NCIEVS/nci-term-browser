@@ -390,6 +390,7 @@ public class DataUtils {
 			List<CodingScheme> choices = new ArrayList<CodingScheme>();
 			LexEVSResolvedValueSetService lrvs = new LexEVSResolvedValueSetServiceImpl(lbs);
 			List<CodingScheme> schemes = lrvs.listAllResolvedValueSets();
+			if (schemes == null) return null;
 			for (int i = 0; i < schemes.size(); i++) {
 				CodingScheme cs = schemes.get(i);
 				int j = i+1;
@@ -481,6 +482,7 @@ public class DataUtils {
         buf.append("|");
         for (int i = 0; i < display_name_vec.size(); i++) {
 		    OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+		    if (info == null) return null;
 		    if (info.getLabel().indexOf("NCI_Thesaurus") != -1 || info.getLabel().indexOf("NCI Thesaurus") != -1) {
 		        if (!isNull(info.getTag()) && info.getTag().compareToIgnoreCase(Constants.PRODUCTION) == 0) {
                     buf.append(info.getLabel() + "|");
@@ -528,6 +530,7 @@ public class DataUtils {
 		HashMap virtualId2NamesMap = client.getVirtualId2NamesMap();
 		if (virtualId2NamesMap != null) {
 			Vector virtualId_vec = client.getKeys(virtualId2NamesMap);
+			if (virtualId_vec == null) return null;
 			for (int i=0; i<virtualId_vec.size(); i++) {
 				String virtualId = (String) virtualId_vec.elementAt(i);
 				String names = (String) virtualId2NamesMap.get(virtualId);
@@ -588,6 +591,7 @@ public class DataUtils {
      private static void setMappingDisplayNameHashMap() {
  		_mappingDisplayNameHashMap = new HashMap();
  		Iterator it = _csnv2codingSchemeNameMap.keySet().iterator();
+ 		if (it == null) return;
  		while (it.hasNext()) {
  			String value = (String) it.next();
  			String cs = (String) _csnv2codingSchemeNameMap.get(value);
@@ -756,6 +760,7 @@ public class DataUtils {
                 return;
             }
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -861,6 +866,7 @@ public class DataUtils {
                         } else {
 
                         Vector prop_quals = getSupportedPropertyQualifier(cs);
+                        if (prop_quals == null) return;
                         if (prop_quals.contains("source-code")) {
 							if (!_source_code_schemes.contains(formalname)) {
 								_source_code_schemes.add(formalname);
@@ -876,6 +882,7 @@ public class DataUtils {
 
                         if (!isMapping) {
 							Vector ns_vec = csdu.getNamespaceNames(cs.getCodingSchemeName(), null);
+							if (ns_vec == null) return;
 							for (int i2=0; i2<ns_vec.size(); i2++) {
 								String ns = (String) ns_vec.elementAt(i2);
 								_csNamespace2URIHashMap.put(ns, cs.getCodingSchemeURI());
@@ -885,6 +892,7 @@ public class DataUtils {
                          _isMappingHashMap.put(cs.getCodingSchemeName(), Boolean.valueOf(isMapping));
 
                         String[] localnames = cs.getLocalName();
+                        if (localnames == null) return;
                         for (int m = 0; m < localnames.length; m++) {
                             String localname = localnames[m];
                             _logger.debug("\tlocal name: " + localname);
@@ -907,6 +915,7 @@ public class DataUtils {
                             boolean localname_exist = false;
                             for (int lcv = 0; lcv < localnames.length; lcv++) {
                                 String local_nm = (String) localnames[lcv];
+                                if (local_nm == null) return;
                                 if (local_nm.compareTo(css_local_name) == 0) {
                                     localname_exist = true;
                                     break;
@@ -972,6 +981,7 @@ public class DataUtils {
                             Vector metadataProperties = new Vector();
                             for (int k = 0; k < nvList.length; k++) {
                                 NameAndValue nv = (NameAndValue) nvList[k];
+                                if (nv == null) return;
                                 metadataProperties.add(nv.getName() + "|"
                                     + nv.getContent());
 
@@ -1072,6 +1082,7 @@ public class DataUtils {
             nv_vec = new SortUtils().quickSort(nv_vec);
             for (int k = 0; k < nv_vec.size(); k++) {
                 String value = (String) nv_vec.elementAt(k);
+                if (value == null) return;
                 if (!value.startsWith(Constants.TERMINOLOGY_VALUE_SET) && !value.startsWith(Constants.TERMINOLOGY_VALUE_SET_NAME)) {
 	                _ontologies.add(new SelectItem(value, value));
 				}
@@ -1382,6 +1393,7 @@ public class DataUtils {
             return null;
         }
         Vector metadata = (Vector) _formalName2MetadataHashMap.get(formalName);
+        if (metadata == null) return null;
         if (metadata == null || metadata.size() == 0) {
             return null;
         }
@@ -1397,6 +1409,7 @@ public class DataUtils {
         if (version != null && ! version.equalsIgnoreCase("null"))
             v = getMetadataValues(scheme, version, propertyName);
         else v = getMetadataValues(scheme, propertyName);
+        if (v == null) return null;
         if (v == null || v.size() == 0)
             return null;
         return (String) v.elementAt(0);
@@ -1413,6 +1426,7 @@ public class DataUtils {
             return null;
         }
         Vector metadata = (Vector) _formalNameVersion2MetadataHashMap.get(formalName + "$" + version);
+        if (metadata == null) return null;
         if (metadata == null || metadata.size() == 0) {
             return null;
         }
@@ -1916,11 +1930,13 @@ public class DataUtils {
             if (matches.getResolvedConceptReferenceCount() > 0) {
 				/*
                 Enumeration<ResolvedConceptReference> refEnum = matches.enumerateResolvedConceptReference();
+                if (refEnum == null) return null;
                 while (refEnum.hasMoreElements()) {
                     ResolvedConceptReference ref = refEnum.nextElement();
                 */
 
                 java.util.Enumeration<? extends ResolvedConceptReference> refEnum = matches.enumerateResolvedConceptReference();
+                if (refEnum == null) return null;
                 while (refEnum.hasMoreElements()) {
                     ResolvedConceptReference ref = (ResolvedConceptReference) refEnum.nextElement();
 
@@ -2013,6 +2029,7 @@ public class DataUtils {
 
             // Iterate through all hierarchies and levels ...
             String[] hierarchyIDs = lbscm.getHierarchyIDs(scheme, csvt);
+            if (hierarchyIDs == null) return null;
             for (int k = 0; k < hierarchyIDs.length; k++) {
                 String hierarchyID = hierarchyIDs[k];
                 AssociationList associations = null;
@@ -2075,6 +2092,7 @@ public class DataUtils {
 
             // Iterate through all hierarchies and levels ...
             String[] hierarchyIDs = lbscm.getHierarchyIDs(scheme, csvt);
+            if (hierarchyIDs == null) return null;
             for (int k = 0; k < hierarchyIDs.length; k++) {
                 String hierarchyID = hierarchyIDs[k];
                 AssociationList associations =
@@ -2179,6 +2197,7 @@ public class DataUtils {
      * String ltag) { if (codingSchemeName == null) return null; try {
      * LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
      * CodingSchemeRenderingList lcsrl = lbSvc.getSupportedCodingSchemes();
+     if (lcsrl == null) return null;
      * CodingSchemeRendering[] csra = lcsrl.getCodingSchemeRendering(); for (int
      * i = 0; i < csra.length; i++) { CodingSchemeRendering csr = csra[i];
      * CodingSchemeSummary css = csr.getCodingSchemeSummary(); if
@@ -2217,9 +2236,11 @@ if (lbSvc == null) {
 
             CodingSchemeRenderingList lcsrl = lbSvc.getSupportedCodingSchemes();
             CodingSchemeRendering[] csra = lcsrl.getCodingSchemeRendering();
+            if (csra == null) return null;
             for (int i = 0; i < csra.length; i++) {
                 CodingSchemeRendering csr = csra[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
+                if (css == null) return null;
                 if (css.getFormalName().compareTo(codingSchemeName) == 0
                     || css.getLocalName().compareTo(codingSchemeName) == 0
                     || css.getCodingSchemeURI().compareTo(codingSchemeName) == 0) {
@@ -2275,6 +2296,7 @@ if (lbSvc == null) {
 			}
 
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 CodingSchemeRendering csr = csrs[i];
                 Boolean isActive =
@@ -2283,6 +2305,7 @@ if (lbSvc == null) {
                 // if (isActive != null && isActive.equals(Boolean.TRUE)) {
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
                 String formalname = css.getFormalName();
+                if (formalname == null) return null;
                 if (formalname.compareTo(codingSchemeName) == 0) {
                     String representsVersion = css.getRepresentsVersion();
                     v.add(representsVersion);
@@ -2493,6 +2516,7 @@ if (lbSvc == null) {
      *
      * if (properties == null || properties.length == 0) return v; for (int i =
      * 0; i < properties.length; i++) { Property p = (Property) properties[i];
+     if (p == null) return null;
      * if (property_name.compareTo(p.getPropertyName()) == 0) { String t =
      * p.getValue().getContent();
      *
@@ -2553,12 +2577,14 @@ if (lbSvc == null) {
             return v;
         for (int i = 0; i < properties.length; i++) {
             Property p = (Property) properties[i];
+            if (p == null) return null;
             if (property_name.compareTo(p.getPropertyName()) == 0) {
                 String t = p.getValue().getContent();
 
                 // #27034
                 if (addQualifiers) {
                     String qualifiers = getPropertyQualfierValues(p);
+                    if (qualifiers == null) return null;
                     if (qualifiers.compareTo("") != 0) {
                         t = t + " (" + getPropertyQualfierValues(p) + ")";
                     }
@@ -2588,6 +2614,7 @@ if (lbSvc == null) {
         try {
             CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
             Relations[] relations = cs.getRelations();
+            if (relations == null) return null;
             for (int i = 0; i < relations.length; i++) {
                 Relations relation = relations[i];
 
@@ -2667,8 +2694,10 @@ if (lbSvc == null) {
     public String getPreferredName(Entity c) {
 
         Presentation[] presentations = c.getPresentation();
+        if (presentations == null) return null;
         for (int i = 0; i < presentations.length; i++) {
             Presentation p = presentations[i];
+            if (p == null) return null;
             if (p.getPropertyName().compareTo("Preferred_Name") == 0) {
                 return p.getValue().getContent();
             }
@@ -3430,8 +3459,10 @@ if (lbSvc == null) {
 		if (line == null) return null;
         Vector data_vec = new Vector();
         StringTokenizer st = new StringTokenizer(line, tab);
+        if (st == null) return null;
         while (st.hasMoreTokens()) {
             String value = st.nextToken();
+            if (value == null) return null;
             if (value.compareTo("null") == 0)
                 value = " ";
             data_vec.add(value);
@@ -4162,6 +4193,7 @@ if (lbSvc == null) {
         String con_status = null;
         if (c != null) {
             Vector status_vec = getConceptPropertyValues(c, "Concept_Status");
+            if (status_vec == null) return null;
             if (status_vec == null || status_vec.size() == 0) {
                 con_status = c.getStatus();
             } else {
@@ -4222,6 +4254,7 @@ if (lbSvc == null) {
         if (_formalName2LocalNameHashMap.containsKey(s))
             return s;
         Iterator it = _formalName2LocalNameHashMap.keySet().iterator();
+        if (it == null) return null;
         while (it.hasNext()) {
             String t = (String) it.next();
             String t0 = t;
@@ -4611,6 +4644,7 @@ if (lbSvc == null) {
 			if (cs != null)
 			{
 				SupportedSource[] sources = cs.getMappings().getSupportedSource();
+				if (sources == null) return null;
 				for (int i=0; i<sources.length; i++)
 				{
 					v.add(sources[i].getLocalId());
@@ -4633,6 +4667,7 @@ if (lbSvc == null) {
 	private static HashMap createFormalName2NCImSABHashMap() {
 		HashMap hmap = new HashMap();
 		Vector sab_vec = getSupportedSources("NCI Metathesaurus", null);
+		if (sab_vec == null) return null;
 		for (int i=0; i<sab_vec.size(); i++) {
 			String sab = (String) sab_vec.elementAt(i);
 			if (_localName2FormalNameHashMap.containsKey(sab)) {
@@ -4649,6 +4684,7 @@ if (lbSvc == null) {
 		if (hmap == null) return;
 		//Iterator it = hmap.keySet().iterator();
 		Iterator it = hmap.entrySet().iterator();
+		if (it == null) return;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			String value = (String) hmap.get(key);
@@ -4715,6 +4751,7 @@ if (lbSvc == null) {
 						csvt.setVersion(version);
 					CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
 					Relations[] relations = cs.getRelations();
+					if (relations == null) return null;
 					for (int j = 0; j < relations.length; j++) {
 						Relations relation = relations[j];
 						Boolean bool_obj = relation.isIsMapping();
@@ -4780,6 +4817,7 @@ if (lbSvc == null) {
 			LexBIGService lbSvc = new RemoteServerUtil().createLexBIGService();
 			CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
 			Relations[] relations = cs.getRelations();
+			if (relations == null) return false;
 			if (relations.length == 0) {
 				_isMappingHashMap.put(scheme, Boolean.FALSE);
 				return false;
@@ -4787,6 +4825,7 @@ if (lbSvc == null) {
 			for (int i = 0; i < relations.length; i++) {
 				Relations relation = relations[i];
 				Boolean bool_obj = relation.isIsMapping();
+				if (bool_obj == null) return false;
 				if (bool_obj == null || bool_obj.equals(Boolean.FALSE)) {
 					_isMappingHashMap.put(scheme, Boolean.FALSE);
 					return false;
@@ -4935,6 +4974,7 @@ if (lbSvc == null) {
     public void dumpMappingData(Vector v) {
 	    for (int i=0; i<v.size(); i++) {
 			MappingData mappingData = (MappingData) v.elementAt(i);
+			if (mappingData == null) return;
 			System.out.println(mappingData.getSourceCode() + "|"
 			                 + mappingData.getSourceName() + "|"
 			                 + mappingData.getSourceCodingScheme() + "|"
@@ -5127,6 +5167,7 @@ if (lbSvc == null) {
 			if (cs == null) return null;
 
 			java.util.Enumeration<? extends Relations> relations = cs.enumerateRelations();
+			if (relations == null) return null;
 			while (relations.hasMoreElements()) {
 				Relations relation = (Relations) relations.nextElement();
 				Boolean isMapping = relation.getIsMapping();
@@ -5169,11 +5210,13 @@ if (lbSvc == null) {
 			lbSvc = new RemoteServerUtil().createLexBIGService();
 			CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
 			Relations[] relations = cs.getRelations();
+			if (relations == null) return null;
 			for (int i = 0; i < relations.length; i++) {
 				Relations relation = relations[i];
                 Boolean isMapping = relation.isIsMapping();
                 if (isMapping != null && isMapping.equals(Boolean.TRUE)) {
 					AssociationPredicate[] associationPredicates = relation.getAssociationPredicate();
+					if (associationPredicates == null) return null;
 					for (int j=0; j<associationPredicates.length; j++) {
 						AssociationPredicate associationPredicate = associationPredicates[j];
 						String name = associationPredicate.getAssociationName();
@@ -5276,6 +5319,7 @@ if (lbSvc == null) {
 		Vector v = new Vector();
 		Set keyset = _formalName2LocalNameHashMap.keySet();
 		Iterator iterator = keyset.iterator();
+		if (iterator == null) return null;
 		while (iterator.hasNext()) {
 			String t = (String) iterator.next();
 			v.add(t);
@@ -5293,6 +5337,7 @@ if (lbSvc == null) {
 		}
 
         List list = vsd_service.listValueSetDefinitionURIs();
+        if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String t = (String) list.get(i);
 			v.add(t);
@@ -5303,6 +5348,7 @@ if (lbSvc == null) {
 
     public static ValueSetDefinition findValueSetDefinitionByURI(String uri) {
 		if (uri == null) return null;
+	    if (uri == null) return null;
 	    if (uri.indexOf("|") != -1) {
 			Vector u = parseData(uri);
 			uri = (String) u.elementAt(1);
@@ -5332,6 +5378,7 @@ if (lbSvc == null) {
 			return null;
 		}
         List list = vsd_service.listValueSetDefinitionURIs();
+        if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String t = (String) list.get(i);
 			ValueSetDefinition vsd = findValueSetDefinitionByURI(t);
@@ -5361,6 +5408,7 @@ if (lbSvc == null) {
 			return null;
 		}
         List list = vsd_service.listValueSetDefinitionURIs();
+        if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
 			ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
@@ -5384,6 +5432,7 @@ if (lbSvc == null) {
 			return null;
 		}
         List list = vsd_service.listValueSetDefinitionURIs();
+        if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
 			ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
@@ -5417,6 +5466,7 @@ if (lbSvc == null) {
 
 					if (hmap.containsKey(cs_name)) {
 						Vector v = (Vector) hmap.get(cs_name);
+						if (v == null) return null;
 						if (!v.contains(vsd_str)) {
 							v.add(vsd_str);
 							hmap.put(cs_name, v);
@@ -5445,10 +5495,12 @@ if (lbSvc == null) {
 		    String description = (String) u.elementAt(2);
 		    String domain = (String) u.elementAt(3);
 		    String src_str = (String) u.elementAt(4);
+		    if (src_str == null) return null;
 		    if (src_str == null || src_str.compareTo("<NOT ASSIGNED>") == 0) {
 				String key = "<NOT ASSIGNED>";
 				if (hmap.containsKey(key)) {
 					Vector v = (Vector) hmap.get(key);
+					if (v == null) return null;
 					if (!v.contains(vsd_str)) {
 						v.add(vsd_str);
 						hmap.put(key, v);
@@ -5460,10 +5512,12 @@ if (lbSvc == null) {
 				}
 			} else {
 		    	Vector src_vec = parseData(src_str);
+		    	if (src_vec == null) return null;
 		    	for (int j=0; j<src_vec.size(); j++) {
 					String src = (String) src_vec.elementAt(j);
 					if (hmap.containsKey(src)) {
 						Vector v = (Vector) hmap.get(src);
+						if (v == null) return null;
 						if (!v.contains(vsd_str)) {
 							v.add(vsd_str);
 							hmap.put(src, v);
@@ -5514,6 +5568,7 @@ if (lbSvc == null) {
 		}
         List list = vsd_service.listValueSetDefinitionURIs();
         if (list == null) return null;
+        if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
 			ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
@@ -5522,6 +5577,7 @@ if (lbSvc == null) {
 			while (sourceEnum.hasMoreElements()) {
 				Source src = (Source) sourceEnum.nextElement();
 				String src_str = src.getContent();
+				if (src_str == null) return null;
 				if (src_str.compareTo(source) == 0) {
 					v.add(vsd);
 					break;
@@ -5543,6 +5599,7 @@ if (lbSvc == null) {
 			return null;
 		}
         List list = vsd_service.listValueSetDefinitionURIs();
+        if (list == null) return null;
         if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
@@ -5625,6 +5682,7 @@ if (lbSvc == null) {
                 return null;
             }
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -5750,6 +5808,7 @@ if (lbSvc == null) {
                 return null;
             }
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -5760,6 +5819,7 @@ if (lbSvc == null) {
 
                 if (isActive != null && isActive.equals(Boolean.TRUE)) {
                 	String uri = css.getCodingSchemeURI();
+                	if (uri == null) return null;
                 	if (uri.compareTo(urn) == 0) {
 						String representsVersion = css.getRepresentsVersion();
 
@@ -5790,6 +5850,7 @@ if (lbSvc == null) {
         Entity c = getConceptByCode(scheme, version, ltag, code);
         if (c != null) {
             Vector v = getConceptPropertyValues(c, "NCI_META_CUI");
+            if (v == null) return null;
             if (v == null || v.size() == 0) {
 				return getConceptPropertyValues(c, "UMLS_CUI");
 			}        }
@@ -5800,6 +5861,7 @@ if (lbSvc == null) {
     public static Vector getMatchedMetathesaurusCUIs(Entity c) {
         if (c != null) {
             Vector v = getConceptPropertyValues(c, "NCI_META_CUI");
+            if (v == null) return null;
             if (v == null || v.size() == 0) {
 				return getConceptPropertyValues(c, "UMLS_CUI");
 			}
@@ -5915,6 +5977,7 @@ if (lbSvc == null) {
 
 		//Iterator it = csnv2codesMap.keySet().iterator();
 		Iterator it = csnv2codesMap.entrySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			Entry thisEntry = (Entry) it.next();
 			//String key = (String) it.next();
@@ -5996,9 +6059,11 @@ if (lbSvc == null) {
             LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
             CodingSchemeRenderingList lcsrl = lbSvc.getSupportedCodingSchemes();
             CodingSchemeRendering[] csra = lcsrl.getCodingSchemeRendering();
+            if (csra == null) return null;
             for (int i = 0; i < csra.length; i++) {
                 CodingSchemeRendering csr = csra[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
+                if (css == null) return null;
                 if (css.getFormalName().compareTo(codingSchemeName) == 0
                     || css.getLocalName().compareTo(codingSchemeName) == 0
                     || css.getCodingSchemeURI().compareTo(codingSchemeName) == 0) {
@@ -6076,6 +6141,7 @@ if (lbSvc == null) {
 		Vector u = new Vector();
 		for (int i = 0; i < v.size(); i++) {
 			OntologyInfo info = (OntologyInfo) v.elementAt(i);
+			if (info == null) return null;
 			if (scheme.compareTo(info.getCodingScheme()) == 0) {
 				if (isNull(info.getTag()) || info.getTag().compareToIgnoreCase(Constants.PRODUCTION) != 0) {
 					u.add(info);
@@ -6095,10 +6161,12 @@ if (lbSvc == null) {
         Collections.sort(v, new OntologyInfo.ComparatorImpl());
 		for (int i = 0; i < v.size(); i++) {
 			OntologyInfo info = (OntologyInfo) v.elementAt(i);
+			if (info == null) return null;
 			if (!isNull(info.getTag()) && info.getTag().compareToIgnoreCase(Constants.PRODUCTION) == 0) {
 				u.add(info);
 			    if (info.getExpanded()) {
 					Vector w = getNonProductionOntologies(v, info.getCodingScheme());
+					if (w == null) return null;
 					for (int j=0; j<w.size(); j++) {
 						OntologyInfo ontologyInfo = (OntologyInfo) w.elementAt(j);
 						u.add(ontologyInfo);
@@ -6167,6 +6235,7 @@ if (lbSvc == null) {
 		Vector v = new Vector();
 		if (cs != null) {
 			SupportedPropertyQualifier[] qualifiers = cs.getMappings().getSupportedPropertyQualifier();
+			if (qualifiers == null) return null;
 			for (int i=0; i<qualifiers.length; i++)
 			{
 				v.add(qualifiers[i].getLocalId());
@@ -6232,12 +6301,14 @@ if (lbSvc == null) {
 		}
 
 		Iterator it = _listOfCodingSchemeVersionsUsedInResolutionHashMap.keySet().iterator();
+		if (it == null) return;
 		while (it.hasNext()) {
 			String cs_name = (String) it.next();
 			System.out.println("\nKEY: " + cs_name);
 			HashMap hmap = (HashMap) _listOfCodingSchemeVersionsUsedInResolutionHashMap.get(cs_name);
 			//Iterator it2 = hmap.keySet().iterator();
 			Iterator it2 = hmap.entrySet().iterator();
+			if (it2 == null) return;
 			while (it2.hasNext()) {
 				Entry entry = (Entry) it2.next();
 				String uri = (String) entry.getKey();
@@ -6269,6 +6340,7 @@ if (lbSvc == null) {
             }
 
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -6324,11 +6396,13 @@ if (lbSvc == null) {
 
 		try {
 			Iterator it = _listOfCodingSchemeVersionsUsedInResolutionHashMap.keySet().iterator();
+			if (it == null) return;
 			while (it.hasNext()) {
 				String cs_name = (String) it.next();
 				HashMap hmap = (HashMap) _listOfCodingSchemeVersionsUsedInResolutionHashMap.get(cs_name);
 				if (hmap == null) hmap = new HashMap();
 				Iterator it2 = hmap.entrySet().iterator();
+				if (it2 == null) return;
 				while (it2.hasNext()) {
 					Entry entry = (Entry) it2.next();
 					String uri = (String) entry.getKey();
@@ -6454,6 +6528,7 @@ if (lbSvc == null) {
         if (_uri2CodingSchemeNameHashMap == null) setCodingSchemeMap();
         //KLO, 08182015
         if (vocabularyName == null) return null;
+        if (vocabularyName == null) return null;
         if (vocabularyName.indexOf("%20") != -1) {
 			vocabularyName = vocabularyName.replaceAll("%20", " ");
 		}
@@ -6504,6 +6579,7 @@ if (lbSvc == null) {
 
         Set entrys = map.entrySet() ;
         Iterator iter = entrys.iterator() ;
+        if (iter == null) return null;
         while(iter.hasNext()) {
             Map.Entry me = (Map.Entry)iter.next();
             String acronym = (String) me.getKey();
@@ -6516,6 +6592,7 @@ if (lbSvc == null) {
             }
         }
         String t = buf.toString();
+        if (t == null) return null;
         if (t.indexOf("NCI_Thesaurus") == -1) {
 			t = t + Constants.DEFAULT_NCBO_WIDGET_INFO;//"NCI_Thesaurus|NCI_Thesaurus|NCIT;";
 		}
@@ -6528,6 +6605,7 @@ if (lbSvc == null) {
     public static HashMap parseNCBOWidgetString(String s) {
 		HashMap hmap = new HashMap();
 		Vector v = parseData(s, ";");
+		if (v == null) return null;
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 			int n = t.indexOf("|");
@@ -6659,6 +6737,7 @@ if (lbSvc == null) {
 	        ValueSetDefinition vsd = vsd_service.getValueSetDefinition(valueSetDefinitionURI, null);
 	        Mappings mappings = vsd.getMappings();
             SupportedCodingScheme[] supportedCodingSchemes = mappings.getSupportedCodingScheme();
+            if (supportedCodingSchemes == null) return null;
             for (int i=0; i<supportedCodingSchemes.length; i++) {
 				SupportedCodingScheme supportedCodingScheme = supportedCodingSchemes[i];
 				v.add(supportedCodingScheme.getUri());
@@ -6724,8 +6803,10 @@ if (lbSvc == null) {
 
 	   for (int i = 0; i < display_name_vec.size(); i++) {
 		    OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+		    if (info == null) return null;
 		    if (!isNull(info.getTag()) && info.getTag().compareToIgnoreCase(Constants.PRODUCTION) == 0) {
 			    Vector w = getNonProductionOntologies(display_name_vec, info.getCodingScheme());
+			    if (w == null) return null;
 			    if (w.size() > 0) {
 			        info.setHasMultipleVersions(true);
 			    }
@@ -6758,6 +6839,7 @@ if (lbSvc == null) {
 			cns = cns.restrictToStatus(ActiveOption.ALL, null);
 			cns = cns.restrictToCodes(crefs);
 			ResolvedConceptReferenceList matches = cns.resolveToList(null, null, null, 1);
+			if (matches == null) return null;
 			if (matches.getResolvedConceptReferenceCount() > 0) {
 				ResolvedConceptReference ref = (ResolvedConceptReference) matches.enumerateResolvedConceptReference()
 						.nextElement();
@@ -6776,13 +6858,16 @@ if (lbSvc == null) {
 		if (node == null) return null;
         Vector w = new Vector();
 		Property[] props = node.getAllProperties();
+		if (props == null) return null;
 		for (int i = 0; i < props.length; i++) {
 			Property prop = props[i];
 			 PropertyQualifier[] qualifiers = prop.getPropertyQualifier();
+			 if (qualifiers == null) return null;
 			 for (int k=0; k<qualifiers.length; k++) {
 				  PropertyQualifier qualifier = qualifiers[k];
 			 }
 			 Source[] sources = prop.getSource();
+			 if (sources == null) return null;
 			 for (int k=0; k<sources.length; k++) {
 				  Source source = sources[k];
 			 }
@@ -6821,6 +6906,7 @@ if (lbSvc == null) {
 		TreeItem ti = new TreeItem("<Root>", "Root node");
 		ti._expandable = false;
 		TreeItem root = (TreeItem) terminologyValueSetTree.get("<Root>");
+        if (root == null) return null;
         for (String association : root._assocToChildMap.keySet()) {
 			List<TreeItem> child_nodes = root._assocToChildMap.get(association);
 			for (TreeItem childItem : child_nodes) {
@@ -6910,6 +6996,7 @@ if (lbSvc == null) {
 		java.lang.String[] tags = cstl.getTag();
 
 		if (tags == null) return Boolean.FALSE;
+		if (tags == null) return null;
 		if (tags.length > 0) {
 			for (int j = 0; j < tags.length; j++) {
 				String version_tag = (String) tags[j];
@@ -6960,6 +7047,7 @@ if (lbSvc == null) {
 		String format = "txt";
 		for (int i=0; i<NCIT_MAPPING_DATA.size(); i++) {
 			String line = (String) NCIT_MAPPING_DATA.elementAt(i);
+			if (line == null) return null;
 			if (line.indexOf(mapping_uri) != -1) {
 				if (line.endsWith(".txt")) return "txt";
 				else if (line.endsWith(".xls")) return "xls";
@@ -6973,6 +7061,7 @@ if (lbSvc == null) {
 		String format = "txt";
 		for (int i=0; i<NCIT_MAPPING_DATA.size(); i++) {
 			String line = (String) NCIT_MAPPING_DATA.elementAt(i);
+			if (line == null) return null;
 			if (line.indexOf(mapping_uri) != -1) {
 				int n = line.lastIndexOf("/");
 				return line.substring(n+1, line.length());
@@ -6990,6 +7079,7 @@ if (lbSvc == null) {
 		TreeItem ti = new TreeItem("<Root>", "Root node");
 		ti._expandable = false;
 		TreeItem root = (TreeItem) terminologyValueSetTree.get("<Root>");
+        if (root == null) return null;
         for (String association : root._assocToChildMap.keySet()) {
 			List<TreeItem> child_nodes = root._assocToChildMap.get(association);
 			for (TreeItem childItem : child_nodes) {
@@ -7011,6 +7101,7 @@ if (lbSvc == null) {
 		MetadataUtils metadataUtils = new MetadataUtils(lbSvc);
         Vector v = new Vector();
         List ontology_list = getOntologyList();
+        if (ontology_list == null) return null;
         for (int i = 0; i < ontology_list.size(); i++) {
             SelectItem item = (SelectItem) ontology_list.get(i);
             String value = (String) item.getValue();
@@ -7029,6 +7120,7 @@ if (lbSvc == null) {
             String productionVersion = DataUtils.getProductionVersion(scheme);
             if (productionVersion != null && productionVersion.compareTo(version) == 0) {
                 Vector w = metadataUtils.getMetadataValues(scheme, version, urn, propertyName, true);
+				if (w == null) return null;
 				if (w == null || w.size() == 0) {
 					//v.add(name + "|" + propertyName + " not available");
 					v.add(scheme + " (version: " + version + ")" + "|WARNING: please check the completeness of metadata " + propertyName);
@@ -7076,6 +7168,7 @@ if (lbSvc == null) {
 		try {
 			List list = vsd_service.listValueSetDefinitionURIs();
 			if (list == null || list.size() == 0) return null;
+			if (list == null) return null;
 			for (int i=0; i<list.size(); i++) {
 				String uri = (String) list.get(i);
 				ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);

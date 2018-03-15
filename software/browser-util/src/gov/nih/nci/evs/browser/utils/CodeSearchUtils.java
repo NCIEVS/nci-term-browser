@@ -592,6 +592,7 @@ if (hasSourceCodeQualifier(scheme)) {
 		Vector v = new Vector();
 		if (cs != null) {
 			SupportedPropertyQualifier[] qualifiers = cs.getMappings().getSupportedPropertyQualifier();
+			if (qualifiers == null) return null;
 			for (int i=0; i<qualifiers.length; i++)
 			{
 				v.add(qualifiers[i].getLocalId());
@@ -606,6 +607,7 @@ if (hasSourceCodeQualifier(scheme)) {
 			CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
 			CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
 			Vector prop_quals = getSupportedPropertyQualifier(cs);
+			if (prop_quals == null) return false;
 			if (prop_quals.contains("source-code")) {
 				return true;
 			}
@@ -647,6 +649,7 @@ if (hasSourceCodeQualifier(scheme)) {
             cns = cns.restrictToCodes(crefs);
 
             ResolvedConceptReferenceList list = cns.resolveToList(sortOptions, filterOptions, propertyNames, propertyTypes, resolveObjects, maxToReturn);
+            if (list == null) return null;
             for (int i=0; i<list.getResolvedConceptReferenceCount(); i++) {
 				ResolvedConceptReference rcr = (ResolvedConceptReference) list.getResolvedConceptReference(i);
 				String code = rcr.getCode();

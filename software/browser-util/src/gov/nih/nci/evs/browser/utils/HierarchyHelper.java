@@ -122,9 +122,11 @@ public class HierarchyHelper {
 	private HashMap getInverseHashMap(HashMap hmap) {
 		HashMap inverse_hmap = new HashMap();
 		Iterator it = hmap.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			Vector v = (Vector) hmap.get(key);
+			if (v == null) return null;
 			for (int k=0; k<v.size(); k++) {
 				String value = (String) v.elementAt(k);
 				Vector w = new Vector();
@@ -227,6 +229,7 @@ public class HierarchyHelper {
 		Vector child_codes = new Vector();
 
 		Iterator it = _parent2childcodesMap.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String parent_code = (String) it.next();
 			parent_codes.add(parent_code);
@@ -236,6 +239,7 @@ public class HierarchyHelper {
 		while (it.hasNext()) {
 			String parent_code = (String) it.next();
 			Vector w = (Vector) _parent2childcodesMap.get(parent_code);
+			if (w == null) return null;
 			for (int i=0; i<w.size(); i++) {
 				String s = (String) w.elementAt(i);
 				child_codes.add(s);
@@ -247,6 +251,7 @@ public class HierarchyHelper {
 		Vector roots = new Vector();
 		for (int i=0; i<all_codes.size(); i++) {
 			String s = (String) all_codes.elementAt(i);
+			if (s == null) return null;
 			if (parent_codes.contains(s) && !child_codes.contains(s)) {
 				roots.add(s);
 			}
@@ -259,6 +264,7 @@ public class HierarchyHelper {
 		Vector child_codes = new Vector();
 
 		Iterator it = _parent2childcodesMap.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String parent_code = (String) it.next();
 			parent_codes.add(parent_code);
@@ -268,6 +274,7 @@ public class HierarchyHelper {
 		while (it.hasNext()) {
 			String parent_code = (String) it.next();
 			Vector w = (Vector) _parent2childcodesMap.get(parent_code);
+			if (w == null) return null;
 			for (int i=0; i<w.size(); i++) {
 				String s = (String) w.elementAt(i);
 				child_codes.add(s);
@@ -279,6 +286,7 @@ public class HierarchyHelper {
 		Vector leaf_nodes = new Vector();
 		for (int i=0; i<all_codes.size(); i++) {
 			String s = (String) all_codes.elementAt(i);
+			if (s == null) return null;
 			if (!parent_codes.contains(s) && child_codes.contains(s)) {
 				leaf_nodes.add(s);
 			}
@@ -337,6 +345,7 @@ public class HierarchyHelper {
         for (int i=0; i<w.size(); i++) {
 			String t = (String) w.elementAt(i);
 			Vector u = StringUtils.parseData(t);
+			if (u == null) return null;
 			if (u.size() == 2) {
 				String code = (String) u.elementAt(0);
 				String label = (String) u.elementAt(1);
@@ -396,6 +405,7 @@ public class HierarchyHelper {
 	public Vector getTransitiveClosure(Vector v, String c) {
 		Vector child_codes = getSubclassCodes(c);
 		if (child_codes == null || child_codes.size() == 0) return v;
+		if (child_codes == null) return null;
 		for (int i=0; i<child_codes.size(); i++) {
 			String child_code = (String) child_codes.elementAt(i);
 			System.out.println("Parent " + c + " child: " + child_code);

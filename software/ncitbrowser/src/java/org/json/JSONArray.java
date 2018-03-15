@@ -177,6 +177,7 @@ public class JSONArray implements Serializable {
      */
     public boolean getBoolean(int index) throws JSONException {
         Object o = get(index);
+        if (o == null) return false;
         if (o.equals(Boolean.FALSE)
             || (o instanceof String && ((String) o).equalsIgnoreCase("false"))) {
             return false;

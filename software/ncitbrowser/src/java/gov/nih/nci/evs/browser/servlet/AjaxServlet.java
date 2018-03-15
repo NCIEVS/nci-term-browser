@@ -272,6 +272,7 @@ if (display_name_vec == null) {
 		String new_ontologiesToSearchOnStr = "";
 		for (int i = 0; i < display_name_vec.size(); i++) {
 			 OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+			 if (info == null) return;
 			 if (ontologiesToSearchOnStr.indexOf(info.getLabel()) != -1) { // visible and checked by the user
 				 info.setSelected(true);
 			 } else if (info.getVisible() && ontologiesToSearchOnStr.indexOf(info.getLabel()) == -1) {
@@ -304,6 +305,7 @@ if (display_name_vec == null) {
 		if (display_name_vec != null) {
 			for (int i = 0; i < display_name_vec.size(); i++) {
 				 OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+			     if (info == null) return null;
 			     if (info.getExpanded()) {
 					 buf.append(info.getLabel() + "|");
 				 }
@@ -2481,6 +2483,7 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 		  LexEVSResolvedValueSetService lrvs = new LexEVSResolvedValueSetServiceImpl(lbs);
 		  try {
 			  List<CodingScheme> schemes = lrvs.listAllResolvedValueSets();
+			  if (schemes == null) return null;
 			  for (int i = 0; i < schemes.size(); i++) {
 					CodingScheme cs = schemes.get(i);
 					String uri = cs.getCodingSchemeURI();
@@ -2582,6 +2585,7 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 		//request.getSession().removeAttribute("checked_vocabularies");
 /*
 String checked_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("checked_vocabularies"));
+if (checked_vocabularies == null) return;
 if (checked_vocabularies == null || checked_vocabularies.length() == 0) {
 	checked_vocabularies = get_checked_vocabularies(request);
 }
@@ -2665,17 +2669,21 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
     private String get_checked_nodes(HttpServletRequest request) {
 		StringBuffer buf = new StringBuffer();
 		Enumeration<String> parameterNames = request.getParameterNames();
+		if (parameterNames == null) return null;
 		while (parameterNames.hasMoreElements()) {
 			String paramName = parameterNames.nextElement();
+			if (paramName == null) return null;
 			//if (paramName.indexOf("http://") != -1) {
 				//String paramValue = (String) request.getParameter(paramName);
 				String paramValue = HTTPUtils.cleanXSS((String) request.getParameter(paramName));
+				if (paramValue == null) return null;
 				if (paramValue.compareTo("on") == 0) {
 					buf.append(paramName).append(",");
 				}
 			//}
 		}
 		String checked_vocabularies = buf.toString();
+		if (checked_vocabularies == null) return null;
 		if (checked_vocabularies.length() > 0) {
 			checked_vocabularies = checked_vocabularies.substring(0, checked_vocabularies.length()-1);
 		}
@@ -2686,17 +2694,21 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
     private String get_checked_vocabularies(HttpServletRequest request) {
 		StringBuffer buf = new StringBuffer();
 		Enumeration<String> parameterNames = request.getParameterNames();
+		if (parameterNames == null) return null;
 		while (parameterNames.hasMoreElements()) {
 			String paramName = parameterNames.nextElement();
+			if (paramName == null) return null;
 			if (paramName.indexOf("http://") != -1) {
 				//String paramValue = (String) request.getParameter(paramName);
 				String paramValue = HTTPUtils.cleanXSS((String) request.getParameter(paramName));
+				if (paramValue == null) return null;
 				if (paramValue.compareTo("on") == 0) {
 					buf.append(paramName).append(",");
 				}
 			}
 		}
 		String checked_vocabularies = buf.toString();
+		if (checked_vocabularies == null) return null;
 		if (checked_vocabularies.length() > 0) {
 			checked_vocabularies = checked_vocabularies.substring(0, checked_vocabularies.length()-1);
 		}
@@ -3826,6 +3838,7 @@ out.flush();
 			Vector u = DataUtils.parseData(t, delim);
 			String uri = (String) u.elementAt(0);
 			String version = (String) u.elementAt(1);
+			if (version == null) return;
 			if (version == null || version.compareTo("null") == 0) {
 				version = DataUtils.getVocabularyVersionByTag(uri, "PRODUCTION");
 			}
@@ -4158,6 +4171,7 @@ out.flush();
 			sb.append("\r\n");
 
             List list = iteratorBean.getData(0, size-1);
+            if (list == null) return;
             for (int k=0; k<list.size(); k++) {
 				MappingData mappingData = (MappingData) list.get(k);
 				sb.append("\"" + mappingData.getSourceCode() + "\",");
@@ -4241,6 +4255,7 @@ out.flush();
 
 			MappingIteratorBean bean = new MappingIteratorBean(iterator);
             List list = bean.getData(0, numRemaining-1);
+            if (list == null) return;
             for (int k=0; k<list.size(); k++) {
 				MappingData mappingData = (MappingData) list.get(k);
 				sb.append("\"" + mappingData.getSourceCode() + "\",");
@@ -4360,6 +4375,7 @@ out.flush();
 		  if (graph_reduced) {
 			  group_node_data = graphReductionUtils.get_removed_node_str(v, direction);
 			  Vector group_node_ids = graphReductionUtils.get_group_node_ids(w);
+			  if (group_node_ids == null) return;
 			  for (int k=0; k<group_node_ids.size(); k++) {
 				  String node_id = (String) group_node_ids.elementAt(k);
 				  if (!group_node_id2dataMap.containsKey(node_id)) {
@@ -4379,6 +4395,7 @@ out.flush();
 		  if (graph_reduced) {
 			  group_node_data_2 = graphReductionUtils.get_removed_node_str(v, direction);
 			  Vector group_node_ids = graphReductionUtils.get_group_node_ids(w);
+			  if (group_node_ids == null) return;
 			  for (int k=0; k<group_node_ids.size(); k++) {
 				  String node_id = (String) group_node_ids.elementAt(k);
 				  if (!group_node_id2dataMap.containsKey(node_id)) {
@@ -4510,6 +4527,7 @@ out.flush();
       out.println("      network.on('select', function(params) {");
 
       Iterator it = group_node_id2dataMap.keySet().iterator();
+      if (it == null) return;
       while (it.hasNext()) {
 		  String node_id = (String) it.next();
 		  String node_data = (String) group_node_id2dataMap.get(node_id);
@@ -5171,6 +5189,7 @@ out.flush();
                 /*
 				StringBuffer sb = new StringBuffer();
 				Vector v = FTPDownload.tearPage(uri);
+				if (v == null) return;
 				for (int k=0; k<v.size(); k++) {
 					String line = (String) v.elementAt(k);
 					sb.append(line).append("\n");

@@ -106,6 +106,7 @@ public class LexEVSUtils {
         public Vector<String> getCodingSchemes() {
             Vector<String> list = new Vector<String>();
             Iterator<CScheme> iterator = iterator();
+            if (iterator == null) return null;
             while (iterator.hasNext()) {
                 CScheme item = iterator.next();
                 list.add(item.getCodingScheme());
@@ -116,6 +117,7 @@ public class LexEVSUtils {
         public Vector<String> getVersions() {
             Vector<String> list = new Vector<String>();
             Iterator<CScheme> iterator = iterator();
+            if (iterator == null) return null;
             while (iterator.hasNext()) {
                 CScheme item = iterator.next();
                 list.add(item.getVersion());
@@ -126,6 +128,7 @@ public class LexEVSUtils {
         public String toString(String delimiter) {
             StringBuffer buffer = new StringBuffer();
             Iterator<CScheme> iterator = iterator();
+            if (iterator == null) return null;
             while (iterator.hasNext()) {
                 CScheme item = iterator.next();
                 if (buffer.length() > 0)

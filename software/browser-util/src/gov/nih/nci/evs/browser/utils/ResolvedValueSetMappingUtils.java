@@ -135,6 +135,7 @@ public class ResolvedValueSetMappingUtils {
 			int j = i+1;
 			pw.println("(" + j + ") " + name + " (" + code + ")");
             Vector cuis = metathesaurusUtils.getMatchedMetathesaurusCUIs(scheme, version, ltag, code);
+            if (cuis == null) return;
             //for (int k=0; k<cuis.size(); k++) {
 		    if (cuis != null && cuis.size() > 0) {
 				for (int k=0; k<cuis.size(); k++) {
@@ -157,6 +158,7 @@ public class ResolvedValueSetMappingUtils {
     public Vector getMatchedMetathesaurusCUIs(Entity c) {
         if (c != null) {
             Vector v = conceptDetails.getConceptPropertyValues(c, "NCI_META_CUI");
+			if (v == null) return null;
 			if (v == null || v.size() == 0) {
 				return conceptDetails.getConceptPropertyValues(c, "UMLS_CUI");
 			}

@@ -133,6 +133,7 @@ public class RemoteServerUtil {
     public static LexEVSApplicationService registerAllSecurityTokens(
         LexEVSApplicationService lexevsService) {
         List list = NCItBrowserProperties.getSecurityTokenList();
+        if (list == null) return null;
         if (list == null || list.size() == 0)
             return lexevsService;
         for (int i = 0; i < list.size(); i++) {
@@ -313,6 +314,7 @@ public class RemoteServerUtil {
 		try {
             properties = NCItBrowserProperties.getInstance();
             String serviceUrl = properties.getProperty(NCItBrowserProperties.EVS_SERVICE_URL);
+            if (serviceUrl == null) return null;
             if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
 				return LexEVSValueSetDefinitionServicesImpl.defaultInstance();
 			}

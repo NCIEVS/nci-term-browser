@@ -411,6 +411,7 @@ public class NCItBrowserProperties {
         try {
             getInstance();  // Initializes this singleton class
             String value = getProperty(key);
+            if (value == null) return null;
             if (value == null || value.trim().length() <= 0)
                 throw new Exception("Property " + key + " is not set.");
             return value;
@@ -425,6 +426,7 @@ public class NCItBrowserProperties {
         try {
             getInstance();  // Initializes this singleton class
             String value = getProperty(key);
+            if (value == null) return -1;
             if (value == null || value.trim().length() <= 0)
                 throw new Exception("Property " + key + " is not set.");
             return Integer.parseInt(value);
@@ -439,6 +441,7 @@ public class NCItBrowserProperties {
         try {
             getInstance();  // Initializes this singleton class
             String value = getProperty(key);
+            if (value == null) return false;
             if (value == null || value.trim().length() <= 0)
                 throw new Exception("Property " + key + " is not set.");
             return Boolean.parseBoolean(value);

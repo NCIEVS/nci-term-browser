@@ -83,6 +83,17 @@
 
     function onCodeButtonPressed(formname) {
 	  var algorithmObj = document.forms[formname].valueset_search_algorithm;
+	  // Send redirect:
+	  if (algorithmObj == null) {
+	  	try {
+	  		String error_msg = "WARNING: The server encountered an unexpected error (file: download_value_set.jsp, code: 1, var: algorithmObj).";
+	  		request.getSession().setAttribute("error_msg", error_msg);
+	  		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+	  		response.sendRedirect(redirectURL);				 
+	  	} catch (Exception ex) {
+	  		ex.printStackTrace();
+	  	}
+	  }
 	  for (var j=0; j<algorithmObj.length; j++) {
 		  algorithm = algorithmObj[j].value;
 		  if (algorithm == "exactMatch") {
@@ -93,6 +104,17 @@
 
     function getSearchTarget(formname) {
           var searchTargetObj = document.forms[formname].selectValueSetSearchOption;
+          // Send redirect:
+          if (searchTargetObj == null) {
+          	try {
+          		String error_msg = "WARNING: The server encountered an unexpected error (file: download_value_set.jsp, code: 2, var: searchTargetObj).";
+          		request.getSession().setAttribute("error_msg", error_msg);
+          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+          		response.sendRedirect(redirectURL);				 
+          	} catch (Exception ex) {
+          		ex.printStackTrace();
+          	}
+          }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 	      if (searchTargetObj[j].checked == true) {
 	         return searchTargetObj[j].value;
@@ -105,6 +127,17 @@
       if (curr_target != "Code") return;
 
           var searchTargetObj = document.forms[formname].selectValueSetSearchOption;
+          // Send redirect:
+          if (searchTargetObj == null) {
+          	try {
+          		String error_msg = "WARNING: The server encountered an unexpected error (file: download_value_set.jsp, code: 3, var: searchTargetObj).";
+          		request.getSession().setAttribute("error_msg", error_msg);
+          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+          		response.sendRedirect(redirectURL);				 
+          	} catch (Exception ex) {
+          		ex.printStackTrace();
+          	}
+          }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 		  target = searchTargetObj[j].value;
 		  if (target == "Code") {
@@ -629,6 +662,17 @@ if (rvsi != null && show_pagination) {
   
   <%
     List resultsPerPageValues = UserSessionBean.getResultsPerPageValues();
+    // Send redirect:
+    if (resultsPerPageValues == null) {
+    	try {
+    		String error_msg = "WARNING: The server encountered an unexpected error (file: download_value_set.jsp, code: 4, var: resultsPerPageValues).";
+    		request.getSession().setAttribute("error_msg", error_msg);
+    		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+    		response.sendRedirect(redirectURL);				 
+    	} catch (Exception ex) {
+    		ex.printStackTrace();
+    	}
+    }
     for (int i=0; i<resultsPerPageValues.size(); i++) {
         String resultsPerPageValue = (String) resultsPerPageValues.get(i);
         

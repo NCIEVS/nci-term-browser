@@ -232,6 +232,7 @@ public class ExpressionFormatter {
 
 				Vector w = formatLine(line);
 				String type = (String) w.elementAt(0);
+				if (type == null) return null;
 				if (type.compareTo(TYPE_ROLE_GROUP) == 0) {
 					String s = (String) w.elementAt(1);
 					//if (start) {
@@ -244,6 +245,7 @@ public class ExpressionFormatter {
 
 				} else if (type.compareTo(TYPE_CATEGORY) == 0) {
 					String s = (String) w.elementAt(1);
+					if (s == null) return null;
 					if (s.compareTo("or") != 0) {
 						role_group_start = false;
 					}

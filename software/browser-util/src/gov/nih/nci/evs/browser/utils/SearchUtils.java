@@ -159,6 +159,7 @@ public class SearchUtils {
             csvt.setVersion(version);
             // Iterate through all hierarchies and levels ...
             String[] hierarchyIDs = lbscm.getHierarchyIDs(scheme, csvt);
+            if (hierarchyIDs == null) return null;
             for (int k = 0; k < hierarchyIDs.length; k++) {
                 String hierarchyID = hierarchyIDs[k];
                 AssociationList associations =
@@ -199,6 +200,7 @@ public class SearchUtils {
 
             // Iterate through all hierarchies and levels ...
             String[] hierarchyIDs = lbscm.getHierarchyIDs(scheme, csvt);
+            if (hierarchyIDs == null) return null;
             for (int k = 0; k < hierarchyIDs.length; k++) {
                 String hierarchyID = hierarchyIDs[k];
                 AssociationList associations =
@@ -283,9 +285,11 @@ public class SearchUtils {
             //LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
             CodingSchemeRenderingList lcsrl = lbSvc.getSupportedCodingSchemes();
             CodingSchemeRendering[] csra = lcsrl.getCodingSchemeRendering();
+            if (csra == null) return null;
             for (int i = 0; i < csra.length; i++) {
                 CodingSchemeRendering csr = csra[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
+                if (css == null) return null;
                 if (css.getFormalName().compareTo(codingSchemeName) == 0
                     || css.getLocalName().compareTo(codingSchemeName) == 0) {
                     version = css.getRepresentsVersion();
@@ -331,6 +335,7 @@ public class SearchUtils {
 			}
 
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 CodingSchemeRendering csr = csrs[i];
                 Boolean isActive =
@@ -340,6 +345,7 @@ public class SearchUtils {
                 {
                     CodingSchemeSummary css = csr.getCodingSchemeSummary();
                     String formalname = css.getFormalName();
+                    if (formalname == null) return null;
                     if (formalname.compareTo(codingSchemeName) == 0) {
                         String representsVersion = css.getRepresentsVersion();
                         v.add(representsVersion);
@@ -1346,6 +1352,7 @@ public class SearchUtils {
         s = replaceSpecialCharsWithBlankChar(s);
         List<String> adjusted = new ArrayList<String>();
         StringTokenizer st = new StringTokenizer(s);
+        if (st == null) return null;
         while (st.hasMoreTokens()) {
             String temp = st.nextToken().toLowerCase();
             if (removeDuplicates && adjusted.contains(temp))
@@ -1416,6 +1423,7 @@ public class SearchUtils {
 
     private static String replaceSpecialChars(String s) {
         String escapedChars = "/";
+        if (escapedChars == null) return null;
         for (int i = 0; i < escapedChars.length(); i++) {
             char c = escapedChars.charAt(i);
             s = s.replace(c, '.');
@@ -1480,6 +1488,7 @@ public class SearchUtils {
         while (toSort.hasNext()) {
             // Working in chunks of 100.
             ResolvedConceptReferenceList refs = toSort.next(100);
+            if (refs == null) return null;
             for (int i = 0; i < refs.getResolvedConceptReferenceCount(); i++) {
                 ResolvedConceptReference ref =
                     refs.getResolvedConceptReference(i);
@@ -1533,6 +1542,7 @@ public class SearchUtils {
         while (toSort.hasNext()) {
             // Working in chunks of 100.
             ResolvedConceptReferenceList refs = toSort.next(100);
+            if (refs == null) return null;
             for (int i = 0; i < refs.getResolvedConceptReferenceCount(); i++) {
                 ResolvedConceptReference ref =
                     refs.getResolvedConceptReference(i);
@@ -1872,6 +1882,7 @@ public class SearchUtils {
     private boolean containsSpecialChars(String s) {
         // String escapedChars = "/.|!(){}[]^\"~*?;-_";
         String escapedChars = "/.|!(){}[]^\"~?;-_";
+        if (escapedChars == null) return false;
         for (int i = 0; i < escapedChars.length(); i++) {
             char c = escapedChars.charAt(i);
             if (s.indexOf(c) != -1)
@@ -1882,6 +1893,7 @@ public class SearchUtils {
 
     private static String replaceSpecialCharsWithBlankChar(String s) {
         String escapedChars = "/.|!(){}[]^\"~*?;-_";
+        if (escapedChars == null) return null;
         for (int i = 0; i < escapedChars.length(); i++) {
             char c = escapedChars.charAt(i);
             s = s.replace(c, ' ');
@@ -1971,6 +1983,7 @@ public class SearchUtils {
             }
 
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 CodingSchemeRendering csr = csrs[i];
                 Boolean isActive =
@@ -3012,6 +3025,7 @@ public class SearchUtils {
         LocalNameList propertyNames = new LocalNameList();
         //LexBIGService lbSvc = new RemoteServerUtil().createLexBIGService();
         CodingScheme cs = lbSvc.resolveCodingScheme(codingSchemeName, null);
+        if (cs == null) return null;
         for (SupportedProperty prop : cs.getMappings().getSupportedProperty()) {
             propertyNames.addEntry(prop.getLocalId());
         }
@@ -3284,6 +3298,7 @@ public class SearchUtils {
         int knt = -1;
         for (int i = 0; i < types.length; i++) {
             String type = (String) types[i];
+            if (type == null) return null;
             if (type.compareToIgnoreCase("PRESENTATION") == 0) {
                 knt++;
                 propertyTypes[knt] = PropertyType.PRESENTATION;
@@ -4026,6 +4041,7 @@ System.out.println("===================================================");
 		if (cns == null) return false;
 		try {
 			ResolvedConceptReferenceList list =	cns.resolveToList(null, null, null, null, false, -1);
+			if (list == null) return false;
 			for (int i=0; i<list.getResolvedConceptReferenceCount(); i++) {
 				ResolvedConceptReference rcr = list.getResolvedConceptReference(i);
 				String name = "";
@@ -4477,6 +4493,7 @@ System.out.println("===================================================");
                             Association asso = (Association) assos[j];
                             AssociatedConceptList acl = asso.getAssociatedConcepts();
                             AssociatedConcept[] ac_array = acl.getAssociatedConcept();
+                            if (ac_array == null) return null;
                             for (int k=0; k<ac_array.length; k++)
                             {
                                 AssociatedConcept ac = (AssociatedConcept) ac_array[k];
@@ -4529,6 +4546,7 @@ System.out.println("===================================================");
             if (rel == null) {
 				//    public Vector<String> getSupportedAssociationNames(String codingSchemeName, String version) {
                 Vector w = new CodingSchemeDataUtils(lbSvc).getSupportedAssociationNames(scheme, version);
+                if (w == null) return null;
                 if (w == null || w.size() == 0) {
                     _logger
                         .warn("OntologyBean.getAssociationNames() returns null, or nothing???");

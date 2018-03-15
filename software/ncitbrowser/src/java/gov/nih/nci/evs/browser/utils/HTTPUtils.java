@@ -111,6 +111,7 @@ public class HTTPUtils {
 	public static int getCount(String s, char c) {
 		int num = 0;
 		if (s == null) return num;
+		if (s == null) return -1;
 		for (int i=0; i<s.length(); i++) {
 			char ch = s.charAt(i);
 			if (ch == c) num++;
@@ -488,6 +489,7 @@ public class HTTPUtils {
                     if (!DataUtils.isNullOrBlank(value)) {
 						Vector selected_vocabularies_vec = gov.nih.nci.evs.browser.utils.StringUtils.parseData(name, ",");
 						String nm = name.toLowerCase();
+						if (nm == null) return false;
 						if (nm.compareTo("selected_vocabularies") != 0) {
 							for (int k=0; k<selected_vocabularies_vec.size(); k++) {
 								String vocabularyNm = (String) selected_vocabularies_vec.elementAt(k);
@@ -684,6 +686,7 @@ temporarily commented out
 
     public static Boolean containsPercentSign(String name, String value) {
 		if (name == null || value == null) return null;
+		if (name == null) return null;
 		if (!name.endsWith(".x")
 		    && !name.endsWith(".y")
 		    && name.compareTo("javax.faces.ViewState") != 0) {
@@ -739,6 +742,7 @@ temporarily commented out
 
 	public static Boolean isDynamicId(String id) {
 		if (id == null) return null;
+		if (id == null) return null;
 		if (id.startsWith("j_id_jsp_")) {
 			return Boolean.TRUE;
 		}
@@ -748,6 +752,7 @@ temporarily commented out
 	public static Boolean isSearchFormParameter(String name) {
 		if (name == null) return null;
 		String nm = name.toLowerCase();
+		if (nm == null) return null;
 		if (nm.endsWith("search.x") || nm.endsWith("search.y")) {
 			return Boolean.TRUE;
 		}
@@ -758,6 +763,7 @@ temporarily commented out
 	public static Boolean isCheckedVocabulariesParameter(String name) {
 		if (name == null) return null;
 		String nm = name.toLowerCase();
+		if (nm == null) return null;
 		if (nm.compareTo("selected_vocabularies") == 0) {
 			return Boolean.TRUE;
 		}

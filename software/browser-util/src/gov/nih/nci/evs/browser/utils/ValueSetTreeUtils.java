@@ -287,8 +287,10 @@ public class ValueSetTreeUtils {
 				root_nodes = new Vector();
 				int index = -1;
 				List<LexEVSTreeItem> children = lexevs_ti._assocToChildMap.get(association);
+				if (children == null) return null;
 				for (int i=0; i<children.size(); i++) {
 					LexEVSTreeItem childItem = (LexEVSTreeItem) children.get(i);
+					if (childItem == null) return null;
 					if (childItem.get_text().compareTo(duplicate_root_text) == 0) {
 						root_nodes.add(childItem);
 						if (root_nodes.size() == 1) {
@@ -443,12 +445,14 @@ public class ValueSetTreeUtils {
             return v;
         for (int i = 0; i < properties.length; i++) {
             Property p = (Property) properties[i];
+            if (p == null) return null;
             if (property_name.compareTo(p.getPropertyName()) == 0) {
                 String t = p.getValue().getContent();
 
                 // #27034
                 if (addQualifiers) {
                     String qualifiers = getPropertyQualfierValues(p);
+                    if (qualifiers == null) return null;
                     if (qualifiers.compareTo("") != 0) {
                         t = t + " (" + getPropertyQualfierValues(p) + ")";
                     }

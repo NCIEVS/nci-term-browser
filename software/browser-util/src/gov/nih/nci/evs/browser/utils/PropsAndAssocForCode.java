@@ -163,6 +163,7 @@ public class PropsAndAssocForCode {
             Entity node = ref.getEntity();
 
             Presentation[] prsentations = node.getPresentation();
+            if (prsentations == null) return false;
             for (int i = 0; i < prsentations.length; i++) {
                  Presentation presentation = prsentations[i];
 
@@ -175,6 +176,7 @@ public class PropsAndAssocForCode {
 
 
                  PropertyQualifier[] qualifiers = presentation.getPropertyQualifier();
+                 if (qualifiers == null) return false;
                  for (int k=0; k<qualifiers.length; k++) {
                       PropertyQualifier qualifier = qualifiers[k];
                       buf = new StringBuffer();
@@ -184,6 +186,7 @@ public class PropsAndAssocForCode {
 				 }
 
                  Source[] sources = presentation.getSource();
+                 if (sources == null) return false;
                  for (int k=0; k<sources.length; k++) {
                       Source source = sources[k];
 						 displayMessage(pw, new StringBuffer().append("\t\tSource: ").append(source.getContent()).toString());
@@ -193,12 +196,15 @@ public class PropsAndAssocForCode {
             System.out.println("\n");
 
             Definition[] definitions = node.getDefinition();
+            if (definitions == null) return false;
             for (int i = 0; i < definitions.length; i++) {
                 Definition definition = definitions[i];
+                if (definition == null) return false;
                 displayMessage(pw, new StringBuffer().append("\tDefinition name: ").append(definition.getPropertyName())
                         .append(" text: ").append(definition.getValue().getContent()).toString());
 
                  Source[] sources = definition.getSource();
+                 if (sources == null) return false;
                  for (int j=0; j<sources.length; j++) {
 					 Source src = sources[j];
 					 displayMessage(pw, new StringBuffer().append("\t\tSource: ").append(src.getContent()).toString());
@@ -218,8 +224,10 @@ public class PropsAndAssocForCode {
             System.out.println("\n");
 
             Comment[] comments = node.getComment();
+            if (comments == null) return false;
             for (int i = 0; i < comments.length; i++) {
                 Comment comment = comments[i];
+                if (comment == null) return false;
                 displayMessage(pw, new StringBuffer().append("\tComment name: ").append(comment.getPropertyName())
                         .append(" text: ").append(comment.getValue().getContent()).toString());
 
@@ -238,8 +246,10 @@ public class PropsAndAssocForCode {
             System.out.println("\n");
 
             Property[] props = node.getProperty();
+            if (props == null) return false;
             for (int i = 0; i < props.length; i++) {
                 Property prop = props[i];
+                if (prop == null) return false;
                 displayMessage(pw, new StringBuffer().append("\tProperty name: ").append(prop.getPropertyName())
                         .append(" text: ").append(prop.getValue().getContent()).toString());
 
@@ -263,6 +273,7 @@ public class PropsAndAssocForCode {
             props = node.getAllProperties();
             for (int i = 0; i < props.length; i++) {
                 Property prop = props[i];
+                if (prop == null) return false;
                 displayMessage(pw, new StringBuffer().append("\tProperty name: ").append(prop.getPropertyName())
                         .append(" text: ").append(prop.getValue().getContent()).toString());
 
@@ -326,6 +337,7 @@ public class PropsAndAssocForCode {
 								//displayMessage(pw, "\t" + assoc.getAssociationName());
 
 								AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+								if (acl == null) return;
 								for (int j = 0; j < acl.length; j++) {
 									AssociatedConcept ac = acl[j];
 
@@ -386,6 +398,7 @@ public class PropsAndAssocForCode {
 							//displayMessage(pw, "\t" + assoc.getAssociationName());
 
 							AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+							if (acl == null) return;
 							for (int j = 0; j < acl.length; j++) {
 								AssociatedConcept ac = acl[j];
 

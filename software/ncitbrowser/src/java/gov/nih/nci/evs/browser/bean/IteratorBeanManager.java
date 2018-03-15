@@ -159,6 +159,7 @@ public class IteratorBeanManager extends Object {
             return null;
         Vector key_vec = new Vector();
         Iterator iterator = _iteratorBeanHashMap.keySet().iterator();
+        if (iterator == null) return null;
         while (iterator.hasNext()) {
             String key = (String) iterator.next();
             IteratorBean bean = (IteratorBean) _iteratorBeanHashMap.get(key);

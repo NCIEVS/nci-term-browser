@@ -439,6 +439,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
     	} else {
             for (Iterator<Concept> i = getConcepts().iterator(); i.hasNext();) {
                 Concept item = (Concept)i.next();
+                if (item == null) return null;
                 if (item.getCheckbox().isSelected()) {
                     if (_cart.containsKey(item.code))
                         i.remove();
@@ -623,6 +624,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 			AbsoluteCodingSchemeVersionReferenceList csvList = new AbsoluteCodingSchemeVersionReferenceList();
 			HashSet uri_hset = new HashSet();
             Vector cart_coding_scheme_ref_vec = (Vector) request.getSession().getAttribute("cart_coding_scheme_ref_vec");
+            if (cart_coding_scheme_ref_vec == null) return null;
             for (int i=0; i<cart_coding_scheme_ref_vec.size(); i++) {
 				String cart_coding_scheme_ref = (String) cart_coding_scheme_ref_vec.elementAt(i);
 				Vector u = DataUtils.parseData(cart_coding_scheme_ref);
@@ -938,6 +940,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 				.iterator(); i.hasNext();) {
 			Entry<String, SchemeVersion> x = i.next();
 			SchemeVersion vs = x.getValue();
+			if (vs == null) return;
 			if (vs.mult) {
 				_selectVersionItems.add(new SelectItem(
 					vs.uri + "|" + vs.version,
@@ -962,6 +965,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 				.iterator(); i.hasNext();) {
 			Entry<String, SchemeVersion> x = i.next();
 			SchemeVersion vs = x.getValue();
+			if (vs == null) return;
 			if (vs.mult && inSelectedlist(vs.uri))
 				_selectedVersionItems.add(vs.uri + "|" + vs.version);
 		}
@@ -1010,6 +1014,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 			//ref = search.getConceptByCode(item.codingScheme, item.version, item.code);
 			ref = getConceptByCode(item.codingScheme, item.version, item.code);
 			ArrayList<String> list = getSchemeVersions(ref.getCodingSchemeURI());
+			if (list == null) return null;
 			for(int x=0;x<list.size();x++) {
 				SchemeVersion vs = new SchemeVersion();
 				vs.uri = ref.getCodingSchemeURI();
@@ -1044,6 +1049,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 				.iterator(); i.hasNext();) {
 			Entry<String, SchemeVersion> x = i.next();
 			SchemeVersion vs = x.getValue();
+			if (vs == null) return false;
 			if (vs.uri.equals(uri) && !vs.version.equals(version))
 				return true;
 		}
@@ -1202,9 +1208,11 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 				}
 			}
 			Iterator it = hset.iterator();
+			if (it == null) return null;
 			while (it.hasNext()) {
 				String cs_uri = (String) it.next();
 				Vector versions = DataUtils.getCodingSchemeVersionsByURN(cs_uri);
+				if (versions == null) return null;
 				for (int i=0; i<versions.size(); i++) {
 					String version = (String) versions.elementAt(i);
 					cart_coding_scheme_ref_vec.add(cs_uri + "|" + version);
@@ -1246,6 +1254,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 		Vector uri_vec = new Vector();
 		HashMap cs_uri2version_map = new HashMap();
 		Vector cart_coding_scheme_ref_vec = (Vector) request.getSession().getAttribute("cart_coding_scheme_ref_vec");
+		if (cart_coding_scheme_ref_vec == null) return null;
 		for (int i=0; i<cart_coding_scheme_ref_vec.size(); i++) {
 			String cart_coding_scheme_ref = (String) cart_coding_scheme_ref_vec.elementAt(i);
 			Vector u = DataUtils.parseData(cart_coding_scheme_ref);
@@ -1331,6 +1340,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 					ConceptReferenceList crefs = createConceptReferenceList(v, scheme);
 					cns = cns.restrictToCodes(crefs);
 					ResolvedConceptReferencesIterator iterator = cns.resolve(null, null, null, null, false);
+					if (iterator == null) return null;
 					while (iterator.hasNext()) {
 						ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
 
@@ -1604,6 +1614,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 
             SupportedHierarchy[] hierarchies = cs.getMappings().getSupportedHierarchy();
             String[] ids = hierarchies[0].getAssociationNames();
+            if (ids == null) return null;
             for (int i = 0; i < ids.length; i++) {
                 if (!association_vec.contains(ids[i])) {
                     association_vec.add(ids[i]);
@@ -1651,6 +1662,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 
     	// Get hierarchy
         SupportedHierarchy[] hierarchies = cs.getMappings().getSupportedHierarchy();
+        if (hierarchies == null) return null;
         if (hierarchies == null || hierarchies.length < 1) {
         	throw new Exception("getTreeDirection(): hierarchies is null!");
         }

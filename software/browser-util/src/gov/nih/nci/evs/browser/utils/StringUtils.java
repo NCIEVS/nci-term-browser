@@ -37,8 +37,10 @@ public class StringUtils {
 		if (line == null) return null;
         Vector data_vec = new Vector();
         StringTokenizer st = new StringTokenizer(line, tab);
+        if (st == null) return null;
         while (st.hasMoreTokens()) {
             String value = st.nextToken();
+            if (value == null) return null;
             if (value.compareTo("null") == 0)
                 value = "";
             data_vec.add(value);

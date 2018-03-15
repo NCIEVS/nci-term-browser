@@ -138,11 +138,13 @@ public class RelationshipUtils {
 		try {
 			CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
 			Relations[] relations = cs.getRelations();
+			if (relations == null) return null;
 			for (int i = 0; i < relations.length; i++) {
 				Relations relation = relations[i];
                 Boolean isMapping = relation.isIsMapping();
                 if (isMapping != null && isMapping.equals(Boolean.TRUE)) {
 					AssociationPredicate[] associationPredicates = relation.getAssociationPredicate();
+					if (associationPredicates == null) return null;
 					for (int j=0; j<associationPredicates.length; j++) {
 						AssociationPredicate associationPredicate = associationPredicates[j];
 						String name = associationPredicate.getAssociationName();
@@ -172,6 +174,7 @@ public class RelationshipUtils {
         try {
             CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
             Relations[] relations = cs.getRelations();
+            if (relations == null) return null;
             for (int i = 0; i < relations.length; i++) {
                 Relations relation = relations[i];
 
@@ -480,6 +483,7 @@ public class RelationshipUtils {
 
 															}
 															String qualifiers = buf.toString();
+															if (qualifiers == null) return null;
 															if (qualifiers.endsWith("$")) {
 																qualifiers = qualifiers.substring(0, qualifiers.length()-1);
 															}
@@ -677,6 +681,7 @@ public class RelationshipUtils {
 																buf.append((qualifier_name + "=" + qualifier_value) + "$");
 															}
 															String qualifiers = buf.toString();
+															if (qualifiers == null) return null;
 															if (qualifiers.endsWith("$")) {
 																qualifiers = qualifiers.substring(0, qualifiers.length()-1);
 															}
@@ -852,11 +857,14 @@ public class RelationshipUtils {
 				}
                 if (sourceof != null) {
 					Association[] associations = sourceof.getAssociation();
+					if (associations == null) return null;
 					for (int i = 0; i < associations.length; i++) {
 						Association assoc = associations[i];
+						if (assoc == null) return null;
 						if (assoc.getAssociationName().compareTo(associationName) == 0) {
 							associationExists = true;
 							AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+							if (acl == null) return null;
 							for (int j = 0; j < acl.length; j++) {
 								AssociatedConcept ac = acl[j];
 
@@ -892,6 +900,7 @@ public class RelationshipUtils {
 
 										}
 										String qualifiers = buf.toString();
+										if (qualifiers == null) return null;
 										if (qualifiers.endsWith("$")) {
 											qualifiers = qualifiers.substring(0, qualifiers.length()-1);
 										}
@@ -917,6 +926,7 @@ public class RelationshipUtils {
 											buf.append((qualifier_name + "=" + qualifier_value) + "$");
 										}
 										String qualifiers = buf.toString();
+										if (qualifiers == null) return null;
 										if (qualifiers.endsWith("$")) {
 											qualifiers = qualifiers.substring(0, qualifiers.length()-1);
 										}

@@ -142,10 +142,12 @@ public class RelationshipTabFormatter {
         StringBuffer buf = new StringBuffer();
         buf.append("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
 		Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(expression, "\n");
+		if (w == null) return null;
 		for (int i=0; i<w.size(); i++) {
 			String line = (String) w.elementAt(i);
 			buf.append("<tr><td class=\"dataCellText\">\n");
 			String s = getHyperlink(line);
+			if (s == null) return null;
 			if (s.indexOf("\t") == -1) {
 				buf.append(s);
 			} else {
@@ -384,6 +386,7 @@ public class RelationshipTabFormatter {
 			String namespace = (String) u.elementAt(2);
 			if (alternatingBackground) {
 				Boolean bool_obj = UIUtils.isEven(new Integer(i));
+				if (bool_obj == null) return null;
 				if (bool_obj.equals(Boolean.TRUE)) {
 					buf.append("<tr class=\"dataRowDark\">");
 				} else {
@@ -406,6 +409,7 @@ public class RelationshipTabFormatter {
 		StringBuffer buf = new StringBuffer();
         Vector key_vec = new Vector();
 		Iterator it = hmap.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			key_vec.add(key);
@@ -500,6 +504,7 @@ public class RelationshipTabFormatter {
 		StringBuffer buf = new StringBuffer();
         Vector key_vec = new Vector();
 		Iterator it = hmap.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			key_vec.add(key);

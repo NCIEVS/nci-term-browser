@@ -99,6 +99,7 @@ public class ValueSetDefinitionConfig {
 
     public static boolean fileExists(String filename) {
 		File f = new File(filename);
+		if (f == null) return false;
 		if(f.exists() && !f.isDirectory()) {
 			return true;
 		}
@@ -128,8 +129,10 @@ public class ValueSetDefinitionConfig {
 		if (line == null) return null;
         Vector data_vec = new Vector();
         StringTokenizer st = new StringTokenizer(line, tab);
+        if (st == null) return null;
         while (st.hasMoreTokens()) {
             String value = st.nextToken();
+            if (value == null) return null;
             if (value.compareTo("null") == 0)
                 value = "";
             data_vec.add(value);
@@ -142,6 +145,7 @@ public class ValueSetDefinitionConfig {
 		HashMap hmap = new HashMap();
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(file));
+			if (in == null) return null;
 			while (in.ready()) {
 			    String s = in.readLine();
 			    Vector v = parseData(s);

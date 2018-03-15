@@ -38,6 +38,17 @@
 	
     function onCodeButtonPressed(formname) {
 	  var algorithmObj = document.forms[formname].algorithm;
+	  // Send redirect:
+	  if (algorithmObj == null) {
+	  	try {
+	  		String error_msg = "WARNING: The server encountered an unexpected error (file: searchForm.jsp, code: 1, var: algorithmObj).";
+	  		request.getSession().setAttribute("error_msg", error_msg);
+	  		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+	  		response.sendRedirect(redirectURL);				 
+	  	} catch (Exception ex) {
+	  		ex.printStackTrace();
+	  	}
+	  }
 	  for (var j=0; j<algorithmObj.length; j++) {
 		  algorithm = algorithmObj[j].value;
 		  if (algorithm == "exactMatch") {
@@ -48,6 +59,17 @@
 
     function getSearchTarget(formname) {
           var searchTargetObj = document.forms[formname].searchTarget;
+          // Send redirect:
+          if (searchTargetObj == null) {
+          	try {
+          		String error_msg = "WARNING: The server encountered an unexpected error (file: searchForm.jsp, code: 2, var: searchTargetObj).";
+          		request.getSession().setAttribute("error_msg", error_msg);
+          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+          		response.sendRedirect(redirectURL);				 
+          	} catch (Exception ex) {
+          		ex.printStackTrace();
+          	}
+          }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 	      if (searchTargetObj[j].checked == true) {
 	         return searchTargetObj[j].value;
@@ -60,6 +82,17 @@
       if (curr_target != "codes") return;
 
           var searchTargetObj = document.forms[formname].searchTarget;
+          // Send redirect:
+          if (searchTargetObj == null) {
+          	try {
+          		String error_msg = "WARNING: The server encountered an unexpected error (file: searchForm.jsp, code: 3, var: searchTargetObj).";
+          		request.getSession().setAttribute("error_msg", error_msg);
+          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+          		response.sendRedirect(redirectURL);				 
+          	} catch (Exception ex) {
+          		ex.printStackTrace();
+          	}
+          }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 		  target = searchTargetObj[j].value;
 		  if (target == "codes") {
@@ -118,6 +151,17 @@
 	}
 	
 	String form_requestContextPath = request.getContextPath();
+	// Send redirect:
+	if (form_requestContextPath == null) {
+		try {
+			String error_msg = "WARNING: The server encountered an unexpected error (file: searchForm.jsp, code: 4, var: form_requestContextPath).";
+			request.getSession().setAttribute("error_msg", error_msg);
+			String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+			response.sendRedirect(redirectURL);				 
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 	form_requestContextPath = form_requestContextPath.replace(
 			"//ncitbrowser//ncitbrowser", "//ncitbrowser");
 	String userAgent = request.getHeader("user-agent");

@@ -42,6 +42,17 @@ if (type != null && type.compareTo("all") == 0) {
           {
             String s = (String) synonyms.elementAt(lcv);   
             Vector synonym_data = StringUtils.parseData(s, "|");
+            // Send redirect:
+            if (synonym_data == null) {
+            	try {
+            		String error_msg = "WARNING: The server encountered an unexpected error (file: synonym.jsp, code: 1, var: synonym_data).";
+            		request.getSession().setAttribute("error_msg", error_msg);
+            		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+            		response.sendRedirect(redirectURL);				 
+            	} catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
+            }
             if (synonym_data.size() > 4) {
                 String subsource_nm = (String) synonym_data.elementAt(4);
                 if (!StringUtils.isNullOrBlank(subsource_nm)) {

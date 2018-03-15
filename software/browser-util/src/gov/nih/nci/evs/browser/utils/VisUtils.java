@@ -326,6 +326,7 @@ public class VisUtils {
 			ArrayList list = null;
 
 			List part_of_list = partUtils.getPartOfData(relMap);
+			if (part_of_list == null) return null;
 			for (int i=0; i<part_of_list.size(); i++) {
 				String t = (String) part_of_list.get(i);
 				String rel_node_label = getLabel(getFieldValue(t, 1), getFieldValue(t, 2));
@@ -334,6 +335,7 @@ public class VisUtils {
 			}
 
 			List has_part_list = partUtils.getHasPartData(relMap);
+			if (has_part_list == null) return null;
 			for (int i=0; i<has_part_list.size(); i++) {
 				String t = (String) has_part_list.get(i);
 				String rel_node_label = getLabel(getFieldValue(t, 1), getFieldValue(t, 2));
@@ -496,6 +498,7 @@ public class VisUtils {
 
 		Vector node_label_vec = new Vector();
 		Iterator it = nodes.iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String node_label = (String) it.next();
 			node_label_vec.add(node_label);

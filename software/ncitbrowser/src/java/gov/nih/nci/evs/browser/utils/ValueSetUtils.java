@@ -80,8 +80,10 @@ public class ValueSetUtils {
 		if (line == null) return null;
         Vector data_vec = new Vector();
         StringTokenizer st = new StringTokenizer(line, tab);
+        if (st == null) return null;
         while (st.hasMoreTokens()) {
             String value = st.nextToken();
+            if (value == null) return null;
             if (value.compareTo("null") == 0)
                 value = " ";
             data_vec.add(value);
@@ -307,6 +309,7 @@ public class ValueSetUtils {
 			new SortUtils().quickSort(children);
 			for (TreeItem childItem : children) {
 				String scheme = childItem._text;
+				if (scheme == null) return;
 				if (scheme.compareTo(dictionary) == 0) {
 					String child_node_id = generateID(childItem);
 					printTree(out, childItem, child_node_id, null, "root", 0, view);

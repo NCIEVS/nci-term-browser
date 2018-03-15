@@ -81,6 +81,17 @@
      
     function onCodeButtonPressed(formname) {
           var algorithmObj = document.forms[formname].algorithm;
+          // Send redirect:
+          if (algorithmObj == null) {
+          	try {
+          		String error_msg = "WARNING: The server encountered an unexpected error (file: mapping_search.jsp, code: 1, var: algorithmObj).";
+          		request.getSession().setAttribute("error_msg", error_msg);
+          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+          		response.sendRedirect(redirectURL);				 
+          	} catch (Exception ex) {
+          		ex.printStackTrace();
+          	}
+          }
 	  for (var j=0; j<algorithmObj.length; j++) {
 		  algorithm = algorithmObj[j].value;
 		  if (algorithm == "exactMatch") {
@@ -92,6 +103,17 @@
 
     function getSearchTarget(formname) {
           var searchTargetObj = document.forms[formname].searchTarget;
+          // Send redirect:
+          if (searchTargetObj == null) {
+          	try {
+          		String error_msg = "WARNING: The server encountered an unexpected error (file: mapping_search.jsp, code: 2, var: searchTargetObj).";
+          		request.getSession().setAttribute("error_msg", error_msg);
+          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+          		response.sendRedirect(redirectURL);				 
+          	} catch (Exception ex) {
+          		ex.printStackTrace();
+          	}
+          }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 	      if (searchTargetObj[j].checked == true) {
 	          return searchTargetObj[j].value;
@@ -158,9 +180,31 @@ if (display_name_vec == null) {
 
   for (int i = 0; i < display_name_vec.size(); i++) { 
      OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+     // Send redirect:
+     if (info == null) {
+     	try {
+     		String error_msg = "WARNING: The server encountered an unexpected error (file: mapping_search.jsp, code: 3, var: info).";
+     		request.getSession().setAttribute("error_msg", error_msg);
+     		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+     		response.sendRedirect(redirectURL);				 
+     	} catch (Exception ex) {
+     		ex.printStackTrace();
+     	}
+     }
      if (!DataUtils.isNull(info.getTag()) && info.getTag().compareToIgnoreCase("PRODUCTION") == 0) {
 
 	Vector w = DataUtils.getNonProductionOntologies(display_name_vec, info.getCodingScheme());
+	// Send redirect:
+	if (w == null) {
+		try {
+			String error_msg = "WARNING: The server encountered an unexpected error (file: mapping_search.jsp, code: 4, var: w).";
+			request.getSession().setAttribute("error_msg", error_msg);
+			String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+			response.sendRedirect(redirectURL);				 
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
 	if (w.size() > 0) {
 		info.setHasMultipleVersions(true);
 
@@ -179,6 +223,17 @@ if (display_name_vec == null) {
 
   for (int k = 0; k < display_name_vec.size(); k++) { 
      OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(k);
+     // Send redirect:
+     if (info == null) {
+     	try {
+     		String error_msg = "WARNING: The server encountered an unexpected error (file: mapping_search.jsp, code: 5, var: info).";
+     		request.getSession().setAttribute("error_msg", error_msg);
+     		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+     		response.sendRedirect(redirectURL);				 
+     	} catch (Exception ex) {
+     		ex.printStackTrace();
+     	}
+     }
      if (!info.isProduction()) {
 	  info.setSelected(false);
      }		     

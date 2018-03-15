@@ -167,6 +167,7 @@ public class ValueSetBean {
 		Vector vsd_vec = DataUtils.getValueSetDefinitionMetadata();
 		HashMap csURN2ValueSetMetadataHashMap = DataUtils.getCodingSchemeURN2ValueSetMetadataHashMap(vsd_vec);
 		Iterator it = csURN2ValueSetMetadataHashMap.keySet().iterator();
+        if (it == null) return null;
         while (it.hasNext()) {
            String cs = (String) it.next();
            if (!hset.contains(cs)) {
@@ -181,6 +182,7 @@ public class ValueSetBean {
 
         if (hset == null) return null;
         Iterator it = hset.iterator();
+        if (it == null) return null;
         while (it.hasNext()) {
 			String cs = (String) it.next();
 			String formalName = DataUtils.getFormalName(cs);
@@ -380,6 +382,7 @@ public class ValueSetBean {
 			Vector u = DataUtils.parseData(t, delim);
 			String uri = (String) u.elementAt(0);
 			String version = (String) u.elementAt(1);
+			if (version == null) return null;
 			if (version == null || version.compareTo("null") == 0) {
 				version = DataUtils.getVocabularyVersionByTag(uri, "PRODUCTION");
 			}
@@ -485,6 +488,7 @@ public class ValueSetBean {
 			Vector u = DataUtils.parseData(t, delim);
 			String uri = (String) u.elementAt(0);
 			String version = (String) u.elementAt(1);
+			if (version == null) return null;
 			if (version == null || version.compareTo("null") == 0) {
 				version = DataUtils.getVocabularyVersionByTag(uri, "PRODUCTION");
 			}
@@ -756,6 +760,7 @@ public class ValueSetBean {
 			}
 
 			Vector cs_vec = DataUtils.getCodingSchemeURNsInValueSetDefinition(uri);
+			if (cs_vec == null) return;
 			for (int k=0; k<cs_vec.size(); k++) {
 				String cs_urn = (String) cs_vec.elementAt(k);
 				String version = DataUtils.getVocabularyVersionByTag(cs_urn, "PRODUCTION");
@@ -847,22 +852,27 @@ public class ValueSetBean {
 		Definition[] definitions = concept.getDefinition();
 		Vector v = new Vector();
 		if (definitions == null) return null;
+		if (definitions == null) return null;
 		for (int i=0; i<definitions.length; i++) {
 			Definition definition = definitions[i];
 			Source[] sources = definition.getSource();
+			if (sources == null) return null;
 			for (int j=0; j<sources.length; j++)
 			{
 				Source src = sources[j];
 				String src_name = src.getContent();
+				if (src_name == null) return null;
 				if (src_name.compareTo("NCI") == 0) {
 					v.add(definition.getValue().getContent());
 				}
 			}
 
 			PropertyQualifier[] qualifiers = definition.getPropertyQualifier();
+			if (qualifiers == null) return null;
 			for (int j=0; j<qualifiers.length; j++)
 			{
 				String qualifier_value = qualifiers[j].getValue().getContent();
+				if (qualifier_value == null) return null;
 				if (qualifier_value.compareTo("NCI") == 0) {
 					v.add(definition.getValue().getContent());
 				}
@@ -1239,6 +1249,7 @@ public class ValueSetBean {
 
 		if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
 			String t = searchTarget.toLowerCase();
+			if (t == null) return null;
 			if (t.indexOf("code") != -1) {
 				message = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
 			} else {

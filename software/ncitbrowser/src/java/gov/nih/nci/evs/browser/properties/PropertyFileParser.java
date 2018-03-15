@@ -260,6 +260,7 @@ public class PropertyFileParser {
 
     private boolean getBooleanValue(Element ele, String tagName) {
         String textVal = getTextValue(ele, tagName);
+        if (textVal == null) return false;
         if (textVal.compareToIgnoreCase("true") == 0)
             return true;
         return false;
@@ -267,6 +268,7 @@ public class PropertyFileParser {
 
     private void printData() {
         Iterator it = _displayItemList.iterator();
+        if (it == null) return;
         while (it.hasNext()) {
             _logger.debug(it.next().toString());
         }

@@ -138,6 +138,7 @@ public class MappingSearchUtils {
 			if (cs == null) return null;
 
 			java.util.Enumeration<? extends Relations> relations = cs.enumerateRelations();
+			if (relations == null) return null;
 			while (relations.hasMoreElements()) {
 				Relations relation = (Relations) relations.nextElement();
 				Boolean isMapping = relation.getIsMapping();
@@ -469,6 +470,7 @@ public class MappingSearchUtils {
         try {
             CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
             Relations[] relations = cs.getRelations();
+            if (relations == null) return null;
             for (int i = 0; i < relations.length; i++) {
                 Relations relation = relations[i];
 
@@ -623,6 +625,7 @@ public class MappingSearchUtils {
 			if (cs == null) return null;
 
 			java.util.Enumeration<? extends Relations> relations = cs.enumerateRelations();
+			if (relations == null) return null;
 			while (relations.hasMoreElements()) {
 				Relations relation = (Relations) relations.nextElement();
 				Boolean isMapping = relation.getIsMapping();
@@ -702,6 +705,7 @@ public class MappingSearchUtils {
 		return list;
 /*
  		MappingIteratorBean mappingIteratorBean = new MappingIteratorBean(iterator);
+		if (mappingIteratorBean == null) return null;
 		List list = mappingIteratorBean.getData(0, numberRemaining); // implement getAll
 		if (mappingIteratorBean.getSize() != numberRemaining) {
 			list = mappingIteratorBean.getData(0, mappingIteratorBean.getSize() );
@@ -736,6 +740,7 @@ public class MappingSearchUtils {
 		}
 
  		MappingIteratorBean mappingIteratorBean = new MappingIteratorBean(iterator);
+		if (mappingIteratorBean == null) return null;
 		List list = mappingIteratorBean.getData(0, numberRemaining); // implement getAll
 		if (mappingIteratorBean.getSize() != numberRemaining) {
 			list = mappingIteratorBean.getData(0, mappingIteratorBean.getSize() );

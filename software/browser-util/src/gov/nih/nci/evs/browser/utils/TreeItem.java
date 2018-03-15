@@ -162,6 +162,7 @@ public class TreeItem implements Serializable, Comparable<TreeItem> {
             TreeItem existingTreeItem = children.get(i);
             for (String assoc : child._assocToChildMap.keySet()) {
                 List<TreeItem> toAdd = child._assocToChildMap.get(assoc);
+                if (toAdd == null) return;
                 if (!toAdd.isEmpty()) {
                     existingTreeItem.addAll(assoc, toAdd);
                     existingTreeItem._expandable = false;
@@ -214,6 +215,7 @@ public class TreeItem implements Serializable, Comparable<TreeItem> {
 
         for (String association : ti._assocToChildMap.keySet()) {
             List<TreeItem> children = ti._assocToChildMap.get(association);
+            if (children == null) return;
             for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
                 printTree(childItem, depth + 1);

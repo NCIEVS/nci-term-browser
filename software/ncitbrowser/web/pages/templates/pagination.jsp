@@ -102,6 +102,17 @@ if (!page_timeout) {
   <select name=resultsPerPage size=1 onChange="paginationForm.submit();">
   <%
     List resultsPerPageValues = UserSessionBean.getResultsPerPageValues();
+    // Send redirect:
+    if (resultsPerPageValues == null) {
+    	try {
+    		String error_msg = "WARNING: The server encountered an unexpected error (file: pagination.jsp, code: 1, var: resultsPerPageValues).";
+    		request.getSession().setAttribute("error_msg", error_msg);
+    		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+    		response.sendRedirect(redirectURL);				 
+    	} catch (Exception ex) {
+    		ex.printStackTrace();
+    	}
+    }
     for (int i=0; i<resultsPerPageValues.size(); i++) {
         String resultsPerPageValue = (String) resultsPerPageValues.get(i);
         

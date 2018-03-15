@@ -104,8 +104,10 @@ public class ExpressionParser {
 		if (line == null) return null;
         Vector data_vec = new Vector();
         StringTokenizer st = new StringTokenizer(line, tab);
+        if (st == null) return null;
         while (st.hasMoreTokens()) {
             String value = st.nextToken();
+            if (value == null) return null;
             if (value.compareTo("null") == 0)
                 value = "";
             data_vec.add(value);
@@ -140,6 +142,7 @@ public class ExpressionParser {
 
 	public String restriction2Text(String restriction_id, String restriction) {
 		if (restriction == null || restriction.length() == 0) return restriction;
+		if (restriction == null) return null;
 		if (restriction.startsWith("(")) {
 			restriction = restriction.substring(1, restriction.length());
 		}
@@ -184,6 +187,7 @@ public class ExpressionParser {
 
 			for (int i=0; i<u.size(); i++) {
 				String token = (String) u.elementAt(i);
+				if (token == null) return null;
 				if (token.startsWith(open_bracket)) {
 					StringBuffer buf = new StringBuffer();
 					buf.append(token);
@@ -259,9 +263,11 @@ public class ExpressionParser {
 		}
 		if (expression == null || expression.length() == 0) return hmap;
 		Vector u = parseData(expression, " ");
+		if (u == null) return null;
 		if (u.contains("some")) {
 			for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.compareTo("some") == 0) {
 					String role_name = (String) u.elementAt(i-1);
 					String role_target = (String) u.elementAt(i+1);
@@ -317,6 +323,7 @@ public class ExpressionParser {
 		Vector v = new Vector();
 		Vector rg_vec = new Vector();
 		Iterator it = hmap.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String role = (String) it.next();
 			String value = (String) hmap.get(role);
@@ -374,6 +381,7 @@ public class ExpressionParser {
 					map.put(dv, u);
 				} else {
 					Vector w = outputRestrictionCollection(value);
+					if (w == null) return null;
 					for (int lcv=0; lcv<w.size(); lcv++) {
 						String restriction = (String) w.elementAt(lcv);
 						Vector w2 = parseData(restriction);
@@ -409,6 +417,7 @@ public class ExpressionParser {
 		Vector w = new Vector();
 		for (int i=0; i<v.size(); i++) {
 			String s = (String) v.elementAt(i);
+			if (s == null) return null;
 			if (s.compareTo("some") == 0) {
 				String role_id = (String) v.elementAt(i-1);
 				String role_target_code = (String) v.elementAt(i+1);
@@ -438,6 +447,7 @@ public class ExpressionParser {
 		buf.append("Role group").append("\n");
 		for (int i=0; i<v.size(); i++) {
 			String s = (String) v.elementAt(i);
+			if (s == null) return null;
 			if (s.compareTo("some") == 0) {
 				String role_id = (String) v.elementAt(i-1);
 				String role_target_code = (String) v.elementAt(i+1);
@@ -467,6 +477,7 @@ public class ExpressionParser {
 		}
 		for (int i=0; i<v.size(); i++) {
 			String s = (String) v.elementAt(i);
+			if (s == null) return null;
 			if (s.compareTo("some") == 0) {
 				String role_id = (String) v.elementAt(i-1);
 				String role_target_code = (String) v.elementAt(i+1);
@@ -502,6 +513,7 @@ public class ExpressionParser {
 			v = parseData(s, " ");
 			for (int i=0; i<v.size(); i++) {
 				String t = (String) v.elementAt(i);
+				if (t == null) return null;
 				if (t.compareTo("and") != 0) {
 					w.add(t);
 				}
@@ -545,6 +557,7 @@ public class ExpressionParser {
 		try {
 			Vector key_vec = new Vector();
 			Iterator it2 = map.keySet().iterator();
+			if (it2 == null) return null;
 			while (it2.hasNext()) {
 				String value_domain = (String) it2.next();
 				if (!key_vec.contains(value_domain)) {
@@ -554,6 +567,7 @@ public class ExpressionParser {
 			key_vec = new gov.nih.nci.evs.browser.utils.SortUtils().quickSort(key_vec);
 			for (int k=0; k<key_vec.size(); k++) {
 				String value_domain = (String) key_vec.elementAt(k);
+				if (value_domain == null) return null;
 				if (value_domain.compareTo(PARENT) == 0) {
 					Vector role_data_vec = (Vector) map.get(value_domain);
 					buf.append(value_domain).append("\n");
@@ -567,6 +581,7 @@ public class ExpressionParser {
 
 			for (int k=0; k<key_vec.size(); k++) {
 				String value_domain = (String) key_vec.elementAt(k);
+				if (value_domain == null) return null;
 				if (value_domain.compareTo(PARENT) != 0) {
 					Vector role_data_vec = (Vector) map.get(value_domain);
 					buf.append(value_domain).append("\n");
@@ -593,6 +608,7 @@ public class ExpressionParser {
 			expression = expression.replaceAll("some", "");
 			expression = expression.replaceAll("all", "");
 			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(expression, " ");
+			if (u == null) return null;
 			for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
 				t = t.trim();

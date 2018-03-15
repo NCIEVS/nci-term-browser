@@ -87,6 +87,7 @@ public class SearchFields {
     public static SearchFields setSimple(Vector schemes, String matchText,
         String searchTarget, String source, String matchAlgorithm, int maxReturn) {
         SearchFields fields = new SearchFields();
+        if (fields == null) return null;
         fields.setBasic(Type.Simple, schemes, matchText, searchTarget, source,
             matchAlgorithm, maxReturn);
         return fields;
@@ -95,6 +96,7 @@ public class SearchFields {
     public static SearchFields setName(Vector schemes, String matchText,
         String searchTarget, String source, String matchAlgorithm, int maxReturn) {
         SearchFields fields = new SearchFields();
+        if (fields == null) return null;
         fields.setBasic(Type.Name, schemes, matchText, searchTarget, source,
             matchAlgorithm, maxReturn);
         return fields;
@@ -103,6 +105,7 @@ public class SearchFields {
     public static SearchFields setCode(Vector schemes, String matchText,
         String searchTarget, String source, String matchAlgorithm, int maxReturn) {
         SearchFields fields = new SearchFields();
+        if (fields == null) return null;
         fields.setBasic(Type.Code, schemes, matchText, searchTarget, source,
             matchAlgorithm, maxReturn);
         return fields;
@@ -112,6 +115,7 @@ public class SearchFields {
         String searchTarget, String propertyType, String propertyName,
         String source, String matchAlgorithm, int maxReturn) {
         SearchFields fields = new SearchFields();
+        if (fields == null) return null;
         fields.setBasic(Type.Property, schemes, matchText, searchTarget,
             source, matchAlgorithm, maxReturn);
         fields.setPropertyType(propertyType);
@@ -124,6 +128,7 @@ public class SearchFields {
         String relSearchRela, String source, String matchAlgorithm,
         int maxReturn) {
         SearchFields fields = new SearchFields();
+        if (fields == null) return null;
         fields.setBasic(Type.Relationship, schemes, matchText, searchTarget,
             source, matchAlgorithm, maxReturn);
         fields.setRelSearchAssociation(relSearchAssociation);
@@ -136,6 +141,7 @@ public class SearchFields {
         String relSearchRela, String source, String matchAlgorithm, String direction,
         int maxReturn) {
         SearchFields fields = new SearchFields();
+        if (fields == null) return null;
         fields.setBasic(Type.Relationship, schemes, matchText, searchTarget,
             source, matchAlgorithm, maxReturn);
         fields.setRelSearchAssociation(relSearchAssociation);

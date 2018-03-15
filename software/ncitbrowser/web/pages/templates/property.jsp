@@ -239,6 +239,17 @@ else if (concept_status != null && concept_status.compareToIgnoreCase("Retired C
 	      String value_pre = value;
 	      value = JSPUtils.reformatPDQDefinition(value);
 	      String value_post = value;
+	      // Send redirect:
+	      if (value_post == null) {
+	      	try {
+	      		String error_msg = "WARNING: The server encountered an unexpected error (file: property.jsp, code: 1, var: value_post).";
+	      		request.getSession().setAttribute("error_msg", error_msg);
+	      		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+	      		response.sendRedirect(redirectURL);				 
+	      	} catch (Exception ex) {
+	      		ex.printStackTrace();
+	      	}
+	      }
 	      if (value_pre.compareTo(value_post) != 0 && !value_post.endsWith("PDQ")) {
 	           System.out.println("WARNING -- possible definition formatting issue with " + value_pre);
 	      } 

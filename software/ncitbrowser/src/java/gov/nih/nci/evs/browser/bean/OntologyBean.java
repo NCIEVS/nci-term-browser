@@ -186,6 +186,7 @@ public class OntologyBean {
 
         CodingScheme cs = getCodingScheme(codingSchemeName, null);
         Vector<String> properties = getSupportedPropertyNames(cs);
+        if (properties == null) return null;
         for (int k = 0; k < properties.size(); k++) {
             String value = (String) properties.elementAt(k);
             property_name_list.add(new SelectItem(value, value));
@@ -202,6 +203,7 @@ public class OntologyBean {
 
         CodingScheme cs = getCodingScheme(codingSchemeName, version);
         Vector<String> properties = getSupportedPropertyNames(cs);
+        if (properties == null) return null;
         for (int k = 0; k < properties.size(); k++) {
             String value = (String) properties.elementAt(k);
             property_name_list.add(new SelectItem(value, value));
@@ -218,6 +220,7 @@ public class OntologyBean {
         source_list.add(new SelectItem("ALL", "ALL"));
 
         Vector<String> sources = getSupportedSources(cs);
+        if (sources == null) return null;
         for (int k = 0; k < sources.size(); k++) {
             String value = (String) sources.elementAt(k);
             source_list.add(new SelectItem(value, value));
@@ -234,6 +237,7 @@ public class OntologyBean {
         source_list.add(new SelectItem("ALL", "ALL"));
 
         Vector<String> sources = getSupportedSources(cs);
+        if (sources == null) return null;
         for (int k = 0; k < sources.size(); k++) {
             String value = (String) sources.elementAt(k);
             source_list.add(new SelectItem(value, value));
@@ -255,6 +259,7 @@ public class OntologyBean {
         property_type_list.add(new SelectItem("ALL", "ALL"));
 
         Vector<String> propertytypes = getSupportedPropertyTypes();
+        if (propertytypes == null) return null;
         for (int k = 0; k < propertytypes.size(); k++) {
             String value = (String) propertytypes.elementAt(k);
             property_type_list.add(new SelectItem(value, value));
@@ -307,6 +312,7 @@ public class OntologyBean {
                     prop = mdpl.getMetadataProperty(i);
 
                     String type = prop.getValue();
+                    if (type == null) return null;
                     if (type.equals("expanded_form")
                         || type.equals("rela_inverse")) {
                         if (!hset.contains(potentialValue)) {
@@ -404,6 +410,7 @@ public class OntologyBean {
         Vector v = new Vector();
         try {
             SupportedSource[] sources = cs.getMappings().getSupportedSource();
+            if (sources == null) return null;
             for (int i = 0; i < sources.length; i++) {
                 v.add(sources[i].getLocalId());
             }
@@ -725,16 +732,19 @@ public class OntologyBean {
 			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 			CodingScheme cs = lbSvc.resolveCodingScheme(codingSchemeName, csvt);
 			Relations[] relations = cs.getRelations();
+			if (relations == null) return null;
 			if (relations.length == 0) {
 				return association_name_vec;
 			}
 			for (int i = 0; i < relations.length; i++) {
 				Relations relation = relations[i];
 				Boolean bool_obj = relation.isIsMapping();
+				if (bool_obj == null) return null;
 				if (bool_obj == null || bool_obj.equals(Boolean.FALSE)) {
 					return association_name_vec;
 				} else {
                     AssociationPredicate[] asso_array = relation.getAssociationPredicate();
+                    if (asso_array == null) return null;
                     for (int j=0; j<asso_array.length; j++) {
 						AssociationPredicate asso = asso_array[j];
 						association_name_vec.add(asso.getAssociationName() + "|" + asso.getAssociationName());
@@ -767,6 +777,7 @@ public class OntologyBean {
 				return null;
 			}
 			Relations[] relations = cs.getRelations();
+			if (relations == null) return null;
 			if (relations.length == 0) {
 				return association_name_vec;
 			}
@@ -779,6 +790,7 @@ public class OntologyBean {
 					return association_name_vec;
 				} else {
                     AssociationPredicate[] asso_array = relation.getAssociationPredicate();
+                    if (asso_array == null) return null;
                     for (int j=0; j<asso_array.length; j++) {
 						AssociationPredicate asso = asso_array[j];
 						association_name_vec.add(asso.getAssociationName() + "|" + asso.getAssociationName());
@@ -786,6 +798,7 @@ public class OntologyBean {
 				}
 				*/
 				AssociationPredicate[] asso_array = relation.getAssociationPredicate();
+				if (asso_array == null) return null;
 				for (int j=0; j<asso_array.length; j++) {
 					AssociationPredicate asso = asso_array[j];
 				    association_name_vec.add(asso.getAssociationName() + "|" + asso.getAssociationName());

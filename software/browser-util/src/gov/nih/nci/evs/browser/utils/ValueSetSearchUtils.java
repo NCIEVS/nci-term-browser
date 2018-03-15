@@ -219,6 +219,7 @@ public class ValueSetSearchUtils
             }
 
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -622,6 +623,7 @@ public class ValueSetSearchUtils
 		Vector v = new Vector();
 		try {
 			List<CodingScheme> schemes = lrvs.listAllResolvedValueSets();
+			if (schemes == null) return null;
 			for (int i = 0; i < schemes.size(); i++) {
 				CodingScheme cs = schemes.get(i);
 				int j = i+1;
@@ -656,6 +658,7 @@ public class ValueSetSearchUtils
 		HashMap hmap = new HashMap();
 		try {
 			  List<CodingScheme> schemes = lrvs.listAllResolvedValueSets();
+			  if (schemes == null) return null;
 			  for (int i = 0; i < schemes.size(); i++) {
 					CodingScheme cs = schemes.get(i);
 					String uri = cs.getCodingSchemeURI();
@@ -774,6 +777,7 @@ public class ValueSetSearchUtils
 	        ValueSetDefinition vsd = vsd_service.getValueSetDefinition(valueSetDefinitionURI, null);
 	        Mappings mappings = vsd.getMappings();
             SupportedCodingScheme[] supportedCodingSchemes = mappings.getSupportedCodingScheme();
+            if (supportedCodingSchemes == null) return null;
             for (int i=0; i<supportedCodingSchemes.length; i++) {
 				SupportedCodingScheme supportedCodingScheme = supportedCodingSchemes[i];
 				v.add(supportedCodingScheme.getUri());
@@ -817,6 +821,7 @@ public class ValueSetSearchUtils
 	        ValueSetDefinition vsd = vsd_service.getValueSetDefinition(valueSetDefinitionURI, null);
 	        Mappings mappings = vsd.getMappings();
             SupportedCodingScheme[] supportedCodingSchemes = mappings.getSupportedCodingScheme();
+            if (supportedCodingSchemes == null) return null;
             for (int i=0; i<supportedCodingSchemes.length; i++) {
 				SupportedCodingScheme supportedCodingScheme = supportedCodingSchemes[i];
 				v.add(supportedCodingScheme.getUri());
@@ -881,6 +886,7 @@ public class ValueSetSearchUtils
         CodingScheme cs = csdu.resolveCodingScheme(vsd_uri, prod_version);
         LexEVSResolvedValueSetServiceImpl rvssi = new LexEVSResolvedValueSetServiceImpl(lbSvc);
         AbsoluteCodingSchemeVersionReferenceList scsvrl = rvssi.getListOfCodingSchemeVersionsUsedInResolution(cs);
+        if (scsvrl == null) return null;
         for (int i=0; i<scsvrl.getAbsoluteCodingSchemeVersionReferenceCount(); i++) {
 			AbsoluteCodingSchemeVersionReference acsvr = scsvrl.getAbsoluteCodingSchemeVersionReference(i);
 			String cs_urn = acsvr.getCodingSchemeURN();

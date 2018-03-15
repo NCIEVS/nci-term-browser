@@ -200,6 +200,17 @@ String short_name = cs_name;
 		} else {
 
 			 Vector u2 = StringUtils.parseData(code, ",");
+			 // Send redirect:
+			 if (u2 == null) {
+			 	try {
+			 		String error_msg = "WARNING: The server encountered an unexpected error (file: concept_details.jsp, code: 1, var: u2).";
+			 		request.getSession().setAttribute("error_msg", error_msg);
+			 		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+			 		response.sendRedirect(redirectURL);				 
+			 	} catch (Exception ex) {
+			 		ex.printStackTrace();
+			 	}
+			 }
 			 if (u2.size() == 2) {
 			     code = (String)u2.elementAt(0);
 			     ns = (String)u2.elementAt(1);

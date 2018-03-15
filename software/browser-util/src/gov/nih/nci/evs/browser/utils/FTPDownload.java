@@ -184,6 +184,7 @@ public class FTPDownload {
 
    public static void download(String uri) {
 	  String ext = FilenameUtils.getExtension(uri);
+	  if (ext == null) return;
 	  if (ext.compareTo("txt") == 0) {
 		  downloadText(uri);
 	  } else {
@@ -194,6 +195,7 @@ public class FTPDownload {
 
    public static void download(String uri, String outputfile) {
 	  String ext = FilenameUtils.getExtension(uri);
+	  if (ext == null) return;
 	  if (ext.compareTo("txt") == 0) {
 		  downloadText(uri, outputfile);
 	  } else {
@@ -226,6 +228,7 @@ public class FTPDownload {
     public static Vector extractMappingsFromURL(String page_url) {
 		Vector v = new Vector();
 		Vector w = tearPage(page_url);
+		if (w == null) return null;
 		for (int i=0; i<w.size(); i++) {
 			String line = (String) w.elementAt(i);
 			String line_lower = line.toLowerCase();

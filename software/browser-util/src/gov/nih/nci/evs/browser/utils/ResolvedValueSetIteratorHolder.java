@@ -422,6 +422,7 @@ public class ResolvedValueSetIteratorHolder {
         // Find merged cells in current row.
         for (int i = 0; i < row.getSheet().getNumMergedRegions(); ++i) {
             final CellRangeAddress merge = row.getSheet().getMergedRegion(i);
+            if (merge == null) return;
             if (rowIndex >= merge.getFirstRow()
                     && rowIndex <= merge.getLastRow()) {
                 mergeStart = merge.getFirstColumn();
@@ -451,6 +452,7 @@ public class ResolvedValueSetIteratorHolder {
         // Find merged cells in current row.
         for (int i = 0; i < row.getSheet().getNumMergedRegions(); ++i) {
             final CellRangeAddress merge = row.getSheet().getMergedRegion(i);
+            if (merge == null) return;
             if (rowIndex >= merge.getFirstRow()
                     && rowIndex <= merge.getLastRow()) {
                 mergeStart = merge.getFirstColumn();
@@ -484,6 +486,7 @@ public class ResolvedValueSetIteratorHolder {
 		 String first_ch = "" + c;
 		 if (first_ch.compareTo("C") != 0) return false;
 		 String substr = str.substring(1, str.length());
+		 if (substr == null) return false;
 		 for (int i=0; i<substr.length(); i++) {
 			 c = substr.charAt(i);
 			 if (!Character.isDigit(c)) return false;
@@ -558,6 +561,7 @@ public class ResolvedValueSetIteratorHolder {
 
         // Font style, size and weight
         final HSSFFont font = style.getFont(book);
+        if (font == null) return;
         if (font.getBoldweight() == HSSFFont.BOLDWEIGHT_BOLD) {
             out.append("font-weight: bold; ");
         }
@@ -619,6 +623,7 @@ public class ResolvedValueSetIteratorHolder {
                 break;
             case HSSFCell.CELL_TYPE_FORMULA:
                 final CellValue cv = evaluator.evaluate(cell);
+                if (cv == null) return;
                 switch (cv.getCellType()) {
                 case Cell.CELL_TYPE_BOOLEAN:
                     out.append(cv.getBooleanValue());
@@ -720,6 +725,7 @@ public class ResolvedValueSetIteratorHolder {
         }
         // Font style, size and weight
         final HSSFFont font = style.getFont(book);
+        if (font == null) return;
         if (font.getBoldweight() == HSSFFont.BOLDWEIGHT_BOLD) {
             buf.append("font-weight: bold; ");
         }
@@ -784,6 +790,7 @@ public class ResolvedValueSetIteratorHolder {
                 break;
             case HSSFCell.CELL_TYPE_FORMULA:
                 final CellValue cv = evaluator.evaluate(cell);
+                if (cv == null) return;
                 switch (cv.getCellType()) {
                 case Cell.CELL_TYPE_BOOLEAN:
                     buf.append(cv.getBooleanValue());
@@ -886,6 +893,7 @@ public class ResolvedValueSetIteratorHolder {
 
         for (int i = 0; i < row.getSheet().getNumMergedRegions(); ++i) {
             final CellRangeAddress merge = row.getSheet().getMergedRegion(i);
+            if (merge == null) return;
             if (rowIndex >= merge.getFirstRow()
                     && rowIndex <= merge.getLastRow()) {
                 mergeStart = merge.getFirstColumn();
@@ -942,6 +950,7 @@ public class ResolvedValueSetIteratorHolder {
                 break;
             case HSSFCell.CELL_TYPE_FORMULA:
                 final CellValue cv = evaluator.evaluate(cell);
+                if (cv == null) return null;
                 switch (cv.getCellType()) {
                 case Cell.CELL_TYPE_BOOLEAN:
                     out.append(cv.getBooleanValue());

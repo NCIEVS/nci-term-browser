@@ -22,6 +22,17 @@ page:
 <ul>
   <% 
     Iterator<StandardFtpReportInfo> iterator = list.iterator();
+    // Send redirect:
+    if (iterator == null) {
+    	try {
+    		String error_msg = "WARNING: The server encountered an unexpected error (file: _list_standard_reports.jsp, code: 1, var: iterator).";
+    		request.getSession().setAttribute("error_msg", error_msg);
+    		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+    		response.sendRedirect(redirectURL);				 
+    	} catch (Exception ex) {
+    		ex.printStackTrace();
+    	}
+    }
     while (iterator.hasNext()) {
       StandardFtpReportInfo info = iterator.next();
   %>

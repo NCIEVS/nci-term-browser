@@ -113,6 +113,7 @@ public class ValueSetMetadataUtils {
 		try {
 			List list = vsd_service.listValueSetDefinitionURIs();
 			if (list == null || list.size() == 0) return null;
+			if (list == null) return null;
 			for (int i=0; i<list.size(); i++) {
 				String uri = (String) list.get(i);
 				ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
@@ -216,6 +217,7 @@ public class ValueSetMetadataUtils {
 		ValueSetDefinition vsd = findValueSetDefinitionByURI(vsd_uri);
 		Mappings mappings = vsd.getMappings();
 		SupportedSource[] supporetedSources = mappings.getSupportedSource();
+		if (supporetedSources == null) return null;
 		for (int i=0; i<supporetedSources.length; i++) {
 			SupportedSource supportedSource = supporetedSources[i];
 			return supportedSource.getContent();

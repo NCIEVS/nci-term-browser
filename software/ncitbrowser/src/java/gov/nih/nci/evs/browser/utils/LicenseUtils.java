@@ -90,6 +90,7 @@ public class LicenseUtils {
         LexEVSUtils.CSchemes schemes) {
         LicenseBean licenseBean = getLicenseBean(request);
         Iterator<LexEVSUtils.CScheme> iterator = schemes.iterator();
+        if (iterator == null) return;
         while (iterator.hasNext()) {
             LexEVSUtils.CScheme cScheme = iterator.next();
             licenseBean.addLicenseAgreement(cScheme.getCodingScheme());

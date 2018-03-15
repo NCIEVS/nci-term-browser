@@ -373,6 +373,17 @@ body {
  
     function check_all() {
         var topNodes = tree.getRoot().children;
+        // Send redirect:
+        if (topNodes == null) {
+        	try {
+        		String error_msg = "WARNING: The server encountered an unexpected error (file: value_set_terminology_view.jsp, code: 1, var: topNodes).";
+        		request.getSession().setAttribute("error_msg", error_msg);
+        		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+        		response.sendRedirect(redirectURL);				 
+        	} catch (Exception ex) {
+        		ex.printStackTrace();
+        	}
+        }
         for(var i=0; i<topNodes.length; ++i) {
             topNodes[i].check();
         }
@@ -380,6 +391,17 @@ body {
  
     function uncheck_all() {
         var topNodes = tree.getRoot().children;
+        // Send redirect:
+        if (topNodes == null) {
+        	try {
+        		String error_msg = "WARNING: The server encountered an unexpected error (file: value_set_terminology_view.jsp, code: 2, var: topNodes).";
+        		request.getSession().setAttribute("error_msg", error_msg);
+        		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+        		response.sendRedirect(redirectURL);				 
+        	} catch (Exception ex) {
+        		ex.printStackTrace();
+        	}
+        }
         for(var i=0; i<topNodes.length; ++i) {
             topNodes[i].uncheck();
         }
@@ -402,6 +424,17 @@ body {
         checkedNodes = [];
         for(var i=0, l=nodes.length; i<l; i=i+1) {
             var n = nodes[i];
+            // Send redirect:
+            if (n == null) {
+            	try {
+            		String error_msg = "WARNING: The server encountered an unexpected error (file: value_set_terminology_view.jsp, code: 3, var: n).";
+            		request.getSession().setAttribute("error_msg", error_msg);
+            		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+            		response.sendRedirect(redirectURL);				 
+            	} catch (Exception ex) {
+            		ex.printStackTrace();
+            	}
+            }
             if (n.checkState > 0) { // if we were interested in the nodes that have some but not all children checked
             //if (n.checkState === 2) {
                 checkedNodes.push(n.label); // just using label for simplicity

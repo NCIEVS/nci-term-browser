@@ -86,6 +86,7 @@ public abstract class FileFormatterBase {
         boolean lastWasDelim = true;
         while (st.hasMoreTokens()) {
             String value = st.nextToken();
+            if (value == null) return null;
             if (value.equals(tab)) {
                 if (lastWasDelim) {
                     data_vec.add("");
@@ -169,6 +170,7 @@ public abstract class FileFormatterBase {
             } else {
                 for (int i = 0; i < v.size(); i++) {
                     String s = (String) v.elementAt(i);
+                    if (s == null) return null;
                     if (s.length() > maxLength && a[i].equals(Boolean.FALSE)) {
                         a[i] = Boolean.TRUE;
                     }
@@ -199,6 +201,7 @@ public abstract class FileFormatterBase {
     protected int findColumnIndicator(Vector<String> headings, String label) {
         for (int i = 0; i < headings.size(); i++) {
             String heading = headings.elementAt(i);
+            if (heading == null) return -1;
             if (heading.contains(label))
                 return i;
         }
@@ -211,6 +214,7 @@ public abstract class FileFormatterBase {
         int max = 0;
         String delimiter = " ";
         Vector<String> v = parseData(heading, delimiter);
+        if (v == null) return -1;
         for (int k = 0; k < v.size(); k++) {
             String s = (String) v.elementAt(k);
             int len = s.length();

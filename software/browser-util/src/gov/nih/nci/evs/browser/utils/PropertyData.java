@@ -249,6 +249,7 @@ public class PropertyData
 			String presentation_value = (String) w.elementAt(1);
 
 			String isPreferred = (String) w.elementAt(2);
+			if (isPreferred == null) return;
 			if (isPreferred.compareTo("true") == 0) {
 				properties_to_display.add(presentation_name);
 				String display_label = presentation_name.replaceAll("_", " ");
@@ -260,6 +261,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 		}
 		for (int i=0; i<displayItemList.size(); i++) {
 			DisplayItem displayItem = (DisplayItem) displayItemList.get(i);
+			if (displayItem == null) return;
 			if (!displayItem.getIsExternalCode() && !properties_to_display.contains( displayItem.getPropertyName() )) {
 				properties_to_display.add(displayItem.getPropertyName());
 				properties_to_display_label.add(displayItem.getItemLabel());
@@ -276,6 +278,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 
 		for (int i=0; i<displayItemList.size(); i++) {
 			DisplayItem displayItem = (DisplayItem) displayItemList.get(i);
+			if (displayItem == null) return;
 			if (displayItem.getIsExternalCode()) {
 				external_source_codes.add(displayItem.getPropertyName());
 				external_source_codes_label.add(displayItem.getItemLabel());
@@ -300,6 +303,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 	public void dumpVector(String label, Vector v) {
 		System.out.println(label);
 		if (v == null) return;
+		if (v == null) return;
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 			System.out.println("\t" + t);
@@ -311,10 +315,12 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 		System.out.println(label);
 		if (hmap == null) return;
 		Iterator iterator = hmap.entrySet().iterator();
+		if (iterator == null) return;
 		while (iterator.hasNext()) {
 			Entry thisEntry = (Entry) iterator.next();
 			String prop_name = (String) thisEntry.getKey();
 			Vector value_vec = (Vector) thisEntry.getValue();
+			if (value_vec == null) return;
 			for (int k=0; k<value_vec.size(); k++) {
 				String value = (String) value_vec.elementAt(k);
 				System.out.println(prop_name + " -> " + value);
@@ -349,6 +355,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 			String presentation_name = (String) w.elementAt(0);
 			String presentation_value = (String) w.elementAt(1);
 			String isPreferred = (String) w.elementAt(2);
+			if (isPreferred == null) return;
 			if (isPreferred.compareTo("true") == 0) {
 				properties_to_display.add(presentation_name);
 				properties_to_display_label.add(presentation_name.replaceAll("_", " "));
@@ -359,6 +366,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 
 		for (int i=0; i<displayItemList.size(); i++) {
 			DisplayItem displayItem = (DisplayItem) displayItemList.get(i);
+			if (displayItem == null) return;
 			if (!displayItem.getIsExternalCode() && !properties_to_display.contains( displayItem.getPropertyName() )) {
 				properties_to_display.add(displayItem.getPropertyName());
 				properties_to_display_label.add(displayItem.getItemLabel());
@@ -374,6 +382,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 
 		for (int i=0; i<displayItemList.size(); i++) {
 			DisplayItem displayItem = (DisplayItem) displayItemList.get(i);
+			if (displayItem == null) return;
 			if (displayItem.getIsExternalCode()) {
 				external_source_codes.add(displayItem.getPropertyName());
 				external_source_codes_label.add(displayItem.getItemLabel());
@@ -558,10 +567,12 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 		boolean hasOtherProperties = false;
 		Vector prop_name_value_vec = new Vector();
 		Iterator iterator = propertyName2ValueHashMap.entrySet().iterator();
+		if (iterator == null) return null;
 		while (iterator.hasNext()) {
 			Entry thisEntry = (Entry) iterator.next();
 			String prop_name = (String) thisEntry.getKey();
 			Vector value_vec = (Vector) thisEntry.getValue();
+			if (value_vec == null) return null;
 			for (int k=0; k<value_vec.size(); k++) {
 				String value = (String) value_vec.elementAt(k);
 				prop_name_value_vec.add(prop_name + "|" + value);
@@ -693,6 +704,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 							String value_pre = value;
 							value = reformatPDQDefinition(value);
 							String value_post = value;
+							if (value_post == null) return;
 							if (value_pre.compareTo(value_post) != 0 && !value_post.endsWith("PDQ")) {
 								System.out.println("WARNING -- possible definition formatting issue with " + value_pre);
 							}
@@ -756,6 +768,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
     public Vector findOtherPropertyNames() {
 		Vector prop_name_vec = new Vector();
 		Iterator iterator = propertyName2ValueHashMap.entrySet().iterator();
+		if (iterator == null) return null;
 		while (iterator.hasNext()) {
 			Entry thisEntry = (Entry) iterator.next();
 			String prop_name = (String) thisEntry.getKey();
@@ -808,6 +821,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 	}
 
 	public boolean isNCIT(String codingScheme) {
+		if (codingScheme == null) return false;
 		if (codingScheme == null) return false;
 		if (codingScheme.compareTo(Constants.NCI_THESAURUS) == 0 ||
             codingScheme.compareTo(Constants.NCIT_CS_NAME) == 0) {
@@ -960,6 +974,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 
         for (int i = 0; i < t.length() - target.length(); i++) {
             String substr = t.substring(i, i + target.length());
+            if (substr == null) return null;
             if (substr.compareTo(target) == 0) {
                 found = true;
                 t1 = t.substring(0, i);
@@ -967,6 +982,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
                 while (k1 < t.length() - 1) {
                     k1++;
                     String c = t.substring(k1, k1 + 1);
+                    if (c == null) return null;
                     if (c.compareTo(doubleQuote) == 0) {
                         t1 = t.substring(0, k1);
                         break;
@@ -976,6 +992,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
                 while (k2 > 0) {
                     k2--;
                     String c = t.substring(k2, k2 + 1);
+                    if (c == null) return null;
                     if (c.compareTo(doubleQuote) == 0) {
                         t2 = t.substring(0, k2);
                         break;

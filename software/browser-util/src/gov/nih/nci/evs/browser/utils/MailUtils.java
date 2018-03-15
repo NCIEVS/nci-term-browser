@@ -170,6 +170,7 @@ public class MailUtils extends Object {
     public static void postMail(String from, String recipients[],
         String subject, String message) throws MessagingException, Exception {
         String mail_smtp_server = getMailSmtpServer();
+        if (mail_smtp_server == null) return;
         if (mail_smtp_server == null || mail_smtp_server.length() <= 0)
             throw new MessagingException("SMTP host not set.");
         postMailValidation(from, recipients, subject, message);

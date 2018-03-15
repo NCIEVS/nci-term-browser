@@ -263,7 +263,7 @@ public class ViewInHierarchyUtils {
 	    return node;
 	}
 
-	boolean isNodeInList(List<LexEvsTreeNode> listEvsTreeNode, String code) {
+	public boolean isNodeInList(List<LexEvsTreeNode> listEvsTreeNode, String code) {
 		if (listEvsTreeNode == null) return false;
 		for (int k=0; k<listEvsTreeNode.size(); k++) {
 			LexEvsTreeNode node = listEvsTreeNode.get(k);
@@ -273,10 +273,11 @@ public class ViewInHierarchyUtils {
 	}
 
 
-	List<LexEvsTreeNode> removeDotNode(List<LexEvsTreeNode> listEvsTreeNode) {
+	public List<LexEvsTreeNode> removeDotNode(List<LexEvsTreeNode> listEvsTreeNode) {
 		List<LexEvsTreeNode> list = new ArrayList();
 		for (int i=0; i<listEvsTreeNode.size(); i++) {
 			LexEvsTreeNode node = listEvsTreeNode.get(i);
+			if (node == null) return null;
 			if (node.getCode().compareTo("...") != 0 && node.getEntityDescription().compareTo("...") != 0) {
 				list.add(node);
 			}
@@ -286,14 +287,17 @@ public class ViewInHierarchyUtils {
 
 
 
-	List<LexEvsTreeNode> getRemainingLexEvsTreeNodes(String codingScheme, String version, List<LexEvsTreeNode> listEvsTreeNode) {
+	public List<LexEvsTreeNode> getRemainingLexEvsTreeNodes(String codingScheme, String version, List<LexEvsTreeNode> listEvsTreeNode) {
 		List<LexEvsTreeNode> list = new ArrayList();
 		HashMap hmap = getRoots(codingScheme, version);
         TreeItem ti = (TreeItem) hmap.get("<Root>");
+		if (ti == null) return null;
 		for (String association : ti._assocToChildMap.keySet()) {
 			List<TreeItem> children = ti._assocToChildMap.get(association);
+			if (children == null) return null;
 			for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
+				if (childItem == null) return null;
 				if (!isNodeInList(listEvsTreeNode, childItem._code)) {
 					LexEvsTreeNode node = treeItem2LexEvsTreeNode(codingScheme, version, childItem);
 					list.add(node);
@@ -347,6 +351,7 @@ public class ViewInHierarchyUtils {
             listEvsTreeNode = removeDotNode(listEvsTreeNode);
 
 	        List<LexEvsTreeNode> remainingRootNodes = getRemainingLexEvsTreeNodes(codingScheme, version, listEvsTreeNode);
+	        if (remainingRootNodes == null) return;
 	        for (int k=0; k<remainingRootNodes.size(); k++) {
 				LexEvsTreeNode node = remainingRootNodes.get(k);
     			listEvsTreeNode.add(node);
@@ -717,10 +722,12 @@ public class ViewInHierarchyUtils {
 
     public String getFocusCode(String ontology_node_id) {
 		if (ontology_node_id == null) return null;
+		if (ontology_node_id == null) return null;
 		if (ontology_node_id.indexOf("_dot_") == -1) {
 			return ontology_node_id;
 		}
 		Vector v = StringUtils.parseData(ontology_node_id, "_");
+		if (v == null) return null;
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 		}
@@ -732,10 +739,12 @@ public class ViewInHierarchyUtils {
 
     public String getParentCode(String ontology_node_id) {
 		if (ontology_node_id == null) return null;
+		if (ontology_node_id == null) return null;
 		if (ontology_node_id.indexOf("_dot_") == -1) {
 			return ontology_node_id;
 		}
 		Vector v = StringUtils.parseData(ontology_node_id, "_");
+		if (v == null) return null;
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 		}
@@ -944,6 +953,7 @@ public class ViewInHierarchyUtils {
 		}
 		for (String association : ti._assocToChildMap.keySet()) {
 			List<TreeItem> children = ti._assocToChildMap.get(association);
+			if (children == null) return null;
 			for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
 				TreeItem ti_child = searchTree(scheme, version, ns, code, childItem);
@@ -961,8 +971,10 @@ public class ViewInHierarchyUtils {
 		HashSet hset = new HashSet();
 		for (String association : ti._assocToChildMap.keySet()) {
 			List<TreeItem> children = ti._assocToChildMap.get(association);
+			if (children == null) return null;
 			for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
+				if (childItem == null) return null;
 				if (childItem._code.compareTo(ti._code) != 0 && !hset.contains(childItem._code)) {
 					hset.add(childItem._code);
 				}
@@ -974,6 +986,7 @@ public class ViewInHierarchyUtils {
 	public static void dumpHashSet(HashSet hset) {
 		if (hset == null) return;
 		Iterator it = hset.iterator();
+		if (it == null) return;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			System.out.println(key);
@@ -985,8 +998,10 @@ public class ViewInHierarchyUtils {
 		root._expandable = false;
         for (String association : ti._assocToChildMap.keySet()) {
             List<TreeItem> children = ti._assocToChildMap.get(association);
+            if (children == null) return null;
             for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
+                if (childItem == null) return null;
                 if (!childCodes.contains(childItem._code)) {
 					root.addChild(association, childItem);
 					root._expandable = true;
@@ -1098,8 +1113,10 @@ public class ViewInHierarchyUtils {
 
 		for (String association : vh_tree._assocToChildMap.keySet()) {
 			List<TreeItem> children = vh_tree._assocToChildMap.get(association);
+			if (children == null) return null;
 			for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
+				if (childItem == null) return null;
 				if (childItem._code.compareTo("@@") != 0 && childItem._code.compareTo("@") != 0) {
 					TreeItem node = searchTree(codingScheme, version, childItem._ns, childItem._code, vih_tree);
 					if (node == null) {

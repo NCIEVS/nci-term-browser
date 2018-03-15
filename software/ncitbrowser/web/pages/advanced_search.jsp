@@ -63,6 +63,17 @@
 
     function getSearchTarget() {
       var searchTargetObj = document.forms["advancedSearchForm"].selectSearchOption;
+      // Send redirect:
+      if (searchTargetObj == null) {
+      	try {
+      		String error_msg = "WARNING: The server encountered an unexpected error (file: advanced_search.jsp, code: 1, var: searchTargetObj).";
+      		request.getSession().setAttribute("error_msg", error_msg);
+      		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+      		response.sendRedirect(redirectURL);				 
+      	} catch (Exception ex) {
+      		ex.printStackTrace();
+      	}
+      }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 	      if (searchTargetObj[j].checked == true) {
 	         return searchTargetObj[j].value;
@@ -75,6 +86,17 @@
       if (curr_target != "Code") return;
 
       var searchTargetObj = document.forms["advancedSearchForm"].selectSearchOption;
+      // Send redirect:
+      if (searchTargetObj == null) {
+      	try {
+      		String error_msg = "WARNING: The server encountered an unexpected error (file: advanced_search.jsp, code: 2, var: searchTargetObj).";
+      		request.getSession().setAttribute("error_msg", error_msg);
+      		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+      		response.sendRedirect(redirectURL);				 
+      	} catch (Exception ex) {
+      		ex.printStackTrace();
+      	}
+      }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 		  target = searchTargetObj[j].value;
 		  if (target == "Code") {
@@ -93,6 +115,17 @@
  
        var selectSearchOption = "";
        var selectSearchOptionObj = document.forms["advancedSearchForm"].selectSearchOption;
+       // Send redirect:
+       if (selectSearchOptionObj == null) {
+       	try {
+       		String error_msg = "WARNING: The server encountered an unexpected error (file: advanced_search.jsp, code: 3, var: selectSearchOptionObj).";
+       		request.getSession().setAttribute("error_msg", error_msg);
+       		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+       		response.sendRedirect(redirectURL);				 
+       	} catch (Exception ex) {
+       		ex.printStackTrace();
+       	}
+       }
        for (var i=0; i<selectSearchOptionObj.length; i++) {
          if (selectSearchOptionObj[i].checked) {
            selectSearchOption = selectSearchOptionObj[i].value;
@@ -103,6 +136,17 @@
      
       var algorithm = "exactMatch";
       var algorithmObj = document.forms["advancedSearchForm"].adv_search_algorithm;
+      // Send redirect:
+      if (algorithmObj == null) {
+      	try {
+      		String error_msg = "WARNING: The server encountered an unexpected error (file: advanced_search.jsp, code: 4, var: algorithmObj).";
+      		request.getSession().setAttribute("error_msg", error_msg);
+      		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+      		response.sendRedirect(redirectURL);				 
+      	} catch (Exception ex) {
+      		ex.printStackTrace();
+      	}
+      }
       for (var i=0; i<algorithmObj.length; i++) {
         if (algorithmObj[i].checked) {
            algorithm = algorithmObj[i].value;
@@ -123,6 +167,17 @@
 
       var direction = "";
       var directionObj = document.forms["advancedSearchForm"].direction;
+      // Send redirect:
+      if (directionObj == null) {
+      	try {
+      		String error_msg = "WARNING: The server encountered an unexpected error (file: advanced_search.jsp, code: 5, var: directionObj).";
+      		request.getSession().setAttribute("error_msg", error_msg);
+      		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+      		response.sendRedirect(redirectURL);				 
+      	} catch (Exception ex) {
+      		ex.printStackTrace();
+      	}
+      }
       for (var i=0; i<directionObj.length; i++) {
         if (directionObj[i].checked) {
           direction = directionObj[i].value;
@@ -166,6 +221,17 @@
 
       var direction = "";
       var directionObj = document.forms["advancedSearchForm"].direction;
+      // Send redirect:
+      if (directionObj == null) {
+      	try {
+      		String error_msg = "WARNING: The server encountered an unexpected error (file: advanced_search.jsp, code: 6, var: directionObj).";
+      		request.getSession().setAttribute("error_msg", error_msg);
+      		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+      		response.sendRedirect(redirectURL);				 
+      	} catch (Exception ex) {
+      		ex.printStackTrace();
+      	}
+      }
       for (var i=0; i<directionObj.length; i++) {
         if (directionObj[i].checked) {
           direction = directionObj[i].value;
@@ -193,6 +259,17 @@
  
        var algorithm = "exactMatch";
        var algorithmObj = document.forms["advancedSearchForm"].adv_search_algorithm;
+       // Send redirect:
+       if (algorithmObj == null) {
+       	try {
+       		String error_msg = "WARNING: The server encountered an unexpected error (file: advanced_search.jsp, code: 7, var: algorithmObj).";
+       		request.getSession().setAttribute("error_msg", error_msg);
+       		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+       		response.sendRedirect(redirectURL);				 
+       	} catch (Exception ex) {
+       		ex.printStackTrace();
+       	}
+       }
        for (var i=0; i<algorithmObj.length; i++) {
          if (algorithmObj[i].checked) {
             algorithm = algorithmObj[i].value;
@@ -202,6 +279,17 @@
 
        var selectSearchOption = "";
        var selectSearchOptionObj = document.forms["advancedSearchForm"].selectSearchOption;
+       // Send redirect:
+       if (selectSearchOptionObj == null) {
+       	try {
+       		String error_msg = "WARNING: The server encountered an unexpected error (file: advanced_search.jsp, code: 8, var: selectSearchOptionObj).";
+       		request.getSession().setAttribute("error_msg", error_msg);
+       		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+       		response.sendRedirect(redirectURL);				 
+       	} catch (Exception ex) {
+       		ex.printStackTrace();
+       	}
+       }
        for (var i=0; i<selectSearchOptionObj.length; i++) {
          if (selectSearchOptionObj[i].checked) {
            selectSearchOption = selectSearchOptionObj[i].value;
@@ -222,6 +310,17 @@
 
       var direction = "";
       var directionObj = document.forms["advancedSearchForm"].direction;
+      // Send redirect:
+      if (directionObj == null) {
+      	try {
+      		String error_msg = "WARNING: The server encountered an unexpected error (file: advanced_search.jsp, code: 9, var: directionObj).";
+      		request.getSession().setAttribute("error_msg", error_msg);
+      		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+      		response.sendRedirect(redirectURL);				 
+      	} catch (Exception ex) {
+      		ex.printStackTrace();
+      	}
+      }
       for (var i=0; i<directionObj.length; i++) {
         if (directionObj[i].checked) {
           direction = directionObj[i].value;

@@ -402,6 +402,7 @@ public class SimpleSearchUtils {
 									// Analyze the result ...
 									if (matches.getResolvedConceptReferenceCount() > 0) {
 										Enumeration<? extends ResolvedConceptReference> refEnum = matches.enumerateResolvedConceptReference();
+										if (refEnum == null) return null;
 										while (refEnum.hasMoreElements()) {
 											ResolvedConceptReference rcr = refEnum.nextElement();
 
@@ -496,6 +497,7 @@ public class SimpleSearchUtils {
 		Vector v = new Vector();
 		try {
 			List<CodingScheme> schemes = lrvs.listAllResolvedValueSets();
+			if (schemes == null) return null;
 			for (int i = 0; i < schemes.size(); i++) {
 				CodingScheme cs = schemes.get(i);
 				int j = i+1;

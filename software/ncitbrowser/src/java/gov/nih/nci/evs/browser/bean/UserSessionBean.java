@@ -469,6 +469,7 @@ if (!retval) {
 					String msg = "No match.";
 					if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
 						String t = searchTarget.toLowerCase();
+						if (t == null) return null;
 						if (t.indexOf("code") != -1) {
 							msg = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
 						} else {
@@ -493,6 +494,7 @@ if (!retval) {
 						String msg = "No match.";
 						if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
 							String t = searchTarget.toLowerCase();
+							if (t == null) return null;
 							if (t.indexOf("code") != -1) {
 								msg = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
 							} else {
@@ -556,6 +558,7 @@ if (!retval) {
         if (searchTarget.compareTo("relationships") == 0
             && matchAlgorithm.compareTo("contains") == 0) {
             String text = matchText.trim();
+            if (text == null) return null;
             if (text.length() < NCItBrowserProperties
                 .getMinimumSearchStringLength()) {
                 String msg = Constants.ERROR_REQUIRE_MORE_SPECIFIC_QUERY_STRING;
@@ -882,6 +885,7 @@ if (!retval) {
 
 		if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
 			String t = searchTarget.toLowerCase();
+			if (t == null) return null;
 			if (t.indexOf("code") != -1) {
 				message = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
 			} else {
@@ -1245,6 +1249,7 @@ if (selected_vocabularies != null) { // hidden variable (subsequent search from 
 		List list = Arrays.asList(ontology_list);//.contains("any");
 	    for (int i=0; i<display_name_vec.size(); i++) {
 		    OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+		    if (info == null) return null;
 		    if (info.getVisible() && !list.contains(info.getLabel())) {
 				info.setSelected(false);
 			} else if (info.getVisible() && list.contains(info.getLabel())) {
@@ -1262,6 +1267,7 @@ if (selected_vocabularies != null) { // hidden variable (subsequent search from 
 	buf.append("|");
 	for (int i=0; i<display_name_vec.size(); i++) {
 		 OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+		 if (info == null) return null;
 		 if (info.getSelected()) {
 			 if (!hset.contains(info.getLabel())) {
 				 buf.append(info.getLabel() + "|");
@@ -1329,6 +1335,7 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
 			List checked_list = Arrays.asList(ontology_list);
 			for (int i = 0; i < display_name_vec.size(); i++) {
 				 OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+				 if (info == null) return null;
 				 if (checked_list.contains(info.getLabel())) {
 					 info.setSelected(true);
 				 }
@@ -1342,6 +1349,7 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
 		buff.append("|");
 		for (int i = 0; i < display_name_vec.size(); i++) {
 			 OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+			 if (info == null) return null;
 			 if (info.getSelected()) {
 				 selected_knt++;
 				 ontologies_to_search_on.add(info.getLabel());
@@ -1415,6 +1423,7 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
         else if (searchTarget.compareTo("relationships") == 0
             && matchAlgorithm.compareTo("contains") == 0) {
             String text = matchText.trim();
+            if (text == null) return null;
             if (text.length() < NCItBrowserProperties
                 .getMinimumSearchStringLength()) {
                 String msg = Constants.ERROR_REQUIRE_MORE_SPECIFIC_QUERY_STRING;
@@ -1862,6 +1871,7 @@ response.setContentType("text/html;charset=utf-8");
         String message = Constants.ERROR_NO_MATCH_FOUND;
 		if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
 			String t = searchTarget.toLowerCase();
+			if (t == null) return null;
 			if (t.indexOf("code") != -1) {
 				message = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
 			} else {
@@ -2230,6 +2240,7 @@ if (!retval) {
 
 			if (associationsToNavigate == null) {
 				Vector w = new CodingSchemeDataUtils(lbSvc).getSupportedAssociationNames(scheme, null);
+				if (w == null) return null;
 				if (w == null || w.size() == 0) {
 					//_logger
 					//	.warn("OntologyBean.getAssociationNames() returns null, or nothing???");
@@ -2447,6 +2458,7 @@ System.out.println("(*) advancedSearchAction SearchUtils(lbSvc).searchByAssociat
 					String message = "No match found.";
 					if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
 						String t = searchTarget.toLowerCase();
+						if (t == null) return null;
 						if (t.indexOf("code") != -1) {
 							message = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
 						} else {
@@ -2491,6 +2503,7 @@ response.setContentType("text/html;charset=utf-8");
         String message = "No match found.";
 		if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
 			String t = searchTarget.toLowerCase();
+			if (t == null) return null;
 			if (t.indexOf("code") != -1) {
 				message = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
 			} else {
@@ -2635,6 +2648,7 @@ response.setContentType("text/html;charset=utf-8");
 
 		for (int i = 0; i < display_name_vec.size(); i++) {
 		     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+			 if (info == null) return null;
 			 if (info.getVisible()) {
 				 info.setSelected(false);
 				 if (ontologiesToSearchOnStr.indexOf(info.getLabel()) != -1) {
@@ -2682,6 +2696,7 @@ response.setContentType("text/html;charset=utf-8");
 
 
 	    Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
+		if (display_name_vec == null) return null;
 		for (int i = 0; i < display_name_vec.size(); i++) {
 		     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
              info.setSelected(false);
@@ -2725,6 +2740,7 @@ response.setContentType("text/html;charset=utf-8");
 
 String s = "|";
 	    Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
+		if (display_name_vec == null) return;
 		for (int i = 0; i < display_name_vec.size(); i++) {
 		     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
 
@@ -2770,8 +2786,10 @@ ontologiesToSearchOnStr = s;
         int k = Integer.parseInt(action_cs_index_str);
         int show_counter = 0;
 	    Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
+		if (display_name_vec == null) return;
 		for (int i = 0; i < display_name_vec.size(); i++) {
 		     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+             if (info == null) return;
              if (info.isProduction() && info.getHasMultipleVersions() && !info.getExpanded()) {
 				 show_counter++;
 				 if (show_counter == k) {
@@ -2798,8 +2816,10 @@ ontologiesToSearchOnStr = s;
         int k = Integer.parseInt(action_cs_index_str);
         int hide_counter = 0;
 	    Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
+		if (display_name_vec == null) return;
 		for (int i = 0; i < display_name_vec.size(); i++) {
 		     OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+		     if (info == null) return;
 		     if (info.isProduction() && info.getHasMultipleVersions() && info.getExpanded()) {
 				 hide_counter++;
 				 if (hide_counter == k) {
@@ -3069,6 +3089,7 @@ ontologiesToSearchOnStr = s;
         // Do this so we can capture non-Latin chars
         request.setCharacterEncoding("UTF-8");
         String answer = HTTPUtils.cleanXSS((String) request.getParameter("answer"));
+        if (answer == null) return null;
         if (answer == null || answer.length() == 0) {
             throw new NoReloadException(
                 "Please enter the characters appearing in the image. ");
@@ -3147,6 +3168,7 @@ ontologiesToSearchOnStr = s;
 		if (display_name_vec != null) {
 			for (int i = 0; i < display_name_vec.size(); i++) {
 				 OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+			     if (info == null) return null;
 			     if (info.getExpanded()) {
 					 buf.append(info.getLabel() + "|");
 				 }
@@ -3192,6 +3214,7 @@ ontologiesToSearchOnStr = s;
 
 			MappingIteratorBean bean = new MappingIteratorBean(iterator);
             List list = bean.getData(0, numRemaining-1);
+            if (list == null) return;
             for (int k=0; k<list.size(); k++) {
 				MappingData mappingData = (MappingData) list.get(k);
 				sb.append("\"" + mappingData.getSourceCode() + "\",");

@@ -4,6 +4,17 @@
 <div class="bannerarea_960">
 <%
   JSPUtils.JSPHeaderInfoMore info = new JSPUtils.JSPHeaderInfoMore(request);
+  // Send redirect:
+  if (info == null) {
+  	try {
+  		String error_msg = "WARNING: The server encountered an unexpected error (file: content-header-alt.jsp, code: 1, var: info).";
+  		request.getSession().setAttribute("error_msg", error_msg);
+  		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+  		response.sendRedirect(redirectURL);				 
+  	} catch (Exception ex) {
+  		ex.printStackTrace();
+  	}
+  }
   if (DataUtils.isNCIT(info.dictionary)) {
   %>
     <div class="banner">

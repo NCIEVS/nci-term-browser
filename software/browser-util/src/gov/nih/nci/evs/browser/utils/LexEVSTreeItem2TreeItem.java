@@ -69,6 +69,7 @@ public class LexEVSTreeItem2TreeItem {
 		ti._expandable = false;
 		for (String association : lexevs_ti._assocToChildMap.keySet()) {
 			List<LexEVSTreeItem> children = lexevs_ti._assocToChildMap.get(association);
+			if (children == null) return null;
 			for (int i=0; i<children.size(); i++) {
 				LexEVSTreeItem childItem = (LexEVSTreeItem) children.get(i);
 				TreeItem child_ti = toTreeItem(childItem);
@@ -110,6 +111,7 @@ public class LexEVSTreeItem2TreeItem {
 			List list = new ArrayList();
 			for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
+				if (childItem == null) return null;
 				if (childItem._text.compareTo("NCI Thesaurus") == 0) {
 					ti.addChild(association, childItem);
 					ti._expandable = true;

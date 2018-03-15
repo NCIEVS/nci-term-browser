@@ -267,6 +267,7 @@ public class TreeUtils {
 
         // Now process elements in the branch ...
         AssociatedConceptList concepts = path.getAssociatedConcepts();
+        if (concepts == null) return;
         for (int i = 0; i < concepts.getAssociatedConceptCount(); i++) {
 
             // Determine the next concept in the branch and
@@ -661,6 +662,7 @@ public class TreeUtils {
      *
      * CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt); if (cs ==
      * null) return null; Mappings mappings = cs.getMappings();
+     if (mappings == null) return null;
      * SupportedHierarchy[] hierarchies = mappings.getSupportedHierarchy(); if
      * (hierarchies == null || hierarchies.length == 0) return null;
      *
@@ -700,6 +702,7 @@ public class TreeUtils {
      *
      * CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt); if (cs ==
      * null) return null; Mappings mappings = cs.getMappings();
+     if (mappings == null) return null;
      * SupportedHierarchy[] hierarchies = mappings.getSupportedHierarchy(); if
      * (hierarchies == null || hierarchies.length == 0) return null;
      *
@@ -758,6 +761,7 @@ public class TreeUtils {
 
             Mappings mappings = cs.getMappings();
             SupportedHierarchy[] hierarchies = mappings.getSupportedHierarchy();
+            if (hierarchies == null) return null;
             if (hierarchies == null || hierarchies.length == 0) {
                 return null;
 			}
@@ -805,6 +809,7 @@ public class TreeUtils {
                 return null;
             Mappings mappings = cs.getMappings();
             SupportedHierarchy[] hierarchies = mappings.getSupportedHierarchy();
+            if (hierarchies == null) return null;
             if (hierarchies == null || hierarchies.length == 0)
                 return null;
 
@@ -850,6 +855,7 @@ public class TreeUtils {
                 return null;
             Mappings mappings = cs.getMappings();
             SupportedHierarchy[] hierarchies = mappings.getSupportedHierarchy();
+            if (hierarchies == null) return null;
             if (hierarchies == null || hierarchies.length == 0)
                 return null;
 
@@ -896,6 +902,7 @@ public class TreeUtils {
      *
      * CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt); if (cs ==
      * null) return null; Mappings mappings = cs.getMappings();
+     if (mappings == null) return null;
      * SupportedHierarchy[] hierarchies = mappings.getSupportedHierarchy(); if
      * (hierarchies == null || hierarchies.length == 0) return null;
      * SupportedHierarchy hierarchyDefn = hierarchies[0]; String hier_id =
@@ -1033,6 +1040,7 @@ public class TreeUtils {
      *
      * List child_list = new ArrayList(); for (Iterator<AssociatedConcept>
      * branchNodes = branchItemList .iterateAssociatedConcept();
+     if (branchNodes == null) return null;
      * branchNodes.hasNext();) { AssociatedConcept branchItemNode =
      * branchNodes.next(); child_list.add(branchItemNode); }
      *
@@ -1090,6 +1098,7 @@ public class TreeUtils {
 			focus.setCodingSchemeName(scheme);
 			if (namespace == null) {
                 List<String> list = lbscm.getDistinctNamespacesOfCode(scheme, csvt, code);
+                if (list == null) return null;
                 if (list.size() == 1) {
 					// do nothing???
 				}
@@ -1562,6 +1571,7 @@ public class TreeUtils {
                     csvt, acRef.getConceptCode())));
 
         AssociatedConceptList acl = assoc.getAssociatedConcepts();
+        if (acl == null) return null;
         for (AssociatedConcept ac : acl.getAssociatedConcept()) {
             // Create reverse association (same non-directional name)
             Association rAssoc = new Association();
@@ -1691,6 +1701,7 @@ public class TreeUtils {
             Object[] objs = keyset.toArray();
             String code = (String) objs[0];
             TreeItem ti = (TreeItem) hmap.get(code);
+            if (ti == null) return;
             for (String association : ti._assocToChildMap.keySet()) {
                 _logger.debug("\nassociation: " + association);
                 List<TreeItem> children = ti._assocToChildMap.get(association);
@@ -1704,6 +1715,7 @@ public class TreeUtils {
                         printTree(childItem, focusCode, level);
 
                         List list = getTopNodes(childItem);
+                        if (list == null) return;
                         for (int i = 0; i < list.size(); i++) {
                             Object obj = list.get(i);
                             String nd_code = "";
@@ -1855,6 +1867,7 @@ public class TreeUtils {
     //is_a
     public String selectHierarchyId(String[] ids, String id) {
 		if (ids == null || ids.length == 0) return null;
+		if (ids == null) return null;
 		if (ids.length == 1) {
 			return ids[0];
 		} else {
@@ -1869,9 +1882,11 @@ public class TreeUtils {
 
     public SupportedHierarchy selectSupportedHierarchy(SupportedHierarchy[] hierarchies, String id) {
 		if (hierarchies == null || hierarchies.length == 0) return null;
+		if (hierarchies == null) return null;
 		for (int i=0; i<hierarchies.length; i++) {
 			SupportedHierarchy hierarchyDefn = hierarchies[i];
 			String hier_id = hierarchyDefn.getLocalId();
+			if (hier_id == null) return null;
 			if (hier_id.compareTo(id) == 0) {
 				return hierarchyDefn;
 			}
@@ -1924,6 +1939,7 @@ public class TreeUtils {
             int parent_knt = 0;
             if (list != null && list.getAssociationCount() > 0) {
                 Association[] associations = list.getAssociation();
+                if (associations == null) return;
                 for (int k = 0; k < associations.length; k++) {
                     Association association = associations[k];
                     AssociatedConceptList acl =
@@ -2024,6 +2040,7 @@ public class TreeUtils {
                 return null;
             Mappings mappings = cs.getMappings();
             SupportedHierarchy[] hierarchies = mappings.getSupportedHierarchy();
+            if (hierarchies == null) return null;
             if (hierarchies == null || hierarchies.length == 0)
                 return null;
             SupportedHierarchy hierarchyDefn = hierarchies[0];
@@ -2087,6 +2104,7 @@ public class TreeUtils {
 
         for (int i = 0; i < roots.getResolvedConceptReferenceCount(); i++) {
             ResolvedConceptReference rcr = roots.getResolvedConceptReference(i);
+            if (rcr == null) return null;
             // _logger.debug("getHierarchyRoots rcr.getConceptCode(): " +
             // rcr.getConceptCode());
 
@@ -2163,6 +2181,7 @@ public class TreeUtils {
         int knt = 0;
         for (int i = 0; i < roots.getResolvedConceptReferenceCount(); i++) {
             ResolvedConceptReference rcr = roots.getResolvedConceptReference(i);
+            if (rcr == null) return null;
             // _logger.debug("getHierarchyRoots rcr.getConceptCode(): " +
             // rcr.getConceptCode());
 
@@ -2250,6 +2269,7 @@ public class TreeUtils {
                 return null;
             Mappings mappings = cs.getMappings();
             SupportedHierarchy[] hierarchies = mappings.getSupportedHierarchy();
+            if (hierarchies == null) return null;
             if (hierarchies == null || hierarchies.length == 0)
                 return null;
 
@@ -2281,6 +2301,7 @@ public class TreeUtils {
                 return null;
             Mappings mappings = cs.getMappings();
             SupportedHierarchy[] hierarchies = mappings.getSupportedHierarchy();
+            if (hierarchies == null) return null;
             if (hierarchies == null || hierarchies.length == 0)
                 return null;
 
@@ -2408,6 +2429,7 @@ public class TreeUtils {
                 return null;
             Mappings mappings = cs.getMappings();
             SupportedHierarchy[] hierarchies = mappings.getSupportedHierarchy();
+            if (hierarchies == null) return null;
             if (hierarchies == null || hierarchies.length == 0)
                 return null;
 
@@ -2452,6 +2474,7 @@ public class TreeUtils {
 
 			if (namespace == null) {
                 List<String> ns_list = lbscm.getDistinctNamespacesOfCode(scheme, csvt, code);
+                if (ns_list == null) return null;
                 if (ns_list.size() == 1) {
 					// do nothing???
 				}
@@ -2532,6 +2555,7 @@ public class TreeUtils {
     public static void relabelTreeNodes(HashMap hmap) {
 		//Iterator it = hmap.keySet().iterator();
 		Iterator it = hmap.entrySet().iterator();
+		if (it == null) return;
 		while (it.hasNext()) {
             Entry thisEntry = (Entry) it.next();
 			String key = (String) thisEntry.getKey();
@@ -2611,6 +2635,7 @@ public class TreeUtils {
             csvt.setVersion(version);
             // Iterate through all hierarchies and levels ...
             String[] hierarchyIDs = lbscm.getHierarchyIDs(scheme, csvt);
+            if (hierarchyIDs == null) return null;
             for (int k = 0; k < hierarchyIDs.length; k++) {
                 String hierarchyID = hierarchyIDs[k];
                 AssociationList associations =

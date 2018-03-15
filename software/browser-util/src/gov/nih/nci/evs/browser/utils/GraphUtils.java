@@ -50,6 +50,7 @@ public class GraphUtils {
 	public static String generateGraphScript(HashSet nodes, HashMap edge_map, int option) {
 		Vector node_label_vec = new Vector();
 		Iterator it = nodes.iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String node_label = (String) it.next();
 			node_label_vec.add(node_label);
@@ -96,6 +97,7 @@ public class GraphUtils {
 			buf.append("var edges = [").append("\n");
 			int count = 0;
 			Iterator it2 = edge_map.keySet().iterator();
+			if (it2 == null) return null;
 			while (it2.hasNext()) {
 				String key = (String) it2.next();
 				Vector w = (Vector) edge_map.get(key);
@@ -114,6 +116,7 @@ public class GraphUtils {
 				String to_id = (String) label2IdMap.get(target);
 
 				Vector w = (Vector) edge_map.get(key);
+				if (w == null) return null;
 				for (int k=0; k<w.size(); k++) {
 					String edge = (String) w.elementAt(k);
 					m++;
@@ -147,6 +150,7 @@ public class GraphUtils {
 		Vector v = new Vector();
 		Vector node_label_vec = new Vector();
 		Iterator it = nodes.iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String node_label = (String) it.next();
 			//node_label = encodeNodeLabel(node_label);
@@ -201,6 +205,7 @@ public class GraphUtils {
 			v.add("var edges = [");
 			int count = 0;
 			Iterator it2 = edge_map.keySet().iterator();
+			if (it2 == null) return null;
 			while (it2.hasNext()) {
 				String key = (String) it2.next();
 				Vector w = (Vector) edge_map.get(key);
@@ -219,6 +224,7 @@ public class GraphUtils {
 				String to_id = (String) label2IdMap.get(target);
 
 				Vector w = (Vector) edge_map.get(key);
+				if (w == null) return null;
 				for (int k=0; k<w.size(); k++) {
 					String edge = (String) w.elementAt(k);
 					m++;

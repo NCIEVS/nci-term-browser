@@ -264,6 +264,7 @@ public class ValueSetFormatter {
                     rcrl.getResolvedConceptReference();
                 for (int i = 0; i < rcra.length; i++) {
                     ResolvedConceptReference rcr = rcra[i];
+				    if (rcr == null) return null;
 				    String t = rcr.getEntityDescription().getContent() + "|"+ rcr.getCode() + "|"+ rcr.getCodingSchemeName()
 					+ "|" + rcr.getCodeNamespace();
                     v.add(t);
@@ -298,8 +299,10 @@ public class ValueSetFormatter {
     public LocalNameList getPropertyNameLocalNameList(Vector types) {
 		 Vector property_names = new Vector();
 		 if (types == null || types.size() == 0) return null;
+		 if (types == null) return null;
 		 for (int i=0; i<types.size(); i++) {
 			 String type = (String) types.elementAt(i);
+			 if (type == null) return null;
 			 if (type.endsWith("Name") || type.endsWith("Term") || type.endsWith("Code")) {
 				 if (!property_names.contains("FULL_SYN")) {
 					 property_names.add("FULL_SYN");
@@ -442,6 +445,7 @@ public class ValueSetFormatter {
 			String term_name_found = null;
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("name")) {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
@@ -465,6 +469,7 @@ public class ValueSetFormatter {
 			if (term_name_found == null) {
 				for (int i=0; i<u.size(); i++) {
 					String t = (String) u.elementAt(i);
+					if (t == null) return null;
 					if (t.startsWith("name")) {
 						HashMap hmap = lineSegment2HashMap(t);
 						String form = (String) hmap.get("form");
@@ -484,6 +489,7 @@ public class ValueSetFormatter {
 			StringBuffer buf = new StringBuffer();
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("name")) {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
@@ -495,6 +501,7 @@ public class ValueSetFormatter {
 				}
 			}
 			String s = buf.toString();
+			if (s == null) return null;
 			if (s.length() > 0) {
 				s = s.substring(0, s.length()-1);
 			}
@@ -504,6 +511,7 @@ public class ValueSetFormatter {
 			StringBuffer buf = new StringBuffer();
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("name")) {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
@@ -515,6 +523,7 @@ public class ValueSetFormatter {
 				}
 			}
 			String s = buf.toString();
+			if (s == null) return null;
 			if (s.length() > 0) {
 				s = s.substring(0, s.length()-1);
 			}
@@ -523,6 +532,7 @@ public class ValueSetFormatter {
 			StringBuffer buf = new StringBuffer();
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("name")) {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
@@ -534,6 +544,7 @@ public class ValueSetFormatter {
 				}
 			}
 			String s = buf.toString();
+			if (s == null) return null;
 			if (s.length() > 0) {
 				s = s.substring(0, s.length()-1);
 			}
@@ -542,6 +553,7 @@ public class ValueSetFormatter {
 			StringBuffer buf = new StringBuffer();
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("definition")) {
 					HashMap hmap = lineSegment2HashMap(t);
 					String src = (String) hmap.get("source");
@@ -552,6 +564,7 @@ public class ValueSetFormatter {
 				}
 			}
 			String s = buf.toString();
+			if (s == null) return null;
 			if (s.length() > 0) {
 				s = s.substring(0, s.length()-1);
 			}
@@ -564,6 +577,7 @@ public class ValueSetFormatter {
 		} else if (type.compareTo(NCIT_PREFERRED_TERM) == 0) {
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("name")) {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
@@ -578,6 +592,7 @@ public class ValueSetFormatter {
 			Vector syn_vec = new Vector();
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("name")) {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
@@ -612,6 +627,7 @@ public class ValueSetFormatter {
 				buf.append(value).append("$");
 			}
 			String s = buf.toString();
+			if (s == null) return null;
 			if (s.length() > 0) {
 				s = s.substring(0, s.length()-1);
 			}
@@ -620,6 +636,7 @@ public class ValueSetFormatter {
 			StringBuffer buf = new StringBuffer();
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("definition")) {
 					HashMap hmap = lineSegment2HashMap(t);
 					String src = (String) hmap.get("source");
@@ -630,6 +647,7 @@ public class ValueSetFormatter {
 				}
 			}
 			String s = buf.toString();
+			if (s == null) return null;
 			if (s.length() > 0) {
 				s = s.substring(0, s.length()-1);
 			}
@@ -638,9 +656,11 @@ public class ValueSetFormatter {
 		} else if (type.compareTo(MALIGNANCY_STATUS) == 0) { //Neoplastic_Status
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("property")) {
 					Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(t, "$");
 					String prop_name = (String) w.elementAt(1);
+					if (prop_name == null) return null;
 					if (prop_name.compareTo("Neoplastic_Status") == 0) {
 						String prop_value = (String) w.elementAt(2);
 						return prop_value;
@@ -650,9 +670,11 @@ public class ValueSetFormatter {
 		} else if (type.compareTo(NCI_METATHESAURUS_CUI) == 0 || type.compareTo("NCI_META_CUI") == 0) {
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("property")) {
 					Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(t, "$");
 					String prop_name = (String) w.elementAt(1);
+					if (prop_name == null) return null;
 					if (prop_name.compareTo("NCI_META_CUI") == 0) {
 						String prop_value = (String) w.elementAt(2);
 						return prop_value;
@@ -663,9 +685,11 @@ public class ValueSetFormatter {
 		} else if (type.compareTo(UMLS_CUI) == 0 || type.compareTo("UMLS_CUI") == 0) {
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("property")) {
 					Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(t, "$");
 					String prop_name = (String) w.elementAt(1);
+					if (prop_name == null) return null;
 					if (prop_name.compareTo("UMLS_CUI") == 0) {
 						String prop_value = (String) w.elementAt(2);
 					    return prop_value;
@@ -675,9 +699,11 @@ public class ValueSetFormatter {
 		} else {
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
+				if (t == null) return null;
 				if (t.startsWith("property")) {
 					Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(t, "$");
 					String prop_name = (String) w.elementAt(1);
+					if (prop_name == null) return null;
 					if (prop_name.compareTo(type) == 0) {
 						String prop_value = (String) w.elementAt(2);
 						return prop_value;
@@ -754,6 +780,7 @@ public class ValueSetFormatter {
 				value = "";
 			}
 			Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(value, "$");
+			if (w == null) return null;
 			if (w.size() == 1) {
 				String hyperlink = value;
 				if (key.compareTo(NCIT_CONCEPT_CODE) == 0) {
@@ -782,6 +809,7 @@ public class ValueSetFormatter {
 				value = "";
 			}
 			Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(value, "$");
+			if (w == null) return null;
 			if (w.size() == 1) {
 				buf.append(value).append("|");
 		    } else {
@@ -798,6 +826,7 @@ public class ValueSetFormatter {
 			}
 		}
 		String retstr = buf.toString();
+		if (retstr == null) return null;
 		if (retstr.endsWith("|")) {
 			retstr = retstr.substring(0, retstr.length()-1);
 		}
@@ -966,6 +995,7 @@ public class ValueSetFormatter {
 		ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
 		Mappings mappings = vsd.getMappings();
 		SupportedSource[] supporetedSources = mappings.getSupportedSource();
+		if (supporetedSources == null) return null;
 		for (int i=0; i<supporetedSources.length; i++) {
 			SupportedSource supportedSource = supporetedSources[i];
 			return supportedSource.getContent();
@@ -984,6 +1014,7 @@ public class ValueSetFormatter {
 	public Vector getVars(String line) {
 		Vector w = new Vector();
 		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line);
+		if (u == null) return null;
 		for (int i=0; i<u.size(); i++) {
 			String heading = (String) u.elementAt(i);
 			String varName = getVarName(heading);
@@ -1010,6 +1041,7 @@ public class ValueSetFormatter {
 		HashSet hset = new HashSet();
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
+			if (t == null) return null;
 			if (!hset.contains(t)) {
 				hset.add(t);
 				w.add(t);
@@ -1028,6 +1060,7 @@ public class ValueSetFormatter {
 			String line = (String) vs_data.elementAt(i);
 			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line, '|');
 			gov.nih.nci.evs.browser.bean.Concept c = new gov.nih.nci.evs.browser.bean.Concept();
+			if (c == null) return null;
 			for (int j=0; j<var_vec.size(); j++) {
 				String var = (String) var_vec.elementAt(j);
 				String value = (String) u.elementAt(j);
@@ -1127,6 +1160,7 @@ public class ValueSetFormatter {
         String name = null;
         for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
+			if (t == null) return null;
 			if (t.indexOf("|AB|NCI|") != -1) {
 				name = t.substring(0, t.indexOf("|AB|NCI|"));
 				break;

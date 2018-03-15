@@ -916,6 +916,7 @@ public class CacheController {
             String code = (String) objs[0];
 
             TreeItem ti = (TreeItem) hmap.get(code);
+            if (ti == null) return null;
             for (String association : ti._assocToChildMap.keySet()) {
 
                 List<TreeItem> children = ti._assocToChildMap.get(association);
@@ -1100,6 +1101,7 @@ public class CacheController {
     private int findFocusNodePosition(String node_id, List<TreeItem> children) {
         for (int i = 0; i < children.size(); i++) {
             TreeItem childItem = (TreeItem) children.get(i);
+            if (childItem == null) return -1;
             if (node_id.compareTo(childItem._code) == 0)
                 return i;
         }
@@ -1221,6 +1223,7 @@ public class CacheController {
         JSONArray nodesArray = new JSONArray();
         for (String association : ti._assocToChildMap.keySet()) {
             List<TreeItem> children = ti._assocToChildMap.get(association);
+			if (children == null) return null;
 			for (int i = 0; i < children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
 				int knt = 0;

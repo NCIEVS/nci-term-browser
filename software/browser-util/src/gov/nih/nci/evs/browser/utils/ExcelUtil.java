@@ -131,6 +131,7 @@ public class ExcelUtil {
 			int lcv = 0;
 			while (rowIterator.hasNext()) {
 				Row row = rowIterator.next();
+				if (row == null) return -1;
 				//if (row.getCell(0).getStringCellValue().compareTo(code) == 0 ||
 				if (row.getCell(col).getStringCellValue().compareTo(code) == 0) {
 					return lcv;
@@ -171,6 +172,7 @@ public class ExcelUtil {
 
 			while (rowIterator.hasNext()) {
 				Row row = rowIterator.next();
+				if (row == null) return -1;
 				//if (row.getCell(0).getStringCellValue().compareTo(code) == 0 ||
 				if (row.getCell(col).getStringCellValue().compareTo(code) == 0) {
 					num = lcv;

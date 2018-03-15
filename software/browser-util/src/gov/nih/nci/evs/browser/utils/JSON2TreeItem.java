@@ -63,6 +63,7 @@ public class JSON2TreeItem {
 		JSONParser parser = new JSONParser();
 		TreeItem ti = new TreeItem("", "");
 		Iterator it = jsonObj.keySet().iterator();
+        if (it == null) return null;
         while (it.hasNext()) {
 			String key = (String) it.next();
 			Object obj = jsonObj.get(key);
@@ -160,6 +161,7 @@ public class JSON2TreeItem {
 		StringBuffer buf = new StringBuffer();
 		for (String association : ti._assocToChildMap.keySet()) {
 			List<TreeItem> children = ti._assocToChildMap.get(association);
+			if (children == null) return null;
 			for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
 				String s = getTreeItemInJson(childItem);
@@ -191,6 +193,7 @@ public class JSON2TreeItem {
             buf.append("[{\"children_nodes\":");
 	        for (String association : ti._assocToChildMap.keySet()) {
 		        List<TreeItem> children = ti._assocToChildMap.get(association);
+		        if (children == null) return null;
 		        for (int i=0; i<children.size(); i++) {
 		            TreeItem childItem = (TreeItem) children.get(i);
 		            String s = getTreeItemInJson(childItem);

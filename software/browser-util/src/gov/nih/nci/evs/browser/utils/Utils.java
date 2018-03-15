@@ -117,6 +117,7 @@ public class Utils {
         int i=0;
 
         Iterator<Integer> iterator = list.iterator();
+        if (iterator == null) return null;
         while (iterator.hasNext()) {
             Integer value = iterator.next();
             values[i++] = value;
@@ -138,11 +139,13 @@ public class Utils {
     public static void dumpHashMap(String label, HashMap hmap) {
 		System.out.println("\n" + label + ":");
 		Iterator it = hmap.keySet().iterator();
+		if (it == null) return;
 		while (it.hasNext()) {
 			String nv = (String) it.next();
 			System.out.println("\n");
 
 			Vector v = (Vector) hmap.get(nv);
+			if (v == null) return;
 			for (int i=0; i<v.size(); i++) {
 				String q = (String) v.elementAt(i);
 				System.out.println(nv + " --> " + q);
@@ -237,6 +240,7 @@ public class Utils {
     public static Vector<String> unique(Vector<String> list) {
         Vector<String> newList = new Vector<String>();
         Iterator<String> iterator = list.iterator();
+        if (iterator == null) return null;
         while (iterator.hasNext()) {
             String text = iterator.next();
             if (! newList.contains(text))
@@ -253,6 +257,7 @@ public class Utils {
             str = "  " + str;
 
         String index = Integer.toString(i);
+        if (index == null) return null;
         for (int j=index.length(); j<3; ++j)
         	index = " " + index;
 

@@ -39,6 +39,7 @@ public class PropertyFileUtil {
 
 		Set<String> keys = prop.stringPropertyNames();
 		Iterator it = keys.iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			String value = prop.getProperty(key);

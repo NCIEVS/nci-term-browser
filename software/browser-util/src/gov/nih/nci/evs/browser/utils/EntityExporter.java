@@ -77,6 +77,7 @@ public class EntityExporter {
         try {
             CodingSchemeRenderingList lcsrl = lbSvc.getSupportedCodingSchemes();
             CodingSchemeRendering[] csra = lcsrl.getCodingSchemeRendering();
+            if (csra == null) return null;
             for (int i = 0; i < csra.length; i++) {
                 CodingSchemeRendering csr = csra[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
@@ -208,12 +209,15 @@ public class EntityExporter {
     public void printProperties(PrintWriter pw, Entity node) {
         if (node == null) return;
 		Presentation[] presentations = node.getPresentation();
+		if (presentations == null) return;
 		for (int i = 0; i < presentations.length; i++) {
 			 Presentation presentation = presentations[i];
 			 StringBuffer buf = new StringBuffer();
+			 if (buf == null) return;
 			 buf.append("Presentation|").append(presentation.getPropertyName())
 					 .append("|").append(presentation.getValue().getContent());
 			 PropertyQualifier[] qualifiers = presentation.getPropertyQualifier();
+			 if (qualifiers == null) return;
 			 if (qualifiers.length > 0) {
 				 buf.append("$");
 				 for (int k=0; k<qualifiers.length; k++) {
@@ -232,6 +236,7 @@ public class EntityExporter {
 			 }
 
 			 Source[] sources = presentation.getSource();
+			 if (sources == null) return;
 			 if (sources.length > 0) {
 				 for (int k=0; k<sources.length; k++) {
 					  Source source = sources[k];
@@ -246,12 +251,15 @@ public class EntityExporter {
 
 
 		Definition[] definitions = node.getDefinition();
+		if (definitions == null) return;
 		for (int i = 0; i < definitions.length; i++) {
 			 Definition definition = definitions[i];
 			 StringBuffer buf = new StringBuffer();
+			 if (buf == null) return;
 			 buf.append("Definition|").append(definition.getPropertyName())
 					 .append("|").append(definition.getValue().getContent());
 			 PropertyQualifier[] qualifiers = definition.getPropertyQualifier();
+			 if (qualifiers == null) return;
 			 if (qualifiers.length > 0) {
 				 buf.append("$");
 				 for (int k=0; k<qualifiers.length; k++) {
@@ -263,6 +271,7 @@ public class EntityExporter {
 				 }
 			 }
 			 Source[] sources = definition.getSource();
+			 if (sources == null) return;
 			 if (sources.length > 0) {
 				 for (int k=0; k<sources.length; k++) {
 					  Source source = sources[k];
@@ -276,12 +285,15 @@ public class EntityExporter {
 		}
 
 		Comment[] comments = node.getComment();
+		if (comments == null) return;
 		for (int i = 0; i < comments.length; i++) {
 			 Comment comment = comments[i];
 			 StringBuffer buf = new StringBuffer();
+			 if (buf == null) return;
 			 buf.append("Comment|").append(comment.getPropertyName())
 					 .append("|").append(comment.getValue().getContent());
 			 PropertyQualifier[] qualifiers = comment.getPropertyQualifier();
+			 if (qualifiers == null) return;
 			 if (qualifiers.length > 0) {
 				 buf.append("$");
 				 for (int k=0; k<qualifiers.length; k++) {
@@ -293,6 +305,7 @@ public class EntityExporter {
 				 }
 			 }
 			 Source[] sources = comment.getSource();
+			 if (sources == null) return;
 			 if (sources.length > 0) {
 				 for (int k=0; k<sources.length; k++) {
 					  Source source = sources[k];
@@ -306,12 +319,15 @@ public class EntityExporter {
 		}
 
 		Property[] properties = node.getProperty();
+		if (properties == null) return;
 		for (int i = 0; i < properties.length; i++) {
 			 Property property = properties[i];
 			 StringBuffer buf = new StringBuffer();
+			 if (buf == null) return;
 			 buf.append("Property|").append(property.getPropertyName())
 					 .append("|").append(property.getValue().getContent());
 			 PropertyQualifier[] qualifiers = property.getPropertyQualifier();
+			 if (qualifiers == null) return;
 			 if (qualifiers.length > 0) {
 				 buf.append("$");
 				 for (int k=0; k<qualifiers.length; k++) {
@@ -323,6 +339,7 @@ public class EntityExporter {
 				 }
 			 }
 			 Source[] sources = property.getSource();
+			 if (sources == null) return;
 			 if (sources.length > 0) {
 				 for (int k=0; k<sources.length; k++) {
 					  Source source = sources[k];
@@ -418,6 +435,7 @@ public class EntityExporter {
 						pw.println("\t" + assoc.getAssociationName());
 
 						AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+						if (acl == null) return;
 						for (int j = 0; j < acl.length; j++) {
 							AssociatedConcept ac = acl[j];
 
@@ -466,6 +484,7 @@ public class EntityExporter {
                     pw.println("\t" + assoc.getAssociationName());
 
                     AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+                    if (acl == null) return;
                     for (int j = 0; j < acl.length; j++) {
                         AssociatedConcept ac = acl[j];
 
@@ -744,6 +763,7 @@ public class EntityExporter {
         String label = null;
         for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
+			if (t == null) return null;
 			if (t.startsWith("Presentation|label")) {
 				Vector u = StringUtils.parseData(t);
 				label = (String) u.elementAt(2);

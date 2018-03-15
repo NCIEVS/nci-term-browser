@@ -42,6 +42,17 @@
     
     function onCodeButtonPressed(formname) {
           var algorithmObj = document.forms[formname].algorithm;
+          // Send redirect:
+          if (algorithmObj == null) {
+          	try {
+          		String error_msg = "WARNING: The server encountered an unexpected error (file: resolved_value_set.jsp, code: 1, var: algorithmObj).";
+          		request.getSession().setAttribute("error_msg", error_msg);
+          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+          		response.sendRedirect(redirectURL);				 
+          	} catch (Exception ex) {
+          		ex.printStackTrace();
+          	}
+          }
 	  for (var j=0; j<algorithmObj.length; j++) {
 		  algorithm = algorithmObj[j].value;
 		  if (algorithm == "exactMatch") {
@@ -53,6 +64,17 @@
 
     function getSearchTarget(formname) {
           var searchTargetObj = document.forms[formname].searchTarget;
+          // Send redirect:
+          if (searchTargetObj == null) {
+          	try {
+          		String error_msg = "WARNING: The server encountered an unexpected error (file: resolved_value_set.jsp, code: 2, var: searchTargetObj).";
+          		request.getSession().setAttribute("error_msg", error_msg);
+          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+          		response.sendRedirect(redirectURL);				 
+          	} catch (Exception ex) {
+          		ex.printStackTrace();
+          	}
+          }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 	      if (searchTargetObj[j].checked == true) {
 	          return searchTargetObj[j].value;
@@ -332,6 +354,17 @@ if (has_released_file) {
                         if (DataUtils.isNCIT(defaultCodingScheme)) {
 				Vector codes = new Vector();
 				List list = iteratorBean.getData(istart, iend);
+				// Send redirect:
+				if (list == null) {
+					try {
+						String error_msg = "WARNING: The server encountered an unexpected error (file: resolved_value_set.jsp, code: 3, var: list).";
+						request.getSession().setAttribute("error_msg", error_msg);
+						String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+						response.sendRedirect(redirectURL);				 
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
 				for (int k = 0; k < list.size(); k++) {
 					Object obj = list.get(k);
 					ResolvedConceptReference ref = (ResolvedConceptReference) obj;

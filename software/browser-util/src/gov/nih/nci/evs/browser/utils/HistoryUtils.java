@@ -252,6 +252,7 @@ public class HistoryUtils {
 
             HashSet<String> hset = new HashSet<String>();
             Enumeration<? extends NCIChangeEvent> enumeration = list.enumerateEntry();
+            if (enumeration == null) return null;
             while (enumeration.hasMoreElements()) {
                 NCIChangeEvent event = (NCIChangeEvent) enumeration.nextElement();
                 ChangeType type = event.getEditaction();
@@ -299,9 +300,11 @@ public class HistoryUtils {
             return null;
         ChangeType type = event.getEditaction();
         String type_str = type.toString();
+        if (type_str == null) return null;
         if (type_str.compareTo("merge") == 0) {
             Date date = event.getEditDate();
             String rCode = event.getReferencecode();
+            if (rCode == null) return null;
             if (rCode.compareTo(code) == 0) {
 
                 _logger.debug("rCode." + rCode + " == code == " + code);
@@ -451,6 +454,7 @@ public class HistoryUtils {
                     // C1040101)
                     Vector w = StringUtils.parseData(s, "|");
                     String action = (String) w.elementAt(0);
+                    if (action == null) return null;
                     if (action.compareTo("merge") == 0
                         || action.compareTo("retire") == 0) {
                         String date = (String) w.elementAt(1);

@@ -91,6 +91,7 @@ public class CodingSchemeUtils {
                 return null;
             }
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -100,6 +101,7 @@ public class CodingSchemeUtils {
                             CodingSchemeVersionStatus.ACTIVE);
 
                 String representsVersion = css.getRepresentsVersion();
+                if (representsVersion == null) return null;
                 if (representsVersion.length() <= MAX_VERSION_LENGTH) {
 
 					CodingSchemeVersionOrTag vt =
@@ -109,6 +111,7 @@ public class CodingSchemeUtils {
 					try {
 						CodingScheme cs = lbSvc.resolveCodingScheme(css.getFormalName(), vt);
 						String[] localnames = cs.getLocalName();
+						if (localnames == null) return null;
 						for (int m = 0; m < localnames.length; m++) {
 							String localname = localnames[m];
 							_localName2CodingSchemeNameHashMap.put(localname, cs.getCodingSchemeName());
@@ -130,6 +133,7 @@ public class CodingSchemeUtils {
 		pw.println(label);
 		Vector key_vec = new Vector();
 		Iterator it = hmap.keySet().iterator();
+		if (it == null) return;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			key_vec.add(key);

@@ -76,8 +76,10 @@ public class MetadataUtils {
         // ArrayList<MetadataProperty>();
         Vector v = new Vector();
         Iterator<? extends MetadataProperty> metaItr = mdpl.iterateMetadataProperty();
+        if (metaItr == null) return null;
         while (metaItr.hasNext()) {
             MetadataProperty property = (MetadataProperty) metaItr.next();
+            if (property == null) return null;
             if (property.getName().equals(CODING_SCHEME_NAME_PROPERTY)) {
                 v.add(property.getValue());
             }
@@ -118,8 +120,10 @@ public class MetadataUtils {
             new ArrayList<MetadataProperty>();
 
         Iterator<? extends MetadataProperty> metaItr = mdpl.iterateMetadataProperty();
+        if (metaItr == null) return null;
         while (metaItr.hasNext()) {
             MetadataProperty property = (MetadataProperty) metaItr.next();
+            if (property == null) return null;
             if (property.getName().equals(CODING_SCHEME_NAME_PROPERTY)
                 && property.getValue().equals(codingScheme)) {
                 metaDataProperties.add(property);
@@ -178,6 +182,7 @@ public class MetadataUtils {
         try {
             CodingSchemeRenderingList lcsrl = lbSvc.getSupportedCodingSchemes();
             CodingSchemeRendering[] csrs = lcsrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 CodingSchemeRendering csr = (CodingSchemeRendering) csrs[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
@@ -290,6 +295,7 @@ public class MetadataUtils {
             return null;
         Vector v = new Vector();
         Iterator<? extends MetadataProperty> metaItr = mdpl.iterateMetadataProperty();
+        if (metaItr == null) return null;
         while (metaItr.hasNext()) {
             MetadataProperty property = (MetadataProperty) metaItr.next();
             String t = property.getName() + "|" + property.getValue();
@@ -315,6 +321,7 @@ public class MetadataUtils {
             String t = (String) metadata.elementAt(i);
             Vector u = StringUtils.parseData(t, "|");
             String name = (String) u.elementAt(0);
+            if (name == null) return null;
             if (name.compareTo(propertyName) == 0) {
                 String value = (String) u.elementAt(1);
                 w.add(value);
@@ -485,11 +492,13 @@ public class MetadataUtils {
                 AbsoluteCodingSchemeVersionReference acsvr = acdvra[i];
                 String urn = acsvr.getCodingSchemeURN();
                 String ver = acsvr.getCodingSchemeVersion();
+                if (ver == null) return null;
                 if (urn.equals(cs_urn) && ver.equals(version)) {
                     // 100807 KLO
                     svc = svc.restrictToCodingScheme(acsvr);
                     MetadataPropertyList mdpl = svc.resolve();
                     MetadataProperty[] properties = mdpl.getMetadataProperty();
+                    if (properties == null) return null;
                     for (int j = 0; j < properties.length; j++) {
                         MetadataProperty property = properties[j];
                         NameAndValue nv =
@@ -575,8 +584,10 @@ public class MetadataUtils {
 
 			CodingScheme cs = lbSvc.resolveCodingScheme(scheme, versionOrTag);
 			NameAndValue[] nvList = getMetadataProperties(cs);
+			if (nvList == null) return false;
 			for (int k = 0; k < nvList.length; k++) {
 				NameAndValue nv = (NameAndValue) nvList[k];
+				if (nv == null) return false;
 				if (nv.getName().compareTo(gov.nih.nci.evs.browser.common.Constants.TREE_ACCESS_ALLOWED) == 0) {
 				    if (nv.getContent().compareTo("false") == 0) {
 						return false;

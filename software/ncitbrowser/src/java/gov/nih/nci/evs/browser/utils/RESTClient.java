@@ -153,6 +153,7 @@ public class RESTClient{
         Set entrys = map.entrySet() ;
         Vector v = new Vector();
         Iterator iter = entrys.iterator();
+        if (iter == null) return;
         while(iter.hasNext()) {
             Map.Entry me = (Map.Entry)iter.next();
             v.add(me.getKey() + "|" + me.getValue());

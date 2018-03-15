@@ -103,6 +103,7 @@ public class ValueSetResolver {
 		try {
 			pw = new PrintWriter(outputfile, "UTF-8");
 			Iterator it = vsdUri2NameMap.keySet().iterator();
+			if (it == null) return;
 			while (it.hasNext()) {
 				String cs_uri = (String) it.next();
 				String name = (String) vsdUri2NameMap.get(cs_uri);

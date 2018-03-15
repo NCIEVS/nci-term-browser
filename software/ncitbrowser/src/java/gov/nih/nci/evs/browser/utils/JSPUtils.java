@@ -251,6 +251,7 @@ public class JSPUtils {
             for (int j = 0; j < display_name_vec.size(); j++) {
                 OntologyInfo info = display_name_vec.elementAt(j);
                 String label = info.getLabel();
+                if (label == null) return null;
                 if (label.compareTo(s) == 0) {
                     displayName = info.getDisplayName();
                     break;
@@ -493,6 +494,7 @@ public class JSPUtils {
 
         for (int i = 0; i < t.length() - target.length(); i++) {
             String substr = t.substring(i, i + target.length());
+            if (substr == null) return null;
             if (substr.compareTo(target) == 0) {
                 found = true;
                 t1 = t.substring(0, i);
@@ -500,6 +502,7 @@ public class JSPUtils {
                 while (k1 < t.length() - 1) {
                     k1++;
                     String c = t.substring(k1, k1 + 1);
+                    if (c == null) return null;
                     if (c.compareTo(doubleQuote) == 0) {
                         t1 = t.substring(0, k1);
                         break;
@@ -509,6 +512,7 @@ public class JSPUtils {
                 while (k2 > 0) {
                     k2--;
                     String c = t.substring(k2, k2 + 1);
+                    if (c == null) return null;
                     if (c.compareTo(doubleQuote) == 0) {
                         t2 = t.substring(0, k2);
                         break;

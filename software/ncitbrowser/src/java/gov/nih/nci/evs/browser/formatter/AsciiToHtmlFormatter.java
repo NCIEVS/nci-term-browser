@@ -86,6 +86,7 @@ public class AsciiToHtmlFormatter extends FileFormatterBase
 
         // Prints topmost report banner:
         Vector<String> headings = getColumnHeadings(textfile, delimiter);
+        if (headings == null) return;
         out.writeln_indent("<tr><td colspan=\"" + (headings.size() + 1)
             + "\" class=\"reportTablePrimaryLabel\" height=\"20\">");
         out.writeln_inden1("Report: " + getReportName(out.getFilename()));
@@ -112,6 +113,7 @@ public class AsciiToHtmlFormatter extends FileFormatterBase
                 continue;
 
             Vector<String> v = parseData(line, delimiter);
+            if (v == null) return;
             v.add(0, Integer.toString(row)); // From adding # column
             int numMissingCells = headings.size() - v.size();
             for (int i = 0; i < numMissingCells; ++i)
@@ -143,6 +145,7 @@ public class AsciiToHtmlFormatter extends FileFormatterBase
                     continue;
 
                 String value = v.get(col);
+                if (value == null) return;
                 if (value == null || value.trim().length() <= 0)
                     value = "&nbsp;";
                 else if (_ncitCodeColumns.contains(col - 1)) // -1 from # column

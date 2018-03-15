@@ -72,6 +72,7 @@ public class UIUtils {
 			return;
 		}
 		Vector v = gov.nih.nci.evs.browser.utils.StringUtils.parseData(owl_role_quantifiers);
+		if (v == null) return;
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 			OWL_ROLE_QUALIFIER_LIST.add(t);
@@ -94,6 +95,7 @@ public class UIUtils {
 		Vector v = new Vector();
         for (int i = 0; i < properties.length; i++) {
             Property p = (Property) properties[i];
+            if (p == null) return null;
             if (p.getPropertyName().compareTo(propertyName) == 0) {
             	v.add(p);
 			}
@@ -146,6 +148,7 @@ public class UIUtils {
 			String n_v = name + "|" + value;
 			Vector qualifier_vec = new Vector();
 			PropertyQualifier[] qualifiers = p.getPropertyQualifier();
+			if (qualifiers == null) return null;
 			for (int j = 0; j < qualifiers.length; j++) {
 				PropertyQualifier q = qualifiers[j];
 				String qualifier_name = q.getPropertyQualifierName();
@@ -240,6 +243,7 @@ public class UIUtils {
 
 	public boolean hasQualifiers(Vector qualifiers) {
 		if (qualifiers == null || qualifiers.size() == 0) return false;
+		if (qualifiers == null) return false;
 		for (int j = 0; j < qualifiers.size(); j++) {
 			String q = (String) qualifiers.elementAt(j);
 			if (q != null && q.length() > 0) return true;
@@ -258,6 +262,7 @@ public class UIUtils {
 		Vector nv_vec = spec.getKeyVec();
 		if (nv_vec == null) {
 			Iterator entries = qualifierHashMap.entrySet().iterator();
+			if (entries == null) return null;
 			while (entries.hasNext()) {
 				Entry thisEntry = (Entry) entries.next();
 				String nv = (String) thisEntry.getKey();
@@ -373,6 +378,7 @@ public class UIUtils {
 
 						if (displayQualifier(qualifier_name)) {
 							String t = qualifier_name + ":" + qualifier_value;
+							if (t == null) return null;
 							if (t.length() > 1) {
 								buf.append("			 <tr>").append("\n");
 								buf.append("			 <td class=\"dataCellText\" >" + Constants.INDENT + t + "</td>").append("\n");
@@ -423,6 +429,7 @@ public class UIUtils {
 
 						if (displayQualifier(qualifier_name)) {
 							String t = qualifier_name + ":" + qualifier_value;
+							if (t == null) return null;
 							if (t.length() > 1) {
 								buf.append("			 <tr>").append("\n");
 								buf.append("			 <td class=\"dataCellText\" >" + Constants.INDENT + t + "</td>").append("\n");
@@ -454,6 +461,7 @@ public class UIUtils {
 		Vector nv_vec = spec.getKeyVec();
 		if (nv_vec == null) {
 			Iterator entries = qualifierHashMap.entrySet().iterator();
+			if (entries == null) return null;
 			while (entries.hasNext()) {
 				Entry thisEntry = (Entry) entries.next();
 				String nv = (String) thisEntry.getKey();
@@ -567,6 +575,7 @@ public class UIUtils {
 
 						if (displayQualifier(qualifier_name)) {
 							String t = qualifier_name + ":" + qualifier_value;
+							if (t == null) return null;
 							if (t.length() > 1) {
 								buf.append("			 <tr>").append("\n");
 								buf.append("			 <td class=\"dataCellText\" >" + Constants.INDENT + t + "</td>").append("\n");
@@ -615,6 +624,7 @@ public class UIUtils {
 
 						if (displayQualifier(qualifier_name)) {
 							String t = qualifier_name + ":" + qualifier_value;
+							if (t == null) return null;
 							if (t.length() > 1) {
 								buf.append("			 <tr>").append("\n");
 								buf.append("			 <td class=\"dataCellText\" >" + Constants.INDENT + t + "</td>").append("\n");
@@ -743,6 +753,7 @@ public class UIUtils {
 			}
 		}
 		String label = buf.toString();
+		if (label == null) return null;
 		if (label.length() == 0) {
 			label = defaultLabel;
 		}
@@ -782,6 +793,7 @@ public class UIUtils {
 				String n_v = name + "|" + value;
 				Vector qualifier_vec = new Vector();
 				PropertyQualifier[] qualifiers = p.getPropertyQualifier();
+				if (qualifiers == null) return null;
 				for (int j = 0; j < qualifiers.length; j++) {
 					PropertyQualifier q = qualifiers[j];
 					String qualifier_name = q.getPropertyQualifierName();
@@ -817,6 +829,7 @@ public class UIUtils {
 		Vector nv_vec = spec.getKeyVec();
 		if (nv_vec == null) {
 			Iterator entries = qualifierHashMap.entrySet().iterator();
+			if (entries == null) return null;
 			while (entries.hasNext()) {
 				Entry thisEntry = (Entry) entries.next();
 				String nv = (String) thisEntry.getKey();
@@ -911,6 +924,7 @@ public class UIUtils {
 
 						if (displayQualifier(qualifier_name)) {
 							String t = qualifier_name + ":" + qualifier_value;
+							if (t == null) return null;
 							if (t.length() > 1) {
 								buf.append("			 <tr>").append("\n");
 								buf.append("			 <td class=\"dataCellText\" >" + indent + t + "</td>").append("\n");
@@ -964,6 +978,7 @@ public class UIUtils {
 						}
 
 						String t = qualifier_name + ":" + qualifier_value;
+						if (t == null) return null;
 						if (t.length() > 1) {
 							buf.append("			 <tr>").append("\n");
 							buf.append("			 <td class=\"dataCellText\" >" + indent + t + "</td>").append("\n");
@@ -1062,6 +1077,7 @@ public class UIUtils {
 		Vector w = new Vector();
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
+			if (t == null) return null;
 			if (!hset.contains(t)) {
 				hset.add(t);
 				w.add(t);
@@ -1117,6 +1133,7 @@ public class UIUtils {
         buf.append("<tr><td class=\"textbody\">Other mappings available for download:</td><td></td></tr>").append("\n");
 
 		Vector v = FTPDownload.extractMappingsFromURL(page_url);
+		if (v == null) return null;
 		for (int i=0; i<v.size(); i++) {
 			String line = (String) v.elementAt(i);
 			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line, '|');
@@ -1183,6 +1200,7 @@ if (url.endsWith(".xls")) {
         RelationshipUtils relUtils = new RelationshipUtils(lbSvc);
         HashMap relMap = relUtils.getRelationshipHashMap(codingSchemeURN, codingSchemeVersion, code, namespace, useNamespace);
         Iterator it = relMap.keySet().iterator();
+        if (it == null) return;
         while (it.hasNext()) {
 			String key = (String) it.next();
 			ArrayList list = (ArrayList) relMap.get(key);

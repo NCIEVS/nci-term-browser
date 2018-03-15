@@ -292,6 +292,7 @@ public class ValueSetHierarchy {
 		try {
 			String valueSetDefinitionRevisionId = null;
 			List list = valueSetDefinitionURIList;
+			if (list == null) return null;
 			for (int i=0; i<list.size(); i++) {
 				String uri = (String) list.get(i);
 			    ValueSetDefinition vsd = vsd_service.getValueSetDefinition(new URI(uri), valueSetDefinitionRevisionId);
@@ -316,6 +317,7 @@ public class ValueSetHierarchy {
 		}
 
 		if (uri == null) return null;
+	    if (uri == null) return null;
 	    if (uri.indexOf("|") != -1) {
 			Vector u = StringUtils.parseData(uri);
 			uri = (String) u.elementAt(1);
@@ -348,6 +350,7 @@ public class ValueSetHierarchy {
 		Vector v = new Vector();
         List list = valueSetDefinitionURIList;
         if (list == null) return null;
+        if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
 			ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
@@ -356,6 +359,7 @@ public class ValueSetHierarchy {
 			while (sourceEnum.hasMoreElements()) {
 				Source src = (Source) sourceEnum.nextElement();
 				String src_str = src.getContent();
+				if (src_str == null) return null;
 				if (src_str.compareTo(source) == 0) {
 					v.add(vsd);
 					break;
@@ -370,6 +374,7 @@ public class ValueSetHierarchy {
 		Vector v = new Vector();
 		HashSet hset = new HashSet();
 		List list = valueSetDefinitionURIList;
+        if (list == null) return null;
         if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
@@ -464,6 +469,7 @@ public class ValueSetHierarchy {
             Object[] objs = keyset.toArray();
             String code = (String) objs[0];
             TreeItem ti = (TreeItem) hmap.get(code);
+            if (ti == null) return null;
             for (String association : ti._assocToChildMap.keySet()) {
                 List<TreeItem> children = ti._assocToChildMap.get(association);
                 // Collections.sort(children);
@@ -661,6 +667,7 @@ public class ValueSetHierarchy {
 
 				if(hmap.containsKey(ti._code)) {
 					Vector v = (Vector) hmap.get(ti._code);
+					if (v == null) return;
 					if (!v.contains(childItem._code)) {
 						v.add(childItem._code);
 						hmap.put(ti._code, v);
@@ -686,6 +693,7 @@ public class ValueSetHierarchy {
                 String subconcept_key = childItem._code;
 				if(hmap.containsKey(subconcept_key)) {
 					Vector v = (Vector) hmap.get(subconcept_key);
+					if (v == null) return;
 					if (!v.contains(superconcept_key)) {
 						v.add(superconcept_key);
 						hmap.put(subconcept_key, v);
@@ -704,6 +712,7 @@ public class ValueSetHierarchy {
 
     public void populateSuperconceptHashMap(HashMap source_hierarchy, HashMap hmap) {
 		TreeItem root = (TreeItem) source_hierarchy.get("<Root>");
+        if (root == null) return;
         for (String association : root._assocToChildMap.keySet()) {
             List<TreeItem> children = root._assocToChildMap.get(association);
             for (TreeItem childItem : children) {
@@ -714,6 +723,7 @@ public class ValueSetHierarchy {
 
     public void populateSubconceptHashMap(HashMap source_hierarchy, HashMap hmap) {
 		TreeItem root = (TreeItem) source_hierarchy.get("<Root>");
+        if (root == null) return;
         for (String association : root._assocToChildMap.keySet()) {
             List<TreeItem> children = root._assocToChildMap.get(association);
             for (TreeItem childItem : children) {
@@ -780,6 +790,7 @@ public class ValueSetHierarchy {
 	        ValueSetDefinition vsd = vsd_service.getValueSetDefinition(valueSetDefinitionURI, null);
 	        Mappings mappings = vsd.getMappings();
             SupportedCodingScheme[] supportedCodingSchemes = mappings.getSupportedCodingScheme();
+            if (supportedCodingSchemes == null) return null;
             for (int i=0; i<supportedCodingSchemes.length; i++) {
 				SupportedCodingScheme supportedCodingScheme = supportedCodingSchemes[i];
 				v.add(supportedCodingScheme.getUri());
@@ -800,6 +811,7 @@ public class ValueSetHierarchy {
 	        ValueSetDefinition vsd = vsd_service.getValueSetDefinition(valueSetDefinitionURI, null);
 	        Mappings mappings = vsd.getMappings();
             SupportedCodingScheme[] supportedCodingSchemes = mappings.getSupportedCodingScheme();
+            if (supportedCodingSchemes == null) return null;
             for (int i=0; i<supportedCodingSchemes.length; i++) {
 				SupportedCodingScheme supportedCodingScheme = supportedCodingSchemes[i];
 				v.add(supportedCodingScheme.getUri());
@@ -867,6 +879,7 @@ public class ValueSetHierarchy {
 				boolean found = false;
 				for (int j=0; j<vsd_vec.size(); j++) {
 					ValueSetDefinition next_vsd = (ValueSetDefinition) vsd_vec.elementAt(j);
+					if (next_vsd == null) return null;
 					if (next_vsd.getValueSetDefinitionURI().compareTo(vsd_uri) == 0) {
 						found = true;
 						break;
@@ -919,6 +932,7 @@ public class ValueSetHierarchy {
 			ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
 			uri2VSD_map.put(uri, vsd);
 			java.util.Enumeration<? extends Source> sourceEnum = vsd.enumerateSource();
+			if (sourceEnum == null) return null;
 			while (sourceEnum.hasMoreElements()) {
 				Source src = (Source) sourceEnum.nextElement();
 				String src_str = src.getContent();
@@ -929,6 +943,7 @@ public class ValueSetHierarchy {
 
 				if (source2VSD_map.containsKey(src_str)) {
 					Vector vsd_v = (Vector) source2VSD_map.get(src_str);
+					if (vsd_v == null) return null;
 					if (!vsd_v.contains(uri)) {
 						vsd_v.add(uri);
 					}
@@ -952,6 +967,7 @@ public class ValueSetHierarchy {
 				Vector sub_vec = (Vector) _source_subconcept_map.get(src);
 				for (int j=0; j<source_vec.size(); j++) {
 					String source = (String) source_vec.elementAt(j);
+					if (source == null) return null;
 					if (source.compareTo(src) != 0 && sub_vec.contains(source)) {
 						has_children = true;
 						break;
@@ -966,6 +982,7 @@ public class ValueSetHierarchy {
 				Vector super_vec = (Vector) _source_superconcept_map.get(src);
 				for (int j=0; j<source_vec.size(); j++) {
 					String source = (String) source_vec.elementAt(j);
+					if (source == null) return null;
 					if (source.compareTo(src) != 0 && super_vec.contains(source)) {
 						has_parent = true;
 						break;
@@ -977,12 +994,14 @@ public class ValueSetHierarchy {
 			if (!has_children && !has_parent) {
 				// find all VSDs has the source
 				Vector vsd_v = (Vector) source2VSD_map.get(src);
+				if (vsd_v == null) return null;
 				for(int i=0; i<vsd_v.size(); i++) {
 					//ValueSetDefinition vsd = (ValueSetDefinition) vsd_v.elementAt(i);
 					String vsd_uri = (String) vsd_v.elementAt(i);
 					ValueSetDefinition vsd = (ValueSetDefinition) uri2VSD_map.get(vsd_uri);
 
 					String name = vsd.getValueSetDefinitionName();
+					if (name == null) return null;
 					if (name == null || name.compareTo("") == 0) {
 						name = "<NOT ASSIGNED>";
 					}
@@ -996,12 +1015,14 @@ public class ValueSetHierarchy {
 
 			} else if (has_children && !has_parent) {
 				Vector vsd_v = (Vector) source2VSD_map.get(src);
+				if (vsd_v == null) return null;
 				for(int i=0; i<vsd_v.size(); i++) {
 					//ValueSetDefinition vsd = (ValueSetDefinition) vsd_v.elementAt(i);
 					String vsd_uri = (String) vsd_v.elementAt(i);
 					ValueSetDefinition vsd = (ValueSetDefinition) uri2VSD_map.get(vsd_uri);
 
 					String name = vsd.getValueSetDefinitionName();
+					if (name == null) return null;
 					if (name == null || name.compareTo("") == 0) {
 						name = "<NOT ASSIGNED>";
 					}
@@ -1045,6 +1066,7 @@ public class ValueSetHierarchy {
                 return csVersionList;
             }
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -1106,6 +1128,7 @@ public class ValueSetHierarchy {
 		}
         Vector root_cs_vec = new Vector();
         Iterator it = _valueSetParticipationHashSet.iterator();
+        if (it == null) return null;
         while (it.hasNext()) {
 			String cs = (String) it.next();
 			String formalName = getFormalName(cs);
@@ -1171,6 +1194,7 @@ if (root_cs_vec != null) {
 				k = i+1;
 				//System.out.println("(" + k + ") " + uri);
 				Vector cs_vec = getCodingSchemeURNsInValueSetDefinition(uri);
+				if (cs_vec == null) return null;
 				for (int j=0; j<cs_vec.size(); j++) {
 					String cs = (String) cs_vec.elementAt(j);
 					if (!valueSetParticipationHashSet.contains(cs)) {
@@ -1249,6 +1273,7 @@ if (root_cs_vec != null) {
         if (cns == null) return null;
 
         Vector codes = getCodesInNodeSet(cns);
+        if (codes == null) return null;
         for (int i=0; i<codes.size(); i++) {
 			String code = (String) codes.elementAt(i);
 			try {
@@ -1299,6 +1324,7 @@ if (root_cs_vec != null) {
 
 			if (_source_subconcept_map.containsKey(src)) {
 				Vector sub_vec = (Vector) _source_subconcept_map.get(src);
+				if (sub_vec == null) return null;
 				for (int j=0; j<sub_vec.size(); j++) {
 					String sub_src = (String) sub_vec.elementAt(j);
 					if (!hset.contains(sub_src)) {
@@ -1317,8 +1343,10 @@ if (root_cs_vec != null) {
 			String sub_str = (String) sub_src_vec.elementAt(i);
 			if (_vsd_source_to_vsds_map.containsKey(sub_str)) {
 				Vector sub_vsd_vec = (Vector) _vsd_source_to_vsds_map.get(sub_str);
+				if (sub_vsd_vec == null) return null;
 				for (int k=0; k<sub_vsd_vec.size(); k++) {
 					ValueSetDefinition sub_vsd = (ValueSetDefinition) sub_vsd_vec.elementAt(k);
+					if (sub_vsd == null) return null;
 					if (!sub_vsd_uri_hset.contains(sub_vsd.getValueSetDefinitionURI())) {
 						sub_vsd_uri_hset.add(sub_vsd.getValueSetDefinitionURI());
 						//create child node
@@ -1343,6 +1371,7 @@ if (root_cs_vec != null) {
 
     public void assignTreeNodeExpandable(HashMap hmap) {
 		Iterator it = hmap.entrySet().iterator();
+		if (it == null) return;
 		while (it.hasNext()) {
 			Entry entry = (Entry) it.next();
 			String key = (String) entry.getKey();
@@ -1370,10 +1399,12 @@ if (root_cs_vec != null) {
 
     public void assignValueSetNodeExpandable(HashMap hmap) {
 		Iterator it = hmap.entrySet().iterator();
+		if (it == null) return;
 		while (it.hasNext()) {
 			Entry entry = (Entry) it.next();
 			String key = (String) entry.getKey();
 			TreeItem ti = (TreeItem) entry.getValue();
+			if (ti == null) return;
 			for (String association : ti._assocToChildMap.keySet()) {
 				List<TreeItem> children = ti._assocToChildMap.get(association);
 				for (TreeItem childItem : children) {
@@ -1382,6 +1413,7 @@ if (root_cs_vec != null) {
 
 					childItem._expandable = false;
 					Vector source_vec = getValueSetDecriptionSources(code);
+					if (source_vec == null) return;
 					for (int i=0; i<source_vec.size(); i++) {
 						String source = (String) source_vec.elementAt(i);
 						if (hasSubSourceInSourceHierarchy(source)) {
@@ -1448,11 +1480,13 @@ if (root_cs_vec != null) {
     public boolean hasChildren(HashMap hmap) {
 /*
 		Iterator it = hmap.keySet().iterator();
+		if (it == null) return false;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			TreeItem ti = (TreeItem) hmap.get(key);
 */
 		Iterator it = hmap.entrySet().iterator();
+		if (it == null) return false;
 		while (it.hasNext()) {
 			Entry entry = (Entry) it.next();
 			String key = (String) entry.getKey();
@@ -1530,6 +1564,7 @@ if (root_cs_vec != null) {
 			if (vsd_root_vec != null) {
 				for (int j=0; j<vsd_root_vec.size(); j++) {
 					ValueSetDefinition vsd = (ValueSetDefinition) vsd_root_vec.elementAt(j);
+					if (vsd == null) return null;
 					if (!hset.contains(vsd.getValueSetDefinitionURI())) {
 						hset.add(vsd.getValueSetDefinitionURI());
 						TreeItem ti = new TreeItem(vsd.getValueSetDefinitionURI(), vsd.getValueSetDefinitionName());
@@ -1634,6 +1669,7 @@ if (root_cs_vec != null) {
 		//_valueSetDefinitionURI2VSD_map = createValueSetDefinitionURI2VSD_map();
 
 		Iterator it = _valueSetDefinitionURI2VSD_map.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String vsd_uri = (String) it.next();
 			Vector cs_vec = getCodingSchemeURNsInValueSetDefinition(vsd_uri);
@@ -1705,6 +1741,7 @@ if (root_cs_vec != null) {
 
 			if (_source_subconcept_map.containsKey(source)) {
 				Vector sub_vec = (Vector) _source_subconcept_map.get(source);
+				if (sub_vec == null) return null;
 				for (int j=0; j<sub_vec.size(); j++) {
 					String sub_source = (String) sub_vec.elementAt(j);
 			        Vector vsd_vec = getVSDRootsBySource(sub_source);
@@ -1712,6 +1749,7 @@ if (root_cs_vec != null) {
 					if (vsd_vec != null && vsd_vec.size() > 0) {
 						for (int k=0; k<vsd_vec.size(); k++) {
 							ValueSetDefinition vsd = (ValueSetDefinition) vsd_vec.elementAt(k);
+							if (vsd == null) return null;
 							if (!hset.contains(vsd.getValueSetDefinitionURI())) {
 							   hset.add(vsd.getValueSetDefinitionURI());
 							   vsd_in_sub_src_vec.add(vsd);
@@ -1743,6 +1781,7 @@ if (root_cs_vec != null) {
 			if (vsd_root_vec != null) {
 				for (int j=0; j<vsd_root_vec.size(); j++) {
 					ValueSetDefinition vsd = (ValueSetDefinition) vsd_root_vec.elementAt(j);
+					if (vsd == null) return null;
 					if (!hset.contains(vsd.getValueSetDefinitionURI())) {
 						hset.add(vsd.getValueSetDefinitionURI());
 						TreeItem ti = new TreeItem(vsd.getValueSetDefinitionURI(), vsd.getValueSetDefinitionName());
@@ -1811,6 +1850,7 @@ if (root_cs_vec != null) {
 
 		HashMap src_vs_tree_root_hmap = expand_src_vs_tree_exclude_src_nodes(vsd.getValueSetDefinitionURI());
 		TreeItem src_vs_tree_root = (TreeItem) src_vs_tree_root_hmap.get("<Root>");
+		if (src_vs_tree_root == null) return null;
 		for (String asso_name : src_vs_tree_root._assocToChildMap.keySet()) {
 		    List<TreeItem> child_nodes = src_vs_tree_root._assocToChildMap.get(asso_name);
 		    for (TreeItem child_item : child_nodes) {
@@ -1855,6 +1895,7 @@ if (root_cs_vec != null) {
 
 				 HashMap src_vs_tree_root_hmap = expand_src_vs_tree_exclude_src_nodes(code);
 				 TreeItem src_vs_tree_root = (TreeItem) src_vs_tree_root_hmap.get("<Root>");
+				 if (src_vs_tree_root == null) return null;
 				 for (String asso_name : src_vs_tree_root._assocToChildMap.keySet()) {
 					 List<TreeItem> child_nodes = src_vs_tree_root._assocToChildMap.get(asso_name);
 					 for (TreeItem child_item : child_nodes) {
@@ -1895,6 +1936,7 @@ if (root_cs_vec != null) {
 		//TreeItem ncit_node = null;
 		for (int i=0; i<branch.size(); i++) {
 			TreeItem ti = (TreeItem) branch.get(i);
+			if (ti == null) return null;
 			if (ti._text.compareTo("NCI Thesaurus") == 0) {
 				//ncit_node = ti;
 				new_branch.add(ti);
@@ -1904,6 +1946,7 @@ if (root_cs_vec != null) {
 
 		for (int i=0; i<branch.size(); i++) {
 			TreeItem ti = (TreeItem) branch.get(i);
+			if (ti == null) return null;
 			if (ti._text.compareTo("NCI Thesaurus") != 0) {
 				new_branch.add(ti);
 			}
@@ -1942,6 +1985,7 @@ if (root_cs_vec != null) {
                 return;
             }
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
+            if (csrs == null) return;
             for (int i = 0; i < csrs.length; i++) {
                 int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
@@ -1979,6 +2023,7 @@ if (root_cs_vec != null) {
                         codingSchemeName2URIHashMap.put(formalname, cs.getCodingSchemeURI());
 
                         String[] localnames = cs.getLocalName();
+                        if (localnames == null) return;
                         for (int m = 0; m < localnames.length; m++) {
                             String localname = localnames[m];
                             _logger.debug("\tlocal name: " + localname);
@@ -2012,9 +2057,11 @@ if (root_cs_vec != null) {
         HashMap source2VSD_map = new HashMap();
         HashMap uri2VSD_map = new HashMap();
         List list = valueSetDefinitionURIList;
+        if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
             Vector cs_vec = getCodingSchemeURNsInValueSetDefinition(uri);
+            if (cs_vec == null) return null;
             if (cs_vec.contains(codingSchemeURN)) {
 				ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
 
@@ -2030,6 +2077,7 @@ if (root_cs_vec != null) {
 					}
 					if (source2VSD_map.containsKey(src_str)) {
 						Vector vsd_v = (Vector) source2VSD_map.get(src_str);
+						if (vsd_v == null) return null;
 						if (!vsd_v.contains(uri)) {
 							vsd_v.add(uri);
 						}
@@ -2055,6 +2103,7 @@ if (root_cs_vec != null) {
 				Vector sub_vec = (Vector) _source_subconcept_map.get(src);
 				for (int j=0; j<source_in_cs_vsd_vec.size(); j++) {
 					String source = (String) source_in_cs_vsd_vec.elementAt(j);
+					if (source == null) return null;
 					if (source.compareTo(src) != 0 && sub_vec.contains(source)) {
 						has_children = true;
 						break;
@@ -2067,6 +2116,7 @@ if (root_cs_vec != null) {
 				Vector super_vec = (Vector) _source_superconcept_map.get(src);
 				for (int j=0; j<source_in_cs_vsd_vec.size(); j++) {
 					String source = (String) source_in_cs_vsd_vec.elementAt(j);
+					if (source == null) return null;
 					if (source.compareTo(src) != 0 && super_vec.contains(source)) {
 						has_parent = true;
 						break;
@@ -2078,12 +2128,14 @@ if (root_cs_vec != null) {
 			if (!has_children && !has_parent) {
 				// find all VSDs has the source
 				Vector vsd_v = (Vector) source2VSD_map.get(src);
+				if (vsd_v == null) return null;
 				for(int i=0; i<vsd_v.size(); i++) {
 					//ValueSetDefinition vsd = (ValueSetDefinition) vsd_v.elementAt(i);
 					String vsd_uri = (String) vsd_v.elementAt(i);
 					ValueSetDefinition vsd = (ValueSetDefinition) uri2VSD_map.get(vsd_uri);
 
 					String name = vsd.getValueSetDefinitionName();
+					if (name == null) return null;
 					if (name == null || name.compareTo("") == 0) {
 						name = "<NOT ASSIGNED>";
 					}
@@ -2099,12 +2151,14 @@ if (root_cs_vec != null) {
 
 			} else if (has_children && !has_parent) {
 				Vector vsd_v = (Vector) source2VSD_map.get(src);
+				if (vsd_v == null) return null;
 				for(int i=0; i<vsd_v.size(); i++) {
 					//ValueSetDefinition vsd = (ValueSetDefinition) vsd_v.elementAt(i);
 					String vsd_uri = (String) vsd_v.elementAt(i);
 					ValueSetDefinition vsd = (ValueSetDefinition) uri2VSD_map.get(vsd_uri);
 
 					String name = vsd.getValueSetDefinitionName();
+					if (name == null) return null;
 					if (name == null || name.compareTo("") == 0) {
 						name = "<NOT ASSIGNED>";
 					}
@@ -2161,6 +2215,7 @@ if (root_cs_vec != null) {
 				 try {
 				     HashMap cs_hmap = getRootValueSets(node_id);
 				     TreeItem temp_root = (TreeItem) cs_hmap.get("<Root>");
+				     if (temp_root == null) return null;
 				     for (String asso_name : temp_root._assocToChildMap.keySet()) {
 					     List<TreeItem> cs_vs_children = temp_root._assocToChildMap.get(asso_name);
 					     for (TreeItem child_item : cs_vs_children) {
@@ -2210,6 +2265,7 @@ if (root_cs_vec != null) {
 		HashMap hmap = getSubValueSets(scheme, code);
 		if (hmap != null) {
 			TreeItem temp_root = (TreeItem) hmap.get(code);
+            if (temp_root == null) return null;
             for (String association : temp_root._assocToChildMap.keySet()) {
                 List<TreeItem> child_nodes = temp_root._assocToChildMap.get(association);
                 for (TreeItem childItem : child_nodes) {
@@ -2228,6 +2284,7 @@ if (root_cs_vec != null) {
 		_vsUri2ParticipationCS_map = new HashMap();
 		_cs2vsdURIs_map = new HashMap();
         List list = valueSetDefinitionURIList;
+        if (list == null) return;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
             Vector cs_vec = getCodingSchemeURNsInValueSetDefinition(uri);
@@ -2297,6 +2354,7 @@ if (root_cs_vec != null) {
 
 		// find participating VSDs based on scheme uri2VSD_map & source2VSD_map
         List list = valueSetDefinitionURIList;
+        if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
 			boolean restriction_to_cs_condition = get_restriction_to_cs_condition(uri, codingSchemeURN);
@@ -2312,6 +2370,7 @@ if (root_cs_vec != null) {
 				participating_vsd_vec.add(uri);
 
 				java.util.Enumeration<? extends Source> sourceEnum = vsd.enumerateSource();
+				if (sourceEnum == null) return null;
 				while (sourceEnum.hasMoreElements()) {
 					Source src = (Source) sourceEnum.nextElement();
 					String src_str = src.getContent();
@@ -2320,6 +2379,7 @@ if (root_cs_vec != null) {
 					}
 					if (source2VSD_map.containsKey(src_str)) {
 						Vector vsd_v = (Vector) source2VSD_map.get(src_str);
+						if (vsd_v == null) return null;
 						if (!vsd_v.contains(uri)) {
 							vsd_v.add(uri);
 						}
@@ -2350,6 +2410,7 @@ if (root_cs_vec != null) {
 				String src_str = src.getContent();
 				if (_source_subconcept_map.containsKey(src_str)) {
 					Vector sub_vec = (Vector) _source_subconcept_map.get(src_str);
+					if (sub_vec == null) return null;
 					for (int k=0; k<sub_vec.size(); k++) {
 						String sub_src = (String) sub_vec.elementAt(k);
 
@@ -2364,6 +2425,7 @@ if (root_cs_vec != null) {
 									String vsd_text = sub_vsd.getValueSetDefinitionName();
 
 											java.util.Enumeration<? extends Source> sub_vsd_sourceEnum = sub_vsd.enumerateSource();
+											if (sub_vsd_sourceEnum == null) return null;
 											while (sub_vsd_sourceEnum.hasMoreElements()) {
 												Source sub_vsd_src = (Source) sub_vsd_sourceEnum.nextElement();
 												String sub_vsd_src_str = sub_vsd_src.getContent();
@@ -2372,6 +2434,7 @@ if (root_cs_vec != null) {
 
 									if (vsd_vec.contains( sub_vsd_uri )) {
 										TreeItem ti_sub = new TreeItem(sub_vsd_uri, vsd_text);
+										if (ti_sub == null) return null;
 										ti_sub._expandable = false; // to be modified
 										children.add(ti_sub);
 									}

@@ -142,6 +142,17 @@ subject to the conditions specified at
                  int size = w.size();
                  
                  String abbr = (String) w.elementAt(size-2);
+                 // Send redirect:
+                 if (abbr == null) {
+                 	try {
+                 		String error_msg = "WARNING: The server encountered an unexpected error (file: source_help_info-termbrowser.jsp, code: 1, var: abbr).";
+                 		request.getSession().setAttribute("error_msg", error_msg);
+                 		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+                 		response.sendRedirect(redirectURL);				 
+                 	} catch (Exception ex) {
+                 		ex.printStackTrace();
+                 	}
+                 }
                  if (!(abbr.startsWith("Terminology Value Set") && abbr.startsWith("Terminology_Value_Set"))) {
                          lcv++;
 			 String def = (String) w.elementAt(size-1);

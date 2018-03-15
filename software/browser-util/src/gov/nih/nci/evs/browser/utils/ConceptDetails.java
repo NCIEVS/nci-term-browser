@@ -448,6 +448,7 @@ public class ConceptDetails {
 
         for (int j = 0; j < properties.length; j++) {
             Property prop = properties[j];
+            if (prop == null) return null;
             if (prop.getPropertyName().compareTo(propertyName) == 0) {
                 v.add(prop.getValue().getContent());
             }
@@ -462,6 +463,7 @@ public class ConceptDetails {
         String con_status = null;
         if (c != null) {
             Vector status_vec = getConceptPropertyValues(c, "Concept_Status");
+            if (status_vec == null) return null;
             if (status_vec == null || status_vec.size() == 0) {
                 con_status = c.getStatus();
             } else {
@@ -504,10 +506,12 @@ public class ConceptDetails {
             return v;
         for (int i = 0; i < properties.length; i++) {
             Property p = (Property) properties[i];
+            if (p == null) return null;
             if (property_name.compareTo(p.getPropertyName()) == 0) {
                 String t = p.getValue().getContent();
                 if (addQualifiers) {
                     String qualifiers = getPropertyQualfierValues(p);
+                    if (qualifiers == null) return null;
                     if (qualifiers.compareTo("") != 0) {
                         //t = t + " (" + getPropertyQualfierValues(p) + ")";
                         t = t + " (" + qualifiers + ")";
@@ -534,6 +538,7 @@ public class ConceptDetails {
             for (int j = 0; j < qualifiers.length; j++) {
                 PropertyQualifier q = qualifiers[j];
                 String qualifier_name = q.getPropertyQualifierName();
+                if (qualifier_name == null) return null;
                 if (qualifier_name.compareTo("label") != 0) {
 					String qualifier_value = q.getValue().getContent();
 					buf.append(qualifier_name + ": " + qualifier_value);
@@ -563,6 +568,7 @@ public class ConceptDetails {
 			cns = cns.restrictToStatus(ActiveOption.ALL, null);
 			cns = cns.restrictToCodes(crefs);
 			ResolvedConceptReferenceList matches = cns.resolveToList(null, null, null, 1);
+			if (matches == null) return null;
 			if (matches.getResolvedConceptReferenceCount() > 0) {
 				ResolvedConceptReference ref = (ResolvedConceptReference) matches.enumerateResolvedConceptReference()
 						.nextElement();
@@ -580,13 +586,16 @@ public class ConceptDetails {
 		if (node == null) return null;
         Vector w = new Vector();
 		Property[] props = node.getAllProperties();
+		if (props == null) return null;
 		for (int i = 0; i < props.length; i++) {
 			 Property prop = props[i];
 			 PropertyQualifier[] qualifiers = prop.getPropertyQualifier();
+			 if (qualifiers == null) return null;
 			 for (int k=0; k<qualifiers.length; k++) {
 				  PropertyQualifier qualifier = qualifiers[k];
 			 }
 			 Source[] sources = prop.getSource();
+			 if (sources == null) return null;
 			 for (int k=0; k<sources.length; k++) {
 				  Source source = sources[k];
 			 }
@@ -772,9 +781,11 @@ public class ConceptDetails {
         try {
             CodingSchemeRenderingList lcsrl = lbSvc.getSupportedCodingSchemes();
             CodingSchemeRendering[] csra = lcsrl.getCodingSchemeRendering();
+            if (csra == null) return null;
             for (int i = 0; i < csra.length; i++) {
                 CodingSchemeRendering csr = csra[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
+                if (css == null) return null;
                 if (css.getFormalName().compareTo(codingSchemeName) == 0
                     || css.getLocalName().compareTo(codingSchemeName) == 0
                     || css.getCodingSchemeURI().compareTo(codingSchemeName) == 0) {
@@ -919,8 +930,10 @@ public class ConceptDetails {
 
     public String getPreferredName(Entity c) {
         Presentation[] presentations = c.getPresentation();
+        if (presentations == null) return null;
         for (int i = 0; i < presentations.length; i++) {
             Presentation p = presentations[i];
+            if (p == null) return null;
             if (p.getPropertyName().compareTo("Preferred_Name") == 0) {
                 return p.getValue().getContent();
             }
@@ -986,6 +999,7 @@ public class ConceptDetails {
 
             if (matches.getResolvedConceptReferenceCount() > 0) {
                 java.util.Enumeration<? extends ResolvedConceptReference> refEnum = matches.enumerateResolvedConceptReference();
+                if (refEnum == null) return null;
                 while (refEnum.hasMoreElements()) {
                     ResolvedConceptReference ref = (ResolvedConceptReference) refEnum.nextElement();
 
@@ -1269,10 +1283,12 @@ public class ConceptDetails {
     public HashMap getPropertyQualifierHashMap(Entity node) {
 		HashMap hmap = new HashMap();
 		Presentation[] presentations = node.getPresentation();
+		if (presentations == null) return null;
 		for (int i = 0; i < presentations.length; i++) {
 			 Presentation presentation = presentations[i];
 			 String key = presentation.getPropertyName() + "$" + presentation.getValue().getContent();
 			 PropertyQualifier[] qualifiers = presentation.getPropertyQualifier();
+			 if (qualifiers == null) return null;
 			 for (int k=0; k<qualifiers.length; k++) {
 				  PropertyQualifier qualifier = qualifiers[k];
 				  String value = qualifier.getPropertyQualifierName() + "=" + qualifier.getValue().getContent();
@@ -1286,10 +1302,12 @@ public class ConceptDetails {
      	}
 
 		Definition[] definitions = node.getDefinition();
+		if (definitions == null) return null;
 		for (int i = 0; i < definitions.length; i++) {
 			 Definition definition = definitions[i];
 			 String key = definition.getPropertyName() + "$" + definition.getValue().getContent();
 			 PropertyQualifier[] qualifiers = definition.getPropertyQualifier();
+			 if (qualifiers == null) return null;
 			 for (int k=0; k<qualifiers.length; k++) {
 				  PropertyQualifier qualifier = qualifiers[k];
 				  String value = qualifier.getPropertyQualifierName() + "=" + qualifier.getValue().getContent();
@@ -1303,10 +1321,12 @@ public class ConceptDetails {
 		}
 
 		Comment[] comments = node.getComment();
+		if (comments == null) return null;
 		for (int i = 0; i < comments.length; i++) {
 			 Comment comment = comments[i];
 			 String key = comment.getPropertyName() + "$" + comment.getValue().getContent();
 			 PropertyQualifier[] qualifiers = comment.getPropertyQualifier();
+			 if (qualifiers == null) return null;
 			 for (int k=0; k<qualifiers.length; k++) {
 				  PropertyQualifier qualifier = qualifiers[k];
 				  String value = qualifier.getPropertyQualifierName() + "=" + qualifier.getValue().getContent();
@@ -1320,10 +1340,12 @@ public class ConceptDetails {
 		}
 
 		Property[] properties = node.getProperty();
+		if (properties == null) return null;
 		for (int i = 0; i < properties.length; i++) {
 			 Property property = properties[i];
 			 String key = property.getPropertyName() + "$" + property.getValue().getContent();
 			 PropertyQualifier[] qualifiers = property.getPropertyQualifier();
+			 if (qualifiers == null) return null;
 			 for (int k=0; k<qualifiers.length; k++) {
 				  PropertyQualifier qualifier = qualifiers[k];
 				  String value = qualifier.getPropertyQualifierName() + "=" + qualifier.getValue().getContent();
@@ -1368,6 +1390,7 @@ public class ConceptDetails {
 								for (int i = 0; i < associations.length; i++) {
 									Association assoc = associations[i];
 									AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+									if (acl == null) return null;
 									for (int j = 0; j < acl.length; j++) {
 										AssociatedConcept ac = acl[j];
 										if (namedClassOnly) {
@@ -1428,6 +1451,7 @@ public class ConceptDetails {
 								//displayMessage(pw, "\t" + assoc.getAssociationName());
 
 								AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+								if (acl == null) return null;
 								for (int j = 0; j < acl.length; j++) {
 									AssociatedConcept ac = acl[j];
 									if (namedClassOnly) {
@@ -1458,18 +1482,21 @@ public class ConceptDetails {
 		StringBuffer buf = new StringBuffer();
 
 		Presentation[] presentations = node.getPresentation();
+		if (presentations == null) return null;
 		for (int i = 0; i < presentations.length; i++) {
 			 buf = new StringBuffer();
 			 Presentation presentation = presentations[i];
 			 buf.append(presentation.getPropertyName() + "|" + presentation.getValue().getContent());
 			 StringBuffer qualifier_buf = new StringBuffer();
 			 PropertyQualifier[] qualifiers = presentation.getPropertyQualifier();
+			 if (qualifiers == null) return null;
 			 for (int k=0; k<qualifiers.length; k++) {
 				  PropertyQualifier qualifier = qualifiers[k];
 				  String value = qualifier.getPropertyQualifierName() + "=" + qualifier.getValue().getContent();
 				  qualifier_buf.append(value).append("$");
 			 }
 			 String qualifier_str = qualifier_buf.toString();
+			 if (qualifier_str == null) return null;
 			 if (qualifier_str.endsWith("$")) {
 				 qualifier_str = qualifier_str.substring(0, qualifier_str.length()-1);
 			 }
@@ -1480,18 +1507,21 @@ public class ConceptDetails {
      	}
 
 		Definition[] definitions = node.getDefinition();
+		if (definitions == null) return null;
 		for (int i = 0; i < definitions.length; i++) {
 			 buf = new StringBuffer();
 			 Definition definition = definitions[i];
 			 buf.append(definition.getPropertyName() + "|" + definition.getValue().getContent());
 			 StringBuffer qualifier_buf = new StringBuffer();
 			 PropertyQualifier[] qualifiers = definition.getPropertyQualifier();
+			 if (qualifiers == null) return null;
 			 for (int k=0; k<qualifiers.length; k++) {
 				  PropertyQualifier qualifier = qualifiers[k];
 				  String value = qualifier.getPropertyQualifierName() + "=" + qualifier.getValue().getContent();
 				  qualifier_buf.append(value).append("$");
 			 }
 			 String qualifier_str = qualifier_buf.toString();
+			 if (qualifier_str == null) return null;
 			 if (qualifier_str.endsWith("$")) {
 				 qualifier_str = qualifier_str.substring(0, qualifier_str.length()-1);
 			 }
@@ -1502,18 +1532,21 @@ public class ConceptDetails {
 		}
 
 		Comment[] comments = node.getComment();
+		if (comments == null) return null;
 		for (int i = 0; i < comments.length; i++) {
 			 buf = new StringBuffer();
 			 Comment comment = comments[i];
 			 buf.append(comment.getPropertyName() + "|" + comment.getValue().getContent());
 			 StringBuffer qualifier_buf = new StringBuffer();
 			 PropertyQualifier[] qualifiers = comment.getPropertyQualifier();
+			 if (qualifiers == null) return null;
 			 for (int k=0; k<qualifiers.length; k++) {
 				  PropertyQualifier qualifier = qualifiers[k];
 				  String value = qualifier.getPropertyQualifierName() + "=" + qualifier.getValue().getContent();
 				  qualifier_buf.append(value).append("$");
 			 }
 			 String qualifier_str = qualifier_buf.toString();
+			 if (qualifier_str == null) return null;
 			 if (qualifier_str.endsWith("$")) {
 				 qualifier_str = qualifier_str.substring(0, qualifier_str.length()-1);
 			 }
@@ -1524,18 +1557,21 @@ public class ConceptDetails {
 		}
 
 		Property[] properties = node.getProperty();
+		if (properties == null) return null;
 		for (int i = 0; i < properties.length; i++) {
 			 buf = new StringBuffer();
 			 Property property = properties[i];
 			 buf.append(property.getPropertyName() + "|" + property.getValue().getContent());
 			 StringBuffer qualifier_buf = new StringBuffer();
 			 PropertyQualifier[] qualifiers = property.getPropertyQualifier();
+			 if (qualifiers == null) return null;
 			 for (int k=0; k<qualifiers.length; k++) {
 				  PropertyQualifier qualifier = qualifiers[k];
 				  String value = qualifier.getPropertyQualifierName() + "=" + qualifier.getValue().getContent();
 				  qualifier_buf.append(value).append("$");
 			 }
 			 String qualifier_str = qualifier_buf.toString();
+			 if (qualifier_str == null) return null;
 			 if (qualifier_str.endsWith("$")) {
 				 qualifier_str = qualifier_str.substring(0, qualifier_str.length()-1);
 			 }
@@ -1559,6 +1595,7 @@ public class ConceptDetails {
 			buf.append(t).append("$");
 		}
 		String s = buf.toString();
+		if (s == null) return null;
 		if (s.endsWith("$")) {
 			s = s.substring(0, s.length()-1);
 		}
@@ -1601,6 +1638,7 @@ public class ConceptDetails {
 		String target = qualifierName + "=" + qualifierValue;
 		Vector w = new Vector();
 		Iterator it = propertyQualifierHashMap.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String nv = (String) it.next();
 			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(nv, "$");
@@ -1623,6 +1661,7 @@ public class ConceptDetails {
     public Vector getPropertyNames(HashMap propertyQualifierHashMap) {
 		Vector w = new Vector();
 		Iterator it = propertyQualifierHashMap.keySet().iterator();
+		if (it == null) return null;
 		while (it.hasNext()) {
 			String nv = (String) it.next();
 			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(nv, "$");
@@ -1671,6 +1710,7 @@ public class ConceptDetails {
 
 		buf.append("|").append(qual_buf);
 		String line = buf.toString();
+		if (line == null) return null;
 		if (line.endsWith("$")) {
 			line = line.substring(0, line.length()-1);
 		}
@@ -1684,14 +1724,17 @@ public class ConceptDetails {
     public void dumpPropertyHashMap(HashMap propertyHashMap) {
 		if (propertyHashMap == null) return;
 		Iterator it = propertyHashMap.keySet().iterator();
+		if (it == null) return;
 		while (it.hasNext()) {
 			String code = (String) it.next();
 			System.out.println("\n" + code);
 			HashMap hmap = (HashMap) propertyHashMap.get(code);
 			Iterator it2 = hmap.keySet().iterator();
+			if (it2 == null) return;
 			while (it2.hasNext()) {
 				String key = (String) it2.next();
 				Vector values = (Vector) hmap.get(key);
+				if (values == null) return;
 				for (int k=0; k<values.size(); k++) {
 					String value = (String) values.elementAt(k);
 					System.out.println("\t" + key + ":" + value);
@@ -1705,6 +1748,7 @@ public class ConceptDetails {
 		//key:   prop_name
 		//value: Vector(prop_value|qual-name=qual-value$qual-name=qual-value$...)
 		Presentation[] presentations = e.getPresentation();
+        if (presentations == null) return null;
         for (int i = 0; i < presentations.length; i++) {
             Presentation p = presentations[i];
             String prop_name = p.getPropertyName();
@@ -1719,6 +1763,7 @@ public class ConceptDetails {
 
 
 		Property[] properties = e.getProperty();
+        if (properties == null) return null;
         for (int i = 0; i < properties.length; i++) {
             Property p = properties[i];
             String prop_name = p.getPropertyName();
@@ -1732,6 +1777,7 @@ public class ConceptDetails {
 		}
 
 		Definition[] definitions = e.getDefinition();
+        if (definitions == null) return null;
         for (int i = 0; i < definitions.length; i++) {
             Definition p = definitions[i];
             String prop_name = p.getPropertyName();
@@ -1745,6 +1791,7 @@ public class ConceptDetails {
 		}
 
 		Comment[] comments = e.getComment();
+        if (comments == null) return null;
         for (int i = 0; i < comments.length; i++) {
             Comment p = comments[i];
             String prop_name = p.getPropertyName();
@@ -1822,6 +1869,7 @@ public class ConceptDetails {
     public HashMap string2HashMap(String qualifier) {
 		HashMap qual_hmap = new HashMap();
 		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(qualifier, '$');
+		if (u == null) return null;
 		for (int i=0; i<u.size(); i++) {
 			String t = (String) u.elementAt(i);
 			Vector u2 = gov.nih.nci.evs.browser.utils.StringUtils.parseData(t, '=');
@@ -1856,6 +1904,7 @@ public class ConceptDetails {
 						if (source != null) {
 							if (qual_hmap.containsKey(SOURCE)) {
 								String s = (String) qual_hmap.get(SOURCE);
+								if (s == null) return null;
 								if (s.compareTo(source) != 0) {
 									matched = false;
 								}
@@ -1864,6 +1913,7 @@ public class ConceptDetails {
 						if (term_type != null) {
 							if (qual_hmap.containsKey(TERM_TYPE)) {
 								String s = (String) qual_hmap.get(TERM_TYPE);
+								if (s == null) return null;
 								if (s.compareTo(term_type) != 0) {
 									matched = false;
 								}
@@ -1873,6 +1923,7 @@ public class ConceptDetails {
 						if (qualifier_name != null) {
 							if (qual_hmap.containsKey(qualifier_name)) {
 								String s = (String) qual_hmap.get(qualifier_name);
+								if (s == null) return null;
 								if (s.compareTo(qualifier_value) != 0) {
 									matched = false;
 								}

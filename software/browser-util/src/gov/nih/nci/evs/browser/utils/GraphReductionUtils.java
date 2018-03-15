@@ -38,12 +38,14 @@ public class GraphReductionUtils {
     public HashMap getInverseHashMap(HashMap hmap) {
 		HashMap inv_hmap = new HashMap();
         Iterator it = hmap.keySet().iterator();
+        if (it == null) return null;
         while (it.hasNext()) {
 			String key = (String) it.next();
 			Vector node_edge = parseData(key);
 			String node = (String) node_edge.elementAt(0);
 			String edge = (String) node_edge.elementAt(1);
 			Vector w = (Vector) hmap.get(key);
+			if (w == null) return null;
 			for (int i=0; i<w.size(); i++) {
 				String value = (String) w.elementAt(i);
 				String value_edge = value + "|" + edge;
@@ -76,6 +78,7 @@ public class GraphReductionUtils {
         "{id: " + nodeId + ", font: {size:12, color:'red', face:'sans', background:'white'}, label: '" + nodeLabel + "', shape: 'dot', size:8, title: '" + POP_UP_MSG + "', color: {background:'cyan', border:'blue',highlight:{background:'red',border:'blue'},hover:{background:'white',border:'red'}}},";
         for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
+			if (t == null) return null;
 			if (t.compareTo("var nodes = [") == 0) {
 				w.add(t);
 				w.add(new_node);
@@ -104,6 +107,7 @@ public class GraphReductionUtils {
 
         for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
+			if (t == null) return null;
 			if (t.compareTo("var edges = [") == 0) {
 				w.add(t);
 				w.add(new_edge);
@@ -165,6 +169,7 @@ public class GraphReductionUtils {
         "{from: " + groupNodeId + ", to: " + targetNodeId + ", arrows:'to', width: 1, label:'" + edgeLabel + "'},";
         for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
+			if (t == null) return null;
 			if (t.compareTo("var edges = [") == 0) {
 				w.add(t);
 				w.add(new_edge);
@@ -179,9 +184,11 @@ public class GraphReductionUtils {
 		int max = -1;
 		String max_key = null;
         Iterator it = hmap.keySet().iterator();
+        if (it == null) return null;
         while (it.hasNext()) {
 			String key = (String) it.next();
 			Vector w = (Vector) hmap.get(key);
+			if (w == null) return null;
 			if (w.size() > max) {
 				max = w.size();
 				max_key = key;
@@ -199,9 +206,11 @@ public class GraphReductionUtils {
 		int max = -1;
 		String max_key = null;
         Iterator it = sourceEdge2TargetsMap.keySet().iterator();
+        if (it == null) return -1;
         while (it.hasNext()) {
 			String key = (String) it.next();
 			Vector w = (Vector) sourceEdge2TargetsMap.get(key);
+			if (w == null) return -1;
 			if (w.size() > max) {
 				max = w.size();
 				max_key = key;
@@ -260,6 +269,7 @@ public class GraphReductionUtils {
 				String source = getSourceId(line);
 				String target = getTargetId(line);
 				String edge = getEdgeLabel(line);
+				if (edge == null) return false;
 				if (source.compareTo(max_id) == 0 && edge.compareTo(max_edge) != 0 && target.compareTo(nodeId) == 0 ) {
 				    return false;
 				} else if (source.compareTo(max_id) != 0 && edge.compareTo(max_edge) == 0 && target.compareTo(nodeId) == 0) {
@@ -381,6 +391,7 @@ public class GraphReductionUtils {
 		if (line == null) return null;
         Vector data_vec = new Vector();
         StringTokenizer st = new StringTokenizer(line, tab);
+        if (st == null) return null;
         while (st.hasMoreTokens()) {
             String value = st.nextToken();
             data_vec.add(value);
@@ -492,6 +503,7 @@ public class GraphReductionUtils {
 		if (hmap == null) return;
 		System.out.println(label);
 		Iterator it = hmap.keySet().iterator();
+		if (it == null) return;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			Vector v = (Vector) hmap.get(key);
@@ -792,6 +804,7 @@ public class GraphReductionUtils {
 	public Vector get_group_node_ids(Vector v) {
 		Vector w = new Vector();
 		if (v == null) return w;
+		if (v == null) return null;
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 			t = t.trim();

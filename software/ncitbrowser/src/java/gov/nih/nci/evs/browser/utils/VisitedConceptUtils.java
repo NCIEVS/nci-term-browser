@@ -87,8 +87,10 @@ public class VisitedConceptUtils {
 
         public boolean exists(Vector<VisitedConcept> concepts) {
             Iterator<VisitedConcept> iterator = concepts.iterator();
+            if (iterator == null) return false;
             while (iterator.hasNext()) {
                 VisitedConcept visitedConcept = iterator.next();
+                if (visitedConcept == null) return false;
                 if (visitedConcept.getValue().equals(value))
                     return true;
             }
@@ -198,6 +200,7 @@ public class VisitedConceptUtils {
 
         String value = getLink(visitedConcepts);
         String pipe = JSPUtils.getPipeSeparator(displaySeparator);
+        if (pipe == null) return null;
         if (pipe.length() > 0)
             value = pipe + " " + value;
         return value;

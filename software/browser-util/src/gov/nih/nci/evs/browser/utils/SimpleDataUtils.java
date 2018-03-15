@@ -114,11 +114,13 @@ public class SimpleDataUtils {
 			//lbSvc = new RemoteServerUtil().createLexBIGService();
 			CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
 			Relations[] relations = cs.getRelations();
+			if (relations == null) return null;
 			for (int i = 0; i < relations.length; i++) {
 				Relations relation = relations[i];
                 Boolean isMapping = relation.isIsMapping();
                 if (isMapping != null && isMapping.equals(Boolean.TRUE)) {
 					AssociationPredicate[] associationPredicates = relation.getAssociationPredicate();
+					if (associationPredicates == null) return null;
 					for (int j=0; j<associationPredicates.length; j++) {
 						AssociationPredicate associationPredicate = associationPredicates[j];
 						String name = associationPredicate.getAssociationName();
@@ -161,6 +163,7 @@ public class SimpleDataUtils {
 		Vector v = new Vector();
 		if (cs != null) {
 			SupportedPropertyQualifier[] qualifiers = cs.getMappings().getSupportedPropertyQualifier();
+			if (qualifiers == null) return null;
 			for (int i=0; i<qualifiers.length; i++)
 			{
 				v.add(qualifiers[i].getLocalId());
@@ -175,6 +178,7 @@ public class SimpleDataUtils {
 			CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
 			CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
 			Vector prop_quals = getSupportedPropertyQualifier(cs);
+			if (prop_quals == null) return false;
 			if (prop_quals.contains("source-code")) {
 				return true;
 			}

@@ -106,12 +106,14 @@ public class ConceptEntity {
     public ConceptEntity() {
         //super();
     }
-
+
+
     public ConceptEntity(LexBIGService lbSvc) {
         //super();
         this.lbSvc = lbSvc;
     }
-
+
+
 
     static void displayAndLogError(String s, Exception e) {
 		System.out.println(s);
@@ -162,7 +164,8 @@ public class ConceptEntity {
         ConceptReferenceList crefs = ConvenienceMethods.createConceptReferenceList(new String[] { code }, scheme);
 
         CodedNodeSet cns = lbSvc.getCodingSchemeConcepts(scheme, csvt);
-
+
+
 if (cns == null) {
 System.out.println("CNS == NULL???");
 return false;
@@ -181,19 +184,24 @@ return false;
             Entity node = ref.getEntity();
 
             Presentation[] prsentations = node.getPresentation();
+            if (prsentations == null) return false;
             for (int i = 0; i < prsentations.length; i++) {
                  Presentation presentation = prsentations[i];
+                 if (presentation == null) return false;
                  displayMessage(new StringBuffer().append("\tPresentation name: ").append(presentation.getPropertyName())
                          .append(" text: ").append(presentation.getValue().getContent()).toString());
 
                  PropertyQualifier[] qualifiers = presentation.getPropertyQualifier();
+                 if (qualifiers == null) return false;
                  for (int k=0; k<qualifiers.length; k++) {
                       PropertyQualifier qualifier = qualifiers[k];
+						 if (qualifier == null) return false;
 						 displayMessage(new StringBuffer().append("\t\tQualifier name: ").append(qualifier.getPropertyQualifierName())
 								 .append(" text: ").append(qualifier.getValue().getContent()).toString());
 				 }
 
                  Source[] sources = presentation.getSource();
+                 if (sources == null) return false;
                  for (int k=0; k<sources.length; k++) {
                       Source source = sources[k];
 						 displayMessage(new StringBuffer().append("\t\tSource: ").append(source.getContent()).toString());
@@ -203,24 +211,30 @@ return false;
             System.out.println("\n");
 
             Definition[] definitions = node.getDefinition();
+            if (definitions == null) return false;
             for (int i = 0; i < definitions.length; i++) {
                 Definition definition = definitions[i];
+                if (definition == null) return false;
                 displayMessage(new StringBuffer().append("\tDefinition name: ").append(definition.getPropertyName())
                         .append(" text: ").append(definition.getValue().getContent()).toString());
             }
             System.out.println("\n");
 
             Comment[] comments = node.getComment();
+            if (comments == null) return false;
             for (int i = 0; i < comments.length; i++) {
                 Comment comment = comments[i];
+                if (comment == null) return false;
                 displayMessage(new StringBuffer().append("\tComment name: ").append(comment.getPropertyName())
                         .append(" text: ").append(comment.getValue().getContent()).toString());
             }
             System.out.println("\n");
 
             Property[] props = node.getProperty();
+            if (props == null) return false;
             for (int i = 0; i < props.length; i++) {
                 Property prop = props[i];
+                if (prop == null) return false;
                 displayMessage(new StringBuffer().append("\tProperty name: ").append(prop.getPropertyName())
                         .append(" text: ").append(prop.getValue().getContent()).toString());
             }
@@ -232,6 +246,7 @@ return false;
             props = node.getAllProperties();
             for (int i = 0; i < props.length; i++) {
                 Property prop = props[i];
+                if (prop == null) return false;
                 displayMessage(new StringBuffer().append("\tProperty name: ").append(prop.getPropertyName())
                         .append(" text: ").append(prop.getValue().getContent()).toString());
             }
@@ -280,11 +295,14 @@ return false;
 						displayMessage("\t" + assoc.getAssociationName());
 
 						AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+						if (acl == null) return;
 						for (int j = 0; j < acl.length; j++) {
 							AssociatedConcept ac = acl[j];
-							String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());
+
+							String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());
 							EntityDescription ed = ac.getEntityDescription();
 							String concept_code = ac.getConceptCode();
+							if (concept_code == null) return;
 							if (!concept_code.startsWith("@")) {
 								displayMessage("\t\t" + ac.getConceptCode() + "/"
 									+ (ed == null ? "**No Description**" : ed.getContent()) + " --> (" + rela + ") --> " + code);
@@ -296,7 +314,8 @@ return false;
         }
 
     }
-
+
+
     public String code2Name(String scheme, String version, String code) {
 		ConceptDetails cd = new ConceptDetails(lbSvc);
 		String ns = cd.getNamespaceByCode(scheme, version, code);
@@ -335,11 +354,13 @@ return false;
 						//displayMessage("\t" + assoc.getAssociationName());
 
 						AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+						if (acl == null) return;
 						for (int j = 0; j < acl.length; j++) {
 							AssociatedConcept ac = acl[j];
 							String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());
 							EntityDescription ed = ac.getEntityDescription();
 							String concept_code = ac.getConceptCode();
+							if (concept_code == null) return;
 							if (!concept_code.startsWith("@")) {
 								pw.println(ac.getConceptCode() + "|"
 									+ (ed == null ? "**No Description**" : ed.getContent()) + "|" + rela
@@ -386,9 +407,11 @@ return false;
                     displayMessage("\t" + assoc.getAssociationName());
 
                     AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+                    if (acl == null) return;
                     for (int j = 0; j < acl.length; j++) {
                         AssociatedConcept ac = acl[j];
-                        String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());
+
+                        String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());
 
                         EntityDescription ed = ac.getEntityDescription();
                         displayMessage("\t\t" + code + " --> (" + rela + ") --> " + ac.getConceptCode() + "/"
@@ -399,7 +422,8 @@ return false;
         }
     }
 
-
+
+
 
     public String replaceAssociationNameByRela(AssociatedConcept ac, String associationName) {
 		if (ac.getAssociationQualifiers() == null) return associationName;
@@ -434,8 +458,10 @@ return false;
                     .nextElement();
             Entity node = ref.getEntity();
             Property[] props = node.getAllProperties();
+            if (props == null) return null;
             for (int i = 0; i < props.length; i++) {
                 Property prop = props[i];
+                if (prop == null) return null;
                 if (prop.getPropertyName().compareTo(propName) == 0) {
 					w.add(prop.getValue().getContent().toString());
 				}
@@ -471,6 +497,7 @@ return false;
                     Association assoc = associations[i];
                     //displayMessage("\t" + assoc.getAssociationName());
                     AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+                    if (acl == null) return null;
                     for (int j = 0; j < acl.length; j++) {
                         AssociatedConcept ac = acl[j];
                         String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());
@@ -509,10 +536,12 @@ return false;
 
                 if (targetof != null) {
 					Association[] associations = targetof.getAssociation();
+					if (associations == null) return null;
 					for (int i = 0; i < associations.length; i++) {
 						Association assoc = associations[i];
 						//displayMessage("\t" + assoc.getAssociationName());
 						AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+						if (acl == null) return null;
 						for (int j = 0; j < acl.length; j++) {
 							AssociatedConcept ac = acl[j];
 							String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());

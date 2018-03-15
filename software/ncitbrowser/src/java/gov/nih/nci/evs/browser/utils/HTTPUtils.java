@@ -467,7 +467,7 @@ public class HTTPUtils {
 
 	public static String createErrorMessage(String name, String value, int source) {
 		if (source != 0) {
-			System.out.println("(*) createErrorMessage source: " + source);
+			System.out.println("createErrorMessage source: " + source);
 		}
 		System.out.println("WARNING: Invalid parameter value encountered - " + " (name: " + cleanXSS(name) + " value: " + value + ").");
 		return "WARNING: Invalid parameter name and/or value encountered -- please check your URL and try again. ";

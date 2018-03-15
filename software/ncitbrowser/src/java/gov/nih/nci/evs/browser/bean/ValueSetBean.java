@@ -1016,7 +1016,6 @@ public class ValueSetBean {
 					ex.printStackTrace();
 				}
             } else {
-				System.out.println("(*) Dynamically resolve value set.");
 				try {
 					LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 

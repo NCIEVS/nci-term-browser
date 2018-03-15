@@ -135,6 +135,7 @@ public class ValueSetTreeUtils {
 
     LexBIGService lbSvc = null;
     String serviceUrl = null;
+    boolean mode = true;
 
     public ValueSetTreeUtils(LexBIGService lbSvc) {
 		this.lbSvc = lbSvc;
@@ -147,13 +148,21 @@ public class ValueSetTreeUtils {
 
     public ValueSetTreeUtils(LexBIGService lbSvc, String serviceUrl) {
 		this.lbSvc = lbSvc;
+		serviceUrl = serviceUrl.trim();
 		this.serviceUrl = serviceUrl;
+		if (serviceUrl.startsWith("http")) {
+			this.mode = false;
+		}
 		try {
         	initialize();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
     }
+
+    public void setMode(boolean mode) {
+		this.mode = mode;
+	}
 /*
 	public void initialize() throws Exception{
 		long ms = System.currentTimeMillis();
@@ -165,24 +174,24 @@ public class ValueSetTreeUtils {
 	    constructTerminologyValueSetTree();
 	}
 */
-    public SourceAssertedValueSetHierarchyServicesImpl createSourceAssertedValueSetHierarchyServices(String serviceUrl) {
-		if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareTo("null") == 0) {
-			return (SourceAssertedValueSetHierarchyServicesImpl) SourceAssertedValueSetHierarchyServicesImpl.defaultInstance();
-		} else {
-			service = ((LexEVSApplicationService)lbSvc).getLexEVSSourceAssertedValueSetHierarchyServices();
-		}
-		return service;
-	}
+
 
 	public void initialize() throws Exception{
 		long ms = System.currentTimeMillis();
-        //String serviceUrl = RemoteServerUtil.getServiceURL();
-        service = createSourceAssertedValueSetHierarchyServices(serviceUrl);
+        service = createSourceAssertedValueSetHierarchyServices();
 		service.setLexBIGService(lbSvc);
 		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(ValueSetHierarchyService.SCHEME, "PRODUCTION");
 		service.preprocessSourceHierarchyData(ValueSetHierarchyService.SCHEME, prod_version, ValueSetHierarchyService.HIERARCHY, ValueSetHierarchyService.SOURCE,ValueSetHierarchyService.PUBLISH_DESIGNATION, ValueSetHierarchyService.ROOT_CODE);
 	    constructSourceValueSetTree();
 	    constructTerminologyValueSetTree();
+	}
+
+    public SourceAssertedValueSetHierarchyServicesImpl createSourceAssertedValueSetHierarchyServices() {
+		if (this.mode) {
+			return (SourceAssertedValueSetHierarchyServicesImpl) SourceAssertedValueSetHierarchyServicesImpl.defaultInstance();
+		} else {
+			return((LexEVSApplicationService)lbSvc).getLexEVSSourceAssertedValueSetHierarchyServices();
+		}
 	}
 
     public void constructSourceValueSetTree() {

@@ -661,7 +661,7 @@ if (!retval) {
                         iteratorBeanManager.addIteratorBean(iteratorBean);
                     }
                 } else {
-					System.out.println("(*) search by names returns wrapper = NULL???");
+					System.out.println("WARNING: SearchUtils searchByNameOrCode returns null.");
 				}
             }
 
@@ -2229,8 +2229,6 @@ if (!retval) {
 			associationsToNavigate =
 				new String[] { assocName };
 
-		} else {
-			System.out.println("(*) associationsToNavigate == null");
 		}
 
 		if (rel_search_rela != null) {
@@ -2254,17 +2252,7 @@ if (!retval) {
 			}
 		}
 
-/*
-System.out.println("(*) advancedSearchAction SearchUtils(lbSvc).searchByAssociations ...");
 
-		    wrapper =
-			new SearchUtils(lbSvc).searchByAssociations(scheme, version,
-				matchText, associationsToNavigate,
-				association_qualifier_names,
-				association_qualifier_values, search_direction, source,
-				matchAlgorithm, excludeDesignation, ranking,
-				maxToReturn);
-*/
                 wrapper =
                     new SearchUtils(lbSvc).searchByAssociations(scheme, version,
                         matchText, associationsToNavigate,

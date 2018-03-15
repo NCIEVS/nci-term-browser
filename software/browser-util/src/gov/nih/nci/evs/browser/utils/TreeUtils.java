@@ -821,12 +821,12 @@ public class TreeUtils {
 
             String[] associationsToNavigate =
                 hierarchyDefn.getAssociationNames();
-
+/*
             for (int i = 0; i < associationsToNavigate.length; i++) {
                 _logger.debug("(*) associationsToNavigate: "
                     + associationsToNavigate[i]);
             }
-
+*/
             boolean associationsNavigatedFwd =
                 hierarchyDefn.getIsForwardNavigable();
 

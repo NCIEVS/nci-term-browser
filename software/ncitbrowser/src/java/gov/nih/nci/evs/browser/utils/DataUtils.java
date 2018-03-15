@@ -1,6 +1,7 @@
 package gov.nih.nci.evs.browser.utils;
 
 import gov.nih.nci.evs.browser.bean.*;
+import gov.nih.nci.evs.browser.properties.*;
 
 import java.io.*;
 import java.net.URI;
@@ -632,7 +633,7 @@ public class DataUtils {
 				AbsoluteCodingSchemeVersionReferenceList acsvr = service.getListOfCodingSchemeVersionsUsedInResolution(cs);
 				return acsvr;
 		    } else {
-				System.out.println("(*) getListOfCodingSchemeVersionsUsedInResolution service == NULL???");
+				System.out.println("getListOfCodingSchemeVersionsUsedInResolution service == NULL???");
 			}
 
 		} catch (Exception ex) {
@@ -656,7 +657,7 @@ public class DataUtils {
 				AbsoluteCodingSchemeVersionReferenceList acsvr = service.getListOfCodingSchemeVersionsUsedInResolution(scheme);
 				return acsvr;
 		    } else {
-				System.out.println("(*) getListOfCodingSchemeVersionsUsedInResolution service == NULL???");
+				System.out.println("getListOfCodingSchemeVersionsUsedInResolution service == NULL???");
 			}
 
 		} catch (Exception ex) {
@@ -1167,7 +1168,7 @@ public class DataUtils {
         ms = System.currentTimeMillis();
 		sourceValueSetTree = valueSetHierarchy.getSourceValueSetTree(null, null);
 		if (sourceValueSetTree == null) {
-			_logger.debug("\t(*) sourceValueSetTree == null??? ...");
+			//_logger.debug("\t(*) sourceValueSetTree == null??? ...");
 		} else {
 			TreeItem root = (TreeItem) sourceValueSetTree.get("<Root>");
 
@@ -1235,7 +1236,16 @@ public class DataUtils {
 		System.out.println("getValueSetDefinitionMetadata run time (ms): " + (System.currentTimeMillis() - ms));
         System.out.println("Instantiate ValueSetTreeUtils...");
         ms = System.currentTimeMillis();
-        String serviceUrl = RemoteServerUtil.getServiceUrl();
+
+        String serviceUrl = null;//RemoteServerUtil.getServiceUrl();
+        NCItBrowserProperties properties = null;
+        try {
+            properties = NCItBrowserProperties.getInstance();
+            serviceUrl = properties.getProperty(NCItBrowserProperties.EVS_SERVICE_URL);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
         ValueSetTreeUtils util = new ValueSetTreeUtils(lbSvc, serviceUrl);
 		sourceValueSetTree = util.getSourceValueSetTree();
 		terminologyValueSetTree = util.getTerminologyValueSetTree();
@@ -3791,9 +3801,7 @@ if (lbSvc == null) {
                 lbSvc.resolveCodingScheme(formalname, versionOrTag);
             return cs;
         } catch (Exception ex) {
-            _logger.error("(*) Unable to resolveCodingScheme " + formalname);
-            //_logger.error("(*) \tMay require security token. ");
-
+            _logger.error("WARNING: Unable to resolveCodingScheme " + formalname);
         }
         return null;
     }
@@ -4356,7 +4364,6 @@ if (lbSvc == null) {
                     for (int i = 0; i < rcrl.getResolvedConceptReferenceCount(); i++) {
                         ResolvedConceptReference rcr =
                             rcrl.getResolvedConceptReference(i);
-                        // _logger.debug("(*) " + rcr.getCode());
                         Entity c = rcr.getReferencedEntry();
                         if (c == null) {
                             _logger.debug("Concept is null.");
@@ -6559,11 +6566,8 @@ if (lbSvc == null) {
     public static HashMap getNCBOWidgetString() {
         String ncbo_widget_info = NCItBrowserProperties.getNCBO_WIDGET_INFO();
 		if (isNull(ncbo_widget_info)) {
-			//System.out.println("(*) ncbo_widget_info: " + ncbo_widget_info);
-			//System.out.println("(*) computeNCBOWidgetString ... ");
 			ncbo_widget_info = computeNCBOWidgetString();
 		}
-		//System.out.println("(*) ncbo_widget_info: " + ncbo_widget_info);
 		return parseNCBOWidgetString(ncbo_widget_info);
 	}
 
@@ -6573,7 +6577,7 @@ if (lbSvc == null) {
 		HashMap map = NCItBrowserProperties.getBioportalAcronym2NameHashMap();
 
 		if (map == null) {
-			System.out.println("(*) getBioportalAcronym2NameHashMap returns null??? ");
+			System.out.println("WARNING: getBioportalAcronym2NameHashMap returns null??? ");
 			return null;
 		}
 
@@ -6585,7 +6589,7 @@ if (lbSvc == null) {
             String acronym = (String) me.getKey();
             //String name = (String) me.getValue();
             if (_localName2FormalNameHashMap.containsKey(acronym)) {
-				System.out.println("(*) _localName2FormalNameHashMap containsKey " + acronym);
+				System.out.println("WARNING: _localName2FormalNameHashMap containsKey " + acronym);
 				String formalname = (String) _localName2FormalNameHashMap.get(acronym);
 				String cs_name = (String) _uri2CodingSchemeNameHashMap.get(formalname);
 				buf.append(cs_name + "|" + formalname + "|" + acronym + ";");
@@ -7111,10 +7115,6 @@ if (lbSvc == null) {
             String version = DataUtils.getCodingSchemeVersion(value);
             //String name = DataUtils.getMetadataValue(scheme, "display_name");
             String name = metadataUtils.getMetadataValue(scheme, null, null, "display_name");
-
-            //if (name == null || name.compareTo("") == 0) {
-				//System.out.println("(*) WARNING: getSupportedVocabularyMetadataValues -- " + scheme + " does not have a display_name property.");
-			//}
 
             String urn = null;
             String productionVersion = DataUtils.getProductionVersion(scheme);

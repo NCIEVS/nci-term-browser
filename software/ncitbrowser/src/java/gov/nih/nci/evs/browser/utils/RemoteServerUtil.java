@@ -85,7 +85,6 @@ public class RemoteServerUtil {
         NCItBrowserProperties properties = null;
         try {
             properties = NCItBrowserProperties.getInstance();
-
             url = properties.getProperty(NCItBrowserProperties.EVS_SERVICE_URL);
             return createLexBIGService(url);
         } catch (Exception ex) {

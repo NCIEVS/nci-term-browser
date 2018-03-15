@@ -1234,7 +1234,7 @@ public class DataUtils {
 			return;
 		}
 		System.out.println("getValueSetDefinitionMetadata run time (ms): " + (System.currentTimeMillis() - ms));
-        System.out.println("Instantiate ValueSetTreeUtils...");
+
         ms = System.currentTimeMillis();
 
         String serviceUrl = null;//RemoteServerUtil.getServiceUrl();
@@ -1245,19 +1245,26 @@ public class DataUtils {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	    _logger
+			.debug("Instantiating ValueSetTreeUtils. serviceUrl: " + serviceUrl);
 
-        ValueSetTreeUtils util = new ValueSetTreeUtils(lbSvc, serviceUrl);
-		sourceValueSetTree = util.getSourceValueSetTree();
-		terminologyValueSetTree = util.getTerminologyValueSetTree();
+        ValueSetTreeUtils util = null;
+        try {
+			util = new ValueSetTreeUtils(lbSvc, serviceUrl);
+			sourceValueSetTree = util.getSourceValueSetTree();
+			terminologyValueSetTree = util.getTerminologyValueSetTree();
 
-		sourceValueSetTreeStringBuffer = util.getSourceValueSetTreeStringBuffer();
-		terminologyValueSetTreeStringBuffer = util.getTerminologyValueSetTreeStringBuffer();
+			sourceValueSetTreeStringBuffer = util.getSourceValueSetTreeStringBuffer();
+			terminologyValueSetTreeStringBuffer = util.getTerminologyValueSetTreeStringBuffer();
 
-		_sourceValueSetTreeKey2TreeItemMap = util.getSourceValueSetTreeKey2TreeItemMap();
-		_terminologyValueSetDescriptionHashMap = util.getTerminologyValueSetDescriptionHashMap();
+			_sourceValueSetTreeKey2TreeItemMap = util.getSourceValueSetTreeKey2TreeItemMap();
+			_terminologyValueSetDescriptionHashMap = util.getTerminologyValueSetDescriptionHashMap();
 
-		sourceValueSetCheckboxid2NodeIdMap = util.getSourceValueSetCheckboxid2NodeIdMap();
-		//terminologyValueSetCheckboxid2NodeIdMap = util.getTerminologyValueSetCheckboxid2NodeIdMap();
+			sourceValueSetCheckboxid2NodeIdMap = util.getSourceValueSetCheckboxid2NodeIdMap();
+			//terminologyValueSetCheckboxid2NodeIdMap = util.getTerminologyValueSetCheckboxid2NodeIdMap();
+	    } catch (Exception ex) {
+			ex.printStackTrace();
+		}
         System.out.println("ValueSetTreeUtils run time (ms): " + (System.currentTimeMillis() - ms));
 
 

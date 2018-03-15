@@ -1227,11 +1227,17 @@ public class DataUtils {
 		ms = System.currentTimeMillis();
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
         LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-        ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
-        vsdURI2MetadataHashMap = vsmdu.getValueSetDefinitionMetadata();
-		if (vsdURI2MetadataHashMap == null || vsdURI2MetadataHashMap.keySet().size() == 0) {
-			hasNoValueSet = true;
-			return;
+        ValueSetMetadataUtils vsmdu = null;
+        try {
+			vsmdu = new ValueSetMetadataUtils(vsd_service);
+			vsdURI2MetadataHashMap = vsmdu.getValueSetDefinitionMetadata();
+			if (vsdURI2MetadataHashMap == null || vsdURI2MetadataHashMap.keySet().size() == 0) {
+				hasNoValueSet = true;
+				//return;
+				_logger.debug("WARNING: vsmdu.getValueSetDefinitionMetadata() returns null.");
+			}
+		} else {
+			ex.printStackTrace();
 		}
 		System.out.println("getValueSetDefinitionMetadata run time (ms): " + (System.currentTimeMillis() - ms));
 

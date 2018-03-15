@@ -177,7 +177,6 @@ public class ValueSetTreeUtils {
 
 
 	public void initialize() throws Exception{
-		long ms = System.currentTimeMillis();
         service = createSourceAssertedValueSetHierarchyServices();
 		service.setLexBIGService(lbSvc);
 		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(ValueSetHierarchyService.SCHEME, "PRODUCTION");
@@ -513,12 +512,5 @@ public class ValueSetTreeUtils {
 		}
 		return hmap;
 	}
-
-/*
-	public static void main(String[] args) {
-		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-		ValueSetTreeUtils util = new ValueSetTreeUtils(lbSvc);
-	}
-*/
 }
 

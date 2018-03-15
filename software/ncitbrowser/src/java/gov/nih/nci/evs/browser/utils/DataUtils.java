@@ -1238,7 +1238,11 @@ public class DataUtils {
 					if (vsdURI2MetadataHashMap.keySet().size() == 0) {
 						hasNoValueSet = true;
 						//return;
+						System.out.println("WARNING: vsdURI2MetadataHashMap.keySet().size() == 0.");
 						_logger.debug("WARNING: vsdURI2MetadataHashMap.keySet().size() == 0.");
+					} else {
+						System.out.println("\tvsdURI2MetadataHashMap.keySet().size(): " + vsdURI2MetadataHashMap.keySet().size());
+						_logger.debug("\tvsdURI2MetadataHashMap.keySet().size(): " + vsdURI2MetadataHashMap.keySet().size());
 					}
 				}
 			}
@@ -1246,7 +1250,7 @@ public class DataUtils {
 			ex.printStackTrace();
 		}
 		System.out.println("getValueSetDefinitionMetadata run time (ms): " + (System.currentTimeMillis() - ms));
-
+		_logger.debug("getValueSetDefinitionMetadata run time (ms): " + (System.currentTimeMillis() - ms));
         ms = System.currentTimeMillis();
 
         String serviceUrl = null;//RemoteServerUtil.getServiceUrl();
@@ -1257,8 +1261,8 @@ public class DataUtils {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-	    _logger
-			.debug("Instantiating ValueSetTreeUtils. serviceUrl: " + serviceUrl);
+	    _logger.debug("Instantiating ValueSetTreeUtils. serviceUrl: " + serviceUrl);
+	    System.out.println("Instantiating ValueSetTreeUtils. serviceUrl: " + serviceUrl);
 
         ValueSetTreeUtils util = null;
         try {
@@ -1270,7 +1274,22 @@ public class DataUtils {
 			terminologyValueSetTreeStringBuffer = util.getTerminologyValueSetTreeStringBuffer();
 
 			_sourceValueSetTreeKey2TreeItemMap = util.getSourceValueSetTreeKey2TreeItemMap();
+			if (_sourceValueSetTreeKey2TreeItemMap == null) {
+				_logger.debug("WARNING: _sourceValueSetTreeKey2TreeItemMap == null.");
+				System.out.println("WARNING: _sourceValueSetTreeKey2TreeItemMap == null.");
+			} else {
+				_logger.debug("WARNING: _sourceValueSetTreeKey2TreeItemMap.keySet().size() = " + _sourceValueSetTreeKey2TreeItemMap.keySet().size());
+				System.out.println("WARNING: _sourceValueSetTreeKey2TreeItemMap.keySet().size() = " + _sourceValueSetTreeKey2TreeItemMap.keySet().size());
+			}
+
 			_terminologyValueSetDescriptionHashMap = util.getTerminologyValueSetDescriptionHashMap();
+			if (_terminologyValueSetDescriptionHashMap == null) {
+				_logger.debug("WARNING: _terminologyValueSetDescriptionHashMap == null.");
+				System.out.println("WARNING: _terminologyValueSetDescriptionHashMap == null.");
+			} else {
+				_logger.debug("WARNING: _terminologyValueSetDescriptionHashMap.keySet().size() = " + _terminologyValueSetDescriptionHashMap.keySet().size());
+				System.out.println("WARNING: _terminologyValueSetDescriptionHashMap.keySet().size() = " + _terminologyValueSetDescriptionHashMap.keySet().size());
+			}
 
 			sourceValueSetCheckboxid2NodeIdMap = util.getSourceValueSetCheckboxid2NodeIdMap();
 			//terminologyValueSetCheckboxid2NodeIdMap = util.getTerminologyValueSetCheckboxid2NodeIdMap();
@@ -1279,6 +1298,7 @@ public class DataUtils {
 		}
 		// KLO 03152018
 		valueSetHierarchyInitialized = true;
+        _logger.debug("ValueSetTreeUtils run time (ms): " + (System.currentTimeMillis() - ms));
         System.out.println("ValueSetTreeUtils run time (ms): " + (System.currentTimeMillis() - ms));
 
 
@@ -1300,7 +1320,6 @@ public class DataUtils {
         System.out.println("valueSetHierarchy.initializeCS2vsdURIs_map() ...");
 		valueSetHierarchy.initializeCS2vsdURIs_map();
 		_logger.debug("Done initializing initializeCS2vsdURIs_map ...");
-
     }
 
 //////////////////////////////////////////////////////////
@@ -1308,7 +1327,6 @@ public class DataUtils {
     public static HashSet get_valueSetParticipationHashSet() {
 		return _valueSetParticipationHashSet;
 	}
-
 
     public static TreeItem getSourceValueSetTreeItem(String node_id) {
 		String vsd_name = null;

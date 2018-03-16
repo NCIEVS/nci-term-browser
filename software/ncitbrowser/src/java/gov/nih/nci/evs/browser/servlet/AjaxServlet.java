@@ -2168,10 +2168,6 @@ out.print("/pages/subset.jsf\">NCI Thesaurus Subsets</a> page).");
 
 
 ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
-
-System.out.println("vsd_uri: " + vsd_uri);
-
-
 if (show_released_file_button) {
 
 	if (vsc != null && !DataUtils.isNullOrBlank(vsc.getReportURI())) {
@@ -2370,7 +2366,11 @@ out.flush();
 					out.println("	<tr><td>");
 					out.println("	<div style=\"float:left;width:360px;\">");
 
+				if (content != null) {
 					out.println(content);
+				} else {
+					out.println("ERROR: Unable to generate value set tree.");
+				}
 
 					out.println("	</div>");
 					out.println("	</td></tr>");
@@ -3838,7 +3838,6 @@ out.flush();
 			Vector u = DataUtils.parseData(t, delim);
 			String uri = (String) u.elementAt(0);
 			String version = (String) u.elementAt(1);
-			if (version == null) return;
 			if (version == null || version.compareTo("null") == 0) {
 				version = DataUtils.getVocabularyVersionByTag(uri, "PRODUCTION");
 			}
@@ -5186,16 +5185,6 @@ out.flush();
 						+ mapping_name);
 
 				String outputstr = FTPDownload.tear_page(uri);
-                /*
-				StringBuffer sb = new StringBuffer();
-				Vector v = FTPDownload.tearPage(uri);
-				if (v == null) return;
-				for (int k=0; k<v.size(); k++) {
-					String line = (String) v.elementAt(k);
-					sb.append(line).append("\n");
-				}
-				String outputstr = sb.toString();
-				*/
 				response.setContentLength(outputstr.length());
 				ServletOutputStream ouputStream = response.getOutputStream();
 				ouputStream.write(outputstr.getBytes("UTF8"), 0, outputstr.length());

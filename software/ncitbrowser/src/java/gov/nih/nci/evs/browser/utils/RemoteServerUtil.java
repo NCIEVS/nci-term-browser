@@ -178,6 +178,14 @@ public class RemoteServerUtil {
         String codingScheme, SecurityToken securityToken) {
         try {
             if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
+
+                String lg_config_file =
+                    properties
+                        .getProperty(NCItBrowserProperties.LG_CONFIG_FILE);
+                System.setProperty(NCItBrowserProperties.LG_CONFIG_FILE,
+                    lg_config_file);
+
+
                 LexBIGService lbSvc = LexBIGServiceImpl.defaultInstance();
                 return lbSvc;
             }
@@ -312,6 +320,13 @@ public class RemoteServerUtil {
             properties = NCItBrowserProperties.getInstance();
             String serviceUrl = properties.getProperty(NCItBrowserProperties.EVS_SERVICE_URL);
             if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
+
+                String lg_config_file =
+                    properties
+                        .getProperty(NCItBrowserProperties.LG_CONFIG_FILE);
+                System.setProperty(NCItBrowserProperties.LG_CONFIG_FILE,
+                    lg_config_file);
+
 				return LexEVSValueSetDefinitionServicesImpl.defaultInstance();
 			}
 
@@ -326,6 +341,13 @@ public class RemoteServerUtil {
 
     public static LexEVSValueSetDefinitionServices getLexEVSValueSetDefinitionServices(String serviceUrl) {
 		if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
+
+                String lg_config_file =
+                    properties
+                        .getProperty(NCItBrowserProperties.LG_CONFIG_FILE);
+                System.setProperty(NCItBrowserProperties.LG_CONFIG_FILE,
+                    lg_config_file);
+
 			return LexEVSValueSetDefinitionServicesImpl.defaultInstance();
 		}
 		try {

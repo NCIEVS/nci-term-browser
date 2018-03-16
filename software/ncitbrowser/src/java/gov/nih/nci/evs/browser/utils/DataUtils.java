@@ -1278,8 +1278,8 @@ public class DataUtils {
 				_logger.debug("WARNING: _sourceValueSetTreeKey2TreeItemMap == null.");
 				System.out.println("WARNING: _sourceValueSetTreeKey2TreeItemMap == null.");
 			} else {
-				_logger.debug("WARNING: _sourceValueSetTreeKey2TreeItemMap.keySet().size() = " + _sourceValueSetTreeKey2TreeItemMap.keySet().size());
-				System.out.println("WARNING: _sourceValueSetTreeKey2TreeItemMap.keySet().size() = " + _sourceValueSetTreeKey2TreeItemMap.keySet().size());
+				_logger.debug("_sourceValueSetTreeKey2TreeItemMap.keySet().size() = " + _sourceValueSetTreeKey2TreeItemMap.keySet().size());
+				System.out.println("_sourceValueSetTreeKey2TreeItemMap.keySet().size() = " + _sourceValueSetTreeKey2TreeItemMap.keySet().size());
 			}
 
 			_terminologyValueSetDescriptionHashMap = util.getTerminologyValueSetDescriptionHashMap();
@@ -1287,8 +1287,8 @@ public class DataUtils {
 				_logger.debug("WARNING: _terminologyValueSetDescriptionHashMap == null.");
 				System.out.println("WARNING: _terminologyValueSetDescriptionHashMap == null.");
 			} else {
-				_logger.debug("WARNING: _terminologyValueSetDescriptionHashMap.keySet().size() = " + _terminologyValueSetDescriptionHashMap.keySet().size());
-				System.out.println("WARNING: _terminologyValueSetDescriptionHashMap.keySet().size() = " + _terminologyValueSetDescriptionHashMap.keySet().size());
+				_logger.debug("_terminologyValueSetDescriptionHashMap.keySet().size() = " + _terminologyValueSetDescriptionHashMap.keySet().size());
+				System.out.println("_terminologyValueSetDescriptionHashMap.keySet().size() = " + _terminologyValueSetDescriptionHashMap.keySet().size());
 			}
 
 			sourceValueSetCheckboxid2NodeIdMap = util.getSourceValueSetCheckboxid2NodeIdMap();

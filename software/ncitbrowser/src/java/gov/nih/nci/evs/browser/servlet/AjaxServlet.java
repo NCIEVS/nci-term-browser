@@ -1482,9 +1482,13 @@ if (action.compareTo("xmldefinitions") == 0) {
       println(out, "            </tr>");
       println(out, "          </table>");
 
-      if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
-          println(out, "            <div class=\"textbodyredsmall\">" + ServerMonitorThread.getInstance().getMessage() + "</div>");
-      } else {
+      if (RemoteServerUtil.activate_server_monitor_thread) {
+		  if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
+			  println(out, "            <div class=\"textbodyredsmall\">" + ServerMonitorThread.getInstance().getMessage() + "</div>");
+
+		  }
+	  }
+      //} else {
           println(out, "            <!-- Tree content -->");
           println(out, "            <div id=\"rootDesc\">");
           println(out, "              <div id=\"bd\"></div>");
@@ -1497,7 +1501,7 @@ if (action.compareTo("xmldefinitions") == 0) {
           println(out, "              <div id=\"bd\"></div>");
           println(out, "            </div>");
           println(out, "            <div id=\"treecontainer\"></div>");
-      }
+      //}
 
       println(out, "");
       println(out, "          <form id=\"pg_form\" enctype=\"application/x-www-form-urlencoded;charset=UTF-8\">");
@@ -2094,16 +2098,18 @@ if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
       out.println("");
       out.println("</div>");
 
-      if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
-      out.println("    <div class=\"redbar\">");
-      out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
-      out.println("        <tr>");
-      out.println("          <td class=\"lexevs-status\">");
-      out.println("            " + ServerMonitorThread.getInstance().getMessage());
-      out.println("          </td>");
-      out.println("        </tr>");
-      out.println("      </table>");
-      out.println("    </div>");
+	  if (RemoteServerUtil.activate_server_monitor_thread) {
+		  if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
+			  out.println("    <div class=\"redbar\">");
+			  out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
+			  out.println("        <tr>");
+			  out.println("          <td class=\"lexevs-status\">");
+			  out.println("            " + ServerMonitorThread.getInstance().getMessage());
+			  out.println("          </td>");
+			  out.println("        </tr>");
+			  out.println("      </table>");
+			  out.println("    </div>");
+		  }
       }
 
       out.println("      <!-- end Quick links bar -->");
@@ -3456,17 +3462,19 @@ if (DataUtils.isNull(matchText)) {
       out.println("");
       out.println("</div>");
 
-      if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
-		  out.println("    <div class=\"redbar\">");
-		  out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
-		  out.println("        <tr>");
-		  out.println("          <td class=\"lexevs-status\">");
-		  out.println("            " + ServerMonitorThread.getInstance().getMessage());
-		  out.println("          </td>");
-		  out.println("        </tr>");
-		  out.println("      </table>");
-		  out.println("    </div>");
-      }
+      if (RemoteServerUtil.activate_server_monitor_thread) {
+		  if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
+			  out.println("    <div class=\"redbar\">");
+			  out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
+			  out.println("        <tr>");
+			  out.println("          <td class=\"lexevs-status\">");
+			  out.println("            " + ServerMonitorThread.getInstance().getMessage());
+			  out.println("          </td>");
+			  out.println("        </tr>");
+			  out.println("      </table>");
+			  out.println("    </div>");
+		  }
+	  }
 
       out.println("      <!-- end Quick links bar -->");
       out.println("");

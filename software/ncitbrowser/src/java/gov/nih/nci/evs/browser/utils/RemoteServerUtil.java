@@ -73,7 +73,7 @@ public class RemoteServerUtil {
     private static String _serviceInfo = "EvsServiceInfo";
     private static String _serviceURL = null;
 
-    private static boolean activate_server_monitor_thread = false;
+    public static boolean activate_server_monitor_thread = false;
 
     public RemoteServerUtil() {
         // Do nothing

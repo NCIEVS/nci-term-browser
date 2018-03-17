@@ -5393,7 +5393,6 @@ if (lbSvc == null) {
 
 
     public static ValueSetDefinition findValueSetDefinitionByURI(String uri) {
-		if (uri == null) return null;
 	    if (uri == null) return null;
 	    if (uri.indexOf("|") != -1) {
 			Vector u = parseData(uri);
@@ -5614,7 +5613,6 @@ if (lbSvc == null) {
 		}
         List list = vsd_service.listValueSetDefinitionURIs();
         if (list == null) return null;
-        if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
 			ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
@@ -5645,7 +5643,6 @@ if (lbSvc == null) {
 			return null;
 		}
         List list = vsd_service.listValueSetDefinitionURIs();
-        if (list == null) return null;
         if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
@@ -6574,7 +6571,6 @@ if (lbSvc == null) {
         if (_uri2CodingSchemeNameHashMap == null) setCodingSchemeMap();
         //KLO, 08182015
         if (vocabularyName == null) return null;
-        if (vocabularyName == null) return null;
         if (vocabularyName.indexOf("%20") != -1) {
 			vocabularyName = vocabularyName.replaceAll("%20", " ");
 		}
@@ -7039,7 +7035,6 @@ if (lbSvc == null) {
 		java.lang.String[] tags = cstl.getTag();
 
 		if (tags == null) return Boolean.FALSE;
-		if (tags == null) return null;
 		if (tags.length > 0) {
 			for (int j = 0; j < tags.length; j++) {
 				String version_tag = (String) tags[j];
@@ -7207,7 +7202,6 @@ if (lbSvc == null) {
 		try {
 			List list = vsd_service.listValueSetDefinitionURIs();
 			if (list == null || list.size() == 0) return null;
-			if (list == null) return null;
 			for (int i=0; i<list.size(); i++) {
 				String uri = (String) list.get(i);
 				ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);

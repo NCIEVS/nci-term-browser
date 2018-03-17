@@ -96,7 +96,6 @@ public class CodingSchemeDataUtils {
     public void dumpVector(String label, Vector v) {
 		System.out.println("\n" + label + ":");
 		if (v == null) return;
-		if (v == null) return;
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 			int j=i+1;
@@ -280,7 +279,6 @@ public class CodingSchemeDataUtils {
         try {
 			org.LexGrid.naming.SupportedAssociationQualifier[] supportedAssociationQualifiers
 			    = cs.getMappings().getSupportedAssociationQualifier();
-			if (supportedAssociationQualifiers == null) return null;
 			if (supportedAssociationQualifiers == null) return null;
 			for (int i=0; i<supportedAssociationQualifiers.length; i++)
 			{

@@ -158,7 +158,7 @@ if (checked_vocabularies != null) {
     selected_vocabularies_link = JSPUtils.getPopUpWindow(selected_vocabularies_names, "Selected Value Sets");
 }
 
-System.out.println("checked_vocabularies: " + checked_vocabularies);
+//System.out.println("checked_vocabularies: " + checked_vocabularies);
 
 //String partial_checked_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("partial_checked_vocabularies"));
 

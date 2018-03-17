@@ -303,7 +303,6 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 	public void dumpVector(String label, Vector v) {
 		System.out.println(label);
 		if (v == null) return;
-		if (v == null) return;
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 			System.out.println("\t" + t);
@@ -821,7 +820,6 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 	}
 
 	public boolean isNCIT(String codingScheme) {
-		if (codingScheme == null) return false;
 		if (codingScheme == null) return false;
 		if (codingScheme.compareTo(Constants.NCI_THESAURUS) == 0 ||
             codingScheme.compareTo(Constants.NCIT_CS_NAME) == 0) {

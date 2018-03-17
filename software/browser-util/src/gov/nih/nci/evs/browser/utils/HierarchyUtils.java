@@ -137,7 +137,6 @@ public class HierarchyUtils {
 
     public String selectHierarchyId(String[] ids, String id) {
 		if (ids == null || ids.length == 0) return null;
-		if (ids == null) return null;
 		if (ids.length == 1) {
 			return ids[0];
 		} else {

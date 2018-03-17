@@ -142,7 +142,6 @@ public class ExpressionParser {
 
 	public String restriction2Text(String restriction_id, String restriction) {
 		if (restriction == null || restriction.length() == 0) return restriction;
-		if (restriction == null) return null;
 		if (restriction.startsWith("(")) {
 			restriction = restriction.substring(1, restriction.length());
 		}

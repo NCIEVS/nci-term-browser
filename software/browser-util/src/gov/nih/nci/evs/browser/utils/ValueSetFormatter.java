@@ -299,7 +299,6 @@ public class ValueSetFormatter {
     public LocalNameList getPropertyNameLocalNameList(Vector types) {
 		 Vector property_names = new Vector();
 		 if (types == null || types.size() == 0) return null;
-		 if (types == null) return null;
 		 for (int i=0; i<types.size(); i++) {
 			 String type = (String) types.elementAt(i);
 			 if (type == null) return null;

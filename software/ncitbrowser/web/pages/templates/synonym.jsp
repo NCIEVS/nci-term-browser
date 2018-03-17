@@ -57,7 +57,6 @@ if (type != null && type.compareTo("all") == 0) {
                 String subsource_nm = (String) synonym_data.elementAt(4);
                 if (!StringUtils.isNullOrBlank(subsource_nm)) {
 			has_subsource = true;
-			System.out.println("(*) subsource_nm: " + subsource_nm);
 			break;
 		}
             }

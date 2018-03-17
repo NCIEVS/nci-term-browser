@@ -722,7 +722,6 @@ public class ViewInHierarchyUtils {
 
     public String getFocusCode(String ontology_node_id) {
 		if (ontology_node_id == null) return null;
-		if (ontology_node_id == null) return null;
 		if (ontology_node_id.indexOf("_dot_") == -1) {
 			return ontology_node_id;
 		}
@@ -738,7 +737,6 @@ public class ViewInHierarchyUtils {
 	}
 
     public String getParentCode(String ontology_node_id) {
-		if (ontology_node_id == null) return null;
 		if (ontology_node_id == null) return null;
 		if (ontology_node_id.indexOf("_dot_") == -1) {
 			return ontology_node_id;

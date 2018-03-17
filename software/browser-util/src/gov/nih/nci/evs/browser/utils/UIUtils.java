@@ -243,7 +243,6 @@ public class UIUtils {
 
 	public boolean hasQualifiers(Vector qualifiers) {
 		if (qualifiers == null || qualifiers.size() == 0) return false;
-		if (qualifiers == null) return false;
 		for (int j = 0; j < qualifiers.size(); j++) {
 			String q = (String) qualifiers.elementAt(j);
 			if (q != null && q.length() > 0) return true;

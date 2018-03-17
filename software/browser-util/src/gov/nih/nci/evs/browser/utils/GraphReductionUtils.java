@@ -804,7 +804,6 @@ public class GraphReductionUtils {
 	public Vector get_group_node_ids(Vector v) {
 		Vector w = new Vector();
 		if (v == null) return w;
-		if (v == null) return null;
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 			t = t.trim();

@@ -1867,7 +1867,6 @@ public class TreeUtils {
     //is_a
     public String selectHierarchyId(String[] ids, String id) {
 		if (ids == null || ids.length == 0) return null;
-		if (ids == null) return null;
 		if (ids.length == 1) {
 			return ids[0];
 		} else {
@@ -1882,7 +1881,6 @@ public class TreeUtils {
 
     public SupportedHierarchy selectSupportedHierarchy(SupportedHierarchy[] hierarchies, String id) {
 		if (hierarchies == null || hierarchies.length == 0) return null;
-		if (hierarchies == null) return null;
 		for (int i=0; i<hierarchies.length; i++) {
 			SupportedHierarchy hierarchyDefn = hierarchies[i];
 			String hier_id = hierarchyDefn.getLocalId();

@@ -350,7 +350,6 @@ public class ValueSetHierarchy {
 		Vector v = new Vector();
         List list = valueSetDefinitionURIList;
         if (list == null) return null;
-        if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);
 			ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
@@ -374,7 +373,6 @@ public class ValueSetHierarchy {
 		Vector v = new Vector();
 		HashSet hset = new HashSet();
 		List list = valueSetDefinitionURIList;
-        if (list == null) return null;
         if (list == null) return null;
         for (int i=0; i<list.size(); i++) {
 			String uri = (String) list.get(i);

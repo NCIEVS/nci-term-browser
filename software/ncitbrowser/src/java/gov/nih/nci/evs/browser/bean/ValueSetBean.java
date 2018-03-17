@@ -852,7 +852,6 @@ public class ValueSetBean {
 		Definition[] definitions = concept.getDefinition();
 		Vector v = new Vector();
 		if (definitions == null) return null;
-		if (definitions == null) return null;
 		for (int i=0; i<definitions.length; i++) {
 			Definition definition = definitions[i];
 			Source[] sources = definition.getSource();

@@ -405,7 +405,6 @@ public class HierarchyHelper {
 	public Vector getTransitiveClosure(Vector v, String c) {
 		Vector child_codes = getSubclassCodes(c);
 		if (child_codes == null || child_codes.size() == 0) return v;
-		if (child_codes == null) return null;
 		for (int i=0; i<child_codes.size(); i++) {
 			String child_code = (String) child_codes.elementAt(i);
 			System.out.println("Parent " + c + " child: " + child_code);

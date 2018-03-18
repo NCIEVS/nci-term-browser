@@ -58,19 +58,21 @@ public class VisUtils {
     private LexBIGService lbSvc = null;
     private LexBIGServiceConvenienceMethods lbscm = null;
 
-    public static int NODES_ONLY = 1;
-    public static int EDGES_ONLY = 2;
-    public static int NODES_AND_EDGES = 3;
+    public static final int NODES_ONLY = 1;
+    public static final int EDGES_ONLY = 2;
+    public static final int NODES_AND_EDGES = 3;
 
-    public static String ROOT = "<ROOT>";
-    public static String PART_OF = "part_of";
-
-    public static final String[] ALL_RELATIONSHIP_TYPES = {"type_superconcept",
+    public static final String ROOT = "<ROOT>";
+    public static final String PART_OF = "part_of";
+/*
+    public static final String[] Constants.ALL_RELATIONSHIP_TYPES = {"type_superconcept",
                                                            "type_subconcept",
                                                            "type_role",
                                                            "type_inverse_role",
                                                            "type_association",
                                                            "type_inverse_association"};
+
+*/
     public static HashMap RELATIONSHIP_LABEL_MAP;
 
     static {
@@ -252,7 +254,7 @@ public class VisUtils {
 
     public String generateGraphScript(String scheme, String version, String namespace, String code, String[] types, int option, HashMap hmap) {
         if (types == null) {
-			types = ALL_RELATIONSHIP_TYPES;
+			types = Constants.ALL_RELATIONSHIP_TYPES;
 		}
         Vector graphData = generateGraphData(scheme, version, namespace, code, types, option, hmap);
         return GraphUtils.generateGraphScript(graphData, option);
@@ -261,7 +263,7 @@ public class VisUtils {
 
     public Vector generateGraphScriptVector(String scheme, String version, String namespace, String code, String[] types, int option, HashMap hmap) {
         if (types == null) {
-			types = ALL_RELATIONSHIP_TYPES;
+			types = Constants.ALL_RELATIONSHIP_TYPES;
 		}
         Vector graphData = generateGraphData(scheme, version, namespace, code, types, option, hmap);
         return GraphUtils.generateGraphScriptVector(graphData, option);
@@ -589,7 +591,7 @@ public class VisUtils {
 	}
 
     public String generateGraphScript(String scheme, String version, String namespace, String code, int option) {
-        Vector graphData = generateGraphData(scheme, version, namespace, code, ALL_RELATIONSHIP_TYPES, option, null);
+        Vector graphData = generateGraphData(scheme, version, namespace, code, Constants.ALL_RELATIONSHIP_TYPES, option, null);
         return GraphUtils.generateGraphScript(graphData, option);
 	}
 

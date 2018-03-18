@@ -532,7 +532,7 @@ public class SimpleTreeUtils {
 		}
 		printTree(pw, root);
 	}
-
+/*
     public void printTree(Vector v, HashMap tree_map) {
 		if (tree_map == null) return;
 		TreeItem root = (TreeItem) tree_map.get("<Root>");
@@ -550,7 +550,7 @@ public class SimpleTreeUtils {
 		v = new Vector();
 		printTree(v, root);
 	}
-
+*/
     public void printTree(PrintWriter pw, TreeItem root) {
 		if (root == null) return;
 		pw.println("<ul>");

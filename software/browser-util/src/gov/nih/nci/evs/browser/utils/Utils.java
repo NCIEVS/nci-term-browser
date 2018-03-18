@@ -310,20 +310,23 @@ public class Utils {
 	 }
 
 	 public static void saveToFile(String outputfile, Vector v) {
+		if (outputfile == null) return;
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(outputfile, "UTF-8");
-			if (v != null && v.size() > 0) {
-				for (int i=0; i<v.size(); i++) {
-					String t = (String) v.elementAt(i);
-					pw.println(t);
+			if (pw != null) {
+				if (v != null && v.size() > 0) {
+					for (int i=0; i<v.size(); i++) {
+						String t = (String) v.elementAt(i);
+						pw.println(t);
+					}
 				}
-		    }
+			}
 		} catch (Exception ex) {
 
 		} finally {
 			try {
-				pw.close();
+				if (pw != null) pw.close();
 				System.out.println("Output file " + outputfile + " generated.");
 			} catch (Exception ex) {
 				ex.printStackTrace();

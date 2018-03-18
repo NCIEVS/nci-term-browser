@@ -192,14 +192,21 @@ public class Constants {
 
     public static final String[] TRUE_OR_FALSE = {"true", "false"};
 
-	public static String[] NCIM_CODE_PROPERTYIES = new String[] {"NCI_META_CUI", "UMLS_CUI"};
+	public static final String[] NCIM_CODE_PROPERTYIES = new String[] {"NCI_META_CUI", "UMLS_CUI"};
 
 	public static final String NO_VALUE_SET_REPORT_AVAILABLE = "No value set report is available.";
 
     public static final String CDISC_SUBMISSION_VALUE = "CDISC Submission Value";
 
-    public static String INDENT_HALF = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    public static String INDENT = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    public static final String INDENT_HALF = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    public static final String INDENT = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+    public static final String[] ALL_RELATIONSHIP_TYPES = {"type_superconcept",
+                                                           "type_subconcept",
+                                                           "type_role",
+                                                           "type_inverse_role",
+                                                           "type_association",
+                                                           "type_inverse_association"};
 
 	public static final String[] HAZARD_CHARS = {
 		"$QUERY", "$WHERE", "()", "(EVAL", ".JPG HTTP",

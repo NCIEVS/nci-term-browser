@@ -326,21 +326,17 @@ public class PropsAndAssocForCode {
             while (refEnum.hasMoreElements()) {
                 ResolvedConceptReference ref = refEnum.nextElement();
                 AssociationList targetof = ref.getTargetOf();
+				if (targetof != null) {
+					Association[] associations = targetof.getAssociation();
+					if (associations != null && associations.length > 0) {
+						for (int i = 0; i < associations.length; i++) {
+							Association assoc = associations[i];
+							//displayMessage(pw, "\t" + assoc.getAssociationName());
 
-
-                if (targetof != null) {
-					if (targetof != null) {
-						Association[] associations = targetof.getAssociation();
-						if (associations != null && associations.length > 0) {
-							for (int i = 0; i < associations.length; i++) {
-								Association assoc = associations[i];
-								//displayMessage(pw, "\t" + assoc.getAssociationName());
-
-								AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
-								if (acl == null) return;
+							AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+							if (acl != null) {
 								for (int j = 0; j < acl.length; j++) {
 									AssociatedConcept ac = acl[j];
-
 									String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());
 									EntityDescription ed = ac.getEntityDescription();
 									displayMessage(pw, "\t\t" + ac.getConceptCode() + "/"
@@ -356,7 +352,7 @@ public class PropsAndAssocForCode {
 							}
 						}
 					}
-			    }
+				}
             }
         }
 

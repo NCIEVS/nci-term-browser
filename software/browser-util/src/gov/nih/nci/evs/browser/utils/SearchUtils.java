@@ -131,7 +131,7 @@ public class SearchUtils {
         Arrays.asList(new String[] { "a", "an", "and", "by", "for", "of", "on",
             "in", "nos", "the", "to", "with" });
 
-    private static HashMap _propertyLocalNameListHashMap = null;
+    private HashMap _propertyLocalNameListHashMap = null;
 
     private LexBIGService lbSvc = null;
 
@@ -399,6 +399,7 @@ public class SearchUtils {
 
     public NameAndValueList createNameAndValueList(String[] names,
         String[] values) {
+		if (names == null) return null;
         NameAndValueList nvList = new NameAndValueList();
         for (int i = 0; i < names.length; i++) {
             NameAndValue nv = new NameAndValue();
@@ -2696,11 +2697,6 @@ public class SearchUtils {
                             // cns = cns2.difference(cns);
 
                             //if (cns != null) {
-								/*
-                                cns =
-                                    filterOutAnonymousClasses(lbSvc, scheme,
-                                        cns);
-                                */
                                 //if (cns != null) {
                                     cns_vec.add(cns);
                                     codingSchemeNames.add(scheme);
@@ -2873,7 +2869,7 @@ public class SearchUtils {
         propertyTypes[3] = PropertyType.PRESENTATION;
         return propertyTypes;
     }
-
+/*
     private ResolvedConceptReferencesIterator filterOutAnonymousClasses(
         LexBIGService lbSvc, String scheme, CodedNodeSet cns,
         ResolvedConceptReferencesIterator iterator) {
@@ -2983,7 +2979,7 @@ public class SearchUtils {
         }
         return null;
     }
-
+*/
     public String findBestContainsAlgorithm(String matchText) {
         if (matchText == null)
             return "nonLeadingWildcardLiteralSubString";
@@ -4529,6 +4525,9 @@ System.out.println("===================================================");
     public CodedNodeGraph getRestrictedCodedNodeGraph(
         String scheme, String version, String rel, String rela,
         CodedNodeSet cns, int direction) {
+
+		if (cns == null) return null;
+
         CodedNodeGraph cng = null;
         CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
         versionOrTag.setVersion(version);
@@ -4540,6 +4539,7 @@ System.out.println("===================================================");
 
         try {
             cng = lbSvc.getNodeGraph(scheme, versionOrTag, null);
+            if (cng == null) return null;
             NameAndValueList asso_list = null;
             String [] associationsToNavigate = null;
 
@@ -4568,21 +4568,21 @@ System.out.println("===================================================");
             }
 
             cng = cng.restrictToAssociations(asso_list, qualifier_list);
+            if (cng == null) return null;
 
-            if (cns != null) {
-                if (direction == -1) {
-                    _logger
-                        .warn("restrictToSourceCodes... ");
+			if (direction == -1) {
+				_logger
+					.warn("restrictToSourceCodes... ");
 
-                    cng = cng.restrictToSourceCodes(cns);
-                } else if (direction == 1) {
-                    _logger
-                        .warn("restrictToTargetCodes... ");
+				cng = cng.restrictToSourceCodes(cns);
+			} else if (direction == 1) {
+				_logger
+					.warn("restrictToTargetCodes... ");
 
 
-                    cng = cng.restrictToTargetCodes(cns);
-                }
-            }
+				cng = cng.restrictToTargetCodes(cns);
+			}
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

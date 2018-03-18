@@ -377,7 +377,7 @@ public class HierarchyUtils {
 		}
 		return null;
 	}
-
+/*
     public boolean testHierarchy(PrintWriter pw, String scheme, String version, String code) {
 		if (version == null) {
 			version = csdu.getVocabularyVersionByTag(scheme, Constants.PRODUCTION);
@@ -459,7 +459,7 @@ public class HierarchyUtils {
 		}
     	return true;
 	}
-
+*/
 	public Vector getChildrenCodes(LexEvsTreeNode node) {
 	   List<LexEvsTreeNode> list_children = node.getPathToRootChildren();
 	   if (list_children == null) return null;

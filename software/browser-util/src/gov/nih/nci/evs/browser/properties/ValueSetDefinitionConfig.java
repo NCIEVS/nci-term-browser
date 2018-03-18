@@ -63,7 +63,7 @@ import gov.nih.nci.evs.browser.utils.*;
  */
 
 public class ValueSetDefinitionConfig {
-    public  static HashMap valueSetConfigHashMap = null;
+    protected static HashMap valueSetConfigHashMap = null;
     private static String vsd_config_file_dir = null;
     private static String vsd_config_file = null;
     private static Logger _logger =

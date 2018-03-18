@@ -94,6 +94,8 @@ public class ValueSetResolver {
 	}
 
 	public void run(String outputfile) {
+		if (outputfile == null) return;
+
 		long ms = System.currentTimeMillis();
 		PrintWriter pw = null;
 		String version = null;
@@ -102,40 +104,42 @@ public class ValueSetResolver {
 		int i = 0;
 		try {
 			pw = new PrintWriter(outputfile, "UTF-8");
-			Iterator it = vsdUri2NameMap.keySet().iterator();
-			if (it == null) return;
-			while (it.hasNext()) {
-				String cs_uri = (String) it.next();
-				String name = (String) vsdUri2NameMap.get(cs_uri);
-				i++;
-				System.out.println("(" + i + ") " + name + " (" + cs_uri + ")");
-				ResolvedConceptReferencesIterator rcri = null;
-				try {
-					rcri = csdu.resolveCodingScheme(cs_uri, version, resolveObjects);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-
-				if (rcri == null) {
-					//pw.println("\t" + "Unable to resolve " + name + " (" + cs_uri + ")");
-					result_vec.add(name + "|" + cs_uri + "|Exception thrown at csdu.resolveCodingScheme.");
-				} else {
+			if (pw != null) {
+				Iterator it = vsdUri2NameMap.keySet().iterator();
+				if (it == null) return;
+				while (it.hasNext()) {
+					String cs_uri = (String) it.next();
+					String name = (String) vsdUri2NameMap.get(cs_uri);
+					i++;
+					System.out.println("(" + i + ") " + name + " (" + cs_uri + ")");
+					ResolvedConceptReferencesIterator rcri = null;
 					try {
-						int numberRemaining = rcri.numberRemaining();
-						result_vec.add(name + "|" + cs_uri + "|" + numberRemaining);
+						rcri = csdu.resolveCodingScheme(cs_uri, version, resolveObjects);
 					} catch (Exception ex) {
 						ex.printStackTrace();
-						result_vec.add(name + "|" + cs_uri + "|Exception thrown at rcri.numberRemaining()");
+					}
+
+					if (rcri == null) {
+						//pw.println("\t" + "Unable to resolve " + name + " (" + cs_uri + ")");
+						result_vec.add(name + "|" + cs_uri + "|Exception thrown at csdu.resolveCodingScheme.");
+					} else {
+						try {
+							int numberRemaining = rcri.numberRemaining();
+							result_vec.add(name + "|" + cs_uri + "|" + numberRemaining);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+							result_vec.add(name + "|" + cs_uri + "|Exception thrown at rcri.numberRemaining()");
+						}
 					}
 				}
-			}
-			result_vec = new SortUtils().quickSort(result_vec);
-			int j = 0;
-			pw.println("\n\n");
-			for (i=0; i<result_vec.size(); i++) {
-				String t = (String) result_vec.elementAt(i);
-				j++;
-				pw.println("(" + j + ") " + t);
+				result_vec = new SortUtils().quickSort(result_vec);
+				int j = 0;
+				pw.println("\n\n");
+				for (i=0; i<result_vec.size(); i++) {
+					String t = (String) result_vec.elementAt(i);
+					j++;
+					pw.println("(" + j + ") " + t);
+				}
 			}
 
 
@@ -143,7 +147,7 @@ public class ValueSetResolver {
 
 		} finally {
 			try {
-				pw.close();
+				if (pw != null) pw.close();
 				System.out.println("Output file " + outputfile + " generated.");
 			} catch (Exception ex) {
 				ex.printStackTrace();

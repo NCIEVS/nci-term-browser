@@ -1384,25 +1384,26 @@ public class ConceptDetails {
 					ResolvedConceptReference ref = refEnum.nextElement();
 					AssociationList targetof = ref.getTargetOf();
 					if (targetof != null) {
-						if (targetof != null) {
-							Association[] associations = targetof.getAssociation();
-							if (associations != null && associations.length > 0) {
-								for (int i = 0; i < associations.length; i++) {
-									Association assoc = associations[i];
-									AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
-									if (acl == null) return null;
+						Association[] associations = targetof.getAssociation();
+						if (associations != null && associations.length > 0) {
+							for (int i = 0; i < associations.length; i++) {
+								Association assoc = associations[i];
+								AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+								if (acl != null) {
 									for (int j = 0; j < acl.length; j++) {
 										AssociatedConcept ac = acl[j];
-										if (namedClassOnly) {
-											if (!ac.getConceptCode().startsWith("@")) {
+										if (ac != null) {
+											if (namedClassOnly) {
+												if (!ac.getConceptCode().startsWith("@")) {
+													String rela = assoc.getAssociationName();
+													EntityDescription ed = ac.getEntityDescription();
+													v.add(ed.getContent() + "$" + ac.getConceptCode() + "$" + rela);
+												}
+											} else {
 												String rela = assoc.getAssociationName();
 												EntityDescription ed = ac.getEntityDescription();
 												v.add(ed.getContent() + "$" + ac.getConceptCode() + "$" + rela);
 											}
-										} else {
-											String rela = assoc.getAssociationName();
-											EntityDescription ed = ac.getEntityDescription();
-											v.add(ed.getContent() + "$" + ac.getConceptCode() + "$" + rela);
 										}
 									}
 								}

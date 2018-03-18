@@ -120,6 +120,8 @@ public class ResolvedValueSetMappingUtils {
 
 
     public void run(PrintWriter pw, Vector codes) {
+		if (pw == null) return;
+		if (codes == null) return;
 		String scheme = "NCI_Thesaurus";
 		String version = codingSchemeDataUtils.getVocabularyVersionByTag(scheme, "PRODUCTION");
 		String ncim_scheme = "NCI Metathesaurus";
@@ -210,16 +212,19 @@ public class ResolvedValueSetMappingUtils {
 
 
     public void run(String value_set_ascii_file, String outputfile) {
+		if (outputfile == null) return;
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(outputfile, "UTF-8");
-			Vector valueSetCodes = loadValueSetData(value_set_ascii_file);
-			run(pw, valueSetCodes);
+			if (pw != null) {
+				Vector valueSetCodes = loadValueSetData(value_set_ascii_file);
+				run(pw, valueSetCodes);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			try {
-				pw.close();
+				if (pw != null) pw.close();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

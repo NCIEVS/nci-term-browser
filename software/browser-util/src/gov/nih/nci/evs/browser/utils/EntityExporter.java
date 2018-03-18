@@ -66,8 +66,12 @@ public class EntityExporter {
 
 
     void displayAndLogError(String s, Exception e) {
-		pw.println(s);
-		e.printStackTrace();
+		if (pw != null) {
+			pw.println(s);
+		}
+		if (e != null) {
+			e.printStackTrace();
+		}
 	}
 
     public String getVocabularyVersionByTag(String codingSchemeName, String ltag) {
@@ -142,6 +146,7 @@ public class EntityExporter {
 
 
      public void exportEntity(String scheme, String version, String code) throws LBException {
+		if (code == null) return;
         try {
 			if (version == null) {
 				version = getVocabularyVersionByTag(scheme, "PRODUCTION");
@@ -150,16 +155,19 @@ public class EntityExporter {
 
 			this.outputfile = code + ".txt";
 			PrintWriter pw = new PrintWriter(outputfile, "UTF-8");
-			CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
-			if (version != null) csvt.setVersion(version);
-			printProps(pw, scheme, csvt, code);
-			printFrom(pw,  scheme, csvt, code);
-			printTo(pw, scheme, csvt, code);
+			if (pw != null) {
+
+				CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
+				if (version != null) csvt.setVersion(version);
+				printProps(pw, scheme, csvt, code);
+				printFrom(pw,  scheme, csvt, code);
+				printTo(pw, scheme, csvt, code);
+			}
 	    } catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			try {
-				pw.close();
+				if (pw != null) pw.close();
 				System.out.println("Output file " + outputfile + " generated.");
 			} catch (Exception ex) {
 				ex.printStackTrace();

@@ -12,16 +12,18 @@ public class FTPDownload {
    public static Vector get(String uri) {
       URL u = null;
       InputStream is = null;
-      DataInputStream dis;
+      DataInputStream dis = null;
       String s;
       Vector v = new Vector();
       try {
          u = new URL(uri);
-         is = u.openStream();
-         dis = new DataInputStream(new BufferedInputStream(is));
-         while ((s = dis.readLine()) != null) {
-            v.add(s);
-         }
+         if (u != null) {
+			 is = u.openStream();
+			 dis = new DataInputStream(new BufferedInputStream(is));
+			 while ((s = dis.readLine()) != null) {
+				v.add(s);
+			 }
+		 }
 
       } catch (MalformedURLException mue) {
 		 System.out.println("(*) MalformedURLException: " + uri);
@@ -34,7 +36,7 @@ public class FTPDownload {
 
       } finally {
          try {
-            is.close();
+            if (is != null) is.close();
          } catch (IOException ioe) {
             ioe.printStackTrace();
          }
@@ -44,26 +46,31 @@ public class FTPDownload {
 
 
    public static void downloadText(String uri) {
-      URL u;
+	  if (uri == null) return;
+      URL u = null;
       InputStream is = null;
-      DataInputStream dis;
-      String s;
+      DataInputStream dis = null;
+      String s = null;
       PrintWriter pw = null;
-      int n = uri.lastIndexOf("/");
       String outputfile = null;
+      int n = uri.lastIndexOf("/");
       if (n != -1) {
 		  outputfile = uri.substring(n+1, uri.length());
 	  }
-      System.out.println(outputfile);
+      //System.out.println(outputfile);
       if (outputfile == null) return;
       try {
          pw = new PrintWriter(outputfile, "UTF-8");
-         u = new URL(uri);
-         is = u.openStream();
-         dis = new DataInputStream(new BufferedInputStream(is));
-         while ((s = dis.readLine()) != null) {
-            pw.println(s);
-         }
+         if (pw != null) {
+			 u = new URL(uri);
+			 if (u != null) {
+				 is = u.openStream();
+				 dis = new DataInputStream(new BufferedInputStream(is));
+				 while ((s = dis.readLine()) != null) {
+					pw.println(s);
+				 }
+			 }
+		 }
 
       } catch (MalformedURLException mue) {
          mue.printStackTrace();
@@ -73,8 +80,8 @@ public class FTPDownload {
 
       } finally {
          try {
-            is.close();
-            pw.close();
+            if (is != null) is.close();
+            if (pw != null) pw.close();
             System.out.println("Output file " + outputfile + " generated.");
          } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -119,21 +126,27 @@ public class FTPDownload {
 
 
    public static void downloadText(String uri, String outputfile) {
-      URL u;
+	  if (uri == null) return;
+	  if (outputfile == null) return;
+
+      URL u = null;
       InputStream is = null;
-      DataInputStream dis;
-      String s;
+      DataInputStream dis = null;
+      String s = null;
       PrintWriter pw = null;
 
-      if (outputfile == null) return;
       try {
          pw = new PrintWriter(outputfile, "UTF-8");
-         u = new URL(uri);
-         is = u.openStream();
-         dis = new DataInputStream(new BufferedInputStream(is));
-         while ((s = dis.readLine()) != null) {
-            pw.println(s);
-         }
+         if (pw != null) {
+			 u = new URL(uri);
+			 if (u != null) {
+				 is = u.openStream();
+				 dis = new DataInputStream(new BufferedInputStream(is));
+				 while ((s = dis.readLine()) != null) {
+					pw.println(s);
+				 }
+			 }
+		 }
 
       } catch (MalformedURLException mue) {
          mue.printStackTrace();
@@ -143,8 +156,8 @@ public class FTPDownload {
 
       } finally {
          try {
-            is.close();
-            pw.close();
+            if (is != null) is.close();
+            if (pw != null) pw.close();
             System.out.println("Output file " + outputfile + " generated.");
          } catch (IOException ioe) {
             ioe.printStackTrace();

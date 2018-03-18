@@ -119,6 +119,9 @@ public class UIUtils {
 
 
     public String generatePropertyTable(Entity concept, String property_type) {
+		if (concept == null) return null;
+		if (property_type == null) return null;
+
 		org.LexGrid.commonTypes.Property[] properties = null;
 
         if (property_type.compareToIgnoreCase("GENERIC") == 0) {
@@ -140,25 +143,31 @@ public class UIUtils {
 
 		Vector keyVec = new Vector();
 		HashMap qualifierHashMap = new HashMap();
+		if (properties == null) return null;
 
         for (int i = 0; i < properties.length; i++) {
             Property p = (Property) properties[i];
-			String name = p.getPropertyName();
-			String value = p.getValue().getContent();
-			String n_v = name + "|" + value;
-			Vector qualifier_vec = new Vector();
-			PropertyQualifier[] qualifiers = p.getPropertyQualifier();
-			if (qualifiers == null) return null;
-			for (int j = 0; j < qualifiers.length; j++) {
-				PropertyQualifier q = qualifiers[j];
-				String qualifier_name = q.getPropertyQualifierName();
-				String qualifier_value = q.getValue().getContent();
-				String t = qualifier_name + "|" + qualifier_value;
-				qualifier_vec.add(t);
+            if (p != null) {
+				String name = p.getPropertyName();
+				if (p.getValue() != null) {
+					String value = p.getValue().getContent();
+					String n_v = name + "|" + value;
+					Vector qualifier_vec = new Vector();
+					PropertyQualifier[] qualifiers = p.getPropertyQualifier();
+					if (qualifiers != null) {
+						for (int j = 0; j < qualifiers.length; j++) {
+							PropertyQualifier q = qualifiers[j];
+							String qualifier_name = q.getPropertyQualifierName();
+							String qualifier_value = q.getValue().getContent();
+							String t = qualifier_name + "|" + qualifier_value;
+							qualifier_vec.add(t);
+						}
+						keyVec.add(n_v);
+						qualifier_vec = new SortUtils().quickSort(qualifier_vec);
+						qualifierHashMap.put(n_v, qualifier_vec);
+					}
+				}
 			}
-			keyVec.add(n_v);
-			qualifier_vec = new SortUtils().quickSort(qualifier_vec);
-			qualifierHashMap.put(n_v, qualifier_vec);
 		}
 
 		keyVec = new SortUtils().quickSort(keyVec);
@@ -251,6 +260,7 @@ public class UIUtils {
 	}
 
     public String generateHTMLTable(HTMLTableSpec spec, String codingScheme, String version) {
+		if (spec == null) return null;
 		return generateHTMLTable(spec, codingScheme, version, null);
 	}
 
@@ -455,10 +465,13 @@ public class UIUtils {
 */
 
     public String generateHTMLTable(HTMLTableSpec spec, String codingScheme, String version, String rel_type) {
+		if (spec == null) return null;
 		StringBuffer buf = new StringBuffer();
 		HashMap qualifierHashMap = spec.getQualifierHashMap();
+		if (qualifierHashMap == null) return null;
 		Vector nv_vec = spec.getKeyVec();
 		if (nv_vec == null) {
+			nv_vec = new Vector();
 			Iterator entries = qualifierHashMap.entrySet().iterator();
 			if (entries == null) return null;
 			while (entries.hasNext()) {
@@ -769,10 +782,12 @@ public class UIUtils {
 
 
     public String generatePropertyTable(Entity concept, Vector property_names, String description, int qualifierColumn) {
+		if (concept == null) return null;
 		if (property_names == null) return null;
 
 		org.LexGrid.commonTypes.Property[] properties = null;
 		properties = concept.getAllProperties();
+		if (properties == null) return null;
 
 		String firstColumnHeading = "Name";
 		String secondColumnHeading = "Value";
@@ -823,10 +838,13 @@ public class UIUtils {
 
 
     public String generatePropertyTable(HTMLTableSpec spec, String codingScheme, String version) {
+		if (spec == null) return null;
 		StringBuffer buf = new StringBuffer();
 		HashMap qualifierHashMap = spec.getQualifierHashMap();
+		if (qualifierHashMap == null) return null;
 		Vector nv_vec = spec.getKeyVec();
 		if (nv_vec == null) {
+			nv_vec = new Vector();
 			Iterator entries = qualifierHashMap.entrySet().iterator();
 			if (entries == null) return null;
 			while (entries.hasNext()) {

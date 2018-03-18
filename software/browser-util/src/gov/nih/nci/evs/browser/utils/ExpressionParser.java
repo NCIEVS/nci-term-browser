@@ -19,9 +19,9 @@ import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
  */
 
 public class ExpressionParser {
-	public static String EQUIVALENT_CLASS = "equivalentClass";
+	public static final String EQUIVALENT_CLASS = "equivalentClass";
 
-	private static int SEGMENT_SIZE = 5000;
+	private static final int SEGMENT_SIZE = 5000;
 	private HashMap operand_map = null;
 	static HashMap code2NameMap = null;
 	static HashMap name2CodeMap = null;
@@ -314,8 +314,12 @@ public class ExpressionParser {
 
 	public HashMap translateEquivalentClassHashMap(String scheme, String version,
 	                                               String expression, HashMap hmap) {
+		if (expression == null) return null;
+		if (hmap == null) return null;
 		String[] codes = searchCodesInExpression(expression);
+		if (codes == null) return null;
 		HashMap conceptcode2NameMap = csu.codes2Names(scheme, version, codes);
+		if (conceptcode2NameMap == null) return null;
 		setconceptcode2NameMap(conceptcode2NameMap);
 
 		HashMap map = new HashMap();
@@ -328,21 +332,21 @@ public class ExpressionParser {
 			String value = (String) hmap.get(role);
 			if (role.startsWith("P_")) {
 				String role_name = PARENT;
-
 				String role_target_code = value;
 				//to be modified
 				//String role_target_name = value;//getEntityDescription(codingScheme, version, value);
 				String role_target_name = (String) conceptcode2NameMap.get(role_target_code);
-
 				String value_domain = PARENT;
 				Vector u = new Vector();
 				if (map.get(value_domain) != null) {
 					u = (Vector) map.get(value_domain);
 				}
-				if (!u.contains(role_target_name + "(" + role_target_code + ")")) {
-					u.add(role_target_name + " (" + role_target_code + ")");
-					u = new gov.nih.nci.evs.browser.utils.SortUtils().quickSort(u);
-					map.put(value_domain, u);
+				if (u != null) {
+					if (!u.contains(role_target_name + "(" + role_target_code + ")")) {
+						u.add(role_target_name + " (" + role_target_code + ")");
+						u = new gov.nih.nci.evs.browser.utils.SortUtils().quickSort(u);
+						map.put(value_domain, u);
+					}
 				}
 
 			} else if (role.startsWith("R_")) {
@@ -352,19 +356,20 @@ public class ExpressionParser {
 				String role_name = (String) w.elementAt(0);
 				String role_target_name = (String) w.elementAt(1);
 				String role_target_code = (String) w.elementAt(2);
-				if (roleToValueDomainMap == null) {
-					System.out.println("(***) roleToValueDomainMap == null???: ");
-				}
-				String value_domain = (String) roleToValueDomainMap.get(role_name);
-				Vector u = new Vector();
-				if (map.get(value_domain) != null) {
-					u = (Vector) map.get(value_domain);
-				}
-				if (!u.contains(role_name + "\t" + role_target_name + "(" + role_target_code + ")")) {
-					u.add(role_name + "\t" + role_target_name + " (" + role_target_code + ")");
-					u = new gov.nih.nci.evs.browser.utils.SortUtils().quickSort(u);
-					map.put(value_domain, u);
-				}
+				if (roleToValueDomainMap != null) {
+					String value_domain = (String) roleToValueDomainMap.get(role_name);
+					Vector u = new Vector();
+					if (map.get(value_domain) != null) {
+						u = (Vector) map.get(value_domain);
+					}
+					if (u != null) {
+						if (!u.contains(role_name + "\t" + role_target_name + "(" + role_target_code + ")")) {
+							u.add(role_name + "\t" + role_target_name + " (" + role_target_code + ")");
+							u = new gov.nih.nci.evs.browser.utils.SortUtils().quickSort(u);
+							map.put(value_domain, u);
+						}
+					}
+			    }
 			} else if (role.startsWith("RG_")) {
 				if (value.indexOf(" or ") != -1) {
 					String str = outputRoleGroup(value);
@@ -374,10 +379,12 @@ public class ExpressionParser {
 					if (map.get(dv) != null) {
 						u = (Vector) map.get(dv);
 					}
-					if (!u.contains(str)) {
-						u.add(str);
+					if (u != null) {
+						if (!u.contains(str)) {
+							u.add(str);
+						}
+						map.put(dv, u);
 					}
-					map.put(dv, u);
 				} else {
 					Vector w = outputRestrictionCollection(value);
 					if (w == null) return null;
@@ -388,15 +395,19 @@ public class ExpressionParser {
 						String role_target_name = (String) w2.elementAt(1);
 						String role_target_code = (String) w2.elementAt(2);
 						String str = role_name + "\t" + role_target_name + " (" + role_target_code + ")";
-						String dv = (String) roleToValueDomainMap.get(role_name);
-						Vector u = new Vector();
-						if (map.get(dv) != null) {
-							u = (Vector) map.get(dv);
+						if (roleToValueDomainMap != null) {
+							String dv = (String) roleToValueDomainMap.get(role_name);
+							Vector u = new Vector();
+							if (map.get(dv) != null) {
+								u = (Vector) map.get(dv);
+							}
+							if (u != null) {
+								if (!u.contains(str)) {
+									u.add(str);
+								}
+								map.put(dv, u);
+							}
 						}
-						if (!u.contains(str)) {
-							u.add(str);
-						}
-						map.put(dv, u);
 					}
 				}
 			}

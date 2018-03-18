@@ -338,7 +338,9 @@ public class ValueSetFormatter {
 	 }
 
      public Vector resolve(String scheme, String version, String source, Vector fields, Vector codes, int maxToReturn) {
+		if (codes == null) return null;
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+		if (csdu == null) return null;
 		Vector w = new Vector();
 		long ms = System.currentTimeMillis();
 		try {
@@ -364,18 +366,18 @@ public class ValueSetFormatter {
 
 			org.LexGrid.commonTypes.Property[] properties = null;
 			cns = cns.restrictToStatus(ActiveOption.ALL, null);
+			if (cns == null) {
+				return null;
+			}
+
 			cns = cns.restrictToCodes(crefs);
+			if (cns == null) {
+				return null;
+			}
 
             SortOptionList sortCriteria = null;
             CodedNodeSet.PropertyType[] propertyTypes = null;
             LocalNameList propertyNames = getPropertyNameLocalNameList(fields);
-
-            /*
-            CodedNodeSet.PropertyType[] propertyTypes = new CodedNodeSet.PropertyType[3];
-            propertyTypes[0] = CodedNodeSet.PropertyType.PRESENTATION;
-            propertyTypes[1] = CodedNodeSet.PropertyType.DEFINITION;
-            propertyTypes[2] = CodedNodeSet.PropertyType.GENERIC;
-            */
 
             ResolvedConceptReferencesIterator iterator = null;
             try {
@@ -390,16 +392,24 @@ public class ValueSetFormatter {
                 e.printStackTrace();
             }
 
+            if (iterator == null) return null;
+
             while (iterator.hasNext()) {
                 iterator = iterator.scroll(maxToReturn);
+                //if (maxToReturn == -1) maxToReturn = 100;
+                //iterator = iterator.getNext(maxToReturn);
                 ResolvedConceptReferenceList rcrl = iterator.getNext();
-                ResolvedConceptReference[] rcra =
-                    rcrl.getResolvedConceptReference();
-                for (int lcv = 0; lcv< rcra.length; lcv++) {
-                    ResolvedConceptReference ref = rcra[lcv];
-                    Entity node = ref.getEntity();
-                    String line = csdu.getPropertyValues(node);
-					w.add(line);
+                if (rcrl != null) {
+					ResolvedConceptReference[] rcra =
+						rcrl.getResolvedConceptReference();
+					if (rcra != null) {
+						for (int lcv = 0; lcv< rcra.length; lcv++) {
+							ResolvedConceptReference ref = rcra[lcv];
+							Entity node = ref.getEntity();
+							String line = csdu.getPropertyValues(node);
+							w.add(line);
+						}
+					}
 				}
 			}
 		} catch (Exception ex) {

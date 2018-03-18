@@ -1482,13 +1482,9 @@ if (action.compareTo("xmldefinitions") == 0) {
       println(out, "            </tr>");
       println(out, "          </table>");
 
-      if (RemoteServerUtil.activate_server_monitor_thread) {
-		  if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
-			  println(out, "            <div class=\"textbodyredsmall\">" + ServerMonitorThread.getInstance().getMessage() + "</div>");
-
-		  }
-	  }
-      //} else {
+      if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
+          println(out, "            <div class=\"textbodyredsmall\">" + ServerMonitorThread.getInstance().getMessage() + "</div>");
+      } else {
           println(out, "            <!-- Tree content -->");
           println(out, "            <div id=\"rootDesc\">");
           println(out, "              <div id=\"bd\"></div>");
@@ -1501,7 +1497,7 @@ if (action.compareTo("xmldefinitions") == 0) {
           println(out, "              <div id=\"bd\"></div>");
           println(out, "            </div>");
           println(out, "            <div id=\"treecontainer\"></div>");
-      //}
+      }
 
       println(out, "");
       println(out, "          <form id=\"pg_form\" enctype=\"application/x-www-form-urlencoded;charset=UTF-8\">");
@@ -2098,18 +2094,16 @@ if (mode != null && (mode.compareTo("0") == 0 || mode.compareTo("2") == 0)) {
       out.println("");
       out.println("</div>");
 
-	  if (RemoteServerUtil.activate_server_monitor_thread) {
-		  if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
-			  out.println("    <div class=\"redbar\">");
-			  out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
-			  out.println("        <tr>");
-			  out.println("          <td class=\"lexevs-status\">");
-			  out.println("            " + ServerMonitorThread.getInstance().getMessage());
-			  out.println("          </td>");
-			  out.println("        </tr>");
-			  out.println("      </table>");
-			  out.println("    </div>");
-		  }
+      if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
+      out.println("    <div class=\"redbar\">");
+      out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
+      out.println("        <tr>");
+      out.println("          <td class=\"lexevs-status\">");
+      out.println("            " + ServerMonitorThread.getInstance().getMessage());
+      out.println("          </td>");
+      out.println("        </tr>");
+      out.println("      </table>");
+      out.println("    </div>");
       }
 
       out.println("      <!-- end Quick links bar -->");
@@ -3462,19 +3456,17 @@ if (DataUtils.isNull(matchText)) {
       out.println("");
       out.println("</div>");
 
-      if (RemoteServerUtil.activate_server_monitor_thread) {
-		  if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
-			  out.println("    <div class=\"redbar\">");
-			  out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
-			  out.println("        <tr>");
-			  out.println("          <td class=\"lexevs-status\">");
-			  out.println("            " + ServerMonitorThread.getInstance().getMessage());
-			  out.println("          </td>");
-			  out.println("        </tr>");
-			  out.println("      </table>");
-			  out.println("    </div>");
-		  }
-	  }
+      if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
+		  out.println("    <div class=\"redbar\">");
+		  out.println("      <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" role='presentation'>");
+		  out.println("        <tr>");
+		  out.println("          <td class=\"lexevs-status\">");
+		  out.println("            " + ServerMonitorThread.getInstance().getMessage());
+		  out.println("          </td>");
+		  out.println("        </tr>");
+		  out.println("      </table>");
+		  out.println("    </div>");
+      }
 
       out.println("      <!-- end Quick links bar -->");
       out.println("");
@@ -4315,8 +4307,8 @@ out.flush();
 		if (relMap == null || types == null) return 0;
 		int knt = 0;
 		List typeList = Arrays.asList(types);
-		for (int k=0; k<VisUtils.ALL_RELATIONSHIP_TYPES.length; k++) {
-			String rel_type = (String) VisUtils.ALL_RELATIONSHIP_TYPES[k];
+		for (int k=0; k<Constants.ALL_RELATIONSHIP_TYPES.length; k++) {
+			String rel_type = (String) Constants.ALL_RELATIONSHIP_TYPES[k];
 			if (typeList.contains(rel_type)) {
 				List list = (ArrayList) relMap.get(rel_type);
 				if (list != null) {
@@ -4348,7 +4340,7 @@ out.flush();
 	  VisUtils visUtils = new VisUtils(lb_svc);
 	  String[] types = null;
 	  if (type == null || type.compareTo("ALL") == 0) {
-		  types = VisUtils.ALL_RELATIONSHIP_TYPES;
+		  types = Constants.ALL_RELATIONSHIP_TYPES;
 	  } else {
 		  types = new String[1];
 		  types[0] = type;
@@ -4642,8 +4634,8 @@ out.flush();
 	  String rel_type = null;
 	  String option_label = null;
 
-	  for (int k=0; k<VisUtils.ALL_RELATIONSHIP_TYPES.length; k++) {
-          rel_type = (String) VisUtils.ALL_RELATIONSHIP_TYPES[k];
+	  for (int k=0; k<Constants.ALL_RELATIONSHIP_TYPES.length; k++) {
+          rel_type = (String) Constants.ALL_RELATIONSHIP_TYPES[k];
           List list = (List) hmap.get(rel_type);
           if (list != null && list.size() > 0) {
 			  option_label = VisUtils.getRelatinshipLabel(rel_type);

@@ -23,7 +23,7 @@ boolean owl2_display = false;
 LexBIGService lb_svc = RemoteServerUtil.createLexBIGService();
 MappingSearchUtils mappingSearchUtils = new MappingSearchUtils(lb_svc);
 RelationshipUtils relationshipUtils = new RelationshipUtils(lb_svc);
-ConceptDetails cd = new ConceptDetails(lbSvc);
+//ConceptDetails cd = new ConceptDetails(lbSvc);
 
 
 if (version_curr != null && ! version_curr.equalsIgnoreCase("null")) {

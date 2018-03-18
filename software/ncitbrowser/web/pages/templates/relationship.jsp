@@ -23,6 +23,7 @@ boolean owl2_display = false;
 LexBIGService lb_svc = RemoteServerUtil.createLexBIGService();
 MappingSearchUtils mappingSearchUtils = new MappingSearchUtils(lb_svc);
 RelationshipUtils relationshipUtils = new RelationshipUtils(lb_svc);
+ConceptDetails cd = new ConceptDetails(lbSvc);
 
 
 if (version_curr != null && ! version_curr.equalsIgnoreCase("null")) {
@@ -31,21 +32,23 @@ if (version_curr != null && ! version_curr.equalsIgnoreCase("null")) {
 
 boolean isMapping = DataUtils.isMapping(scheme_curr, version_curr);
 String code_curr = (String) request.getSession().getAttribute("code");
-String ns_curr = (String) request.getSession().getAttribute("ns");
+
+    if (code_curr == null) {
+        code_curr = HTTPUtils.cleanXSS((String) request.getParameter("code"));
+        //ns_curr = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
+    }
+
+String ns_curr = cd.getNamespaceByCode(scheme_curr, version_curr, code);//(String) request.getSession().getAttribute("ns");
 
     String rel_display_name = DataUtils.getMetadataValue(scheme_curr, version_curr, "display_name");
     if (rel_display_name == null) rel_display_name = DataUtils.getLocalName(scheme_curr);
 
-    if (code_curr == null) {
-        code_curr = HTTPUtils.cleanXSS((String) request.getParameter("code"));
-        ns_curr = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
-    }
-    
+/*    
 // Relationship tab failed to render correctly.    
 if (ns_curr == null || ns_curr.compareTo("null") == 0 || ns_curr.compareTo("undefined") == 0) {
     ns_curr = new ConceptDetails(lb_svc).getNamespaceByCode(scheme_curr, version_curr, code_curr); 
 }
-    
+*/    
     String key = scheme_curr + "$" + version_curr + "$" + code_curr;
     if (!DataUtils.isNullOrBlank(ns_curr)) {
         key = key + "$" + ns_curr;

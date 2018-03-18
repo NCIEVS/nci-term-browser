@@ -5173,9 +5173,11 @@ out.flush();
     public void exportMappingAction(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String uri = HTTPUtils.cleanXSS((String) request.getParameter("uri"));
+			if (uri == null) return;
 			System.out.println("uri: " + uri);
 			String format = DataUtils.getMappingFileFormat(uri);
 			System.out.println("format: " + format);
+			ServletOutputStream ouputStream = null;
             if (format.compareTo("txt") == 0) {
 				response.setContentType("text/html");
 				int n = uri.lastIndexOf("/");
@@ -5185,46 +5187,70 @@ out.flush();
 						+ mapping_name);
 
 				String outputstr = FTPDownload.tear_page(uri);
-				response.setContentLength(outputstr.length());
-				ServletOutputStream ouputStream = response.getOutputStream();
-				ouputStream.write(outputstr.getBytes("UTF8"), 0, outputstr.length());
-				ouputStream.flush();
-				ouputStream.close();
+				if (outputstr != null) {
+					response.setContentLength(outputstr.length());
+					ouputStream = response.getOutputStream();
+					try {
+						ouputStream.write(outputstr.getBytes("UTF8"), 0, outputstr.length());
+						ouputStream.flush();
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					} finally {
+						try {
+							ouputStream.close();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
 
 			} else if (format.compareTo("xls") == 0) {
                 String outputfile = DataUtils.getMappingFileName(uri);
+                if (outputfile == null) return;
                 File file = new File(outputfile);
-				FTPDownload.downloadExcel(uri, outputfile);
-			    response.setContentType("application/xls");
+                if (file != null) {
+					FTPDownload.downloadExcel(uri, outputfile);
+					response.setContentType("application/xls");
 
-				int n = uri.lastIndexOf("/");
-				String mapping_name = uri.substring(n+1, uri.length());
-				System.out.println("mapping_name: " + mapping_name);
-				response.setHeader("Content-Disposition", "attachment; filename="
-						+ mapping_name);
+					int n = uri.lastIndexOf("/");
+					String mapping_name = uri.substring(n+1, uri.length());
+					System.out.println("mapping_name: " + mapping_name);
+					response.setHeader("Content-Disposition", "attachment; filename="
+							+ mapping_name);
 
-				response.setContentLength((int) file.length());
-				try {
-					FileInputStream fileInputStream = new FileInputStream(file);
-					OutputStream responseOutputStream = response.getOutputStream();
-					int bytes;
-					while ((bytes = fileInputStream.read()) != -1) {
-						responseOutputStream.write(bytes);
+					response.setContentLength((int) file.length());
+					FileInputStream fileInputStream = null;
+					OutputStream responseOutputStream = null;
+					try {
+						fileInputStream = new FileInputStream(file);
+						responseOutputStream = response.getOutputStream();
+						int bytes;
+						while ((bytes = fileInputStream.read()) != -1) {
+							responseOutputStream.write(bytes);
+						}
+						//fileInputStream.close();
+						//responseOutputStream.close();
+
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+
+					} finally {
+						try {
+							fileInputStream.close();
+							responseOutputStream.close();
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
 					}
-					fileInputStream.close();
-					responseOutputStream.close();
-
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-
-
 			}
-
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

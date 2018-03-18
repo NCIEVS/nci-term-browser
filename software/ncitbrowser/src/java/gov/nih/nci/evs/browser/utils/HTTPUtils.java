@@ -100,7 +100,7 @@ public class HTTPUtils {
     }
 */
 
-    public void HTTPUtils() {
+    public HTTPUtils() {
 
 	}
 

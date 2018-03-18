@@ -69,6 +69,7 @@ public class RESTClient{
         Vector v = new Vector();
         URL url;
         HttpURLConnection connection = null;
+        BufferedReader br = null;
         try {
            url = new URL(uri);
            connection = (HttpURLConnection) url.openConnection();
@@ -77,7 +78,7 @@ public class RESTClient{
                throw new RuntimeException("Failed : The HTTP error code is : "
                        + connection.getResponseCode());
            }
-           BufferedReader br = new BufferedReader(new InputStreamReader(
+           br = new BufferedReader(new InputStreamReader(
                    (connection.getInputStream())));
            String output;
            while ((output = br.readLine()) != null) {
@@ -90,6 +91,13 @@ public class RESTClient{
         } catch (IOException e) {
            e.printStackTrace();
         } finally {
+		   if (br != null) {
+			   try {
+			   	  br.close();
+			   } catch (Exception e) {
+
+			   }
+		   }
            if(connection != null){
                connection.disconnect();
            }

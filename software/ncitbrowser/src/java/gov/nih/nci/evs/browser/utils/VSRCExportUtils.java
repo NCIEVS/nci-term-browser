@@ -79,7 +79,7 @@ public class VSRCExportUtils {
 
 	public void exportValueSetDefinitionConfigToCSV(HttpServletRequest request, HttpServletResponse response) {
 		String csvfile = CSVFILE;
-		StringBuffer sb = valueSetReportConfig2StringBuffer(ValueSetDefinitionConfig.valueSetConfigVector);
+		StringBuffer sb = valueSetReportConfig2StringBuffer(ValueSetDefinitionConfig.getValueSetConfigVector());
 		exportToCSV(request, response, sb, csvfile);
 	}
 

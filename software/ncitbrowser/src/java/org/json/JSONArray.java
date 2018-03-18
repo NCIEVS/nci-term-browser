@@ -77,7 +77,7 @@ import java.util.*;
  * @version 2
  */
 public class JSONArray implements Serializable {
-
+    static final long serialVersionUID = 11L;
     /**
      * The arrayList where the JSONArray's properties are kept.
      */

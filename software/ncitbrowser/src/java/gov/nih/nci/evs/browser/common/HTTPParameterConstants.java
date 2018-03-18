@@ -128,13 +128,13 @@ public class HTTPParameterConstants {
 	public static final String[] selectValueSetSearchOption_values = new String[] {"Code", "CodingScheme", "Name", "Source"};
 	public static final String[] valueset_search_algorithm_values = new String[] {"contains", "exactMatch", "startsWith"};
 
-	public static List adv_search_algorithm_value_list = Arrays.asList(adv_search_algorithm_values);
-	public static List algorithm_value_list = Arrays.asList(algorithm_values);
-	public static List direction_value_list = Arrays.asList(direction_values);
-	public static List searchTarget_value_list = Arrays.asList(searchTarget_values);
-	public static List selectSearchOption_value_list = Arrays.asList(selectSearchOption_values);
-	public static List selectValueSetSearchOption_value_list = Arrays.asList(selectValueSetSearchOption_values);
-	public static List valueset_search_algorithm_value_list = Arrays.asList(valueset_search_algorithm_values);
+	public static final List adv_search_algorithm_value_list = Arrays.asList(adv_search_algorithm_values);
+	public static final List algorithm_value_list = Arrays.asList(algorithm_values);
+	public static final List direction_value_list = Arrays.asList(direction_values);
+	public static final List searchTarget_value_list = Arrays.asList(searchTarget_values);
+	public static final List selectSearchOption_value_list = Arrays.asList(selectSearchOption_values);
+	public static final List selectValueSetSearchOption_value_list = Arrays.asList(selectValueSetSearchOption_values);
+	public static final List valueset_search_algorithm_value_list = Arrays.asList(valueset_search_algorithm_values);
 
     /**
      * Constructor

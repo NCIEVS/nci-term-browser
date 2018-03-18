@@ -60,6 +60,8 @@ public class VisitedConceptUtils {
     private static Logger _logger = Logger.getLogger(VisitedConceptUtils.class);
 
     private static class VisitedConcept implements Serializable {
+		static final long serialVersionUID = 10L;
+
         public String scheme = "";
         public String version = "";
         public String namespace = "";

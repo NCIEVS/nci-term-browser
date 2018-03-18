@@ -63,8 +63,8 @@ import gov.nih.nci.evs.browser.utils.*;
  */
 
 public class ValueSetDefinitionConfig {
-    public  static HashMap valueSetConfigHashMap = null;
-    public  static Vector valueSetConfigVector = null;
+    private static HashMap valueSetConfigHashMap = null;
+    private static Vector valueSetConfigVector = null;
     private static String vsd_config_file_dir = null;
     private static String vsd_config_file = null;
     private static HashSet uriHset = null;
@@ -88,6 +88,14 @@ public class ValueSetDefinitionConfig {
 
     public ValueSetDefinitionConfig() {
 
+	}
+
+	public static HashMap getValueSetConfigHashMap() {
+		return valueSetConfigHashMap;
+	}
+
+	public static Vector getValueSetConfigVector() {
+		return valueSetConfigVector;
 	}
 
 	public static String getValueSetDownloadDir() {
@@ -153,49 +161,62 @@ public class ValueSetDefinitionConfig {
 	}
 
     public static HashMap readValueSetDefinitionConfigFile(String file) {
-		valueSetConfigVector =new Vector();
+		if (file == null) return null;
+		valueSetConfigVector = new Vector();
 		HashMap hmap = new HashMap();
 		uriHset = new HashSet();
 		code2URIHashMap = new HashMap();
+		BufferedReader in = null;
 		try {
-			BufferedReader in = new BufferedReader(new FileReader(file));
+			in = new BufferedReader(new FileReader(file));
 			if (in == null) return null;
 			while (in.ready()) {
 			    String s = in.readLine();
 			    valueSetConfigVector.add(s);
 			    Vector v = parseData(s);
-			    String name = (String) v.elementAt(0);
-			    String uri = (String) v.elementAt(1);
-			    String reportURI = (String) v.elementAt(2);
-			    String extractionRule = (String) v.elementAt(3);
+			    if (v != null) {
+					if (v.size() == 4) {
+						String name = (String) v.elementAt(0);
+						String uri = (String) v.elementAt(1);
+						if (uri != null) {
+							String reportURI = (String) v.elementAt(2);
+							String extractionRule = (String) v.elementAt(3);
 
-				if (uri.indexOf("valueset") != -1) {
-					int n = uri.lastIndexOf("/");
-					if (n != -1) {
-						String code = uri.substring(n+1, uri.length());
-						if (!uriHset.contains(code)) {
-							uriHset.add(code);
-							code2URIHashMap.put(code, uri);
+							if (uri.indexOf("valueset") != -1) {
+								int n = uri.lastIndexOf("/");
+								if (n != -1) {
+									String code = uri.substring(n+1, uri.length());
+									if (!uriHset.contains(code)) {
+										uriHset.add(code);
+										code2URIHashMap.put(code, uri);
+									}
+								}
+							}
+
+							if (reportURI != null) {
+								reportURI = reportURI.replaceAll("%20", " ");
+							}
+
+							ValueSetConfig vsc = new ValueSetConfig(
+								name,
+								uri,
+								reportURI,
+								extractionRule);
+							hmap.put(uri, vsc);
+							String uri_lower = uri.toLowerCase();
+							hmap.put(uri_lower, vsc);
 						}
 					}
 				}
-
-			    if (reportURI != null) {
-					reportURI = reportURI.replaceAll("%20", " ");
-				}
-
-				ValueSetConfig vsc = new ValueSetConfig(
-					name,
-					uri,
-					reportURI,
-					extractionRule);
-				hmap.put(uri, vsc);
-				String uri_lower = uri.toLowerCase();
-				hmap.put(uri_lower, vsc);
 			}
-			in.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		} finally {
+			try {
+				if (in != null) in.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return hmap;
 	}

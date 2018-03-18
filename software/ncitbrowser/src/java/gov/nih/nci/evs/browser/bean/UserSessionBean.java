@@ -209,7 +209,7 @@ if (single_mapping_search != null && single_mapping_search.compareTo("true") == 
                     NCItBrowserProperties.MAXIMUM_RETURN);
             maxToReturn = Integer.parseInt(max_str);
         } catch (Exception ex) {
-
+			ex.printStackTrace();
         }
         ResolvedConceptReferencesIterator iterator = null;
 
@@ -377,7 +377,7 @@ if (!retval) {
 							}
 
 						} catch (Exception ex) {
-							//ex.printStackTrace();
+							ex.printStackTrace();
 						}
 				    }
 
@@ -418,7 +418,7 @@ if (!retval) {
 							}
 
 						} catch (Exception ex) {
-							//ex.printStackTrace();
+							ex.printStackTrace();
 						}
 				    }
 
@@ -583,6 +583,7 @@ if (!retval) {
                 _logger.debug("* ranking: " + ranking);
                 // _logger.debug("* sortOption: " + sortOption);
             } catch (Exception e) {
+				e.printStackTrace();
             }
         }
 
@@ -684,7 +685,7 @@ if (!retval) {
 						source, matchAlgorithm, ranking, maxToReturn, false);
 
 				} catch (Exception ex) {
-                    //ex.printStackTrace();
+                    ex.printStackTrace();
 				}
 
                 if (wrapper != null) {
@@ -710,7 +711,7 @@ if (!retval) {
                         matchText, source, matchAlgorithm, excludeDesignation,
                         ranking, maxToReturn);
 				} catch (Exception ex) {
-                    //ex.printStackTrace();
+                    ex.printStackTrace();
 				}
 
                 if (wrapper != null) {
@@ -737,7 +738,7 @@ if (!retval) {
                         ranking, maxToReturn);
 
 				} catch (Exception ex) {
-                    //ex.printStackTrace();
+                    ex.printStackTrace();
 				}
 
 
@@ -747,7 +748,7 @@ if (!retval) {
 						try {
 							int numberOfMatches = iterator.numberRemaining();
 						} catch (Exception ex) {
-                            //ex.printStackTrace();
+                            ex.printStackTrace();
 						}
                         iteratorBean = new IteratorBean(iterator);
                         iteratorBean.setKey(key);
@@ -1450,6 +1451,7 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
                     _logger.debug("  " + i + ") " + ontology_list[i]);
                 }
             } catch (Exception e) {
+				e.printStackTrace();
             }
         }
 
@@ -1553,7 +1555,7 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
                     .getProperty(NCItBrowserProperties.MAXIMUM_RETURN);
             maxToReturn = Integer.parseInt(max_str);
         } catch (Exception ex) {
-            // Do nothing
+            ex.printStackTrace();
         }
         boolean designationOnly = false;
         boolean excludeDesignation = true;
@@ -2054,6 +2056,7 @@ response.setContentType("text/html;charset=utf-8");
                     NCItBrowserProperties.MAXIMUM_RETURN);
             maxToReturn = Integer.parseInt(max_str);
         } catch (Exception ex) {
+			ex.printStackTrace();
         }
         //Utils.StopWatch stopWatch = new Utils.StopWatch();
         Vector<org.LexGrid.concepts.Entity> v = null;
@@ -2283,9 +2286,10 @@ if (!retval) {
 						    }
 
 						} catch (Exception ex) {
-							//ex.printStackTrace();
 							//020713 KLO
 							iterator = null;
+							ex.printStackTrace();
+
 						}
 /*
                     iteratorBean = new IteratorBean(iterator);

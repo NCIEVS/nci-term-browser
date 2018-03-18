@@ -61,7 +61,8 @@ import gov.nih.nci.evs.browser.properties.*;
  */
 
 //public class IteratorBean extends Object implements Serializable {
-public class IteratorBean extends Object {
+public class IteratorBean extends Object implements Serializable {
+	static final long serialVersionUID = 13L;
     private static Logger _logger = Logger.getLogger(IteratorBean.class);
     private static int DEFAULT_MAX_RETURN = 100;
     private ResolvedConceptReferencesIterator _iterator = null;

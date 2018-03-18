@@ -125,6 +125,7 @@ public class LicenseBean extends Object {
                 DataUtils.getMetadataValue(codingSchemeName,
                     "license_statement");
         } catch (Exception ex) {
+			ex.printStackTrace();
         }
         return copyRightStmt;
     }

@@ -156,19 +156,16 @@ public class CacheController {
         return null;
     }
 
-
-
-
-
     public String[] getCacheNames() {
         return getCacheManager().getCacheNames();
     }
 
+/*
     public void clear() {
         _cache.removeAll();
         // cache.flush();
     }
-
+*/
     public boolean containsKey(Object key) {
         return _cache.isKeyInCache(key);
     }

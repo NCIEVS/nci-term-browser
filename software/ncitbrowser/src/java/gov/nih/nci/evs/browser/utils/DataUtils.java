@@ -2264,8 +2264,13 @@ public class DataUtils {
      * //e.printStackTrace(); } return null; }
      */
 
-    public static String getVocabularyVersionByTag(String codingSchemeName,
-        String ltag) {
+    public static String getVocabularyVersionByTag(String codingSchemeName, String ltag) {
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+		return csdu.getVocabularyVersionByTag(codingSchemeName, ltag);
+	}
+
+	/*
 
 if (codingSchemeName == null) {
 	codingSchemeName = "NCI Thesaurus";
@@ -2329,7 +2334,7 @@ if (lbSvc == null) {
         }
         return null;
     }
-
+*/
     public static Vector<String> getVersionListData(String codingSchemeName) {
 
         Vector<String> v = new Vector();
@@ -2725,8 +2730,7 @@ if (lbSvc == null) {
     }
 
     public String[] getSortedKeys(HashMap map) {
-        if (map == null)
-            return null;
+        if (map == null) return new String[0];
         Set keyset = map.keySet();
         String[] names = new String[keyset.size()];
         Iterator it = keyset.iterator();

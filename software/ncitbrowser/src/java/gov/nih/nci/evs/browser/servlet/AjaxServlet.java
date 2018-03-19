@@ -856,13 +856,15 @@ if (action.compareTo("xmldefinitions") == 0) {
     }
 
     private static boolean _debug = false;
-    private static StringBuffer _debugBuffer = null;
+    //private static StringBuffer _debugBuffer = null;
 
     public void println(PrintWriter out, String text) {
+		/*
         if (_debug) {
             _logger.debug("DBG: " + text);
             _debugBuffer.append(text + "\n");
         }
+        */
         out.println(text);
     }
 
@@ -886,11 +888,11 @@ if (action.compareTo("xmldefinitions") == 0) {
 		  ex.printStackTrace();
 		  return;
 	  }
-
+/*
       if (_debug) {
           _debugBuffer = new StringBuffer();
       }
-
+*/
       String localName = DataUtils.getLocalName(ontology_display_name);
       String formalName = DataUtils.getFormalName(localName);
       String term_browser_version = DataUtils.getMetadataValue(formalName, ontology_version, "term_browser_version");
@@ -1521,13 +1523,14 @@ if (action.compareTo("xmldefinitions") == 0) {
       println(out, "  ");
       println(out, "</body>");
       println(out, "</html>");
-
+/*
       if (_debug) {
           _logger.debug(Utils.SEPARATOR);
           _logger.debug("VIH HTML:\n" + _debugBuffer);
           _debugBuffer = null;
           _logger.debug(Utils.SEPARATOR);
       }
+*/
     }
 
 

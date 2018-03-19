@@ -51,9 +51,11 @@ import org.apache.log4j.*;
  * @author EVS Team (David Yee)
  * @version 1.0
  */
-
+/*
 public class UrlAsciiToHtmlFormatter extends AsciiToHtmlFormatter implements
         FormatterConstant {
+*/
+public class UrlAsciiToHtmlFormatter extends AsciiToHtmlFormatter {
     private static Logger _logger = Logger
         .getLogger(UrlAsciiToHtmlFormatter.class);
     private String _value = "";

@@ -148,11 +148,13 @@ public class ValueSetTreeUtils {
 
     public ValueSetTreeUtils(LexBIGService lbSvc, String serviceUrl) {
 		this.lbSvc = lbSvc;
-		serviceUrl = serviceUrl.trim();
 		this.serviceUrl = serviceUrl;
-		if (serviceUrl.startsWith("http")) {
-			this.mode = false;
+		if (serviceUrl == null) {
+			this.mode = true;  // local
+		} else {
+			this.mode = false; // remote
 		}
+		System.out.println("ValueSetTreeUtils serviceUrl:" + serviceUrl);
 		try {
         	initialize();
 		} catch (Exception ex) {

@@ -178,19 +178,30 @@ public class ValueSetTreeUtils {
 
 	public void initialize() throws Exception{
         service = createSourceAssertedValueSetHierarchyServices();
-		service.setLexBIGService(lbSvc);
 		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(ValueSetHierarchyService.SCHEME, "PRODUCTION");
 		service.preprocessSourceHierarchyData(ValueSetHierarchyService.SCHEME, prod_version, ValueSetHierarchyService.HIERARCHY, ValueSetHierarchyService.SOURCE,ValueSetHierarchyService.PUBLISH_DESIGNATION, ValueSetHierarchyService.ROOT_CODE);
 	    constructSourceValueSetTree();
 	    constructTerminologyValueSetTree();
 	}
 
+/*
     public SourceAssertedValueSetHierarchyServicesImpl createSourceAssertedValueSetHierarchyServices() {
 		if (this.mode) {
 			return (SourceAssertedValueSetHierarchyServicesImpl) SourceAssertedValueSetHierarchyServicesImpl.defaultInstance();
 		} else {
 			return((LexEVSApplicationService)lbSvc).getLexEVSSourceAssertedValueSetHierarchyServices();
 		}
+	}
+*/
+    public SourceAssertedValueSetHierarchyServicesImpl createSourceAssertedValueSetHierarchyServices() {
+		SourceAssertedValueSetHierarchyServicesImpl service = null;
+		if (this.mode) {
+			service = (SourceAssertedValueSetHierarchyServicesImpl) SourceAssertedValueSetHierarchyServicesImpl.defaultInstance();
+		} else {
+			service = ((LexEVSApplicationService)lbSvc).getLexEVSSourceAssertedValueSetHierarchyServices();
+			service.setLexBIGService(lbSvc);
+		}
+		return service;
 	}
 
     public void constructSourceValueSetTree() {

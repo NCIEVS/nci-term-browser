@@ -1089,7 +1089,7 @@ public class ConceptDetails {
         Vector v = new Vector();
         Presentation[] properties = concept.getPresentation();
         int n = 0;
-        boolean inclusion = true;
+        //boolean inclusion = true;
         for (int i = 0; i < properties.length; i++) {
             Presentation p = properties[i];
 			String term_name = p.getValue().getContent();
@@ -1645,7 +1645,7 @@ public class ConceptDetails {
 			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(nv, "$");
 			if (u != null) {
 				String propertyName = (String) u.elementAt(0);
-				String propertyValue = (String) u.elementAt(1);
+				//String propertyValue = (String) u.elementAt(1);
 				Vector v = (Vector) propertyQualifierHashMap.get(nv);
 				if (v != null) {
 					if (v.contains(target) && !w.contains(propertyName)) {

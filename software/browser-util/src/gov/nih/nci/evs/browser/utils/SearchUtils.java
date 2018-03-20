@@ -755,7 +755,7 @@ public class SearchUtils {
         CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
         if (version != null)
             csvt.setVersion(version);
-        ResolvedConceptReferenceList matches = null;
+        //ResolvedConceptReferenceList matches = null;
         Vector v = new Vector();
         try {
             // EVSApplicationService lbSvc = new
@@ -809,7 +809,7 @@ public class SearchUtils {
         CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
         if (version != null)
             csvt.setVersion(version);
-        ResolvedConceptReferenceList matches = null;
+        //ResolvedConceptReferenceList matches = null;
         Vector v = new Vector();
         try {
             // EVSApplicationService lbSvc = new
@@ -855,7 +855,7 @@ public class SearchUtils {
         String delim = ".*";
         StringBuffer searchPhrase = new StringBuffer();
 
-        int k = -1;
+        //int k = -1;
         searchPhrase.append(delim);
 
         for (int i = 0; i < words.size(); i++) {
@@ -2288,7 +2288,7 @@ public class SearchUtils {
 		}
 
         String matchText0 = matchText;
-        String matchAlgorithm0 = matchAlgorithm;
+        //String matchAlgorithm0 = matchAlgorithm;
         matchText0 = matchText0.trim();
 
         _logger.debug("searchByProperties..." + matchText);
@@ -2571,14 +2571,14 @@ public class SearchUtils {
 				associationNameAndValueList,
 				associationQualifierNameAndValueList,
 				quickUnionIterator);
-
+/*
 			try {
 				int numberRemaining = decorator.numberRemaining();
 			} catch (Exception ex) {
 				//ex.printStackTrace();
 				System.out.println("decorator.numberRemaining() throws exception???");
 			}
-
+*/
 			return decorator;
 		} catch (Exception ex) {
 			return null;
@@ -3123,10 +3123,10 @@ public class SearchUtils {
             sourceList =
                 ConvenienceMethods.createLocalNameList(new String[] { source });
  */
-        NameAndValueList qualifierList = null;
+        //NameAndValueList qualifierList = null;
 
         String matchText0 = matchText;
-        String matchAlgorithm0 = matchAlgorithm;
+        //String matchAlgorithm0 = matchAlgorithm;
         matchText0 = matchText0.trim();
         //if (matchText == null || matchText.length() == 0) {
 		if (matchText.length() == 0) {
@@ -3224,7 +3224,7 @@ public class SearchUtils {
             }
             try {
                 try {
-                    long ms = System.currentTimeMillis(), delay = 0;
+                    //long ms = System.currentTimeMillis(), delay = 0;
                     cns = restrictToSource(cns, source);
                     _logger.debug("cns.resolve ...");
                     iterator =
@@ -3249,7 +3249,7 @@ public class SearchUtils {
         }
 
         if (!excludeDesignation) {
-            int lcv = 0;
+            //int lcv = 0;
             int iterator_size = 0;
             if (iterator != null) {
                 try {
@@ -4469,7 +4469,7 @@ System.out.println("===================================================");
             }
 
             ResolvedConceptReference[] rcrArray = rcrl.getResolvedConceptReference();
-            Entity ce = null;
+            //Entity ce = null;
 
             for (int i=0; i<rcrArray.length; i++)
             {

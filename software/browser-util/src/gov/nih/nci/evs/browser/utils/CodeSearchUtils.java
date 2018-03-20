@@ -207,7 +207,7 @@ import org.apache.commons.codec.language.*;
             sourceLnL = null;
         }
 
-        SortOptionList sortCriteria = null;// Constructors.createSortOptionList(new
+        //SortOptionList sortCriteria = null;// Constructors.createSortOptionList(new
                                            // String[]{"matchToQuery", "code"});
         CodedNodeSet cns = null;
         try {
@@ -384,7 +384,7 @@ import org.apache.commons.codec.language.*;
         String version, String matchText, String source, boolean searchInactive) {
         //LexBIGService lbs = RemoteServerUtil.createLexBIGService();
         //if (lbs == null) return null;
-        ResolvedConceptReferencesIterator iterator = null;
+        //ResolvedConceptReferencesIterator iterator = null;
         CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
         if (version != null)
             versionOrTag.setVersion(version);
@@ -444,7 +444,7 @@ import org.apache.commons.codec.language.*;
 		try {
 			boolean resolveConcepts = false;
 			try {
-				long ms = System.currentTimeMillis(), delay = 0;
+				//long ms = System.currentTimeMillis(), delay = 0;
 				iterator =
 					cns.resolve(sortCriteria, null, restrictToProperties,
 						null, resolveConcepts);
@@ -528,14 +528,14 @@ import org.apache.commons.codec.language.*;
 
 		if (matchText == null || matchText.trim().length() == 0) return null;
 
-		LocalNameList contextList = null;
-		NameAndValueList qualifierList = null;
-		LocalNameList propertyLnL = null;
+		//LocalNameList contextList = null;
+		//NameAndValueList qualifierList = null;
+		//LocalNameList propertyLnL = null;
 		SortOptionList sortCriteria = null;
-		LocalNameList sourceLnL = null;
-		LocalNameList sourceList = null;
+		//LocalNameList sourceLnL = null;
+		//LocalNameList sourceList = null;
 		LocalNameList restrictToProperties = new LocalNameList();
-		CodedNodeSet.PropertyType[] propertyTypes = null;
+		//CodedNodeSet.PropertyType[] propertyTypes = null;
 		boolean resolveConcepts = false;
 		//CodedNodeSet.PropertyType[] types = new PropertyType[] { PropertyType.PRESENTATION };
         Vector<CodedNodeSet> cns_vec = new Vector<CodedNodeSet>();
@@ -628,7 +628,7 @@ if (hasSourceCodeQualifier(scheme)) {
 	}
 
     public HashMap codes2Names(String scheme, String version, String[] codes) {
-        ResolvedConceptReferencesIterator iterator = null;
+        //ResolvedConceptReferencesIterator iterator = null;
         CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
         if (version != null)
             versionOrTag.setVersion(version);

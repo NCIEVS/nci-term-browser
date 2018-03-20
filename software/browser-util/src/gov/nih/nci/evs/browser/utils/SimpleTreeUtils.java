@@ -351,7 +351,7 @@ public class SimpleTreeUtils {
   public void printNode(PrintWriter pw, TreeItem ti, int level) {
 	  if (ti == null) return;
 
-	    String display_text = ti._text;
+	    //String display_text = ti._text;
 		String indentation = getIndentation(level);
 		pw.println(indentation + "<li>");
 		String checkbox_id = ti._id;
@@ -416,7 +416,7 @@ public class SimpleTreeUtils {
 
 
   public void printNode(Vector v, TreeItem ti, int level) {
-	    String display_text = ti._text;
+	    //String display_text = ti._text;
 		String indentation = getIndentation(level);
 		v.add(indentation + "<li>");
 		String checkbox_id = ti._id;

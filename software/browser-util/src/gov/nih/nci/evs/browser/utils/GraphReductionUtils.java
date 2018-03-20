@@ -152,7 +152,7 @@ public class GraphReductionUtils {
             if (isEdge(line)) {
 				String source = getSourceId(line);
 				String target = getTargetId(line);
-				String edge = getEdgeLabel(line);
+				//String edge = getEdgeLabel(line);
 				if (!(nodes_to_remove.contains(source) || nodes_to_remove.contains(target))) {
 					w.add(line);
 				}
@@ -695,7 +695,7 @@ public class GraphReductionUtils {
    }
 */
     public Vector get_nodes_to_remove(Vector v, HashMap hmap) {
-		int source_max = getHighestFreqSourceEdgeCount(hmap);
+		//int source_max = getHighestFreqSourceEdgeCount(hmap);
 		String max_source_edge_str = getHighestFreqSourceEdge(hmap);
 		Vector v1 = getCandidateTargetNodesToRemove(hmap);
 		//dumpVector("CandidateTargetNodesToRemove:", v1);
@@ -711,7 +711,7 @@ public class GraphReductionUtils {
 		String removed_nodes_str = "";
 		Vector nodes_to_remove = get_nodes_to_remove(v, hmap);
 		if (nodes_to_remove.size() == 0) return removed_nodes_str;
-		String max_source_edge_str =  getHighestFreqSourceEdge(hmap);
+		//String max_source_edge_str =  getHighestFreqSourceEdge(hmap);
 		w = removeNodes(v, nodes_to_remove);
 		Vector removed_nodes = vec_difference(v, w);
 		Vector removed_node_ids = extractNodeIDs(removed_nodes);

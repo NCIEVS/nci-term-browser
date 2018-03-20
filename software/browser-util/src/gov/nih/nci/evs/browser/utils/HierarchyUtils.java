@@ -283,8 +283,8 @@ public class HierarchyUtils {
 	}
 
     public JSONArray getSubconceptJSONArray(String codingScheme, String version, String code, String ns) {
-        String key = codingScheme + "$" + version + "$" + code + "$" + ns;
-		long ms = System.currentTimeMillis();
+        //String key = codingScheme + "$" + version + "$" + code + "$" + ns;
+		//long ms = System.currentTimeMillis();
         boolean useNamespace = false;
         if (ns == null) {
 			ns = new ConceptDetails(lbSvc).getNamespaceByCode(codingScheme, version, code);
@@ -292,7 +292,7 @@ public class HierarchyUtils {
 				useNamespace = true;
 			}
 		}
-		TreeItem root = new TreeItem("Root", "<Root>");
+		//TreeItem root = new TreeItem("Root", "<Root>");
 		if (code.compareTo("<Root>") == 0) {
 			return null;
 		}
@@ -332,7 +332,7 @@ public class HierarchyUtils {
     public JSONArray getSubconcepts(String scheme, String version, String code, String ns, boolean fromCache) {
         String parent_code = null;
 		String focus_code = null;
-        HashMap map = null;
+        //HashMap map = null;
         JSONArray nodeArray = null;
         ViewInHierarchyUtils util = new ViewInHierarchyUtils(lbSvc);
         // getRemainingSubconcepts
@@ -488,45 +488,5 @@ public class HierarchyUtils {
 		}
 	}
 
-/*
-    public static void main(String[] args) {
-		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-		HierarchyUtils test = new HierarchyUtils(lbSvc);
 
-		String scheme = "NCI_Thesaurus";
-		String version = null;
-		version = "OWL2Asserted NS";
-		String code = "C43431"; // Activity
-		String rootJSON = null;
-
-		String outputfile = "test_hier_" + code + ".txt";
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(outputfile, "UTF-8");
-			pw.println("Service URL: " + RemoteServerUtil.getServiceURL());
-			long ms1 = System.currentTimeMillis();
-			scheme = "NCI_Thesaurus";
-			version = "OWL2Asserted NS";
-			//version = null;
-			code = "C43431"; // Activity
-            pw.println("\n==========================================================");
-			boolean bool = test.testHierarchy(pw, scheme, version, code);
-			if (bool) {
-				pw.println("\nResult: Success.");
-			} else {
-				pw.println("\nResult: Failed.");
-			}
-			System.out.println("Run time (milliseconds): " + (System.currentTimeMillis() - ms1));
-		} catch (Exception ex) {
-
-		} finally {
-			try {
-				pw.close();
-				System.out.println("Output file " + outputfile + " generated.");
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-    }
-*/
 }

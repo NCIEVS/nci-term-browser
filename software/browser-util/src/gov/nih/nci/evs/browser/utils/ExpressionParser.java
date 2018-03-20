@@ -156,7 +156,7 @@ public class ExpressionParser {
 			String code = (String) u.elementAt(2);
 			//to be modified:
 			String name = code;
-			String valueDomain = (String) roleToValueDomainMap.get(role_name);
+			//String valueDomain = (String) roleToValueDomainMap.get(role_name);
 			//System.out.println(valueDomain);
 			return role_name + "\t" + name;
 		}
@@ -324,7 +324,7 @@ public class ExpressionParser {
 
 		HashMap map = new HashMap();
 		Vector v = new Vector();
-		Vector rg_vec = new Vector();
+		//Vector rg_vec = new Vector();
 		Iterator it = hmap.keySet().iterator();
 		if (it == null) return null;
 		while (it.hasNext()) {
@@ -637,31 +637,5 @@ public class ExpressionParser {
 		}
         return codes;
 	}
-/*
-    public static void main(String [] args) {
-		long ms = System.currentTimeMillis();
-		String codingSchemeURN = null;
-		codingSchemeURN = "NCI_Thesaurus";
-		String code = "C5266";
-		code = "C114968";
-		String version = null;
-		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-
-		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
-		if (version == null) {
-			version = csdu.getVocabularyVersionByTag(codingSchemeURN, Constants.PRODUCTION);
-		}
-		String equivalanceClass = null;
-		try {
-			equivalanceClass = new CodingSchemeDataUtils(lbSvc).getEquivalenceExpression(codingSchemeURN, version, code);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		System.out.println(equivalanceClass);
-		ExpressionParser test = new ExpressionParser(lbSvc);
-		String expression = test.infixExpression2Text(codingSchemeURN, version, equivalanceClass);
-		System.out.println("Total run time (ms): " + (System.currentTimeMillis() - ms));
-   }
-*/
 }
 

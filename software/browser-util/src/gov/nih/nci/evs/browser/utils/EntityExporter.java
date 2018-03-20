@@ -781,7 +781,7 @@ public class EntityExporter {
 		entityDescription.setContent(label);
 		concept.setEntityDescription(entityDescription);
 
-        PropertyQualifier propertyQualifier = null;
+        //PropertyQualifier propertyQualifier = null;
         for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 			Vector u = StringUtils.parseData(t);

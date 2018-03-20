@@ -93,12 +93,12 @@ public class CodingSchemeUtils {
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
             if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
-                int j = i + 1;
+                //int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
-                Boolean isActive =
-                        csr.getRenderingDetail().getVersionStatus().equals(
-                            CodingSchemeVersionStatus.ACTIVE);
+                //Boolean isActive =
+                //        csr.getRenderingDetail().getVersionStatus().equals(
+                //            CodingSchemeVersionStatus.ACTIVE);
 
                 String representsVersion = css.getRepresentsVersion();
                 if (representsVersion == null) return null;

@@ -308,7 +308,7 @@ public class ValueSetSearchUtils
         //long ms = System.currentTimeMillis(), delay = 0;
         long tnow = System.currentTimeMillis();
         long total_delay = 0;
-        boolean debug_flag = false;
+        //boolean debug_flag = false;
 
         boolean preprocess = true;
         //if (matchText == null || matchText.length() == 0) {
@@ -395,9 +395,9 @@ public class ValueSetSearchUtils
         //long ms = System.currentTimeMillis(), delay = 0;
         long tnow = System.currentTimeMillis();
         long total_delay = 0;
-        boolean debug_flag = false;
+        //boolean debug_flag = false;
 
-        boolean preprocess = true;
+        //boolean preprocess = true;
         if (matchText.length() == 0) {
             return null;
         }
@@ -498,9 +498,9 @@ public class ValueSetSearchUtils
         //long ms = System.currentTimeMillis(), delay = 0;
         long tnow = System.currentTimeMillis();
         long total_delay = 0;
-        boolean debug_flag = false;
+        //boolean debug_flag = false;
 
-        boolean preprocess = true;
+        //boolean preprocess = true;
         if (matchText.length() == 0) {
             return null;
         }
@@ -546,7 +546,7 @@ public class ValueSetSearchUtils
                 return null;
             }
 
-            CodedNodeSet.SearchDesignationOption option = null;
+            //CodedNodeSet.SearchDesignationOption option = null;
             String language = null;
             cns = cns.restrictToAnonymous(CodedNodeSet.AnonymousOption.NON_ANONYMOUS_ONLY);
 			LocalNameList propertyNames = new LocalNameList();
@@ -626,7 +626,7 @@ public class ValueSetSearchUtils
 			if (schemes == null) return null;
 			for (int i = 0; i < schemes.size(); i++) {
 				CodingScheme cs = schemes.get(i);
-				int j = i+1;
+				//int j = i+1;
 				String key = cs.getCodingSchemeURI();
 				String cs_name = cs.getCodingSchemeName();
 				String name = cs.getFormalName();
@@ -678,7 +678,7 @@ public class ValueSetSearchUtils
         String matchText, int searchOption, String matchAlgorithm) {
 		ResolvedConceptReferencesIterator iterator = null;
 
-        long ms = System.currentTimeMillis();
+        //long ms = System.currentTimeMillis();
 
 		if (checked_vocabularies == null) return null;
 		Vector selected_vocabularies = StringUtils.parseData(checked_vocabularies, ",");
@@ -689,7 +689,7 @@ public class ValueSetSearchUtils
 		Vector versions = new Vector();
 
 		for (int i=0; i<selected_vocabularies.size(); i++) {
-			int k = i+1;
+			//int k = i+1;
 			String selected_vocabulary = (String) selected_vocabularies.elementAt(i);
 			schemes.add(selected_vocabulary);
 			//versions.add((String) hmap.get(selected_vocabulary));

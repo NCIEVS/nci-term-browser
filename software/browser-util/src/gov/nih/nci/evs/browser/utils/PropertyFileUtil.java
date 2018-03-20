@@ -13,14 +13,14 @@ public class PropertyFileUtil {
 
   public static void main(String[] args) {
 
-	Properties prop = new Properties();
-	InputStream input = null;
+	//Properties prop = new Properties();
+	//InputStream input = null;
 	String filename = "lbconfig.props";
 
 	if (args.length>0) {
 		filename = args[0];
 	}
-	NameAndValueList name_value_list = parse(filename);
+	//NameAndValueList name_value_list = parse(filename);
   }
 
 

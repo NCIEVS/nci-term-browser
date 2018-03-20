@@ -931,7 +931,7 @@ public class ResolvedValueSetIteratorHolder {
             // Within the merging region - skip the cell.
             return null;
         }
-        StringBuffer buf = new StringBuffer();
+        //StringBuffer buf = new StringBuffer();
         String val = "";
         try {
             switch (cell.getCellType()) {

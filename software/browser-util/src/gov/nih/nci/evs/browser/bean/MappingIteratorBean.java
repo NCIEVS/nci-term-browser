@@ -368,8 +368,8 @@ public class MappingIteratorBean extends Object {
 		String targetCodingSchemeVesion = null;
 		String targetCodeNamespace = null;
 
-		String source_ns = null;
-		String target_ns = null;
+		//String source_ns = null;
+		//String target_ns = null;
 
 
         try {
@@ -624,9 +624,9 @@ public class MappingIteratorBean extends Object {
 
 
         _logger.debug("Retrieving data (from: " + idx1 + " to: " + idx2 + ")");
-        long ms = System.currentTimeMillis();
-        long dt = 0;
-        long total_delay = 0;
+        //long ms = System.currentTimeMillis();
+        //long dt = 0;
+        //long total_delay = 0;
         int upper_bound = idx2;
         _timeout = false;
 

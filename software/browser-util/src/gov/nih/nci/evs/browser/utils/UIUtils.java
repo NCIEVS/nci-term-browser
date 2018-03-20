@@ -1116,7 +1116,7 @@ public class UIUtils {
         StringBuffer buf = new StringBuffer();
 		buf.append("<table>");
 		for (int i=0; i<w.size(); i++) {
-			int j = i+1;
+			//int j = i+1;
 			String value = (String) w.elementAt(i);
 			boolean isEven = UIUtils.isEven(i);
 			if (isEven) {

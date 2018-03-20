@@ -61,7 +61,7 @@ public class GraphUtils {
 		}
 
 		node_label_vec = new SortUtils().quickSort(node_label_vec);
-		int knt = 0;
+		//int knt = 0;
 		HashMap label2IdMap = new HashMap();
 		for (int k=0; k<node_label_vec.size(); k++) {
 			String node_label = (String) node_label_vec.elementAt(k);
@@ -163,7 +163,7 @@ public class GraphUtils {
 		}
 
 		node_label_vec = new SortUtils().quickSort(node_label_vec);
-		int knt = 0;
+		//int knt = 0;
 		HashMap label2IdMap = new HashMap();
 		for (int k=0; k<node_label_vec.size(); k++) {
 			String node_label = (String) node_label_vec.elementAt(k);
@@ -172,7 +172,7 @@ public class GraphUtils {
 			label2IdMap.put(node_label, id);
 		}
 
-		StringBuffer buf = new StringBuffer();
+		//StringBuffer buf = new StringBuffer();
         if (option == NODES_ONLY || option == NODES_AND_EDGES) {
 			v.add("var nodes = [");
 			for (int k=0; k<node_label_vec.size()-1; k++) {

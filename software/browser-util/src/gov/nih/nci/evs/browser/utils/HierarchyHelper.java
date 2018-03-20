@@ -96,7 +96,7 @@ public class HierarchyHelper {
 
 
     public HierarchyHelper(Vector v, int format) {
-		long ms = System.currentTimeMillis();
+		//long ms = System.currentTimeMillis();
         this.rel_vec = v;
         this.format = format;
         initialize(v, format);

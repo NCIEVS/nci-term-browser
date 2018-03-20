@@ -430,7 +430,7 @@ public class RelationshipUtils {
 									for (int j = 0; j < acl.length; j++) {
 										AssociatedConcept ac = acl[j];
 
-										String ac_csn = ac.getCodingSchemeName();
+										//String ac_csn = ac.getCodingSchemeName();
 
 										// [#26283] Remove self-referential
 										// relationships.
@@ -782,7 +782,7 @@ public class RelationshipUtils {
 				lbSvc.getGenericExtension("MappingExtension");
 
             boolean isMappingCS = mappingExtension.isMappingCodingScheme(scheme, csvt);
-            Boolean bool_obj = Boolean.valueOf(isMappingCS);//   new Boolean(isMappingCS);
+            //Boolean bool_obj = Boolean.valueOf(isMappingCS);//   new Boolean(isMappingCS);
 			return isMappingCS;
 
 		} catch (Exception ex) {

@@ -91,9 +91,9 @@ public class RoleDataGenerator {
         if (version != null) {
             versionOrTag.setVersion(version);
 		}
-		java.lang.String relationContainerName = null;
+		//java.lang.String relationContainerName = null;
         NameAndValueList association = null;
-        NameAndValueList associationQualifiers = null;
+        //NameAndValueList associationQualifiers = null;
         Boolean restrictToAnonymous = Boolean.FALSE;
 
         String[] associationsToNavigate = new String[2];
@@ -160,9 +160,8 @@ public class RoleDataGenerator {
                         for (int i = 0; i < child_list.size(); i++) {
                             AssociatedConcept branchItemNode =
                                 (AssociatedConcept) child_list.get(i);
-                            String branchItemCode =
-                                branchItemNode.getConceptCode();
-                            String branchItemText =  branchItemNode.getEntityDescription().getContent();
+                            //String branchItemCode = branchItemNode.getConceptCode();
+                            String branchItemText = branchItemNode.getEntityDescription().getContent();
                             buf.append(branchItemText).append("|");
                         }
                     }
@@ -196,14 +195,14 @@ public class RoleDataGenerator {
 		Vector v = getRoleData(scheme, version);
 		HashMap map = new HashMap();
 		Vector names = new Vector();
-		Vector w = new Vector();
+		//Vector w = new Vector();
 		for (int i=0; i<v.size(); i++) {
 			String line = (String) v.elementAt(i);
 			int n = line.indexOf("|");
 			String name = line.substring(0, n);
 			names.add(name);
 			String data = line.substring(n+1, line.length());
-			int j = i+1;
+			//int j = i+1;
 			map.put(name, data);
 		}
 		HashMap id2name = getRoleId2NameMap(scheme, version);

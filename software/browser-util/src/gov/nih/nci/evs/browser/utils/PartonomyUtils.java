@@ -174,7 +174,7 @@ public class PartonomyUtils {
 	}
 
 	public TreeItem getChildNode(String codingSchemeURN, String codingSchemeVersion, String code, String namespace, String rel) {
-		HashMap hmap = new HashMap();
+		//HashMap hmap = new HashMap();
 		boolean useNamespace = true;
 		if (gov.nih.nci.evs.browser.utils.StringUtils.isNullOrBlank(namespace)) {
 			useNamespace = false;
@@ -199,7 +199,7 @@ public class PartonomyUtils {
 
 		for (int i=0; i<part_of_list.size(); i++) {
 			String t = (String) part_of_list.get(i);
-			String child_name = gov.nih.nci.evs.browser.utils.StringUtils.getFieldValue(t, 1);
+			//String child_name = gov.nih.nci.evs.browser.utils.StringUtils.getFieldValue(t, 1);
 			String child_code = gov.nih.nci.evs.browser.utils.StringUtils.getFieldValue(t, 2);
 			String rel_label = gov.nih.nci.evs.browser.utils.StringUtils.getFieldValue(t, 0);
 			TreeItem child_node = getChildNode(codingSchemeURN, codingSchemeVersion, child_code, namespace, rel);

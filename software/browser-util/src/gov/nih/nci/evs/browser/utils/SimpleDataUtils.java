@@ -150,7 +150,7 @@ public class SimpleDataUtils {
 				lbSvc.getGenericExtension("MappingExtension");
 
             boolean isMappingCS = mappingExtension.isMappingCodingScheme(scheme, csvt);
-            Boolean bool_obj = Boolean.valueOf(isMappingCS);//   new Boolean(isMappingCS);
+            //Boolean bool_obj = Boolean.valueOf(isMappingCS);//   new Boolean(isMappingCS);
 			return isMappingCS;
 
 		} catch (Exception ex) {

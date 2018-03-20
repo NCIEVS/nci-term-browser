@@ -437,7 +437,7 @@ public class PropsAndAssocForCode {
 		code = "CDR0000459776";
 
 
-        PrintWriter pw = null;
+        //PrintWriter pw = null;
         try {
             new PropsAndAssocForCode().run(null, scheme, version, code, entityType);
         } catch (Exception e) {

@@ -770,7 +770,7 @@ public class TreeUtils {
             if (hierarchies.length > 1) {
                 hierarchyDefn = selectSupportedHierarchy(hierarchies, DEFAULT_HIERARCHY_ID);
 			}
-            String hier_id = hierarchyDefn.getLocalId();
+            //String hier_id = hierarchyDefn.getLocalId();
             String[] associationsToNavigate =
                 hierarchyDefn.getAssociationNames();
 
@@ -1084,7 +1084,6 @@ public class TreeUtils {
         ResolvedConceptReferenceList matches = null;
         //Vector v = new Vector();
         try {
-
 			Entity concept = null;
 			if (namespace == null) {
 				concept = conceptDetails.getConceptByCode(scheme, version, code);
@@ -1093,9 +1092,10 @@ public class TreeUtils {
 			}
 			if (concept == null) return null;
 			String entityCodeNamespace = concept.getEntityCodeNamespace();
-
 			ConceptReference focus = ConvenienceMethods.createConceptReference(code, scheme);
 			focus.setCodingSchemeName(scheme);
+			//KLO 03202018
+			focus.setCodeNamespace(entityCodeNamespace);
 			if (namespace == null) {
                 List<String> list = lbscm.getDistinctNamespacesOfCode(scheme, csvt, code);
                 if (list == null) return null;
@@ -2096,7 +2096,7 @@ public class TreeUtils {
          * // HL7 patch if (scheme.indexOf("HL7") != -1) { return
          * getTreeRoots(scheme, csvt, hierarchyID); }
          */
-        int maxDepth = 1;
+        //int maxDepth = 1;
         ResolvedConceptReferenceList roots =
             lbscm.getHierarchyRoots(scheme, csvt, hierarchyID);
 
@@ -2169,7 +2169,7 @@ public class TreeUtils {
     public List getTreeRoots(String scheme, CodingSchemeVersionOrTag csvt,
         String hierarchyID) throws LBException {
 
-        int maxDepth = 1;
+        //int maxDepth = 1;
         ResolvedConceptReferenceList roots =
             lbscm.getHierarchyRoots(scheme, csvt, hierarchyID);
         ResolvedConceptReferenceList modified_roots =
@@ -2556,7 +2556,7 @@ public class TreeUtils {
 		if (it == null) return;
 		while (it.hasNext()) {
             Entry thisEntry = (Entry) it.next();
-			String key = (String) thisEntry.getKey();
+			//String key = (String) thisEntry.getKey();
 			//TreeItem ti = (TreeItem) hmap.get(key);
 			TreeItem ti = (TreeItem) thisEntry.getValue();
 

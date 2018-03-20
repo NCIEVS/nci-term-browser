@@ -351,9 +351,9 @@ public class CodingSchemeDataUtils {
 			if (schemes == null) return null;
 			for (int i = 0; i < schemes.size(); i++) {
 				CodingScheme cs = schemes.get(i);
-				int j = i+1;
+				//int j = i+1;
 				String key = cs.getCodingSchemeURI();
-				String name = cs.getCodingSchemeName();
+				//String name = cs.getCodingSchemeName();
 				String value = cs.getRepresentsVersion();
 				Vector v = new Vector();
 				if (hmap.containsKey(key)) {
@@ -378,7 +378,7 @@ public class CodingSchemeDataUtils {
 				lbSvc.getGenericExtension("MappingExtension");
 
             boolean isMappingCS = mappingExtension.isMappingCodingScheme(scheme, csvt);
-            Boolean bool_obj = Boolean.valueOf(isMappingCS);
+            //Boolean bool_obj = Boolean.valueOf(isMappingCS);
 
 			return isMappingCS;
 
@@ -408,7 +408,7 @@ public class CodingSchemeDataUtils {
              CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
              if (csrs == null) return null;
              for (int i = 0; i < csrs.length; i++) {
-                 int j = i + 1;
+                 //int j = i + 1;
                  CodingSchemeRendering csr = csrs[i];
                  CodingSchemeSummary css = csr.getCodingSchemeSummary();
                  String formalname = css.getFormalName();
@@ -479,7 +479,6 @@ public class CodingSchemeDataUtils {
                  CodingSchemeRendering csr = csrs[i];
                  CodingSchemeSummary css = csr.getCodingSchemeSummary();
                  String formalname = css.getFormalName();
-
                  Boolean isActive = null;
 
                  if (csr.getRenderingDetail() == null) {
@@ -697,8 +696,8 @@ public class CodingSchemeDataUtils {
 					for (int j = 0; j < namespaces.length; j++) {
 						SupportedNamespace ns = namespaces[j];
 						if (ns != null) {
-							java.lang.String ns_name =
-								ns.getEquivalentCodingScheme();
+							//java.lang.String ns_name =
+							//	ns.getEquivalentCodingScheme();
 							java.lang.String ns_id =
 								ns.getContent();
 							if (ns_id != null && ns_id.compareTo("") != 0) {
@@ -833,7 +832,7 @@ public class CodingSchemeDataUtils {
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
             if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
-                int j = i + 1;
+                //int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
                 Boolean isActive =
@@ -868,7 +867,7 @@ public class CodingSchemeDataUtils {
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
             if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
-                int j = i + 1;
+                //int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
                 Boolean isActive =
@@ -924,9 +923,9 @@ public class CodingSchemeDataUtils {
             if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
                 CodingSchemeRendering csr = csrs[i];
-                Boolean isActive =
-                    csr.getRenderingDetail().getVersionStatus().equals(
-                        CodingSchemeVersionStatus.ACTIVE);
+                //Boolean isActive =
+                //    csr.getRenderingDetail().getVersionStatus().equals(
+                //        CodingSchemeVersionStatus.ACTIVE);
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
                 String formalname = css.getFormalName();
                 if (formalname == null) return null;
@@ -996,7 +995,7 @@ public class CodingSchemeDataUtils {
             CodingSchemeRendering[] csrs = csrl.getCodingSchemeRendering();
             if (csrs == null) return null;
             for (int i = 0; i < csrs.length; i++) {
-                int j = i + 1;
+                //int j = i + 1;
                 CodingSchemeRendering csr = csrs[i];
                 CodingSchemeSummary css = csr.getCodingSchemeSummary();
                 String formalname = css.getFormalName();
@@ -1019,7 +1018,7 @@ public class CodingSchemeDataUtils {
 				try {
 					CodingScheme cs = lbSvc.resolveCodingScheme(formalname, vt);
 					if (isResolvedValueSetCodingScheme(cs)) {
-						String cs_uri = cs.getCodingSchemeURI();
+						//String cs_uri = cs.getCodingSchemeURI();
 						String cs_name = cs.getCodingSchemeName();
 
 						HashMap hmap = new HashMap();
@@ -1060,7 +1059,7 @@ public class CodingSchemeDataUtils {
 
 	public Vector getConceptDomainNames() {
 		String scheme = "conceptDomainCodingScheme";
-		String version = null;
+		//String version = null;
         CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
 		Vector conceptDomainName_vec = new Vector();
 		try {
@@ -1265,9 +1264,9 @@ public class CodingSchemeDataUtils {
         if (version != null) {
             versionOrTag.setVersion(version);
 		}
-		java.lang.String relationContainerName = null;
+		//java.lang.String relationContainerName = null;
         NameAndValueList association = null;
-        NameAndValueList associationQualifiers = null;
+        //NameAndValueList associationQualifiers = null;
         Boolean restrictToAnonymous = Boolean.FALSE;
 
         String[] associationsToNavigate = new String[2];
@@ -1335,8 +1334,8 @@ public class CodingSchemeDataUtils {
                         for (int i = 0; i < child_list.size(); i++) {
                             AssociatedConcept branchItemNode =
                                 (AssociatedConcept) child_list.get(i);
-                            String branchItemCode =
-                                branchItemNode.getConceptCode();
+                            //String branchItemCode =
+                            //    branchItemNode.getConceptCode();
                             String branchItemText =  branchItemNode.getEntityDescription().getContent();
                             buf.append(branchItemText).append("|");
                         }

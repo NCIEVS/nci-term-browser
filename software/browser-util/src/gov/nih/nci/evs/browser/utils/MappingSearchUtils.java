@@ -103,8 +103,11 @@ public class MappingSearchUtils {
 
     private LexBIGService lbSvc = null;
 
+    private LexBIGServiceConvenienceMethods lbscm = null;
+
     public MappingSearchUtils(LexBIGService lbSvc) {
         this.lbSvc = lbSvc;
+        this.lbscm = createLexBIGServiceConvenienceMethods(lbSvc);
     }
 
     public String findBestContainsAlgorithm(String matchText) {
@@ -528,12 +531,12 @@ public class MappingSearchUtils {
 
 
         //CodedNodeSet.PropertyType[] propertyTypes = null;
-        LocalNameList propertyNames = null;
+        //LocalNameList propertyNames = null;
         LocalNameList sourceList = null;
         //propertyTypes = getAllNonPresentationPropertyTypes();
 
-        LocalNameList contextList = null;
-        NameAndValueList qualifierList = null;
+        //LocalNameList contextList = null;
+        //NameAndValueList qualifierList = null;
 
 		//LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		MappingExtension mappingExtension = null;
@@ -817,8 +820,6 @@ public class MappingSearchUtils {
 		if (direction == 1) searchContext = SearchContext.SOURCE_CODES;
         else if (direction == -1) searchContext = SearchContext.TARGET_CODES;
         //LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-        LexBIGServiceConvenienceMethods lbscm =
-            createLexBIGServiceConvenienceMethods(lbSvc);
 
         CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
         if (version != null)

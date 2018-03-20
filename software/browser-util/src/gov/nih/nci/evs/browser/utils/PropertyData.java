@@ -171,7 +171,7 @@ public class PropertyData
 	}
 
 	public boolean isDefinition(String label) {
-		String t = label.toLowerCase();
+		//String t = label.toLowerCase();
 		if (label.indexOf("definition") != -1) {
 			return true;
 		}
@@ -179,7 +179,7 @@ public class PropertyData
 	}
 
 	public boolean isDefinitionWithSource(String label) {
-		String t = label.toLowerCase();
+		//String t = label.toLowerCase();
 		if (label.indexOf("definition") != -1 && label.indexOf("|") != -1) {
 			return true;
 		}
@@ -246,7 +246,7 @@ public class PropertyData
 			String t = (String) presentation_vec.elementAt(i);
 			Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(t, "$");
 			String presentation_name = (String) w.elementAt(0);
-			String presentation_value = (String) w.elementAt(1);
+			//String presentation_value = (String) w.elementAt(1);
 
 			String isPreferred = (String) w.elementAt(2);
 			if (isPreferred == null) return;
@@ -352,7 +352,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 			String t = (String) presentation_vec.elementAt(i);
 			Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(t, "$");
 			String presentation_name = (String) w.elementAt(0);
-			String presentation_value = (String) w.elementAt(1);
+			//String presentation_value = (String) w.elementAt(1);
 			String isPreferred = (String) w.elementAt(2);
 			if (isPreferred == null) return;
 			if (isPreferred.compareTo("true") == 0) {
@@ -563,7 +563,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 	public Vector getOtherProperties() {
 		if (curr_concept == null) return null;
 		Vector other_properties = new Vector();
-		boolean hasOtherProperties = false;
+		//oolean hasOtherProperties = false;
 		Vector prop_name_value_vec = new Vector();
 		Iterator iterator = propertyName2ValueHashMap.entrySet().iterator();
 		if (iterator == null) return null;
@@ -634,8 +634,8 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 		Vector non_nci_def_label_value = new Vector();
 		Vector other_label_value = new Vector();
 		boolean is_definition = false;
-		Vector ncim_metathesaurus_cui_vec = new Vector();
-		HashSet ncim_metathesaurus_cui_hset = new HashSet();
+		//Vector ncim_metathesaurus_cui_vec = new Vector();
+		//HashSet ncim_metathesaurus_cui_hset = new HashSet();
 
 		String ncim_cui_propName = "NCI_META_CUI";
 		String ncim_cui_propName_label = null;
@@ -834,7 +834,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
     public String generateRelationshipTable(String codingScheme, String version, String code, String namespace, String rel_type, boolean display_qualifiers) {
         boolean display_equiv_expression = false;
         String equivalanceClass = null;
-        String retstr = null;
+        //String retstr = null;
         if (isNCIT(codingScheme) && rel_type.compareTo(Constants.TYPE_ROLE) == 0) {
 			try {
 				equivalanceClass = new CodingSchemeDataUtils(lbSvc).getEquivalenceExpression(codingScheme, version, code);
@@ -966,9 +966,9 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
         String t1 = t;
         String t2 = t;
         String doubleQuote = "\"";
-        String t6 = null;
-        String replacedWith = null;
-        String t5 = null;
+        //String t6 = null;
+        //String replacedWith = null;
+        //String t5 = null;
 
         for (int i = 0; i < t.length() - target.length(); i++) {
             String substr = t.substring(i, i + target.length());
@@ -997,7 +997,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
                     }
                 }
 
-                String t3 = t.substring(k2, k1 + 1);
+                //String t3 = t.substring(k2, k1 + 1);
                 String t4 = t.substring(k2 + 1, k1);
                 v.add(t4);
             }

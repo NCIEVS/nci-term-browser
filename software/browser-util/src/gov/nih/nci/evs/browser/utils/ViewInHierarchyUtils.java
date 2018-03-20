@@ -727,9 +727,11 @@ public class ViewInHierarchyUtils {
 		}
 		Vector v = StringUtils.parseData(ontology_node_id, "_");
 		if (v == null) return null;
+		/*
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 		}
+		*/
         if (v.contains("root")) {
 			return restoreNodeID((String) v.elementAt(1));
 		}
@@ -743,9 +745,11 @@ public class ViewInHierarchyUtils {
 		}
 		Vector v = StringUtils.parseData(ontology_node_id, "_");
 		if (v == null) return null;
+		/*
 		for (int i=0; i<v.size(); i++) {
 			String t = (String) v.elementAt(i);
 		}
+		*/
         if (v.contains("root")) {
 			return restoreNodeID((String) v.elementAt(1));
 		}
@@ -847,7 +851,7 @@ public class ViewInHierarchyUtils {
 		ti._expandable = false;
 		Vector w = new Vector();
 
-        List<LexEvsTreeNode> list = new ArrayList();
+        //List<LexEvsTreeNode> list = new ArrayList();
         try {
 			CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
 			if (version != null)
@@ -859,8 +863,8 @@ public class ViewInHierarchyUtils {
 			LexEvsTreeNode parent_node = lexEvsTree.findNodeInTree(code);
 			ChildTreeNodeIterator itr = parent_node.getChildIterator();
 			try {
-				HashSet hset = new HashSet();
-				int lcv = 0;
+				//HashSet hset = new HashSet();
+				//int lcv = 0;
 
 				while(itr.hasNext()){
 					LexEvsTreeNode child = itr.next();
@@ -1012,7 +1016,7 @@ public class ViewInHierarchyUtils {
     public HashMap getRemainingNodes(String scheme, String version, String focus_code, String namespace, String dot_node_code) {
 		TreeItem ti = null;
 		TreeItem tree_item = null;
-		HashMap tree_hmap = null;
+		//HashMap tree_hmap = null;
 		HashMap hmap = null;
 
 		//if (StringUtils.isNullOrBlank(namespace)) {
@@ -1099,12 +1103,12 @@ public class ViewInHierarchyUtils {
 
         //System.out.println(json);
 		TreeItem vih_tree = JSON2TreeItem.json2TreeItem(json);
-		ViewInHierarchyUtils util = new ViewInHierarchyUtils(lbSvc);
+		//ViewInHierarchyUtils util = new ViewInHierarchyUtils(lbSvc);
 
 		HashMap hmap = getRoots(codingScheme, version);
 		TreeItem vh_tree = (TreeItem) hmap.get("<Root>");
 
-        HashMap vh_hmap = new HashMap();
+        //HashMap vh_hmap = new HashMap();
 		TreeItem vh_root = new TreeItem("<Root>", "", "", null);
 		vh_root._expandable = false;
 		String childNavText = "inverse_is_a";

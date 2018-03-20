@@ -269,7 +269,7 @@ public class RelationshipTabFormatter {
 	}
 
     public HashMap getOutboundRoleTable(ArrayList roles) {
-		boolean restrictToConcept = true;
+		//boolean restrictToConcept = true;
 		ExpressionParser parser = new ExpressionParser();
         Vector v = new Vector();
         HashMap valueDomain2RoleDataMap = new HashMap();
@@ -479,7 +479,7 @@ public class RelationshipTabFormatter {
 	}
 
     public HashMap getInboundRoleTable(ArrayList roles) {
-		boolean restrictToConcept = true;
+		//boolean restrictToConcept = true;
 		ExpressionParser parser = new ExpressionParser();
         Vector v = new Vector();
         HashMap domain2RoleDataMap = new HashMap();

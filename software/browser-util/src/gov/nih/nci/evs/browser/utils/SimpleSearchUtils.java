@@ -500,7 +500,7 @@ public class SimpleSearchUtils {
 			if (schemes == null) return null;
 			for (int i = 0; i < schemes.size(); i++) {
 				CodingScheme cs = schemes.get(i);
-				int j = i+1;
+				//int j = i+1;
 				String key = cs.getCodingSchemeURI();
 				String cs_name = cs.getCodingSchemeName();
 				String name = cs.getFormalName();

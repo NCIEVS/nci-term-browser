@@ -103,7 +103,7 @@ public class QuickUnionIterator implements ResolvedConceptReferencesIterator {
 
                     if (iterator != null) {
 						try {
-							int numberRemaining = iterator.numberRemaining();
+							//int numberRemaining = iterator.numberRemaining();
 						} catch (Exception ex) {
 							//ex.printStackTrace();
 							System.out.println("ERROR: iterator.numberRemaining() exception??? ");

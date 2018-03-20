@@ -222,7 +222,7 @@ public class MetadataUtils {
         _logger.debug("getMetadataCodingSchemeNames returns "
             + codingSchemeNames.size());
 
-        int knt = 0;
+        //int knt = 0;
         for (int k = 0; k < codingSchemeNames.size(); k++) {
             String codingSchemeName = (String) codingSchemeNames.elementAt(k);
 

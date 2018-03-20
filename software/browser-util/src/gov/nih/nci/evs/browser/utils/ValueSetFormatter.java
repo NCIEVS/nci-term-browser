@@ -342,7 +342,7 @@ public class ValueSetFormatter {
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		if (csdu == null) return null;
 		Vector w = new Vector();
-		long ms = System.currentTimeMillis();
+		//long ms = System.currentTimeMillis();
 		try {
 			CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
 			if (version == null) {
@@ -364,7 +364,7 @@ public class ValueSetFormatter {
 				return null;
 			}
 
-			org.LexGrid.commonTypes.Property[] properties = null;
+			//org.LexGrid.commonTypes.Property[] properties = null;
 			cns = cns.restrictToStatus(ActiveOption.ALL, null);
 			if (cns == null) {
 				return null;
@@ -382,11 +382,13 @@ public class ValueSetFormatter {
             ResolvedConceptReferencesIterator iterator = null;
             try {
                 iterator = cns.resolve(sortCriteria, propertyNames, propertyTypes);
+                /*
                 try {
 					int numRemaining = iterator.numberRemaining();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				*/
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -900,7 +902,7 @@ public class ValueSetFormatter {
 			buf.append("</th>").append("\n");
 		}
 		for (int i=0; i<w.size(); i++) {
-			int j = i+1;
+			//int j = i+1;
 			String line = (String) w.elementAt(i);
 			for (int k=0; k<fields.size(); k++) {
 				String type = (String) fields.elementAt(k);
@@ -1132,7 +1134,7 @@ public class ValueSetFormatter {
 			}
 			if (rcri != null) {
 				try {
-					int numberRemaining = rcri.numberRemaining();
+					//int numberRemaining = rcri.numberRemaining();
 					while (rcri.hasNext()) {
 						rcri = rcri.scroll(maxToReturn);
 						ResolvedConceptReferenceList rcrl = rcri.getNext();

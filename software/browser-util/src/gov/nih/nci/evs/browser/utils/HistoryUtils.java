@@ -255,8 +255,8 @@ public class HistoryUtils {
             if (enumeration == null) return null;
             while (enumeration.hasMoreElements()) {
                 NCIChangeEvent event = (NCIChangeEvent) enumeration.nextElement();
-                ChangeType type = event.getEditaction();
-                Date date = event.getEditDate();
+                //ChangeType type = event.getEditaction();
+                //Date date = event.getEditDate();
                 String rCode = event.getReferencecode();
                 String name = "unassigned";
                 if (rCode != null && rCode.length() > 0
@@ -457,7 +457,7 @@ public class HistoryUtils {
                     if (action == null) return null;
                     if (action.compareTo("merge") == 0
                         || action.compareTo("retire") == 0) {
-                        String date = (String) w.elementAt(1);
+                        //String date = (String) w.elementAt(1);
                         String nameAndCode = (String) w.elementAt(2);
                         _logger.debug("(*) nameAndCode: " + nameAndCode);
                         // //merge|2006-01-01|LAS17 protein, S cerevisiae (Code

@@ -83,54 +83,37 @@
   <script type="text/javascript">
     
     function onCodeButtonPressed(formname) {
-          var algorithmObj = document.forms[formname].algorithm;
-          // Send redirect:
-          if (algorithmObj == null) {
-          	try {
-          		String error_msg = "WARNING: The server encountered an unexpected error (file: value_set_search_results.jsp, code: 2, var: algorithmObj).";
-          		request.getSession().setAttribute("error_msg", error_msg);
-          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-          		response.sendRedirect(redirectURL);				 
-          	} catch (Exception ex) {
-          		ex.printStackTrace();
-          	}
-          }
+	  var algorithmObj = document.forms[formname].algorithm;
 	  for (var j=0; j<algorithmObj.length; j++) {
 		  algorithm = algorithmObj[j].value;
 		  if (algorithm == "exactMatch") {
 			 algorithmObj[j].checked = true;
-			 break;
 		  }
 	  }
     }
 
     function getSearchTarget(formname) {
           var searchTargetObj = document.forms[formname].searchTarget;
-          // Send redirect:
-          if (searchTargetObj == null) {
-          	try {
-          		String error_msg = "WARNING: The server encountered an unexpected error (file: value_set_search_results.jsp, code: 3, var: searchTargetObj).";
-          		request.getSession().setAttribute("error_msg", error_msg);
-          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-          		response.sendRedirect(redirectURL);				 
-          	} catch (Exception ex) {
-          		ex.printStackTrace();
-          	}
-          }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 	      if (searchTargetObj[j].checked == true) {
-	          return searchTargetObj[j].value;
+	         return searchTargetObj[j].value;
 	      }
 	  }
     }
 
-
     function onAlgorithmChanged(formname) {
-          var target = getSearchTarget(formname);
-          if (target != "codes") return;
-          var targetObj = document.forms[formname].searchTarget;
-          targetObj[0].checked = true;
-    }         
+      var curr_target = getSearchTarget(formname);
+      if (curr_target != "codes") return;
+
+          var searchTargetObj = document.forms[formname].searchTarget;
+	  for (var j=0; j<searchTargetObj.length; j++) {
+		  target = searchTargetObj[j].value;
+		  if (target == "codes") {
+			  searchTargetObj[0].checked = true;
+			  return;
+		  }
+	  }
+    }	 
   
   </script>
   

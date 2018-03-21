@@ -92,17 +92,6 @@ request.getSession().removeAttribute("m");
   	      var matchText = document.searchTerm.matchText.value;
 
   	      var checkedObj = document.forms["searchTerm"].ontology_list;
-  	      // Send redirect:
-  	      if (checkedObj == null) {
-  	      	try {
-  	      		String error_msg = "WARNING: The server encountered an unexpected error (file: multiple_search.jsp, code: 1, var: checkedObj).";
-  	      		request.getSession().setAttribute("error_msg", error_msg);
-  	      		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-  	      		response.sendRedirect(redirectURL);				 
-  	      	} catch (Exception ex) {
-  	      		ex.printStackTrace();
-  	      	}
-  	      }
   	      for (var i=0; i<checkedObj.length; i++) {
   		if (checkedObj[i].checked) {
   		    checkedStr = checkedStr + checkedObj[i].value + "|";
@@ -117,17 +106,6 @@ request.getSession().removeAttribute("m");
   	      
   
   	          var searchTargetObj = document.forms["searchTerm"].searchTarget;
-  	          // Send redirect:
-  	          if (searchTargetObj == null) {
-  	          	try {
-  	          		String error_msg = "WARNING: The server encountered an unexpected error (file: multiple_search.jsp, code: 2, var: searchTargetObj).";
-  	          		request.getSession().setAttribute("error_msg", error_msg);
-  	          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-  	          		response.sendRedirect(redirectURL);				 
-  	          	} catch (Exception ex) {
-  	          		ex.printStackTrace();
-  	          	}
-  	          }
   		  for (var j=0; j<searchTargetObj.length; j++) {
   		      if (searchTargetObj[j].checked == true) {
   			  target = searchTargetObj[j].value;
@@ -136,17 +114,6 @@ request.getSession().removeAttribute("m");
   		  }
   
   	          var algorithmObj = document.forms["searchTerm"].algorithm;
-  	          // Send redirect:
-  	          if (algorithmObj == null) {
-  	          	try {
-  	          		String error_msg = "WARNING: The server encountered an unexpected error (file: multiple_search.jsp, code: 3, var: algorithmObj).";
-  	          		request.getSession().setAttribute("error_msg", error_msg);
-  	          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-  	          		response.sendRedirect(redirectURL);				 
-  	          	} catch (Exception ex) {
-  	          		ex.printStackTrace();
-  	          	}
-  	          }
   		  for (var j=0; j<algorithmObj.length; j++) {
   		      if (algorithmObj[j].checked == true) {
   		          alg = algorithmObj[j].value;

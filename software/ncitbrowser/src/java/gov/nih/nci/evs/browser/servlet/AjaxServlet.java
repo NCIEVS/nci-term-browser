@@ -1346,11 +1346,10 @@ if (action.compareTo("xmldefinitions") == 0) {
       println(out, "");
 
       println(out, "      var root = tree.getRoot();");
-
-
       LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+      String entity_ns = new ConceptDetails(lbSvc).getNamespaceByCode(ontology_display_name, null, node_id);
+      new ViewInHierarchyUtils(lbSvc).printTree(out, ontology_display_name, ontology_version, node_id, entity_ns);
       //new ViewInHierarchyUtils(lbSvc).printTree(out, ontology_display_name, ontology_version, node_id, namespace);
-      new ViewInHierarchyUtils(lbSvc).printTree(out, ontology_display_name, ontology_version, node_id, namespace);
 
       //println(out, "             showPartialHierarchy();");
       println(out, "             tree.draw();");

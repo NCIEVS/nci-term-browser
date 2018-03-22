@@ -750,10 +750,10 @@ public class UIUtils {
             if (qualifierColumn == 1) {
                 if (hasQualifiers(qualifiers)) {
 					buf.append("	  <td class=\"dataCellText\" scope=\"row\">").append("\n");
+
 					buf.append("		  <table>").append("\n");
 					buf.append("			 <tr>");
 					buf.append("<td class=\"dataCellText\" valign=\"top\">").append("\n");
-					//buf.append("				 " + name).append("\n");
 					buf.append(Constants.INDENT_HALF + name).append("\n");
 					buf.append("			 </td></tr>").append("\n");
 
@@ -805,15 +805,20 @@ public class UIUtils {
 					}
 
 					buf.append("	  <td class=\"dataCellText\" scope=\"row\">").append("\n");
+					buf.append(value).append("\n");
+					buf.append("	 </td></tr>").append("\n");
 
-
+					buf.append("<tr>").append("\n");
+					buf.append("<td class=\"dataCellText\" scope=\"row\" valign=\"top\"></td>").append("\n");
+					buf.append("<td class=\"dataCellText\" scope=\"row\">").append("\n");
+							buf.append("		  <table>").append("\n");
+/*
 							buf.append("		  <table>").append("\n");
 							buf.append("			 <tr>");
 							buf.append("<td class=\"dataCellText\">").append("\n");
-							//buf.append("				 " + value).append("\n");
 							buf.append(Constants.INDENT_HALF + value).append("\n");
 							buf.append("			 </td></tr>").append("\n");
-
+*/
 							for (int j = 0; j < qualifiers.size(); j++) {
 								String q = (String) qualifiers.elementAt(j);
 								Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q);
@@ -828,7 +833,7 @@ public class UIUtils {
 									qualifier_value = (String) u.elementAt(1);
 								}
 
-								String t = qualifier_name + ":" + qualifier_value;
+								String t = qualifier_name + ":&nbsp;" + qualifier_value;
 								if (t == null) return null;
 								if (t.length() > 1) {
 									buf.append("			 <tr>").append("\n");

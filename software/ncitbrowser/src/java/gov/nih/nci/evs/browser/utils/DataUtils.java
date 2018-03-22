@@ -297,9 +297,6 @@ public class DataUtils {
 		UIUtils uiUtils = new UIUtils(lbSvc);
 
 		String ncit_mapping_url = NCItBrowserProperties.getNCItMappingURL();
-
-//System.out.println("DataUtils ncit_mapping_url: " + ncit_mapping_url);
-
 		if (ncit_mapping_url == null) {
 			ncit_mapping_url = NCIT_MAPPING_URL;
 		}
@@ -593,12 +590,14 @@ public class DataUtils {
  		_mappingDisplayNameHashMap = new HashMap();
  		Iterator it = _csnv2codingSchemeNameMap.keySet().iterator();
  		if (it == null) return;
+ 		MetadataUtils metadataUtils = new MetadataUtils(lbSvc);
+
  		while (it.hasNext()) {
  			String value = (String) it.next();
  			String cs = (String) _csnv2codingSchemeNameMap.get(value);
  			String version = (String) _csnv2VersionMap.get(value);
  			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
- 			HashMap hmap = new MetadataUtils(lbSvc).getMappingDisplayHashMap(cs, version);
+ 			HashMap hmap = metadataUtils.getMappingDisplayHashMap(cs, version);
  			if (hmap != null) {
  				_mappingDisplayNameHashMap.put(cs, hmap);
  			}
@@ -751,6 +750,7 @@ public class DataUtils {
                 return;
             }
             LexEVSResolvedValueSetService service = new LexEVSResolvedValueSetServiceImpl(lbSvc);
+            MetadataUtils metadataUtils = new MetadataUtils(lbSvc)
             CodingSchemeRenderingList csrl = null;
             try {
                 csrl = lbSvc.getSupportedCodingSchemes();
@@ -904,11 +904,9 @@ public class DataUtils {
                         _localName2FormalNameHashMap.put(cs.getCodingSchemeName(), formalname);
                         //LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
                         NameAndValue[] nvList =
-                            new MetadataUtils(lbSvc).getMetadataProperties(cs);
+                            metadataUtils.getMetadataProperties(cs);
                         if (nvList == null || nvList.length <= 0) {
-                            //_logger.warn("\t*** Warning: Metadata properties are possibly not loaded.       ***");
-                            //_logger.warn("\t*** MetadataUtils.getMetadataProperties(cs) returns empty list. ***");
-                            _logger.warn("\t*** No metadata found for " + cs.getCodingSchemeName() + " (version: " + representsVersion + ")");
+                            _logger.warn("\tNo metadata found for " + cs.getCodingSchemeName() + " (version: " + representsVersion + ")");
                         }
                         //if (cs != null && nvList != null) {
 						if (nvList != null) {

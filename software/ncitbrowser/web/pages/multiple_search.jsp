@@ -134,17 +134,6 @@ window.location.href = "/ncitbrowser/ajax?action=show&csn="+ csn +"&matchText=" 
   	      var target = "";
   	      var alg = "";
   	      var checkedObj = document.forms["searchTerm"].ontology_list;
-  	      // Send redirect:
-  	      if (checkedObj == null) {
-  	      	try {
-  	      		String error_msg = "WARNING: The server encountered an unexpected error (file: multiple_search.jsp, code: 4, var: checkedObj).";
-  	      		request.getSession().setAttribute("error_msg", error_msg);
-  	      		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-  	      		response.sendRedirect(redirectURL);				 
-  	      	} catch (Exception ex) {
-  	      		ex.printStackTrace();
-  	      	}
-  	      }
   	      for (var i=0; i<checkedObj.length; i++) {
   		if (checkedObj[i].checked) {
   		    checkedStr = checkedStr + checkedObj[i].value + "|";
@@ -157,17 +146,6 @@ window.location.href = "/ncitbrowser/ajax?action=show&csn="+ csn +"&matchText=" 
   	      }
   	      
   	          var searchTargetObj = document.forms["searchTerm"].searchTarget;
-  	          // Send redirect:
-  	          if (searchTargetObj == null) {
-  	          	try {
-  	          		String error_msg = "WARNING: The server encountered an unexpected error (file: multiple_search.jsp, code: 5, var: searchTargetObj).";
-  	          		request.getSession().setAttribute("error_msg", error_msg);
-  	          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-  	          		response.sendRedirect(redirectURL);				 
-  	          	} catch (Exception ex) {
-  	          		ex.printStackTrace();
-  	          	}
-  	          }
   		  for (var j=0; j<searchTargetObj.length; j++) {
   		      if (searchTargetObj[j].checked == true) {
   			  target = searchTargetObj[j].value;
@@ -176,17 +154,6 @@ window.location.href = "/ncitbrowser/ajax?action=show&csn="+ csn +"&matchText=" 
   		  }
   
   	          var algorithmObj = document.forms["searchTerm"].algorithm;
-  	          // Send redirect:
-  	          if (algorithmObj == null) {
-  	          	try {
-  	          		String error_msg = "WARNING: The server encountered an unexpected error (file: multiple_search.jsp, code: 6, var: algorithmObj).";
-  	          		request.getSession().setAttribute("error_msg", error_msg);
-  	          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-  	          		response.sendRedirect(redirectURL);				 
-  	          	} catch (Exception ex) {
-  	          		ex.printStackTrace();
-  	          	}
-  	          }
   		  for (var j=0; j<algorithmObj.length; j++) {
   		      if (algorithmObj[j].checked == true) {
   		          alg = algorithmObj[j].value;
@@ -209,17 +176,6 @@ window.location.href = "/ncitbrowser/ajax?action=hide&csn="+ csn +"&matchText=" 
      
     function onCodeButtonPressed(formname) {
           var algorithmObj = document.forms["searchTerm"].algorithm;
-          // Send redirect:
-          if (algorithmObj == null) {
-          	try {
-          		String error_msg = "WARNING: The server encountered an unexpected error (file: multiple_search.jsp, code: 7, var: algorithmObj).";
-          		request.getSession().setAttribute("error_msg", error_msg);
-          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-          		response.sendRedirect(redirectURL);				 
-          	} catch (Exception ex) {
-          		ex.printStackTrace();
-          	}
-          }
 	  for (var j=0; j<algorithmObj.length; j++) {
 		  algorithm = algorithmObj[j].value;
 		  if (algorithm == "exactMatch") {
@@ -231,17 +187,6 @@ window.location.href = "/ncitbrowser/ajax?action=hide&csn="+ csn +"&matchText=" 
 
     function getSearchTarget(formname) {
           var searchTargetObj = document.forms[formname].searchTarget;
-          // Send redirect:
-          if (searchTargetObj == null) {
-          	try {
-          		String error_msg = "WARNING: The server encountered an unexpected error (file: multiple_search.jsp, code: 8, var: searchTargetObj).";
-          		request.getSession().setAttribute("error_msg", error_msg);
-          		String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-          		response.sendRedirect(redirectURL);				 
-          	} catch (Exception ex) {
-          		ex.printStackTrace();
-          	}
-          }
 	  for (var j=0; j<searchTargetObj.length; j++) {
 	      if (searchTargetObj[j].checked == true) {
 	          return searchTargetObj[j].value;

@@ -590,13 +590,13 @@ public class DataUtils {
  		_mappingDisplayNameHashMap = new HashMap();
  		Iterator it = _csnv2codingSchemeNameMap.keySet().iterator();
  		if (it == null) return;
+ 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
  		MetadataUtils metadataUtils = new MetadataUtils(lbSvc);
 
  		while (it.hasNext()) {
  			String value = (String) it.next();
  			String cs = (String) _csnv2codingSchemeNameMap.get(value);
  			String version = (String) _csnv2VersionMap.get(value);
- 			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
  			HashMap hmap = metadataUtils.getMappingDisplayHashMap(cs, version);
  			if (hmap != null) {
  				_mappingDisplayNameHashMap.put(cs, hmap);
@@ -750,7 +750,7 @@ public class DataUtils {
                 return;
             }
             LexEVSResolvedValueSetService service = new LexEVSResolvedValueSetServiceImpl(lbSvc);
-            MetadataUtils metadataUtils = new MetadataUtils(lbSvc)
+            MetadataUtils metadataUtils = new MetadataUtils(lbSvc);
             CodingSchemeRenderingList csrl = null;
             try {
                 csrl = lbSvc.getSupportedCodingSchemes();

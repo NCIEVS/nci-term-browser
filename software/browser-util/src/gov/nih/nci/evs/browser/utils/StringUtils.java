@@ -324,6 +324,18 @@ public class StringUtils {
 	}
 
 
+    public static String trimLeadingBlanksOrTabs(String line) {
+		if (line == null) return null;
+		if (line.length() == 0) return line;
+		char c = line.charAt(0);
+		while (c == ' ' || c == '\t') {
+			line = line.substring(1, line.length());
+			if (line.length() == 0) return line;
+		    c = line.charAt(0);
+		}
+		return line;
+	}
+
 	public static void convertDelimited2CSV(String inputfile, String outputfile, char delimiter) {
         Vector v = Utils.readFile(inputfile);
         Vector w = convertDelimited2CSV(v, delimiter);

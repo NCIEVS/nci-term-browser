@@ -264,206 +264,6 @@ public class UIUtils {
 		return generateHTMLTable(spec, codingScheme, version, null);
 	}
 
-/*
-    public String generateHTMLTable(HTMLTableSpec spec, String codingScheme, String version, String rel_type) {
-		StringBuffer buf = new StringBuffer();
-		HashMap qualifierHashMap = spec.getQualifierHashMap();
-		Vector nv_vec = spec.getKeyVec();
-		if (nv_vec == null) {
-			Iterator entries = qualifierHashMap.entrySet().iterator();
-			if (entries == null) return null;
-			while (entries.hasNext()) {
-				Entry thisEntry = (Entry) entries.next();
-				String nv = (String) thisEntry.getKey();
-				nv_vec.add(nv);
-			}
-			nv_vec = new SortUtils().quickSort(nv_vec);
-		}
-		String description = spec.getDescription();
-		if (description != null) {
-			buf.append(description).append("\n");
-		}
-		buf.append("<table class=\"datatable_960\" border=\"0\" width=\"100%\">").append("\n");
-
-	    String firstColumnHeading = spec.getFirstColumnHeading();
-	    String secondColumnHeading = spec.getSecondColumnHeading();
-        if (firstColumnHeading != null && secondColumnHeading != null) {
-			buf.append("<tr>").append("\n");
-			buf.append("   <th class=\"dataCellText\" scope=\"col\" align=\"left\">" + firstColumnHeading  + "</th>").append("\n");
-			buf.append("   <th class=\"dataCellText\" scope=\"col\" align=\"left\">" + secondColumnHeading + "</th>").append("\n");
-			buf.append("</tr>").append("\n");
-	    }
-        int firstPercentColumnWidth = spec.getFirstPercentColumnWidth();
-        int secondPercentColumnWidth = spec.getSecondPercentColumnWidth();
-
-        if (firstPercentColumnWidth <= 0 || firstPercentColumnWidth <= 0) {
-			buf.append("   <col width=\"50%\">").append("\n");
-			buf.append("   <col width=\"50%\">").append("\n");
-		} else {
-			String w1 = Integer.toString(firstPercentColumnWidth);
-			String w2 = Integer.toString(secondPercentColumnWidth);
-			buf.append("   <col width=\"" + w1 + "%\">").append("\n");
-			buf.append("   <col width=\"" + w2 + "%\">").append("\n");
-	    }
-
-	    int qualifierColumn = spec.getQualifierColumn();
-		int n = 0;
-        for (int i = 0; i < nv_vec.size(); i++) {
-            String n_v = (String) nv_vec.elementAt(i);
-            Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v);
-            String name = "";
-            String value = "";
-
-            if (w.size() > 0) {
-            	name = (String) w.elementAt(0);
-			}
-
-			if (w.size() > 1) {
-            	value = (String) w.elementAt(1);
-			}
-
-            String code = null;
-            String namespace = null;
-
-            if (w.size() > 2) {
-				code = (String) w.elementAt(2);
-			}
-			if (w.size() > 3) {
-				namespace = (String) w.elementAt(3);
-			}
-            Vector qualifiers = (Vector) qualifierHashMap.get(n_v);
-            qualifiers = new SortUtils().quickSort(qualifiers);
-
-			if ((n++) % 2 == 0) {
-				  buf.append("	<tr class=\"dataRowDark\">").append("\n");
-			} else {
-				  buf.append("	<tr class=\"dataRowLight\">").append("\n");
-			}
-
-			if (qualifierColumn == 0) {
-                  if (rel_type == null || !rel_type.startsWith("type_inverse")) {
-					  buf.append("<td class=\"dataCellText\" valign=\"top\">").append("\n");
-					  buf.append(Constants.INDENT_HALF + name).append("\n");
-					  buf.append("</td>").append("\n");
-					  if (code != null) {
-						  value = getHyperlink(codingScheme, version, value, code, namespace);
-					  }
-					  buf.append("<td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + value + "</td>").append("\n");
-				  } else {
-					  if (code != null) {
-						  value = getHyperlink(codingScheme, version, value, code, namespace);
-					  }
-					  buf.append("<td class=\"dataCellText\" valign=\"top\">").append("\n");
-					  buf.append(Constants.INDENT_HALF + value).append("\n");
-					  buf.append("</td>").append("\n");
-					  buf.append("<td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + name + "</td>").append("\n");
-				  }
-
-			} else if (qualifierColumn == 1) {
-                if (hasQualifiers(qualifiers)) {
-
-					if (code != null) {
-						value = getHyperlink(codingScheme, version, value, code, namespace);
-					}
-					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">").append("\n");
-					buf.append("		  <table>").append("\n");
-					buf.append("			 <tr>");
-					buf.append("<td class=\"dataCellText\">").append("\n");
-					buf.append(Constants.INDENT_HALF + value).append("\n");
-					buf.append("			 </td></tr>").append("\n");
-					for (int j = 0; j < qualifiers.size(); j++) {
-						String q = (String) qualifiers.elementAt(j);
-						Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q);
-
-						String qualifier_name = "";
-						String qualifier_value = "";
-
-						if (u.size() > 0) {
-							qualifier_name = (String) u.elementAt(0);
-						}
-						if (u.size() > 1) {
-							qualifier_value = (String) u.elementAt(1);
-						}
-
-						if (displayQualifier(qualifier_name)) {
-							String t = qualifier_name + ":" + qualifier_value;
-							if (t == null) return null;
-							if (t.length() > 1) {
-								buf.append("			 <tr>").append("\n");
-								buf.append("			 <td class=\"dataCellText\" >" + Constants.INDENT + t + "</td>").append("\n");
-								buf.append("			 </tr>").append("\n");
-							}
-						}
-					}
-
-					buf.append("		  </table>").append("\n");
-					buf.append("	  </td>").append("\n");
-					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + name + "</td>").append("\n");
-			    } else {
-					if (code != null) {
-						value = getHyperlink(codingScheme, version, value, code, namespace);
-					}
-					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + value + "</td>").append("\n");
-					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + name + "</td>").append("\n");
-				}
-
-			} else if (qualifierColumn == 2) {
-
-                if (hasQualifiers(qualifiers)) {
-					if (code != null) {
-						value = getHyperlink(codingScheme, version, value, code, namespace);
-					}
-					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + name + "</td>").append("\n");
-
-					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">").append("\n");
-					buf.append("		  <table>").append("\n");
-					buf.append("			 <tr>");
-					buf.append("<td class=\"dataCellText\">").append("\n");
-					//buf.append("				 " + value).append("\n");
-					buf.append(Constants.INDENT_HALF + value).append("\n");
-					buf.append("			 </td></tr>").append("\n");
-					for (int j = 0; j < qualifiers.size(); j++) {
-						String q = (String) qualifiers.elementAt(j);
-						Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q);
-
-						String qualifier_name = "";
-						String qualifier_value = "";
-
-						if (u.size() > 0) {
-							qualifier_name = (String) u.elementAt(0);
-						}
-						if (u.size() > 1) {
-							qualifier_value = (String) u.elementAt(1);
-						}
-
-						if (displayQualifier(qualifier_name)) {
-							String t = qualifier_name + ":" + qualifier_value;
-							if (t == null) return null;
-							if (t.length() > 1) {
-								buf.append("			 <tr>").append("\n");
-								buf.append("			 <td class=\"dataCellText\" >" + Constants.INDENT + t + "</td>").append("\n");
-								buf.append("			 </tr>").append("\n");
-							}
-						}
-					}
-					buf.append("		  </table>").append("\n");
-					buf.append("	  </td>").append("\n");
-
-			    } else {
-					if (code != null) {
-						value = getHyperlink(codingScheme, version, value, code, namespace);
-					}
-					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + name + "</td>").append("\n");
-					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + value + "</td>").append("\n");
-				}
-			}
-			buf.append("	</tr>").append("\n");
-		}
-		buf.append("</table>").append("\n");
-        return buf.toString();
-	}
-*/
-
     public String generateHTMLTable(HTMLTableSpec spec, String codingScheme, String version, String rel_type) {
 		if (spec == null) return null;
 		StringBuffer buf = new StringBuffer();
@@ -836,6 +636,31 @@ public class UIUtils {
 		return generatePropertyTable(spec, null, null);
 	}
 
+    public Vector sort_maps_to_qualifiers(Vector qualifiers) {
+		if (qualifiers == null) return null;
+		Vector w = new Vector();
+		HashMap hmap = new HashMap();
+		for (int j = 0; j < qualifiers.size(); j++) {
+			String q = (String) qualifiers.elementAt(j);
+			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q);
+			String qualifier_name = "";
+			String qualifier_value = "";
+			if (u.size() > 0) {
+				qualifier_name = (String) u.elementAt(0);
+			}
+			if (u.size() > 1) {
+				qualifier_value = (String) u.elementAt(1);
+			}
+			hmap.put(qualifier_name, qualifier_value);
+		}
+		Vector keys = getMapsToQualifierNames();
+		for (int i=0; i<keys.size(); i++) {
+			String key = (String) keys.elementAt(i);
+			String value = (String) hmap.get(key);
+			w.add(key + ":" + value);
+		}
+		return w;
+	}
 
     public String generatePropertyTable(HTMLTableSpec spec, String codingScheme, String version) {
 		if (spec == null) return null;
@@ -907,7 +732,14 @@ public class UIUtils {
 				namespace = (String) w.elementAt(3);
 			}
             Vector qualifiers = (Vector) qualifierHashMap.get(n_v);
-            qualifiers = new SortUtils().quickSort(qualifiers);
+
+            /////////////////////////////////////////////////////////////////////////
+            //KLO 03222018
+            if (name.compareTo(MAPS_TO) == 0) {
+				qualifiers = sort_maps_to_qualifiers(qualifiers);
+			} else {
+            	qualifiers = new SortUtils().quickSort(qualifiers);
+			}
 
 			if ((n++) % 2 == 0) {
 				  buf.append("	<tr class=\"dataRowDark\">").append("\n");
@@ -973,37 +805,40 @@ public class UIUtils {
 					}
 
 					buf.append("	  <td class=\"dataCellText\" scope=\"row\">").append("\n");
-					buf.append("		  <table>").append("\n");
-					buf.append("			 <tr>");
-					buf.append("<td class=\"dataCellText\">").append("\n");
-					//buf.append("				 " + value).append("\n");
-                    buf.append(Constants.INDENT_HALF + value).append("\n");
-					buf.append("			 </td></tr>").append("\n");
 
-					for (int j = 0; j < qualifiers.size(); j++) {
-						String q = (String) qualifiers.elementAt(j);
-						Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q);
 
-						String qualifier_name = "";
-						String qualifier_value = "";
+							buf.append("		  <table>").append("\n");
+							buf.append("			 <tr>");
+							buf.append("<td class=\"dataCellText\">").append("\n");
+							//buf.append("				 " + value).append("\n");
+							buf.append(Constants.INDENT_HALF + value).append("\n");
+							buf.append("			 </td></tr>").append("\n");
 
-						if (u.size() > 0) {
-							qualifier_name = (String) u.elementAt(0);
-						}
-						if (u.size() > 1) {
-							qualifier_value = (String) u.elementAt(1);
-						}
+							for (int j = 0; j < qualifiers.size(); j++) {
+								String q = (String) qualifiers.elementAt(j);
+								Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q);
 
-						String t = qualifier_name + ":" + qualifier_value;
-						if (t == null) return null;
-						if (t.length() > 1) {
-							buf.append("			 <tr>").append("\n");
-							buf.append("			 <td class=\"dataCellText\" >" + indent + t + "</td>").append("\n");
-							buf.append("			 </tr>").append("\n");
-					    }
-					}
+								String qualifier_name = "";
+								String qualifier_value = "";
 
-					buf.append("		  </table>").append("\n");
+								if (u.size() > 0) {
+									qualifier_name = (String) u.elementAt(0);
+								}
+								if (u.size() > 1) {
+									qualifier_value = (String) u.elementAt(1);
+								}
+
+								String t = qualifier_name + ":" + qualifier_value;
+								if (t == null) return null;
+								if (t.length() > 1) {
+									buf.append("			 <tr>").append("\n");
+									buf.append("			 <td class=\"dataCellText\" >" + indent + t + "</td>").append("\n");
+									buf.append("			 </tr>").append("\n");
+								}
+							}
+							buf.append("		  </table>").append("\n");
+
+
 					buf.append("	  </td>").append("\n");
 
 			    } else {
@@ -1182,6 +1017,92 @@ if (url.endsWith(".xls")) {
 		buf.append("</table>");
         return buf.toString();
 	}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static String removeBackSlashChars(String line) {
+		if (line == null) return null;
+		StringBuffer buf = new StringBuffer();;
+		for (int i=0; i<line.length(); i++) {
+			char c = line.charAt(i);
+			if (c != '\\') {
+				buf.append(c);
+			}
+		}
+		return buf.toString();
+	}
+
+
+
+	public static String otherProperty2HTMLString(String propertyName, String propertyValue, HashMap qualifierMap, Vector keys) {
+	    return otherProperty2HTMLString(propertyName, propertyValue, qualifierMap, keys);
+    }
+
+	public static String otherProperty2HTMLString(String propertyName, String propertyValue, HashMap qualifierMap, Vector keys, boolean inner_qualifier_table_only) {
+		if (propertyName == null || propertyValue == null || qualifierMap == null) return null;
+		StringBuffer buf = new StringBuffer();
+		if (!inner_qualifier_table_only) {
+			buf.append("<tr class=\"dataRowLight\">").append("\n");
+			buf.append("<td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + propertyName + "</td>").append("\n");
+			buf.append("<td class=\"dataCellText\" scope=\"row\">" + propertyValue + "</td>").append("\n");
+			buf.append("</tr>").append("\n");
+			buf.append("<tr class=\"dataRowLight\">").append("\n");
+			buf.append("<td class=\"dataCellText\" scope=\"row\" valign=\"top\"></td>").append("\n");
+			buf.append("<td class=\"dataCellText\" scope=\"row\">").append("\n");
+		}
+        buf.append("<table>").append("\n");
+        if (keys == null) {
+			keys = new Vector();
+			Iterator it = qualifierMap.keySet().iterator();
+			while (it.hasNext()) {
+				String key = (String) it.next();
+				keys.add(key);
+			}
+		}
+
+		for (int i=0; i<keys.size(); i++) {
+			String key = (String) keys.elementAt(i);
+			String value = (String) qualifierMap.get(key);
+			buf.append("<tr>").append("\n");
+			String target_terminology = (String) qualifierMap.get(TARGET_TERMINOLOGY);
+			buf.append("<td class=\"dataCellText\">" + NGSP + "" + key + ":&nbsp;" + value + "</td>").append("\n");
+			buf.append("</tr>").append("\n");
+		}
+        buf.append("</table>").append("\n");
+        if (!inner_qualifier_table_only) {
+			buf.append("</td>").append("\n");
+			buf.append("</tr>").append("\n");
+		}
+        return buf.toString();
+	}
+
+    private static final String MAPS_TO = "Maps_To";
+	private static final String TARGET_TERMINOLOGY = "Target_Terminology";
+	private static final String RELATIONSHIP_TO_TARGET = "Relationship_to_Target";
+	private static final String TARGET_TERM_TYPE = "Target_Term_Type";
+	private static final String TARGET_CODE = "Target_Code";
+	private static final String NGSP = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+	public static Vector getMapsToQualifierNames() {
+		Vector v = new Vector();
+		v.add(TARGET_TERMINOLOGY);
+		v.add(RELATIONSHIP_TO_TARGET);
+		v.add(TARGET_TERM_TYPE);
+		v.add(TARGET_CODE);
+		return v;
+	}
+
+	public static String otherProperty2HTMLString(String propertyName, String propertyValue, HashMap qualifierMap) {
+		if (propertyName == null || propertyValue == null || qualifierMap == null) return null;
+		Vector keys = null;
+		if (propertyName.compareTo(MAPS_TO) == 0) {
+			keys = getMapsToQualifierNames();
+		}
+		return otherProperty2HTMLString(propertyName, propertyValue, qualifierMap, keys);
+	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*
     public static void main(String [] args) {
         boolean testLocal = true;

@@ -672,6 +672,9 @@ public class UIUtils {
 
     public String generatePropertyTable(HTMLTableSpec spec, String codingScheme, String version) {
 		if (spec == null) return null;
+
+System.out.println("========== calling generatePropertyTable ... ");
+
 		StringBuffer buf = new StringBuffer();
 		HashMap qualifierHashMap = spec.getQualifierHashMap();
 		if (qualifierHashMap == null) return null;
@@ -784,7 +787,6 @@ public class UIUtils {
 
 						if (displayQualifier(qualifier_name)) {
 							String t = qualifier_name + ":&nbsp;&nbsp;&nbsp;" + qualifier_value;
-							if (t == null) return null;
 							if (t.length() > 1) {
 								buf.append("			 <tr>").append("\n");
 								buf.append("			 <td class=\"dataCellText\" >" + indent + t + "</td>").append("\n");
@@ -809,6 +811,7 @@ public class UIUtils {
 			}
 
             if (qualifierColumn == 2) {
+
                 if (hasQualifiers(qualifiers)) {
 					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + name + "</td>").append("\n");
 					if (code != null) {
@@ -850,10 +853,16 @@ public class UIUtils {
 									}
 								}
 
-								String t = qualifier_name + ":&nbsp;&nbsp;&nbsp;" + qualifier_value;
+								String t = qualifier_name + ":" + qualifier_value;
 								if (t.endsWith(":")) {
 									t = t.substring(0, t.length()-1);
 								}
+
+int m = t.indexOf(":");
+if (m != -1) {
+	t = t.substring(0, m) + ":&nbsp;" + t.substring(m+1, t.length());
+}
+
 								if (t.length() > 1) {
 									buf.append("			 <tr>").append("\n");
 									buf.append("			 <td class=\"dataCellText\" >" + indent + t + "</td>").append("\n");

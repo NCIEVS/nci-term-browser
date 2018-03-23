@@ -650,6 +650,7 @@ public class UIUtils {
 			}
 			if (u.size() > 1) {
 				qualifier_value = (String) u.elementAt(1);
+				qualifier_value = qualifier_value.trim();
 				if (qualifier_value.endsWith(":")) {
 					qualifier_value = qualifier_value.substring(0, qualifier_value.length()-1);
 				}
@@ -660,6 +661,7 @@ public class UIUtils {
 		for (int i=0; i<keys.size(); i++) {
 			String key = (String) keys.elementAt(i);
 			String value = (String) hmap.get(key);
+			value = value.trim();
 			if (value.endsWith(":")) {
 				value = value.substring(0, value.length()-1);
 			}

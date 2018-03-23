@@ -844,13 +844,16 @@ public class UIUtils {
 								}
 								if (u.size() > 1) {
 									qualifier_value = (String) u.elementAt(1);
+									qualifier_value = qualifier_value.trim();
 									if (qualifier_value.endsWith(":")) {
 										qualifier_value = qualifier_value.substring(0, qualifier_value.length()-1);
 									}
 								}
 
 								String t = qualifier_name + ":&nbsp;&nbsp;&nbsp;" + qualifier_value;
-								//if (t == null) return null;
+								if (t.endsWith(":")) {
+									t = t.substring(0, t.length()-1);
+								}
 								if (t.length() > 1) {
 									buf.append("			 <tr>").append("\n");
 									buf.append("			 <td class=\"dataCellText\" >" + indent + t + "</td>").append("\n");

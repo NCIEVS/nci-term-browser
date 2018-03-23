@@ -124,73 +124,6 @@ public class AssertedVSearchUtils {
 		return null;
 	}
 
-
-	public String getResolvedConceptReferenceExpression(ResolvedConceptReference ref) {
-		StringBuffer buf = new StringBuffer();
-		buf.append(ref.getEntityDescription().getContent() + " (" + ref.getConceptCode() + ")").append("\n");
-		buf.append("\turi: " + ref.getCodingSchemeURI()).append("\n");
-		buf.append("\tcoding scheme: " + ref.getCodingSchemeName()).append("\n");
-		buf.append("\tversion: " + ref.getCodingSchemeVersion()).append("\n");
-		buf.append("\tnamespace: " + ref.getCodeNamespace());
-		return buf.toString();
-	}
-
-    //System.out.println(ref.getConceptCode() + ":" + ref.getEntityDescription().getContent());
-    protected void displayRef(ResolvedConceptReference ref) {
-        System.out.println(getResolvedConceptReferenceExpression(ref));
-    }
-
-    protected void displayRef(int index, ResolvedConceptReference ref) {
-        System.out.println("(" + index + ") " + getResolvedConceptReferenceExpression(ref));
-    }
-
-    public void dumpIterator(ResolvedConceptReferencesIterator itr, int batchSize) {
-		dumpIterator(itr, batchSize, true);
-	}
-
-
-    public void dumpIterator(ResolvedConceptReferencesIterator itr, int batchSize, boolean showIndex) {
-		if (batchSize != -1) {
-			try {
-				int knt = 0;
-				while (itr.hasNext()) {
-					ResolvedConceptReference[] refs =
-						itr.next(batchSize).getResolvedConceptReference();
-					for (ResolvedConceptReference ref : refs) {
-						knt++;
-						if (showIndex) {
-							displayRef(knt, ref);
-						} else {
-							displayRef(ref);
-						}
-					}
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		} else {
-			try {
-				int knt = 0;
-				while (itr.hasNext()) {
-					knt++;
-					ResolvedConceptReference ref = (ResolvedConceptReference) itr.next();
-					if (showIndex) {
-						displayRef(knt, ref);
-					} else {
-						displayRef(ref);
-					}
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
-		}
-    }
-
-    public void dumpIterator(ResolvedConceptReferencesIterator itr) {
-		dumpIterator(itr, -1);
-	}
-
     public ResolvedConceptReferencesIterator search(
         Vector<String> schemes, Vector<String> versions, String matchText, String algorithm, String target) throws LBException {
         if (algorithm == null|| target == null) return null;
@@ -307,7 +240,7 @@ public class AssertedVSearchUtils {
 				if (iterator == null) {
 					System.out.println("search returns a null iterator.");
 				} else {
-					test.dumpIterator(iterator, 100, true);
+					IteratorHelper.dumpIterator(iterator, 100, true);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

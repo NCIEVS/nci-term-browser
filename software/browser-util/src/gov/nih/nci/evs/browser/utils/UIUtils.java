@@ -650,6 +650,9 @@ public class UIUtils {
 			}
 			if (u.size() > 1) {
 				qualifier_value = (String) u.elementAt(1);
+				if (qualifier_value.endsWith(":")) {
+					qualifier_value = qualifier_value.substring(0, qualifier_value.length()-1);
+				}
 			}
 			hmap.put(qualifier_name, qualifier_value);
 		}
@@ -741,7 +744,10 @@ public class UIUtils {
             	qualifiers = new SortUtils().quickSort(qualifiers);
 			}
 
-			if ((n++) % 2 == 0) {
+			n++;
+
+			//if ((n++) % 2 == 0) {
+			if (n % 2 == 0) {
 				  buf.append("	<tr class=\"dataRowDark\">").append("\n");
 			} else {
 				  buf.append("	<tr class=\"dataRowLight\">").append("\n");
@@ -808,17 +814,19 @@ public class UIUtils {
 					buf.append(value).append("\n");
 					buf.append("	 </td></tr>").append("\n");
 
-					buf.append("<tr>").append("\n");
+					//buf.append("<tr>").append("\n");
+
+
+			if (n % 2 == 0) {
+				  buf.append("	<tr class=\"dataRowDark\">").append("\n");
+			} else {
+				  buf.append("	<tr class=\"dataRowLight\">").append("\n");
+			}
+
+
 					buf.append("<td class=\"dataCellText\" scope=\"row\" valign=\"top\"></td>").append("\n");
 					buf.append("<td class=\"dataCellText\" scope=\"row\">").append("\n");
 							buf.append("		  <table>").append("\n");
-/*
-							buf.append("		  <table>").append("\n");
-							buf.append("			 <tr>");
-							buf.append("<td class=\"dataCellText\">").append("\n");
-							buf.append(Constants.INDENT_HALF + value).append("\n");
-							buf.append("			 </td></tr>").append("\n");
-*/
 							for (int j = 0; j < qualifiers.size(); j++) {
 								String q = (String) qualifiers.elementAt(j);
 								Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q);
@@ -842,10 +850,7 @@ public class UIUtils {
 								}
 							}
 							buf.append("		  </table>").append("\n");
-
-
 					buf.append("	  </td>").append("\n");
-
 			    } else {
 					buf.append("	  <td class=\"dataCellText\" scope=\"row\">" + name + "</td>").append("\n");
 					if (code != null) {

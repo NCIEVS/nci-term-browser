@@ -1231,8 +1231,6 @@ public class ValueSetFormatter {
 	}
 
 	public static void main(String[] args) {
-
-		System.out.println("=========================");
 		LexBIGService lbSvc = null;//RemoteServerUtil.createLexBIGService();
 		LexEVSValueSetDefinitionServices vsd_service = null;//RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 

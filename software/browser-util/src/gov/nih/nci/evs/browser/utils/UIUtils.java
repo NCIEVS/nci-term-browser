@@ -672,9 +672,6 @@ public class UIUtils {
 
     public String generatePropertyTable(HTMLTableSpec spec, String codingScheme, String version) {
 		if (spec == null) return null;
-
-System.out.println("========== calling generatePropertyTable ... ");
-
 		StringBuffer buf = new StringBuffer();
 		HashMap qualifierHashMap = spec.getQualifierHashMap();
 		if (qualifierHashMap == null) return null;

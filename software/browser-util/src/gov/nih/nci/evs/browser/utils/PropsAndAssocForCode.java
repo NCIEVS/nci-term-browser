@@ -267,9 +267,6 @@ public class PropsAndAssocForCode {
             }
             System.out.println("\n");
 
-
-            System.out.println("\n=========================================================================");
-
             props = node.getAllProperties();
             for (int i = 0; i < props.length; i++) {
                 Property prop = props[i];

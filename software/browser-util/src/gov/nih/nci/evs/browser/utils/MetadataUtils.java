@@ -288,7 +288,7 @@ public class MetadataUtils {
 
     public Vector getMetadataNameValuePairs(MetadataPropertyList mdpl, boolean sort) {
 		if (debug) {
-		System.out.println("====================== dump getMetadataNameValuePairs ======================");
+		System.out.println("dump getMetadataNameValuePairs...");
 		}
 
         if (mdpl == null)

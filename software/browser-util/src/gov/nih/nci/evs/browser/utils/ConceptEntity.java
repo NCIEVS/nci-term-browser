@@ -154,7 +154,6 @@ public class ConceptEntity {
     protected boolean printProps(String code, String scheme, CodingSchemeVersionOrTag csvt)
             throws LBException {
         // Perform the query ...
-
         System.out.println("======================================================================");
         System.out.println("Coding scheme: " + scheme);
         System.out.println("Coding scheme version: " + csvt.getVersion());

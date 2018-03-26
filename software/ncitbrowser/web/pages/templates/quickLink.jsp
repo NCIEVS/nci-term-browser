@@ -3,12 +3,12 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Vector"%>
-<%@ page import="java.util.HashSet"%>
-<%@ page import="java.util.HashMap"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="java.util.Set"%>
-<%@ page import="java.util.Iterator"%>
+<%@ page import="java.util.Vector" %>
+<%@ page import="java.util.HashSet" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.Iterator" %>
 <%@ page import="gov.nih.nci.evs.browser.utils.DataUtils" %>
 <%@ page import="gov.nih.nci.evs.browser.properties.PropertyFileParser" %>
 <%@ page import="gov.nih.nci.evs.browser.properties.NCItBrowserProperties" %>
@@ -30,84 +30,103 @@
 <%@ page import="javax.faces.model.SelectItem" %>
 
 <%
-    String ncim_url = new DataUtils().getNCImURL();
-    String quicklink_dictionary = (String) request.getSession().getAttribute("dictionary");
-    quicklink_dictionary = DataUtils.getFormalName(quicklink_dictionary);
-    String term_suggestion_application_url2 = "";
-    String dictionary_encoded2 = "";
-    if (quicklink_dictionary != null) {
-        term_suggestion_application_url2 = DataUtils.getMetadataValue(quicklink_dictionary, "term_suggestion_application_url");    
-        dictionary_encoded2 = DataUtils.replaceAll(quicklink_dictionary, " ", "%20");
-    }
+String ncim_url = new DataUtils().getNCImURL();
+String quicklink_dictionary = (String) request.getSession().getAttribute("dictionary");
+quicklink_dictionary = DataUtils.getFormalName(quicklink_dictionary);
+String term_suggestion_application_url2 = "";
+String dictionary_encoded2 = "";
+if (quicklink_dictionary != null) {
+  term_suggestion_application_url2 = DataUtils.getMetadataValue(quicklink_dictionary, "term_suggestion_application_url");
+  dictionary_encoded2 = DataUtils.replaceAll(quicklink_dictionary, " ", "%20");
+}
 %>
 <div class="bluebar">
 
   <table border="0" cellspacing="0" cellpadding="0" role='presentation'>
     <tr>
-      <td><div class="quicklink-status">
-        <% boolean debug = false; if (debug) {  //DYEE_DEBUG (default: false) %>
-          <%= NCItBrowserProperties.getStringProperty(NCItBrowserProperties.EVS_SERVICE_URL, "") %>
-          | <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/pages/deprecated/valueSetTmp.jsf');">VS Tmp</a>
-        <% } %>
-        &nbsp;
-      </div></td>
       <td>
+        <div class="quicklink-status">
+          <% boolean debug = false; if (debug) {  //DYEE_DEBUG (default: false) %>
+          <%= NCItBrowserProperties.getStringProperty(NCItBrowserProperties.EVS_SERVICE_URL, "") %>
+          |
+          <a
+              href="#"
+              onClick="javascript:window.open('<%=request.getContextPath()%>/pages/deprecated/valueSetTmp.jsf');">
 
-  <div id="quicklinksholder">
-      <ul id="quicklinks"
-        onmouseover="document.quicklinksimg.src='<%=basePath%>/images/quicklinks-active.gif';"
-        onmouseout="document.quicklinksimg.src='<%=basePath%>/images/quicklinks-inactive.gif';">
-        <li>
-          <a href="#" tabindex="1"><img src="<%=basePath%>/images/quicklinks-inactive.gif" width="162"
-            height="18" border="0" name="quicklinksimg" alt="Quick Links" />
+            VS Tmp</a>
+        <% } %> &nbsp;
+      </div>
+    </td>
+    <td>
+
+      <div id="quicklinksholder">
+        <ul
+            id="quicklinks"
+            onmouseover="document.quicklinksimg.src='<%=basePath%>/images/quicklinks-active.gif';"
+            onmouseout="document.quicklinksimg.src='<%=basePath%>/images/quicklinks-inactive.gif';">
+
+          <li>
+          <a href="#" tabindex="1">
+            <img
+                src="<%=basePath%>/images/quicklinks-inactive.gif"
+                width="162"
+                height="18"
+                border="0"
+                name="quicklinksimg"
+                alt="Quick Links"
+            />
           </a>
           <ul>
-            <li><a href="http://evs.nci.nih.gov/" tabindex="2" target="_blank"
-              alt="Enterprise Vocabulary Services">EVS Home</a></li>
-            <li><a href="<%=ncim_url%>" tabindex="3" target="_blank"
-              alt="NCI Metathesaurus">NCI Metathesaurus Browser</a></li>
-
-            <%
-            if (DataUtils.isNCIT(quicklink_dictionary)) {
-            %>
-
-            <li><a href="<%= request.getContextPath() %>/index.jsp" tabindex="4"
-              alt="NCI Thesaurus Browser">NCI Thesaurus Browser</a></li>
-
-            <%
-            }
-            %>
-
             <li>
-              <a href="<%= request.getContextPath() %>/termbrowser.jsf" tabindex="5" alt="NCI Term Browser">NCI Term Browser</a>
-            </li>
-              
-            <li><a href="http://www.cancer.gov/cancertopics/terminologyresources" tabindex="6" target="_blank"
-              alt="NCI Terminology Resources">NCI Terminology Resources</a></li>
-            <% if (term_suggestion_application_url2 != null && term_suggestion_application_url2.length() > 0) { %>
-              <li><a href="<%=term_suggestion_application_url2%>?dictionary=<%=dictionary_encoded2%>" tabindex="7" target="_blank" alt="Term Suggestion">Term Suggestion</a></li>
-            <% } %>
-
-          </ul>
+            <a href="http://evs.nci.nih.gov/" tabindex="2" target="_blank" alt="Enterprise Vocabulary Services">
+              EVS Home</a>
+          </li>
+          <li>
+          <a href="<%=ncim_url%>" tabindex="3" target="_blank" alt="NCI Metathesaurus">NCI Metathesaurus Browser</a>
         </li>
-      </ul>
-  </div>
-  
-      </td>
+
+        <% if (DataUtils.isNCIT(quicklink_dictionary)) { %>
+
+          <li>
+          <a href="<%= request.getContextPath() %>/index.jsp" tabindex="4" alt="NCI Thesaurus Browser">
+            NCI Thesaurus Browser</a>
+        </li>
+
+      <% } %>
+
+      <li>
+      <a href="<%= request.getContextPath() %>/termbrowser.jsf" tabindex="5" alt="NCI Term Browser">NCI Term Browser</a>
+    </li>
+
+    <li>
+    <a
+        href="http://www.cancer.gov/cancertopics/terminologyresources"
+        tabindex="6"
+        target="_blank"
+        alt="NCI Terminology Resources">
+
+      NCI Terminology Resources</a>
+  </li>  <% if (term_suggestion_application_url2 != null && term_suggestion_application_url2.length() > 0) { %>
+    <li>
+    <a
+        href="<%=term_suggestion_application_url2%>?dictionary=<%=dictionary_encoded2%>"
+        tabindex="7"
+        target="_blank"
+        alt="Term Suggestion">
+
+      Term Suggestion</a>
+  </li><% } %>
+
+</ul></li></ul></div>
+
+</td></tr></table></div>
+
+<% if (! ServerMonitorThread.getInstance().isLexEVSRunning()) { %>
+<div class="redbar">
+  <table border="0" cellspacing="0" cellpadding="0" role='presentation'>
+    <tr>
+      <td class="lexevs-status"><%= ServerMonitorThread.getInstance().getMessage() %></td>
     </tr>
   </table>
 </div>
-
-<%
-    if (! ServerMonitorThread.getInstance().isLexEVSRunning()) {
-%>
-	<div class="redbar">
-	  <table border="0" cellspacing="0" cellpadding="0" role='presentation'>
-	    <tr>
-	      <td class="lexevs-status">
-	        <%= ServerMonitorThread.getInstance().getMessage() %>
-	      </td>
-	    </tr>
-	  </table>
-	</div>
 <% } %>

@@ -205,7 +205,7 @@
               ns = (String)u2.elementAt(1);
             }
           }
-          
+          //KLO
           code = HTTPUtils.cleanXSS(code);
 
           if (code == null) {
@@ -220,19 +220,23 @@
           }
 
           request.getSession().setAttribute("code", code);
-          request.getSession().setAttribute("code", code);
-
+          /*
+          //[NCITERM-758] View Graph: Page Can't be found due to ns=null when selecting Concept from Cart and then View Graph
+          if (StringUtils.isNullOrBlank(ns)) {
+            LexcBIGService lbSvc = RemoteServerUtil.createLexcBIGService();
+            ns = new ConceptDetails(lbSvc) getNamespaceByCode(dictionary, version, code);
+          }
+          */
           request.getSession().setAttribute("ns", ns);
           String active_code = (String) request.getSession().getAttribute("active_code");
 
           if (active_code == null) {
-            request.getSession().removeAttribute("propertyData");
+            request.getSession().setAttribute("active_code", code);
           } else {
             if (active_code.compareTo(code) != 0) {
               request.getSession().removeAttribute(
               "RelationshipHashMap");
               request.getSession().setAttribute("active_code", code);
-              request.getSession().removeAttribute("propertyData");
             }
           }
 
@@ -265,91 +269,40 @@
                 type = "properties";
               }
             }
-/*
-		    String cd_dictionary = dataUtils.getFormalName(dictionary);
-		    String term_suggestion_application_url = dataUtils
-		    .getMetadataValue(cd_dictionary,"term_suggestion_application_url");
-		    String name = "";
-		    String ltag = null;
 
-		    if (JSPUtils.isNull(dictionary)) {
-		      name = "Error: Invalid dictionary - " + dictionary + ".";
-		    } else if (JSPUtils.isNull(version)) {
-		      name = "Error: Invalid version - " + version + ".";
-		    } else {
-		      namespace_list = conceptDetails.getDistinctNamespacesOfCode(
-		      dictionary, version, code);
+            String cd_dictionary = dataUtils.getFormalName(dictionary);
+            String term_suggestion_application_url = dataUtils
+            .getMetadataValue(cd_dictionary,"term_suggestion_application_url");
+            String name = "";
+            String ltag = null;
 
-		      if (StringUtils.isNullOrBlank(ns) || namespace_list.size() == 1) {
-			c = conceptDetails.getConceptByCode(dictionary, version, code);
-		      } else {
-			c = conceptDetails.getConceptByCode(dictionary, version, code, ns, true);
-		      }
+            if (JSPUtils.isNull(dictionary)) {
+              name = "Error: Invalid dictionary - " + dictionary + ".";
+            } else if (JSPUtils.isNull(version)) {
+              name = "Error: Invalid version - " + version + ".";
+            } else {
+              namespace_list = conceptDetails.getDistinctNamespacesOfCode(
+              dictionary, version, code);
 
-		      if (c != null) {
-			request.getSession().setAttribute("concept", c);
-			request.getSession().setAttribute("code", code);
-			request.getSession().setAttribute("ns", ns);
-			name = "";
-			if (c.getEntityDescription() != null) {
-			  name = c.getEntityDescription().getContent();
-			}
-		      } else {
-			//name = "The server encountered an internal error that prevented it from fulfilling this request.";
-			name = "ERROR: Invalid code - " + code + ".";
-		      }
-		    }
-*/
+              if (StringUtils.isNullOrBlank(ns) || namespace_list.size() == 1) {
+                c = conceptDetails.getConceptByCode(dictionary, version, code);
+              } else {
+                c = conceptDetails.getConceptByCode(dictionary, version, code, ns, true);
+              }
 
-		    if (JSPUtils.isNull(dictionary)) {
-		      try {
-			String error_msg = "Error: Invalid dictionary - " + dictionary + ".";
-			request.getSession().setAttribute("error_msg", error_msg);
-			String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-			response.sendRedirect(redirectURL);
-		      } catch (Exception ex) {
-			ex.printStackTrace();
-		      }	
-		    } else if (JSPUtils.isNull(version)) {
-		      try {
-			String error_msg =  "Error: Invalid version - " + version + ".";
-			request.getSession().setAttribute("error_msg", error_msg);
-			String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-			response.sendRedirect(redirectURL);
-		      } catch (Exception ex) {
-			ex.printStackTrace();
-		      }	
-		    }
-		    
-		    String cd_dictionary = dataUtils.getFormalName(dictionary);
-		    String term_suggestion_application_url = dataUtils
-		    .getMetadataValue(cd_dictionary,"term_suggestion_application_url");
-		    String name = "";
-		    String ltag = null;
-
-                    c = (Entity) request.getSession().getAttribute("concept");
-                    if (c == null) {
-		      namespace_list = conceptDetails.getDistinctNamespacesOfCode(
-		      dictionary, version, code);
-		      if (StringUtils.isNullOrBlank(ns) || namespace_list.size() == 1) {
-			c = conceptDetails.getConceptByCode(dictionary, version, code);
-		      } else {
-			c = conceptDetails.getConceptByCode(dictionary, version, code, ns, true);
-		      }                   
-                    }
-                    
-                    
-
-		      if (c != null) {
-			request.getSession().setAttribute("concept", c);
-			request.getSession().setAttribute("code", code);
-			request.getSession().setAttribute("ns", ns);
-			name = "";
-			if (c.getEntityDescription() != null) {
-			  name = c.getEntityDescription().getContent();
-			}
-		      } 	    
-		    
+              if (c != null) {
+                request.getSession().setAttribute("concept", c);
+                request.getSession().setAttribute("code", code);
+                request.getSession().setAttribute("ns", ns);
+                name = "";
+                if (c.getEntityDescription() != null) {
+                  name = c.getEntityDescription().getContent();
+                }
+              } else {
+                //name = "The server encountered an internal error that prevented it from fulfilling this request.";
+                name = "ERROR: Invalid code - " + code + ".";
+              }
+            }
 
             if (DataUtils.isNCIT(dictionary)) {
               %>

@@ -205,7 +205,7 @@
               ns = (String)u2.elementAt(1);
             }
           }
-          //KLO
+          
           code = HTTPUtils.cleanXSS(code);
 
           if (code == null) {
@@ -220,23 +220,19 @@
           }
 
           request.getSession().setAttribute("code", code);
-          /*
-          //[NCITERM-758] View Graph: Page Can't be found due to ns=null when selecting Concept from Cart and then View Graph
-          if (StringUtils.isNullOrBlank(ns)) {
-            LexcBIGService lbSvc = RemoteServerUtil.createLexcBIGService();
-            ns = new ConceptDetails(lbSvc) getNamespaceByCode(dictionary, version, code);
-          }
-          */
+          request.getSession().setAttribute("code", code);
+
           request.getSession().setAttribute("ns", ns);
           String active_code = (String) request.getSession().getAttribute("active_code");
 
           if (active_code == null) {
-            request.getSession().setAttribute("active_code", code);
+            request.getSession().removeAttribute("propertyData");
           } else {
             if (active_code.compareTo(code) != 0) {
               request.getSession().removeAttribute(
               "RelationshipHashMap");
               request.getSession().setAttribute("active_code", code);
+              request.getSession().removeAttribute("propertyData");
             }
           }
 

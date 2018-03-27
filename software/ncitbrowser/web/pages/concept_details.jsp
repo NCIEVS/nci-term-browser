@@ -269,40 +269,91 @@
                 type = "properties";
               }
             }
+/*
+		    String cd_dictionary = dataUtils.getFormalName(dictionary);
+		    String term_suggestion_application_url = dataUtils
+		    .getMetadataValue(cd_dictionary,"term_suggestion_application_url");
+		    String name = "";
+		    String ltag = null;
 
-            String cd_dictionary = dataUtils.getFormalName(dictionary);
-            String term_suggestion_application_url = dataUtils
-            .getMetadataValue(cd_dictionary,"term_suggestion_application_url");
-            String name = "";
-            String ltag = null;
+		    if (JSPUtils.isNull(dictionary)) {
+		      name = "Error: Invalid dictionary - " + dictionary + ".";
+		    } else if (JSPUtils.isNull(version)) {
+		      name = "Error: Invalid version - " + version + ".";
+		    } else {
+		      namespace_list = conceptDetails.getDistinctNamespacesOfCode(
+		      dictionary, version, code);
 
-            if (JSPUtils.isNull(dictionary)) {
-              name = "Error: Invalid dictionary - " + dictionary + ".";
-            } else if (JSPUtils.isNull(version)) {
-              name = "Error: Invalid version - " + version + ".";
-            } else {
-              namespace_list = conceptDetails.getDistinctNamespacesOfCode(
-              dictionary, version, code);
+		      if (StringUtils.isNullOrBlank(ns) || namespace_list.size() == 1) {
+			c = conceptDetails.getConceptByCode(dictionary, version, code);
+		      } else {
+			c = conceptDetails.getConceptByCode(dictionary, version, code, ns, true);
+		      }
 
-              if (StringUtils.isNullOrBlank(ns) || namespace_list.size() == 1) {
-                c = conceptDetails.getConceptByCode(dictionary, version, code);
-              } else {
-                c = conceptDetails.getConceptByCode(dictionary, version, code, ns, true);
-              }
+		      if (c != null) {
+			request.getSession().setAttribute("concept", c);
+			request.getSession().setAttribute("code", code);
+			request.getSession().setAttribute("ns", ns);
+			name = "";
+			if (c.getEntityDescription() != null) {
+			  name = c.getEntityDescription().getContent();
+			}
+		      } else {
+			//name = "The server encountered an internal error that prevented it from fulfilling this request.";
+			name = "ERROR: Invalid code - " + code + ".";
+		      }
+		    }
+*/
 
-              if (c != null) {
-                request.getSession().setAttribute("concept", c);
-                request.getSession().setAttribute("code", code);
-                request.getSession().setAttribute("ns", ns);
-                name = "";
-                if (c.getEntityDescription() != null) {
-                  name = c.getEntityDescription().getContent();
-                }
-              } else {
-                //name = "The server encountered an internal error that prevented it from fulfilling this request.";
-                name = "ERROR: Invalid code - " + code + ".";
-              }
-            }
+		    if (JSPUtils.isNull(dictionary)) {
+		      try {
+			String error_msg = "Error: Invalid dictionary - " + dictionary + ".";
+			request.getSession().setAttribute("error_msg", error_msg);
+			String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+			response.sendRedirect(redirectURL);
+		      } catch (Exception ex) {
+			ex.printStackTrace();
+		      }	
+		    } else if (JSPUtils.isNull(version)) {
+		      try {
+			String error_msg =  "Error: Invalid version - " + version + ".";
+			request.getSession().setAttribute("error_msg", error_msg);
+			String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
+			response.sendRedirect(redirectURL);
+		      } catch (Exception ex) {
+			ex.printStackTrace();
+		      }	
+		    }
+		    
+		    String cd_dictionary = dataUtils.getFormalName(dictionary);
+		    String term_suggestion_application_url = dataUtils
+		    .getMetadataValue(cd_dictionary,"term_suggestion_application_url");
+		    String name = "";
+		    String ltag = null;
+
+                    c = (Entity) request.getSession().getAttribute("concept");
+                    if (c == null) {
+		      namespace_list = conceptDetails.getDistinctNamespacesOfCode(
+		      dictionary, version, code);
+		      if (StringUtils.isNullOrBlank(ns) || namespace_list.size() == 1) {
+			c = conceptDetails.getConceptByCode(dictionary, version, code);
+		      } else {
+			c = conceptDetails.getConceptByCode(dictionary, version, code, ns, true);
+		      }                   
+                    }
+                    
+                    
+
+		      if (c != null) {
+			request.getSession().setAttribute("concept", c);
+			request.getSession().setAttribute("code", code);
+			request.getSession().setAttribute("ns", ns);
+			name = "";
+			if (c.getEntityDescription() != null) {
+			  name = c.getEntityDescription().getContent();
+			}
+		      } 	    
+		    
 
             if (DataUtils.isNCIT(dictionary)) {
               %>

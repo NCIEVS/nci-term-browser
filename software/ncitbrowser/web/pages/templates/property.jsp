@@ -56,8 +56,11 @@ String concept_id = null;
 
 LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 ConceptDetails cd = new ConceptDetails(lbSvc);
-
+PropertyData propertyData = null;
 try {
+
+propertyData = new PropertyData(lbs, cs_name, prop_version);
+propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantifiers());
   def_map = NCItBrowserProperties.getDefSourceMappingHashMap();
   propertyData.setDefSourceMapping(def_map);
 
@@ -66,10 +69,19 @@ try {
 
   curr_concept = (Entity) request.getSession().getAttribute("concept");
   if (curr_concept != null) {
-    propertyData.setCurr_concept(curr_concept);
-
+    String property_data_key = (String) request.getSession().getAttribute("property_data_key");
+    if (property_data_key == null || property_data_key.compareTo(curr_concept.getEntityCode()) != 0) {
+        try {
+		request.getSession().removeAttribute("propertyData");
+		propertyData = new PropertyData(lbSvc, cs_name, prop_version);
+		propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantifiers());
+		propertyData.setCurr_concept(curr_concept);
+		request.getSession().setAttribute("property_data_key", curr_concept.getEntityCode());
+	} catch (Exception ex) {
+		ex.printStackTrace();
+	}
+    }
     request.getSession().setAttribute("code", curr_concept.getEntityCode());
-    //curr_concept = propertyData.getCurr_concept();
     codingScheme = propertyData.getCodingScheme();
     version = propertyData.getVersion();
     code = propertyData.getCode();
@@ -99,7 +111,8 @@ try {
 } catch (Exception ex) {
   // Do nothing
 }
-
+   
+    
 if ((type.compareTo("properties") == 0 || type.compareTo("all") == 0) &&
 displayItemList != null && curr_concept != null) {
   %>
@@ -117,14 +130,18 @@ displayItemList != null && curr_concept != null) {
   isActive = propertyData.getIsActive();
 
   if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != null) || (concept_status != null && concept_status.compareTo("null") != 0 && show_status)) {
+
     %>
     <p class="textbody">
       <b>Concept Status:</b>&nbsp;
       <i class="textbodyred"><%= concept_status %></i>
       <%
       if (descendantCodes != null) {
+      
         if (descendantCodes != null && descendantCodes.size() > 0) {
           String link = "&nbsp;(See:&nbsp;";
+         
+          
           %>
           <%= link %>
           <%
@@ -134,6 +151,7 @@ displayItemList != null && curr_concept != null) {
             Vector w = StringUtils.parseData(t);
             String descendantName = (String) w.elementAt(0);
             String descendantCode = (String) w.elementAt(1);
+            
             %>
             <a
                 href="<%= request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=prop_dictionary_nm%>&ns=<%=prop_dictionary_nm%>&code=<%=descendantCode%>">
@@ -152,6 +170,8 @@ displayItemList != null && curr_concept != null) {
       <%
     }
     else if (concept_status != null && concept_status.compareToIgnoreCase("Retired Concept") != 0) {
+
+
       %>
       <p class="textbody">
         <b>Concept Status:</b>&nbsp;
@@ -242,7 +262,7 @@ displayItemList != null && curr_concept != null) {
                   }
                 }
                 if (value_pre.compareTo(value_post) != 0 && !value_post.endsWith("PDQ")) {
-                  System.out.println("WARNING -- possible definition formatting issue with " + value_pre);
+                    System.out.println("WARNING -- possible definition formatting issue with " + value_pre);
                 }
               }
 
@@ -307,6 +327,7 @@ displayItemList != null && curr_concept != null) {
       %>
 
       <%
+      
       for (int i_def = 0; i_def<other_label_value.size(); i_def++) {
         String label_value = (String) other_label_value.elementAt(i_def);
         Vector u = StringUtils.parseData(label_value);
@@ -322,6 +343,7 @@ displayItemList != null && curr_concept != null) {
               <%
             }
             String qualifier_str = propertyData.getPropertyQualifierString(propName_label, value);
+            
             if (qualifier_str != null) {
               %>
               <%= qualifier_str %>            <% } %>
@@ -332,6 +354,8 @@ displayItemList != null && curr_concept != null) {
       %>
 
       <%
+     
+      
       for (int i_def = 0; i_def<nci_def_label_value.size(); i_def++) {
         String label_value = (String) nci_def_label_value.elementAt(i_def);
         Vector u = StringUtils.parseData(label_value);
@@ -345,6 +369,7 @@ displayItemList != null && curr_concept != null) {
             <%
           }
           String qualifier_str = propertyData.getPropertyQualifierString(propName_label, value);
+          
           if (qualifier_str != null) {
             %>
             <%= qualifier_str %>          <% } %>
@@ -352,6 +377,7 @@ displayItemList != null && curr_concept != null) {
       <% } %>
 
       <%
+      
       for (int i_def = 0; i_def<non_nci_def_label_value.size(); i_def++) {
         String label_value = (String) non_nci_def_label_value.elementAt(i_def);
 
@@ -366,6 +392,8 @@ displayItemList != null && curr_concept != null) {
             <%
           }
           String qualifier_str = propertyData.getPropertyQualifierString(propName_label, value);
+          
+          
           if (qualifier_str != null) {
             %>
             <%= qualifier_str %>          <% } %>
@@ -373,6 +401,8 @@ displayItemList != null && curr_concept != null) {
       <% } %>
 
       <%
+      
+      
       for (int i_def = 0; i_def<other_label_value.size(); i_def++) {
         String label_value = (String) other_label_value.elementAt(i_def);
         Vector u = StringUtils.parseData(label_value);
@@ -388,6 +418,8 @@ displayItemList != null && curr_concept != null) {
 
               <%
               String qualifier_str = propertyData.getPropertyQualifierString(propName_label, value);
+             
+              
               if (qualifier_str != null) {
                 %>
                 <%= qualifier_str %>              <% } %>
@@ -423,7 +455,10 @@ displayItemList != null && curr_concept != null) {
       %>
 
       <%
+ 
+      
       ncim_metathesaurus_cui_vec = cd.getNCImCodes(curr_concept);
+      
       //String ncimURL = new ConceptDetails().getNCImURL();
       String ncimURL = dataUtils.getNCImURL();
       if (ncim_metathesaurus_cui_vec.size() > 0) {
@@ -495,9 +530,16 @@ displayItemList != null && curr_concept != null) {
 
           for (int i=0; i<presentation_vec.size(); i++) {
             String t = (String) presentation_vec.elementAt(i);
+           
+            
             Vector w = StringUtils.parseData(t, "$");
             String presentation_name = (String) w.elementAt(0);
             String presentation_value = (String) w.elementAt(1);
+            
+            
+            
+            
+            
             String isPreferred = (String) w.elementAt(2);
 
             displayed_properties.add(presentation_name);
@@ -509,6 +551,7 @@ displayItemList != null && curr_concept != null) {
             }
             synonym_values = new SortUtils().quickSort(synonym_values);
           }
+
 
           int row=0;
           for (int j=0; j<synonym_values.size(); j++) {
@@ -532,12 +575,19 @@ displayItemList != null && curr_concept != null) {
         boolean hasExternalSourceCodes = false;
         boolean display_UMLS_CUI = true;
         String dict_name = (String) request.getSession().getAttribute("dictionary");
+        
+        
         String vocab_format = dataUtils.getMetadataValue(dict_name, "format");
+        
+        
         if (vocab_format != null && vocab_format.compareTo("RRF") == 0) {
-          display_UMLS_CUI= false;
+          display_UMLS_CUI = false;
         }
 
-        if (external_source_codes.size() != 0) {
+
+        if (external_source_codes != null && external_source_codes.size() != 0) {
+        
+        
           for (int i=0; i<external_source_codes.size(); i++) {
             String propName = (String) external_source_codes.elementAt(i);
             String propName_label = (String) external_source_codes_label.elementAt(i);
@@ -567,6 +617,10 @@ displayItemList != null && curr_concept != null) {
 
                 <%
                 n = 0;
+                
+                
+                if (external_source_codes != null) {
+                
                 for (int i=0; i<external_source_codes.size(); i++) {
                   String propName = (String) external_source_codes.elementAt(i);
                   String propName_label = (String) external_source_codes_label.elementAt(i);
@@ -612,12 +666,15 @@ displayItemList != null && curr_concept != null) {
                 </table>
 
               <% } %>
-
+            <% } %>
             </p>
             <p>
               <%
               boolean hasOtherProperties = false;
               Vector other_prop_names = propertyData.findOtherPropertyNames();
+
+
+              
               if (other_prop_names != null && other_prop_names.size() > 0) {
                 hasOtherProperties = true;
               }
@@ -648,6 +705,8 @@ displayItemList != null && curr_concept != null) {
               String primitive_prop_name = "primitive";
               String primitive_label = "Defined Fully by Roles:";
               String defined_label = "Defined Fully by Roles:";
+
+        
 
               dict = dataUtils.getFormalName(dict);
 
@@ -681,6 +740,7 @@ displayItemList != null && curr_concept != null) {
             <%
             //String url = JSPUtils.getBookmarkUrl(request, dictionary, version, concept_id, namespace);
             String url = JSPUtils.getBookmarkUrl(lbSvc, request, dictionary, version, namespace, concept_id);
+ 
 
             String bookmark_title = prop_dictionary + "%20" + concept_id;
             %>

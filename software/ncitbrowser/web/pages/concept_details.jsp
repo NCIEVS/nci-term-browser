@@ -73,11 +73,11 @@
     LexBIGService lbs = RemoteServerUtil.createLexBIGService();
     DataUtils dataUtils = new DataUtils();
     String cs_name = dataUtils.getCSName(prop_dictionary);
-    PropertyData propertyData = new PropertyData(lbs, cs_name, prop_version);
-    propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantifiers());
+    //PropertyData propertyData = new PropertyData(lbs, cs_name, prop_version);
+    //ropertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantifiers());
 
-    ConceptDetails conceptDetails = propertyData.getConceptDetails();
-    HistoryUtils historyUtils = propertyData.getHistoryUtils();
+    ConceptDetails conceptDetails = new ConceptDetails(lbs);//propertyData.getConceptDetails();
+    HistoryUtils historyUtils = new HistoryUtils(lbs); //= propertyData.getHistoryUtils();
 
     List namespace_list = null;
 

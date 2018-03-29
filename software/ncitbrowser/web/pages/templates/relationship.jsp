@@ -14,7 +14,7 @@ if (type.compareTo("relationship") == 0 || type.compareTo("all") == 0)
   String scheme_curr = relationship_info.dictionary;
   String version_curr = relationship_info.version;
   String version_parameter = "";
-  String cNamespace = null;
+  String cNamespace = concept_curr.getEntityCodeNamespace();
 
   boolean owl2_display = false;
 
@@ -35,7 +35,7 @@ if (type.compareTo("relationship") == 0 || type.compareTo("all") == 0)
     //ns_curr = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
   }
 
-  String ns_curr = cd.getNamespaceByCode(scheme_curr, version_curr, code);//(String) request.getSession().getAttribute("ns");
+  String ns_curr = cd.getNamespaceByCode(scheme_curr, version_curr, code_curr);//(String) request.getSession().getAttribute("ns");
 
   String rel_display_name = DataUtils.getMetadataValue(scheme_curr, version_curr, "display_name");
   if (rel_display_name == null) rel_display_name = DataUtils.getLocalName(scheme_curr);

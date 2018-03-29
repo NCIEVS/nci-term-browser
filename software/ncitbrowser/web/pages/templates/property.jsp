@@ -59,7 +59,7 @@ ConceptDetails cd = new ConceptDetails(lbSvc);
 PropertyData propertyData = null;
 try {
 
-propertyData = new PropertyData(lbs, cs_name, prop_version);
+propertyData = new PropertyData(lbSvc, cs_name, prop_version);
 propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantifiers());
   def_map = NCItBrowserProperties.getDefSourceMappingHashMap();
   propertyData.setDefSourceMapping(def_map);
@@ -74,6 +74,14 @@ propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantif
         try {
 		request.getSession().removeAttribute("propertyData");
 		propertyData = new PropertyData(lbSvc, cs_name, prop_version);
+		
+		  propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantifiers());
+		  def_map = NCItBrowserProperties.getDefSourceMappingHashMap();
+		  propertyData.setDefSourceMapping(def_map);
+
+		  displayItemList = NCItBrowserProperties.getInstance().getDisplayItemList();
+		  propertyData.setDisplayItemList(displayItemList);		
+		
 		propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantifiers());
 		propertyData.setCurr_concept(curr_concept);
 		request.getSession().setAttribute("property_data_key", curr_concept.getEntityCode());

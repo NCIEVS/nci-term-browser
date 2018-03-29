@@ -70,7 +70,7 @@ propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantif
   curr_concept = (Entity) request.getSession().getAttribute("concept");
   if (curr_concept != null) {
     String property_data_key = (String) request.getSession().getAttribute("property_data_key");
-    if (property_data_key == null || property_data_key.compareTo(curr_concept.getEntityCode()) != 0) {
+    //if (property_data_key == null || property_data_key.compareTo(curr_concept.getEntityCode()) != 0) {
         try {
 		request.getSession().removeAttribute("propertyData");
 		propertyData = new PropertyData(lbSvc, cs_name, prop_version);
@@ -88,7 +88,7 @@ propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantif
 	} catch (Exception ex) {
 		ex.printStackTrace();
 	}
-    }
+    //}
     request.getSession().setAttribute("code", curr_concept.getEntityCode());
     codingScheme = propertyData.getCodingScheme();
     version = propertyData.getVersion();

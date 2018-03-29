@@ -508,7 +508,7 @@
                         id="referer"
                         value="<%=HTTPUtils.getRefererParmEncode(request)%>">
 
-                  </h:form>
+                  </form>
 
                 </div>
                 <!-- searchbox -->

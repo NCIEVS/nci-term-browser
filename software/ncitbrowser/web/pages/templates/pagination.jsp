@@ -29,7 +29,7 @@
         }
         if (!page_timeout) {
           %>
-          <b>Results <%= istart_str % > - <%= iend_str %>of&nbsp;<%= match_size %></b>
+          <b>Results <%= istart_str %> - <%= iend_str %>of&nbsp;<%= match_size %></b>
         <% } else { %>
           <b>Results</b>
         <% } %>

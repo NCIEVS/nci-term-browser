@@ -1,5 +1,6 @@
 package gov.nih.nci.evs.browser.bean;
 
+import gov.nih.nci.evs.browser.utils.*;
 import gov.nih.nci.evs.searchlog.*;
 
 import java.util.*;
@@ -844,9 +845,12 @@ if (!retval) {
 
 						if (c == null) {
 
-							c =
-								DataUtils.getConceptByCode(scheme, null, null, ref
-									.getConceptCode());
+							//c =	DataUtils.getConceptByCode(scheme, null, null, ref.getConceptCode());
+							//LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+							//c =	new ConceptDetails(lbSvc).getConceptByCode(scheme, verion, null, ref.getConceptCode());
+							c =	new ConceptDetails(lbSvc).getConceptByCode(scheme, version, ref.getConceptCode(), null, false);
+
+
 							if (c == null) {
 								String message =
 									"Unable to find the concept with a code '"
@@ -1119,11 +1123,12 @@ if (!retval) {
     }
 
     public String acceptLicenseAction() {
-
+        LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
         String dictionary = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
+        String version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
         String code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
 
         if (dictionary != null && code != null) {
@@ -1135,12 +1140,10 @@ if (!retval) {
             licenseBean.addLicenseAgreement(dictionary);
             request.getSession().setAttribute("licenseBean", licenseBean);
 
-            Entity c =
-                DataUtils.getConceptByCode(dictionary, null, null, code);
+            Entity c = new ConceptDetails(lbSvc).getConceptByCode(dictionary, version, code, null, false);
             request.getSession().setAttribute("code", code);
             request.getSession().setAttribute("concept", c);
             request.getSession().setAttribute("type", "properties");
-
 
 			HttpServletResponse response =
 				(HttpServletResponse) FacesContext.getCurrentInstance()
@@ -2471,9 +2474,7 @@ if (!retval) {
                 } else {
                     c = ref.getReferencedEntry();
                     if (c == null) {
-                        c =
-                            DataUtils.getConceptByCode(scheme, null, null, ref
-                                .getConceptCode());
+                        c = new ConceptDetails(lbSvc).getConceptByCode(scheme, version, ref.getConceptCode(), null, false);
                     }
                 }
 

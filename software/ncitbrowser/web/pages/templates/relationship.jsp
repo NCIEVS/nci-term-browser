@@ -101,8 +101,8 @@ if (type.compareTo("relationship") == 0 || type.compareTo("all") == 0)
         <td class="textsubtitle-blue" align="left">
 
           <% if (type != null && type.compareTo("all") == 0) { %>
-            <A name="relationships">Relationships with other&nbsp;<%= DataUtils.encodeTerm(rel_display_name) %>Concepts</A>
-          <% } else { %> Relationships with other<%= rel_display_name %> Concepts          <% } %>
+            <A name="relationships">Relationships with other&nbsp;<%= DataUtils.encodeTerm(rel_display_name) %>&nbsp;Concepts</A>
+          <% } else { %> Relationships with other <%= rel_display_name %> Concepts          <% } %>
         </td>
       </tr>
     </table>

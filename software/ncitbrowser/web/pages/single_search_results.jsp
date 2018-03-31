@@ -104,7 +104,7 @@
               </tr>
               <tr>
                 <td>
-                  <b>Results<%= istart_str %>-<%= iend_str %>of&nbsp;<%= match_size %>for:<%= matchText %></b>&nbsp;
+                  <b>Results <%= istart_str %> - <%= iend_str %>of&nbsp;<%= match_size %>for:<%= matchText %></b>&nbsp;
                   <%= contains_warning_msg %>
                 </td>
               </tr>

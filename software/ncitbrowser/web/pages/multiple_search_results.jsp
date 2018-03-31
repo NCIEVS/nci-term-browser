@@ -398,10 +398,9 @@ Contains&nbsp;
               <tr>
                 <td class="dataTableHeader">
                   <% if (contains_warning_msg != null && size > 0) { %>
-                    <b>Results<%= istart_str %>-<%= iend_str %>of&nbsp;<%= match_size %>for:<%= match_text %></b>&nbsp;
-                    <%= contains_warning_msg %>                  <% } else if (size > 0) { %> Results<%= istart_str %>-
-                    <%= iend_str %>
-                    of&nbsp;<%= match_size %> for:<%= match_text %></b>
+                    <b>Results <%= istart_str %> - <%= iend_str %>of&nbsp;<%= match_size %>for:<%= match_text %></b>&nbsp;
+                    <%= contains_warning_msg %>                  <% } else if (size > 0) { %>  
+                    Results <%= istart_str %> - <%= iend_str %>of&nbsp;<%= match_size %> for:<%= match_text %></b>
                   <%
                 }
                 String tooltip_str = JSPUtils.getSelectedVocabularyTooltip(request);

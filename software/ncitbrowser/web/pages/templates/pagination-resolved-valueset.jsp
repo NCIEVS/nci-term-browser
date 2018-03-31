@@ -25,7 +25,7 @@ String next_page_num_str = Integer.toString(next_page_num);
     <tr>
       <td class="textbody" align=left>
 
-        <b>Results<%= istart_str %>-<%= iend_str %>of&nbsp;<%= match_size %></b>
+        <b>Results <%= istart_str %> - <%= iend_str %>of&nbsp;<%= match_size %></b>
 
       </td>
       <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>

@@ -28,16 +28,16 @@ private static String getCabigIndicator(boolean display, String basePath) {
 }
 %>
 <%
-String nci_meta_url = new DataUtils().getNCImURL();
-String ncit_url = new DataUtils().getNCItURL();
+String nci_meta_url = DataUtils.getNCImURL();
+String ncit_url = DataUtils.getNCItURL();
 
 request.getSession().removeAttribute("dictionary");
 request.getSession().removeAttribute("version");
 
-String ncit_build_info = new DataUtils().getNCITBuildInfo();
-String application_version = new DataUtils().getApplicationVersion();
-String anthill_build_tag_built = new DataUtils().getNCITAnthillBuildTagBuilt();
-String evs_service_url = new DataUtils().getEVSServiceURL();
+String ncit_build_info = DataUtils.getNCITBuildInfo();
+String application_version = DataUtils.getApplicationVersion();
+String anthill_build_tag_built = DataUtils.getNCITAnthillBuildTagBuilt();
+String evs_service_url = DataUtils.getEVSServiceURL();
 
 String requestContextPath = request.getContextPath();
 requestContextPath = requestContextPath.replace("//ncitbrowser//ncitbrowser", "//ncitbrowser");

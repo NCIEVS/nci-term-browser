@@ -11,10 +11,10 @@
 <%@ page import="org.LexGrid.LexBIG.LexBIGService.LexBIGService" %>
 
 <%
-String ncit_build_info = new DataUtils().getNCITBuildInfo();
-String application_version = new DataUtils().getApplicationVersion();
-String anthill_build_tag_built = new DataUtils().getNCITAnthillBuildTagBuilt();
-String evs_service_url = new DataUtils().getEVSServiceURL();
+String ncit_build_info = DataUtils.getNCITBuildInfo();
+String application_version = DataUtils.getApplicationVersion();
+String anthill_build_tag_built = DataUtils.getNCITAnthillBuildTagBuilt();
+String evs_service_url = DataUtils.getEVSServiceURL();
 %>
 <!--
   uild info: <%=ncit_build_info%> Version info: <%=application_version%> Tag: <%=anthill_build_tag_built%> LexEVS URL:

@@ -8,10 +8,10 @@
 <%@ page import="gov.nih.nci.evs.browser.utils.HTTPUtils" %>
 
 <%
-String ncit_build_info = new DataUtils().getNCITBuildInfo();
-String application_version = new DataUtils().getApplicationVersion();
-String anthill_build_tag_built = new DataUtils().getNCITAnthillBuildTagBuilt();
-String evs_service_url = new DataUtils().getEVSServiceURL();
+String ncit_build_info = DataUtils.getNCITBuildInfo();
+String application_version = DataUtils.getApplicationVersion();
+String anthill_build_tag_built = DataUtils.getNCITAnthillBuildTagBuilt();
+String evs_service_url = DataUtils.getEVSServiceURL();
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html xmlns:c="http://java.sun.com/jsp/jstl/core">

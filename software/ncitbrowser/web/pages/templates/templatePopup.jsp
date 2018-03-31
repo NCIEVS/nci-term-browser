@@ -6,10 +6,10 @@
 
 <%
 String basePath = request.getContextPath();
-String ncit_build_info = new DataUtils().getNCITBuildInfo();
-String application_version = new DataUtils().getApplicationVersion();
-String anthill_build_tag_built = new DataUtils().getNCITAnthillBuildTagBuilt();
-String evs_service_url = new DataUtils().getEVSServiceURL();
+String ncit_build_info = DataUtils.getNCITBuildInfo();
+String application_version = DataUtils.getApplicationVersion();
+String anthill_build_tag_built = DataUtils.getNCITAnthillBuildTagBuilt();
+String evs_service_url = DataUtils.getEVSServiceURL();
 String content_title = HTTPUtils.cleanXSS((String) request.getParameter("content_title"));
 String content_page = HTTPUtils.cleanXSS((String) request.getParameter("content_page"));
 String display_app_logo = HTTPUtils.cleanXSS((String) request.getParameter("display_app_logo"));

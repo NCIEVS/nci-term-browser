@@ -362,7 +362,7 @@ public class JSPUtils {
     public static String getApplicationVersionDisplay() {
         if (_applicationVersionDisplay == null)
             _applicationVersionDisplay =
-                HTTPUtils.cleanXSS(new DataUtils().getApplicationVersionDisplay());
+                HTTPUtils.cleanXSS(DataUtils.getApplicationVersionDisplay());
                 //HTTPUtils.cleanXSS(new ConceptDetails().getApplicationVersionDisplay());
         return _applicationVersionDisplay;
     }

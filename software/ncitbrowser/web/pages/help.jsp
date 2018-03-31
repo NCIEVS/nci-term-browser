@@ -29,7 +29,7 @@
         skip navigation links</A>
       <!-- End Skip Top Navigation -->
       <%
-      String application_version = new DataUtils().getApplicationVersion();
+      String application_version = DataUtils.getApplicationVersion();
       String contactUsUrl = request.getContextPath() + "/pages/contact_us.jsf";
       String subsetsUrl = request.getContextPath() + "/pages/subset.jsf";
       String arrowImage = request.getContextPath() + "/images/up_arrow.jpg";

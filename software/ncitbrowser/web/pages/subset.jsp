@@ -9,7 +9,7 @@
 <%@ page import="gov.nih.nci.evs.browser.common.*" %>
 
 <%
-String terminology_subset_download_url = new DataUtils().getTerminologySubsetDownloadURL();
+String terminology_subset_download_url = DataUtils.getTerminologySubsetDownloadURL();
 String term_subset_link = null;
 if ( (terminology_subset_download_url == null) ||
 (terminology_subset_download_url.compareToIgnoreCase("null") == 0) ) {

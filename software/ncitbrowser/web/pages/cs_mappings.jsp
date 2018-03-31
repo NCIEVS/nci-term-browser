@@ -35,10 +35,10 @@
       mapping_scheme_and_version = "";
   }
 
-  String ncit_build_info = new DataUtils().getNCITBuildInfo();
-  String application_version = new DataUtils().getApplicationVersion();
-  String anthill_build_tag_built = new DataUtils().getNCITAnthillBuildTagBuilt();
-  String evs_service_url = new DataUtils().getEVSServiceURL();
+  String ncit_build_info = DataUtils.getNCITBuildInfo();
+  String application_version = DataUtils.getApplicationVersion();
+  String anthill_build_tag_built = DataUtils.getNCITAnthillBuildTagBuilt();
+  String evs_service_url = DataUtils.getEVSServiceURL();
   
   String requestContextPath = request.getContextPath();
   requestContextPath = requestContextPath.replace("//ncitbrowser//ncitbrowser", "//ncitbrowser");

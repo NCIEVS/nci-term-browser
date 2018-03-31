@@ -183,7 +183,7 @@
     String propertyName = "html_compatable_description";
     Vector from_vec = new Vector();
     Vector to_vec = new Vector();
-    from_vec.add("ncim_url"); to_vec.add(new DataUtils().getNCImURL());
+    from_vec.add("ncim_url"); to_vec.add(DataUtils.getNCImURL());
 
     Vector abbr_vec = (Vector) request.getSession().getAttribute("source_descriptions");
     if (abbr_vec == null) {

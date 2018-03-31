@@ -178,7 +178,7 @@ public class DataUtils {
     public static final String TYPE_INVERSE_ROLE = "type_inverse_role";
     public static final String TYPE_INVERSE_ASSOCIATION = "type_inverse_association";
 
-
+/*
     public String _ncicbContactURL = null;
     public String _terminologySubsetDownloadURL = null;
     public String _term_suggestion_application_url = null;
@@ -188,7 +188,17 @@ public class DataUtils {
     public String _ncitAnthillBuildTagBuilt = null;
     public String _evsServiceURL = null;
     public String _ncimURL = null;
+*/
 
+    public static String _ncicbContactURL = null;
+    public static String _terminologySubsetDownloadURL = null;
+    public static String _term_suggestion_application_url = null;
+    public static String _ncitBuildInfo = null;
+    public static String _ncitAppVersion = null;
+    public static String _ncitAppVersionDisplay = null;
+    public static String _ncitAnthillBuildTagBuilt = null;
+    public static String _evsServiceURL = null;
+    public static String _ncimURL = null;
 
     private static HashMap _namespace2CodingScheme = null;
 
@@ -262,7 +272,7 @@ public class DataUtils {
 
     private static String _api_key = null;
 
-    public String _ncitURL = null;
+    public static String _ncitURL = null;
 
     private static HashMap resovedValueSetHashMap = null;
 
@@ -288,7 +298,83 @@ public class DataUtils {
     }
 
     static {
+
+
+        _terminologySubsetDownloadURL = null;
+        _term_suggestion_application_url = null;
+        _ncitBuildInfo = null;
+        _ncitAppVersion = null;
+        _ncitAppVersionDisplay = null;
+        _ncitAnthillBuildTagBuilt = null;
+        _evsServiceURL = null;
+        _ncimURL = null;
+
+
 		System.out.println("Initialization ...");
+		String default_url = "ncicb@pop.nci.nih.gov";
+		String default_info = "N/A";
+
+		NCItBrowserProperties properties = null;
+		try {
+			properties = NCItBrowserProperties.getInstance();
+			_ncicbContactURL =
+				properties.getProperty(NCItBrowserProperties.NCICB_CONTACT_URL);
+			if (_ncicbContactURL == null) {
+				_ncicbContactURL = default_url;
+			}
+			_terminologySubsetDownloadURL =
+				properties
+					.getProperty(NCItBrowserProperties.TERMINOLOGY_SUBSET_DOWNLOAD_URL);
+
+			_ncitBuildInfo =
+				properties.getProperty(NCItBrowserProperties.NCIT_BUILD_INFO);
+			if (_ncitBuildInfo == null) {
+				_ncitBuildInfo = default_info;
+			}
+			default_info = "1.0";
+			_ncitAppVersion =
+				properties.getProperty(NCItBrowserProperties.NCIT_APP_VERSION);
+			if (_ncitAppVersion == null) {
+				_ncitAppVersion = default_info;
+			}
+
+			String value =
+				properties.getProperty(NCItBrowserProperties.NCIT_APP_VERSION_DISPLAY);
+			if (value == null)
+				_ncitAppVersionDisplay = "";
+			String version = getApplicationVersion();
+			value = value.replace("$application.version", version);
+			_ncitAppVersionDisplay = value;
+
+			default_info = "N/A";
+			_ncitAnthillBuildTagBuilt =
+				properties
+					.getProperty(NCItBrowserProperties.ANTHILL_BUILD_TAG_BUILT);
+			if (_ncitAnthillBuildTagBuilt == null) {
+				_ncitAnthillBuildTagBuilt = default_info;
+			}
+			default_info = "N/A";
+			_ncitURL = properties.getProperty(NCItBrowserProperties.NCIT_URL);
+			if (_ncitURL == null) {
+				_ncitURL = default_info;
+			}
+			default_info = "http://ncim.nci.nih.gov";
+			_ncimURL = properties.getProperty(NCItBrowserProperties.NCIM_URL);
+			if (_ncimURL == null) {
+				_ncimURL = default_info;
+			}
+			default_info = "Local LexEVS";
+			_evsServiceURL =
+				properties.getProperty(NCItBrowserProperties.EVS_SERVICE_URL);
+			if (_evsServiceURL == null) {
+				_evsServiceURL = default_info;
+			}
+			_term_suggestion_application_url =
+				properties
+					.getProperty(NCItBrowserProperties.TERM_SUGGESTION_APPLICATION_URL);
+		} catch (Exception ex) {
+            ex.printStackTrace();
+		}
 
 		long ms0 = System.currentTimeMillis();
 		long ms = System.currentTimeMillis();
@@ -3650,7 +3736,8 @@ if (lbSvc == null) {
         return v;
     }
 
-    public String getNCICBContactURL() {
+/*
+    public static String getNCICBContactURL() {
         if (_ncicbContactURL != null) {
             return _ncicbContactURL;
         }
@@ -3671,7 +3758,7 @@ if (lbSvc == null) {
         return _ncicbContactURL;
     }
 
-    public String getTerminologySubsetDownloadURL() {
+    public static String getTerminologySubsetDownloadURL() {
         NCItBrowserProperties properties = null;
         try {
             properties = NCItBrowserProperties.getInstance();
@@ -3684,7 +3771,7 @@ if (lbSvc == null) {
         return _terminologySubsetDownloadURL;
     }
 
-    public String getNCITBuildInfo() {
+    public static String getNCITBuildInfo() {
         if (_ncitBuildInfo != null) {
             return _ncitBuildInfo;
         }
@@ -3704,7 +3791,7 @@ if (lbSvc == null) {
         return _ncitBuildInfo;
     }
 
-    public String getApplicationVersion() {
+    public static String getApplicationVersion() {
         if (_ncitAppVersion != null) {
             return _ncitAppVersion;
         }
@@ -3724,7 +3811,7 @@ if (lbSvc == null) {
         return _ncitAppVersion;
     }
 
-    public String getApplicationVersionDisplay() {
+    public static String getApplicationVersionDisplay() {
         if (_ncitAppVersionDisplay != null)
             return _ncitAppVersionDisplay;
 
@@ -3743,7 +3830,7 @@ if (lbSvc == null) {
         }
     }
 
-    public String getNCITAnthillBuildTagBuilt() {
+    public static String getNCITAnthillBuildTagBuilt() {
         if (_ncitAnthillBuildTagBuilt != null) {
             return _ncitAnthillBuildTagBuilt;
         }
@@ -3764,7 +3851,7 @@ if (lbSvc == null) {
         return _ncitAnthillBuildTagBuilt;
     }
 
-    public String getNCItURL() {
+    public static String getNCItURL() {
         if (_ncitURL != null) {
             return _ncitURL;
         }
@@ -3782,7 +3869,7 @@ if (lbSvc == null) {
         return _ncitURL;
     }
 
-    public String getNCImURL() {
+    public static String getNCImURL() {
         if (_ncimURL != null) {
             return _ncimURL;
         }
@@ -3800,7 +3887,7 @@ if (lbSvc == null) {
         return _ncimURL;
     }
 
-    public String getEVSServiceURL() {
+    public static String getEVSServiceURL() {
         if (_evsServiceURL != null) {
             return _evsServiceURL;
         }
@@ -3820,7 +3907,7 @@ if (lbSvc == null) {
         return _evsServiceURL;
     }
 
-    public String getTermSuggestionURL() {
+    public static String getTermSuggestionURL() {
         NCItBrowserProperties properties = null;
         try {
             properties = NCItBrowserProperties.getInstance();
@@ -3832,6 +3919,9 @@ if (lbSvc == null) {
         }
         return _term_suggestion_application_url;
     }
+
+
+*/
 
     // /////////////////////////////////////////////////////////////////////////////
 
@@ -7109,32 +7199,6 @@ if (lbSvc == null) {
 		}
 		return null;
 	}
-/*
-    public static HashMap getCodingSchemeValueSetSubTree(String scheme) {
-		//if (terminologyValueSetTree == null) {
-		//	terminologyValueSetTree = ValueSetHierarchy.getCodingSchemeValueSetTree(null, null);
-		//}
-		String formalname = getFormalName(scheme);
-		HashMap tree = new HashMap();
-		TreeItem ti = new TreeItem("<Root>", "Root node");
-		ti._expandable = false;
-		TreeItem root = (TreeItem) terminologyValueSetTree.get("<Root>");
-        if (root == null) return null;
-        for (String association : root._assocToChildMap.keySet()) {
-			List<TreeItem> child_nodes = root._assocToChildMap.get(association);
-			for (TreeItem childItem : child_nodes) {
-				if (childItem._text.compareTo(formalname) == 0) {
-					ti.addChild(association, childItem);
-					ti._expandable = true;
-		            tree.put("<Root>", ti);
-                    return tree;
-				}
-			}
-		}
-		return tree;
-	}
-*/
-
 
     public static Vector getSupportedVocabularyMetadataValues(String propertyName) {
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
@@ -7235,75 +7299,7 @@ if (lbSvc == null) {
 		return (String) vsdURI2MetadataHashMap.get(vsd_uri);
 	}
 
-/*
-    public static String getValueSetDefinitionMetadata(ValueSetDefinition vsd) {
-		if (vsd== null) return null;
-		String name = "";
-		String uri = "";
-		String description = "";
-		String domain = "";
-		String src_str = "";
 
-		//String supportedSourceStr = "";
-		StringBuffer buf = new StringBuffer();
-
-		uri = vsd.getValueSetDefinitionURI();
-		name = vsd.getValueSetDefinitionName();
-		if (name == null || name.compareTo("") == 0) {
-			name = "<NOT ASSIGNED>";
-		}
-
-		domain = vsd.getConceptDomain();
-		if (domain == null || domain.compareTo("") == 0) {
-			domain = "<NOT ASSIGNED>";
-		}
-
-		java.util.Enumeration<? extends Source> sourceEnum = vsd.enumerateSource();
-
-		while (sourceEnum.hasMoreElements()) {
-			Source src = (Source) sourceEnum.nextElement();
-			src_str = src_str + src.getContent() + ";";
-		}
-		if (src_str.length() > 0) {
-			src_str = src_str.substring(0, src_str.length()-1);
-		}
-
-		if (src_str == null || src_str.compareTo("") == 0) {
-			src_str = "<NOT ASSIGNED>";
-		}
-
-		if (vsd.getEntityDescription() != null) {
-			description = vsd.getEntityDescription().getContent();
-			if (description == null || description.compareTo("") == 0) {
-				description = "<NO DESCRIPTION>";
-			}
-		} else {
-			description = "<NO DESCRIPTION>";
-		}
-
-		//[GF#31718] Sources on value set home pages displaying wrong value.
-		Mappings mappings = vsd.getMappings();
-        java.util.Enumeration<? extends SupportedSource> supportedSourceEnum = mappings.enumerateSupportedSource();
-
-		while (supportedSourceEnum.hasMoreElements()) {
-			SupportedSource src = (SupportedSource) supportedSourceEnum.nextElement();
-			//supportedSourceStr = supportedSourceStr + src.getContent() + ";";
-			buf.append(src.getContent() + ";");
-		}
-		String supportedSourceStr = buf.toString();
-
-		if (supportedSourceStr.length() > 0) {
-			supportedSourceStr = supportedSourceStr.substring(0, supportedSourceStr.length()-1);
-		}
-		if (supportedSourceStr == null || supportedSourceStr.compareTo("") == 0) {
-			supportedSourceStr = "<NOT ASSIGNED>";
-		}
-
-		String defaultCodingScheme = vsd.getDefaultCodingScheme();
-
-		return name + "|" + uri + "|" + description + "|" + domain + "|" + src_str + "|" + supportedSourceStr + "|" + defaultCodingScheme;
-	}
-	*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static String getCodingSchemeURIbyNS(String ns) {
@@ -7316,6 +7312,48 @@ if (lbSvc == null) {
 	public static String get_FILE_BASED_MAPPING_STRING() {
 		return FILE_BASED_MAPPING_STRING;
 	}
+
+
+    public static String getNCICBContactURL() {
+        return _ncicbContactURL;
+    }
+
+    public static String getTerminologySubsetDownloadURL() {
+        return _terminologySubsetDownloadURL;
+    }
+
+    public static String getNCITBuildInfo() {
+        return _ncitBuildInfo;
+    }
+
+    public static String getApplicationVersion() {
+        return _ncitAppVersion;
+    }
+
+    public static String getApplicationVersionDisplay() {
+        return _ncitAppVersionDisplay;
+    }
+
+    public static String getNCITAnthillBuildTagBuilt() {
+        return _ncitAnthillBuildTagBuilt;
+    }
+
+    public static String getNCItURL() {
+        return _ncitURL;
+    }
+
+    public static String getNCImURL() {
+        return _ncimURL;
+    }
+
+    public static String getEVSServiceURL() {
+        return _evsServiceURL;
+    }
+
+    public static String getTermSuggestionURL() {
+        return _term_suggestion_application_url;
+    }
+
 
     public static void main(String[] args) {
         String scheme = "NCI Thesaurus";

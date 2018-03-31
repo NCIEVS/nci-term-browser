@@ -3,7 +3,7 @@
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 
 <%
-String nci_meta_url = new DataUtils().getNCImURL();
+String nci_meta_url = DataUtils.getNCImURL();
 JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
 %>
 <div id="message" class="textbody">

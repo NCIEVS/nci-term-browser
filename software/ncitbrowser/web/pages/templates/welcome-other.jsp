@@ -3,7 +3,7 @@
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 
 <%
-String nci_meta_url = new DataUtils().getNCImURL();
+String nci_meta_url = DataUtils.getNCImURL();
 JSPUtils.JSPHeaderInfo info4 = new JSPUtils.JSPHeaderInfo(request);
 String vocablary_version_value = info4.version;
 boolean isMapping = DataUtils.isMapping(scheme, null);

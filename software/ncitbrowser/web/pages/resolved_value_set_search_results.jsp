@@ -225,11 +225,11 @@
                       <td class="dataTableHeader">
                         <% if (contains_warning_msg != null) { %>
                           <b>
-                            Results <%= istart_str %> - <%= iend_str %> of&nbsp;<%= match_size %> for:<%= match_text %>
+                            Results <%= istart_str %> - <%= iend_str %>&nbsp;of&nbsp;<%= match_size %>&nbsp;for:&nbsp;<%= match_text %>
                           </b>&nbsp;
                           <%= contains_warning_msg %>                        <% } else { %> Results <%= istart_str %> - 
                           <%= iend_str %>
-                          of&nbsp;<%= match_size %> for:<%= match_text %></b>                      <% } %></td></tr>
+                          &nbsp;of&nbsp;<%= match_size %>&nbsp;for:&nbsp;<%= match_text %></b>                      <% } %></td></tr>
 
                   <tr>
                     <td class="textbody">

@@ -335,9 +335,9 @@
                 <tr>
                   <td>
                     <% if (contains_warning_msg != null) { %>
-                      <b>Results <%= istart_str %> - <%= iend_str %>of&nbsp;<%= match_size %>for:<%= matchText %></b>&nbsp;
+                      <b>Results <%= istart_str %> - <%= iend_str %>&nbsp;of&nbsp;<%= match_size %>&nbsp;for:&nbsp;<%= matchText %></b>&nbsp;
                       <%= contains_warning_msg %>                    <% } else { %>
-                      <b>Results <%= istart_str %> - <%= iend_str %>of&nbsp;<%= match_size %>for:<%= matchText %></b>
+                      <b>Results <%= istart_str %> - <%= iend_str %>&nbsp;of&nbsp;<%= match_size %>&nbsp;for:&nbsp;<%= matchText %></b>
                     <% } %>
                   </td>
                 </tr>

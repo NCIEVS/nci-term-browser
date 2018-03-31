@@ -583,7 +583,7 @@
                                   <tr>
                                     <td>
                                       <b>
-                                        Results <%= istart_str %> - <%= iend_str %> of&nbsp;<%= match_size %> for:
+                                        Results <%= istart_str %> - <%= iend_str %>&nbsp;of&nbsp;<%= match_size %>&nbsp;for:&nbsp;
                                         <%= matchText %>
                                         &nbsp;from
                                       </b>

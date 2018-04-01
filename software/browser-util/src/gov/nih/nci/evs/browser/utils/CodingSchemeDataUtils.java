@@ -72,12 +72,14 @@ public class CodingSchemeDataUtils {
     HashMap resovedValueSetHashMap = null;
 
 	LexBIGService lbSvc = null;
+	private ConceptDetails cd = null;
 	private LexBIGServiceConvenienceMethods lbscm = null;
 
 
 	public CodingSchemeDataUtils(LexBIGService lbSvc) {
 		this.lbSvc = lbSvc;
 		try {
+			this.cd = new ConceptDetails(lbSvc);
 			this.lbscm = (LexBIGServiceConvenienceMethods) lbSvc.getGenericExtension("LexBIGServiceConvenienceMethods");
 	    } catch (Exception ex) {
 			ex.printStackTrace();
@@ -1353,44 +1355,61 @@ public class CodingSchemeDataUtils {
 		return w;
 	}
 
-    public String getEquivalenceExpression(String scheme, String version, String code)
-            throws LBException {
+    public String getEquivalenceExpression(String scheme, String version, String code, String codeNamespace) throws LBException {
 		String expression = null;
 		CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
 		if (version != null) {
 			csvt.setVersion(version);
 		}
+		if (codeNamespace == null) {
+			codeNamespace = cd.getNamespaceByCode(scheme, version, code);
+		}
+		ConceptReference cr = ConvenienceMethods.createConceptReference(code, scheme);
 
+if (cr == null) {
+	System.out.println("ConvenienceMethods.createConceptReference returns NULL???: ");
+	return null;
+}
+
+		cr.setCodeNamespace(codeNamespace);
+/*
         ResolvedConceptReferenceList matches = lbSvc.getNodeGraph(scheme, csvt, null).resolveAsList(
                 ConvenienceMethods.createConceptReference(code, scheme), true, false, 1, 1, new LocalNameList(), null,
                 null, -1);
+*/
+        ResolvedConceptReferenceList matches = lbSvc.getNodeGraph(scheme, csvt, null).resolveAsList(
+                cr, true, false, 1, 1, new LocalNameList(), null,
+                null, -1);
 
         // Analyze the result ...
-        if (matches.getResolvedConceptReferenceCount() > 0) {
+        if (matches != null && matches.getResolvedConceptReferenceCount() > 0) {
             Enumeration<? extends ResolvedConceptReference> refEnum = matches.enumerateResolvedConceptReference();
-
             while (refEnum.hasMoreElements()) {
                 ResolvedConceptReference ref = refEnum.nextElement();
                 AssociationList sourceof = ref.getSourceOf();
-                Association[] associations = sourceof.getAssociation();
-
-                for (int i = 0; i < associations.length; i++) {
-                    Association assoc = associations[i];
-                    String assoName = assoc.getAssociationName();
-                    if (assoName == null) return null;
-                    if (assoName.compareTo("equivalentClass") == 0) {
-						AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
-						if (acl == null) return null;
-						for (int j = 0; j < acl.length; j++) {
-							AssociatedConcept ac = acl[j];
-							String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());
-							EntityDescription ed = ac.getEntityDescription();
-							//expression = code + " --> (" + rela + ") --> " + ac.getConceptCode() + " " + ed.getContent();
-							expression = ed.getContent();
-                            break;
+                if (sourceof != null) {
+					Association[] associations = sourceof.getAssociation();
+					if (associations != null) {
+						for (int i = 0; i < associations.length; i++) {
+							Association assoc = associations[i];
+							String assoName = assoc.getAssociationName();
+							if (assoName != null) {
+								if (assoName.compareTo("equivalentClass") == 0) {
+									AssociatedConcept[] acl = assoc.getAssociatedConcepts().getAssociatedConcept();
+									if (acl != null) {
+										for (int j = 0; j < acl.length; j++) {
+											AssociatedConcept ac = acl[j];
+											String rela = replaceAssociationNameByRela(ac, assoc.getAssociationName());
+											EntityDescription ed = ac.getEntityDescription();
+											expression = ed.getContent();
+											break;
+										}
+									}
+								}
+							}
 						}
 					}
-                }
+				}
             }
         }
         return expression;

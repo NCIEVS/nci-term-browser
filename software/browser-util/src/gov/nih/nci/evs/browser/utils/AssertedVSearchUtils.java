@@ -214,7 +214,7 @@ public class AssertedVSearchUtils {
 	}
 
 //SPL Color Terminology|http://evs.nci.nih.gov/valueset/FDA/C54453|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/SPL/FDA-SPL_NCIt_Subsets.xls|1:2:C54453
-
+/*
 	public static void main(String[] args) {
 		LexBIGService lbSvc = null;//RemoteServerUtil.createLexBIGService();
 		AssertedVSearchUtils test = new AssertedVSearchUtils(lbSvc);
@@ -249,4 +249,5 @@ public class AssertedVSearchUtils {
 			ex.printStackTrace();
 		}
 	}
+	*/
 }

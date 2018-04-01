@@ -182,6 +182,10 @@ public class UserSessionBean extends Object {
 
     public String searchAction() {
 
+
+System.out.println("searchAction ...");
+
+
 HttpServletResponse response =
 	(HttpServletResponse) FacesContext.getCurrentInstance()
 		.getExternalContext().getResponse();
@@ -230,6 +234,11 @@ if (single_mapping_search != null && single_mapping_search.compareTo("true") == 
         request.getSession().setAttribute("algorithm", matchAlgorithm);
 
         String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
+
+
+ System.out.println("matchText: " + matchText);
+
+
         if (matchText != null) {
             matchText = matchText.trim();
             request.getSession().setAttribute("matchText", matchText);
@@ -783,6 +792,8 @@ if (!retval) {
 				}
 			}
 
+			System.out.println("size: " + size);
+
             if (size > 1) {
 
 
@@ -808,10 +819,6 @@ if (!retval) {
                 request.getSession().setAttribute("singleton", "true");
                 request.getSession().setAttribute("dictionary", scheme);// Constants.CODING_SCHEME_NAME);
                 int pageNumber = 1;
-
-                //List list = iteratorBean.getData(1);
-
-                //List list = iteratorBean.getData(0, 0);
 
                 if (list != null && list.size() > 0) {
 
@@ -862,14 +869,12 @@ if (!retval) {
 									scheme);
 								return "message";
 							}
-
-						} else {
-							request.getSession().setAttribute("code",
-								c.getEntityCode());
 						}
 					}
 
+                    System.out.println("(*) save to session " + c.getEntityCode());
 					request.getSession().setAttribute("concept", c);
+					request.getSession().setAttribute("code", c.getEntityCode());
 					request.getSession().setAttribute("type", "properties");
 					request.getSession().setAttribute("new_search", Boolean.TRUE);
 

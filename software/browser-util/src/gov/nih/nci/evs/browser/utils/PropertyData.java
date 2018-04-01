@@ -212,7 +212,6 @@ public class PropertyData
 	}
 
 	public void setCurr_concept(Entity curr_concept) {
-
 		this.curr_concept = curr_concept;
 		this.code = curr_concept.getEntityCode();
 		this.namespace = curr_concept.getEntityCodeNamespace();
@@ -220,13 +219,16 @@ public class PropertyData
 		this.additionalproperties = new Vector();
 		this.additionalproperties.add("CONCEPT_NAME");
 		this.additionalproperties.add("primitive");
-		this.concept_status = conceptDetails.getConceptStatus(codingScheme, version, null, curr_concept.getEntityCode());
+		this.concept_status = conceptDetails.getConceptStatus(codingScheme, version, namespace, code);
 		this.displayLabel2PropertyNameHashMap = new HashMap();
 
 		if (concept_status != null) {
 		   concept_status = concept_status.replaceAll("_", " ");
-		   if (concept_status.compareToIgnoreCase("active") == 0 || concept_status.compareToIgnoreCase("reviewed") == 0) concept_status = null;
+		   if (concept_status.compareToIgnoreCase("active") == 0 || concept_status.compareToIgnoreCase("reviewed") == 0) {
+			   concept_status = null;
+		   }
 		}
+
 		this.propertyName2ValueHashMap = conceptDetails.getPropertyName2ValueHashMap(curr_concept);
 		this.propertyQualifierHashMap = conceptDetails.getPropertyQualifierHashMap(curr_concept);
 		Vector propertyvalues = new Vector();
@@ -837,7 +839,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
         //String retstr = null;
         if (isNCIT(codingScheme) && rel_type.compareTo(Constants.TYPE_ROLE) == 0) {
 			try {
-				equivalanceClass = new CodingSchemeDataUtils(lbSvc).getEquivalenceExpression(codingScheme, version, code);
+				equivalanceClass = new CodingSchemeDataUtils(lbSvc).getEquivalenceExpression(codingScheme, version, code, namespace);
 				if (equivalanceClass != null) {
 					display_equiv_expression = true;
 				}

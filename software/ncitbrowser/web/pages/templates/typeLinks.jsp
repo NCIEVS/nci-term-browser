@@ -5,7 +5,6 @@
     <%
     JSPUtils.JSPHeaderInfo typeLinks_info = new JSPUtils.JSPHeaderInfo(request);
     String scheme = typeLinks_info.dictionary;
-    //scheme = DataUtils.getFormalName(scheme);
     scheme = DataUtils.getCSName(scheme);
 
     String tab_version = typeLinks_info.version;
@@ -24,6 +23,11 @@
     String jsp_page_name = "concept_details.jsf";
     String id = null;
     id = (String) request.getSession().getAttribute("code");
+    //KLO 04022018
+    if (_ns == null) {
+        LexBIGService lexBIGService = RemoteServerUtil.createLexBIGService();
+        _ns = new ConceptDetails(lexBIGService).getNamespaceByCode(scheme, tab_version, id);
+    }
 
     String data_type = HTTPUtils.cleanXSS((String) request.getParameter("data_type"));
     if (data_type == null) {

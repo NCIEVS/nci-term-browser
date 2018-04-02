@@ -4013,7 +4013,7 @@ out.flush();
 						//url = url + "&ns=NCI%20Thesaurus";
 						//url = url + "&ns=NCI_Thesaurus";
 						LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-						String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCI_THESAURUS, ncit_production_version, code);
+						String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCIT_CS_NAME, ncit_production_version, code);
 						url = url + "&ns=" + ns;
 
 						ResolvedValueSetIteratorHolder rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, url, cdisc);
@@ -4979,12 +4979,12 @@ out.flush();
 			if (startIndex != -1) {
 				try {
 					String url = "/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus";
-					String ncit_production_version = csdu.getVocabularyVersionByTag(Constants.NCI_THESAURUS, "PRODUCTION");
+					String ncit_production_version = csdu.getVocabularyVersionByTag(Constants.NCIT_CS_NAME, "PRODUCTION");
 					if (ncit_production_version != null) {
 						url = url + "&version=" + ncit_production_version;
 					}
 					LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCI_THESAURUS, ncit_production_version, code);
+					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCIT_CS_NAME, ncit_production_version, code);
 					url = url + "&ns=" + ns;
 					rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, url, cdisc);
     				return rvsi;
@@ -5036,13 +5036,14 @@ out.flush();
 			}
 			if (startIndex != -1) {
 				try {
-					String url = "/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus";
-					String ncit_production_version = csdu.getVocabularyVersionByTag(Constants.NCI_THESAURUS, "PRODUCTION");
+					//String url = "/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus";
+					String url = "/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus";
+					String ncit_production_version = csdu.getVocabularyVersionByTag(Constants.NCIT_CS_NAME, "PRODUCTION");
 					if (ncit_production_version != null) {
 						url = url + "&version=" + ncit_production_version;
 					}
 					LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCI_THESAURUS, ncit_production_version, code);
+					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCIT_CS_NAME, ncit_production_version, code);
 					url = url + "&ns=" + ns;
 					ResolvedValueSetIteratorHolder rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, url, cdisc);
     				String content = getResolvedValueSetContent(rvsi);

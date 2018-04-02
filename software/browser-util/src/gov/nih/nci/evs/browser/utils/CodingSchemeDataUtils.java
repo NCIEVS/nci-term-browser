@@ -120,7 +120,7 @@ public class CodingSchemeDataUtils {
 			cs = lbSvc.resolveCodingScheme(codingScheme, versionOrTag);
 		} catch (Exception ex) {
 			//ex.printStackTrace();
-			System.out.println("WARNING: unable to resolve " + codingScheme + "(version: " + version + ")");
+			System.out.println("WARNING: unable to resolve " + codingScheme + " (version: " + version + ")");
 		}
 		return cs;
     }
@@ -523,9 +523,11 @@ public class CodingSchemeDataUtils {
  	     return w;
     }
 
-
+/*
     public String getVocabularyVersionByTag(String codingSchemeName, String ltag) {
-		if (codingSchemeName == null) return null;
+		if (codingSchemeName == null) {
+			return null;
+		}
         String version = null;
         int knt = 0;
         try {
@@ -539,15 +541,18 @@ public class CodingSchemeDataUtils {
                     || (css.getLocalName() != null && css.getLocalName().compareTo(codingSchemeName) == 0)
                     || (css.getCodingSchemeURI() != null && css.getCodingSchemeURI().compareTo(codingSchemeName) == 0)) {
 					version = css.getRepresentsVersion();
+					System.out.println("codingSchemeName: " + codingSchemeName + " (" + version + ")");
                     knt++;
 
-                    if (ltag == null)
-                        return version;
+                    if (ltag == null) {
+						return version;
+					}
                     RenderingDetail rd = csr.getRenderingDetail();
                     CodingSchemeTagList cstl = rd.getVersionTags();
                     java.lang.String[] tags = cstl.getTag();
-                    if (tags == null)
+                    if (tags == null) {
                         return version;
+					}
 
 					if (tags.length > 0) {
                         for (int j = 0; j < tags.length; j++) {
@@ -562,11 +567,66 @@ public class CodingSchemeDataUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("Number of PRODUCTION versions found: " + knt);
         if (ltag != null && ltag.compareToIgnoreCase(PRODUCTION) == 0 & knt == 1) {
             return version;
         }
         return null;
     }
+*/
+
+    public String getVocabularyVersionByTag(String codingSchemeName, String ltag) {
+		if (codingSchemeName == null || ltag == null) {
+			return null;
+		}
+		Vector versions = new Vector();
+        String version = null;
+        int knt = 0;
+        try {
+            CodingSchemeRenderingList lcsrl = lbSvc.getSupportedCodingSchemes();
+            CodingSchemeRendering[] csra = lcsrl.getCodingSchemeRendering();
+            if (csra == null) {
+				System.out.println("csra == null -- return null.");
+				return null;
+			}
+            for (int i = 0; i < csra.length; i++) {
+                CodingSchemeRendering csr = csra[i];
+                CodingSchemeSummary css = csr.getCodingSchemeSummary();
+                if (css != null) {
+					if ((css.getFormalName() != null && css.getFormalName().compareTo(codingSchemeName) == 0)
+						|| (css.getLocalName() != null && css.getLocalName().compareTo(codingSchemeName) == 0)
+						|| (css.getCodingSchemeURI() != null && css.getCodingSchemeURI().compareTo(codingSchemeName) == 0)) {
+						version = css.getRepresentsVersion();
+						RenderingDetail rd = csr.getRenderingDetail();
+						if (rd != null) {
+							CodingSchemeTagList cstl = rd.getVersionTags();
+							java.lang.String[] tags = cstl.getTag();
+							if (tags != null) {
+								if (tags.length > 0) {
+									for (int j = 0; j < tags.length; j++) {
+										String version_tag = (String) tags[j];
+										if (version_tag != null && version_tag.compareToIgnoreCase(ltag) == 0) {
+											versions.add(version);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (versions.size() > 1) {
+			System.out.println("WARNING: Number of " + ltag + " versions: " + versions.size());
+		} else if (versions.size() == 1) {
+			return (String) versions.elementAt(0);
+		}
+        return null;
+    }
+
+
 
     public CodingScheme getCodingScheme(String codingScheme, String version) throws LBException {
         CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();

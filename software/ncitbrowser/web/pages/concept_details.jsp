@@ -244,6 +244,8 @@ Entity c = null;
           ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
 if (ns == null || ns.compareTo("null") == 0) {
     ns = cd.getNamespaceByCode(dictionary, version, code);
+    //propertyData.setNamespace(ns);
+    //request.getSession().setAttribute("propertyData", propertyData);
 }
           
           
@@ -370,6 +372,11 @@ if (ns == null || ns.compareTo("null") == 0) {
                 %>
 
                 <%
+                if (DataUtils.isNullOrBlank(ns)) {
+                    ns = cd.getNamespaceByCode(dictionary, version, code);
+                }
+                
+               
                 if (DataUtils.isNullOrBlank(ns)) {
                   %>
 
@@ -752,7 +759,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
           %>
           <%= link %>
           <%
-          String coding_scheme_name = mappingTab.getCSName(dictionary);
+          String coding_scheme_name = ns;//mappingTab.getCSName(dictionary);
           for (int i=0; i<descendantCodes.size(); i++) {
             String t = (String) descendantCodes.elementAt(i);
             Vector w = StringUtils.parseData(t);

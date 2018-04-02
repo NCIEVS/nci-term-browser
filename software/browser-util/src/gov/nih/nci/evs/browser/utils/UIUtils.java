@@ -479,7 +479,7 @@ public class UIUtils {
 				version = csdu.getVocabularyVersionByTag(Constants.NCIT_CS_NAME, Constants.PRODUCTION);
 			} catch (Exception ex) {
 				System.out.println("ERROR: Constants.NCIT_CS_NAME " + Constants.NCIT_CS_NAME);
-				System.out.println("ERROR: Constants.PRODUCTION " + Constants.PRODUCTION);
+				System.out.println("ERROR: getVocabularyVersionByTag returns: " + version);
 			}
 		}
 		String ns = cd.getNamespaceByCode(Constants.NCIT_CS_NAME, version, code);

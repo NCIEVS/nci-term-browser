@@ -77,6 +77,7 @@ public class RelationshipUtils {
     private LexBIGService lbSvc = null;
     private LexBIGServiceConvenienceMethods lbscm = null;
     private TreeUtils treeUtils = null;
+    private ConceptDetails cd = null;
 
     public static int SUPERCONCEPT_OPTION = 0;
     public static int SUBCONCEPT_OPTION = 1;
@@ -84,6 +85,7 @@ public class RelationshipUtils {
     public static int INVERSE_ROLE_OPTION = 3;
     public static int ASSOCIATION_OPTION = 4;
     public static int INVERSE_ASSOCIATION_OPTION = 5;
+
 
     public List createOptionList(boolean superconcept,
                                  boolean subconcept,
@@ -119,6 +121,7 @@ public class RelationshipUtils {
 	public RelationshipUtils(LexBIGService lbSvc) {
         this.lbSvc = lbSvc;
         try {
+			this.cd = new ConceptDetails(lbSvc);
             this.lbscm =
                 (LexBIGServiceConvenienceMethods) lbSvc
                     .getGenericExtension("LexBIGServiceConvenienceMethods");
@@ -280,6 +283,9 @@ public class RelationshipUtils {
         String entityCodeNamespace = null;
 		Entity concept = null;
 		if (ns != null) {
+			if (ns.compareTo("null") == 0) {
+				ns = cd.getNamespaceByCode(scheme, version, code);
+			}
 			concept = new ConceptDetails(lbSvc).getConceptByCode(scheme, version, code, ns, useNamespace);
 		} else {
 			concept = new ConceptDetails(lbSvc).getConceptByCode(scheme, version, code);

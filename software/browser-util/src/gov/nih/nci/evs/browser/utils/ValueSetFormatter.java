@@ -130,8 +130,6 @@ public class ValueSetFormatter {
 	                                 NCI_METATHESAURUS_CUI,
 	                                 UMLS_CUI
 	                                 };
-    UIUtils uiUtils = null;
-
     static HashMap vsHeading2VarHashMap = null;
 
 	private String NCITCODE = "ncitCode";
@@ -143,6 +141,7 @@ public class ValueSetFormatter {
 	private String SOURCEDEFINITIONS = "sourceDefinitions";
 
 	private	ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+	UIUtils uiUtils = null;
 
     static {
 		vsHeading2VarHashMap = new HashMap();
@@ -157,8 +156,9 @@ public class ValueSetFormatter {
 
 
 // Default constructor
-	public ValueSetFormatter() {
-        uiUtils = new UIUtils();
+	public ValueSetFormatter(LexBIGService lbSvc) {
+		this.lbSvc = lbSvc;
+        this.uiUtils = new UIUtils(lbSvc);
 	}
 
 // Constructor
@@ -166,10 +166,10 @@ public class ValueSetFormatter {
     public ValueSetFormatter(LexBIGService lbSvc, LexEVSValueSetDefinitionServices vsd_service) {
 		this.lbSvc = lbSvc;
 		this.vsd_service = vsd_service;
-        csdu = new CodingSchemeDataUtils(lbSvc);
-	    vsmdu = new ValueSetMetadataUtils(vsd_service);
-        uiUtils = new UIUtils();
-        cd = new ConceptDetails(lbSvc);
+        this.csdu = new CodingSchemeDataUtils(lbSvc);
+	    this.vsmdu = new ValueSetMetadataUtils(vsd_service);
+        this.cd = new ConceptDetails(lbSvc);
+        this.uiUtils = new UIUtils(lbSvc);
 	}
 
 	public ValueSetFormatter(

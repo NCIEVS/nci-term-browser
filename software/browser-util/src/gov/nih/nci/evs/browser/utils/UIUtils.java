@@ -66,9 +66,8 @@ public class UIUtils {
 
     private String NCIT_PRODUCTION_VERSION = null;
 
-	public UIUtils() {
-
-	}
+    private String codingScheme = null;
+    private String version = null;
 
 	public void set_owl_role_quantifiers(String owl_role_quantifiers) {
         OWL_ROLE_QUALIFIER_LIST = new ArrayList();
@@ -83,9 +82,31 @@ public class UIUtils {
 		}
 	}
 
-	public UIUtils(LexBIGService lbSvc) {
+	public void setCodingSchemeNameAndVersion(String codingScheme, String version) {
+		this.codingScheme = codingScheme;
+		this.version = version;
+	}
 
+	public UIUtils(LexBIGService lbSvc) {
+		String codingScheme = Constants.NCIT_CS_NAME;
+		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(codingScheme, Constants.PRODUCTION);
+		setCodingSchemeNameAndVersion(codingScheme, prod_version);
+        try {
+			cd = new ConceptDetails(lbSvc);
+			csdu = new CodingSchemeDataUtils(lbSvc);
+			NCIT_PRODUCTION_VERSION = csdu.getVocabularyVersionByTag(Constants.NCIT_CS_NAME, Constants.PRODUCTION);
+            lbscm =
+                (LexBIGServiceConvenienceMethods) lbSvc
+                    .getGenericExtension("LexBIGServiceConvenienceMethods");
+            lbscm.setLexBIGService(lbSvc);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public UIUtils(LexBIGService lbSvc, String codingScheme, String version) {
         this.lbSvc = lbSvc;
+        setCodingSchemeNameAndVersion(codingScheme, version);
         try {
 			cd = new ConceptDetails(lbSvc);
 			csdu = new CodingSchemeDataUtils(lbSvc);
@@ -470,21 +491,19 @@ public class UIUtils {
 	}
 
     public String getHyperlink(String name, String code) {
-        return getHyperlink(NCIT_PRODUCTION_VERSION, name, code);
+        return getHyperlink(this.version, name, code);
     }
 
     public String getHyperlink(String version, String name, String code) {
-		if (version == null) {
-			try {
-				version = csdu.getVocabularyVersionByTag(Constants.NCIT_CS_NAME, Constants.PRODUCTION);
-			} catch (Exception ex) {
-				System.out.println("ERROR: Constants.NCIT_CS_NAME " + Constants.NCIT_CS_NAME);
-				System.out.println("ERROR: getVocabularyVersionByTag returns: " + version);
-			}
+		String ns = null;
+		try {
+			ns = cd.getNamespaceByCode(codingScheme, version, code);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			ns = "ncit";
 		}
-		String ns = cd.getNamespaceByCode(Constants.NCIT_CS_NAME, version, code);
-        //return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, Constants.NCIT_CS_NAME);
-        return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, ns);
+        String hyperlink = getHyperlink(codingScheme, version, name, code, ns);
+        return hyperlink;
     }
 
     public String getHyperlink(String codingScheme, String version, String name, String code, String ns) {

@@ -167,12 +167,6 @@ Entity c = null;
           String singleton = (String) request.getAttribute("singleton");
 
           boolean code_from_cart_action = false;
-          
-
-          
-          
-          
-
           code = (String) request.getAttribute("code_from_cart_action");
           if (code == null) {
             code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
@@ -180,18 +174,9 @@ Entity c = null;
             request.removeAttribute("code_from_cart_action");
             code_from_cart_action = true;
           }
-          
-         
 
           if (StringUtils.isNullOrBlank(code)) {
-          
-          
-          
               code = (String) request.getSession().getAttribute("code");
-              
-              
-              //System.out.println("getAttribute code: " + code);
- 
           } else {
 
             Vector u2 = StringUtils.parseData(code, ",");
@@ -219,9 +204,15 @@ Entity c = null;
                //System.out.println("#2 code: " + code);
              } 
            }
-          
-          //KLO
- code = HTTPUtils.cleanXSS(code);    
+
+
+ns = (String) request.getParameter("ns");
+if (ns == null) {
+    ns = (String) request.getSession().getAttribute("ns");
+}
+sessionMonitor.execute(request, dictionary, version, code, ns);
+ 
+code = HTTPUtils.cleanXSS(code);    
           
 
 /*
@@ -284,6 +275,9 @@ if (ns == null || ns.compareTo("null") == 0) {
               }
             }
           }
+
+
+
 
 
           if (type == null) {
@@ -588,8 +582,7 @@ if (ns == null || ns.compareTo("null") == 0) {
 <%
 
 
-          sessionMonitor.execute(request, dictionary, version, code, ns);
-
+          
 
 HashMap def_map = null;
 int other_src_alt_def_count = 0;
@@ -1576,10 +1569,6 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
 */ 
    String ns_curr = ns;
  
-   //System.out.println("relationship tab...scheme_curr " + scheme_curr); 
-   //System.out.println("relationship tab...version_curr " + version_curr);  
-   //System.out.println("relationship tab...code_curr " + code_curr); 
-   //System.out.println("relationship tab...ns_curr " + ns_curr);  
 
    String rel_display_name = mappingTab.getMetadataValue(scheme_curr, version_curr, "display_name");
    
@@ -1597,7 +1586,6 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
    if (!DataUtils.isNullOrBlank(ns_curr)) {
      key = key + "$" + ns_curr;
    }
- 
  
      HashMap hmap = propertyData.getRelationshipHashMap();
  
@@ -1645,7 +1633,7 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
        <% } else { %>
          <p>
            <%
-           parent_table_str = new RelationshipTabFormatter().formatSingleColumnTable(scheme_curr, Constants.TYPE_SUPERCONCEPT, superconcepts);
+           parent_table_str = new RelationshipTabFormatter(lbSvc).formatSingleColumnTable(scheme_curr, Constants.TYPE_SUPERCONCEPT, superconcepts);
            %>
            <p><%= parent_table_str %></p>
          <% } %>
@@ -1663,7 +1651,7 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
        <% } else { %>
          <p>
            <%
-           child_table_str = new RelationshipTabFormatter().formatSingleColumnTable(scheme_curr, Constants.TYPE_SUBCONCEPT, subconcepts);
+           child_table_str = new RelationshipTabFormatter(lbSvc).formatSingleColumnTable(scheme_curr, Constants.TYPE_SUBCONCEPT, subconcepts);
            %>
            <p><%= child_table_str %></p>
          <% } %>
@@ -1671,14 +1659,18 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
        <%
        //propertyData.setRelationshipHashMap(hmap);
        
-       String role_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, cNamespace, Constants.TYPE_ROLE, true);
+       //String role_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, cNamespace, Constants.TYPE_ROLE, true);
+       String role_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, ns, Constants.TYPE_ROLE, true);
        
        %>
        <p><%= role_table_str %></p>
  
        <%
        //propertyData.setRelationshipHashMap(hmap);
-       String assoc_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, cNamespace, Constants.TYPE_ASSOCIATION, true);
+       //String assoc_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, cNamespace, Constants.TYPE_ASSOCIATION, true);
+
+       String assoc_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, ns, Constants.TYPE_ASSOCIATION, true);
+
        %>
        <p><%= assoc_table_str %></p>
        <p>
@@ -1692,14 +1684,19 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
          if (!isMapping) {
            if (display_inverse_relationships) {
              propertyData.setRelationshipHashMap(hmap);
-             String inv_role_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, cNamespace, Constants.TYPE_INVERSE_ROLE, true);
+             //String inv_role_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, cNamespace, Constants.TYPE_INVERSE_ROLE, true);
+             String inv_role_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, ns, Constants.TYPE_INVERSE_ROLE, true);
+
              %>
              <p><%= inv_role_table_str %></p>
              <%
            }
          }
          propertyData.setRelationshipHashMap(hmap);
-         String inv_asso_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, cNamespace, Constants.TYPE_INVERSE_ASSOCIATION, true);
+         //String inv_asso_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, cNamespace, Constants.TYPE_INVERSE_ASSOCIATION, true);
+
+         String inv_asso_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, ns, Constants.TYPE_INVERSE_ASSOCIATION, true);
+
          %>
          <p><%= inv_asso_table_str %></p>
          <%

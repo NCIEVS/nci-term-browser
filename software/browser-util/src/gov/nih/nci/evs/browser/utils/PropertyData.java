@@ -118,6 +118,7 @@ public class PropertyData
     RelationshipTabFormatter formatter = null;//new RelationshipTabFormatter(lbSvc);
 
     private RelationshipUtils relUtils = null;
+    private UIUtils uiUtils = null;
 
 
 // Constructor
@@ -132,6 +133,7 @@ public class PropertyData
         this.conceptDetails = new ConceptDetails(lbSvc);
         this.relUtils = new RelationshipUtils(lbSvc);
         this.histUtils = new HistoryUtils(lbSvc);
+        this.uiUtils = new UIUtils(lbSvc);
 
         this.additionalproperties = new Vector();
         this.displayed_properties = new Vector();
@@ -802,7 +804,6 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public String generatePropertyTable(Entity concept, Vector property_names, String description) {
-		UIUtils uiUtils = new UIUtils();
 		uiUtils.set_owl_role_quantifiers(owl_role_quantifiers);
 		return uiUtils.generatePropertyTable(concept, property_names, description, 2);
 	}
@@ -866,7 +867,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 		if (display_equiv_expression) {
 			String expression = new ExpressionParser(lbSvc).infixExpression2Text(codingScheme, version, equivalanceClass);
 			if (expression != null) {
-				expression = new ExpressionFormatter().reformat(expression);
+				expression = new ExpressionFormatter(lbSvc).reformat(expression);
 				//System.out.println("expression: " + expression);
 				buf.append(expression);
 			}
@@ -913,7 +914,6 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 			list = (ArrayList) hmap.get(rel_type);
 	    }
 
-		UIUtils uiUtils = new UIUtils();
 		uiUtils.set_owl_role_quantifiers(owl_role_quantifiers);
 
         String defaultLabel = null;

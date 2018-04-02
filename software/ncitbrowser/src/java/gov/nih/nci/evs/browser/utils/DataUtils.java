@@ -148,7 +148,7 @@ public class DataUtils {
     private static HashMap _csnv2codingSchemeNameMap = null;
     private static HashMap _csnv2VersionMap = null;
 
-    private static boolean initializeValueSetHierarchy = true; //PROD - set to true; TEST - set to false
+    private static boolean initializeValueSetHierarchy = false; //PROD - set to true; TEST - set to false
     private static boolean valueSetHierarchyInitialized = false;
     private static boolean hasNoValueSet = false;
 

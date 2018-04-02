@@ -26,6 +26,8 @@ public class ExpressionFormatter {
     String TYPE_ROLE = "3";
     String TYPE_ROLE_GROUP = "4";
 
+    LexBIGService lbSvc = null;
+
     //LexBIGService lbSvc = null;
     static HashSet valueDomainSet = null;
     UIUtils uiUtils = null;
@@ -42,8 +44,8 @@ public class ExpressionFormatter {
 		valueDomainSet.add("Parent");
 	}
 
-    public ExpressionFormatter() {
-        uiUtils = new UIUtils();
+    public ExpressionFormatter(LexBIGService lbSvc) {
+        uiUtils = new UIUtils(lbSvc);
 	}
 
 //<a href="ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&version=17.01e&code=C39679&ns=NCI_Thesaurus">Hallmark Cell</a>

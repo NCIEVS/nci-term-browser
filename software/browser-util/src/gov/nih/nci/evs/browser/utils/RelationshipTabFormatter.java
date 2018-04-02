@@ -29,11 +29,11 @@ public class RelationshipTabFormatter {
     LexBIGService lbSvc = null;
     RelationshipUtils relUtils = null;
     UIUtils uiUtils = null;
-
+/*
     public RelationshipTabFormatter() {
         uiUtils = new UIUtils();
 	}
-
+*/
     public RelationshipTabFormatter(LexBIGService lbSvc) {
 		this.lbSvc = lbSvc;
 		this.relUtils = new RelationshipUtils(lbSvc);

@@ -1366,10 +1366,10 @@ public class CodingSchemeDataUtils {
 		}
 		ConceptReference cr = ConvenienceMethods.createConceptReference(code, scheme);
 
-if (cr == null) {
-	System.out.println("ConvenienceMethods.createConceptReference returns NULL???: ");
-	return null;
-}
+		if (cr == null) {
+			System.out.println("ConvenienceMethods.createConceptReference returns NULL???: ");
+			return null;
+		}
 
 		cr.setCodeNamespace(codeNamespace);
 /*

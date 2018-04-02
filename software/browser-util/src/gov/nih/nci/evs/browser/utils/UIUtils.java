@@ -471,14 +471,15 @@ public class UIUtils {
 
     public String getHyperlink(String version, String name, String code) {
 		String namespace = cd.getNamespaceByCode(Constants.NCIT_CS_NAME, version, code);
-        //return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, Constants.NCIT_CS_NAME);
+        return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, Constants.NCIT_NS);
         //return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, namespace);
-        return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, null);
+
+        //return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, null);
     }
 
     public String getHyperlink(String codingScheme, String version, String name, String code, String ns) {
 		if (Arrays.asList(Constants.NON_CONCEPT_TO_CONCEPT_ASSOCIATION).contains(name)) return name;
-
+/*
         if (version == null) {
 			version = csdu.getVocabularyVersionByTag(codingScheme, Constants.PRODUCTION);
 		}
@@ -486,6 +487,7 @@ public class UIUtils {
 		if (ns == null) {
 			ns = cd.getNamespaceByCode(codingScheme, version, code);
 		}
+*/
 
 		StringBuffer buf = new StringBuffer();
 		if (version != null) {

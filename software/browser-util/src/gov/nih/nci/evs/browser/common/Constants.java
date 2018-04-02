@@ -63,6 +63,7 @@ public class Constants {
     public static final String CODING_SCHEME_NAME = "NCI Thesaurus";
     public static final String NCI_THESAURUS = "NCI Thesaurus";
     public static final String NCIT_CS_NAME = "NCI_Thesaurus";
+    public static final String NCIT_NS = "ncit";
     public static final String NCI_METATHESAURUS = "NCI Metathesaurus";
     public static final String NCI_METATHESAURUS_CUI = "NCI Metathesaurus CUI";
 

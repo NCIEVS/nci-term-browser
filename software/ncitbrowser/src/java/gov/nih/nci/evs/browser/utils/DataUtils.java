@@ -148,7 +148,7 @@ public class DataUtils {
     private static HashMap _csnv2codingSchemeNameMap = null;
     private static HashMap _csnv2VersionMap = null;
 
-    private static boolean initializeValueSetHierarchy = true;
+    private static boolean initializeValueSetHierarchy = false; // PROD true; testing: false
     private static boolean valueSetHierarchyInitialized = false;
     private static boolean hasNoValueSet = false;
 
@@ -402,9 +402,9 @@ public class DataUtils {
 		}
 		//resovedValueSetHashMap = getResolvedValueSetHashMap();
 		ms = System.currentTimeMillis();
-        System.out.println("setCodingSchemeMap... ");
+        System.out.println("Sort coding schemes... ");
 		setCodingSchemeMap();
-		System.out.println("setCodingSchemeMap run time (ms): " + (System.currentTimeMillis() - ms));
+		System.out.println("Sort coding schemes run time (ms): " + (System.currentTimeMillis() - ms));
 		ms = System.currentTimeMillis();
 /*
         System.out.println("getValueSetDefinitionMetadata... ");

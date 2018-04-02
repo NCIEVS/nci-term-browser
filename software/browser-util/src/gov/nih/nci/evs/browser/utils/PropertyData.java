@@ -117,6 +117,8 @@ public class PropertyData
     private String owl_role_quantifiers = null;
     RelationshipTabFormatter formatter = null;//new RelationshipTabFormatter(lbSvc);
 
+    private RelationshipUtils relUtils = null;
+
 
 // Constructor
 	public PropertyData(LexBIGService lbSvc, String dictionary, String version) {
@@ -128,6 +130,7 @@ public class PropertyData
         this.codingScheme = dictionary;
 
         this.conceptDetails = new ConceptDetails(lbSvc);
+        this.relUtils = new RelationshipUtils(lbSvc);
         this.histUtils = new HistoryUtils(lbSvc);
 
         this.additionalproperties = new Vector();
@@ -215,6 +218,9 @@ public class PropertyData
 		this.curr_concept = curr_concept;
 		this.code = curr_concept.getEntityCode();
 		this.namespace = curr_concept.getEntityCodeNamespace();
+
+		this.relationshipHashMap = relUtils.getRelationshipHashMap(codingScheme, version, code, namespace, true);
+
 		this.isActive = curr_concept.isIsActive();
 		this.additionalproperties = new Vector();
 		this.additionalproperties.add("CONCEPT_NAME");
@@ -545,7 +551,9 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 		return this.propertyName2ValueHashMap;
 	}
 
-
+	public HashMap getRelationshipHashMap() {
+		return this.relationshipHashMap;
+	}
 
 	public static String getDisplayLink(HashMap<String, String> label2URL,
 		HashMap<String, String> label2Linktext, String label, String value) {
@@ -596,6 +604,8 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
         getDescendantCodes(curr_concept);
 
 	}
+
+
 
 	public Vector getDescendantCodes(Entity curr_concept) {
 	    Vector descendantCodes = histUtils.getDescendantCodes(dictionary, null, null, curr_concept.getEntityCode());
@@ -824,6 +834,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 	public boolean isNCIT(String codingScheme) {
 		if (codingScheme == null) return false;
 		if (codingScheme.compareTo(Constants.NCI_THESAURUS) == 0 ||
+		    codingScheme.compareTo(Constants.NCIT) == 0 ||
             codingScheme.compareTo(Constants.NCIT_CS_NAME) == 0) {
 			return true;
 		}
@@ -838,20 +849,9 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
         String equivalanceClass = null;
         //String retstr = null;
 
-    System.out.println("prpertydata.generateRelationshipTable codingScheme " +  codingScheme);
-    System.out.println("prpertydata.generateRelationshipTable version " +  version);
-    System.out.println("prpertydata.generateRelationshipTable code " +  code);
-    System.out.println("prpertydata.generateRelationshipTable namespace " +  namespace);
-    System.out.println("prpertydata.generateRelationshipTable rel_type " +  rel_type);
-    System.out.println("prpertydata.generateRelationshipTable display_qualifiers " +  display_qualifiers);
-
-
         if (isNCIT(codingScheme) && rel_type.compareTo(Constants.TYPE_ROLE) == 0) {
 			try {
 				equivalanceClass = new CodingSchemeDataUtils(lbSvc).getEquivalenceExpression(codingScheme, version, code, namespace);
-
-				System.out.println("equivalanceClass: " + equivalanceClass);
-
 				if (equivalanceClass != null) {
 					display_equiv_expression = true;
 				} else {
@@ -867,8 +867,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 			String expression = new ExpressionParser(lbSvc).infixExpression2Text(codingScheme, version, equivalanceClass);
 			if (expression != null) {
 				expression = new ExpressionFormatter().reformat(expression);
-
-				System.out.println("expression: " + expression);
+				//System.out.println("expression: " + expression);
 				buf.append(expression);
 			}
 		}
@@ -878,10 +877,8 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 			if (relationshipHashMap != null) {
 				roles = (ArrayList) relationshipHashMap.get(Constants.TYPE_ROLE);
 				formattedTable = formatter.formatOutboundRoleTable(roles);
-				System.out.println("(1) " + formattedTable);
 			} else {
 			    formattedTable = formatter.formatOutboundRoleTable(codingScheme, version, code, codingScheme);
-			    System.out.println("(2) " + formattedTable);
 			}
 			buf.append("<p></p>");
 			buf.append(formattedTable);

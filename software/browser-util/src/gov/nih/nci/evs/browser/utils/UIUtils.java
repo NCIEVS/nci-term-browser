@@ -61,7 +61,10 @@ public class UIUtils {
     private LexBIGServiceConvenienceMethods lbscm = null;
     private String indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     private List OWL_ROLE_QUALIFIER_LIST = null;
+    private CodingSchemeDataUtils csdu = null;
     private ConceptDetails cd = null;
+
+    private String NCIT_PRODUCTION_VERSION = null;
 
 	public UIUtils() {
 
@@ -81,9 +84,12 @@ public class UIUtils {
 	}
 
 	public UIUtils(LexBIGService lbSvc) {
+
         this.lbSvc = lbSvc;
         try {
 			cd = new ConceptDetails(lbSvc);
+			csdu = new CodingSchemeDataUtils(lbSvc);
+			NCIT_PRODUCTION_VERSION = csdu.getVocabularyVersionByTag(Constants.NCIT_CS_NAME, Constants.PRODUCTION);
             lbscm =
                 (LexBIGServiceConvenienceMethods) lbSvc
                     .getGenericExtension("LexBIGServiceConvenienceMethods");
@@ -464,10 +470,18 @@ public class UIUtils {
 	}
 
     public String getHyperlink(String name, String code) {
-        return getHyperlink(null, name, code);
+        return getHyperlink(NCIT_PRODUCTION_VERSION, name, code);
     }
 
     public String getHyperlink(String version, String name, String code) {
+		if (version == null) {
+			try {
+				version = csdu.getVocabularyVersionByTag(Constants.NCIT_CS_NAME, Constants.PRODUCTION);
+			} catch (Exception ex) {
+				System.out.println("ERROR: Constants.NCIT_CS_NAME " + Constants.NCIT_CS_NAME);
+				System.out.println("ERROR: Constants.PRODUCTION " + Constants.PRODUCTION);
+			}
+		}
 		String ns = cd.getNamespaceByCode(Constants.NCIT_CS_NAME, version, code);
         //return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, Constants.NCIT_CS_NAME);
         return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, ns);

@@ -164,10 +164,14 @@ Entity c = null;
         <div id="main-area_960">
           <%
 
-
           String singleton = (String) request.getAttribute("singleton");
 
           boolean code_from_cart_action = false;
+          
+
+          
+          
+          
 
           code = (String) request.getAttribute("code_from_cart_action");
           if (code == null) {
@@ -186,7 +190,7 @@ Entity c = null;
               code = (String) request.getSession().getAttribute("code");
               
               
-              System.out.println("getAttribute code: " + code);
+              //System.out.println("getAttribute code: " + code);
  
           } else {
 
@@ -212,7 +216,7 @@ Entity c = null;
              Entity con = (Entity) request.getSession().getAttribute("concept");
              if (con != null) {
                code = con.getEntityCode();
-               System.out.println("#2 code: " + code);
+               //System.out.println("#2 code: " + code);
              } 
            }
           
@@ -238,7 +242,7 @@ Entity c = null;
           
           
           ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
-if (ns == null) {
+if (ns == null || ns.compareTo("null") == 0) {
     ns = cd.getNamespaceByCode(dictionary, version, code);
 }
           
@@ -864,7 +868,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                   }
                 }
                 if (value_pre.compareTo(value_post) != 0 && !value_post.endsWith("PDQ")) {
-                    System.out.println("WARNING -- possible definition formatting issue with " + value_pre);
+                    //System.out.println("WARNING -- possible definition formatting issue with " + value_pre);
                 }
               }
 
@@ -1565,10 +1569,10 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
 */ 
    String ns_curr = ns;
  
-   System.out.println("relationship tab...scheme_curr " + scheme_curr); 
-   System.out.println("relationship tab...version_curr " + version_curr);  
-   System.out.println("relationship tab...code_curr " + code_curr); 
-   System.out.println("relationship tab...ns_curr " + ns_curr);  
+   //System.out.println("relationship tab...scheme_curr " + scheme_curr); 
+   //System.out.println("relationship tab...version_curr " + version_curr);  
+   //System.out.println("relationship tab...code_curr " + code_curr); 
+   //System.out.println("relationship tab...ns_curr " + ns_curr);  
 
    String rel_display_name = mappingTab.getMetadataValue(scheme_curr, version_curr, "display_name");
    
@@ -1579,7 +1583,7 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
    if (ns_curr == null || ns_curr.compareTo("null") == 0 || ns_curr.compareTo("undefined") == 0) {
      ns_curr = cd.getNamespaceByCode(scheme_curr, version_curr, code_curr);
    }
-   System.out.println("relationship tab...ns_curr " + ns_curr);  
+   //System.out.println("relationship tab...ns_curr " + ns_curr);  
      
    
    String key = scheme_curr + "$" + version_curr + "$" + code_curr;
@@ -1588,39 +1592,7 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
    }
  
  
-   HashMap hmap = null;
-   /*
-   String rel_key = (String) request.getSession().getAttribute("rel_key");
-   if (rel_key == null || rel_key.compareTo(key) != 0) {
-     hmap = relationshipUtils.getRelationshipHashMap(scheme_curr, version_curr, code_curr, ns_curr, true);
-     request.getSession().setAttribute("RelationshipHashMap", hmap);
-     request.getSession().setAttribute("rel_key", rel_key);
-   } else {
-     hmap = (HashMap) request.getSession().getAttribute("RelationshipHashMap");
-   }
-   */
-   
-   Object obj = request.getSession().getAttribute("RelationshipHashMap");
-   if (obj == null) {
-       System.out.println("*** hmap == null ??? -- calling getRelationshipHashMap...");
-       try {
-	   hmap = relationshipUtils.getRelationshipHashMap(scheme_curr, version_curr, code_curr, ns_curr, true);
-	   if (hmap == null) {
-	       System.out.println("*** getRelationshipHashMap returns null???");
-	   } else {
-	       request.getSession().setAttribute("RelationshipHashMap", hmap);
-	   }
-       } catch (Exception ex) {
-           ex.printStackTrace();
-       }
-   } else {
-       hmap = (HashMap) obj;
-   }
-   
- 
-   //if (hmap != null) {
- 
-//     request.getSession().setAttribute("RelationshipHashMap", hmap);
+     HashMap hmap = propertyData.getRelationshipHashMap();
  
      ArrayList superconcepts = (ArrayList) hmap.get(Constants.TYPE_SUPERCONCEPT);
      ArrayList subconcepts = (ArrayList) hmap.get(Constants.TYPE_SUBCONCEPT);

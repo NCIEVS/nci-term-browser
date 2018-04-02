@@ -182,10 +182,6 @@ public class UserSessionBean extends Object {
 
     public String searchAction() {
 
-
-System.out.println("searchAction ...");
-
-
 HttpServletResponse response =
 	(HttpServletResponse) FacesContext.getCurrentInstance()
 		.getExternalContext().getResponse();
@@ -234,10 +230,6 @@ if (single_mapping_search != null && single_mapping_search.compareTo("true") == 
         request.getSession().setAttribute("algorithm", matchAlgorithm);
 
         String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
-
-
- System.out.println("matchText: " + matchText);
-
 
         if (matchText != null) {
             matchText = matchText.trim();
@@ -792,10 +784,7 @@ if (!retval) {
 				}
 			}
 
-			System.out.println("size: " + size);
-
             if (size > 1) {
-
 
                 request.getSession().setAttribute("search_results", v);
                 String match_size = Integer.toString(size);
@@ -872,7 +861,6 @@ if (!retval) {
 						}
 					}
 
-                    System.out.println("(*) save to session " + c.getEntityCode());
 					request.getSession().setAttribute("concept", c);
 					request.getSession().setAttribute("code", c.getEntityCode());
 					request.getSession().setAttribute("type", "properties");
@@ -1795,9 +1783,13 @@ if (!retval) {
 					} else {
 						c = ref.getReferencedEntry();
 						if (c == null) {
+							/*
 							//c = DataUtils.getConceptByCode(coding_scheme, ref_version,
 							c = new SearchUtils(lbSvc).getConceptByCode(coding_scheme, ref_version,
 									null, ref.getConceptCode());
+							*/
+							//KLO, 04022018
+							c = new ConceptDetails(lbSvc).getConceptByCode(coding_scheme, ref_version, ref.getConceptCode());
 						}
 					}
 

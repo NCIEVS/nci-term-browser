@@ -37,7 +37,7 @@ public class SessionMonitor {
 		}
         return propertyData;
 	}
-
+/*
 	private HashMap createRelationshipHashMap(String codingScheme, String version, String code) {
 		return createRelationshipHashMap(codingScheme, version, code, null);
 	}
@@ -49,12 +49,14 @@ public class SessionMonitor {
 		boolean useNamespace = true;
 	    return relUtils.getRelationshipHashMap(codingScheme, version, code, ns, useNamespace);
     }
-
+*/
     private void refreshSessionVariables(HttpServletRequest request, String codingScheme, String version, String code, String namespace) {
 		PropertyData propertyData = createPropertyData(codingScheme, version, code);
 		request.getSession().setAttribute("propertyData", propertyData);
+		/*
 		HashMap relationshipHashMap = createRelationshipHashMap(codingScheme, version, code);
 		request.getSession().setAttribute("RelationshipHashMap", relationshipHashMap);
+		*/
 		request.getSession().setAttribute("active_code", code);
 		request.getSession().setAttribute("ns", namespace);
 
@@ -64,7 +66,8 @@ public class SessionMonitor {
 	}
 
 	public void execute(HttpServletRequest request, String codingScheme, String version, String code) {
-		execute(request, codingScheme, version, code, null);
+		String ns = cd.getNamespaceByCode(codingScheme, version, code);
+		execute(request, codingScheme, version, code, ns);
 	}
 
 	public void execute(HttpServletRequest request, String codingScheme, String version, String code, String namespace) {

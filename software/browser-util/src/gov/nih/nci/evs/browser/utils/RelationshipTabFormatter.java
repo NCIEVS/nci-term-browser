@@ -451,7 +451,6 @@ public class RelationshipTabFormatter {
 				String roleTargetCode = (String) u.elementAt(2);
 				String codingScheme = (String) u.elementAt(3);
 				String namespace = (String) u.elementAt(4);
-
 				String hyperlink = getHyperlink(codingScheme, namespace, roleTargetCode, roleTargetName);
 
 				buf.append("<tr class=\"dataRowLight\">");

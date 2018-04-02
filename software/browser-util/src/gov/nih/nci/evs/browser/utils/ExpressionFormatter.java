@@ -119,12 +119,7 @@ public class ExpressionFormatter {
 		}
 		name = name.substring(n+1, name.length());
         name = name.trim();
-        /*
-        StringBuffer buf = new StringBuffer();
-        buf.append("<a href=\"ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus");
-        buf.append("&code=").append(code).append("&ns=NCI_Thesaurus\">").append(name).append("</a>");
-		String hyperlink = buf.toString();
-		*/
+
 		String hyperlink = uiUtils.getHyperlink(name, code);
 
 		if (role.compareTo("") == 0) {
@@ -191,9 +186,6 @@ public class ExpressionFormatter {
 
 	public String reformat(String expression) {
 		if (expression == null) return null;
-
-System.out.println("reformatting ..." + expression);
-
         StringBuffer buf = new StringBuffer();
 		String label = getRelationshipTableLabel(Constants.TYPE_LOGICAL_DEFINITION, false);
         buf.append(label);

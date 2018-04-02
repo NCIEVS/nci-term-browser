@@ -837,11 +837,25 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
         boolean display_equiv_expression = false;
         String equivalanceClass = null;
         //String retstr = null;
+
+    System.out.println("prpertydata.generateRelationshipTable codingScheme " +  codingScheme);
+    System.out.println("prpertydata.generateRelationshipTable version " +  version);
+    System.out.println("prpertydata.generateRelationshipTable code " +  code);
+    System.out.println("prpertydata.generateRelationshipTable namespace " +  namespace);
+    System.out.println("prpertydata.generateRelationshipTable rel_type " +  rel_type);
+    System.out.println("prpertydata.generateRelationshipTable display_qualifiers " +  display_qualifiers);
+
+
         if (isNCIT(codingScheme) && rel_type.compareTo(Constants.TYPE_ROLE) == 0) {
 			try {
 				equivalanceClass = new CodingSchemeDataUtils(lbSvc).getEquivalenceExpression(codingScheme, version, code, namespace);
+
+				System.out.println("equivalanceClass: " + equivalanceClass);
+
 				if (equivalanceClass != null) {
 					display_equiv_expression = true;
+				} else {
+					return "";
 				}
 		    } catch (Exception ex) {
 				ex.printStackTrace();
@@ -851,8 +865,12 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 		StringBuffer buf = new StringBuffer();
 		if (display_equiv_expression) {
 			String expression = new ExpressionParser(lbSvc).infixExpression2Text(codingScheme, version, equivalanceClass);
-			expression = new ExpressionFormatter().reformat(expression);
-			buf.append(expression);
+			if (expression != null) {
+				expression = new ExpressionFormatter().reformat(expression);
+
+				System.out.println("expression: " + expression);
+				buf.append(expression);
+			}
 		}
 		if (isNCIT(codingScheme) && rel_type.compareTo(Constants.TYPE_ROLE) == 0) {
 			ArrayList roles = null;
@@ -860,8 +878,10 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 			if (relationshipHashMap != null) {
 				roles = (ArrayList) relationshipHashMap.get(Constants.TYPE_ROLE);
 				formattedTable = formatter.formatOutboundRoleTable(roles);
+				System.out.println("(1) " + formattedTable);
 			} else {
 			    formattedTable = formatter.formatOutboundRoleTable(codingScheme, version, code, codingScheme);
+			    System.out.println("(2) " + formattedTable);
 			}
 			buf.append("<p></p>");
 			buf.append(formattedTable);

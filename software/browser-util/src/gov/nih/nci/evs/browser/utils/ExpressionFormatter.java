@@ -190,6 +190,10 @@ public class ExpressionFormatter {
 	}
 
 	public String reformat(String expression) {
+		if (expression == null) return null;
+
+System.out.println("reformatting ..." + expression);
+
         StringBuffer buf = new StringBuffer();
 		String label = getRelationshipTableLabel(Constants.TYPE_LOGICAL_DEFINITION, false);
         buf.append(label);
@@ -197,10 +201,7 @@ public class ExpressionFormatter {
         columnHeadings.add("Relationship");
 		columnHeadings.add("Value (qualifiers indented underneath)");
         Vector columnWidths = new Vector();
-        /*
-        columnWidths.add(new Integer(30));
-        columnWidths.add(new Integer(70));
-        */
+
         columnWidths.add(new Integer(40));
         columnWidths.add(new Integer(60));
         String table = createTable(columnHeadings, columnWidths);

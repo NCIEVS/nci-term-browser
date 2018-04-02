@@ -272,14 +272,12 @@ public class RelationshipUtils {
         boolean isMapping = isMapping(scheme, version);
         NameAndValueList navl = null;
         if (isMapping) navl = getMappingAssociationNames(scheme, version);
-
         CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
         if (version != null)
             csvt.setVersion(version);
 
         ConceptReference cr = ConvenienceMethods.createConceptReference(code, scheme);
         String entityCodeNamespace = null;
-
 		Entity concept = null;
 		if (ns != null) {
 			concept = new ConceptDetails(lbSvc).getConceptByCode(scheme, version, code, ns, useNamespace);
@@ -297,7 +295,6 @@ public class RelationshipUtils {
         if (entityCodeNamespace != null) {
 			cr.setCodingSchemeName(entityCodeNamespace);
 		}
-
         // Perform the query ...
         ResolvedConceptReferenceList matches = null;
         List list = getSupportedRoleNames(scheme, version);
@@ -526,7 +523,6 @@ public class RelationshipUtils {
 
 			}
 		}
-
         if (checkOption(options, INVERSE_ROLE_OPTION) || checkOption(options, INVERSE_ASSOCIATION_OPTION)) {
             try {
 				cng = lbSvc.getNodeGraph(scheme, csvt, null);
@@ -748,8 +744,6 @@ public class RelationshipUtils {
 
 		map.put(Constants.TYPE_INVERSE_ROLE, inverse_roleList);
 		map.put(Constants.TYPE_INVERSE_ASSOCIATION, inverse_associationList);
-
-
         return map;
     }
 

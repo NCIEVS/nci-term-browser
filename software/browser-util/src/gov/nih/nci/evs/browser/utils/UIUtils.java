@@ -62,7 +62,6 @@ public class UIUtils {
     private String indent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     private List OWL_ROLE_QUALIFIER_LIST = null;
     private ConceptDetails cd = null;
-    private CodingSchemeDataUtils csdu = null;
 
 	public UIUtils() {
 
@@ -84,8 +83,7 @@ public class UIUtils {
 	public UIUtils(LexBIGService lbSvc) {
         this.lbSvc = lbSvc;
         try {
-			this.cd = new ConceptDetails(lbSvc);
-			this.csdu = new CodingSchemeDataUtils(lbSvc);
+			cd = new ConceptDetails(lbSvc);
             lbscm =
                 (LexBIGServiceConvenienceMethods) lbSvc
                     .getGenericExtension("LexBIGServiceConvenienceMethods");
@@ -470,24 +468,13 @@ public class UIUtils {
     }
 
     public String getHyperlink(String version, String name, String code) {
-		String namespace = cd.getNamespaceByCode(Constants.NCIT_CS_NAME, version, code);
-        return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, Constants.NCIT_NS);
-        //return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, namespace);
-
-        //return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, null);
+		String ns = cd.getNamespaceByCode(Constants.NCIT_CS_NAME, version, code);
+        //return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, Constants.NCIT_CS_NAME);
+        return getHyperlink(Constants.NCIT_CS_NAME, version, name, code, ns);
     }
 
     public String getHyperlink(String codingScheme, String version, String name, String code, String ns) {
 		if (Arrays.asList(Constants.NON_CONCEPT_TO_CONCEPT_ASSOCIATION).contains(name)) return name;
-/*
-        if (version == null) {
-			version = csdu.getVocabularyVersionByTag(codingScheme, Constants.PRODUCTION);
-		}
-
-		if (ns == null) {
-			ns = cd.getNamespaceByCode(codingScheme, version, code);
-		}
-*/
 
 		StringBuffer buf = new StringBuffer();
 		if (version != null) {

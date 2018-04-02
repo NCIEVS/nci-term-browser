@@ -59,7 +59,7 @@ String ns = null;
 String type = null;
 Entity c = null;    
          
-//System.out.println("(1) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(1) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();            
          
          
@@ -73,8 +73,8 @@ ms = System.currentTimeMillis();
 
     String version = prop_info.version;
 
-//System.out.println("version: " + version);
-//System.out.println("(1a) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("version: " + version);
+//System.out.println.println("(1a) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();            
 
 
@@ -94,9 +94,9 @@ ms = System.currentTimeMillis();
 
     String cs_name = mappingTab.getCSName(dictionary);
     
-//System.out.println("dictionary: " + dictionary);    
-//System.out.println("cs_name: " + cs_name);
-//System.out.println("(1b) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("dictionary: " + dictionary);    
+//System.out.println.println("cs_name: " + cs_name);
+//System.out.println.println("(1b) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();            
     
     List namespace_list = null;
@@ -189,8 +189,8 @@ ms = System.currentTimeMillis();
           }
           
 
-//System.out.println("code: " + code);
-//System.out.println("(1c) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("code: " + code);
+//System.out.println.println("(1c) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();             
          
 
@@ -201,7 +201,7 @@ ms = System.currentTimeMillis();
               code = (String) request.getSession().getAttribute("code");
               
               
-              //System.out.println("getAttribute code: " + code);
+              //System.out.println.println("getAttribute code: " + code);
  
           } else {
 
@@ -224,22 +224,22 @@ ms = System.currentTimeMillis();
           }
           
  
- //System.out.println("#1 code: " + code);
+ //System.out.println.println("#1 code: " + code);
  
            if (code == null) {
              Entity con = (Entity) request.getSession().getAttribute("concept");
              if (con != null) {
                code = con.getEntityCode();
-               //System.out.println("#2 code: " + code);
+               //System.out.println.println("#2 code: " + code);
              } 
            }
           
           //KLO
  code = HTTPUtils.cleanXSS(code);    
           
-//System.out.println("#3 code: " + code);  
+//System.out.println.println("#3 code: " + code);  
 
-//System.out.println("(1f) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(1f) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis(); 
 
 /*
@@ -256,7 +256,7 @@ ms = System.currentTimeMillis();
 */
 
 
-//System.out.println("(2) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(2) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();  
 
           request.getSession().setAttribute("code", code);
@@ -267,8 +267,8 @@ if (ns == null) {
     ns = cd.getNamespaceByCode(dictionary, version, code);
 }
           
-//System.out.println("ns: " + ns);    
-//System.out.println("(1d) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("ns: " + ns);    
+//System.out.println.println("(1d) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();             
     
           
@@ -309,9 +309,9 @@ ms = System.currentTimeMillis();
             }
           }
 
-//System.out.println(" (3) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println(" (3) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();  
-//System.out.println("#4 code: " + code);
+//System.out.println.println("#4 code: " + code);
 
   
 
@@ -355,7 +355,7 @@ ms = System.currentTimeMillis();
               
                 request.getSession().setAttribute("concept", c);
                 
- //System.out.println("#5 code: " + code);
+ //System.out.println.println("#5 code: " + code);
                
                 
                 
@@ -371,7 +371,7 @@ ms = System.currentTimeMillis();
               }
             }
 
-//System.out.println("(4) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(4) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();  
 
             if (DataUtils.isNCIT(dictionary)) {
@@ -431,7 +431,7 @@ ms = System.currentTimeMillis();
                 <%
               }
 
-//System.out.println("(5) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(5) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();  
 
               boolean historyAccess = historyUtils.isHistoryServiceAvailable(dictionary);
@@ -513,7 +513,7 @@ ms = System.currentTimeMillis();
           <%
         }
 
-//System.out.println("(6) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(6) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();  
 
         if (!StringUtils.isNull(b)) {
@@ -594,8 +594,8 @@ ms = System.currentTimeMillis();
 */   
 
 
-//System.out.println("code: " + code); 
-//System.out.println("ns: " + ns);
+//System.out.println.println("code: " + code); 
+//System.out.println.println("ns: " + ns);
 
 
       %>
@@ -628,18 +628,18 @@ ms = System.currentTimeMillis();
 
 <%
 
-//System.out.println("(7) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(7) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();  
-//System.out.println("calling sessionMonitor.execute: dictionary: " + dictionary); 
-//System.out.println("calling sessionMonitor.execute: version: " + version); 
-//System.out.println("calling sessionMonitor.execute: code: " + code);  
-//System.out.println("calling sessionMonitor.execute: ns: " + ns); 
+//System.out.println.println("calling sessionMonitor.execute: dictionary: " + dictionary); 
+//System.out.println.println("calling sessionMonitor.execute: version: " + version); 
+//System.out.println.println("calling sessionMonitor.execute: code: " + code);  
+//System.out.println.println("calling sessionMonitor.execute: ns: " + ns); 
 
           sessionMonitor.execute(request, dictionary, version, code, ns);
           
-//System.out.println("exit sessionMonitor.execute " + code); 
+//System.out.println.println("exit sessionMonitor.execute " + code); 
 
-//System.out.println("(1e) Total run time (ms): " + (System.currentTimeMillis() - ms));    
+//System.out.println.println("(1e) Total run time (ms): " + (System.currentTimeMillis() - ms));    
 
 
 
@@ -692,7 +692,7 @@ try {
 curr_concept = (Entity) request.getSession().getAttribute("concept");
 
 if (curr_concept == null) {
-//System.out.println("curr_concept is null???");
+//System.out.println.println("curr_concept is null???");
 }
 
   //if (curr_concept != null) {
@@ -720,7 +720,7 @@ if (curr_concept == null) {
     //}
     */
 
-//System.out.println("(8a) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8a) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();  
 
 
@@ -728,27 +728,28 @@ ms = System.currentTimeMillis();
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
     propertyData = (PropertyData) request.getSession().getAttribute("propertyData");
     
+    /*
     codingScheme = propertyData.getCodingScheme();
     dictionary = codingScheme;
     
     version = propertyData.getVersion();
     code = propertyData.getCode();
-    
-//System.out.println("#6 code: " + code);
-    
-    
     namespace = propertyData.getNamespace();
+    */
+    
+//System.out.println.println("#6 code: " + code);
+  
     ns = namespace;
     
     isActive = propertyData.getIsActive();
     concept_status = propertyData.getConcept_status();
     
-//System.out.println("dictionary " + dictionary);
-//System.out.println("version " + version);    
-//System.out.println("code " + code);    
-//System.out.println("ns " + ns);
-//System.out.println("isActive " + isActive);
-//System.out.println("concept_status " + concept_status);
+//System.out.println.println("dictionary " + dictionary);
+//System.out.println.println("version " + version);    
+//System.out.println.println("code " + code);    
+//System.out.println.println("ns " + ns);
+//System.out.println.println("isActive " + isActive);
+//System.out.println.println("concept_status " + concept_status);
 
     properties_to_display_label = propertyData.getProperties_to_display_label();
     properties_to_display_url = propertyData.getProperties_to_display_url();
@@ -769,7 +770,7 @@ ms = System.currentTimeMillis();
     
     request.getSession().setAttribute("code", curr_concept.getEntityCode());
 
-//System.out.println("concept_id " + concept_id);
+//System.out.println.println("concept_id " + concept_id);
 
   //}
 
@@ -778,22 +779,23 @@ ms = System.currentTimeMillis();
 }
 
 
-//System.out.println("(8b) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8b) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();   
 
 if (type == null) {
 	type = "properties";
 }
-//System.out.println("type: " + type);
+//System.out.println.println("type: " + type);
 
-//System.out.println("(8c) Total run time (ms): " + (System.currentTimeMillis() - ms));
-ms = System.currentTimeMillis();   
+//System.out.println.println("(8c) Total run time (ms): " + (System.currentTimeMillis() - ms));
+ms = System.currentTimeMillis();  
+
     
 //if ((type.compareTo("properties") == 0 || type.compareTo("all") == 0) && displayItemList != null && curr_concept != null) {
-if ((type.compareTo("properties") == 0 || type.compareTo("all") == 0)) {
+if (type.compareTo("properties") == 0 || type.compareTo("all") == 0) {
 
 
-//System.out.println("(8d) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8d) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();   
 
   %>
@@ -809,24 +811,24 @@ ms = System.currentTimeMillis();
   <%
   
   
-//System.out.println("(8e) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8e) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();   
   
   
 boolean show_status = propertyData.get_show_status();
 isActive = propertyData.getIsActive();
 
-//System.out.println("isActive: " + isActive);
-//System.out.println("concept_status: " + concept_status);
-//System.out.println("show_status: " + show_status);
+//System.out.println.println("isActive: " + isActive);
+//System.out.println.println("concept_status: " + concept_status);
+//System.out.println.println("show_status: " + show_status);
 
 
-//System.out.println("(8f) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8f) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();   
 
 if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != null) || (concept_status != null && concept_status.compareTo("null") != 0 && show_status)) {
 
-//System.out.println("(8g) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8g) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();   
 
 
@@ -837,7 +839,7 @@ ms = System.currentTimeMillis();
       <%
       
       
-//System.out.println("(8g-1) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8g-1) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();   
      
       
@@ -845,7 +847,7 @@ ms = System.currentTimeMillis();
         if (descendantCodes.size() > 0) {
         
         
-//System.out.println("(8g-2) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8g-2) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();   
         
         
@@ -881,7 +883,7 @@ ms = System.currentTimeMillis();
     }
     else if (concept_status != null && concept_status.compareToIgnoreCase("Retired Concept") != 0) {
 
-//System.out.println("(8h) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8h) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();   
 
 
@@ -906,7 +908,7 @@ ms = System.currentTimeMillis();
       }
     }
 
-//System.out.println("(8i) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8i) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();   
 
     for (int i=0; i<properties_to_display.size(); i++) {
@@ -978,7 +980,7 @@ ms = System.currentTimeMillis();
                   }
                 }
                 if (value_pre.compareTo(value_post) != 0 && !value_post.endsWith("PDQ")) {
-                    //System.out.println("WARNING -- possible definition formatting issue with " + value_pre);
+                    //System.out.println.println("WARNING -- possible definition formatting issue with " + value_pre);
                 }
               }
 
@@ -1044,7 +1046,7 @@ ms = System.currentTimeMillis();
 
       <%
 
-//System.out.println("(8j) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8j) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis(); 
 
       for (int i_def = 0; i_def<other_label_value.size(); i_def++) {
@@ -1074,7 +1076,7 @@ ms = System.currentTimeMillis();
 
       <%
 
-//System.out.println("(8k) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8k) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();        
       
       for (int i_def = 0; i_def<nci_def_label_value.size(); i_def++) {
@@ -1099,7 +1101,7 @@ ms = System.currentTimeMillis();
 
       <%
       
-//System.out.println("(8l) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8l) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();
 
 
@@ -1127,7 +1129,7 @@ ms = System.currentTimeMillis();
 
       <%
 
-//System.out.println("(8m) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8m) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();
       
       
@@ -1185,7 +1187,7 @@ ms = System.currentTimeMillis();
       <%
  
  
- //System.out.println("(8n) Total run time (ms): " + (System.currentTimeMillis() - ms));
+ //System.out.println.println("(8n) Total run time (ms): " + (System.currentTimeMillis() - ms));
  ms = System.currentTimeMillis();
 
       
@@ -1260,7 +1262,7 @@ ms = System.currentTimeMillis();
           HashSet hset2 = new HashSet();
           Vector synonym_values = new Vector();
 
-//System.out.println("(8o) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8o) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();
 
           for (int i=0; i<presentation_vec.size(); i++) {
@@ -1307,7 +1309,7 @@ ms = System.currentTimeMillis();
 
         <%
         
-//System.out.println("(8p) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8p) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();
         
         
@@ -1346,7 +1348,7 @@ ms = System.currentTimeMillis();
         }
 
 
-//System.out.println("(8q) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8q) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();
 
         if (!hasExternalSourceCodes) {
@@ -1483,7 +1485,7 @@ ms = System.currentTimeMillis();
             <%
             
             
-//System.out.println("(8r) Total run time (ms): " + (System.currentTimeMillis() - ms));
+//System.out.println.println("(8r) Total run time (ms): " + (System.currentTimeMillis() - ms));
 ms = System.currentTimeMillis();
             
             
@@ -1674,13 +1676,17 @@ ms = System.currentTimeMillis();
 
  
     <!--
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////RELATIONSHIPS/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     -->
 
  
  <%
  if (type.compareTo("relationship") == 0 || type.compareTo("all") == 0)
  {
+ 
+ 
+ //System.out.println.println("relationship tab...");
+ 
  
    JSPUtils.JSPHeaderInfo relationship_info = new JSPUtils.JSPHeaderInfo(request);
    Entity concept_curr = (Entity) request.getSession().getAttribute("concept");
@@ -1696,6 +1702,10 @@ String version_curr = version;
 String version_parameter = "";
 String cNamespace = ns;
 String code_curr = code;//(String) request.getSession().getAttribute("code");
+
+
+//System.out.println.println("relationship tab...code_curr " + code_curr);  
+
  
    boolean owl2_display = false;
     if (version_curr != null && ! version_curr.equalsIgnoreCase("null")) {
@@ -1703,6 +1713,10 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
    }
  
    boolean isMapping = mappingTab.isMapping(scheme_curr, version_curr);
+   
+   
+ //System.out.println.println("relationship tab...isMapping " + isMapping);  
+   
 /*   
  
    if (code_curr == null) {
@@ -1714,19 +1728,32 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
 */ 
    String ns_curr = ns;
  
+   //System.out.println.println("relationship tab...scheme_curr " + scheme_curr); 
+   //System.out.println.println("relationship tab...version_curr " + version_curr);  
+   //System.out.println.println("relationship tab...code_curr " + code_curr); 
+   //System.out.println.println("relationship tab...ns_curr " + ns_curr);  
+
    String rel_display_name = mappingTab.getMetadataValue(scheme_curr, version_curr, "display_name");
+   
+   
+ //System.out.println.println("relationship tab...rel_display_name " + rel_display_name);     
+   
    if (rel_display_name == null) rel_display_name = DataUtils.getLocalName(scheme_curr);
  
-   /*
+   
    // Relationship tab failed to render correctly.
    if (ns_curr == null || ns_curr.compareTo("null") == 0 || ns_curr.compareTo("undefined") == 0) {
-     ns_curr = new ConceptDetails(lbSvc).getNamespaceByCode(scheme_curr, version_curr, code_curr);
+     ns_curr = cd.getNamespaceByCode(scheme_curr, version_curr, code_curr);
    }
-   */
+   //System.out.println.println("relationship tab...ns_curr " + ns_curr);  
+     
+   
    String key = scheme_curr + "$" + version_curr + "$" + code_curr;
    if (!DataUtils.isNullOrBlank(ns_curr)) {
      key = key + "$" + ns_curr;
    }
+ 
+ //System.out.println.println("relationship tab...key " + key);  
  
    HashMap hmap = null;
    /*
@@ -1739,7 +1766,24 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
      hmap = (HashMap) request.getSession().getAttribute("RelationshipHashMap");
    }
    */
-   hmap = (HashMap) request.getSession().getAttribute("RelationshipHashMap");
+   
+   Object obj = request.getSession().getAttribute("RelationshipHashMap");
+   if (obj == null) {
+       //System.out.println.println("*** hmap == null ??? -- calling getRelationshipHashMap...");
+       try {
+	   hmap = relationshipUtils.getRelationshipHashMap(scheme_curr, version_curr, code_curr, ns_curr, true);
+	   if (hmap == null) {
+	       //System.out.println.println("*** getRelationshipHashMap returns null???");
+	   } else {
+	       request.getSession().setAttribute("RelationshipHashMap", hmap);
+	   }
+       } catch (Exception ex) {
+           ex.printStackTrace();
+       }
+   } else {
+       hmap = (HashMap) obj;
+   }
+   
  
    //if (hmap != null) {
  
@@ -1813,13 +1857,20 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
          <% } %>
        </p>
        <%
-       propertyData.setRelationshipHashMap(hmap);
+       //propertyData.setRelationshipHashMap(hmap);
+       
+  //System.out.println.println("calling propertyData.generateRelationshipTable...");     
+       
        String role_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, cNamespace, Constants.TYPE_ROLE, true);
+       
+ //System.out.println.println("(*) relationship tab...role_table_str " + role_table_str);  
+              
+       
        %>
        <p><%= role_table_str %></p>
  
        <%
-       propertyData.setRelationshipHashMap(hmap);
+       //propertyData.setRelationshipHashMap(hmap);
        String assoc_table_str = propertyData.generateRelationshipTable(scheme_curr, version_curr, code, cNamespace, Constants.TYPE_ASSOCIATION, true);
        %>
        <p><%= assoc_table_str %></p>
@@ -1876,7 +1927,8 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
          
     
     <%
-
+//KLO 04022018
+    request.getSession().setAttribute("active_code", code);
     
     if (type.compareTo("mapping") == 0 || type.compareTo("all") == 0) {
       HashMap display_name_hmap = new HashMap();

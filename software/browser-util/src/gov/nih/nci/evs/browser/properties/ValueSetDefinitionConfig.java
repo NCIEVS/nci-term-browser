@@ -1,15 +1,13 @@
 package gov.nih.nci.evs.browser.properties;
 
-import java.io.*;
-import java.util.*;
-
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.apache.log4j.*;
 
 import gov.nih.nci.evs.browser.bean.ValueSetConfig;
 import gov.nih.nci.evs.browser.utils.*;
+import java.io.*;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.Map;
+import org.apache.log4j.*;
 
 
 /**
@@ -61,6 +59,7 @@ import gov.nih.nci.evs.browser.utils.*;
  *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
+
 
 public class ValueSetDefinitionConfig {
     protected static HashMap valueSetConfigHashMap = null;

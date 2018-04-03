@@ -1,5 +1,37 @@
 package gov.nih.nci.evs.browser.utils;
 
+
+import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+import org.apache.commons.codec.language.*;
+import org.apache.log4j.*;
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.concepts.*;
+import org.LexGrid.LexBIG.DataModel.Collections.*;
+import org.LexGrid.LexBIG.DataModel.Core.*;
+import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
+import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
+import org.LexGrid.LexBIG.DataModel.Core.types.*;
+import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
+import org.LexGrid.LexBIG.Exceptions.LBException;
+import org.LexGrid.LexBIG.Extensions.Generic.*;
+import org.LexGrid.LexBIG.Extensions.Generic.CodingSchemeReference;
+import org.LexGrid.LexBIG.Extensions.Generic.SearchExtension;
+import org.LexGrid.LexBIG.Impl.LexBIGServiceImpl;
+import org.LexGrid.LexBIG.LexBIGService.*;
+import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
+import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
+import org.LexGrid.LexBIG.Utility.*;
+import org.LexGrid.LexBIG.Utility.Iterators.*;
+import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
+import org.LexGrid.naming.*;
+import org.lexgrid.resolvedvalueset.impl.LexEVSResolvedValueSetServiceImpl;
+import org.lexgrid.resolvedvalueset.LexEVSResolvedValueSetService;
+import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
+
+
 /**
  * <!-- LICENSE_TEXT_START -->
  * Copyright 2008,2009 NGIT. This software was developed in conjunction
@@ -43,53 +75,12 @@ package gov.nih.nci.evs.browser.utils;
  */
 
 /**
- * SimpleSearchUtils (uses LexEVSAPI 6.1 SearchExtension)
+ * @author EVS Team
+ * @version 1.0
  *
- * @author kimong
+ *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
-
-import java.util.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-
-import org.apache.log4j.*;
-
-import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
-import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
-import org.LexGrid.LexBIG.Exceptions.LBException;
-import org.LexGrid.LexBIG.Extensions.Generic.CodingSchemeReference;
-import org.LexGrid.LexBIG.Extensions.Generic.SearchExtension;
-
-import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
-import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-
-import org.LexGrid.LexBIG.DataModel.Collections.*;
-import org.LexGrid.LexBIG.DataModel.Core.*;
-import org.LexGrid.LexBIG.LexBIGService.*;
-import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
-import org.LexGrid.LexBIG.Utility.*;
-import org.LexGrid.concepts.*;
-import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
-import org.LexGrid.LexBIG.Utility.Iterators.*;
-import org.LexGrid.codingSchemes.*;
-import org.apache.log4j.*;
-
-import org.LexGrid.LexBIG.DataModel.Core.types.*;
-import org.LexGrid.naming.*;
-import org.LexGrid.LexBIG.Extensions.Generic.*;
-
-import org.apache.commons.codec.language.*;
-import org.LexGrid.LexBIG.Extensions.Generic.SearchExtension;
-
-import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-import org.LexGrid.LexBIG.Impl.LexBIGServiceImpl;
-
-import org.lexgrid.resolvedvalueset.LexEVSResolvedValueSetService;
-import org.lexgrid.resolvedvalueset.impl.LexEVSResolvedValueSetServiceImpl;
-import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
 
 
 public class SimpleSearchUtils {

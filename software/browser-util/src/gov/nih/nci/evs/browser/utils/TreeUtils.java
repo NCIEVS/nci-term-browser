@@ -1,33 +1,31 @@
 package gov.nih.nci.evs.browser.utils;
 
+
 import gov.nih.nci.evs.browser.common.*;
-
 import java.util.*;
-import java.util.Map;
 import java.util.Map.Entry;
-
+import java.util.Map;
+import org.apache.log4j.*;
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.commonTypes.*;
+import org.LexGrid.concepts.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.Exceptions.*;
 import org.LexGrid.LexBIG.Extensions.Generic.*;
 import org.LexGrid.LexBIG.Extensions.Generic.LexBIGServiceConvenienceMethods.*;
-import org.LexGrid.LexBIG.LexBIGService.*;
-import org.LexGrid.LexBIG.Utility.*;
-import org.LexGrid.codingSchemes.*;
-import org.LexGrid.commonTypes.*;
-import org.LexGrid.naming.*;
-import org.LexGrid.concepts.*;
-
-import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
-import org.apache.log4j.*;
-
+import org.LexGrid.LexBIG.Impl.Extensions.tree.dao.iterator.ChildTreeNodeIterator;
 import org.LexGrid.LexBIG.Impl.Extensions.tree.json.JsonConverter;
 import org.LexGrid.LexBIG.Impl.Extensions.tree.json.JsonConverterFactory;
+import org.LexGrid.LexBIG.Impl.Extensions.tree.model.LexEvsTree;
+import org.LexGrid.LexBIG.Impl.Extensions.tree.model.LexEvsTreeNode;
 import org.LexGrid.LexBIG.Impl.Extensions.tree.service.TreeService;
 import org.LexGrid.LexBIG.Impl.Extensions.tree.service.TreeServiceFactory;
-import org.LexGrid.LexBIG.Impl.Extensions.tree.dao.iterator.ChildTreeNodeIterator;
-import org.LexGrid.LexBIG.Impl.Extensions.tree.model.LexEvsTreeNode;
-import org.LexGrid.LexBIG.Impl.Extensions.tree.model.LexEvsTree;
+import org.LexGrid.LexBIG.LexBIGService.*;
+import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
+import org.LexGrid.LexBIG.Utility.*;
+import org.LexGrid.naming.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -75,32 +73,11 @@ import org.LexGrid.LexBIG.Impl.Extensions.tree.model.LexEvsTree;
  * @author EVS Team
  * @version 1.0
  *
- * Note: This class is created based on Mayo's BuildTreForCode.java sample code
- *
- * Modification history
- *     Initial modification kim.ong@ngc.com
+ *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
 
-/**
- * Attempts to provide a tree, based on a focus code, that includes the
- * following information:
- *
- * <pre>
- * - All paths from the hierarchy root to one or more focus codes.
- * - Immediate children of every node in path to root
- * - Indicator to show whether any unexpanded node can be further expanded
- * </pre>
- *
- * This example accepts two parameters... The first parameter is required, and
- * must contain at least one code in a comma-delimited list. A tree is produced
- * for each code. Time to produce the tree for each code is printed in
- * milliseconds. In order to factor out costs of startup and shutdown, resolving
- * multiple codes may offer a better overall estimate performance.
- *
- * The second parameter is optional, and can indicate a hierarchy ID to navigate
- * when resolving child nodes. If not provided, "is_a" is assumed.
- */
+
 public class TreeUtils {
     private static Logger _logger = Logger.getLogger(TreeUtils.class);
     private static LocalNameList _noopList = new LocalNameList();

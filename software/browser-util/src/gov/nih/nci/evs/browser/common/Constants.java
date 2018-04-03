@@ -1,7 +1,9 @@
 package gov.nih.nci.evs.browser.common;
 
-import java.util.List;
+
 import java.util.Arrays;
+import java.util.List;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -46,10 +48,14 @@ import java.util.Arrays;
  */
 
 /**
- * Application constants class
+ * @author EVS Team
+ * @version 1.0
  *
- * @author kim.ong@ngc.com
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
  */
+
+
 public class Constants {
     public static final String PRODUCTION = "PRODUCTION";
     public static final String TELEPHONE = "240-276-5541 or Toll-Free: 1-888-478-4423";

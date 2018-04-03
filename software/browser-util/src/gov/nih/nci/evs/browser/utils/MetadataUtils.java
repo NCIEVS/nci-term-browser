@@ -1,18 +1,19 @@
 package gov.nih.nci.evs.browser.utils;
 
+
 import gov.nih.nci.evs.browser.common.*;
 import java.util.*;
-import org.LexGrid.LexBIG.DataModel.Collections.*;
-import org.LexGrid.LexBIG.DataModel.Core.*;
-import org.LexGrid.LexBIG.LexBIGService.*;
-import org.LexGrid.LexBIG.Utility.*;
-import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
-import org.LexGrid.codingSchemes.*;
-import org.LexGrid.LexBIG.Extensions.Generic.*;
-import org.LexGrid.LexBIG.Exceptions.LBException;
-
 import javax.faces.model.*;
 import org.apache.log4j.*;
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.LexBIG.DataModel.Collections.*;
+import org.LexGrid.LexBIG.DataModel.Core.*;
+import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
+import org.LexGrid.LexBIG.Exceptions.LBException;
+import org.LexGrid.LexBIG.Extensions.Generic.*;
+import org.LexGrid.LexBIG.LexBIGService.*;
+import org.LexGrid.LexBIG.Utility.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -63,6 +64,7 @@ import org.apache.log4j.*;
  *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
+
 
 public class MetadataUtils {
 	private boolean debug = false;

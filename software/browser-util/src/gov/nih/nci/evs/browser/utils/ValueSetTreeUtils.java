@@ -1,10 +1,10 @@
 package gov.nih.nci.evs.browser.utils;
 
+
 import gov.nih.nci.evs.browser.bean.*;
 import gov.nih.nci.evs.browser.bean.MappingData;
 import gov.nih.nci.evs.browser.common.Constants;
 import gov.nih.nci.evs.browser.properties.*;
-
 import java.io.*;
 import java.net.URI;
 import java.sql.*;
@@ -14,6 +14,20 @@ import java.util.Arrays;
 import java.util.Map.Entry;
 import java.util.Map;
 import javax.faces.model.*;
+import org.apache.commons.lang.*;
+import org.apache.log4j.*;
+import org.lexevs.dao.database.service.valuesets.LexEVSTreeItem;
+import org.lexevs.dao.database.service.valuesets.ValueSetHierarchyService;
+import org.lexevs.dao.database.service.valuesets.ValueSetHierarchyServiceImpl;
+import org.lexevs.property.PropertyExtension;
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.commonTypes.*;
+import org.LexGrid.commonTypes.Properties;
+import org.LexGrid.commonTypes.Property;
+import org.LexGrid.commonTypes.Source;
+import org.LexGrid.concepts.*;
+import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
+import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.DataModel.Core.types.*;
@@ -36,29 +50,15 @@ import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
 import org.LexGrid.LexBIG.Utility.*;
 import org.LexGrid.LexBIG.Utility.Iterators.*;
 import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
-import org.LexGrid.codingSchemes.*;
-import org.LexGrid.commonTypes.*;
-import org.LexGrid.commonTypes.Properties;
-import org.LexGrid.commonTypes.Property;
-import org.LexGrid.commonTypes.Source;
-import org.LexGrid.concepts.*;
 import org.LexGrid.naming.*;
 import org.LexGrid.relations.AssociationPredicate;
 import org.LexGrid.relations.Relations;
-import org.LexGrid.valueSets.ValueSetDefinition;
-import org.LexGrid.versions.*;
-import org.apache.commons.lang.*;
-import org.apache.log4j.*;
-import org.lexevs.dao.database.service.valuesets.LexEVSTreeItem;
-import org.lexevs.dao.database.service.valuesets.ValueSetHierarchyService;
-import org.lexevs.dao.database.service.valuesets.ValueSetHierarchyServiceImpl;
-import org.lexevs.property.PropertyExtension;
-import org.lexgrid.resolvedvalueset.LexEVSResolvedValueSetService;
 import org.lexgrid.resolvedvalueset.impl.LexEVSResolvedValueSetServiceImpl;
+import org.lexgrid.resolvedvalueset.LexEVSResolvedValueSetService;
 import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
 import org.lexgrid.valuesets.sourceasserted.impl.SourceAssertedValueSetHierarchyServicesImpl;
+import org.LexGrid.valueSets.ValueSetDefinition;
+import org.LexGrid.versions.*;
 import static gov.nih.nci.evs.browser.common.Constants.*;
 
 
@@ -111,6 +111,8 @@ import static gov.nih.nci.evs.browser.common.Constants.*;
  *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
+
+
 public class ValueSetTreeUtils {
 
 	private SourceAssertedValueSetHierarchyServicesImpl service;

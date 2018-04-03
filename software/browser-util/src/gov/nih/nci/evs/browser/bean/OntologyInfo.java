@@ -1,7 +1,9 @@
 package gov.nih.nci.evs.browser.bean;
 
+
 import java.io.*;
 import java.util.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -44,6 +46,15 @@ import java.util.*;
  *      POSSIBILITY OF SUCH DAMAGE.
  * <!-- LICENSE_TEXT_END -->
  */
+
+/**
+ * @author EVS Team
+ * @version 1.0
+ *
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
+ */
+
 
 public class OntologyInfo implements java.io.Serializable {
     private String _codingScheme = "";

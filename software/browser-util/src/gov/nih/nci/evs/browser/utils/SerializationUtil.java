@@ -1,5 +1,9 @@
 package gov.nih.nci.evs.browser.utils;
 
+
+import java.io.*;
+
+
 /**
  * <!-- LICENSE_TEXT_START -->
  * Copyright 2008,2009 NGIT. This software was developed in conjunction
@@ -50,7 +54,6 @@ package gov.nih.nci.evs.browser.utils;
  *
  */
 
-import java.io.*;
 
 public class SerializationUtil {
 

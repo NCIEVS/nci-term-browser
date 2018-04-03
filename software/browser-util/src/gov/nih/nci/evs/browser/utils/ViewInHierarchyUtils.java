@@ -1,7 +1,16 @@
 package gov.nih.nci.evs.browser.utils;
 
+
+import gov.nih.nci.evs.browser.common.*;
 import java.io.*;
 import java.util.*;
+import org.apache.log4j.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.commonTypes.*;
+import org.LexGrid.concepts.*;
+import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Collections.ConceptReferenceList;
 import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
@@ -25,14 +34,8 @@ import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet;
 import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
 import org.LexGrid.LexBIG.Utility.*;
 import org.LexGrid.LexBIG.Utility.Constructors;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
-import org.LexGrid.codingSchemes.*;
-import org.LexGrid.commonTypes.*;
-import org.LexGrid.concepts.*;
 import org.LexGrid.naming.*;
-import org.apache.log4j.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -80,11 +83,10 @@ import org.json.JSONObject;
  * @author EVS Team
  * @version 1.0
  *
- *      Modification history Initial implementation kim.ong@ngc.com
+ *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
 
-// Note: Version with the has more (...) nodes feature.
 
 public class ViewInHierarchyUtils {
 	public static int MAX_CHILDREN = 5;
@@ -1217,14 +1219,19 @@ public class ViewInHierarchyUtils {
 		System.out.println("Total run time (ms): " + (System.currentTimeMillis() - ms));
 	}
 
-/*
+
     public static void main(String[] args) throws Exception {
-		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		long ms = System.currentTimeMillis();
+		LexBIGService lbSvc = null;//RemoteServerUtil.createLexBIGService();
         ViewInHierarchyUtils vihu = new ViewInHierarchyUtils(lbSvc);
         String scheme = "NCI_Thesaurus";
-        String version = "15.12d";
-        String namespace = "NCI_Thesaurus";
+        System.out.println("scheme: " + scheme);
+        String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(scheme, Constants.PRODUCTION);
+        System.out.println("version: " + version);
+        String namespace = null;
         String code = "C2693"; //Erlotinib Hydrochloride (Code C2693)
+        namespace = new ConceptDetails(lbSvc).getNamespaceByCode(scheme, version, code);
+        System.out.println("namespace: " + namespace);
         //code = "C38628";
 	    HashMap hmap = vihu.getRoots(scheme, version);
 	    TreeItem ti = (TreeItem) hmap.get("<Root>");
@@ -1234,7 +1241,6 @@ public class ViewInHierarchyUtils {
 			if (hmap != null) {
 				ti = (TreeItem) hmap.get(code);
 				TreeItem.printTree(ti, 0);
-
 				String json = JSON2TreeItem.treeItem2Json(ti);
 				System.out.println(json);
 		    } else {
@@ -1247,7 +1253,7 @@ public class ViewInHierarchyUtils {
 		String json = vihu.getTree(scheme, version, code, namespace);
 		System.out.println("\n\nVIH JSON:" + "\n" + json);
 
-		TreeItem ti = JSON2TreeItem.json2TreeItem(json);
+		ti = JSON2TreeItem.json2TreeItem(json);
 		TreeItem.printTree(ti, 0);
 
 		TreeItem tree_item = vihu.searchTree(scheme, version, namespace, "C1404", ti);
@@ -1256,7 +1262,7 @@ public class ViewInHierarchyUtils {
 		HashSet hset = vihu.getChildItemCodes(tree_item);
 
         code = "C1404";
-        HashMap hmap = new TreeUtils(lbSvc).getSubconcepts(scheme, version, code, namespace);
+        hmap = new TreeUtils(lbSvc).getSubconcepts(scheme, version, code, namespace);
 		ti = (TreeItem) hmap.get(code);
 		TreeItem.printTree(ti, 0);
 
@@ -1265,21 +1271,22 @@ public class ViewInHierarchyUtils {
 
         String focus_code = "C20181";//Conceptual Entity (Code C20181)
         String dot_node_code = "@";
-        HashMap hmap = vihu.getRemainingNodes(scheme, version, focus_code, namespace, dot_node_code);
-		TreeItem ti = (TreeItem) hmap.get("<Root>");
+        hmap = vihu.getRemainingNodes(scheme, version, focus_code, namespace, dot_node_code);
+		ti = (TreeItem) hmap.get("<Root>");
 		TreeItem.printTree(ti, 0);
 
 		//Cell Aging (Code C16394)
 		//Cellular Process (Code C20480)
 
-        String focus_code = "C16394";//Conceptual Entity (Code C20181)
-        String dot_node_code = "C20480";
-        HashMap hmap = vihu.getRemainingNodes(scheme, version, focus_code, namespace, dot_node_code);
-		TreeItem ti = (TreeItem) hmap.get("<Root>");
+        focus_code = "C16394";//Conceptual Entity (Code C20181)
+        dot_node_code = "C20480";
+        hmap = vihu.getRemainingNodes(scheme, version, focus_code, namespace, dot_node_code);
+		ti = (TreeItem) hmap.get("<Root>");
 		TreeItem.printTree(ti, 0);
         code = "C16394";
         String vih_json = vihu.getTree(scheme, version, code, namespace);
+        System.out.println(vih_json);
+        System.out.println("Total run time (ms): " + (System.currentTimeMillis() - ms));
     }
-*/
 }
 

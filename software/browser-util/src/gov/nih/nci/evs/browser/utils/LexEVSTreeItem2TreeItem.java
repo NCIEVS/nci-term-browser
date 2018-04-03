@@ -1,14 +1,14 @@
 package gov.nih.nci.evs.browser.utils;
 
+
 import gov.nih.nci.evs.browser.properties.*;
-
-import org.lexevs.dao.database.service.valuesets.*;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import org.lexevs.dao.database.service.valuesets.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -59,6 +59,7 @@ import java.util.TreeMap;
  *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
+
 
 public class LexEVSTreeItem2TreeItem {
 

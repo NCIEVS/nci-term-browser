@@ -1,10 +1,11 @@
 package gov.nih.nci.evs.browser.utils;
 
+
 import java.io.*;
 import java.text.*;
 import java.util.*;
-
 import org.apache.log4j.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -47,6 +48,15 @@ import org.apache.log4j.*;
  *      POSSIBILITY OF SUCH DAMAGE.
  * <!-- LICENSE_TEXT_END -->
  */
+
+/**
+ * @author EVS Team
+ * @version 1.0
+ *
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
+ */
+
 
 public class Utils {
     private static Logger _logger = Logger.getLogger(Utils.class);

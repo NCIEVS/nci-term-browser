@@ -1,15 +1,14 @@
 package gov.nih.nci.evs.browser.utils;
 
-import java.util.*;
-
-import org.LexGrid.LexBIG.DataModel.Core.*;
-import org.apache.log4j.*;
-import org.LexGrid.valueSets.ValueSetDefinition;
-import org.LexGrid.LexBIG.Impl.Extensions.tree.model.LexEvsTreeNode;
-import org.lexevs.dao.database.service.valuesets.LexEVSTreeItem;
-
 
 import gov.nih.nci.evs.browser.bean.*;
+import java.util.*;
+import org.apache.log4j.*;
+import org.lexevs.dao.database.service.valuesets.LexEVSTreeItem;
+import org.LexGrid.LexBIG.DataModel.Core.*;
+import org.LexGrid.LexBIG.Impl.Extensions.tree.model.LexEvsTreeNode;
+import org.LexGrid.valueSets.ValueSetDefinition;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -60,6 +59,7 @@ import gov.nih.nci.evs.browser.bean.*;
  *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
+
 
 public class SortComparator implements Comparator<Object> {
     private static Logger _logger = Logger.getLogger(SortComparator.class);

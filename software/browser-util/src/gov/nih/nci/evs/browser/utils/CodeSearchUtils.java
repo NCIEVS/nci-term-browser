@@ -1,23 +1,21 @@
 package gov.nih.nci.evs.browser.utils;
 
-import java.util.*;
 
+import java.util.*;
+import org.apache.commons.codec.language.*;
+import org.apache.log4j.*;
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.concepts.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Core.*;
+import org.LexGrid.LexBIG.DataModel.Core.types.*;
+import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
+import org.LexGrid.LexBIG.Extensions.Generic.*;
 import org.LexGrid.LexBIG.LexBIGService.*;
 import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
 import org.LexGrid.LexBIG.Utility.*;
-import org.LexGrid.concepts.*;
-import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
 import org.LexGrid.LexBIG.Utility.Iterators.*;
-import org.LexGrid.codingSchemes.*;
-import org.apache.log4j.*;
-
-import org.LexGrid.LexBIG.DataModel.Core.types.*;
 import org.LexGrid.naming.*;
-import org.LexGrid.LexBIG.Extensions.Generic.*;
-
-import org.apache.commons.codec.language.*;
 
 
 /**
@@ -69,6 +67,8 @@ import org.apache.commons.codec.language.*;
  *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
+
+
  public class CodeSearchUtils {
     private static Logger _logger = Logger.getLogger(CodeSearchUtils.class);
     private static final boolean CASE_SENSITIVE = true;

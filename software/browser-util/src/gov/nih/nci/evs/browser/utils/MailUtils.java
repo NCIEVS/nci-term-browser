@@ -1,11 +1,10 @@
 package gov.nih.nci.evs.browser.utils;
 
-//import gov.nih.nci.evs.browser.properties.*;
 
 import java.util.*;
-
 import javax.mail.*;
 import javax.mail.internet.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -48,6 +47,15 @@ import javax.mail.internet.*;
  *      POSSIBILITY OF SUCH DAMAGE.
  * <!-- LICENSE_TEXT_END -->
  */
+
+/**
+ * @author EVS Team
+ * @version 1.0
+ *
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
+ */
+
 
 public class MailUtils extends Object {
     private static final long serialVersionUID = 1L;

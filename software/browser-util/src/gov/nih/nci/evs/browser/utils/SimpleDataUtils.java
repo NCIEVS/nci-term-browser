@@ -1,49 +1,41 @@
 package gov.nih.nci.evs.browser.utils;
 
+
 import java.util.*;
-
-
+import org.lexevs.paging.AbstractPageableIterator;
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.commonTypes.*;
 import org.LexGrid.LexBIG.DataModel.Collections.AssociationList;
+import org.LexGrid.LexBIG.DataModel.Collections.LocalNameList;
+import org.LexGrid.LexBIG.DataModel.Collections.NameAndValueList;
 import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
+import org.LexGrid.LexBIG.DataModel.Collections.SortOptionList;
 import org.LexGrid.LexBIG.DataModel.Core.AssociatedConcept;
 import org.LexGrid.LexBIG.DataModel.Core.Association;
+import org.LexGrid.LexBIG.DataModel.Core.CodingSchemeVersionOrTag;
 import org.LexGrid.LexBIG.DataModel.Core.ConceptReference;
+import org.LexGrid.LexBIG.DataModel.Core.NameAndValue;
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBResourceUnavailableException;
-import org.LexGrid.LexBIG.Impl.helpers.IteratorBackedResolvedConceptReferencesIterator;
-import org.LexGrid.LexBIG.LexBIGService.CodedNodeGraph;
-import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
-import org.LexGrid.LexBIG.Utility.Constructors;
-import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-import org.lexevs.paging.AbstractPageableIterator;
-
-import org.LexGrid.LexBIG.DataModel.Core.NameAndValue;
-import org.LexGrid.LexBIG.DataModel.Collections.NameAndValueList;
-
-import org.LexGrid.LexBIG.DataModel.Collections.SortOptionList;
-import org.LexGrid.LexBIG.DataModel.Collections.LocalNameList;
-
-import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet;
-
-
-import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.PropertyType;
-import org.LexGrid.LexBIG.DataModel.Core.CodingSchemeVersionOrTag;
-
-import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping;
-import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping.SearchContext;
-import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Direction;
+import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping.SearchContext;
+import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.MappingSortOption;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.MappingSortOptionName;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.QualifierSortOption;
-
-import org.LexGrid.codingSchemes.*;
-import org.LexGrid.commonTypes.*;
-import org.LexGrid.relations.Relations;
-import org.LexGrid.relations.AssociationPredicate;
-
+import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension;
+import org.LexGrid.LexBIG.Impl.helpers.IteratorBackedResolvedConceptReferencesIterator;
+import org.LexGrid.LexBIG.LexBIGService.CodedNodeGraph;
+import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.PropertyType;
+import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet;
+import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
+import org.LexGrid.LexBIG.Utility.Constructors;
+import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
 import org.LexGrid.naming.SupportedPropertyQualifier;
+import org.LexGrid.relations.AssociationPredicate;
+import org.LexGrid.relations.Relations;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -88,12 +80,14 @@ import org.LexGrid.naming.SupportedPropertyQualifier;
  */
 
 /**
- * The Class SearchByAssociationIteratorDecorator. Decorates a
- * ResolvedConceptReferencesIterator to provide paging support for Associated
- * Concept-type searches. As the iterator advances, subconcepts are queried from
- * the decorated iterator on demand, rather than all at once. This elminates the
- * need to resolve large CodedNodeGraphs.
+ * @author EVS Team
+ * @version 1.0
+ *
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
  */
+
+
 public class SimpleDataUtils {
 
 	private LexBIGService lbSvc = null;

@@ -1,7 +1,9 @@
 package gov.nih.nci.evs.browser.utils;
 
-import org.LexGrid.LexBIG.DataModel.Core.*;
+
 import org.LexGrid.commonTypes.*;
+import org.LexGrid.LexBIG.DataModel.Core.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -46,8 +48,14 @@ import org.LexGrid.commonTypes.*;
  */
 
 /**
- * Used to manage and sort search results based on a scoring algorithm.
+ * @author EVS Team
+ * @version 1.0
+ *
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
  */
+
+
 public class ScoredTerm implements Comparable<ScoredTerm> {
 
     ResolvedConceptReference _ref = null;

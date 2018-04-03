@@ -1,50 +1,44 @@
 package gov.nih.nci.evs.browser.utils;
 
-import gov.nih.nci.evs.browser.bean.*;
 
-import java.util.*;
-import java.net.URI;
-import java.io.*;
-
-
-import javax.faces.context.*;
-import javax.faces.event.*;
-import javax.faces.model.*;
-import javax.servlet.http.*;
-
-import gov.nih.nci.evs.browser.utils.*;
-import gov.nih.nci.evs.browser.properties.*;
-import gov.nih.nci.evs.browser.common.*;
-
-import org.LexGrid.LexBIG.DataModel.Collections.*;
-import org.LexGrid.LexBIG.DataModel.Core.*;
-import org.LexGrid.LexBIG.LexBIGService.*;
-import org.LexGrid.LexBIG.Utility.*;
-import org.LexGrid.codingSchemes.*;
-import org.LexGrid.naming.*;
-import org.LexGrid.LexBIG.Impl.Extensions.GenericExtensions.*;
-import org.apache.log4j.*;
-import javax.faces.event.ValueChangeEvent;
-
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
-import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
-import org.LexGrid.valueSets.ValueSetDefinition;
-import org.LexGrid.commonTypes.Source;
-import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
-import org.lexgrid.valuesets.dto.ResolvedValueSetDefinition;
-import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-import javax.servlet.ServletOutputStream;
-import org.LexGrid.concepts.*;
-import org.lexgrid.valuesets.dto.ResolvedValueSetCodedNodeSet;
-
-import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.PropertyType;
-import org.LexGrid.concepts.Definition;
-import org.LexGrid.commonTypes.PropertyQualifier;
-import org.LexGrid.commonTypes.Property;
-
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.XStream;
+import gov.nih.nci.evs.browser.bean.*;
+import gov.nih.nci.evs.browser.common.*;
+import gov.nih.nci.evs.browser.properties.*;
+import gov.nih.nci.evs.browser.utils.*;
+import java.io.*;
+import java.net.URI;
+import java.util.*;
+import javax.faces.context.*;
+import javax.faces.event.*;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.*;
+import javax.servlet.http.*;
+import javax.servlet.ServletOutputStream;
+import org.apache.log4j.*;
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.commonTypes.Property;
+import org.LexGrid.commonTypes.PropertyQualifier;
+import org.LexGrid.commonTypes.Source;
+import org.LexGrid.concepts.*;
+import org.LexGrid.concepts.Definition;
+import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+import org.LexGrid.LexBIG.DataModel.Collections.*;
+import org.LexGrid.LexBIG.DataModel.Core.*;
+import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
+import org.LexGrid.LexBIG.Impl.Extensions.GenericExtensions.*;
+import org.LexGrid.LexBIG.LexBIGService.*;
+import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.PropertyType;
+import org.LexGrid.LexBIG.Utility.*;
+import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
+import org.LexGrid.naming.*;
+import org.lexgrid.valuesets.dto.ResolvedValueSetCodedNodeSet;
+import org.lexgrid.valuesets.dto.ResolvedValueSetDefinition;
+import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
+import org.LexGrid.valueSets.ValueSetDefinition;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -87,6 +81,15 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  *      POSSIBILITY OF SUCH DAMAGE.
  * <!-- LICENSE_TEXT_END -->
  */
+
+/**
+ * @author EVS Team
+ * @version 1.0
+ *
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
+ */
+
 
 public class ValueSetMetadataUtils {
     public HashMap vsdURI2MetadataHashMap = null;

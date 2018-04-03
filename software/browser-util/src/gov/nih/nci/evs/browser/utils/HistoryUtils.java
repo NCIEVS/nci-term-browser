@@ -1,8 +1,10 @@
 package gov.nih.nci.evs.browser.utils;
 
+
 import java.text.*;
 import java.util.*;
-
+import org.apache.log4j.*;
+import org.LexGrid.concepts.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.NCIHistory.*;
 import org.LexGrid.LexBIG.DataModel.NCIHistory.types.*;
@@ -10,8 +12,7 @@ import org.LexGrid.LexBIG.Exceptions.*;
 import org.LexGrid.LexBIG.History.*;
 import org.LexGrid.LexBIG.LexBIGService.*;
 import org.LexGrid.LexBIG.Utility.*;
-import org.LexGrid.concepts.*;
-import org.apache.log4j.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -59,7 +60,10 @@ import org.apache.log4j.*;
  * @author EVS Team
  * @version 1.0
  *
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
  */
+
 
 public class HistoryUtils {
     private static Logger _logger = Logger.getLogger(HistoryUtils.class);

@@ -1,3 +1,11 @@
+package gov.nih.nci.evs.browser.utils;
+
+
+import java.io.*;
+import java.math.*;
+import java.util.*;
+
+
 /**
  * <!-- LICENSE_TEXT_START -->
  * Copyright 2008,2009 NGIT. This software was developed in conjunction
@@ -41,17 +49,13 @@
  */
 
 /**
- * SimpleSearchUtils (uses LexEVSAPI 6.1 SearchExtension)
+ * @author EVS Team
+ * @version 1.0
  *
- * @author kimong
+ *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
-package gov.nih.nci.evs.browser.utils;
 
-import java.io.*;
-import java.util.*;
-
-import java.math.*;
 
 public class SimpleTreeUtils {
     int node_counter = 0;

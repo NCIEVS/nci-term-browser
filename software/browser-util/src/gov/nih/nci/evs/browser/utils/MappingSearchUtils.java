@@ -1,46 +1,38 @@
 package gov.nih.nci.evs.browser.utils;
 
+
 import gov.nih.nci.evs.browser.bean.*;
 import gov.nih.nci.evs.browser.common.*;
-
-import java.util.*;
 import java.sql.*;
-
-import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
-import org.LexGrid.LexBIG.DataModel.Collections.*;
-import org.LexGrid.LexBIG.DataModel.Core.*;
-import org.LexGrid.LexBIG.Exceptions.*;
-import org.LexGrid.LexBIG.Impl.*;
-import org.LexGrid.LexBIG.LexBIGService.*;
-import org.LexGrid.concepts.*;
-import org.LexGrid.LexBIG.Utility.Iterators.*;
-import org.LexGrid.codingSchemes.*;
-import org.LexGrid.LexBIG.Utility.*;
-import org.LexGrid.LexBIG.DataModel.Core.types.*;
-import org.LexGrid.LexBIG.Extensions.Generic.*;
-import org.LexGrid.naming.*;
-import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
-import org.LexGrid.commonTypes.*;
-
+import java.util.*;
 import org.apache.commons.codec.language.*;
 import org.apache.log4j.*;
-import org.LexGrid.relations.Relations;
-
-import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.PropertyType;
-
-import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping.SearchContext;
-
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.commonTypes.*;
+import org.LexGrid.concepts.*;
+import org.LexGrid.LexBIG.DataModel.Collections.*;
+import org.LexGrid.LexBIG.DataModel.Core.*;
+import org.LexGrid.LexBIG.DataModel.Core.types.*;
+import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
+import org.LexGrid.LexBIG.Exceptions.*;
 import org.LexGrid.LexBIG.Extensions.Generic.*;
-import org.LexGrid.LexBIG.Extensions.Generic.SupplementExtension;
-
-import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Direction;
+import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping.SearchContext;
+import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.MappingSortOption;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.MappingSortOptionName;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.QualifierSortOption;
-import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping;
+import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension;
+import org.LexGrid.LexBIG.Extensions.Generic.SupplementExtension;
+import org.LexGrid.LexBIG.Impl.*;
+import org.LexGrid.LexBIG.LexBIGService.*;
+import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
+import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.PropertyType;
 import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.SearchDesignationOption;
-
+import org.LexGrid.LexBIG.Utility.*;
+import org.LexGrid.LexBIG.Utility.Iterators.*;
+import org.LexGrid.naming.*;
+import org.LexGrid.relations.Relations;
 
 
 /**
@@ -92,6 +84,7 @@ import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.SearchDesignationOption;
  *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
+
 
 public class MappingSearchUtils {
 

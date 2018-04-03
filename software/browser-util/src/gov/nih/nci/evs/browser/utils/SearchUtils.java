@@ -1,32 +1,26 @@
 package gov.nih.nci.evs.browser.utils;
 
-//import gov.nih.nci.test.util.*;
 
-import java.util.*;
-import java.sql.*;
-
-import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
-import org.LexGrid.LexBIG.DataModel.Collections.*;
-import org.LexGrid.LexBIG.DataModel.Core.*;
-import org.LexGrid.LexBIG.Exceptions.*;
-import org.LexGrid.LexBIG.Impl.*;
-import org.LexGrid.LexBIG.LexBIGService.*;
-import org.LexGrid.concepts.*;
-import org.LexGrid.LexBIG.Utility.Iterators.*;
-import org.LexGrid.codingSchemes.*;
-import org.LexGrid.LexBIG.Utility.*;
-import org.LexGrid.LexBIG.DataModel.Core.types.*;
-import org.LexGrid.LexBIG.Extensions.Generic.*;
-import org.LexGrid.naming.*;
-import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
-import org.LexGrid.commonTypes.*;
-
-//import gov.nih.nci.evs.browser.properties.*;
 import gov.nih.nci.evs.browser.common.*;
-
+import java.sql.*;
+import java.util.*;
 import org.apache.commons.codec.language.*;
 import org.apache.log4j.*;
-
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.commonTypes.*;
+import org.LexGrid.concepts.*;
+import org.LexGrid.LexBIG.DataModel.Collections.*;
+import org.LexGrid.LexBIG.DataModel.Core.*;
+import org.LexGrid.LexBIG.DataModel.Core.types.*;
+import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
+import org.LexGrid.LexBIG.Exceptions.*;
+import org.LexGrid.LexBIG.Extensions.Generic.*;
+import org.LexGrid.LexBIG.Impl.*;
+import org.LexGrid.LexBIG.LexBIGService.*;
+import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
+import org.LexGrid.LexBIG.Utility.*;
+import org.LexGrid.LexBIG.Utility.Iterators.*;
+import org.LexGrid.naming.*;
 
 
 /**
@@ -78,6 +72,7 @@ import org.apache.log4j.*;
  *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
+
 
 public class SearchUtils {
     private static Logger _logger = Logger.getLogger(SearchUtils.class);

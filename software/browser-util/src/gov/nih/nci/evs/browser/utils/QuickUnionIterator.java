@@ -1,15 +1,16 @@
 package gov.nih.nci.evs.browser.utils;
 
-import java.util.*;
-import java.io.Serializable;
 
+import java.io.Serializable;
+import java.util.*;
+import org.apache.log4j.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.Exceptions.*;
 import org.LexGrid.LexBIG.LexBIGService.*;
 import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
 import org.LexGrid.LexBIG.Utility.Iterators.*;
-import org.apache.log4j.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -54,11 +55,14 @@ import org.apache.log4j.*;
  */
 
 /**
- * The Class QuickUnionIterator. Provides Union-like resolving of CodedNodeSets
- * without the Union performance penalty. This Iterator assumes that all
- * restrictions have been placed on the CodedNodeSets BEFORE being passed into
- * this Iterator.
+ * @author EVS Team
+ * @version 1.0
+ *
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
  */
+
+
 public class QuickUnionIterator implements ResolvedConceptReferencesIterator {
     private static Logger _logger = Logger.getLogger(QuickUnionIterator.class);
 

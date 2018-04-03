@@ -1,76 +1,53 @@
 package gov.nih.nci.evs.browser.utils;
 
-import java.util.*;
+
+import gov.nih.nci.evs.security.*;
+import gov.nih.nci.system.client.*;
+import gov.nih.nci.system.client.ApplicationServiceProvider;
 import java.io.*;
 import java.net.*;
-import org.LexGrid.LexBIG.caCore.interfaces.*;
-import org.LexGrid.LexBIG.LexBIGService.*;
-import org.LexGrid.LexBIG.Impl.*;
-
-import gov.nih.nci.system.client.*;
-import gov.nih.nci.evs.security.*;
-
+import java.util.*;
 import org.apache.log4j.*;
-
+import org.LexGrid.codingSchemes.CodingScheme;
+import org.LexGrid.commonTypes.EntityDescription;
+import org.LexGrid.LexBIG.caCore.interfaces.*;
 import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
-import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
-
-
-import gov.nih.nci.system.client.ApplicationServiceProvider;
-
 import org.LexGrid.LexBIG.DataModel.Collections.AbsoluteCodingSchemeVersionReferenceList;
+import org.LexGrid.LexBIG.DataModel.Collections.CodingSchemeRenderingList;
+import org.LexGrid.LexBIG.DataModel.Collections.ConceptReferenceList;
+import org.LexGrid.LexBIG.DataModel.Collections.LocalNameList;
+import org.LexGrid.LexBIG.DataModel.Collections.SortOptionList;
+import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
+import org.LexGrid.LexBIG.DataModel.Core.CodingSchemeSummary;
+import org.LexGrid.LexBIG.DataModel.Core.CodingSchemeVersionOrTag;
+import org.LexGrid.LexBIG.DataModel.Core.ConceptReference;
+import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
+import org.LexGrid.LexBIG.DataModel.Core.types.CodingSchemeVersionStatus;
+import org.LexGrid.LexBIG.DataModel.InterfaceElements.CodingSchemeRendering;
+import org.LexGrid.LexBIG.Exceptions.LBException;
+import org.LexGrid.LexBIG.Exceptions.LBInvocationException;
+import org.LexGrid.LexBIG.Impl.*;
+import org.LexGrid.LexBIG.LexBIGService.*;
+import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.PropertyType;
 import org.LexGrid.LexBIG.Utility.Constructors;
 import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.LexGrid.naming.Mappings;
 import org.LexGrid.naming.SupportedCodingScheme;
+import org.lexgrid.resolvedvalueset.impl.LexEVSResolvedValueSetServiceImpl;
+import org.lexgrid.resolvedvalueset.LexEVSResolvedValueSetService;
 import org.LexGrid.util.PrintUtility;
+import org.LexGrid.valueSets.CodingSchemeReference;
 import org.LexGrid.valueSets.DefinitionEntry;
+import org.lexgrid.valuesets.dto.ResolvedValueSetCodedNodeSet;
+import org.lexgrid.valuesets.dto.ResolvedValueSetDefinition;
 import org.LexGrid.valueSets.EntityReference;
+import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
+import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
 import org.LexGrid.valueSets.PropertyMatchValue;
 import org.LexGrid.valueSets.PropertyReference;
-import org.LexGrid.valueSets.ValueSetDefinition;
 import org.LexGrid.valueSets.types.DefinitionOperator;
-import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
-import org.lexgrid.valuesets.dto.ResolvedValueSetDefinition;
+import org.LexGrid.valueSets.ValueSetDefinition;
 import org.LexGrid.valueSets.ValueSetDefinitionReference;
-import org.LexGrid.commonTypes.EntityDescription;
-import org.LexGrid.valueSets.CodingSchemeReference;
-
-import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
-
-import org.LexGrid.LexBIG.DataModel.Collections.SortOptionList;
-import org.LexGrid.LexBIG.Exceptions.LBException;
-
-import org.lexgrid.valuesets.dto.ResolvedValueSetCodedNodeSet;
-
-
-import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
-import org.LexGrid.LexBIG.DataModel.Collections.AbsoluteCodingSchemeVersionReferenceList;
-
-
-import org.LexGrid.LexBIG.DataModel.Core.ConceptReference;
-import org.LexGrid.codingSchemes.CodingScheme;
-import org.LexGrid.LexBIG.DataModel.Core.CodingSchemeVersionOrTag;
-import org.LexGrid.LexBIG.DataModel.Core.types.CodingSchemeVersionStatus;
-import org.LexGrid.LexBIG.DataModel.Core.CodingSchemeSummary;
-
-import org.LexGrid.LexBIG.DataModel.InterfaceElements.CodingSchemeRendering;
-
-import org.LexGrid.LexBIG.Exceptions.LBInvocationException;
-import org.LexGrid.LexBIG.DataModel.Collections.CodingSchemeRenderingList;
-
-import org.lexgrid.valuesets.dto.ResolvedValueSetCodedNodeSet;
-import org.LexGrid.LexBIG.DataModel.Collections.AbsoluteCodingSchemeVersionReferenceList;
-import org.LexGrid.LexBIG.DataModel.Collections.LocalNameList;
-
-import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.PropertyType;
-import org.LexGrid.LexBIG.DataModel.Collections.ConceptReferenceList;
-import org.LexGrid.LexBIG.DataModel.Core.ConceptReference;
-
-import org.lexgrid.resolvedvalueset.LexEVSResolvedValueSetService;
-import org.lexgrid.resolvedvalueset.impl.LexEVSResolvedValueSetServiceImpl;
-import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
 
 
 /**
@@ -120,6 +97,7 @@ import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
  * @version 1.0
  *
  *          Modification history Initial implementation kim.ong@ngc.com
+ *
  */
 
 

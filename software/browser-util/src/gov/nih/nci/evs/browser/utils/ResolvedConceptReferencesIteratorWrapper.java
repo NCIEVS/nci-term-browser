@@ -1,6 +1,8 @@
 package gov.nih.nci.evs.browser.utils;
 
+
 import org.LexGrid.LexBIG.Utility.Iterators.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -45,12 +47,14 @@ import org.LexGrid.LexBIG.Utility.Iterators.*;
  */
 
 /**
- * The Class ResolvedConceptReferencesIteratorWrapper. Decorates a
- * ResolvedConceptReferencesIterator to provide paging support for Associated
- * Concept-type searches. As the iterator advances, subconcepts are queried from
- * the decorated iterator on demand, rather than all at once. This elminates the
- * need to resolve large CodedNodeGraphs.
+ * @author EVS Team
+ * @version 1.0
+ *
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
  */
+
+
 public class ResolvedConceptReferencesIteratorWrapper {
 
     /** The Constant serialVersionUID. */

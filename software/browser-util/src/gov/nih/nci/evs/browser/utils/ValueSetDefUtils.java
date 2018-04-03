@@ -1,77 +1,62 @@
 package gov.nih.nci.evs.browser.utils;
 
-import java.io.*;
-import java.net.URI;
-import java.text.*;
-import java.util.*;
-import java.sql.*;
 
 import gov.nih.nci.system.client.ApplicationServiceProvider;
-import org.LexGrid.LexBIG.DataModel.Collections.AbsoluteCodingSchemeVersionReferenceList;
-import org.LexGrid.LexBIG.Utility.Constructors;
-import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
-import org.LexGrid.naming.Mappings;
-import org.LexGrid.naming.SupportedCodingScheme;
-import org.LexGrid.util.PrintUtility;
-import org.LexGrid.valueSets.DefinitionEntry;
-import org.LexGrid.valueSets.EntityReference;
-import org.LexGrid.valueSets.PropertyMatchValue;
-import org.LexGrid.valueSets.PropertyReference;
-import org.LexGrid.valueSets.ValueSetDefinition;
-import org.LexGrid.valueSets.types.DefinitionOperator;
-import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
-import org.lexgrid.valuesets.dto.ResolvedValueSetDefinition;
-
-import org.LexGrid.LexBIG.DataModel.Collections.*;
-import org.LexGrid.LexBIG.DataModel.Core.*;
-import org.LexGrid.LexBIG.Exceptions.*;
-import org.LexGrid.LexBIG.History.*;
-import org.LexGrid.LexBIG.LexBIGService.*;
-import org.LexGrid.LexBIG.Utility.*;
-import org.LexGrid.concepts.*;
-import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
-import org.LexGrid.LexBIG.Utility.Iterators.*;
+import java.io.*;
+import java.net.URI;
+import java.sql.*;
+import java.text.*;
+import java.util.*;
+import java.util.Arrays;
+import java.util.Map.Entry;
+import java.util.Map;
+import org.apache.log4j.*;
+import org.json.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;
-import org.LexGrid.relations.Relations;
-import org.LexGrid.versions.*;
-import org.LexGrid.naming.*;
+import org.LexGrid.commonTypes.Source;
+import org.LexGrid.concepts.*;
+import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
+import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+import org.LexGrid.LexBIG.DataModel.Collections.*;
+import org.LexGrid.LexBIG.DataModel.Collections.AbsoluteCodingSchemeVersionReferenceList;
+import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.DataModel.Core.types.*;
+import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
+import org.LexGrid.LexBIG.Exceptions.*;
 import org.LexGrid.LexBIG.Extensions.Generic.*;
-
-
-import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Direction;
+import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping.SearchContext;
+import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.MappingSortOption;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.MappingSortOptionName;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.QualifierSortOption;
-import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
-
+import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension;
 import org.LexGrid.LexBIG.Extensions.Generic.SupplementExtension;
-import org.LexGrid.relations.AssociationPredicate;
-
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
-import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
-
-import org.LexGrid.valueSets.ValueSetDefinition;
-import org.LexGrid.commonTypes.Source;
-
-
-import org.apache.log4j.*;
-import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping;
-import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping.SearchContext;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import org.LexGrid.LexBIG.History.*;
+import org.LexGrid.LexBIG.LexBIGService.*;
 import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
+import org.LexGrid.LexBIG.Utility.*;
+import org.LexGrid.LexBIG.Utility.Constructors;
+import org.LexGrid.LexBIG.Utility.Iterators.*;
+import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
+import org.LexGrid.naming.*;
+import org.LexGrid.naming.Mappings;
+import org.LexGrid.naming.SupportedCodingScheme;
+import org.LexGrid.relations.AssociationPredicate;
+import org.LexGrid.relations.Relations;
+import org.LexGrid.util.PrintUtility;
+import org.LexGrid.valueSets.DefinitionEntry;
+import org.lexgrid.valuesets.dto.ResolvedValueSetDefinition;
+import org.LexGrid.valueSets.EntityReference;
 import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
+import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
+import org.LexGrid.valueSets.PropertyMatchValue;
+import org.LexGrid.valueSets.PropertyReference;
+import org.LexGrid.valueSets.types.DefinitionOperator;
+import org.LexGrid.valueSets.ValueSetDefinition;
+import org.LexGrid.versions.*;
 
-import org.json.*;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -119,7 +104,7 @@ import org.json.*;
  * @author EVS Team
  * @version 1.0
  *
- *      Modification history Initial implementation kim.ong@ngc.com
+ *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
 

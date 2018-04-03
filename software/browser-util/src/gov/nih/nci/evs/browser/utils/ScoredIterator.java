@@ -1,11 +1,12 @@
 package gov.nih.nci.evs.browser.utils;
 
-import java.util.*;
 
+import java.util.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.Exceptions.*;
 import org.LexGrid.LexBIG.Utility.Iterators.*;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -50,9 +51,14 @@ import org.LexGrid.LexBIG.Utility.Iterators.*;
  */
 
 /**
- * Used to wrap scored results for consumption as a standard
- * ResolvedConceptReferenceIterator.
+ * @author EVS Team
+ * @version 1.0
+ *
+ *          Modification history Initial implementation kim.ong@ngc.com
+ *
  */
+
+
 public class ScoredIterator implements ResolvedConceptReferencesIterator {
     private static final long serialVersionUID = -4975979409144702081L;
     private ScoredTerm[] _scoredTerms = null;

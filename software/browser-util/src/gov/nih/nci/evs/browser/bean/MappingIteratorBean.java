@@ -1,24 +1,23 @@
 package gov.nih.nci.evs.browser.bean;
 
-import java.io.*;
-import java.util.*;
-
-import org.LexGrid.LexBIG.Utility.Iterators.*;
-import org.LexGrid.LexBIG.DataModel.Core.*;
-import org.apache.log4j.*;
 
 import gov.nih.nci.evs.browser.common.*;
 import gov.nih.nci.evs.browser.properties.*;
-
-import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
+import java.io.*;
+import java.util.*;
+import org.apache.log4j.*;
 import org.LexGrid.LexBIG.DataModel.Collections.AssociationList;
-import org.LexGrid.naming.SupportedAssociation;
-import org.LexGrid.relations.Relations;
-import org.LexGrid.relations.AssociationPredicate;
-import org.LexGrid.LexBIG.DataModel.Core.Association;
+import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.DataModel.Core.AssociatedConcept;
+import org.LexGrid.LexBIG.DataModel.Core.Association;
 import org.LexGrid.LexBIG.DataModel.Core.NameAndValue;
+import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
+import org.LexGrid.LexBIG.Utility.Iterators.*;
 import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
+import org.LexGrid.naming.SupportedAssociation;
+import org.LexGrid.relations.AssociationPredicate;
+import org.LexGrid.relations.Relations;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -69,6 +68,7 @@ import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
  *          Modification history Initial implementation kim.ong@ngc.com
  *
  */
+
 
 public class MappingIteratorBean extends Object {
     private static Logger _logger = Logger.getLogger(MappingIteratorBean.class);

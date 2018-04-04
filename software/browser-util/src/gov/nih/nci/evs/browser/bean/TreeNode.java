@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.XStream;
 
-public class TreeNode
+public class TreeNode implements Serializable
 {
 
 // Variable declaration

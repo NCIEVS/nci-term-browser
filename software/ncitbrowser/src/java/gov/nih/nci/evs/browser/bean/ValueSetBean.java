@@ -442,6 +442,7 @@ public class ValueSetBean {
                 .getExternalContext().getRequest();
 
         String selectedvalueset = null;
+        LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
         //String selectedvalueset = (String) request.getParameter("valueset");
         String multiplematches = HTTPUtils.cleanXSS((String) request.getParameter("multiplematches"));
         if (multiplematches != null) {
@@ -488,7 +489,6 @@ public class ValueSetBean {
 			Vector u = DataUtils.parseData(t, delim);
 			String uri = (String) u.elementAt(0);
 			String version = (String) u.elementAt(1);
-			if (version == null) return null;
 			if (version == null || version.compareTo("null") == 0) {
 				version = DataUtils.getVocabularyVersionByTag(uri, "PRODUCTION");
 			}
@@ -498,7 +498,7 @@ public class ValueSetBean {
 		key = key + buf.toString();
         request.getSession().setAttribute("coding_scheme_ref", coding_scheme_ref);
 		try {
-			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+
             CodingSchemeDataUtils codingSchemeDataUtils = new CodingSchemeDataUtils(lbSvc);
 			ResolvedConceptReferencesIterator itr = codingSchemeDataUtils.resolveCodingScheme(vsd_uri, null, false);
 			try {

@@ -1,4 +1,3 @@
-
 package gov.nih.nci.evs.browser.utils;
 
 import java.net.*;
@@ -7,6 +6,8 @@ import java.util.*;
 
 import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
+import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
+import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
 
 public class IteratorHelper {
 
@@ -27,6 +28,40 @@ public class IteratorHelper {
     protected static void displayRef(int index, ResolvedConceptReference ref) {
         System.out.println("(" + index + ") " + getResolvedConceptReferenceExpression(ref));
     }
+
+    public static void dumpResolvedConceptReferenceList(ResolvedConceptReferenceList list) {
+		dumpResolvedConceptReferenceList(list, true);
+	}
+
+    public static void dumpResolvedConceptReferenceList(ResolvedConceptReferenceList list, boolean showIndex) {
+		int knt = 0;
+		for (int i=0; i<list.getResolvedConceptReferenceCount(); i++) {
+			ResolvedConceptReference ref = list.getResolvedConceptReference(i);
+			knt++;
+			if (showIndex) {
+				displayRef(knt, ref);
+			} else {
+				displayRef(ref);
+			}
+		}
+	}
+
+    public static void dumpAbsoluteCodingSchemeVersionReferenceList(List<AbsoluteCodingSchemeVersionReference> list) {
+		int knt = 0;
+		//for (int i=0; i<list.getAbsoluteCodingSchemeVersionReferenceCount(); i++) {
+		for (int i=0; i<list.size(); i++) {
+			AbsoluteCodingSchemeVersionReference ref = list.get(i);
+			StringBuffer buf = new StringBuffer();
+			//buf.append(ref.getEntityDescription().getContent() + " (" + ref.getConceptCode() + ")").append("\n");
+			buf.append("\turi: " + ref.getCodingSchemeURN()).append("\n");
+			/*
+			buf.append("\tcoding scheme: " + ref.getCodingSchemeName()).append("\n");
+			buf.append("\tversion: " + ref.getCodingSchemeVersion()).append("\n");
+			buf.append("\tnamespace: " + ref.getCodeNamespace());
+			*/
+			System.out.println(buf.toString());
+		}
+	}
 
     public static void dumpIterator(ResolvedConceptReferencesIterator itr, int batchSize, boolean showIndex) {
 		if (batchSize != -1) {

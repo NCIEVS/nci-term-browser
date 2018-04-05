@@ -127,7 +127,8 @@ import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
 
 public final class AjaxServlet extends HttpServlet {
     private static Logger _logger = Logger.getLogger(AjaxServlet.class);
-    CodingSchemeDataUtils csdu = null;
+    //CodingSchemeDataUtils csdu = null;
+    //ValueSetDefUtils vsdu = null;
     boolean show_released_file_button = false;
 
     /**
@@ -144,8 +145,12 @@ public final class AjaxServlet extends HttpServlet {
      *         problems occur during initialisation
      */
     public void init() throws ServletException {
+		/*
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+		vsdu = new ValueSetDefUtils(lbSvc, vsd_service);
 		csdu = new CodingSchemeDataUtils(lbSvc);
+		*/
     }
 
     /**
@@ -175,9 +180,6 @@ public final class AjaxServlet extends HttpServlet {
             throws IOException, ServletException {
         execute(request, response);
     }
-
-
-
 
     private static void debugJSONString(String msg, String jsonString) {
     	boolean debug = false;
@@ -3777,7 +3779,7 @@ out.flush();
 		}
 	}
 
-
+/*
     public void resolveValueSetAction(HttpServletRequest request, HttpServletResponse response) {
         String selectedvalueset = null;
         //String selectedvalueset = (String) request.getParameter("valueset");
@@ -3879,15 +3881,6 @@ out.flush();
 			}
 
 			request.getSession().setAttribute("coding_scheme_ref", coding_scheme_ref);
-            /*
-            try {
-				int numberRemaining = itr.numberRemaining();
-				System.out.println("numberRemaining: " + numberRemaining);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			*/
-
 			request.getSession().setAttribute("ResolvedConceptReferencesIterator", itr);
 			request.getSession().setAttribute("resolved_vs_key", key);
 
@@ -3910,12 +3903,6 @@ out.flush();
 		request.getSession().setAttribute("message", msg);
         try {
 			String nextJSP = "/pages/resolved_value_set.jsf?vsd_uri="+vsd_uri;
-			/*
-            String defaultCodingScheme = DataUtils.getValueSetDefaultCodingScheme(vsd_uri);
-            if (!DataUtils.isNCIT(defaultCodingScheme)) {
-				nextJSP = "/pages/default_resolved_value_set.jsf?vsd_uri="+vsd_uri;
-			}
-			*/
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 			dispatcher.forward(request,response);
 			return;
@@ -3925,6 +3912,141 @@ out.flush();
 		}
         //return "resolved_value_set";
 	}
+	*/
+
+    public void resolveValueSetAction(HttpServletRequest request, HttpServletResponse response) {
+        String selectedvalueset = null;
+        String multiplematches = HTTPUtils.cleanXSS((String) request.getParameter("multiplematches"));
+        if (multiplematches != null) {
+			selectedvalueset = HTTPUtils.cleanXSS((String) request.getParameter("valueset"));
+		} else {
+			selectedvalueset = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+			if (selectedvalueset != null && selectedvalueset.indexOf("|") != -1) {
+				Vector u = StringUtils.parseData(selectedvalueset);
+				selectedvalueset = (String) u.elementAt(1);
+			}
+		}
+
+		String valueset_search_algorithm = HTTPUtils.cleanXSS((String) request.getParameter("valueset_search_algorithm"));
+		String selectValueSetSearchOption = HTTPUtils.cleanXSS((String) request.getParameter("selectValueSetSearchOption"));
+		request.getSession().setAttribute("valueset_search_algorithm", valueset_search_algorithm);
+		request.getSession().setAttribute("searchTarget", selectValueSetSearchOption);
+
+        String vsd_uri = selectedvalueset;
+		request.getSession().setAttribute("selectedvalueset", selectedvalueset);
+        request.getSession().setAttribute("vsd_uri", vsd_uri);
+        String[] coding_scheme_ref = null;
+        String key = vsd_uri;
+
+        LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+        CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+        LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+        ValueSetDefUtils vsdu = new ValueSetDefUtils(lbSvc, vsd_service);
+        Vector w = vsdu.getCodingSchemeReferencesInValueSetDefinition(vsd_uri, "PRODUCTION");
+        if (w != null) {
+			coding_scheme_ref = new String[w.size()];
+			for (int i=0; i<w.size(); i++) {
+				String s = (String) w.elementAt(i);
+				coding_scheme_ref[i] = s;
+
+			}
+		}
+        if (coding_scheme_ref == null || coding_scheme_ref.length == 0) {
+			String msg = "No PRODUCTION version of coding scheme is available.";
+			request.getSession().setAttribute("message", msg);
+
+			try {
+				String nextJSP = "/pages/resolve_value_set.jsf";
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+				dispatcher.forward(request,response);
+				return;
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			return;
+		}
+
+		AbsoluteCodingSchemeVersionReferenceList csvList = new AbsoluteCodingSchemeVersionReferenceList();
+        StringBuffer buf = new StringBuffer();
+        for (int i=0; i<coding_scheme_ref.length; i++) {
+			String t = coding_scheme_ref[i];
+			String delim = "|";
+			if (t.indexOf("|") == -1) {
+				delim = "$";
+			}
+			Vector u = StringUtils.parseData(t, delim);
+			String uri = (String) u.elementAt(0);
+			String version = (String) u.elementAt(1);
+			if (version == null || version.compareTo("null") == 0) {
+				version = csdu.getVocabularyVersionByTag(uri, "PRODUCTION");
+			}
+			buf.append("|" + uri + "$" + version);
+            csvList.addAbsoluteCodingSchemeVersionReference(Constructors.createAbsoluteCodingSchemeVersionReference(uri, version));
+		}
+
+		key = key + buf.toString();
+        request.getSession().setAttribute("coding_scheme_ref", coding_scheme_ref);
+
+		try {
+			//LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+            //CodingSchemeDataUtils codingSchemeDataUtils = new CodingSchemeDataUtils(lbSvc);
+			ResolvedConceptReferencesIterator itr = csdu.resolveCodingScheme(vsd_uri, null, false);
+
+			IteratorBeanManager iteratorBeanManager = null;
+
+			if (FacesContext.getCurrentInstance() != null &&
+				FacesContext.getCurrentInstance().getExternalContext() != null &&
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null) {
+				 iteratorBeanManager = (IteratorBeanManager) FacesContext.getCurrentInstance().getExternalContext()
+				.getSessionMap().get("iteratorBeanManager");
+			}
+
+			if (iteratorBeanManager == null) {
+				iteratorBeanManager = new IteratorBeanManager();
+				request.getSession().setAttribute("iteratorBeanManager", iteratorBeanManager);
+			}
+
+			request.getSession().setAttribute("ResolvedConceptReferencesIterator", itr);
+			IteratorBean iteratorBean = iteratorBeanManager.getIteratorBean(key);
+			if (iteratorBean == null) {
+				iteratorBean = new IteratorBean(itr);
+				iteratorBean.initialize();
+				iteratorBean.setKey(key);
+				iteratorBeanManager.addIteratorBean(iteratorBean);
+			}
+
+			request.getSession().setAttribute("coding_scheme_ref", coding_scheme_ref);
+			request.getSession().setAttribute("ResolvedConceptReferencesIterator", itr);
+			request.getSession().setAttribute("resolved_vs_key", key);
+
+			try {
+				String nextJSP = "/pages/resolved_value_set.jsf";
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+				dispatcher.forward(request,response);
+				return;
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			return;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		String msg = "Unable to resolve the value set " + vsd_uri;
+		request.getSession().setAttribute("message", msg);
+        try {
+			String nextJSP = "/pages/resolved_value_set.jsf?vsd_uri="+vsd_uri;
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+			dispatcher.forward(request,response);
+			return;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
 
     public String convertValueSetURI(String uri) {
 		if (!uri.startsWith(Constants.VALUE_SET_URI_PREFIX)) {
@@ -4943,6 +5065,10 @@ out.flush();
 	}
 
     public ResolvedValueSetIteratorHolder constructResolvedValueSetIteratorHolder(ValueSetConfig vsc) {
+
+        LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+        CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+
 		String table_content = null;
 		StringBuffer table_content_buf = new StringBuffer();
 
@@ -4983,7 +5109,7 @@ out.flush();
 					if (ncit_production_version != null) {
 						url = url + "&version=" + ncit_production_version;
 					}
-					LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+					//LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCIT_CS_NAME, ncit_production_version, code);
 					url = url + "&ns=" + ns;
 					rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, url, cdisc);
@@ -5004,6 +5130,9 @@ out.flush();
 
 
     public String getReleasedFileContent(ValueSetConfig vsc) {
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+
 		String table_content = null;
 		StringBuffer table_content_buf = new StringBuffer();
 		String filename = vsc.getReportURI();
@@ -5042,7 +5171,7 @@ out.flush();
 					if (ncit_production_version != null) {
 						url = url + "&version=" + ncit_production_version;
 					}
-					LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+					//LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCIT_CS_NAME, ncit_production_version, code);
 					url = url + "&ns=" + ns;
 					ResolvedValueSetIteratorHolder rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, url, cdisc);

@@ -114,12 +114,15 @@ public class ValueSetDefUtils {
 	private List valueSetDefinitionURIList = null;
 	LexBIGService lbSvc = null;
 	LexEVSValueSetDefinitionServices vsd_service = null;
+	CodingSchemeDataUtils csdu = null;
 	HashMap vsdUri2NameMap = null;
 
     public ValueSetDefUtils(LexBIGService lbSvc, LexEVSValueSetDefinitionServices vsd_service) {
 		this.lbSvc = lbSvc;
         this.vsd_service = vsd_service;
+        this.csdu = new CodingSchemeDataUtils(lbSvc);
         valueSetDefinitionURIList = this.vsd_service.listValueSetDefinitionURIs();
+
         createVsdUri2NameMap();
 	}
 
@@ -217,7 +220,58 @@ public class ValueSetDefUtils {
 		return null;
 	}
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public Vector getCodingSchemeReferencesInValueSetDefinition(String uri, String tag) {
+		try {
+			Vector w = new Vector();
+			Vector urn_vec = getCodingSchemeURNsInValueSetDefinition(uri);
+			if (urn_vec != null) {
+				for (int i=0; i<urn_vec.size(); i++) {
+					String urn = (String) urn_vec.elementAt(i);
+					Vector v = csdu.getCodingSchemeVersionsByURN(urn, tag);
+					if (v != null) {
+						for (int j=0; j<v.size(); j++) {
+							String version = (String) v.elementAt(j);
+							w.add(urn + "|" + version);
+						}
+					}
+				}
+				w = new SortUtils().quickSort(w);
+				return w;
+		    }
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 
+
+    public Vector getCodingSchemeURNsInValueSetDefinition(String uri) {
+	    Vector v = new Vector();
+		try {
+			java.net.URI valueSetDefinitionURI = new URI(uri);
+			//LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+			if (vsd_service == null) {
+				System.out.println("Unable to instantiate LexEVSValueSetDefinitionServices???");
+				return null;
+			}
+
+	        ValueSetDefinition vsd = vsd_service.getValueSetDefinition(valueSetDefinitionURI, null);
+	        Mappings mappings = vsd.getMappings();
+            SupportedCodingScheme[] supportedCodingSchemes = mappings.getSupportedCodingScheme();
+            if (supportedCodingSchemes == null) return null;
+            for (int i=0; i<supportedCodingSchemes.length; i++) {
+				SupportedCodingScheme supportedCodingScheme = supportedCodingSchemes[i];
+				v.add(supportedCodingScheme.getUri());
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		} finally {
+			//System.out.println("Total run time (ms): " + (System.currentTimeMillis() - ms));
+		}
+		return new SortUtils().quickSort(v);
+    }
 /*
     public static void main(String[] args) throws Exception {
 		String output_dir = args[0];

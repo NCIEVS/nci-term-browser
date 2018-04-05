@@ -221,6 +221,39 @@ public class ValueSetDefUtils {
 	}
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public Vector getCodingSchemeReferencesInValueSetDefinition(String uri) {
+		HashSet hset = new HashSet();
+	    if (uri.indexOf("|") != -1) {
+			Vector u = StringUtils.parseData(uri);
+			uri = (String) u.elementAt(1);
+		}
+		try {
+			Vector w = new Vector();
+			Vector urn_vec = getCodingSchemeURNsInValueSetDefinition(uri);
+			if (urn_vec != null) {
+				for (int i=0; i<urn_vec.size(); i++) {
+					String urn = (String) urn_vec.elementAt(i);
+					Vector v = csdu.getCodingSchemeVersionsByURN(urn);
+					if (v != null) {
+						for (int j=0; j<v.size(); j++) {
+							String version = (String) v.elementAt(j);
+							String urn_version = urn + "|" + version;
+							if (!hset.contains(urn_version)) {
+								hset.add(urn_version);
+							    w.add(urn_version);
+						    }
+						}
+					}
+				}
+				w = new SortUtils().quickSort(w);
+				return w;
+		    }
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
     public Vector getCodingSchemeReferencesInValueSetDefinition(String uri, String tag) {
 		try {
 			Vector w = new Vector();

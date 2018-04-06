@@ -6922,14 +6922,18 @@ if (lbSvc == null) {
     //public OntologyInfo(String codingScheme, String displayName, String version, String tag, String label, String sortCategory) {
 		    String tag = null;
 		    String productionVersion = getProductionVersion(short_scheme_name);
-		    //KLO, 12/07/2016
-		    if (version != null && version.compareTo(productionVersion) == 0) {
-		    //if (version.compareTo(productionVersion) == 0) {
-				tag = "PRODUCTION";
+		    // 04062018
+		    if (productionVersion == null) {
+				System.out.println("WARNING: Unable to find the PRODUCITON version of " + short_scheme_name + ".");
+			} else {
+				//KLO, 12/07/2016
+				if (version != null && version.compareTo(productionVersion) == 0) {
+				//if (version.compareTo(productionVersion) == 0) {
+					tag = "PRODUCTION";
+				}
+				OntologyInfo info = new OntologyInfo(short_scheme_name, display_name, version, tag, label, sort_category);
+				display_name_vec.add(info);
 			}
-
-	        OntologyInfo info = new OntologyInfo(short_scheme_name, display_name, version, tag, label, sort_category);
-			display_name_vec.add(info);
 	   }
 
 	   for (int i = 0; i < display_name_vec.size(); i++) {

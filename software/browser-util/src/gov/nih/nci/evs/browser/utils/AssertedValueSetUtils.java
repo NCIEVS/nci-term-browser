@@ -176,7 +176,6 @@ public class AssertedValueSetUtils {
 	}
 
 	public ResolvedConceptReferencesIterator getValueSetIteratorForURI(String rvs_uri) {
-		//URI uri = new URI(vs_uri);
 		ResolvedConceptReferencesIterator iterator = service.getValueSetIteratorForURI(rvs_uri);
 		return iterator;
 	}
@@ -323,12 +322,6 @@ public class AssertedValueSetUtils {
 	public List<CodingScheme> getResolvedValueSetsforConceptReference(ConceptReference ref) {
 		List<CodingScheme> schemes = service.getResolvedValueSetsForConceptReference(ref);
 		return schemes;
-	}
-
-	public ResolvedConceptReferencesIterator getValueSetEntitiesFromIterator(String rvs_uri) throws Exception {
-		URI uri = new URI(rvs_uri);
-		ResolvedConceptReferencesIterator refs = service.getValueSetIteratorForURI(uri.toString());
-        return refs;
 	}
 
 	public List<AbsoluteCodingSchemeVersionReference> getValueSetURIAndVersionForCode(String code) throws LBException{

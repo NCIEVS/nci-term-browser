@@ -71,7 +71,7 @@
       <td class="textbody" align=left>
         Show
         <!--
-          h:selectOneMenu id="pageSize" value="#{userSessionBean.selectedPageSize}"
+          <h:selectOneMenu id="pageSize" value="#{userSessionBean.selectedPageSize}"
           valueChangeListener="#{userSessionBean.pageSizeChanged}" immediate="true" onchange="submit()"> <f:selectItems
           value="#{userSessionBean.pageSizeList}" /> </h:selectOneMenu>
         -->

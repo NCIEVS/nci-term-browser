@@ -38,6 +38,7 @@ import org.lexgrid.valuesets.sourceasserted.impl.AssertedValueSetResolvedConcept
 import org.LexGrid.commonTypes.Properties;
 import org.LexGrid.commonTypes.Property;
 import javax.servlet.http.HttpServletRequest;
+import org.LexGrid.LexBIG.caCore.applicationservice.impl.*;
 
 /*
 	static SourceAssertedValueSetService svc;
@@ -139,6 +140,16 @@ public class AssertedValueSetUtils {
 
 	private LexEVSApplicationService getLexEVSAppService() {
 		LexEVSApplicationService lexevsAppService = null;
+		//testing
+		if (serviceUrl == null) {
+			try {
+				return new LexEVSApplicationServiceImpl(null, null);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			return lexevsAppService;
+		}
+
 		try{
 			lexevsAppService = (LexEVSApplicationService)ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
 			//goodToken = new SecurityToken();

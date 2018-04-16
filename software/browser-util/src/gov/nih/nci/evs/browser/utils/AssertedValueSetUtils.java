@@ -82,7 +82,6 @@ public class AssertedValueSetUtils {
 		service = createLexEVSResolvedValueSetService("NCI_Thesaurus");
 	}
 
-
 	public String find_checked_value_sets(HttpServletRequest request, HashMap rvsuri2nameHashMap) {
 		Iterator it = rvsuri2nameHashMap.keySet().iterator();
 		int lcv = 0;
@@ -138,14 +137,6 @@ public class AssertedValueSetUtils {
 		return service;
 	}
 
-/*
-	public LexEVSResolvedValueSetServiceImpl createLexEVSResolvedValueSetService(LexBIGService lbSvc, String codingScheme) {
-		CodingScheme cs = new CodingSchemeDataUtils(lbSvc).resolveCodingScheme(codingScheme);
-		String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(codingScheme, "PRODUCTION");
-		return createLexEVSResolvedValueSetService(codingScheme, version, cs.getCodingSchemeURI());
-	}
-*/
-
 	private LexEVSApplicationService getLexEVSAppService() {
 		LexEVSApplicationService lexevsAppService = null;
 		try{
@@ -175,10 +166,6 @@ public class AssertedValueSetUtils {
 		return service;
 	}
 
-	public ResolvedConceptReferencesIterator getValueSetIteratorForURI(String rvs_uri) {
-		ResolvedConceptReferencesIterator iterator = service.getValueSetIteratorForURI(rvs_uri);
-		return iterator;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public List<CodingScheme> listAllResolvedValueSets() throws Exception {
@@ -324,6 +311,11 @@ public class AssertedValueSetUtils {
 		return schemes;
 	}
 
+	public ResolvedConceptReferencesIterator getValueSetIteratorForURI(String rvs_uri) {
+		ResolvedConceptReferencesIterator iterator = service.getValueSetIteratorForURI(rvs_uri);
+		return iterator;
+	}
+
 	public List<AbsoluteCodingSchemeVersionReference> getValueSetURIAndVersionForCode(String code) throws LBException{
 		List<AbsoluteCodingSchemeVersionReference> asVSrefs = service.getResolvedValueSetsforEntityCode(code);
 		return asVSrefs;
@@ -405,22 +397,16 @@ public class AssertedValueSetUtils {
     public HashMap getRVSURI2NameHashMap() {
         HashMap hmap = new HashMap();
 		try {
-			List<CodingScheme> schemes = //getRegularResolvedValueSets();
-			listAllResolvedValueSets();
-			//listAllResolvedValueSetsWithMiniScheme();
-			//listAllResolvedValueSetsWithMiniSchemeAndNoAssertedScheme();
-			listAllResolvedValueSetsWithNoAssertedScheme();
+			List<CodingScheme> schemes = listAllResolvedValueSets();
 			if (schemes != null) {
 				for (int i = 0; i < schemes.size(); i++) {
 					CodingScheme cs = schemes.get(i);
 					int j = i+1;
 					String key = cs.getCodingSchemeURI();
 					String name = cs.getCodingSchemeName();
-					//System.out.println(key + " --> " + name);
 					hmap.put(key, name);
 				}
 			}
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -432,6 +418,36 @@ public class AssertedValueSetUtils {
 		String serviceUrl = null;//RemoteServerUtil.getServiceUrl();
 		System.out.println(serviceUrl);
 		AssertedValueSetUtils test = new AssertedValueSetUtils(serviceUrl, lbSvc);
+
+		/*
 		HashMap hmap = test.getRVSURI2NameHashMap();
+
+		Iterator it = hmap.keySet().iterator();
+		while (it.hasNext()) {
+			String key = (String) it.next();
+			String value = (String) hmap.get(key);
+			System.out.println(key + " --> " + value);
+		}
+		*/
+		try {
+			long ms = System.currentTimeMillis();
+			String rvs_uri = "http://evs.nci.nih.gov/valueset/FDA/C54453";
+
+			ResolvedConceptReferencesIterator iterator = test.getValueSetIteratorForURI(rvs_uri);
+			try {
+				int numRemaining = iterator.numberRemaining();
+				System.out.println("numRemaining: " + numRemaining);
+				IteratorHelper.dumpIterator(iterator);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
+			int batchSize = 200;
+			boolean showIndex = true;
+			IteratorHelper.dumpIterator(iterator, batchSize, showIndex);
+			System.out.println("Total run time (ms): " + (System.currentTimeMillis() - ms));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 }

@@ -466,14 +466,23 @@ public class DataUtils {
 
     public static HashMap getResolvedValueSetHashMap() {
 		if (resovedValueSetHashMap != null) return resovedValueSetHashMap;
+
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		String serviceUrl = RemoteServerUtil.getServiceUrl();
+		AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, lbSvc);
+
 		HashMap hmap = new HashMap();
 		_VSDURI2NameHashMap = new HashMap();
 		try {
 			long ms = System.currentTimeMillis();
-			LexBIGService lbs = RemoteServerUtil.createLexBIGService();
+			//LexBIGService lbs = RemoteServerUtil.createLexBIGService();
 			List<CodingScheme> choices = new ArrayList<CodingScheme>();
-			LexEVSResolvedValueSetService lrvs = new LexEVSResolvedValueSetServiceImpl(lbs);
-			List<CodingScheme> schemes = lrvs.listAllResolvedValueSets();
+			//LexEVSResolvedValueSetService lrvs = new LexEVSResolvedValueSetServiceImpl(lbs);
+
+
+			List<CodingScheme> schemes = avsu.listAllResolvedValueSets();//lrvs.listAllResolvedValueSets();
+
+
 			if (schemes == null) return null;
 			for (int i = 0; i < schemes.size(); i++) {
 				CodingScheme cs = schemes.get(i);

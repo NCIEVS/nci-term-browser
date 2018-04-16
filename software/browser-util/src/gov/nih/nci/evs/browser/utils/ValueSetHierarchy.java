@@ -2495,55 +2495,5 @@ if (root_cs_vec != null) {
         return hmap;
 	}
 
-
-/*
-	public static void main(String[] args) throws Exception {
-		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-		String url = "http://lexevsapi6.nci.nih.gov/lexevsapi63";
-		LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices(url);
-        ValueSetHierarchy vsu = new ValueSetHierarchy(lbSvc, vsd_service);
-
-
-        String cs_url = "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#";
-	    HashMap root_hmap = vsu.getRootValueSets(cs_url);
-	    System.out.println("\nTree:");
-	    if (root_hmap != null) {
-			System.out.println("vsu.getRootValueSets returns != null " + cs_url);
-			vsu.printTree(root_hmap);
-		} else {
-			System.out.println("vsu.getRootValueSets returns null??? " + cs_url);
-		}
-
-        cs_url = "National Drug File - Reference Terminology";
-	    root_hmap = vsu.getRootValueSets(cs_url);
-	    System.out.println("\nTree:");
-	    if (root_hmap != null) {
-			System.out.println("vsu.getRootValueSets returns != null " + cs_url);
-			vsu.printTree(root_hmap);
-		} else {
-			System.out.println("vsu.getRootValueSets returns null??? " + cs_url);
-		}
-
-
-		HashMap src_tree = vsu.getSourceValueSetTree();
-		vsu.printTree(src_tree);
-
-        HashMap cs_vs_roots = vsu.getRootValueSets();
-        vsu.printTree(cs_vs_roots);
-
-        String scheme = "National Drug File - Reference Terminology";
-        String code = "National Drug File - Reference Terminology";
-        String name = "National Drug File - Reference Terminology";
-
-        TreeItem ndf = vsu.getCodingSchemeValueSetTreeBranch(scheme, code, name);
-        vsu.printTree(ndf, null, 0);
-
-        long ms = System.currentTimeMillis();
-        HashMap cs_tree = vsu.getCodingSchemeValueSetTree();
-        vsu.printTree(cs_tree);
-        System.out.println("Total run time (ms): " + (System.currentTimeMillis() - ms));
-
-	}
-*/
 }
 

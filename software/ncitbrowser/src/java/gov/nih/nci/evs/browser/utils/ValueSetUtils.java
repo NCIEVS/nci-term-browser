@@ -471,20 +471,10 @@ public class ValueSetUtils {
 
 
     private String replaceNodeID(String code) {
-		/*
-		code = code.replaceAll(":", "cCc");
-        code = code.replaceAll("-", "cDc");
-        code = code.replaceAll("_", "cUc");
-        code = code.replaceAll("/", "cSc");
-        code = code.replaceAll(".", "cEc");
-		return code;
-		*/
 		String s = "" + code.hashCode();
 		s = s.replace("-", "n");
 		return s + generateRandomString();
 	}
-
-
 
 
     public static void main(String[] args) throws Exception {

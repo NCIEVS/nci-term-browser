@@ -588,7 +588,7 @@
                                         &nbsp;from
                                       </b>
                                       &nbsp;
-                                      <%= selected_vocabularies_link %>
+                                      <%=selected_vocabularies_link%>
 
                                     </td>
                                   </tr>
@@ -622,10 +622,14 @@
                                 String entity_code = null;
                                 String entity_cs = null;
                                 String entity_cs_version = null;
+                                String ns = null;
 
-                                System.out.println("vsd_uri: " + vsd_uri);
+                                //System.out.println("vsd_uri: " + vsd_uri);
 
-                                String vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
+                                String vsd_description = null;//
+                                if (vsd_uri != null) {
+                                    vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
+                                }
                                 if (vsd_description == null) {
                                   vsd_description = "DESCRIPTION NOT AVAILABLE";
                                 }
@@ -644,26 +648,22 @@
                                     entity_name = rcr.getEntityDescription().getContent();
                                   }
                                   entity_code = (String) rcr.getCode();
-                                  entity_cs = (String) rcr.getCodeNamespace();
+                                  ns = (String) rcr.getCodeNamespace();
 
-                                  String vocabulary_name = (String) DataUtils.getFormalName(entity_cs);
+				// to be implemented
+				String entity_cs_nm = null;
+				if (ns != null) {
+					if (ns.compareToIgnoreCase("ncit") == 0 || ns.compareToIgnoreCase("NCI_Thesaurus") == 0) {
+					    entity_cs_nm = "NCI_Thesaurus";
+					} else {
+					    entity_cs_nm = DataUtils.getCSName(ns);
+					}
+				}
+					
+                                  String vocabulary_name = entity_cs_nm;//(String) DataUtils.getFormalName(name);
 
                                   //[NCITERM-770] Missing coding scheme version in value set search results.
                                   entity_cs_version = (String) rcr.getCodingSchemeVersion();
-                                  /*
-                                  entity_cs_version = null;//(String) rcr.getCodingSchemeVersion();
-
-                                  if (hmap.containsKey(name + "|" + entity_cs)) {
-                                    entity_cs_version = (String) hmap.get(name + "|" + entity_cs);
-                                  } else {
-                                    entity_cs_version = DataUtils.findVersionOfCodingSchemeUsedInValueSetResolution(name, entity_cs);
-                                    if (DataUtils.isNull(entity_cs_version)) {
-                                      entity_cs_version = "";
-                                    }
-                                    hmap.put(name + "|" + entity_cs, entity_cs_version);
-                                  }
-                                  */
-
                                   String cs_name_and_version = vocabulary_name + " (" +  entity_cs_version + ")";
 
                                   if (i % 2 == 0) {
@@ -681,27 +681,21 @@
                                         </a>
                                       </td>
 
-                                      <!--
-                                        <td class="dataCellText"> <%=entity_cs%> </td> <td class="dataCellText">
-                                        <%=entity_cs_version%> </td>
-                                      -->
-
                                       <td class="dataCellText"><%= cs_name_and_version %></td>
 
                                       <td class="dataCellText">
                                         <%
-                                        String entity_cs_nm = DataUtils.getCSName(entity_cs);
+
                                         if (DataUtils.isNull(entity_cs_version) || entity_cs_version.compareTo("") == 0) {
-                                          //String entity_cs_nm = DataUtils.getCSName(entity_cs);
                                           %>
                                           <a
-                                              href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=entity_cs_nm%>&ns=<%=entity_cs_nm%>&code=<%=entity_code%>&key=<%=itr_key%>&b=1&n=<%=page_number%>&vse=1">
+                                              href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=entity_cs_nm%>&ns=<%=ns%>&code=<%=entity_code%>&key=<%=itr_key%>&b=1&n=<%=page_number%>&vse=1">
 
                                             <%= DataUtils.encodeTerm(entity_name) %>
                                           </a>
                                         <% } else { %>
                                           <a
-                                              href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=entity_cs_nm%>&version=<%=entity_cs_version%>&ns=<%=entity_cs_nm%>&code=<%=entity_code%>&key=<%=itr_key%>&b=1&n=<%=page_number%>&vse=1">
+                                              href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=entity_cs_nm%>&version=<%=entity_cs_version%>&ns=<%=ns%>&code=<%=entity_code%>&key=<%=itr_key%>&b=1&n=<%=page_number%>&vse=1">
 
                                             <%= DataUtils.encodeTerm(entity_name) %>
                                           </a>

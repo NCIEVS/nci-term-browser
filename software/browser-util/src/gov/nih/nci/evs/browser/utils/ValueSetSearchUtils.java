@@ -50,6 +50,10 @@ import org.LexGrid.valueSets.ValueSetDefinition;
 import org.LexGrid.valueSets.ValueSetDefinitionReference;
 
 
+import org.LexGrid.util.assertedvaluesets.AssertedValueSetParameters;
+import org.lexgrid.valuesets.sourceasserted.impl.AssertedValueSetResolvedConceptReferenceIterator;
+
+
 /**
  * <!-- LICENSE_TEXT_START -->
  * Copyright 2008,2009 NGIT. This software was developed in conjunction
@@ -114,6 +118,7 @@ public class ValueSetSearchUtils
     CodingSchemeDataUtils csdu = null;
 
     private String serviceUrl = null;
+    private AssertedVSearchUtils avssu = null;
 
     public ValueSetSearchUtils() {
 
@@ -127,6 +132,7 @@ public class ValueSetSearchUtils
 		this.lbSvc = lbSvc;
         this.lrvs = new LexEVSResolvedValueSetServiceImpl(lbSvc);
         this.csdu = new CodingSchemeDataUtils(lbSvc);
+        this.avssu = new AssertedVSearchUtils(lbSvc);
 	}
 
     public ValueSetSearchUtils(LexBIGService lbSvc, String serviceUrl) {
@@ -134,6 +140,7 @@ public class ValueSetSearchUtils
 		this.serviceUrl = serviceUrl;
         this.lrvs = new LexEVSResolvedValueSetServiceImpl(lbSvc);
         this.csdu = new CodingSchemeDataUtils(lbSvc);
+        this.avssu = new AssertedVSearchUtils(lbSvc);
 	}
 
     public void setServiceUrl(String serviceUrl) {
@@ -276,6 +283,25 @@ public class ValueSetSearchUtils
 
     public ResolvedConceptReferencesIterator searchByCode(
         String vsd_uri, AbsoluteCodingSchemeVersionReferenceList csVersionList, String matchText, int maxToReturn) {
+		Vector<String> schemes = new Vector();
+		Vector<String> versions = new Vector();
+		schemes.add(vsd_uri);
+		String version = avssu.getProductionVersion(vsd_uri);
+		versions.add(version);
+        int searchOption = 1;
+        String algorithm = "exactMatch";
+        try {
+        	return avssu.search(schemes, versions, matchText, searchOption, algorithm);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+
+/*
+    public ResolvedConceptReferencesIterator searchByCode(
+        String vsd_uri, AbsoluteCodingSchemeVersionReferenceList csVersionList, String matchText, int maxToReturn) {
 
 		if (matchText == null) return null;
         //String matchText0 = matchText;
@@ -350,7 +376,7 @@ public class ValueSetSearchUtils
         return iterator;
 
     }
-
+*/
 
     public ResolvedConceptReferencesIterator searchByName(
         String vsd_uri, String matchText, String matchAlgorithm, int maxToReturn) {
@@ -358,7 +384,24 @@ public class ValueSetSearchUtils
 	}
 
 
+    public ResolvedConceptReferencesIterator searchByName(
+        String vsd_uri, AbsoluteCodingSchemeVersionReferenceList csVersionList, String matchText, String algorithm, int maxToReturn) {
+		Vector<String> schemes = new Vector();
+		Vector<String> versions = new Vector();
+		schemes.add(vsd_uri);
+		String version = avssu.getProductionVersion(vsd_uri);
+		versions.add(version);
+        int searchOption = 2;
+        try {
+        	return avssu.search(schemes, versions, matchText, searchOption, algorithm);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 
+
+/*
     public ResolvedConceptReferencesIterator searchByName(
         String vsd_uri, AbsoluteCodingSchemeVersionReferenceList csVersionList, String matchText, String matchAlgorithm, int maxToReturn) {
 
@@ -396,11 +439,6 @@ public class ValueSetSearchUtils
             }
             java.lang.String valueSetDefinitionRevisionId = null;
             //AbsoluteCodingSchemeVersionReferenceList csVersionList = null;
-            /*
-            Vector cs_ref_vec = DataUtils.getCodingSchemeReferencesInValueSetDefinition(vsd_uri, "PRODUCTION");
-            if (cs_ref_vec != null) csVersionList = DataUtils.vector2CodingSchemeVersionReferenceList(cs_ref_vec);
-            */
-
             String csVersionTag = null;
 
             ResolvedValueSetCodedNodeSet rvs_cns = null;
@@ -441,7 +479,7 @@ public class ValueSetSearchUtils
         return iterator;
 
     }
-
+*/
 
     private CodedNodeSet.PropertyType[] getAllPropertyTypes() {
         CodedNodeSet.PropertyType[] propertyTypes =
@@ -463,6 +501,26 @@ public class ValueSetSearchUtils
     }
 
 
+    public ResolvedConceptReferencesIterator searchByProperties(
+        String vsd_uri, String matchText, boolean excludeDesignation, String algorithm, int maxToReturn) {
+		if (matchText == null) return null;
+		Vector<String> schemes = new Vector();
+		Vector<String> versions = new Vector();
+		schemes.add(vsd_uri);
+		String version = avssu.getProductionVersion(vsd_uri);
+		versions.add(version);
+        int searchOption = 3;
+        try {
+        	return avssu.search(schemes, versions, matchText, searchOption, algorithm);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+
+
+/*
     public ResolvedConceptReferencesIterator searchByProperties(
         String vsd_uri, String matchText, boolean excludeDesignation, String matchAlgorithm, int maxToReturn) {
 		if (matchText == null) return null;
@@ -498,10 +556,7 @@ public class ValueSetSearchUtils
             }
             java.lang.String valueSetDefinitionRevisionId = null;
             AbsoluteCodingSchemeVersionReferenceList csVersionList = null;
-            /*
-            Vector cs_ref_vec = DataUtils.getCodingSchemeReferencesInValueSetDefinition(vsd_uri, "PRODUCTION");
-            if (cs_ref_vec != null) csVersionList = DataUtils.vector2CodingSchemeVersionReferenceList(cs_ref_vec);
-            */
+
             String csVersionTag = null;
 
             ResolvedValueSetCodedNodeSet rvs_cns = null;
@@ -556,7 +611,7 @@ public class ValueSetSearchUtils
         return iterator;
 
     }
-
+*/
 
     public Vector filterValueSetMetadata(Vector metadata_vec, String codingSchemeName) {
 		if (codingSchemeName.compareTo("ALL") == 0) return metadata_vec;
@@ -651,7 +706,36 @@ public class ValueSetSearchUtils
 	}
 
 
+    public ResolvedConceptReferencesIterator searchResolvedValueSetCodingSchemes(String checked_vocabularies,
+        String matchText, int searchOption, String algorithm) {
+		ResolvedConceptReferencesIterator iterator = null;
+		if (checked_vocabularies == null) {
+			return null;
+		}
+		Vector selected_vocabularies = StringUtils.parseData(checked_vocabularies, ',');
+		Vector schemes = new Vector();
+		Vector versions = new Vector();
+		for (int i=0; i<selected_vocabularies.size(); i++) {
+			String selected_vocabulary = (String) selected_vocabularies.elementAt(i);
+			if (selected_vocabulary != null && selected_vocabulary.length() > 0) {
+				int j = i+1;
+				schemes.add(selected_vocabulary);
+				versions.add(null);
+			}
+		}
+        try {
+			if (searchOption == 1) algorithm = "exactMatch";
+        	return avssu.search(schemes, versions, matchText, searchOption, algorithm);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 
+
+
+
+/*
     public ResolvedConceptReferencesIterator searchResolvedValueSetCodingSchemes(String checked_vocabularies,
         String matchText, int searchOption, String matchAlgorithm) {
 		ResolvedConceptReferencesIterator iterator = null;
@@ -718,7 +802,7 @@ public class ValueSetSearchUtils
 		}
 		return iterator;
 	}
-
+*/
 
 	public LexEVSValueSetDefinitionServices getLexEVSValueSetDefinitionServices() {
 		return getLexEVSValueSetDefinitionServices(serviceUrl);

@@ -64,6 +64,7 @@ public class IteratorHelper {
 	}
 
     public static void dumpIterator(ResolvedConceptReferencesIterator itr, int batchSize, boolean showIndex) {
+		if (itr == null) return;
 		if (batchSize != -1) {
 			try {
 				int knt = 0;
@@ -100,6 +101,51 @@ public class IteratorHelper {
 
 		}
     }
+
+
+
+    public static void dumpIterator(ResolvedConceptReferencesIterator itr, int batchSize, boolean showIndex, int maxReturn) {
+		if (itr == null) return;
+		int knt = 0;
+		if (batchSize != -1) {
+			try {
+				while (itr.hasNext()) {
+					ResolvedConceptReference[] refs =
+						itr.next(batchSize).getResolvedConceptReference();
+					for (ResolvedConceptReference ref : refs) {
+						knt++;
+						if (maxReturn != -1 && knt >= maxReturn) break;
+						if (showIndex) {
+							displayRef(knt, ref);
+						} else {
+							displayRef(ref);
+						}
+					}
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		} else {
+			try {
+				while (itr.hasNext()) {
+					knt++;
+					if (maxReturn != -1 && knt >= maxReturn) break;
+					ResolvedConceptReference ref = (ResolvedConceptReference) itr.next();
+					if (showIndex) {
+						displayRef(knt, ref);
+					} else {
+						displayRef(ref);
+					}
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
+		}
+    }
+
+
+
 
     public static void dumpIterator(ResolvedConceptReferencesIterator itr, int batchSize) {
 		dumpIterator(itr, batchSize, true);

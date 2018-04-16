@@ -135,7 +135,12 @@ public class AssertedValueSetUtils {
 		codingSchemeName(codingScheme).
 		codingSchemeURI(codingSchemeURI)
 		.build();
-		service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
+
+		if (serviceUrl == null) {
+			service = new LexEVSResolvedValueSetServiceImpl();
+		} else {
+			service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
+		}
 		service.initParams(params);
 		return service;
 	}
@@ -173,8 +178,13 @@ public class AssertedValueSetUtils {
 		codingSchemeName(codingScheme).
 		codingSchemeURI(codingSchemeURI)
 		.build();
-		//service = (LexEVSResolvedValueSetServiceImpl) LexEVSServiceHolder.instance().getLexEVSAppService().getLexEVSResolvedVSService(params);
-		service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
+
+		// KLO, 04162018
+		if (serviceUrl == null) {
+		    service = new LexEVSResolvedValueSetServiceImpl();// LexEVSServiceHolder.instance().getLexEVSAppService().getLexEVSResolvedVSService(params);
+	    } else {
+		    service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
+	    }
 		service.initParams(params);
 		return service;
 	}

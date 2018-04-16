@@ -39,6 +39,8 @@ import org.LexGrid.commonTypes.Properties;
 import org.LexGrid.commonTypes.Property;
 import javax.servlet.http.HttpServletRequest;
 import org.LexGrid.LexBIG.caCore.applicationservice.impl.*;
+import org.LexGrid.LexBIG.LexBIGService.*;
+import org.LexGrid.LexBIG.Impl.LexBIGServiceImpl;
 
 /*
 	static SourceAssertedValueSetService svc;
@@ -143,7 +145,7 @@ public class AssertedValueSetUtils {
 		//testing
 		if (serviceUrl == null) {
 			try {
-				return new LexEVSApplicationServiceImpl(null, null);
+				return (LexEVSApplicationService) LexBIGServiceImpl.defaultInstance();// new LexEVSApplicationServiceImpl(null, null);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

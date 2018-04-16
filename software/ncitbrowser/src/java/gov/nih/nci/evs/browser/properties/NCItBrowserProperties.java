@@ -550,7 +550,7 @@ public class NCItBrowserProperties {
 		return _owl_role_quantifiers;
 	}
 
-	public static String getServiceURL() {
+	public static String getServiceUrl() {
 		return _service_url;
 	}
 

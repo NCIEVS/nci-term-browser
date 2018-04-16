@@ -112,8 +112,8 @@ public class ValueSetBean {
 	public ValueSetSearchUtils createValueSetSearchUtils() {
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
         ValueSetSearchUtils valueSetSearchUtils = new ValueSetSearchUtils(lbSvc);
-        String serviceURL = RemoteServerUtil.getServiceURL();
-        valueSetSearchUtils.setServiceUrl(serviceURL);
+        String serviceUrl = RemoteServerUtil.getServiceUrl();
+        valueSetSearchUtils.setServiceUrl(serviceUrl);
         return valueSetSearchUtils;
 	}
 
@@ -1425,7 +1425,7 @@ public class ValueSetBean {
 		}
 
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-		String serviceUrl = RemoteServerUtil.getServiceURL();
+		String serviceUrl = RemoteServerUtil.getServiceUrl();
 		LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices(serviceUrl);
         ValueSetFormatter test = new ValueSetFormatter(lbSvc, vsd_service);
         String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(vsd_uri, Constants.PRODUCTION);

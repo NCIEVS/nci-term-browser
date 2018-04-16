@@ -1346,7 +1346,8 @@ public class DataUtils {
 		_logger.debug("getValueSetDefinitionMetadata run time (ms): " + (System.currentTimeMillis() - ms));
         ms = System.currentTimeMillis();
 
-        String serviceUrl = null;//RemoteServerUtil.getServiceUrl();
+        String serviceUrl = RemoteServerUtil.getServiceUrl();
+        /*
         NCItBrowserProperties properties = null;
         try {
             properties = NCItBrowserProperties.getInstance();
@@ -1354,6 +1355,7 @@ public class DataUtils {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		*/
 	    _logger.debug("Instantiating ValueSetTreeUtils. serviceUrl: " + serviceUrl);
 	    System.out.println("Instantiating ValueSetTreeUtils. serviceUrl: " + serviceUrl);
 

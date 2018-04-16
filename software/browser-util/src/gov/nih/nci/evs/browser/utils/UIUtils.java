@@ -135,6 +135,7 @@ public class UIUtils {
 	}
 
 	public UIUtils(LexBIGService lbSvc) {
+		this.lbSvc = lbSvc;
 		String codingScheme = Constants.NCIT_CS_NAME;
 		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(codingScheme, Constants.PRODUCTION);
 		setCodingSchemeNameAndVersion(codingScheme, prod_version);

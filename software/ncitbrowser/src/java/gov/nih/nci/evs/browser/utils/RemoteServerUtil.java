@@ -228,9 +228,6 @@ public class RemoteServerUtil {
         return null;
     }
 
-    public static String getServiceURL() {
-		return NCItBrowserProperties.getServiceURL();
-    }
     public static String getServiceUrl() {
 		String url = null;
         try {

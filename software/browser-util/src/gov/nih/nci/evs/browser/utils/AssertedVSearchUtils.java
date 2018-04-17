@@ -190,6 +190,19 @@ public class AssertedVSearchUtils {
 		}
 		return null;
 	}
+
+
+    private static int getSearchOption(String searchOptionText) {
+		String t = searchOptionText.toLowerCase();
+		if (t.indexOf("code") != -1) {
+			return BY_CODE;
+		} else if (t.indexOf("name") != -1) {
+			return BY_NAME;
+		} else if (t.indexOf("propert") != -1) {
+			return BY_PROPERTY;
+		}
+		return -1;
+	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -224,7 +237,7 @@ public class AssertedVSearchUtils {
 		Vector<String> versions = new Vector();
 		schemes.add(scheme);
 		versions.add(version);
-
+/*
 		int searchOption = BY_NAME;
 		if (target != null) {
 			target = target.toLowerCase();
@@ -232,6 +245,8 @@ public class AssertedVSearchUtils {
 				searchOption = BY_CODE;
 			}
 		}
+*/
+		int searchOption = getSearchOption(target);
 		return search(schemes, versions, matchText, searchOption, algorithm);
     }
 

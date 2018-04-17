@@ -3943,7 +3943,7 @@ if (lbSvc == null) {
                 lbSvc.resolveCodingScheme(formalname, versionOrTag);
             return cs;
         } catch (Exception ex) {
-            _logger.error("WARNING: Unable to resolveCodingScheme " + formalname);
+            _logger.warn("WARNING: Unable to resolveCodingScheme " + formalname);
         }
         return null;
     }

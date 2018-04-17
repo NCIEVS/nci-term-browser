@@ -645,7 +645,6 @@ public class ValueSetSearchUtils
 
 	}
 
-
     // default to Name search
     public ResolvedConceptReferencesIterator searchResolvedValueSetCodingSchemes(String checked_vocabularies,
         String matchText, String matchAlgorithm) {

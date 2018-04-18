@@ -120,6 +120,9 @@
     String valueSetSearch_requestContextPath = request.getContextPath();
     String selected_ValueSetSearchOption = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("selectValueSetSearchOption"));
     String checked_vocabularies = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("checked_vocabularies"));
+    
+    
+    
     boolean bool_val;
     Vector selected_vocabularies = null;
 

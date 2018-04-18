@@ -1587,13 +1587,15 @@ request.getSession().setAttribute("mode", mode);
 
 //[NCITERM-745] Top node of value sets deselected after search.
 String checked_valuesets = get_checked_vocabularies(request);//HTTPUtils.cleanXSS((String) request.getSession().getAttribute("checked_vocabularies"));
+
 String checked_nodes = get_checked_nodes(request);//HTTPUtils.cleanXSS((String) request.getSession().getAttribute("checked_vocabularies"));
 Vector selected_valuesets = null;
 Vector selected_nodes = null;
 if (!DataUtils.isNullOrBlank(checked_nodes)) {
-	request.getSession().setAttribute("checked_vocabularies", checked_valuesets);
-	selected_valuesets = DataUtils.parseData(checked_valuesets, ",");
+	request.getSession().setAttribute("checked_vocabularies", checked_nodes);
+	selected_valuesets = DataUtils.parseData(checked_nodes, ",");
 	selected_nodes = DataUtils.parseData(checked_nodes, ",");
+	System.out.println("Number of value sets selected: " + selected_nodes.size());
 	stu.setSelectedNodes(selected_nodes);
 }
 
@@ -2595,7 +2597,16 @@ if (checked_vocabularies == null || checked_vocabularies.length() == 0) {
 }
 */
 String checked_vocabularies = get_checked_vocabularies(request);
-request.getSession().removeAttribute("checked_vocabularies");
+
+		if (checked_vocabularies == null || checked_vocabularies.length() <= 1) {
+			checked_vocabularies = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("checked_vocabularies"));
+		}
+
+//request.getSession().removeAttribute("checked_vocabularies");
+
+//04182018
+//System.out.println(checked_vocabularies);
+request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 
 /*
 if (checked_vocabularies != null) {
@@ -2631,9 +2642,8 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
 			}
 			return;
 		}
-
-        if (DataUtils.isNullOrBlank(checked_vocabularies)) {
-			msg = "No value set definition is selected.";
+		if (checked_vocabularies == null || checked_vocabularies.length() <= 1) {
+			msg = "No value set is selected.";
 			request.getSession().setAttribute("message", msg);
 			if (!DataUtils.isNull(ontology_display_name) && !DataUtils.isNull(ontology_version)) {
 				create_vs_tree(request, response, view, ontology_display_name, ontology_version);
@@ -2663,7 +2673,6 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
 					destination = contextPath + "/pages/value_set_entity_search_results.jsf?value_set_tab=false&root_vsd_uri=" + root_vsd_uri;
 				}
 				response.sendRedirect(response.encodeRedirectURL(destination));
-	            //request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -2691,7 +2700,6 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
 		if (checked_vocabularies.length() > 0) {
 			checked_vocabularies = checked_vocabularies.substring(0, checked_vocabularies.length()-1);
 		}
-		//System.out.println(checked_vocabularies);
 		return checked_vocabularies;
 	}
 
@@ -2716,7 +2724,6 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
 		if (checked_vocabularies.length() > 0) {
 			checked_vocabularies = checked_vocabularies.substring(0, checked_vocabularies.length()-1);
 		}
-		//System.out.println(checked_vocabularies);
 		return checked_vocabularies;
 	}
 
@@ -2747,12 +2754,14 @@ long ms = System.currentTimeMillis();
 //String checked_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("checked_vocabularies"));
 
 String checked_vocabularies = get_checked_vocabularies(request);
+request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 String checked_nodes = get_checked_nodes(request);
 
 
 if (checked_vocabularies != null) {
 	checked_vocabularies = checked_vocabularies.trim();
 }
+
 if (DataUtils.isNullOrBlank(checked_vocabularies)) {
     checked_vocabularies = find_checked_value_sets(request);
 }
@@ -2767,8 +2776,10 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
 		}
 */
 
-		if (checked_vocabularies != null && checked_vocabularies.compareTo("") == 0) {
-			msg = "No value set definition is selected.";
+request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
+
+		if (checked_vocabularies == null || checked_vocabularies.length() <= 1) {
+			msg = "No value set is selected.";
 			request.getSession().setAttribute("message", msg);
 			return "message";
 		}
@@ -4899,10 +4910,9 @@ out.flush();
 		if (checked_vocabularies != null) {
 			request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 		}
-		if (checked_vocabularies != null && checked_vocabularies.compareTo("") == 0) {
-			msg = "No value set definition is selected.";
+		if (checked_vocabularies == null || checked_vocabularies.compareTo("") <= 1) {
+			msg = "No value set is selected.";
 			request.getSession().setAttribute("message", msg);
-			//return "message";
 		}
 
 		//Vector selected_vocabularies = DataUtils.parseData(checked_vocabularies, ",");

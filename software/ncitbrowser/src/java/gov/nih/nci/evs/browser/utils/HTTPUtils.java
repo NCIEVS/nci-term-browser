@@ -14,6 +14,7 @@ import org.apache.log4j.*;
 import gov.nih.nci.evs.browser.common.*;
 import gov.nih.nci.evs.browser.properties.*;
 
+
 /**
  * <!-- LICENSE_TEXT_START -->
  * Copyright 2008,2009 NGIT. This software was developed in conjunction
@@ -803,7 +804,6 @@ temporarily commented out
         return Boolean.TRUE;
 	}
 
-    //HTTPUtils.preserveHTTPRequestParameterValues(request);
 	public static void preserveHTTPRequestParameterValues(HttpServletRequest request) {
 		Object attr_1 = request.getSession().getAttribute("adv_search_algorithm");
 		if (attr_1 != null && attr_1 instanceof String) {
@@ -863,6 +863,70 @@ temporarily commented out
 		Object attr_12 = request.getSession().getAttribute("valueset_search_algorithm");
 		if (attr_12 != null && attr_12 instanceof String) {
 			request.getSession().setAttribute("valueset_search_algorithm", (String) attr_12);
+		}
+	}
+
+
+	public static void preserveSearchFormParameters(HttpServletRequest request) {
+		Object param_obj_0 = request.getParameter("adv_search_algorithm");
+		if (param_obj_0 != null) {
+			String param_0 = HTTPUtils.cleanXSS((String) param_obj_0);
+			request.getSession().setAttribute("adv_search_algorithm", param_0);
+		}
+		Object param_obj_1 = request.getParameter("algorithm");
+		if (param_obj_1 != null) {
+			String param_1 = HTTPUtils.cleanXSS((String) param_obj_1);
+			request.getSession().setAttribute("algorithm", param_1);
+		}
+		Object param_obj_2 = request.getParameter("captcha_option");
+		if (param_obj_2 != null) {
+			String param_2 = HTTPUtils.cleanXSS((String) param_obj_2);
+			request.getSession().setAttribute("captcha_option", param_2);
+		}
+		Object param_obj_3 = request.getParameter("matchText");
+		if (param_obj_3 != null) {
+			String param_3 = HTTPUtils.cleanMatchTextXSS((String) param_obj_3);
+			request.getSession().setAttribute("matchText", param_3);
+		}
+		Object param_obj_4 = request.getParameter("matchText_RVS");
+		if (param_obj_4 != null) {
+			String param_4 = HTTPUtils.cleanMatchTextXSS((String) param_obj_4);
+			request.getSession().setAttribute("matchText_RVS", param_4);
+		}
+		Object param_obj_5 = request.getParameter("matchText_VSD");
+		if (param_obj_5 != null) {
+			String param_5 = HTTPUtils.cleanMatchTextXSS((String) param_obj_5);
+			request.getSession().setAttribute("matchText_VSD", param_5);
+		}
+		Object param_obj_6 = request.getParameter("opt");
+		if (param_obj_6 != null) {
+			String param_6 = HTTPUtils.cleanXSS((String) param_obj_6);
+			request.getSession().setAttribute("opt", param_6);
+		}
+		Object param_obj_7 = request.getParameter("searchTarget");
+		if (param_obj_7 != null) {
+			String param_7 = HTTPUtils.cleanXSS((String) param_obj_7);
+			request.getSession().setAttribute("searchTarget", param_7);
+		}
+		Object param_obj_8 = request.getParameter("selectSearchOption");
+		if (param_obj_8 != null) {
+			String param_8 = HTTPUtils.cleanXSS((String) param_obj_8);
+			request.getSession().setAttribute("selectSearchOption", param_8);
+		}
+		Object param_obj_9 = request.getParameter("selectValueSetSearchOption");
+		if (param_obj_9 != null) {
+			String param_9 = HTTPUtils.cleanXSS((String) param_obj_9);
+			request.getSession().setAttribute("selectValueSetSearchOption", param_9);
+		}
+		Object param_obj_10 = request.getParameter("text");
+		if (param_obj_10 != null) {
+			String param_10 = HTTPUtils.cleanMatchTextXSS((String) param_obj_10);
+			request.getSession().setAttribute("text", param_10);
+		}
+		Object param_obj_11 = request.getParameter("valueset_search_algorithm");
+		if (param_obj_11 != null) {
+			String param_11 = HTTPUtils.cleanXSS((String) param_obj_11);
+			request.getSession().setAttribute("valueset_search_algorithm", param_11);
 		}
 	}
 

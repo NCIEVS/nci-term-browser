@@ -1595,7 +1595,6 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 	request.getSession().setAttribute("checked_vocabularies", checked_nodes);
 	selected_valuesets = DataUtils.parseData(checked_nodes, ",");
 	selected_nodes = DataUtils.parseData(checked_nodes, ",");
-	System.out.println("Number of value sets selected: " + selected_nodes.size());
 	stu.setSelectedNodes(selected_nodes);
 }
 
@@ -1610,7 +1609,6 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 			vsd = DataUtils.findValueSetDefinitionByURI(vsd_uri);
 			if (vsd != null) {
 					vsd_name = vsd.getValueSetDefinitionName();
-					System.out.println(vsd_name);
 					isValueSet = true;
 
 					//KLO, 10182017
@@ -2672,6 +2670,7 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
 				if (!DataUtils.isNull(vsd_uri)) {
 					destination = contextPath + "/pages/value_set_entity_search_results.jsf?value_set_tab=false&root_vsd_uri=" + root_vsd_uri;
 				}
+request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 				response.sendRedirect(response.encodeRedirectURL(destination));
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -2752,9 +2751,15 @@ long ms = System.currentTimeMillis();
 
 
 //String checked_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("checked_vocabularies"));
-
+/*
 String checked_vocabularies = get_checked_vocabularies(request);
 request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
+*/
+
+String checked_vocabularies = get_checked_vocabularies(request);
+if (checked_vocabularies == null) {
+	checked_vocabularies = (String) request.getSession().getAttribute("checked_vocabularies");
+}
 String checked_nodes = get_checked_nodes(request);
 
 
@@ -5217,7 +5222,6 @@ out.flush();
 		out.println("                           </td>");
 		out.println("                        </tr>");
 		out.println("                     </table>");
-
 	}
 
     public void exportToCSVAction(HttpServletRequest request, HttpServletResponse response) {

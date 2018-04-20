@@ -47,10 +47,6 @@ public class AssertedVSearchUtils {
     public static final String CONTAINS = "contains";
     public static final String LUCENE = "lucene";
 
-    //public static final String NAMES = "names";
-    //public static final String CODES = "codes";
-    //public static final String PROPERTIES = "properties";
-
     private static Logger _logger = Logger.getLogger(AssertedVSearchUtils.class);
 	private AssertedValueSetParameters params = null;
 	private SourceAssertedValueSetSearchExtension service = null;
@@ -91,7 +87,6 @@ public class AssertedVSearchUtils {
 		dumpIterator(itr, batchSize, true);
 	}
 
-
     public static void dumpIterator(ResolvedConceptReferencesIterator itr, int batchSize, boolean showIndex) {
 		if (batchSize != -1) {
 			try {
@@ -126,7 +121,6 @@ public class AssertedVSearchUtils {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-
 		}
     }
 
@@ -164,45 +158,7 @@ public class AssertedVSearchUtils {
 		}
 		return null;
 	}
-
-
-    private static int getSearchOption(String searchOptionText) {
-		String t = searchOptionText.toLowerCase();
-		if (t.indexOf("code") != -1) {
-			return BY_CODE;
-		} else if (t.indexOf("name") != -1) {
-			return BY_NAME;
-		} else if (t.indexOf("propert") != -1) {
-			return BY_PROPERTY;
-		}
-		return -1;
-	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-/*
-    public ResolvedConceptReferencesIterator search(
-        Vector<String> schemes, Vector<String> versions, String matchText, String target, String algorithm) throws LBException {
-        if (algorithm == null|| target == null) return null;
-
-        if (algorithm.compareToIgnoreCase(EXACT_MATCH) == 0 && target.compareToIgnoreCase(CODES) == 0) {
-			return search(schemes, versions, matchText, BY_CODE, "exactMatch");
-        } else if (algorithm.compareToIgnoreCase(LUCENE) == 0 && target.compareToIgnoreCase(CODES) == 0) {
-			return search(schemes, versions, matchText, BY_CODE, "exactMatch");
-
-
-        } else if (algorithm.compareToIgnoreCase(EXACT_MATCH) == 0 && target.compareToIgnoreCase(NAMES) == 0) {
-			return search(schemes, versions, matchText, BY_NAME, "exactMatch");
-
-
-        } else if (algorithm.compareToIgnoreCase(LUCENE) == 0 && target.compareToIgnoreCase(NAMES) == 0) {
-			return search(schemes, versions, matchText, BY_NAME, "lucene");
-        } else if (algorithm.compareToIgnoreCase(CONTAINS) == 0 && target.compareToIgnoreCase(NAMES) == 0) {
-			return search(schemes, versions, matchText, BY_NAME, "contains");
-		}
-		return null;
-	}
-*/
 
     public ResolvedConceptReferencesIterator search(
         String scheme, String version, String matchText, String target, String algorithm) throws LBException {
@@ -211,7 +167,7 @@ public class AssertedVSearchUtils {
 		Vector<String> versions = new Vector();
 		schemes.add(scheme);
 		versions.add(version);
-/*
+
 		int searchOption = BY_NAME;
 		if (target != null) {
 			target = target.toLowerCase();
@@ -219,12 +175,9 @@ public class AssertedVSearchUtils {
 				searchOption = BY_CODE;
 			}
 		}
-*/
-		int searchOption = getSearchOption(target);
 		return search(schemes, versions, matchText, searchOption, algorithm);
     }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public ResolvedConceptReferencesIterator search(
         String scheme, String version, String matchText, int searchOption, String algorithm) throws LBException {
 		if (scheme == null) return null;
@@ -235,6 +188,87 @@ public class AssertedVSearchUtils {
 		return search(schemes, versions, matchText, searchOption, algorithm);
     }
 
+
+
+     public ResolvedConceptReferencesIterator search(
+        Vector<String> schemes, Vector<String> versions, String matchText, int searchOption, String algorithm) throws LBException {
+	    if (schemes == null || versions == null) return null;
+	    if (schemes.size() != versions.size()) return null;
+	    if (schemes.size() == 0) return null;
+	    if (matchText == null) return null;
+	    if (searchOption != BY_CODE && algorithm == null) {
+			return null;
+		}
+        Set<CodingSchemeReference> csRefs = new HashSet<CodingSchemeReference>();
+        for (int i=0; i<schemes.size(); i++) {
+			String scheme = (String) schemes.elementAt(i);
+			String version = (String) versions.elementAt(i);
+			CodingSchemeReference csRef = new CodingSchemeReference();
+			csRef.setCodingScheme(scheme);
+			csRef.setVersionOrTag(Constructors.createCodingSchemeVersionOrTagFromVersion(version));
+			csRefs.add(csRef);
+		}
+		SearchExtension.MatchAlgorithm matchAlgorithm = convertToMatchAlgorithm(searchOption, algorithm);
+		ResolvedConceptReferencesIterator iterator = null;
+		if (matchAlgorithm == null) {
+			return null;
+		}
+		try {
+			iterator = service.search(
+				matchText, csRefs, null, matchAlgorithm, false);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return iterator;
+	}
+
+     public ResolvedConceptReferencesIterator search(
+        Vector<String> schemes, Vector<String> versions, String matchText, SearchExtension.MatchAlgorithm matchAlgorithm, boolean searchRVSs) throws LBException {
+        return search(schemes, versions, matchText, matchAlgorithm, searchRVSs, false);
+     }
+
+     public ResolvedConceptReferencesIterator search(
+        Vector<String> schemes, Vector<String> versions, String matchText, SearchExtension.MatchAlgorithm matchAlgorithm, boolean searchRVSs,
+        boolean includeAnonymous) throws LBException {
+		if (matchAlgorithm == null) {
+			return null;
+		}
+	    if (schemes == null || versions == null) return null;
+	    if (schemes.size() != versions.size()) return null;
+	    if (schemes.size() == 0) return null;
+	    if (matchText == null) return null;
+        Set<CodingSchemeReference> csRefs = new HashSet<CodingSchemeReference>();
+        for (int i=0; i<schemes.size(); i++) {
+			String scheme = (String) schemes.elementAt(i);
+			String version = (String) versions.elementAt(i);
+			CodingSchemeReference csRef = new CodingSchemeReference();
+			csRef.setCodingScheme(scheme);
+			csRef.setVersionOrTag(Constructors.createCodingSchemeVersionOrTagFromVersion(version));
+			csRefs.add(csRef);
+		}
+		ResolvedConceptReferencesIterator iterator = null;
+
+		try {
+			if (searchRVSs) {
+				iterator = service.search(matchText, null, csRefs, matchAlgorithm, includeAnonymous);
+			} else {
+				iterator = service.search(matchText, csRefs, null, matchAlgorithm, includeAnonymous);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return iterator;
+	}
+
+    public ResolvedConceptReferencesIterator search(
+        Vector<String> schemes, Vector<String> versions, String matchText, SearchExtension.MatchAlgorithm matchAlgorithm) throws LBException {
+		return search(schemes, versions, matchText, matchAlgorithm, true);
+	}
+
+	public String getProductionVersion(String codingScheme) {
+		return csdu.getVocabularyVersionByTag(codingScheme, "PRODUCITON");
+	}
 
      public void test_search(String inputfile, String code, String name) {
 		 Vector<String> schemes = Utils.readFile(inputfile);
@@ -287,123 +321,4 @@ public class AssertedVSearchUtils {
 			 ex.printStackTrace();
 		 }
 	 }
-
-     public ResolvedConceptReferencesIterator search(
-        Vector<String> schemes, Vector<String> versions, String matchText, int searchOption, String algorithm) throws LBException {
-	    if (schemes == null || versions == null) return null;
-	    if (schemes.size() != versions.size()) return null;
-	    if (schemes.size() == 0) return null;
-	    if (matchText == null) return null;
-	    if (searchOption != BY_CODE && algorithm == null) {
-			return null;
-		}
-        Set<CodingSchemeReference> csRefs = new HashSet<CodingSchemeReference>();
-        for (int i=0; i<schemes.size(); i++) {
-			String scheme = (String) schemes.elementAt(i);
-			String version = (String) versions.elementAt(i);
-			CodingSchemeReference csRef = new CodingSchemeReference();
-			csRef.setCodingScheme(scheme);
-			csRef.setVersionOrTag(Constructors.createCodingSchemeVersionOrTagFromVersion(version));
-			csRefs.add(csRef);
-		}
-		SearchExtension.MatchAlgorithm matchAlgorithm = convertToMatchAlgorithm(searchOption, algorithm);
-		ResolvedConceptReferencesIterator iterator = null;
-		if (matchAlgorithm == null) {
-			return null;
-		}
-		try {
-			//iterator = service.search(
-			//	matchText, null, csRefs, matchAlgorithm, true);
-			iterator = service.search(
-				matchText, csRefs, null, matchAlgorithm, false);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return iterator;
-	}
-
-     public ResolvedConceptReferencesIterator search(
-        Vector<String> schemes, Vector<String> versions, String matchText, int searchOption, SearchExtension.MatchAlgorithm matchAlgorithm) throws LBException {
-	    if (schemes == null || versions == null) return null;
-	    if (schemes.size() != versions.size()) return null;
-	    if (schemes.size() == 0) return null;
-	    if (matchText == null) return null;
-	    if (searchOption != BY_CODE && matchAlgorithm == null) {
-			return null;
-		}
-        Set<CodingSchemeReference> csRefs = new HashSet<CodingSchemeReference>();
-        for (int i=0; i<schemes.size(); i++) {
-			String scheme = (String) schemes.elementAt(i);
-			String version = (String) versions.elementAt(i);
-			CodingSchemeReference csRef = new CodingSchemeReference();
-			csRef.setCodingScheme(scheme);
-			csRef.setVersionOrTag(Constructors.createCodingSchemeVersionOrTagFromVersion(version));
-			csRefs.add(csRef);
-		}
-		//SearchExtension.MatchAlgorithm matchAlgorithm = convertToMatchAlgorithm(searchOption, algorithm);
-		ResolvedConceptReferencesIterator iterator = null;
-		if (matchAlgorithm == null) {
-			return null;
-		}
-		try {
-			//iterator = service.search(
-			//	matchText, null, csRefs, matchAlgorithm, true);
-
-			iterator = service.search(
-				matchText, csRefs, null, matchAlgorithm, false);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return iterator;
-	}
-
-
-	public String getProductionVersion(String codingScheme) {
-		return csdu.getVocabularyVersionByTag(codingScheme, "PRODUCITON");
-	}
-
-//SPL Color Terminology|http://evs.nci.nih.gov/valueset/FDA/C54453|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/SPL/FDA-SPL_NCIt_Subsets.xls|1:2:C54453
-
-	public static void main(String[] args) {
-		String datafile = args[0];
-		LexBIGService lbSvc = null;//RemoteServerUtil.createLexBIGService();
-		AssertedVSearchUtils test = new AssertedVSearchUtils(lbSvc);
-
-		/*
-
-		String scheme = "http://evs.nci.nih.gov/valueset/FDA/C54453";
-		String version = test.getProductionVersion(scheme);
-		//version = "18.03c";
-		String matchText = "red";
-		int target = AssertedVSearchUtils.BY_NAME;
-		String algorithm = AssertedVSearchUtils.EXACT_MATCH;//AssertedVSearchUtils.CONTAINS;
-		algorithm = AssertedVSearchUtils.CONTAINS;
-
-		System.out.println("scheme: " + scheme);
-		System.out.println("version: " + version);
-		System.out.println("matchText: " + matchText);
-		System.out.println("target: " + target);
-		System.out.println("algorithm: " + algorithm);
-
-        ResolvedConceptReferencesIterator iterator = null;
-        try {
-			iterator = test.search(scheme, version, matchText, target, algorithm);
-			try {
-				if (iterator == null) {
-					System.out.println("search returns a null iterator.");
-				} else {
-					test.dumpIterator(iterator, 100, true);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		*/
-		//Red (Code C48326)
-		test.test_search(datafile, "C48326", "red");
-	}
 }

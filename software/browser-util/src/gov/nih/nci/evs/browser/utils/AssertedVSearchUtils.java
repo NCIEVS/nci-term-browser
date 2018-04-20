@@ -1,67 +1,41 @@
 package gov.nih.nci.evs.browser.utils;
 
-
-import java.util.HashSet;
-import java.util.Set;
-
-import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
-import org.LexGrid.LexBIG.Exceptions.LBException;
-import org.LexGrid.LexBIG.Exceptions.LBInvocationException;
-import org.LexGrid.LexBIG.Exceptions.LBParameterException;
-import org.LexGrid.LexBIG.Exceptions.LBResourceUnavailableException;
-import org.LexGrid.LexBIG.Extensions.Generic.CodingSchemeReference;
-import org.LexGrid.LexBIG.Extensions.Generic.SearchExtension.MatchAlgorithm;
-import org.LexGrid.LexBIG.Extensions.Generic.SourceAssertedValueSetSearchExtension;
-import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
-import org.LexGrid.LexBIG.Utility.Constructors;
-import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-//import org.LexGrid.LexBIG.testUtil.LexEVSServiceHolder;
-import org.LexGrid.util.assertedvaluesets.AssertedValueSetParameters;
-
-
 import java.util.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
-
-
+import org.apache.commons.codec.language.*;
 import org.apache.log4j.*;
-
-import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
-import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
-import org.LexGrid.LexBIG.Exceptions.LBException;
-import org.LexGrid.LexBIG.Extensions.Generic.CodingSchemeReference;
-import org.LexGrid.LexBIG.Extensions.Generic.SearchExtension;
-
-import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
-import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-
+import org.LexGrid.codingSchemes.*;
+import org.LexGrid.concepts.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Core.*;
+import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
+import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
+import org.LexGrid.LexBIG.DataModel.Core.types.*;
+import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
+import org.LexGrid.LexBIG.Exceptions.LBException;
+import org.LexGrid.LexBIG.Exceptions.LBInvocationException;
+import org.LexGrid.LexBIG.Exceptions.LBParameterException;
+import org.LexGrid.LexBIG.Exceptions.LBResourceUnavailableException;
+import org.LexGrid.LexBIG.Extensions.Generic.*;
+import org.LexGrid.LexBIG.Extensions.Generic.CodingSchemeReference;
+import org.LexGrid.LexBIG.Extensions.Generic.SearchExtension.MatchAlgorithm;
+import org.LexGrid.LexBIG.Extensions.Generic.SearchExtension;
+import org.LexGrid.LexBIG.Extensions.Generic.SourceAssertedValueSetSearchExtension;
+import org.LexGrid.LexBIG.Impl.LexBIGServiceImpl;
 import org.LexGrid.LexBIG.LexBIGService.*;
 import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.*;
+import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
 import org.LexGrid.LexBIG.Utility.*;
-import org.LexGrid.concepts.*;
-import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
+import org.LexGrid.LexBIG.Utility.Constructors;
 import org.LexGrid.LexBIG.Utility.Iterators.*;
-import org.LexGrid.codingSchemes.*;
-import org.apache.log4j.*;
-
-import org.LexGrid.LexBIG.DataModel.Core.types.*;
-import org.LexGrid.naming.*;
-import org.LexGrid.LexBIG.Extensions.Generic.*;
-
-import org.apache.commons.codec.language.*;
-import org.LexGrid.LexBIG.Extensions.Generic.SearchExtension;
-
 import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-import org.LexGrid.LexBIG.Impl.LexBIGServiceImpl;
-
-import org.lexgrid.resolvedvalueset.LexEVSResolvedValueSetService;
+import org.LexGrid.naming.*;
 import org.lexgrid.resolvedvalueset.impl.LexEVSResolvedValueSetServiceImpl;
+import org.lexgrid.resolvedvalueset.LexEVSResolvedValueSetService;
+import org.LexGrid.util.assertedvaluesets.AssertedValueSetParameters;
 import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
-
-
 
 
 public class AssertedVSearchUtils {
@@ -338,13 +312,53 @@ public class AssertedVSearchUtils {
 			return null;
 		}
 		try {
+			//iterator = service.search(
+			//	matchText, null, csRefs, matchAlgorithm, true);
 			iterator = service.search(
-				matchText, null, csRefs, matchAlgorithm, true);
+				matchText, csRefs, null, matchAlgorithm, false);
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return iterator;
 	}
+
+     public ResolvedConceptReferencesIterator search(
+        Vector<String> schemes, Vector<String> versions, String matchText, int searchOption, SearchExtension.MatchAlgorithm matchAlgorithm) throws LBException {
+	    if (schemes == null || versions == null) return null;
+	    if (schemes.size() != versions.size()) return null;
+	    if (schemes.size() == 0) return null;
+	    if (matchText == null) return null;
+	    if (searchOption != BY_CODE && matchAlgorithm == null) {
+			return null;
+		}
+        Set<CodingSchemeReference> csRefs = new HashSet<CodingSchemeReference>();
+        for (int i=0; i<schemes.size(); i++) {
+			String scheme = (String) schemes.elementAt(i);
+			String version = (String) versions.elementAt(i);
+			CodingSchemeReference csRef = new CodingSchemeReference();
+			csRef.setCodingScheme(scheme);
+			csRef.setVersionOrTag(Constructors.createCodingSchemeVersionOrTagFromVersion(version));
+			csRefs.add(csRef);
+		}
+		//SearchExtension.MatchAlgorithm matchAlgorithm = convertToMatchAlgorithm(searchOption, algorithm);
+		ResolvedConceptReferencesIterator iterator = null;
+		if (matchAlgorithm == null) {
+			return null;
+		}
+		try {
+			//iterator = service.search(
+			//	matchText, null, csRefs, matchAlgorithm, true);
+
+			iterator = service.search(
+				matchText, csRefs, null, matchAlgorithm, false);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return iterator;
+	}
+
 
 	public String getProductionVersion(String codingScheme) {
 		return csdu.getVocabularyVersionByTag(codingScheme, "PRODUCITON");

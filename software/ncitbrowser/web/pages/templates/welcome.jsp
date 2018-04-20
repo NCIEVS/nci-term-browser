@@ -148,7 +148,7 @@ JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
               <td width="3px"></td>
               <td class="textbody" valign="top">
                 <a href="<%=nci_meta_url%>" target="_blank" alt="NCIm">NCI Metathesaurus</a>:
-                Comprehensive database of 6,700,000 terms from 85 terminologies.
+                Comprehensive database of 6,700,000 terms from over 85 terminologies.
               </td>
             </tr>
             <tr valign="top">

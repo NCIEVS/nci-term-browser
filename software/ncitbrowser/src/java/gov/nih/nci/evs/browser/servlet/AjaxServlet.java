@@ -2732,8 +2732,6 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 		String msg = null;
 
 long ms = System.currentTimeMillis();
-
-
         String selectValueSetSearchOption = HTTPUtils.cleanXSS((String) request.getParameter("selectValueSetSearchOption"));
 		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 
@@ -2757,11 +2755,7 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 */
 
 String checked_vocabularies = get_checked_vocabularies(request);
-if (checked_vocabularies == null) {
-	checked_vocabularies = (String) request.getSession().getAttribute("checked_vocabularies");
-}
 String checked_nodes = get_checked_nodes(request);
-
 
 if (checked_vocabularies != null) {
 	checked_vocabularies = checked_vocabularies.trim();
@@ -2804,6 +2798,7 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 			searchOption = SimpleSearchUtils.BY_NAME;
 		}
         String serviceUrl = RemoteServerUtil.getServiceUrl();
+
         ResolvedConceptReferencesIterator iterator = new ValueSetSearchUtils(lbSvc, serviceUrl).searchResolvedValueSetCodingSchemes(checked_vocabularies,
             matchText, searchOption, algorithm);
 

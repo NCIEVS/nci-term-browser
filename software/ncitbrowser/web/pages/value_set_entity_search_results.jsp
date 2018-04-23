@@ -126,10 +126,9 @@
     String selected_vocabularies_link = "";
     
     if (checked_vocabularies != null) {
-    
       tooltip_str = checked_vocabularies + "</br>";
       selected_vocabularies = StringUtils.parseData(checked_vocabularies, ',');
-      System.out.println("selected_vocabularies: " + selected_vocabularies.size());
+      //System.out.println("selected_vocabularies: " + selected_vocabularies.size());
       Vector selected_vocabularies_names = DataUtils.uri2CodingSchemeName(selected_vocabularies);
       System.out.println("Number of selected value sets: " + selected_vocabularies_names.size());
       selected_vocabularies_link = JSPUtils.getPopUpWindow(selected_vocabularies_names, "Selected Value Sets");

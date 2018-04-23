@@ -57,9 +57,9 @@ public class AssertedVSearchUtils {
 		this.lbSvc = lbSvc;
 		this.csdu = new CodingSchemeDataUtils(lbSvc);
 		try {
-			System.out.println("Instantiating SourceAssertedValueSetSearchExtension ...");
+			//System.out.println("Instantiating SourceAssertedValueSetSearchExtension ...");
 			service = (SourceAssertedValueSetSearchExtension) lbSvc.getGenericExtension("AssertedValueSetSearchExtension");
-			System.out.println("Instantiated SourceAssertedValueSetSearchExtension.");
+			//System.out.println("Instantiated SourceAssertedValueSetSearchExtension.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -270,7 +270,45 @@ public class AssertedVSearchUtils {
 		return csdu.getVocabularyVersionByTag(codingScheme, "PRODUCITON");
 	}
 
-     public void test_search(String inputfile, String code, String name) {
+
+    public ResolvedConceptReferencesIterator search(
+        String selected_uris, String matchText, SearchExtension.MatchAlgorithm matchAlgorithm, boolean searchRVSs) throws LBException {
+		try {
+			Vector u = StringUtils.parseData(selected_uris, ',');
+			Vector schemes = new Vector();
+			Vector versions = new Vector();
+			for (int i=0; i<u.size(); i++) {
+				String scheme = (String) u.elementAt(i);
+				schemes.add(scheme);
+				versions.add(null);
+			}
+			return search(schemes, versions, matchText, matchAlgorithm, searchRVSs, false);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+    }
+
+    public ResolvedConceptReferencesIterator search(
+        String selected_uris, String matchText, int searchOption, SearchExtension.MatchAlgorithm matchAlgorithm) throws LBException {
+		try {
+			Vector u = StringUtils.parseData(selected_uris, ',');
+			Vector schemes = new Vector();
+			Vector versions = new Vector();
+			for (int i=0; i<u.size(); i++) {
+				String scheme = (String) u.elementAt(i);
+				schemes.add(scheme);
+				versions.add(null);
+			}
+			return search(schemes, versions, matchText, matchAlgorithm);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
+
+    public void test_search(String inputfile, String code, String name) {
 		 Vector<String> schemes = Utils.readFile(inputfile);
 		 Vector<String> versions = new Vector();
          for (int i=0; i<schemes.size(); i++) {

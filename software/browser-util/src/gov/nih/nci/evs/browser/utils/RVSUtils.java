@@ -74,6 +74,27 @@ public class RVSUtils {
     private ValueSetMetadataUtils vsmdu = null;
     private static String NCI_THESAURUS = "NCI_Thesaurus";
 
+
+    //searchOption
+    public static final int BY_CODE = 1;
+    public static final int BY_NAME = 2;
+    public static final int BY_PROPERTY = 3;
+
+    //algorithm
+    public static final String EXACT_MATCH = "exactMatch";
+    public static final String CONTAINS = "contains";
+    public static final String LUCENE = "lucene";
+
+    static final String[] ALGORITHMS = {EXACT_MATCH, CONTAINS, LUCENE};
+
+    public static SearchExtension.MatchAlgorithm[] SUPPORTED_ALGORITHMS = new SearchExtension.MatchAlgorithm[] {
+		SearchExtension.MatchAlgorithm.CODE_EXACT,
+		SearchExtension.MatchAlgorithm.PRESENTATION_EXACT,
+		SearchExtension.MatchAlgorithm.PRESENTATION_CONTAINS,
+		SearchExtension.MatchAlgorithm.PROPERTY_EXACT,
+		SearchExtension.MatchAlgorithm.PROPERTY_CONTAINS,
+		SearchExtension.MatchAlgorithm.LUCENE};
+
 	public RVSUtils(String serviceUrl, LexBIGService lbSvc, LexEVSValueSetDefinitionServices vsd_service) {
 		this.serviceUrl = serviceUrl;
 		this.lbSvc = lbSvc;
@@ -81,7 +102,7 @@ public class RVSUtils {
 		this.csdu = new CodingSchemeDataUtils(lbSvc);
 		System.out.println("createLexEVSResolvedValueSetService ...");
 		rvs_service = createLexEVSResolvedValueSetService(NCI_THESAURUS);
-		System.out.println("AssertedRVSUtils ...");
+		System.out.println("AssertedValueSetUtils ...");
 		avsu = new AssertedValueSetUtils(serviceUrl, lbSvc);
 		System.out.println("AssertedVSearchUtils ...");
 		avssu = new AssertedVSearchUtils(lbSvc);
@@ -133,6 +154,21 @@ public class RVSUtils {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public List<CodingScheme> listAllResolvedValueSets() throws Exception {
 		return avsu.listAllResolvedValueSets();
+	}
+
+
+    public HashMap createVSDURI2NameHashMap() {
+		HashMap hmap = new HashMap();
+		try {
+			List list = listAllResolvedValueSets();
+			for (int i=0; i<list.size(); i++) {
+				CodingScheme cs = (CodingScheme) list.get(i);
+				hmap.put(cs.getCodingSchemeURI(), cs.getCodingSchemeName());
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return hmap;
 	}
 
 	public Vector getAllResolvedValueSetURIs() {
@@ -198,17 +234,6 @@ public class RVSUtils {
 // search value sets
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //searchOption
-    public static final int BY_CODE = 1;
-    public static final int BY_NAME = 2;
-    public static final int BY_PROPERTY = 3;
-
-    //algorithm
-    public static final String EXACT_MATCH = "exactMatch";
-    public static final String CONTAINS = "contains";
-    public static final String LUCENE = "lucene";
-
-    static final String[] ALGORITHMS = {EXACT_MATCH, CONTAINS, LUCENE};
 
     private static int getSearchOption(String searchOptionText) {
 		String t = searchOptionText.toLowerCase();
@@ -253,7 +278,6 @@ public class RVSUtils {
 
     public ResolvedConceptReferencesIterator search(
         Vector<String> schemes, Vector<String> versions, String matchText, int searchOption, String algorithm) throws LBException {
-		//dumpSearchInputParmeterValues(schemes, versions, matchText, searchOption, algorithm);
 		try {
 			return avssu.search(schemes, versions, matchText, searchOption, algorithm);
 		} catch (Exception ex) {
@@ -261,6 +285,58 @@ public class RVSUtils {
 			return null;
 		}
 	}
+
+    public ResolvedConceptReferencesIterator search(
+        Vector<String> schemes, Vector<String> versions, String matchText, SearchExtension.MatchAlgorithm matchAlgorithm) throws LBException {
+		try {
+			return avssu.search(schemes, versions, matchText, matchAlgorithm);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
+    public ResolvedConceptReferencesIterator search(
+        String selected_uris, String matchText, int searchOption, SearchExtension.MatchAlgorithm matchAlgorithm) throws LBException {
+		try {
+			Vector u = StringUtils.parseData(selected_uris, ',');
+			Vector schemes = new Vector();
+			Vector versions = new Vector();
+			for (int i=0; i<u.size(); i++) {
+				String scheme = (String) u.elementAt(i);
+				schemes.add(scheme);
+				versions.add(null);
+			}
+			return avssu.search(schemes, versions, matchText, matchAlgorithm);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
+    public ResolvedConceptReferencesIterator search(
+        String selected_uris, String matchText, SearchExtension.MatchAlgorithm matchAlgorithm, boolean searchRVSs) throws LBException {
+		try {
+			Vector u = StringUtils.parseData(selected_uris, ',');
+			Vector schemes = new Vector();
+			Vector versions = new Vector();
+			for (int i=0; i<u.size(); i++) {
+				String scheme = (String) u.elementAt(i);
+				schemes.add(scheme);
+				versions.add(null);
+			}
+			return avssu.search(schemes, versions, matchText, matchAlgorithm, searchRVSs, false);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+    }
+
+
+    public ResolvedConceptReferencesIterator search(
+        Vector<String> schemes, Vector<String> versions, String matchText, SearchExtension.MatchAlgorithm matchAlgorithm, boolean searchRVSs) throws LBException {
+        return avssu.search(schemes, versions, matchText, matchAlgorithm, searchRVSs, false);
+    }
 
 	public void test_search(String rvs_uri, String code, String matchText) {
 		int batchSize = 200;
@@ -303,207 +379,114 @@ public class RVSUtils {
 		}
 	}
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public static String getResolvedConceptReferenceExpression(ResolvedConceptReference ref) {
+		StringBuffer buf = new StringBuffer();
+		buf.append(ref.getEntityDescription().getContent() + " (" + ref.getConceptCode() + ")").append("\n");
+		buf.append("\turi: " + ref.getCodingSchemeURI()).append("\n");
+		buf.append("\tcoding scheme: " + ref.getCodingSchemeName()).append("\n");
+		buf.append("\tversion: " + ref.getCodingSchemeVersion()).append("\n");
+		buf.append("\tnamespace: " + ref.getCodeNamespace());
+		return buf.toString();
+	}
+
+    protected static void displayRef(ResolvedConceptReference ref) {
+        System.out.println(getResolvedConceptReferenceExpression(ref));
+    }
+
+    public static void dumpIterator(ResolvedConceptReferencesIterator itr, int batchSize) {
+		if (itr == null) return;
+		if (batchSize != -1) {
+			try {
+				while (itr.hasNext()) {
+					ResolvedConceptReference[] refs =
+						itr.next(batchSize).getResolvedConceptReference();
+					for (ResolvedConceptReference ref : refs) {
+						displayRef(ref);
+					}
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+    public static void dumpIterator(ResolvedConceptReferencesIterator itr) {
+		dumpIterator(itr, 100);
+	}
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static Vector findRVSwithoutSupportingSource(Vector v) {
+		String base_uri = "http://evs.nci.nih.gov/valueset";
+		Vector w = new Vector();
+		for (int i=0; i<v.size(); i++) {
+			String line = (String) v.elementAt(i);
+			Vector u = StringUtils.parseData(line, '|');
+			String uri = (String) u.elementAt(0);
+			String name = (String) u.elementAt(1);
+			int n = uri.lastIndexOf("/");
+			String t = uri.substring(0, n);
+			if (t.compareTo(base_uri) == 0) {
+				System.out.println(uri + " (" +  name + ")");
+			}
+		}
+		return w;
+	}
 
-	public static void main(String[] args) {
-		LexBIGService lbSvc = null;//RemoteServerUtil.createLexBIGService();
-		String serviceUrl = null;//RemoteServerUtil.getServiceUrl();
-		LexEVSValueSetDefinitionServices vsd_service = null;//RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-		long ms = System.currentTimeMillis();
-		RVSUtils vsu = new RVSUtils(serviceUrl, lbSvc, vsd_service);
-		System.out.println("RVSUtils initialization run time (ms): " + (System.currentTimeMillis() - ms));
+	public static String constructSearchAllString(Vector v) {
+		StringBuffer buf = new StringBuffer();
+		for (int i=0; i<v.size(); i++) {
+			String line = (String) v.elementAt(i);
+			Vector u = StringUtils.parseData(line, '|');
+			String uri = (String) u.elementAt(0);
+			buf.append(uri);
+			if (i < v.size()-1) {
+				buf.append(",");
+			}
+		}
+		return buf.toString();
+	}
 
-/*
-
-		AssertedRVSUtils test = new AssertedRVSUtils(serviceUrl, lbSvc);
-		String codingScheme = "NCI_Thesaurus";
-		CodingScheme cs = new CodingSchemeDataUtils(lbSvc).resolveCodingScheme(codingScheme);
-		String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(codingScheme, Constants.PRODUCTION);
-
-		System.out.println("version: " + version);
-*/
-/*
-		HashMap rvsURI2NameHashMap = test.getRVSURI2NameHashMap();
-
+	public void generateRVSURIFile(String outputfile) {
+		HashMap rvsURI2NameHashMap = avsu.getRVSURI2NameHashMap();
+		Vector w = new Vector();
 		System.out.println(rvsURI2NameHashMap.keySet().size());
 		Iterator it = rvsURI2NameHashMap.keySet().iterator();
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			String value = (String) rvsURI2NameHashMap.get(key);
-			System.out.println(key + " --> " + value);
+			w.add(key + "|" + value);
 		}
-*/
-/*
+		Utils.saveToFile(outputfile, w);
+	}
+
+	public void testIterator(String matchText) {
 		try {
+			long ms = System.currentTimeMillis();
+            Vector w = Utils.readFile("rvs_uri.txt");
+			String selected_uris = constructSearchAllString(w);
 
-			List<CodingScheme> schemes = test.listAllResolvedValueSetsWithMiniScheme();
-			System.out.println("Number of listAllResolvedValueSetsWithMiniScheme: " + schemes.size());
-			for (int i=0; i<schemes.size(); i++) {
-				int j = i+1;
-				cs = (CodingScheme) schemes.get(i);
-				System.out.println("(" + j + ") " + cs.getCodingSchemeURI() + " (" + cs.getCodingSchemeName() + ")");
-			}
+			SearchExtension.MatchAlgorithm matchAlgorithm = MatchAlgorithm.PRESENTATION_CONTAINS;
+			boolean searchRVSs = true;
+			/*
+    public ResolvedConceptReferencesIterator search(
+        String selected_uris, String matchText, SearchExtension.MatchAlgorithm matchAlgorithm, boolean searchRVSs) throws LBException {
+			*/
 
-			schemes = test.getRegularResolvedValueSets();
-			System.out.println("Number of RegularResolvedValueSets: " + schemes.size());
-			for (int i=0; i<schemes.size(); i++) {
-				int j = i+1;
-				cs = (CodingScheme) schemes.get(i);
-				System.out.println("(" + j + ") " + cs.getCodingSchemeURI() + " (" + cs.getCodingSchemeName() + ")");
-			}
-
-			schemes = test.listAllResolvedValueSets();
-			System.out.println("Number of listAllResolvedValueSets: " + schemes.size());
-			for (int i=0; i<schemes.size(); i++) {
-				int j = i+1;
-				cs = (CodingScheme) schemes.get(i);
-				System.out.println("(" + j + ") " + cs.getCodingSchemeURI() + " (" + cs.getCodingSchemeName() + ")");
-			}
-
-		} catch (Exception ex) {
+            ResolvedConceptReferencesIterator iterator = avssu.search(selected_uris, matchText, matchAlgorithm, searchRVSs);
+            if (iterator != null) {
+                IteratorHelper.dumpIterator(iterator, 100, true);
+		    }
+			searchRVSs = false;
+            iterator = avssu.search(selected_uris, matchText, matchAlgorithm, searchRVSs);
+            if (iterator != null) {
+                IteratorHelper.dumpIterator(iterator, 100, true);
+		    }
+			System.out.println("RVSUtils search run time (ms): " + (System.currentTimeMillis() - ms));
+	    } catch (Exception ex) {
 			ex.printStackTrace();
 		}
-*/
-		try {
-			ms = System.currentTimeMillis();
-			String rvs_uri = "http://evs.nci.nih.gov/valueset/FDA/C54453";
-			String metadata_str = vsu.getValueSetDefinitionMetadata(rvs_uri);
-			System.out.println(metadata_str);
-			System.out.println("RVSUtils getValueSetDefinitionMetadata run time (ms): " + (System.currentTimeMillis() - ms));
-
-			ms = System.currentTimeMillis();
-			ValueSetDefinition vsd = vsu.findValueSetDefinitionByURI(rvs_uri);
-			System.out.println(vsd.getValueSetDefinitionName());
-			System.out.println("RVSUtils findValueSetDefinitionByURI run time (ms): " + (System.currentTimeMillis() - ms));
-
-/*
-			ResolvedConceptReferencesIterator iterator = vsu.getValueSetIteratorForURI(rvs_uri);
-			int batchSize = 10;
-			boolean showIndex = true;
-			IteratorHelper.dumpIterator(iterator, batchSize, showIndex);
-*/
-            String code = "C48326";
-            String matchText = "red";
-            //Red (Code C48326)
-			vsu.test_search(rvs_uri, code, matchText);
-/*
-
-			List<CodingScheme> schemes = test.getRegularResolvedValueSets();
-			System.out.println("Number of RegularResolvedValueSets: " + schemes.size());
-			for (int i=0; i<schemes.size(); i++) {
-				int j = i+1;
-				cs = (CodingScheme) schemes.get(i);
-				System.out.println("(" + j + ") " + cs.getCodingSchemeURI() + " (" + cs.getCodingSchemeName() + ")");
-			}
-
-			schemes = test.listAllResolvedValueSetsWithMiniScheme();
-			System.out.println("Number of RegularResolvedValueSets: " + schemes.size());
-			for (int i=0; i<schemes.size(); i++) {
-				int j = i+1;
-				cs = (CodingScheme) schemes.get(i);
-				System.out.println("(" + j + ") " + cs.getCodingSchemeURI() + " (" + cs.getCodingSchemeName() + ")");
-			}
-
-			schemes = test.listAllResolvedValueSets();
-			System.out.println("Number of RegularResolvedValueSets: " + schemes.size());
-			for (int i=0; i<schemes.size(); i++) {
-				int j = i+1;
-				cs = (CodingScheme) schemes.get(i);
-				System.out.println("(" + j + ") " + cs.getCodingSchemeURI() + " (" + cs.getCodingSchemeName() + ")");
-			}
-
-/*
-			ResolvedConceptReferenceList rcrl = test.getValueSetEntities(rvs_uri);
-			IteratorHelper.dumpResolvedConceptReferenceList(rcrl);
-
-			List<CodingScheme> schemes = test.getRegularResolvedValueSets();
-			System.out.println("Number of RegularResolvedValueSets: " + schemes.size());
-			for (int i=0; i<schemes.size(); i++) {
-				int j = i+1;
-				cs = (CodingScheme) schemes.get(i);
-				System.out.println("(" + j + ") " + cs.getCodingSchemeURI() + " (" + cs.getCodingSchemeName() + ")");
-			}
-
-	        //List<AbsoluteCodingSchemeVersionReference> acsvrl = test.getValueSetURIAndVersionForTextContains("red");
-	        //IteratorHelper.dumpAbsoluteCodingSchemeVersionReferenceList(acsvrl);
-	        //Red (Code C48326)
-	        List<AbsoluteCodingSchemeVersionReference> acsvrl = test.getValueSetURIAndVersionForCode("C48326");
-	        IteratorHelper.dumpAbsoluteCodingSchemeVersionReferenceList(acsvrl);
-
-			schemes = test.listAllResolvedValueSetsWithMiniScheme();
-			System.out.println("Number of RegularResolvedValueSets: " + schemes.size());
-			for (int i=0; i<schemes.size(); i++) {
-				int j = i+1;
-				cs = (CodingScheme) schemes.get(i);
-				System.out.println("(" + j + ") " + cs.getCodingSchemeURI() + " (" + cs.getCodingSchemeName() + ")");
-			}
-
-			schemes = test.listAllResolvedValueSets();
-			System.out.println("Number of RegularResolvedValueSets: " + schemes.size());
-			for (int i=0; i<schemes.size(); i++) {
-				int j = i+1;
-				cs = (CodingScheme) schemes.get(i);
-				System.out.println("(" + j + ") " + cs.getCodingSchemeURI() + " (" + cs.getCodingSchemeName() + ")");
-			}
-
-			schemes = test.listAllResolvedValueSetsWithNoAssertedScheme();
-			System.out.println("Number of RegularResolvedValueSets: " + schemes.size());
-			for (int i=0; i<schemes.size(); i++) {
-				int j = i+1;
-				cs = (CodingScheme) schemes.get(i);
-				System.out.println("(" + j + ") " + cs.getCodingSchemeURI() + " (" + cs.getCodingSchemeName() + ")");
-			}
-
-            Properties properties = test.getCodingSchemeMetadataForResolvedValueSetURI(rvs_uri);
-            System.out.println("\ndumpProperties");
-            test.dumpProperties(properties);
-            System.out.println("\ndumpCodingSchemeMetadata");
-            test.dumpCodingSchemeMetadata(properties);
-*/
-			System.out.println("Total run time (ms): " + (System.currentTimeMillis() - ms));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-/*
-		AssertedRVSUtils test = new AssertedRVSUtils(lbSvc);
-
-		String codingScheme = "NCI_Thesaurus";
-		CodingScheme cs = new CodingSchemeDataUtils(lbSvc).resolveCodingScheme(codingScheme);
-		String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(codingScheme, "PRODUCTION");
-		if (cs == null) {
-			System.out.println("Unable to resolve " + codingScheme);
-		} else {
-			System.out.println("cs name " + cs.getCodingSchemeName());
-			System.out.println("cs uri " + cs.getCodingSchemeURI());
-			System.out.println("cs formal name " + cs.getFormalName());
-			System.out.println("version " + version);
-		}
-
-        String serviceUrl = "https://lexevsapi65-dev.nci.nih.gov/lexevsapi65";
-		LexEVSDistributed distributed = null;
-		try {
-			distributed = (LexEVSDistributed)
-				ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
-
-			LexEVSResolvedValueSetService service
-			   = test.createLexEVSResolvedValueSetService(distributed, codingScheme, version, cs.getCodingSchemeURI());
-
-			List<CodingScheme> cs_list = service.listAllResolvedValueSets();
-			System.out.println("cs_list.size()= " + cs_list.size());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		String scheme = "http://evs.nci.nih.gov/valueset/FDA/C54453";
-		String version = test.getProductionVersion(scheme);
-		version = "18.01eVS";
-
-			LexEVSDistributed distributed =
-				(LexEVSDistributed)
-				ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
-*/
 	}
 
 }
-
-

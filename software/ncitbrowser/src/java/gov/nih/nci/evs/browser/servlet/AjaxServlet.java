@@ -2590,7 +2590,6 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 		}
 
 		String msg = null;
-		//request.getSession().removeAttribute("checked_vocabularies");
 /*
 String checked_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("checked_vocabularies"));
 if (checked_vocabularies == null) return;

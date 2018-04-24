@@ -1566,6 +1566,10 @@ if (action.compareTo("xmldefinitions") == 0) {
 //  create_vs_tree
 //////////////////////////
 
+    public String get_checked_nodes(HttpServletRequest request) {
+		return  get_checked_vocabularies(request);
+	}
+
 
     public void create_vs_tree(HttpServletRequest request, HttpServletResponse response, int view, String vsd_uri) {
         SimpleTreeUtils stu = new SimpleTreeUtils(DataUtils.getVocabularyNameSet());
@@ -2678,6 +2682,7 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 	    }
     }
 
+/*
     private String get_checked_nodes(HttpServletRequest request) {
 		StringBuffer buf = new StringBuffer();
 		Enumeration<String> parameterNames = request.getParameterNames();
@@ -2685,14 +2690,12 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 		while (parameterNames.hasMoreElements()) {
 			String paramName = parameterNames.nextElement();
 			if (paramName == null) return null;
-			//if (paramName.indexOf("http://") != -1) {
-				//String paramValue = (String) request.getParameter(paramName);
 				String paramValue = HTTPUtils.cleanXSS((String) request.getParameter(paramName));
 				if (paramValue == null) return null;
 				if (paramValue.compareTo("on") == 0) {
 					buf.append(paramName).append(",");
 				}
-			//}
+			}
 		}
 		String checked_vocabularies = buf.toString();
 		if (checked_vocabularies == null) return null;
@@ -2701,7 +2704,7 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 		}
 		return checked_vocabularies;
 	}
-
+*/
     private String get_checked_vocabularies(HttpServletRequest request) {
 		StringBuffer buf = new StringBuffer();
 		Enumeration<String> parameterNames = request.getParameterNames();
@@ -2710,7 +2713,6 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 			String paramName = parameterNames.nextElement();
 			if (paramName == null) return null;
 			if (paramName.indexOf("http://") != -1) {
-				//String paramValue = (String) request.getParameter(paramName);
 				String paramValue = HTTPUtils.cleanXSS((String) request.getParameter(paramName));
 				if (paramValue == null) return null;
 				if (paramValue.compareTo("on") == 0) {
@@ -2727,6 +2729,16 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 	}
 
     public String valueSetSearchAction(HttpServletRequest request) {
+		String checked_vocabularies = null;
+		checked_vocabularies = get_checked_vocabularies(request);
+		if (checked_vocabularies == null || checked_vocabularies.length() < 1) {
+			checked_vocabularies = (String) request.getSession().getAttribute("checked_vocabularies");
+		}
+
+		if (checked_vocabularies != null) {
+			request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
+		}
+
 		java.lang.String valueSetDefinitionRevisionId = null;
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		String msg = null;
@@ -2745,8 +2757,7 @@ long ms = System.currentTimeMillis();
 			algorithm = Constants.DEFAULT_SEARCH_ALGORITHM;//"exactMatch";
 		}
 
-        request.getSession().setAttribute("valueset_search_algorithm", algorithm);
-
+request.getSession().setAttribute("valueset_search_algorithm", algorithm);
 
 //String checked_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("checked_vocabularies"));
 /*
@@ -2754,8 +2765,15 @@ String checked_vocabularies = get_checked_vocabularies(request);
 request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 */
 
-String checked_vocabularies = get_checked_vocabularies(request);
-String checked_nodes = get_checked_nodes(request);
+/*
+
+if (checked_nodes != null && checked_nodes.length() > 0) {
+	Sytem.out.println("valueSetSearchAction step 2 " + checked_vocabularies);
+
+	request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
+} else {
+	Sytem.out.println("valueSetSearchAction step 3 checked_nodes = NULL???");
+}
 
 if (checked_vocabularies != null) {
 	checked_vocabularies = checked_vocabularies.trim();
@@ -2768,20 +2786,18 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
 if (DataUtils.isNullOrBlank(checked_vocabularies)) {
     checked_vocabularies = vsd_uri;
 }
-
-/*
-		if (checked_vocabularies != null) {
-			request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
-		}
 */
 
-request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
-
+/*
 		if (checked_vocabularies == null || checked_vocabularies.length() <= 1) {
+
+
 			msg = "No value set is selected.";
 			request.getSession().setAttribute("message", msg);
 			return "message";
 		}
+*/
+
 
 		//Vector selected_vocabularies = DataUtils.parseData(checked_vocabularies, ",");
         String VSD_view = HTTPUtils.cleanXSS((String) request.getParameter("view"));

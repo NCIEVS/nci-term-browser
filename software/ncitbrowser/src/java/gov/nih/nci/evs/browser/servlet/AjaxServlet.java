@@ -2809,11 +2809,10 @@ if (DataUtils.isNullOrBlank(checked_vocabularies)) {
 
         if (matchText != null) matchText = matchText.trim();
         int searchOption = SimpleSearchUtils.BY_CODE;
-        if (selectValueSetSearchOption.compareTo("Name") == 0) {
+        if (selectValueSetSearchOption.compareToIgnoreCase("Name") == 0 || selectValueSetSearchOption.compareToIgnoreCase("Names") == 0) {
 			searchOption = SimpleSearchUtils.BY_NAME;
 		}
         String serviceUrl = RemoteServerUtil.getServiceUrl();
-
         ResolvedConceptReferencesIterator iterator = new ValueSetSearchUtils(lbSvc, serviceUrl).searchResolvedValueSetCodingSchemes(checked_vocabularies,
             matchText, searchOption, algorithm);
 

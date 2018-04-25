@@ -1331,11 +1331,11 @@ public class DataUtils {
 					if (vsdURI2MetadataHashMap.keySet().size() == 0) {
 						hasNoValueSet = true;
 						//return;
-						System.out.println("WARNING: vsdURI2MetadataHashMap.keySet().size() == 0.");
+						//System.out.println("WARNING: vsdURI2MetadataHashMap.keySet().size() == 0.");
 						_logger.debug("WARNING: vsdURI2MetadataHashMap.keySet().size() == 0.");
 					} else {
-						System.out.println("\tvsdURI2MetadataHashMap.keySet().size(): " + vsdURI2MetadataHashMap.keySet().size());
-						_logger.debug("\tvsdURI2MetadataHashMap.keySet().size(): " + vsdURI2MetadataHashMap.keySet().size());
+						//System.out.println("\tvsdURI2MetadataHashMap.keySet().size(): " + vsdURI2MetadataHashMap.keySet().size());
+						//_logger.debug("\tvsdURI2MetadataHashMap.keySet().size(): " + vsdURI2MetadataHashMap.keySet().size());
 					}
 				}
 			}

@@ -149,7 +149,9 @@ public class ValueSetSearchUtils
 
     public void setLexBIGService(LexBIGService lbSvc) {
 		this.lbSvc = lbSvc;
-		this.lrvs = new LexEVSResolvedValueSetServiceImpl(lbSvc);
+        this.lrvs = new LexEVSResolvedValueSetServiceImpl(lbSvc);
+        this.csdu = new CodingSchemeDataUtils(lbSvc);
+        this.avssu = new AssertedVSearchUtils(lbSvc);
 	}
 
 	protected static void displayRef(int count, ResolvedConceptReference ref){

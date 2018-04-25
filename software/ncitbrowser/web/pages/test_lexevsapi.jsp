@@ -43,9 +43,11 @@
     <%! private static Logger _logger = Utils.getJspLogger("value_set_entity_search_results.jsp"); %>
 
 <%
-	LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+	LexBIGService lbSvc = RemoteServerUtil.createLexBIGService(); 
 	long ms = System.currentTimeMillis();
 	AssertedVSearchUtils avssu = new AssertedVSearchUtils(lbSvc);
+	String serviceUrl = RemoteServerUtil.getServiceUrl(); 
+	AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, lbSvc);
 	//Red (Code C48326)
         Vector schemes = new Vector();
         Vector versions = new Vector();
@@ -60,7 +62,7 @@
         String algorithm = "contains";
         ResolvedConceptReferencesIterator iterator = null;
         ResolvedConceptReferencesIterator iterator2 = null;
-        iterator2 = vsu.getValueSetIteratorForURI(rvs_uri);
+        iterator2 = avsu.getValueSetIteratorForURI(rvs_uri);
         
 	try {
 		 iterator = avssu.search(schemes, versions, matchText, searchOption, algorithm);

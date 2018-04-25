@@ -53,10 +53,14 @@
         versions.add(null);
         schemes.add("http://evs.nci.nih.gov/valueset/FDA/C102833");
         versions.add(null);   
+        
+        String rvs_uri = "http://evs.nci.nih.gov/valueset/FDA/C54453";
         String matchText = "red"; 
         int searchOption = 2;
         String algorithm = "contains";
         ResolvedConceptReferencesIterator iterator = null;
+        ResolvedConceptReferencesIterator iterator2 = null;
+        iterator2 = vsu.getValueSetIteratorForURI(rvs_uri);
         
 	try {
 		 iterator = avssu.search(schemes, versions, matchText, searchOption, algorithm);
@@ -116,6 +120,41 @@
 	 }
 	 %>
      </table>
+     
+     <br></br>
+     
+       <table
+	   class="datatable_960"
+	   summary=""
+	   cellpadding="3"
+	   cellspacing="0"
+	   border="0"
+	   width="100%">
+
+	 <th class="dataTableHeader" scope="col" align="left">Value Set URI</th>
+	 <th class="dataTableHeader" scope="col" align="left">Vocabulary</th>
+	 <th class="dataTableHeader" scope="col" align="left">Version</th>
+	 <th class="dataTableHeader" scope="col" align="left">Name</th>
+	 <th class="dataTableHeader" scope="col" align="left">Code</th>
+	 <th class="dataTableHeader" scope="col" align="left">namespace</th>
+
+	 <%
+	 while (iterator2.hasNext()) {
+	 	ResolvedConceptReference ref = (ResolvedConceptReference) iterator2.next();
+	 %>	
+	 	<tr valign="top" align="left">
+	 	<td><%=ref.getCodingSchemeURI()%></td>
+	 	<td><%=ref.getCodingSchemeName()%></td>
+	 	<td><%=ref.getCodingSchemeVersion()%></td>
+	 	<td><%=ref.getEntityDescription().getContent()%></td>
+	 	<td><%=ref.getConceptCode()%></td>
+	 	<td><%=ref.getCodeNamespace()%></td>
+	 	</tr>
+	 <%	
+	 }
+	 %>
+     </table>     
+     
      </div>
 
             <div class="mainbox-bottom">

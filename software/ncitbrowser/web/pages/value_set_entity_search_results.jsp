@@ -650,7 +650,8 @@
                                   entity_code = (String) rcr.getCode();
                                   ns = (String) rcr.getCodeNamespace();
 
-				// to be implemented
+				// to be modified
+				/*
 				String entity_cs_nm = null;
 				if (ns != null) {
 					if (ns.compareToIgnoreCase("ncit") == 0 || ns.compareToIgnoreCase("NCI_Thesaurus") == 0) {
@@ -659,8 +660,9 @@
 					    entity_cs_nm = DataUtils.getCSName(ns);
 					}
 				}
-					
-                                  String vocabulary_name = entity_cs_nm;//(String) DataUtils.getFormalName(name);
+				*/
+				  String entity_cs_nm = name;
+                                  String vocabulary_name = entity_cs_nm;
 
                                   //[NCITERM-770] Missing coding scheme version in value set search results.
                                   entity_cs_version = (String) rcr.getCodingSchemeVersion();

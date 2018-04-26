@@ -192,6 +192,13 @@ public class AssertedVSearchUtils {
 
      public ResolvedConceptReferencesIterator search(
         Vector<String> schemes, Vector<String> versions, String matchText, int searchOption, String algorithm) throws LBException {
+
+System.out.println("AssertedVSearchUtils: schemes " + schemes.size());
+System.out.println("AssertedVSearchUtils: versions " + versions.size());
+System.out.println("AssertedVSearchUtils: matchText " + matchText);
+System.out.println("AssertedVSearchUtils: searchOption " + searchOption);
+System.out.println("AssertedVSearchUtils: algorithm " + algorithm);
+
 	    if (schemes == null || versions == null) return null;
 	    if (schemes.size() != versions.size()) return null;
 	    if (schemes.size() == 0) return null;
@@ -208,6 +215,7 @@ public class AssertedVSearchUtils {
 			csRef.setVersionOrTag(Constructors.createCodingSchemeVersionOrTagFromVersion(version));
 			csRefs.add(csRef);
 		}
+
 		SearchExtension.MatchAlgorithm matchAlgorithm = convertToMatchAlgorithm(searchOption, algorithm);
 		ResolvedConceptReferencesIterator iterator = null;
 		if (matchAlgorithm == null) {

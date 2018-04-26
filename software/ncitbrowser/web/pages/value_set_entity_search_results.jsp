@@ -679,7 +679,7 @@
                                         <a
                                             href="<%=request.getContextPath() %>/ajax?action=create_src_vs_tree&vsd_uri=<%=uri%>">
 
-                                          <%= DataUtils.encodeTerm(name) %>
+                                          <%= DataUtils.encodeTerm(uri) %>
                                         </a>
                                       </td>
 

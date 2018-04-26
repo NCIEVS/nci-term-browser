@@ -432,14 +432,6 @@ public class ValueSetFormatter {
             ResolvedConceptReferencesIterator iterator = null;
             try {
                 iterator = cns.resolve(sortCriteria, propertyNames, propertyTypes);
-                /*
-                try {
-					int numRemaining = iterator.numberRemaining();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				*/
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -448,8 +440,6 @@ public class ValueSetFormatter {
 
             while (iterator.hasNext()) {
                 iterator = iterator.scroll(maxToReturn);
-                //if (maxToReturn == -1) maxToReturn = 100;
-                //iterator = iterator.getNext(maxToReturn);
                 ResolvedConceptReferenceList rcrl = iterator.getNext();
                 if (rcrl != null) {
 					ResolvedConceptReference[] rcra =
@@ -930,11 +920,33 @@ public class ValueSetFormatter {
 			   fullSynTermName = getFullSynTermName(Constants.NCI_THESAURUS, version, vs_code, NCI_SOURCE, TYPE_AB);
 		    }
 		}
+
+		System.out.println("formatter fullSynTermName " + fullSynTermName);
+
+String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+System.out.println("get_rvs_tbl	metadata: " + metadata);
+Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+String defaultCodingScheme = (String) u.elementAt(6);
+
+
 		if (codes == null) {
+
+			System.out.println("formatter generate codes == null??? ");
+
 		    codes = csdu.getCodesInCodingScheme(vsd_uri, null);
 		}
+
+		System.out.println("formatter generate " + codes.size());
+
+
         StringBuffer buf = new StringBuffer();
-		Vector w = resolve(vsd_uri, version, source, fields, codes, maxReturn);
+
+        //to be modified
+		//Vector w = resolve(vsd_uri, version, source, fields, codes, maxReturn);
+
+		Vector w = resolve(defaultCodingScheme, version, source, fields, codes, maxReturn);
+
+
 		HashMap fieldValueHmap = new HashMap();
         //[NCITERM-759] Term Browser: Rel 2.10: Values page table is formatted incorrectly
 		buf.append("<table class=\"datatable_960\">").append("\n");
@@ -1163,10 +1175,18 @@ public class ValueSetFormatter {
 	}
 
     public String get_rvs_tbl(String vsd_uri, Vector codes) {
+
+System.out.println("get_rvs_tbl	vsd_uri: " + vsd_uri);
+System.out.println("get_rvs_tbl	codes: " + codes.size());
+
 		String rvs_tbl = null;
 		String supported_source = vsmdu.getValueSetSupportedSource(vsd_uri);
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+
+System.out.println("get_rvs_tbl	metadata: " + metadata);
+
+
 		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
 		String defaultCodingScheme = (String) u.elementAt(6);
 		boolean non_ncit_source = true;
@@ -1206,7 +1226,12 @@ public class ValueSetFormatter {
 		rvs_tbl = formatter.generate(defaultCodingScheme, null, supported_source, fields, codes, codes.size());
 		*/
 		Vector fields = getDefaultFields(non_ncit_source);
+
+System.out.println("generating rvs_tbl...");
+
 		rvs_tbl = generate(vsd_uri, null, supported_source, fields, codes, codes.size());
+
+
 		return rvs_tbl;
 	}
 

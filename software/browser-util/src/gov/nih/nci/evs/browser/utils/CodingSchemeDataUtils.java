@@ -1563,6 +1563,9 @@ public class CodingSchemeDataUtils {
 		return resolve(scheme, version, 250);
 	}
 
+
+
+
     public Vector resolve(String scheme, String version, int maxToReturn) {
 		boolean resolveObjects = false;
 		ResolvedConceptReferencesIterator iterator = resolveCodingScheme(scheme, version, resolveObjects);
@@ -1749,7 +1752,11 @@ public class CodingSchemeDataUtils {
 		return v;
 	}
 
-
+    public ResolvedConceptReferencesIterator resolveValueSet(String serviceUrl, String vsd_uri) {
+		AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, this.lbSvc);
+        ResolvedConceptReferencesIterator iterator = avsu.getValueSetIteratorForURI(vsd_uri);
+        return iterator;
+	}
 
 
 }

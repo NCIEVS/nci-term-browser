@@ -1296,8 +1296,13 @@ public class ValueSetBean {
 				.getValueSetDefinitionMetadata(DataUtils
 						.findValueSetDefinitionByURI(vsd_uri));
 		*/
-		String metadata = DataUtils
-				.getValueSetDefinitionMetadata(vsd_uri);
+		//String metadata = DataUtils
+		//		.getValueSetDefinitionMetadata(vsd_uri);
+
+	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+	    ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+
 		Vector u = StringUtils.parseData(metadata);
 		String name = (String) u.elementAt(0);
 		String valueset_uri = (String) u.elementAt(1);
@@ -1331,12 +1336,21 @@ public class ValueSetBean {
 		}
 
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-		LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+		String serviceUrl = RemoteServerUtil.getServiceUrl();
+		//LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
         Vector fields = formatter.getDefaultFields(reformat);
+
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		String version = csdu.getVocabularyVersionByTag(vsd_uri, Constants.PRODUCTION);
-		Vector lines = csdu.resolve(vsd_uri, version);
+
+		AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, lbSvc);
+        ResolvedConceptReferencesIterator iterator2 = null;
+        iterator2 = avsu.getValueSetIteratorForURI(vsd_uri);
+		//Vector lines = csdu.resolve(vsd_uri, version);
+		int maxToReturn = 250;
+		Vector lines = csdu.resolveIterator(iterator2, maxToReturn);
+
 		Vector codes = new Vector();
 		for (int i=0; i<lines.size(); i++) {
 			String line = (String) lines.elementAt(i);

@@ -1758,5 +1758,18 @@ public class CodingSchemeDataUtils {
         return iterator;
 	}
 
-
+	public ConceptReferenceList	iterator2List(ResolvedConceptReferencesIterator iterator) {
+		if (iterator == null) return null;
+		ConceptReferenceList list = new ConceptReferenceList();
+		try {
+			while (iterator.hasNext()) {
+				ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
+				list.addConceptReference(rcr);
+			}
+			return list;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 }

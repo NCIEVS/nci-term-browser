@@ -838,10 +838,32 @@ public class ValueSetBean {
 				try {
 					LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 					CodingSchemeDataUtils codingSchemeDataUtils = new CodingSchemeDataUtils(lbSvc);
-					//Partial implementation -- only export production version.
-					//Note: LexEVSValueSetDefinitionService needs to be fixed to allow exclusion of anonymous classes.
 					CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
-					CodedNodeSet cns = codingSchemeDataUtils.getNodeSet(vsd_uri, versionOrTag);
+
+
+	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+	    ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+		Vector u = StringUtils.parseData(metadata);
+		String defaultCodingScheme = (String) u.elementAt(6);
+		if (defaultCodingScheme.compareTo("ncit") == 0) {
+			defaultCodingScheme = "NCI_Thesaurus";
+		}
+
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+		String version = csdu.getVocabularyVersionByTag(defaultCodingScheme, Constants.PRODUCTION);
+		versionOrTag.setVersion(version);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    String serviceUrl = RemoteServerUtil.getServiceUrl();
+					AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, lbSvc);
+					ResolvedConceptReferencesIterator iterator2 = null;
+					iterator2 = avsu.getValueSetIteratorForURI(vsd_uri);
+
+					CodedNodeSet cns = codingSchemeDataUtils.getNodeSet(defaultCodingScheme, versionOrTag);
+					ConceptReferenceList codeList = csdu.iterator2List(iterator2);
+					cns = cns.restrictToCodes(codeList);
+
 					SortOptionList sortOptions = null;
 					LocalNameList filterOptions = null;
 					LocalNameList propertyNames = null;//new LocalNameList();

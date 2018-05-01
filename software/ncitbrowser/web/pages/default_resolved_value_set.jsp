@@ -82,6 +82,14 @@
           <div id="main-area_960">
             <%@ include file="/pages/templates/content-header-resolvedvalueset.jsp" %>
             <%
+            
+String serviceUrl = RemoteServerUtil.getServiceUrl();
+LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
+           
+            
+            
             String version_selection = (String) request.getSession().getAttribute("version_selection");
             request.getSession().removeAttribute("version_selection");
 
@@ -319,9 +327,6 @@
                             codes.add(ref.getConceptCode());
                           }
 
-                          LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-                          LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-                          ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
                           Vector fields = formatter.getDefaultFields(non_ncit_source);
                           //public String generate(String vsd_uri, String version, String source, Vector fields, Vector codes, int maxReturn) {
                             rvs_tbl = formatter.generate(defaultCodingScheme, null, supportedsource, fields, codes, codes.size());
@@ -346,10 +351,6 @@
                                 ResolvedConceptReference ref = (ResolvedConceptReference) obj;
                                 codes.add(ref.getConceptCode());
                               }
-
-                              LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-                              LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-                              ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
                               Vector fields = formatter.getDefaultFields();
                               //public String generate(String vsd_uri, String version, String source, Vector fields, Vector codes, int maxReturn) {
                                 rvs_tbl = formatter.generate(defaultCodingScheme, null, supportedsource, fields, codes, codes.size());
@@ -372,10 +373,6 @@
                                   ResolvedConceptReference ref = (ResolvedConceptReference) obj;
                                   codes.add(ref.getConceptCode());
                                 }
-
-                                LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-                                LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-                                ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
                                 Vector fields = formatter.getDefaultFields(false);
                                 //public String generate(String vsd_uri, String version, String source, Vector fields, Vector codes, int maxReturn) {
                                   rvs_tbl = formatter.generate(defaultCodingScheme, null, supportedsource, fields, codes, codes.size());

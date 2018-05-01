@@ -392,7 +392,24 @@ public class ValueSetBean {
         request.getSession().setAttribute("coding_scheme_ref", coding_scheme_ref);
 		try {
             CodingSchemeDataUtils codingSchemeDataUtils = new CodingSchemeDataUtils(lbSvc);
-			ResolvedConceptReferencesIterator itr = codingSchemeDataUtils.resolveCodingScheme(vsd_uri, null, false);
+
+			//ResolvedConceptReferencesIterator itr = codingSchemeDataUtils.resolveCodingScheme(vsd_uri, null, false);
+/*
+    public ResolvedConceptReferencesIterator resolveValueSet(
+		String serviceUrl, String defaultCodingScheme, String vsd_uri, String version, boolean resolveObjects) {
+*/
+
+        ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+		Vector u = StringUtils.parseData(metadata);
+		String defaultCodingScheme = (String) u.elementAt(6);
+		if (defaultCodingScheme.compareTo("ncit") == 0) {
+			defaultCodingScheme = "NCI_Thesaurus";
+		}
+
+    ResolvedConceptReferencesIterator itr = codingSchemeDataUtils.resolveValueSet(RemoteServerUtil.getServiceUrl(),
+            defaultCodingScheme, vsd_uri, null, false);
+
 			try {
 				int numberRemaining = itr.numberRemaining();
 			} catch (Exception ex) {
@@ -609,7 +626,6 @@ public class ValueSetBean {
 		}
 
 		FacesContext.getCurrentInstance().responseComplete();
-
 	}
 
 
@@ -667,7 +683,6 @@ public class ValueSetBean {
 
         try {
         	LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-
 			InputStream reader =  vsd_service.exportValueSetResolution(new URI(uri), valueSetDefinitionRevisionId,
 			   csvList, csVersionTag, failOnAllErrors);
 
@@ -863,7 +878,6 @@ public class ValueSetBean {
 					CodedNodeSet cns = codingSchemeDataUtils.getNodeSet(defaultCodingScheme, versionOrTag);
 					ConceptReferenceList codeList = csdu.iterator2List(iterator2);
 					cns = cns.restrictToCodes(codeList);
-
 					SortOptionList sortOptions = null;
 					LocalNameList filterOptions = null;
 					LocalNameList propertyNames = null;//new LocalNameList();
@@ -1308,11 +1322,17 @@ public class ValueSetBean {
 
 
 	public void exportValuesToCSVAction() {
+
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
-		String vsd_uri = (String) request.getSession().getAttribute("vsd_uri");
+
+		String vsd_uri = (String) request.getParameter("vsd_uri");
+		if (vsd_uri == null) {
+		    vsd_uri = (String) request.getSession().getAttribute("vsd_uri");
+		}
+
 		/*
 		String metadata = DataUtils
 				.getValueSetDefinitionMetadata(DataUtils
@@ -1324,7 +1344,6 @@ public class ValueSetBean {
 	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 	    ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
 		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
-
 		Vector u = StringUtils.parseData(metadata);
 		String name = (String) u.elementAt(0);
 		String valueset_uri = (String) u.elementAt(1);
@@ -1344,7 +1363,6 @@ public class ValueSetBean {
 			exportToCSVAction();
 			return;
 		}
-
 		boolean reformat = true;
 		boolean use_new_format = true;
 
@@ -1360,19 +1378,16 @@ public class ValueSetBean {
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		String serviceUrl = RemoteServerUtil.getServiceUrl();
 		//LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
+		ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
         Vector fields = formatter.getDefaultFields(reformat);
 
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
-		String version = csdu.getVocabularyVersionByTag(vsd_uri, Constants.PRODUCTION);
-
+		String version = csdu.getVocabularyVersionByTag(defaultCodingScheme, Constants.PRODUCTION);
 		AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, lbSvc);
-        ResolvedConceptReferencesIterator iterator2 = null;
-        iterator2 = avsu.getValueSetIteratorForURI(vsd_uri);
+        ResolvedConceptReferencesIterator iterator2 = avsu.getValueSetIteratorForURI(vsd_uri);
 		//Vector lines = csdu.resolve(vsd_uri, version);
 		int maxToReturn = 250;
 		Vector lines = csdu.resolveIterator(iterator2, maxToReturn);
-
 		Vector codes = new Vector();
 		for (int i=0; i<lines.size(); i++) {
 			String line = (String) lines.elementAt(i);
@@ -1380,7 +1395,6 @@ public class ValueSetBean {
 			String code = (String) u.elementAt(1);
 			codes.add(code);
 		}
-
 		Vector rvs_tbl = formatter.export(vsd_uri, version, supportedsource, fields, codes);
 	    Vector v = gov.nih.nci.evs.browser.utils.StringUtils.convertDelimited2CSV(rvs_tbl, '|');
         StringBuffer sb = new StringBuffer();
@@ -1426,15 +1440,9 @@ public class ValueSetBean {
                 .getExternalContext().getRequest();
 
         String vsd_uri = (String) request.getSession().getAttribute("vsd_uri");
-/*
-		String metadata = DataUtils
-				.getValueSetDefinitionMetadata(DataUtils
-						.findValueSetDefinitionByURI(vsd_uri));
-*/
-		String metadata = DataUtils
-				.getValueSetDefinitionMetadata(vsd_uri);
-
-
+	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+	    ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
 		Vector u = StringUtils.parseData(metadata);
 		String name = (String) u.elementAt(0);
 		String valueset_uri = (String) u.elementAt(1);
@@ -1454,6 +1462,9 @@ public class ValueSetBean {
 			exportToXMLAction();
 			return;
 		}
+		if (defaultCodingScheme.compareTo("ncit") == 0) {
+			defaultCodingScheme = "NCI_Thesaurus";
+		}
 
 		boolean withSource = true;
 		if (supportedsource == null || supportedsource.compareTo("null") == 0 || supportedsource.compareTo("NCI") == 0) {
@@ -1462,11 +1473,11 @@ public class ValueSetBean {
 
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		String serviceUrl = RemoteServerUtil.getServiceUrl();
-		LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices(serviceUrl);
-        ValueSetFormatter test = new ValueSetFormatter(lbSvc, vsd_service);
-        String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(vsd_uri, Constants.PRODUCTION);
+		//LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices(serviceUrl);
+        //ValueSetFormatter test = new ValueSetFormatter(lbSvc, vsd_service);
+        String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(defaultCodingScheme, Constants.PRODUCTION);
         long ms = System.currentTimeMillis();
-		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
+		ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
 		Vector fields = formatter.getDefaultFields(withSource);
 		ValueSet vs = formatter.instantiateValueSet(vsd_uri, version, fields);
 		String xml_str = formatter.object2XMLStream(vs);

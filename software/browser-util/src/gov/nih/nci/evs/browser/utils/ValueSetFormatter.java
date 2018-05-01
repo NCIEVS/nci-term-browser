@@ -190,7 +190,7 @@ public class ValueSetFormatter {
 	private String NCITDEFINITIONS = "ncitDefinitions"; //*
 	private String SOURCEDEFINITIONS = "sourceDefinitions";
 
-	private	ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+	private	ValueSetMetadataUtils vsmdu = null;//new ValueSetMetadataUtils(vsd_service);
 	UIUtils uiUtils = null;
 
     static {
@@ -204,16 +204,18 @@ public class ValueSetFormatter {
 		vsHeading2VarHashMap.put("Source Definition", "sourceDefinitions");
 	}
 
-
+/*
 // Default constructor
-	public ValueSetFormatter(LexBIGService lbSvc) {
+	public ValueSetFormatter(String serviceUrl, LexBIGService lbSvc) {
+		this.serviceUrl = serviceUrl;
 		this.lbSvc = lbSvc;
         this.uiUtils = new UIUtils(lbSvc);
 	}
-
+*/
 // Constructor
 
-    public ValueSetFormatter(LexBIGService lbSvc, LexEVSValueSetDefinitionServices vsd_service) {
+    public ValueSetFormatter(String serviceUrl, LexBIGService lbSvc, LexEVSValueSetDefinitionServices vsd_service) {
+		this.serviceUrl = serviceUrl;
 		this.lbSvc = lbSvc;
 		this.vsd_service = vsd_service;
         this.csdu = new CodingSchemeDataUtils(lbSvc);
@@ -388,15 +390,27 @@ public class ValueSetFormatter {
 	 }
 
      public Vector resolve(String scheme, String version, String source, Vector fields, Vector codes, int maxToReturn) {
+
+        String defaultCodingScheme = scheme;
 		if (codes == null) return null;
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		if (csdu == null) return null;
+		String metadata = vsmdu.getValueSetDefinitionMetadata(scheme);
+
+		if (metadata != null) {
+			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+			defaultCodingScheme = (String) u.elementAt(6);
+			if (defaultCodingScheme.compareTo("ncit") == 0) {
+				defaultCodingScheme = "NCI_Thesaurus";
+			}
+		}
+
 		Vector w = new Vector();
 		//long ms = System.currentTimeMillis();
 		try {
 			CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
 			if (version == null) {
-				version = csdu.getVocabularyVersionByTag(scheme, Constants.PRODUCTION);
+				version = csdu.getVocabularyVersionByTag(defaultCodingScheme, Constants.PRODUCTION);
 			}
 			if (version != null) {
 				csvt.setVersion(version);
@@ -406,9 +420,8 @@ public class ValueSetFormatter {
 				String t = (String) codes.elementAt(i);
 				a[i] = t;
 			}
-
-			ConceptReferenceList crefs = ConvenienceMethods.createConceptReferenceList(a, scheme);
-			CodedNodeSet cns = lbSvc.getCodingSchemeConcepts(scheme, csvt);
+			ConceptReferenceList crefs = ConvenienceMethods.createConceptReferenceList(a, defaultCodingScheme);
+			CodedNodeSet cns = lbSvc.getCodingSchemeConcepts(defaultCodingScheme, csvt);
 
 			if (cns == null) {
 				return null;
@@ -437,7 +450,6 @@ public class ValueSetFormatter {
             }
 
             if (iterator == null) return null;
-
             while (iterator.hasNext()) {
                 iterator = iterator.scroll(maxToReturn);
                 ResolvedConceptReferenceList rcrl = iterator.getNext();
@@ -921,31 +933,18 @@ public class ValueSetFormatter {
 		    }
 		}
 
-		System.out.println("formatter fullSynTermName " + fullSynTermName);
-
 String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
-System.out.println("get_rvs_tbl	metadata: " + metadata);
 Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
 String defaultCodingScheme = (String) u.elementAt(6);
-
+if (defaultCodingScheme.compareTo("ncit") == 0) {
+	defaultCodingScheme = "NCI_Thesaurus";
+}
 
 		if (codes == null) {
-
-			System.out.println("formatter generate codes == null??? ");
-
-		    codes = csdu.getCodesInCodingScheme(vsd_uri, null);
+		    codes = csdu.getCodesInValueSet(serviceUrl, vsd_uri);
 		}
-
-		System.out.println("formatter generate " + codes.size());
-
-
         StringBuffer buf = new StringBuffer();
-
-        //to be modified
-		//Vector w = resolve(vsd_uri, version, source, fields, codes, maxReturn);
-
 		Vector w = resolve(defaultCodingScheme, version, source, fields, codes, maxReturn);
-
 
 		HashMap fieldValueHmap = new HashMap();
         //[NCITERM-759] Term Browser: Rel 2.10: Values page table is formatted incorrectly
@@ -1016,7 +1015,8 @@ String defaultCodingScheme = (String) u.elementAt(6);
 
 	public Vector export(String vsd_uri, String version, String source, Vector fields, Vector codes) {
 		if (codes == null) {
-		    codes = csdu.getCodesInCodingScheme(vsd_uri, null);
+		    //codes = csdu.getCodesInCodingScheme(vsd_uri, null);
+		    codes = csdu.getCodesInValueSet(serviceUrl, vsd_uri);
 		}
 
         String fullSynTermName = null;
@@ -1175,18 +1175,10 @@ String defaultCodingScheme = (String) u.elementAt(6);
 	}
 
     public String get_rvs_tbl(String vsd_uri, Vector codes) {
-
-System.out.println("get_rvs_tbl	vsd_uri: " + vsd_uri);
-System.out.println("get_rvs_tbl	codes: " + codes.size());
-
 		String rvs_tbl = null;
 		String supported_source = vsmdu.getValueSetSupportedSource(vsd_uri);
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
-
-System.out.println("get_rvs_tbl	metadata: " + metadata);
-
-
 		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
 		String defaultCodingScheme = (String) u.elementAt(6);
 		boolean non_ncit_source = true;
@@ -1198,7 +1190,10 @@ System.out.println("get_rvs_tbl	metadata: " + metadata);
 			ResolvedConceptReferencesIterator rcri = null;
 			boolean resolveObjects = false;
 			try {
-				rcri = csdu.resolveCodingScheme(vsd_uri, null, resolveObjects);
+				//rcri = csdu.resolveCodingScheme(vsd_uri, null, resolveObjects);
+
+    			rcri = csdu.resolveValueSet(serviceUrl, defaultCodingScheme, vsd_uri, null, resolveObjects);
+
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -1226,12 +1221,7 @@ System.out.println("get_rvs_tbl	metadata: " + metadata);
 		rvs_tbl = formatter.generate(defaultCodingScheme, null, supported_source, fields, codes, codes.size());
 		*/
 		Vector fields = getDefaultFields(non_ncit_source);
-
-System.out.println("generating rvs_tbl...");
-
 		rvs_tbl = generate(vsd_uri, null, supported_source, fields, codes, codes.size());
-
-
 		return rvs_tbl;
 	}
 
@@ -1306,10 +1296,11 @@ System.out.println("generating rvs_tbl...");
 	}
 
 	public static void main(String[] args) {
+		String serviceUrl = null;
 		LexBIGService lbSvc = null;//RemoteServerUtil.createLexBIGService();
 		LexEVSValueSetDefinitionServices vsd_service = null;//RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 
-		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
+		ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
 		String vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C67154";
 		vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C66731";
 /*

@@ -79,6 +79,9 @@ public class AssertedValueSetUtils {
 	String serviceUrl = null;
 
     public AssertedValueSetUtils(String serviceUrl, LexBIGService lbSvc) {
+		if (serviceUrl != null && serviceUrl.compareToIgnoreCase("null") == 0) {
+			serviceUrl = null;
+		}
 		this.serviceUrl = serviceUrl;
 		this.lbSvc = lbSvc;
 		this.csdu = new CodingSchemeDataUtils(lbSvc);

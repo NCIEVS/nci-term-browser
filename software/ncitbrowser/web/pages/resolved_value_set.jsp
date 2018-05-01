@@ -82,6 +82,12 @@
           <div id="main-area_960">
             <%@ include file="/pages/templates/content-header-resolvedvalueset.jsp" %>
             <%
+
+	    String serviceUrl = RemoteServerUtil.getServiceUrl();
+	    LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+	    ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
+            
             String version_selection = (String) request.getSession().getAttribute("version_selection");
             request.getSession().removeAttribute("version_selection");
 
@@ -351,9 +357,6 @@
                               ResolvedConceptReference ref = (ResolvedConceptReference) obj;
                               codes.add(ref.getConceptCode());
                             }
-                            LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-                            LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-                            ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
                             //rvs_tbl = formatter.get_rvs_tbl(vsd_uri);
                             rvs_tbl = formatter.get_rvs_tbl(vsd_uri, codes);
                           }

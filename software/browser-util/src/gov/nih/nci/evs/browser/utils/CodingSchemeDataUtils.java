@@ -1528,7 +1528,7 @@ public class CodingSchemeDataUtils {
 		return associationName;
 	}
 
-
+/*
     public Vector resolveIterator(ResolvedConceptReferencesIterator iterator, int maxToReturn) {
         Vector v = new Vector();
         if (iterator == null) {
@@ -1555,6 +1555,26 @@ public class CodingSchemeDataUtils {
         }
         return v;
     }
+*/
+
+    public Vector resolveIterator(ResolvedConceptReferencesIterator iterator, int maxToReturn) {
+        Vector v = new Vector();
+        if (iterator == null) {
+            return v;
+        }
+        try {
+            int iteration = 0;
+            while (iterator.hasNext()) {
+				ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
+			    String t = rcr.getEntityDescription().getContent() + "|"+ rcr.getCode() + "|"+ rcr.getCodingSchemeName()
+					+ "|" + rcr.getCodeNamespace();
+                    v.add(t);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return v;
+    }
 
     public Vector resolve(String scheme, String version) {
 		if (version == null) {
@@ -1562,8 +1582,6 @@ public class CodingSchemeDataUtils {
 		}
 		return resolve(scheme, version, 250);
 	}
-
-
 
 
     public Vector resolve(String scheme, String version, int maxToReturn) {
@@ -1752,6 +1770,23 @@ public class CodingSchemeDataUtils {
 		return v;
 	}
 
+
+    public Vector getCodesInValueSet(String serviceUrl, String vsd_uri) {
+		ResolvedConceptReferencesIterator iterator = resolveValueSet(serviceUrl, vsd_uri);
+		Vector codes = new Vector();
+		try {
+			while (iterator.hasNext()) {
+				ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
+				codes.add(rcr.getCode());
+			}
+			return codes;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+
     public ResolvedConceptReferencesIterator resolveValueSet(String serviceUrl, String vsd_uri) {
 		AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, this.lbSvc);
         ResolvedConceptReferencesIterator iterator = avsu.getValueSetIteratorForURI(vsd_uri);
@@ -1772,4 +1807,56 @@ public class CodingSchemeDataUtils {
 		}
 		return null;
 	}
+
+    public ResolvedConceptReferencesIterator resolveValueSet(
+		String serviceUrl, String defaultCodingScheme, String vsd_uri, String version, boolean resolveObjects) {
+/*
+        ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+		Vector u = StringUtils.parseData(metadata);
+		String defaultCodingScheme = (String) u.elementAt(6);
+*/
+		if (defaultCodingScheme.compareTo("ncit") == 0) {
+			defaultCodingScheme = "NCI_Thesaurus";
+		}
+		AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, lbSvc);
+        ResolvedConceptReferencesIterator iterator2 = null;
+        iterator2 = avsu.getValueSetIteratorForURI(vsd_uri);
+        ConceptReferenceList codeList =	iterator2List(iterator2);
+
+        CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
+        if (version == null) {
+			version = getVocabularyVersionByTag(defaultCodingScheme, Constants.PRODUCTION);
+			versionOrTag.setVersion(version);
+		}
+		ResolvedConceptReferencesIterator itr = null;
+
+		CodedNodeSet cns = null;
+		try {
+			cns = getNodeSet(defaultCodingScheme, versionOrTag);
+			cns = cns.restrictToCodes(codeList);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+
+
+		if (cns != null) {
+			try {
+				SortOptionList sortOptions = null;
+				LocalNameList filterOptions = null;
+				LocalNameList propertyNames = null;
+				//CodedNodeSet.PropertyType[] propertyTypes = null;
+				CodedNodeSet.PropertyType[] propertyTypes = new CodedNodeSet.PropertyType[1];
+				propertyTypes[0] = CodedNodeSet.PropertyType.DEFINITION;
+
+				itr = cns.resolve(sortOptions, filterOptions, propertyNames, propertyTypes, resolveObjects);
+				return itr;
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+        return null;
+	}
+
 }

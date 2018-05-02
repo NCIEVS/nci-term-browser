@@ -143,7 +143,11 @@
                     <h:commandLink
                         action="#{CartActionBean.removeFromCart}"
                         styleClass="texttitle-blue-small"
+                        actionListener="#{CartActionBean.formatListener}"
+                        immediate="true">                        
+                        <!--
                         onclick="return confirmRemoveMessage();">
+                        -->
 
                       <h:graphicImage
                           value="../images/remove.gif"
@@ -153,7 +157,7 @@
                       />
                     </h:commandLink>&nbsp;
                     <h:commandLink
-                        action="#{CartActionBean.cartVersionSelectionAction}"
+                        action="#{CartActionBean.exportCartXML}"
                         styleClass="texttitle-blue-small"
                         actionListener="#{CartActionBean.formatListener}"
                         immediate="true">
@@ -167,7 +171,7 @@
                       <f:param name="format" value="XML" />
                     </h:commandLink>&nbsp;
                     <h:commandLink
-                        action="#{CartActionBean.cartVersionSelectionAction}"
+                        action="#{CartActionBean.exportCartToCSV}"
                         styleClass="texttitle-blue-small"
                         actionListener="#{CartActionBean.formatListener}"
                         immediate="true">

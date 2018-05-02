@@ -428,8 +428,6 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
-
-
     	if (getCount() < 1) {
         	_messageflag = true;
         	_message = NO_CONCEPTS;
@@ -439,6 +437,20 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
     	} else {
             for (Iterator<Concept> i = getConcepts().iterator(); i.hasNext();) {
                 Concept item = (Concept)i.next();
+ /*
+     public static class Concept {
+         private String code = null;
+         private String codingScheme = null;
+         private String nameSpace = null;
+         private String name = null;
+         private String version = null;
+         private String url = null;
+         private String displayStatus = "";
+         private String displayCodingSchemeName = "[Not Set]";
+        private HtmlSelectBooleanCheckbox checkbox = null;
+*/
+
+
                 if (item == null) return null;
                 if (item.getCheckbox().isSelected()) {
                     if (_cart.containsKey(item.code))
@@ -722,7 +734,6 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
         //SearchCart search = new SearchCart();
         ResolvedConceptReference ref = null;
         StringBuffer sb = new StringBuffer();
-
     	if (getCount() < 1) {
         	_messageflag = true;
         	_message = NO_CONCEPTS;

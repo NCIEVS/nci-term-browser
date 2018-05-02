@@ -643,6 +643,9 @@
                                   name = (String) rcr.getCodingSchemeName();
 
                                   uri = (String) rcr.getCodingSchemeURI();
+                                  
+                                  String value_set_name = DataUtils.getValueSetName(uri);
+                                  
                                   entity_name = "";
                                   if (rcr.getEntityDescription() != null) {
                                     entity_name = rcr.getEntityDescription().getContent();
@@ -650,17 +653,6 @@
                                   entity_code = (String) rcr.getCode();
                                   ns = (String) rcr.getCodeNamespace();
 
-				// to be modified
-				/*
-				String entity_cs_nm = null;
-				if (ns != null) {
-					if (ns.compareToIgnoreCase("ncit") == 0 || ns.compareToIgnoreCase("NCI_Thesaurus") == 0) {
-					    entity_cs_nm = "NCI_Thesaurus";
-					} else {
-					    entity_cs_nm = DataUtils.getCSName(ns);
-					}
-				}
-				*/
 				  String entity_cs_nm = name;
                                   String vocabulary_name = entity_cs_nm;
 
@@ -679,7 +671,7 @@
                                         <a
                                             href="<%=request.getContextPath() %>/ajax?action=create_src_vs_tree&vsd_uri=<%=uri%>">
 
-                                          <%= DataUtils.encodeTerm(uri) %>
+                                          <%= DataUtils.encodeTerm(value_set_name) %>
                                         </a>
                                       </td>
 

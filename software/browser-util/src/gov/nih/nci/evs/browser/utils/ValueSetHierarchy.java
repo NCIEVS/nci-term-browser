@@ -275,7 +275,6 @@ public class ValueSetHierarchy {
 		if (vsd.getEntityDescription() == null) {
 			return null;
 		}
-		System.out.println("vsd.getEntityDescription().getContent(): " + vsd.getEntityDescription().getContent());
 		return vsd.getEntityDescription().getContent();
 	}
 

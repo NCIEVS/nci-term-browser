@@ -5418,11 +5418,12 @@ out.flush();
 		FacesContext.getCurrentInstance().responseComplete();
 	}
 
-
     public void exportToExcelAction(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
     		response.setContentType("application/vnd.ms-excel");
+    		//response.setContentType("application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
 			String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
 			vsd_name = vsd_name.replaceAll(" ", "_");
 			vsd_name = vsd_name + ".xls";

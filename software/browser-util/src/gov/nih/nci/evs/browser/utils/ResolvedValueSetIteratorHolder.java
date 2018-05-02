@@ -577,7 +577,10 @@ public class ResolvedValueSetIteratorHolder {
             // Within the merging region - skip the cell.
             return;
         }
-        out.append("<td ");
+        //KLO 05022018
+        //out.append("<td ");
+
+        out.append("<td height=\"15\" ");
         if (colspan > 1) {
             out.append("colspan='").append(colspan).append("' ");
         }
@@ -743,7 +746,12 @@ public class ResolvedValueSetIteratorHolder {
             // Within the merging region - skip the cell.
             return;
         }
-        buf.append("<td ");
+
+        //KLO 05022018
+        //buf.append("<td ");
+
+        buf.append("<td height=\"15\" ");
+
         if (colspan > 1) {
             buf.append("colspan='").append(colspan).append("' ");
         }

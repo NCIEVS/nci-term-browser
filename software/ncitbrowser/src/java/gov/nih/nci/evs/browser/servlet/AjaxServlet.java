@@ -1618,7 +1618,6 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 					//KLO, 10182017
 					if (DataUtils.getValueSetHierarchy() != null) {
 						vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
-						System.out.println("vsd_description: " + vsd_description);
 					} else {
 						System.out.println("WARNING: DataUtils.getValueSetHierarchy() = null.");
 					}

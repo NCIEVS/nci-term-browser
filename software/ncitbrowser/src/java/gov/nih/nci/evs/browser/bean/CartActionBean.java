@@ -424,16 +424,18 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
      */
     public String removeFromCart() {
     	_messageflag = false;
-
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
     	if (getCount() < 1) {
         	_messageflag = true;
         	_message = NO_CONCEPTS;
+        	request.getSession().setAttribute("message", _message);
+
     	} else if (!hasSelected()) {
         	_messageflag = true;
         	_message = NOTHING_SELECTED;
+        	request.getSession().setAttribute("message", _message);
     	} else {
             for (Iterator<Concept> i = getConcepts().iterator(); i.hasNext();) {
                 Concept item = (Concept)i.next();
@@ -511,7 +513,6 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
      * @throws Exception
      */
     public String exportCartXML() throws Exception {
-
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
@@ -523,11 +524,15 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
     	if (getCount() < 1) {
         	_messageflag = true;
         	_message = NO_CONCEPTS;
+        	request.getSession().setAttribute("message", _message);
+
         	return null;
     	}
     	if (!hasSelected()) {
         	_messageflag = true;
         	_message = NOTHING_SELECTED;
+
+        	request.getSession().setAttribute("message", _message);
         	return null;
     	}
 
@@ -537,7 +542,6 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
         // in memory
 
         if (_cart != null && _cart.size() > 0) {
-
         	// Generate unique list of scheme / versions for the cart
         	//versionList = getSchemeVersionList(search);
         	versionList = getSchemeVersionList();
@@ -701,7 +705,6 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 			}
 
             // Send export XML string to browser
-
             HttpServletResponse response = (HttpServletResponse) FacesContext
                     .getCurrentInstance().getExternalContext().getResponse();
             response.setContentType(XML_CONTENT_TYPE);
@@ -712,7 +715,6 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
             ouputStream.write(buf.toString().getBytes("UTF8"), 0, buf.length());
             ouputStream.flush();
             ouputStream.close();
-
             // Don't allow JSF to forward to cart.jsf
             FacesContext.getCurrentInstance().responseComplete();
         }
@@ -728,8 +730,11 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 
     // Garcia implementation:
     public String exportCartToCSV() throws Exception {
-
         _messageflag = false;
+
+        HttpServletRequest request =
+            (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
 
         //SearchCart search = new SearchCart();
         ResolvedConceptReference ref = null;
@@ -737,11 +742,13 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
     	if (getCount() < 1) {
         	_messageflag = true;
         	_message = NO_CONCEPTS;
+        	request.getSession().setAttribute("message", _message);
         	return null;
     	}
     	if (!hasSelected()) {
         	_messageflag = true;
         	_message = NOTHING_SELECTED;
+        	request.getSession().setAttribute("message", _message);
         	return null;
     	}
 

@@ -50,14 +50,14 @@
               alert('No concepts selected.');
             }
           }
+          
           function confirmRemoveMessage() {
             if (isSelected()) {
               return confirm("Are you sure?");
-            } else {
-              return confirm("No concept is selected."); 
-            }
-            //return true; 
+            } 
+            return true; 
           }
+          
           function isSelected() {
             var flag = false;
             var first = document.getElementById("conceptForm:checkboxId");
@@ -134,7 +134,6 @@
                     <h:commandLink
                         action="#{CartActionBean.removeFromCart}"
                         styleClass="texttitle-blue-small"
-                        target="_blank"
                         onclick="return confirmRemoveMessage();" 
                         actionListener="#{CartActionBean.formatListener}"
                         immediate="true">
@@ -146,10 +145,10 @@
                           style="border: none"
                       />
                     </h:commandLink>&nbsp;
+                    
                     <h:commandLink
                         action="#{CartActionBean.exportCartXML}"
                         styleClass="texttitle-blue-small"
-                        actionListener="#{CartActionBean.formatListener}"
                         immediate="true">
 
                       <h:graphicImage
@@ -160,10 +159,10 @@
                       />
                       <f:param name="format" value="XML" />
                     </h:commandLink>&nbsp;
+                    
                     <h:commandLink
                         action="#{CartActionBean.exportCartToCSV}"
                         styleClass="texttitle-blue-small"
-                        actionListener="#{CartActionBean.formatListener}"
                         immediate="true">
 
                       <h:graphicImage

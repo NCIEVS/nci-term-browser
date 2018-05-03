@@ -67,17 +67,6 @@
               } else {
                 for (i=1;i<count;i++) {
                   var element = document.getElementById('conceptForm:checkboxIdj_id_' + i);
-                  // Send redirect:
-                  if (element == null) {
-                    try {
-                      String error_msg = "WARNING: The server encountered an unexpected error (file: cart.jsp, code: 1, var: element).";
-                      request.getSession().setAttribute("error_msg", error_msg);
-                      String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-                      response.sendRedirect(redirectURL);
-                    } catch (Exception ex) {
-                      ex.printStackTrace();
-                    }
-                  }
                   if (element.checked) {
                     flag = true;
                     break;
@@ -143,11 +132,10 @@
                     <h:commandLink
                         action="#{CartActionBean.removeFromCart}"
                         styleClass="texttitle-blue-small"
+                        target="_blank"
+                        onclick="return confirmRemoveMessage();" 
                         actionListener="#{CartActionBean.formatListener}"
-                        immediate="true">                        
-                        <!--
-                        onclick="return confirmRemoveMessage();">
-                        -->
+                        immediate="true">
 
                       <h:graphicImage
                           value="../images/remove.gif"

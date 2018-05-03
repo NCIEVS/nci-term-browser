@@ -53,8 +53,10 @@
           function confirmRemoveMessage() {
             if (isSelected()) {
               return confirm("Are you sure?");
+            } else {
+              return confirm("No concept is selected."); 
             }
-            return true;
+            //return true; 
           }
           function isSelected() {
             var flag = false;

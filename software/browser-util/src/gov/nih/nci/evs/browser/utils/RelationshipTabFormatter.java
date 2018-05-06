@@ -290,6 +290,12 @@ public class RelationshipTabFormatter {
 
 
     public HashMap getOutboundRoleTable(String scheme_curr, String version_curr, String code_curr, String ns_curr) {
+
+String namespace = new ConceptDetails(lbSvc).getNamespaceByCode(scheme_curr, null, code_curr);
+if (ns_curr.compareTo(namespace) != 0) {
+	ns_curr = namespace;
+}
+
 		boolean superconcept = false;
 		boolean subconcept = false;
 		boolean role = true;

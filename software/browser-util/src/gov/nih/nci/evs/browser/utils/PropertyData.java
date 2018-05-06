@@ -888,12 +888,20 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //[NCITERM-746] Update of the Relationships Display.
-
     public String generateRelationshipTable(String codingScheme, String version, String code, String namespace, String rel_type, boolean display_qualifiers) {
         boolean display_equiv_expression = false;
         String equivalanceClass = null;
-        //String retstr = null;
-
+        if (isNCIT(codingScheme) && rel_type.compareTo(Constants.TYPE_ROLE) == 0) {
+			try {
+				equivalanceClass = new CodingSchemeDataUtils(lbSvc).getEquivalenceExpression(codingScheme, version, code, namespace);
+				if (equivalanceClass != null) {
+					display_equiv_expression = true;
+				}
+		    } catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		/*
         if (isNCIT(codingScheme) && rel_type.compareTo(Constants.TYPE_ROLE) == 0) {
 			try {
 				equivalanceClass = new CodingSchemeDataUtils(lbSvc).getEquivalenceExpression(codingScheme, version, code, namespace);
@@ -906,13 +914,13 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 				ex.printStackTrace();
 			}
 		}
+		*/
 
 		StringBuffer buf = new StringBuffer();
 		if (display_equiv_expression) {
 			String expression = new ExpressionParser(lbSvc).infixExpression2Text(codingScheme, version, equivalanceClass);
 			if (expression != null) {
 				expression = new ExpressionFormatter(lbSvc).reformat(expression);
-				//System.out.println("expression: " + expression);
 				buf.append(expression);
 			}
 		}

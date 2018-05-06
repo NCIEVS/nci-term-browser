@@ -449,6 +449,11 @@ public class JSPUtils {
 		if (codingScheme == null) {
 			codingScheme = "NCI Thesaurus";
 		}
+/*
+		if (codingScheme == null) {
+			codingScheme = "NCI_Thesaurus";
+		}
+*/
         String encoded_dictionary = codingScheme.replace(" ", "%20");
         String encoded_concept_id = code;
         encoded_concept_id = encoded_concept_id.replaceAll(":", "%3A");

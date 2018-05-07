@@ -8,7 +8,7 @@
 <%@ page import="org.LexGrid.concepts.Entity" %>
 <%@ page import="gov.nih.nci.evs.browser.common.Constants" %>
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
-<%@ page import="gov.nih.nci.evs.browser.bean.IteratorBean" %>
+<%@ page import="gov.nih.nci.evs.browser.bean.*" %>
 <%@ page import="org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference" %>
 <%@ page import="javax.faces.context.FacesContext" %>
 <%@ page import="org.apache.log4j.*" %>
@@ -62,7 +62,26 @@
         String algorithm = "contains";
         ResolvedConceptReferencesIterator iterator = null;
         ResolvedConceptReferencesIterator iterator2 = null;
+        ResolvedConceptReferencesIterator mapping_iterator = null;
+        
         iterator2 = avsu.getValueSetIteratorForURI(rvs_uri);
+        
+        String mapping_schema = "GO_to_NCIt_Mapping";
+        String mapping_version = "1.1";
+        
+        mapping_iterator = DataUtils.getMappingDataIterator(mapping_schema, mapping_version);
+        int mapping_size = -1;
+	try {
+		mapping_size = mapping_iterator.numberRemaining();
+
+	} catch (Exception ex) {
+		ex.printStackTrace();
+	}        
+        
+        MappingIteratorBean bean = new MappingIteratorBean(mapping_iterator);
+        int idx1 = 0;
+        int idx2 = mapping_size - 1;
+        List mapping_list = bean.getData(idx1, idx2);
         
 	try {
 		 iterator = avssu.search(schemes, versions, matchText, searchOption, algorithm);
@@ -156,6 +175,58 @@
 	 }
 	 %>
      </table>     
+
+     <br></br>
+       <table
+	   class="datatable_960"
+	   summary=""
+	   cellpadding="3"
+	   cellspacing="0"
+	   border="0"
+	   width="100%">
+
+	 <th class="dataTableHeader" scope="col" align="left">Source</th>
+	 <th class="dataTableHeader" scope="col" align="left">Source Code</th>
+	 <th class="dataTableHeader" scope="col" align="left">Source Name</th>
+	 <th class="dataTableHeader" scope="col" align="left">Source Code Namespace</th>
+	 <th class="dataTableHeader" scope="col" align="left">REL</th>
+	 <th class="dataTableHeader" scope="col" align="left">Map Rank</th>
+	 <th class="dataTableHeader" scope="col" align="left">Target</th>
+	 <th class="dataTableHeader" scope="col" align="left">Target Code</th>
+	 <th class="dataTableHeader" scope="col" align="left">Target Name</th>
+	 <th class="dataTableHeader" scope="col" align="left">Target Code Namespace</th>
+	 
+	 <%
+	 for (int k=0; k<mapping_list.size(); k++) {
+	      MappingData mappingData = (MappingData) list.get(k);
+	      String source = mappingData.getSourceCodingScheme();
+	      String source_code = mappingData.getSourceCode();
+	      String source_name = mappingData.getSourceName();
+	      String source_namespace = mappingData.getSourceCodeNamespace();	      
+	      String rel = = mappingData.getRel();
+	      String score = Integer.valueOf(mappingData.getScore()).toString();
+	      String target = mappingData.getTargetCodingScheme();
+	      String target_code = mappingData.getTargetCode();
+	      String target_name = mappingData.getTargetName();
+	      String target_namespace = mappingData.getTargetCodeNamespace();	 	      
+	 %>
+	 	<tr valign="top" align="left">
+	 	<td><%source%></td>
+	 	<td><%source_code%></td>
+	 	<td><%source_name%></td>
+	 	<td><%source_namespace%></td>
+	 	<td><%rel%></td>
+	 	<td><%score%></td>
+	 	<td><%target%></td>
+	 	<td><%target_code%></td>
+	 	<td><%target_name%></td>
+	 	<td><%target_namespace%></td>
+	 	</tr>
+	 <%	
+	 }
+	 %>
+     </table>     
+     
      
      </div>
 

@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.List" %>
 <%@ page import="java.util.Vector" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.HashSet" %>
@@ -88,7 +89,6 @@
 		 try {
 			 if (iterator == null) {
 				 System.out.println("Iterator is null???");
-				 return;
 			 }
 			 int numRemaining = iterator.numberRemaining();
 			 System.out.println("\tNumber of matches: " + numRemaining);
@@ -99,7 +99,6 @@
 		 ex.printStackTrace();
 	}
 
-	System.out.println("RVSUtils initialization run time (ms): " + (System.currentTimeMillis() - ms));
 %>
       <f:view>
         <!-- Begin Skip Top Navigation -->
@@ -203,7 +202,7 @@
 	      String source_code = mappingData.getSourceCode();
 	      String source_name = mappingData.getSourceName();
 	      String source_namespace = mappingData.getSourceCodeNamespace();	      
-	      String rel = = mappingData.getRel();
+	      String rel = mappingData.getRel();
 	      String score = Integer.valueOf(mappingData.getScore()).toString();
 	      String target = mappingData.getTargetCodingScheme();
 	      String target_code = mappingData.getTargetCode();
@@ -211,16 +210,16 @@
 	      String target_namespace = mappingData.getTargetCodeNamespace();	 	      
 	 %>
 	 	<tr valign="top" align="left">
-	 	<td><%source%></td>
-	 	<td><%source_code%></td>
-	 	<td><%source_name%></td>
-	 	<td><%source_namespace%></td>
-	 	<td><%rel%></td>
-	 	<td><%score%></td>
-	 	<td><%target%></td>
-	 	<td><%target_code%></td>
-	 	<td><%target_name%></td>
-	 	<td><%target_namespace%></td>
+	 	<td><%=source%></td>
+	 	<td><%=source_code%></td>
+	 	<td><%=source_name%></td>
+	 	<td><%=source_namespace%></td>
+	 	<td><%=rel%></td>
+	 	<td><%=score%></td>
+	 	<td><%=target%></td>
+	 	<td><%=target_code%></td>
+	 	<td><%=target_name%></td>
+	 	<td><%=target_namespace%></td>
 	 	</tr>
 	 <%	
 	 }

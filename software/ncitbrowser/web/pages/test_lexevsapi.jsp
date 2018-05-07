@@ -197,7 +197,7 @@
 	 
 	 <%
 	 for (int k=0; k<mapping_list.size(); k++) {
-	      MappingData mappingData = (MappingData) list.get(k);
+	      MappingData mappingData = (MappingData) mapping_list.get(k);
 	      String source = mappingData.getSourceCodingScheme();
 	      String source_code = mappingData.getSourceCode();
 	      String source_name = mappingData.getSourceName();

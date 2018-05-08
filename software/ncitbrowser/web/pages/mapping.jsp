@@ -57,6 +57,8 @@
         <!-- Main box -->
         <div id="main-area_960">
           <%
+          LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+
           HashMap display_name_hmap = new HashMap();
 
           ResolvedConceptReferencesIterator iterator = null;
@@ -176,12 +178,12 @@
             if (bean == null) {
               //bean = new MappingIteratorBean();
               // initialization
-              iterator = DataUtils.getMappingDataIterator(mapping_schema, mapping_version, sortBy);
+              //iterator = DataUtils.getMappingDataIterator(mapping_schema, mapping_version, sortBy);
+              iterator = new MappingUtils(lbSvc).getMappingDataIterator(mapping_schema, mapping_version, sortBy);
               if (iterator != null) {
 
                 try {
                   numRemaining = iterator.numberRemaining();
-
                   bean = new MappingIteratorBean(iterator);
 
                 } catch (Exception ex) {
@@ -443,14 +445,31 @@
               if (list == null) {
                 //System.out.println("list == null???");
               } else {
+              
+              MappingData firstMappingData = (MappingData) list.get(0);
+              String ns_src = null;
+              String ns_target = null;
+              
+              String src_cs = firstMappingData.getSourceCodingScheme(); 
+              String target_cs = firstMappingData.getTargetCodingScheme(); 
+              if (DataUtils.isNCIT(src_cs)) {
+              	   String code_src = firstMappingData.getSourceCode(); 
+              	   ns_src = new ConceptDetails(lbSvc).getNamespaceByCode(src_cs, null, code);
+              } else if (DataUtils.isNCIT(target_cs)) {
+              	   String code_target = firstMappingData.getTargetCode(); 
+              	   target_cs = new ConceptDetails(lbSvc).getNamespaceByCode(target_cs, null, code);
+              }              
 
-                for (int lcv=0; lcv<list.size(); lcv++) {
+              for (int lcv=0; lcv<list.size(); lcv++) {
                   mappingData = (MappingData) list.get(lcv);
                   source_code = mappingData.getSourceCode();
                   source_name = mappingData.getSourceName();
                   source_namespace = mappingData.getSourceCodeNamespace();
 
                   source_ns = source_namespace;
+                  if (ns_src != null) {
+                      source_ns = ns_src;
+                  }
 
                   if (display_name_hmap.containsKey(source_namespace)) {
                     source_namespace = (String) display_name_hmap.get(source_namespace);
@@ -467,7 +486,10 @@
                   target_namespace = mappingData.getTargetCodeNamespace();
 
                   target_ns = target_namespace;
-
+                  if (ns_target != null) {
+                      target_ns = ns_target;
+                  }
+                  
                   if (display_name_hmap.containsKey(target_namespace)) {
                     target_namespace = (String) display_name_hmap.get(target_namespace);
                   } else {

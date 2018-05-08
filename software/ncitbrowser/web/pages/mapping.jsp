@@ -455,10 +455,10 @@
               String target_cs = firstMappingData.getTargetCodingScheme(); 
               if (DataUtils.isNCIT(src_cs)) {
               	   String code_src = firstMappingData.getSourceCode(); 
-              	   ns_src = new ConceptDetails(lbSvc).getNamespaceByCode(src_cs, null, code);
+              	   ns_src = new ConceptDetails(lbSvc).getNamespaceByCode(src_cs, null, code_src);
               } else if (DataUtils.isNCIT(target_cs)) {
               	   String code_target = firstMappingData.getTargetCode(); 
-              	   target_cs = new ConceptDetails(lbSvc).getNamespaceByCode(target_cs, null, code);
+              	   target_cs = new ConceptDetails(lbSvc).getNamespaceByCode(target_cs, null, code_target);
               }              
 
               for (int lcv=0; lcv<list.size(); lcv++) {

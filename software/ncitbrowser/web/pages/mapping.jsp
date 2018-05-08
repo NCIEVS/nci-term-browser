@@ -25,6 +25,7 @@
 <%@ page import="gov.nih.nci.evs.browser.properties.*" %>
 <%@ page import="javax.faces.context.FacesContext" %>
 <%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.LexGrid.LexBIG.LexBIGService.*" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html xmlns:c="http://java.sun.com/jsp/jstl/core">

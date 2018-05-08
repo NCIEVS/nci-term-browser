@@ -872,6 +872,20 @@ if (!retval) {
 					request.getSession().removeAttribute("m");
 					response.setContentType("text/html;charset=utf-8");
 
+
+/*
+ try {
+	 String nextJSP = "/pages/appscan_response.jsf";
+	 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+	 dispatcher.forward(request,response);
+	 return;
+
+ } catch (Exception ex) {
+	 ex.printStackTrace();
+ }
+
+*/
+
 					return "concept_details";
 			    }
             }
@@ -1154,22 +1168,12 @@ if (!retval) {
     }
 
 
-
-
     public String multipleSearchAction() {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
         request.getSession().removeAttribute("error_msg");
-
-/*
-boolean retval = HTTPUtils.validateRequestParameters(request);
-if (!retval) {
-	System.out.println("multipleSearchAction returns invalid_parameter");
-	return "invalid_parameter";
-}
-*/
 		String selected_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("selected_vocabularies"));
 
         String[] ontology_list = request.getParameterValues("ontology_list");
@@ -1194,17 +1198,6 @@ if (!retval) {
            request.getSession().setAttribute("matchText", matchText);
 		}
 
-		/*
-        String matchText = HTTPUtils.cleanXSS((String) request.getParameter("matchText"));
-        if (matchText != null) {
-            matchText = matchText.trim();
-            request.getSession().setAttribute("matchText", matchText);
-        } else {
-            matchText = (String) request.getSession().getAttribute("matchText");
-        }
-        */
-
-
         String multiple_search_error =
             (String) request.getSession().getAttribute(
                 "multiple_search_no_match_error");
@@ -1217,6 +1210,8 @@ if (!retval) {
         if (matchAlgorithm == null || matchAlgorithm.length() == 0) {
 			matchAlgorithm = "exactMatch";
 		}
+
+
         request.getSession().setAttribute("algorithm", matchAlgorithm);
 
         String searchTarget = HTTPUtils.cleanXSS((String) request.getParameter("searchTarget"));
@@ -1224,7 +1219,6 @@ if (!retval) {
         if (searchTarget == null || searchTarget.length() == 0) {
 			searchTarget = "names";
 		}
-
         request.getSession().setAttribute("searchTarget", searchTarget);
 
         String initial_search = HTTPUtils.cleanXSS((String) request.getParameter("initial_search"));
@@ -1277,43 +1271,6 @@ if (selected_vocabularies != null) { // hidden variable (subsequent search from 
 	ontologiesToSearchOnStr = buf.toString();
 }
 
-
-/*
-String ontologiesToSearchOnStr = selected_vocabularies;
-if (DataUtils.isNull(selected_vocabularies)) {
-	// check if selection status has been changed.
-
-	buf.append("|");
-	//String ontologiesToSearchOnStr = "|";
-	if (ontology_list != null) {
-		for (int i = 0; i < ontology_list.length; ++i) {
-			//ontologiesToSearchOnStr =
-			//ontologiesToSearchOnStr + ontology_list[i] + "|";
-			buf.append(ontology_list[i] + "|");
-		}
-	}
-	ontologiesToSearchOnStr = buf.toString();
-}
-*/
-
-
-/*
-String new_ontologiesToSearchOnStr = "";
-for (int i = 0; i < display_name_vec.size(); i++) {
-	 OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
-
-	 if (ontologiesToSearchOnStr.indexOf(info.getLabel()) != -1) { // visible and checked by the user
-		 info.setSelected(true);
-		 //KLO
-	 } else {//if (info.getVisible() && ontologiesToSearchOnStr.indexOf(info.getLabel()) == -1) {
-		 info.setSelected(false);
-	 }
-	 if (info.getSelected()) {
-		 new_ontologiesToSearchOnStr = new_ontologiesToSearchOnStr + "|" + info.getLabel();
-	 }
-}
-ontologiesToSearchOnStr = new_ontologiesToSearchOnStr;
-*/
 String ontologiesToExpandStr = getOntologiesToExpandStr(display_name_vec);
 
 request.getSession().setAttribute("display_name_vec", display_name_vec);
@@ -1394,8 +1351,6 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
                     ontologiesToSearchOnStr);
             }
         }
-
-
         String hide_ontology_list = "false";
         // [#19965] Error message is not displayed when Search Criteria is not
         // proivided
@@ -1415,7 +1370,6 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
         }
 
 
-
         // KLO, 012610
         else if (searchTarget.compareTo("relationships") == 0
             && matchAlgorithm.compareTo("contains") == 0) {
@@ -1429,7 +1383,6 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
                 return "multiple_search";
             }
         }
-
         boolean ranking = true;
         String source = HTTPUtils.cleanXSS((String) request.getParameter("source"));
         if (source == null) {
@@ -1450,7 +1403,6 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
 				e.printStackTrace();
             }
         }
-
         if (ontology_list == null) {
             ontology_list_str =
                 HTTPUtils.cleanXSS((String) request.getParameter("ontology_list_str")); // from
@@ -1477,7 +1429,6 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
                 return "multiple_search";
             }
         }
-
         ontologiesToSearchOn = new ArrayList<String>();
         buf = new StringBuffer();
         //ontologiesToSearchOnStr = "|";
@@ -1488,7 +1439,6 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
             buf.append(ontology_list[i] + "|");
         }
         ontologiesToSearchOnStr = buf.toString();
-
         if (ontology_list_str == null) {
             //ontology_list_str = "";
             buf = new StringBuffer();
@@ -1502,7 +1452,6 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
             }
             ontology_list_str = buf.toString();
         }
-
         if (ontologiesToSearchOn.size() == 0) {
             String message = Constants.ERROR_NO_VOCABULARY_SELECTED;// "Please select at least one vocabulary.";
             request.getSession().setAttribute("warning", message);
@@ -1537,7 +1486,6 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
 
             return "license";
         }
-
         LexEVSUtils.CSchemes cSchemes =
             LexEVSUtils.getCSchemes(request, ontologiesToSearchOn);
         Vector<String> schemes = cSchemes.getCodingSchemes();
@@ -1557,7 +1505,6 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
         boolean excludeDesignation = true;
         ResolvedConceptReferencesIterator iterator = null;
 
-
 		for (int lcv=0; lcv<schemes.size(); lcv++) {
 			String check_formal_name = (String) schemes.elementAt(lcv);
 			check_formal_name = DataUtils.getFormalName(check_formal_name);
@@ -1571,11 +1518,8 @@ request.getSession().setAttribute("ontologiesToExpandStr", ontologiesToExpandStr
 
 boolean retval = HTTPUtils.validateRequestParameters(request);
 if (!retval) {
-	System.out.println("multipleSearchAction returns invalid_parameter");
 	return "invalid_parameter";
 }
-
-
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
         if (searchTarget.compareTo("names") == 0) {
 			// temporary fix for: [NCITERM-682] Contains search failed on search strings containing a colon character.
@@ -1615,10 +1559,10 @@ if (!retval) {
 
             delay = System.currentTimeMillis() - ms;
             _logger.debug("searchByNameAndCode delay (millisec.): " + delay);
-
-
-
         } else if (searchTarget.compareTo("codes") == 0) {
+request.getSession().setAttribute("code", matchText);
+
+
             long ms = System.currentTimeMillis();
             long delay = 0;
             _logger.debug("Calling CodeSearchUtils().searchByCode " + matchText);
@@ -1632,6 +1576,7 @@ if (!retval) {
             }
             delay = System.currentTimeMillis() - ms;
             _logger.debug("searchByCode delay (millisec.): " + delay);
+
 
         } else if (searchTarget.compareTo("properties") == 0) {
 			String matchTextStr = matchText.replaceAll(":", " ");
@@ -1665,7 +1610,6 @@ if (!retval) {
         request.getSession().removeAttribute("codeInNCI");
         request.getSession().removeAttribute("AssociationTargetHashMap");
         request.getSession().removeAttribute("type");
-
 
         IteratorBeanManager iteratorBeanManager =
             (IteratorBeanManager) FacesContext.getCurrentInstance()
@@ -1727,6 +1671,7 @@ if (!retval) {
 							ontologiesToSearchOnStr);
 						request.getSession().setAttribute("multiple_search_no_match_error",
 							"true");
+						request.getSession().setAttribute("code", matchText);
 
 						return "multiple_search";
 
@@ -1742,30 +1687,27 @@ if (!retval) {
                 list = iteratorBean.getData(1);
 
                 if (list != null) {
-
 					ResolvedConceptReference ref =
 						(ResolvedConceptReference) list.get(0);
 
 					//ResolvedConceptReference ref = getFirstResolvedConceptReference(iterator);
 					String coding_scheme = ref.getCodingSchemeName();
 					String ref_version = ref.getCodingSchemeVersion();
-
 					if (coding_scheme.compareToIgnoreCase("NCI Metathesaurus") == 0) {
-						String match_size = Integer.toString(size);
+   					    String match_size = Integer.toString(size);
 						;// Integer.toString(v.size());
 						request.getSession().setAttribute("match_size", match_size);
 						request.getSession().setAttribute("page_string", "1");
 						request.getSession().setAttribute("new_search",
 							Boolean.TRUE);
+
+
 						// route to multiple_search_results.jsp
-
-
 
         //KLO, 051012
         request.getSession().removeAttribute("n");
         request.getSession().removeAttribute("b");
         request.getSession().removeAttribute("m");
-
 
 						return "search_results";
 					}
@@ -1793,7 +1735,6 @@ if (!retval) {
 						}
 					}
 
-					request.getSession().setAttribute("code", ref.getConceptCode());
 					request.getSession().setAttribute("concept", c);
 					request.getSession().setAttribute("type", "properties");
 					request.getSession().setAttribute("new_search", Boolean.TRUE);
@@ -1806,6 +1747,8 @@ if (!retval) {
 					String convertJSPString = HTTPUtils.convertJSPString(matchText);
 					request.setAttribute("dictionary", coding_scheme);
 					request.setAttribute("version", ref_version);
+					request.getSession().setAttribute("code", ref.getConceptCode());
+					request.getSession().setAttribute("ns", ref.getCodeNamespace());
 
 
         //KLO, 051012
@@ -1835,9 +1778,7 @@ response.setContentType("text/html;charset=utf-8");
         request.getSession().removeAttribute("n");
         request.getSession().removeAttribute("b");
         request.getSession().removeAttribute("m");
-
-
-					return "search_results";
+ 				    return "search_results";
 				}
 		    } else if (size > 1) {
 				String match_size = Integer.toString(size);
@@ -1855,10 +1796,7 @@ response.setContentType("text/html;charset=utf-8");
         request.getSession().removeAttribute("m");
 				return "search_results";
 			}
-
-
         }
-
         // int minimumSearchStringLength =
         //    NCItBrowserProperties.getMinimumSearchStringLength();
         if (ontologiesToSearchOn.size() == 0) {
@@ -1896,6 +1834,7 @@ response.setContentType("text/html;charset=utf-8");
             ontologiesToSearchOnStr);
         request.getSession().setAttribute("multiple_search_no_match_error",
             "true");
+
         return "multiple_search";
     }
 
@@ -1929,13 +1868,7 @@ response.setContentType("text/html;charset=utf-8");
                 .getExternalContext().getRequest();
 
         request.getSession().removeAttribute("error_msg");
-/*
-        boolean retval = HTTPUtils.validateRequestParameters(request);
-        if (!retval) {
-			System.out.println("advancedSearchAction returns invalid_parameter");
-			return "invalid_parameter";
-		}
-*/
+
         String scheme = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
 	    if (scheme == null || DataUtils.getFormalName(scheme) == null) {
 			String message = "Invalid vocabulary name.";
@@ -2436,7 +2369,6 @@ if (!retval) {
 
             } else if (size == 1) {
                 request.getSession().setAttribute("singleton", "true");
-                request.getSession().setAttribute("dictionary", scheme);
                 // Concept c = (Concept) v.elementAt(0);
                 int pageNumber = 1;
 
@@ -2475,10 +2407,12 @@ if (!retval) {
                     }
                 }
 
+                request.getSession().setAttribute("dictionary", ref.getCodingSchemeName());
+                request.getSession().setAttribute("version", version);
+                request.getSession().setAttribute("ns", ref.getCodeNamespace());
                 request.getSession().setAttribute("code", ref.getConceptCode());
                 request.getSession().setAttribute("concept", c);
                 request.getSession().setAttribute("type", "properties");
-                request.getSession().setAttribute("version", version);
                 request.getSession().setAttribute("new_search", Boolean.TRUE);
 
 HttpServletResponse response =
@@ -2702,10 +2636,6 @@ response.setContentType("text/html;charset=utf-8");
 
 
      private void show_other_versions(HttpServletRequest request, String action_cs, boolean show) {
-
-		//System.out.println("action_cs: " + action_cs + "; show or hide: " + show);
-
-
 	    String ontologiesToSearchOnStr = (String) request.getSession().getAttribute("ontologiesToSearchOnStr");
 	    if (ontologiesToSearchOnStr == null) {
 
@@ -2719,9 +2649,6 @@ response.setContentType("text/html;charset=utf-8");
 			if (ontology_list != null) {
 				//System.out.println("(*) UserSessionBean ontology_list.length: " + ontology_list.length);
 				for (int i = 0; i < ontology_list.length; ++i) {
-
-					//System.out.println("(" + i + ") " + ontology_list[i]);
-
 					buf.append(ontology_list[i] + "|");
 				}
 			}
@@ -2791,9 +2718,6 @@ ontologiesToSearchOnStr = s;
 		}
 
 		String t0 = (String) request.getSession().getAttribute("ontologiesToSearchOnStr");
-
-		//System.out.println("EXIT show_other_versions: " + t0);
-
     }
 
     public void hideListener(ActionEvent evt) {
@@ -2819,8 +2743,6 @@ ontologiesToSearchOnStr = s;
 				 }
 			 }
 		}
-		//System.out.println("EXIT show_other_versions");
-
     }
 
 

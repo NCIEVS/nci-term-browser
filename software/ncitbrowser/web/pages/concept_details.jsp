@@ -169,16 +169,20 @@ Entity c = null;
           boolean code_from_cart_action = false;
           code = (String) request.getAttribute("code_from_cart_action");
           if (code == null) {
-            code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
+               code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
+	       if (code == null) {
+		   code = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("code"));
+	       }             
           } else {
-            request.removeAttribute("code_from_cart_action");
-            code_from_cart_action = true;
+               request.removeAttribute("code_from_cart_action");
+               code_from_cart_action = true;
+               code = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("code"));
           }
 
           if (StringUtils.isNullOrBlank(code)) {
               code = (String) request.getSession().getAttribute("code");
           } else {
-
+/*
             Vector u2 = StringUtils.parseData(code, ",");
             // Send redirect:
             if (u2 == null) {
@@ -195,13 +199,13 @@ Entity c = null;
               code = (String)u2.elementAt(0);
               ns = (String)u2.elementAt(1);
             }
+*/            
           }
  
            if (code == null) {
              Entity con = (Entity) request.getSession().getAttribute("concept");
              if (con != null) {
                code = con.getEntityCode();
-               //System.out.println("#2 code: " + code);
              } 
            }
 
@@ -210,6 +214,10 @@ ns = (String) request.getParameter("ns");
 if (ns == null) {
     ns = (String) request.getSession().getAttribute("ns");
 }
+if (ns == null || ns.compareTo("null") == 0) {
+    ns = cd.getNamespaceByCode(dictionary, version, code);
+}
+
 sessionMonitor.execute(request, dictionary, version, code, ns);
  
 code = HTTPUtils.cleanXSS(code);    
@@ -230,16 +238,6 @@ code = HTTPUtils.cleanXSS(code);
 
 
           request.getSession().setAttribute("code", code);
-          
-          
-          ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
-if (ns == null || ns.compareTo("null") == 0) {
-    ns = cd.getNamespaceByCode(dictionary, version, code);
-    //propertyData.setNamespace(ns);
-    //request.getSession().setAttribute("propertyData", propertyData);
-}
-          
-          
           request.getSession().setAttribute("ns", ns);
           
           ///////////////////////////////////////////////////////////////////////////////////
@@ -275,10 +273,6 @@ if (ns == null || ns.compareTo("null") == 0) {
               }
             }
           }
-
-
-
-
 
           if (type == null) {
             type = HTTPUtils.cleanXSS((String) request.getParameter("type"));
@@ -580,9 +574,7 @@ if (ns == null || ns.compareTo("null") == 0) {
     -->
 
 <%
-
-
-          
+        
 
 HashMap def_map = null;
 int other_src_alt_def_count = 0;
@@ -659,7 +651,8 @@ curr_concept = (Entity) request.getSession().getAttribute("concept");
     */
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
     propertyData = (PropertyData) request.getSession().getAttribute("propertyData");
     
     /*
@@ -1531,6 +1524,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
 
  
  <%
+  
  if (type.compareTo("relationship") == 0 || type.compareTo("all") == 0)
  {
 
@@ -1579,7 +1573,6 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
    if (ns_curr == null || ns_curr.compareTo("null") == 0 || ns_curr.compareTo("undefined") == 0) {
      ns_curr = cd.getNamespaceByCode(scheme_curr, version_curr, code_curr);
    }
-   //System.out.println("relationship tab...ns_curr " + ns_curr);  
      
    
    String key = scheme_curr + "$" + version_curr + "$" + code_curr;

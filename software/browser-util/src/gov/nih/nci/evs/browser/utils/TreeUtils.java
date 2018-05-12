@@ -2636,5 +2636,32 @@ public class TreeUtils {
         }
         return v;
     }
+
+	public static TreeItem placeRootNodeAtTop(TreeItem ti_0, String node_label) {
+		if (ti_0 == null) return null;
+		TreeItem ti = new TreeItem(ti_0._code, ti_0._text, ti_0._ns, ti_0._id, ti_0._auis);
+		ti._expandable = false;
+		for (String association : ti_0._assocToChildMap.keySet()) {
+			List<TreeItem> children = ti_0._assocToChildMap.get(association);
+			List list = new ArrayList();
+			for (int i=0; i<children.size(); i++) {
+				TreeItem childItem = (TreeItem) children.get(i);
+				if (childItem == null) return null;
+				if (childItem._text.compareTo(node_label) == 0) {
+					ti.addChild(association, childItem);
+					ti._expandable = true;
+				} else {
+					list.add(childItem);
+				}
+			}
+			for (int k=0; k<list.size(); k++) {
+				TreeItem childItem3 = (TreeItem) list.get(k);
+				ti.addChild(association, childItem3);
+			}
+		}
+		return ti;
+	}
+
+
 }
 

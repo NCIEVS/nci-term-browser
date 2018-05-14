@@ -1035,7 +1035,7 @@ if (m != -1) {
 		return buf.toString();
 	}
 
-	public static Vector remoteDuplciateValues(Vector v) {
+	public static Vector removeDuplicateValues(Vector v) {
 		if (v == null) return null;
 		HashSet hset = new HashSet();
 		Vector w = new Vector();
@@ -1058,7 +1058,7 @@ if (m != -1) {
 	public static String createTable(Vector w, boolean removeDuplicate) {
 		if (w == null) return null;
 		if (removeDuplicate) {
-			w = remoteDuplciateValues(w);
+			w = removeDuplicateValues(w);
 		}
         StringBuffer buf = new StringBuffer();
 		buf.append("<table>");
@@ -1193,6 +1193,7 @@ if (url.endsWith(".xls")) {
 	private static final String RELATIONSHIP_TO_TARGET = "Relationship_to_Target";
 	private static final String TARGET_TERM_TYPE = "Target_Term_Type";
 	private static final String TARGET_CODE = "Target_Code";
+	private static final String RDFS_COMMENT = "rdfs:comment";
 	private static final String NGSP = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
 	public static Vector getMapsToQualifierNames() {
@@ -1201,6 +1202,7 @@ if (url.endsWith(".xls")) {
 		v.add(RELATIONSHIP_TO_TARGET);
 		v.add(TARGET_TERM_TYPE);
 		v.add(TARGET_CODE);
+		v.add(RDFS_COMMENT);
 		return v;
 	}
 

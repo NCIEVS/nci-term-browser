@@ -19,7 +19,7 @@ import org.apache.log4j.*;
 import org.lexevs.dao.database.service.valuesets.LexEVSTreeItem;
 import org.lexevs.dao.database.service.valuesets.ValueSetHierarchyService;
 import org.lexevs.dao.database.service.valuesets.ValueSetHierarchyServiceImpl;
-import org.lexevs.property.PropertyExtension;
+//import org.lexevs.property.PropertyExtension;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;
 import org.LexGrid.commonTypes.Properties;

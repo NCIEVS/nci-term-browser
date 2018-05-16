@@ -3,10 +3,7 @@ package gov.nih.nci.evs.browser.utils;
 
 import gov.nih.nci.evs.browser.properties.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import org.lexevs.dao.database.service.valuesets.*;
 
 
@@ -82,6 +79,71 @@ public class LexEVSTreeItem2TreeItem {
 	}
 
 
+    public static int get_children_node_count(TreeItem ti) {
+		int knt = 0;
+		for (String association : ti._assocToChildMap.keySet()) {
+			List<TreeItem> children = ti._assocToChildMap.get(association);
+			knt = knt + children.size();
+		}
+		return knt;
+	}
+
+
+    public static void write_children_nodes(TreeItem ti) {
+		int knt = 0;
+		if (!ti._expandable) return;
+		for (String association : ti._assocToChildMap.keySet()) {
+			List<TreeItem> children = ti._assocToChildMap.get(association);
+			for (int i=0; i<children.size(); i++) {
+				TreeItem childItem = (TreeItem) children.get(i);
+			    System.out.println(ti._text + "  child node: " + childItem._text);
+			    write_children_nodes(childItem);
+		    }
+		}
+	}
+
+	public static TreeItem sortChildNodes(TreeItem ti) {
+		if (ti == null) return null;
+		if (!ti._expandable) return ti;
+		TreeItem ti_clone = new TreeItem(ti._code, ti._text, ti._ns, ti._id, ti._auis);
+		HashMap hmap = new HashMap();
+		Vector keys = new Vector();
+		String associationName = null;
+		ti_clone._expandable = false;
+
+		for (String association : ti._assocToChildMap.keySet()) {
+			associationName = association;
+			List<TreeItem> children = ti._assocToChildMap.get(association);
+			for (int i=0; i<children.size(); i++) {
+				TreeItem childItem = (TreeItem) children.get(i);
+				hmap.put(childItem._text, childItem);
+				keys.add(childItem._text);
+				ti_clone._expandable = true;
+			}
+		}
+
+		Vector v = new Vector();
+		Vector w = new Vector();
+		for (int i=0; i<keys.size(); i++) {
+			String key = (String) keys.elementAt(i);
+			if (key.compareTo("NCI Thesaurus") == 0 || key.compareTo("National Cancer Institute Terminology") == 0) {
+				v.add(key);
+			} else {
+				w.add(key);
+			}
+		}
+		if (v.size() == 0) {
+			return ti;
+		}
+		v.addAll(w);
+		for (int i=0; i<v.size(); i++) {
+			String key = (String) v.elementAt(i);
+			TreeItem childItem = (TreeItem) hmap.get(key);
+			ti_clone.addChild(associationName, sortChildNodes(childItem));
+		}
+		return ti_clone;
+	}
+
 	public static TreeItem placeNCItAsFirstNode(TreeItem ti_0) {
 		if (ti_0 == null) return null;
 		TreeItem ti = new TreeItem(ti_0._code, ti_0._text, ti_0._ns, ti_0._id, ti_0._auis);
@@ -91,19 +153,9 @@ public class LexEVSTreeItem2TreeItem {
 			List list = new ArrayList();
 			for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
-				if (childItem == null) return null;
-				if (childItem._text.compareTo("NCI Thesaurus") == 0 || childItem._text.compareTo("National Cancer Institute Terminology") == 0) {
-					ti.addChild(association, childItem);
-					ti._expandable = true;
-				} else {
-					list.add(childItem);
-				}
-			}
-			//new SortUtils().quickSort(list);
-			for (int k=0; k<list.size(); k++) {
-				TreeItem childItem3 = (TreeItem) list.get(k);
-				//ti.addChild(association, sort(childItem3));
-				ti.addChild(association, childItem3);
+				childItem = sortChildNodes(childItem);
+				ti.addChild(association, childItem);
+				ti._expandable = true;
 			}
 		}
 		return ti;

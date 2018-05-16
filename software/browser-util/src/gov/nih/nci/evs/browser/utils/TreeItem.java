@@ -212,6 +212,12 @@ public class TreeItem implements Serializable, Comparable<TreeItem> {
     }
 
     public static void printTree(TreeItem ti, int depth, boolean print_code_first) {
+		boolean sort = true;
+		printTree(ti, depth, print_code_first, sort);
+	}
+
+
+    public static void printTree(TreeItem ti, int depth, boolean print_code_first, boolean sort) {
 		if (ti == null) return;
 
         StringBuffer indent = new StringBuffer();
@@ -233,10 +239,12 @@ public class TreeItem implements Serializable, Comparable<TreeItem> {
 
         for (String association : ti._assocToChildMap.keySet()) {
             List<TreeItem> children = ti._assocToChildMap.get(association);
-            new SortUtils().quickSort(children);
+            if (sort) {
+            	new SortUtils().quickSort(children);
+			}
             for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
-                printTree(childItem, depth + 1, print_code_first);
+                printTree(childItem, depth + 1, print_code_first, sort);
 			}
         }
     }

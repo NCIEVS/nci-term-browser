@@ -214,6 +214,7 @@ public class ValueSetTreeUtils {
 			Map<String, LexEVSTreeItem> source_items  = service.getFullServiceValueSetTree();
 			LexEVSTreeItem source_item = source_items.get(ValueSetHierarchyServiceImpl.ROOT);
 			TreeItem ti = LexEVSTreeItem2TreeItem.toTreeItem(source_item);
+			ti = LexEVSTreeItem2TreeItem.placeNCItAsFirstNode(ti);
 
 			sourceValueSetTree = new HashMap();
 			sourceValueSetTree.put("<Root>", ti);
@@ -347,9 +348,6 @@ public class ValueSetTreeUtils {
         long ms = System.currentTimeMillis();
         try {
 			Map<String, LexEVSTreeItem> terminology_items = service.getSourceDefinedTree();
-//a temporary patch:
-//			terminology_items = modifySourceDefinedTree(terminology_items);
-
 			LexEVSTreeItem terminology_item = terminology_items.get(ValueSetHierarchyServiceImpl.ROOT);
 			TreeItem ti = LexEVSTreeItem2TreeItem.toTreeItem(terminology_item);
 			ti = LexEVSTreeItem2TreeItem.placeNCItAsFirstNode(ti);

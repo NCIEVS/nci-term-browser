@@ -78,31 +78,10 @@ public class LexEVSTreeItem2TreeItem {
 				ti._expandable = true;
 			}
 		}
-		//ti = replaceCodeByURI(ti);
 		return ti;
 	}
 
-/*
-	public static TreeItem replaceCodeByURI(TreeItem ti_0) {
-		if (ti_0 == null) return null;
-		String code = ti_0._code;
-		String uri = ValueSetDefinitionConfig.getValueSetURI(code);
-		TreeItem ti = new TreeItem(uri, ti_0._text, null, ti_0._id, ti_0._auis);
 
-		ti._expandable = false;
-		for (String association : ti_0._assocToChildMap.keySet()) {
-			List<TreeItem> children = ti_0._assocToChildMap.get(association);
-			new SortUtils().quickSort(children);
-			for (int i=0; i<children.size(); i++) {
-				TreeItem childItem = (TreeItem) children.get(i);
-				TreeItem child_ti = replaceCodeByURI(childItem);
-				ti.addChild(association, child_ti);
-				ti._expandable = true;
-			}
-		}
-		return ti;
-	}
-*/
 	public static TreeItem placeNCItAsFirstNode(TreeItem ti_0) {
 		if (ti_0 == null) return null;
 		TreeItem ti = new TreeItem(ti_0._code, ti_0._text, ti_0._ns, ti_0._id, ti_0._auis);
@@ -113,7 +92,7 @@ public class LexEVSTreeItem2TreeItem {
 			for (int i=0; i<children.size(); i++) {
 				TreeItem childItem = (TreeItem) children.get(i);
 				if (childItem == null) return null;
-				if (childItem._text.compareTo("NCI Thesaurus") == 0) {
+				if (childItem._text.compareTo("NCI Thesaurus") == 0 || childItem._text.compareTo("National Cancer Institute Terminology") == 0) {
 					ti.addChild(association, childItem);
 					ti._expandable = true;
 				} else {

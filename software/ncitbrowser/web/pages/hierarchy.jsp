@@ -596,7 +596,7 @@
                   <div id="popupContentArea">
                     <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
                       <tr class="textbody">
-                        <td class="pageTitle" align="left"><%= HTTPUtils.cleanXSS(display_name) %>Hierarchy</td>
+                        <td class="pageTitle" align="left"><%= HTTPUtils.cleanXSS(display_name) %>&nbsp;Hierarchy</td>
                         <td class="pageTitle" align="right">
                           <font size="1" color="red" align="right">
                             <a href="javascript:printPage()">

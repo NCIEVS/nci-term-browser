@@ -214,6 +214,8 @@ public class ValueSetTreeUtils {
 			Map<String, LexEVSTreeItem> source_items  = service.getFullServiceValueSetTree();
 			LexEVSTreeItem source_item = source_items.get(ValueSetHierarchyServiceImpl.ROOT);
 			TreeItem ti = LexEVSTreeItem2TreeItem.toTreeItem(source_item);
+            //KLO
+            ti = LexEVSTreeItem2TreeItem.sortChildNodes(ti);
 			ti = LexEVSTreeItem2TreeItem.placeNCItAsFirstNode(ti);
 
 			sourceValueSetTree = new HashMap();

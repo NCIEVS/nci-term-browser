@@ -159,7 +159,7 @@ public class CodingSchemeDataUtils {
 			cs = lbSvc.resolveCodingScheme(codingScheme, versionOrTag);
 		} catch (Exception ex) {
 			//ex.printStackTrace();
-			System.out.println("WARNING: unable to resolve " + codingScheme + " (version: " + version + ")");
+			//System.out.println("WARNING: unable to resolve " + codingScheme + " (version: " + version + ")");
 		}
 		return cs;
     }

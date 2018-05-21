@@ -221,6 +221,7 @@ public class UIUtils {
 		Vector keyVec = new Vector();
 		HashMap qualifierHashMap = new HashMap();
 		if (properties == null) return null;
+		int lcv = 0;
 
         for (int i = 0; i < properties.length; i++) {
             Property p = (Property) properties[i];
@@ -228,7 +229,9 @@ public class UIUtils {
 				String name = p.getPropertyName();
 				if (p.getValue() != null) {
 					String value = p.getValue().getContent();
-					String n_v = name + "|" + value;
+					//String n_v = name + "|" + value;
+					String n_v = name + "|" + value + "|" + lcv;
+					lcv++;
 					Vector qualifier_vec = new Vector();
 					PropertyQualifier[] qualifiers = p.getPropertyQualifier();
 					if (qualifiers != null) {

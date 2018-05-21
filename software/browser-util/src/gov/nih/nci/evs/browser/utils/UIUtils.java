@@ -686,13 +686,16 @@ public class UIUtils {
 
 		Vector keyVec = new Vector();
 		HashMap qualifierHashMap = new HashMap();
+		int lcv = 0;
 
         for (int i = 0; i < properties.length; i++) {
             Property p = (Property) properties[i];
 			String name = p.getPropertyName();
 			if (property_names.contains(name)) {
 				String value = p.getValue().getContent();
-				String n_v = name + "|" + value;
+				//String n_v = name + "|" + value;
+				String n_v = name + "|" + value + "|" + lcv;
+				lcv++;
 				Vector qualifier_vec = new Vector();
 				PropertyQualifier[] qualifiers = p.getPropertyQualifier();
 				if (qualifiers == null) return null;

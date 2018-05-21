@@ -970,10 +970,8 @@ if (m != -1) {
     public boolean displayQualifier(String qualifierName) {
         if (qualifierName == null) return false;
         if (qualifierName.length() == 0) return false;
-
 		//if (Constants.OWL_ROLE_QUALIFIER_LIST.contains(qualifierName)) {
-		if (OWL_ROLE_QUALIFIER_LIST.contains(qualifierName)) {
-			//System.out.println(	"qualifierName: " + qualifierName + " display=false");
+		if (OWL_ROLE_QUALIFIER_LIST != null && OWL_ROLE_QUALIFIER_LIST.contains(qualifierName)) {
 			return false;
 		}
 		return true;
@@ -1193,7 +1191,7 @@ if (url.endsWith(".xls")) {
 	private static final String RELATIONSHIP_TO_TARGET = "Relationship_to_Target";
 	private static final String TARGET_TERM_TYPE = "Target_Term_Type";
 	private static final String TARGET_CODE = "Target_Code";
-	private static final String RDFS_COMMENT = "rdfs:comment";
+	private static final String RDFS_COMMENT = "comment";
 	private static final String NGSP = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
 	public static Vector getMapsToQualifierNames() {

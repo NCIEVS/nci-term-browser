@@ -829,11 +829,14 @@ public class UIUtils {
 
             String code = null;
             String namespace = null;
-
+/*
             if (w.size() > 2) {
 				code = (String) w.elementAt(2);
 			}
+*/
+
 			if (w.size() > 3) {
+				code = (String) w.elementAt(2);
 				namespace = (String) w.elementAt(3);
 			}
             Vector qualifiers = (Vector) qualifierHashMap.get(n_v);

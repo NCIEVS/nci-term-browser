@@ -286,8 +286,6 @@ if (single_mapping_search != null && single_mapping_search.compareTo("true") == 
 		} else {
 			scheme = HTTPUtils.cleanXSS((String)request.getParameter("scheme"));
 
-			//String searchaction_dictionary = request.getParameter("dictionary");
-
 			if (scheme == null) {
 				scheme = (String) request.getSession().getAttribute("scheme");
 			}
@@ -2553,7 +2551,6 @@ response.setContentType("text/html;charset=utf-8");
         request.getSession().setAttribute("algorithm", matchAlgorithm);
 
         String[] ontology_list = request.getParameterValues("ontology_list");
-        //String action_cs = (String) request.getParameter("cs_name");
 
         StringBuffer buf = new StringBuffer();
         buf.append("|");

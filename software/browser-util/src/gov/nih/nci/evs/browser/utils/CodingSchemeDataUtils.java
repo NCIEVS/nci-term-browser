@@ -1859,4 +1859,23 @@ public class CodingSchemeDataUtils {
         return null;
 	}
 
+    public List getRelationContainerNames(String scheme, String version) {
+        CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
+        if (version != null)
+            csvt.setVersion(version);
+
+		List list = new ArrayList();
+		try {
+			//LexBIGService lbSvc = new RemoteServerUtil().createLexBIGService();
+			CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
+			Relations[] relations = cs.getRelations();
+			for (int i = 0; i < relations.length; i++) {
+				Relations relation = relations[i];
+				list.add(relation.getContainerName());
+			}
+		} catch (Exception ex) {
+
+        }
+        return list;
+    }
 }

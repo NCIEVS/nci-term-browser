@@ -1328,9 +1328,9 @@ public class ValueSetBean {
                 .getExternalContext().getRequest();
 
 
-		String vsd_uri = (String) request.getParameter("vsd_uri");
+		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 		if (vsd_uri == null) {
-		    vsd_uri = (String) request.getSession().getAttribute("vsd_uri");
+		    vsd_uri = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("vsd_uri"));
 		}
 
 		/*

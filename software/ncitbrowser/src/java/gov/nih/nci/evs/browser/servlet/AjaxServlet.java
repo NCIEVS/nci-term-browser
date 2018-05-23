@@ -2249,9 +2249,9 @@ if (show_released_file_button) {
 			  out.println("");
 
 		//v2.9 modification;
-			mode = (String) request.getParameter("mode");
+			mode = HTTPUtils.cleanXSS((String) request.getParameter("mode"));
 			if (mode == null) {
-				mode = (String) request.getSession().getAttribute("mode");
+				mode = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("mode"));
 				//
 				if (mode == null) {
 					mode = "0";
@@ -4232,12 +4232,12 @@ out.flush();
         String refresh = HTTPUtils.cleanXSS((String) request.getParameter("refresh"));
         String resultsPerPage = HTTPUtils.cleanXSS((String) request.getParameter("resultsPerPage"));
 
-        String valueset_search_algorithm = (String) request.getParameter("valueset_search_algorithm");
+        String valueset_search_algorithm = HTTPUtils.cleanXSS((String) request.getParameter("valueset_search_algorithm"));
         if (valueset_search_algorithm != null) {
             request.getSession().setAttribute("valueset_search_algorithm", valueset_search_algorithm);
 		}
 
-        String selectValueSetSearchOption = (String) request.getParameter("selectValueSetSearchOption");
+        String selectValueSetSearchOption = HTTPUtils.cleanXSS((String) request.getParameter("selectValueSetSearchOption"));
         if (selectValueSetSearchOption != null) {
             request.getSession().setAttribute("selectValueSetSearchOption", selectValueSetSearchOption);
 		}

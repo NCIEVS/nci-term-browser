@@ -181,26 +181,7 @@ Entity c = null;
 
           if (StringUtils.isNullOrBlank(code)) {
               code = (String) request.getSession().getAttribute("code");
-          } else {
-/*
-            Vector u2 = StringUtils.parseData(code, ",");
-            // Send redirect:
-            if (u2 == null) {
-              try {
-                String error_msg = "WARNING: The server encountered an unexpected error (file: concept_details.jsp, code: 1, var: u2).";
-                request.getSession().setAttribute("error_msg", error_msg);
-                String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-                response.sendRedirect(redirectURL);
-              } catch (Exception ex) {
-                ex.printStackTrace();
-              }
-            }
-            if (u2.size() == 2) {
-              code = (String)u2.elementAt(0);
-              ns = (String)u2.elementAt(1);
-            }
-*/            
-          }
+          } 
  
            if (code == null) {
              Entity con = (Entity) request.getSession().getAttribute("concept");
@@ -210,9 +191,9 @@ Entity c = null;
            }
 
 
-ns = (String) request.getParameter("ns");
+ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
 if (ns == null) {
-    ns = (String) request.getSession().getAttribute("ns");
+    ns = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("ns"));
 }
 if (ns == null || ns.compareTo("null") == 0) {
     ns = cd.getNamespaceByCode(dictionary, version, code);
@@ -222,40 +203,11 @@ sessionMonitor.execute(request, dictionary, version, code, ns);
  
 code = HTTPUtils.cleanXSS(code);    
           
-
-/*
-          if (code == null) {
-            Entity con = (Entity) request.getSession().getAttribute("concept");
-            if (con != null) {
-              code = con.getEntityCode();
-              ns = con.getEntityCodeNamespace();
-            } else {
-              code = (String) request.getSession().getAttribute("code");
-              ns = (String) request.getSession().getAttribute("ns");
-            }
-          }
-*/
-
-
           request.getSession().setAttribute("code", code);
           request.getSession().setAttribute("ns", ns);
           
           ///////////////////////////////////////////////////////////////////////////////////
           String active_code = (String) request.getSession().getAttribute("active_code");
-          /*
-          if (active_code == null) {
-            //create new PropertyData
-          
-            request.getSession().setAttribute("active_code", code);
-            
-          } else {
-            if (active_code.compareTo(code) != 0) {
-              request.getSession().removeAttribute("RelationshipHashMap");
-              
-              request.getSession().setAttribute("active_code", code);
-            }
-          }
-          */
           ////////////////////////////////////////////////////////////////////////////////////
 
           Boolean new_search = null;
@@ -356,32 +308,34 @@ code = HTTPUtils.cleanXSS(code);
               boolean tree_access2 = !DataUtils.get_vocabulariesWithoutTreeAccessHashSet().contains(dictionary);
               boolean typeLink_isMapping2 = mappingTab.isMapping(dictionary, null);
               if (tree_access2 && !typeLink_isMapping2) {
-
                 %>
 
                 <%
                 if (DataUtils.isNullOrBlank(ns)) {
                     ns = cd.getNamespaceByCode(dictionary, version, code);
                 }
-                
-               
-                if (DataUtils.isNullOrBlank(ns)) {
-                  %>
+                %>
+      
+ <%
+ if (DataUtils.isNullOrBlank(ns)) {
+ %>
+       
+                            <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/ajax?action=search_hierarchy&ontology_node_id=<%=code%>&ontology_display_name=<%=short_name%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
 
-                  <a href="#" onClick="javascript:window.open('<%=request.getContextPath()
-                  %>
-                  /ajax?action=search_hierarchy&ontology_node_id=<%= code %>&ontology_display_name=<%= short_name %>
-                  &version=
-                  <%= version %>
-                  ', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes,
-                  scrollbars=yes, toolbar=no, location=no, directories=no');">
-                <% } else { %>
+ 
+ <%
+ } else {
+ %>
+       
+                            <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/ajax?action=search_hierarchy&ontology_node_id=<%=code%>&ontology_node_ns=<%=ns%>&ontology_display_name=<%=short_name%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
 
-                  <a
-                      href="#"
-                      onClick="javascript:window.open('<%=request.getContextPath()%>/ajax?action=search_hierarchy&ontology_node_id=<%=code%>&ontology_node_ns=<%=ns%>&ontology_display_name=<%=short_name%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
-
-                  <% } %>
+ 
+ <%
+ }
+ %>
+                  
+                  
+                  
                   View in Hierarchy</a>
                 <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
                 <%

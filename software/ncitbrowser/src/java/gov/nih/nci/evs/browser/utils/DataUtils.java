@@ -586,25 +586,6 @@ public class DataUtils {
 	    return _defaultOntologiesToSearchOnStr;
     }
 
-/*
-    public static String getDefaultOntologiesToSearchOnStr() {
-		if (_defaultOntologiesToSearchOnStr != null) return _defaultOntologiesToSearchOnStr;
-        if (_ontologies == null) setCodingSchemeMap();
-
-        StringBuffer buf = new StringBuffer();
-        buf.append("|");
-        for (int i = 0; i < _ontologies.size(); i++) {
-            SelectItem item = (SelectItem) _ontologies.get(i);
-            String value = (String) item.getValue();
-
-            if (value.indexOf("NCI_Thesaurus") != -1 || value.indexOf("NCI Thesaurus") != -1) {
-                buf.append(value + "|");
-            }
-        }
-        return buf.toString();//_defaultOntologiesToSearchOnStr;
-    }
-*/
-
     public static HashMap getDefaultFormalName2VirtualIdMap() {
 		HashMap formalName2VirtualIdMap = new HashMap();
 		formalName2VirtualIdMap.put("NCIT", Constants.NCIT_NCBO_ID);
@@ -613,51 +594,6 @@ public class DataUtils {
 		formalName2VirtualIdMap.put("NCI Thesaurus", Constants.NCIT_NCBO_ID);
 	    return formalName2VirtualIdMap;
 	}
-
-
-/*
-    public static HashMap createFormalName2VirtualIdMap() {
-		HashMap formalName2VirtualIdMap = new HashMap();
-
-		RESTClient client = new RESTClient();
-		HashMap virtualId2NamesMap = client.getVirtualId2NamesMap();
-		if (virtualId2NamesMap != null) {
-			Vector virtualId_vec = client.getKeys(virtualId2NamesMap);
-			if (virtualId_vec == null) return null;
-			for (int i=0; i<virtualId_vec.size(); i++) {
-				String virtualId = (String) virtualId_vec.elementAt(i);
-				String names = (String) virtualId2NamesMap.get(virtualId);
-				Vector name_vec = parseData(names);
-				boolean matched = false;
-				for (int k=0; k<name_vec.size(); k++) {
-					String name = (String) name_vec.elementAt(k);
-					String formalName = getFormalName(name);
-					if (formalName != null) {
-						formalName2VirtualIdMap.put(formalName, virtualId);
-						matched = true;
-						break;
-					}
-				}
-			}
-		}
-
-		// NCI Thesaurus --> 1032
-		if (!formalName2VirtualIdMap.containsKey("NCIT")) {
-			formalName2VirtualIdMap.put("NCIT", Constants.NCIT_NCBO_ID);
-		}
-		if (!formalName2VirtualIdMap.containsKey("NCIt")) {
-			formalName2VirtualIdMap.put("NCIt", Constants.NCIT_NCBO_ID);
-		}
-		if (!formalName2VirtualIdMap.containsKey("NCI_Thesaurus")) {
-			formalName2VirtualIdMap.put("NCI_Thesaurus", Constants.NCIT_NCBO_ID);
-		}
-		if (!formalName2VirtualIdMap.containsKey("NCI Thesaurus")) {
-			formalName2VirtualIdMap.put("NCI Thesaurus", Constants.NCIT_NCBO_ID);
-		}
-		return formalName2VirtualIdMap;
-	}
-*/
-
 
     public static HashMap get_localName2FormalNameHashMap() {
 		return _localName2FormalNameHashMap;

@@ -121,6 +121,11 @@ JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
             <p><%= license_statement_value %></p>
           <% } %>
 
+
+<b>Note</b>: We have a beta version of a new browser and would like input from our users to determine which features are most valuable. If you are interested in  participating, please send us an
+<a href="mailto:ncicbiit@mail.nih.gov">email</a>.
+
+
         </td>
 
         <td valign="top" width="30%">

@@ -2534,7 +2534,7 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 					  }
 					  request.getSession().setAttribute("message", msg);
 					//return "message";
-
+/*
 				  } else if (numRemaining == 1) {
 						try {
 							ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
@@ -2547,6 +2547,8 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 						} catch (Exception ex) {
 							ex.printStackTrace();
 						}
+*/
+
 				  }
 
 			  } catch (Exception ex) {

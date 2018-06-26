@@ -1128,7 +1128,7 @@ if (m != -1) {
 
 if (url.endsWith(".xls")) {
 	  buf.append("&nbsp;&nbsp;");
-      buf.append("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"http://www.microsoft.com/downloads/details.aspx?FamilyID=1cd6acf9-ce06-4e1c-8dcf-f33f669dbc3a&amp;DisplayLang=en\" target=\"_blank\"><img").append("\n");
+      buf.append("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"https://products.office.com/en-US/excel?legRedir=true&CorrelationId=1229dc2e-5ff3-4e3b-adc8-2b6f59e21be4\" target=\"_blank\"><img").append("\n");
       buf.append("     src=\"/ncitbrowser/images/link_xls.gif\" width=\"16\"").append("\n");
       buf.append("     height=\"16\" border=\"0\"").append("\n");
       buf.append("alt=\"Download Plugin Microsoft Excel Viewer\" /></a>").append("\n");

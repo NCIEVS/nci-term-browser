@@ -2513,7 +2513,7 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 
 		  int simpleSearchOption = SimpleSearchUtils.BY_CODE;
 
-          String checked_vocabularies = construct_checked_vocabularies_string();
+          String checked_vocabularies = DataUtils.get_checked_all_vocabularies_string();
 		  LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		  String serviceUrl = RemoteServerUtil.getServiceUrl();
           ResolvedConceptReferencesIterator iterator = new ValueSetSearchUtils(lbSvc, serviceUrl).searchResolvedValueSetCodingSchemes(checked_vocabularies,
@@ -2533,22 +2533,6 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 						  msg = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
 					  }
 					  request.getSession().setAttribute("message", msg);
-					//return "message";
-/*
-				  } else if (numRemaining == 1) {
-						try {
-							ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
-							String code = rcr.getCode();
-							String nextJSP = "/ConceptReport.jsp?dictionary=NCI_Thesaurus&code=" + code;
-							RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-							dispatcher.forward(request,response);
-							return;
-
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
-*/
-
 				  }
 
 			  } catch (Exception ex) {
@@ -2565,6 +2549,8 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
               iteratorBean.setKey(key);
 
 			  request.getSession().setAttribute("value_set_entity_search_results", iteratorBean);
+			  request.getSession().setAttribute("searchTarget", searchOption);
+			  request.getSession().setAttribute("algorithm", algorithm);
 
 			  //return "value_set";
 		  }
@@ -2577,8 +2563,6 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 		  } catch (Exception ex) {
 			  ex.printStackTrace();
 		  }
-
-
 	  }
 
       public void search_value_set(HttpServletRequest request, HttpServletResponse response) {

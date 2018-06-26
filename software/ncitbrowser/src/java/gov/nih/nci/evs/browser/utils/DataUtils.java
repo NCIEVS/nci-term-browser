@@ -291,6 +291,8 @@ public class DataUtils {
 
     public static HashMap _csNamespace2URIHashMap = null;
 
+    public static String checked_all_vocabularies_string = null;
+
     // ==================================================================================
 
     public DataUtils() {
@@ -372,6 +374,28 @@ public class DataUtils {
 			_term_suggestion_application_url =
 				properties
 					.getProperty(NCItBrowserProperties.TERM_SUGGESTION_APPLICATION_URL);
+			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+			AssertedValueSetUtils lrvs = new AssertedValueSetUtils(_evsServiceURL, lbSvc);
+		    List<CodingScheme> choices = new ArrayList<CodingScheme>();
+			try {
+			  List<CodingScheme> schemes = lrvs.listAllResolvedValueSets();
+			  StringBuffer buf = new StringBuffer();
+			  if (schemes != null) {
+				  for (int i = 0; i < schemes.size(); i++) {
+						CodingScheme cs = schemes.get(i);
+						String uri = cs.getCodingSchemeURI();
+						buf.append(uri);
+						if (i < schemes.size()-1) {
+							buf.append(",");
+						}
+				  }
+				  checked_all_vocabularies_string = buf.toString();
+		      }
+
+			} catch (Exception ex) {
+			  ex.printStackTrace();
+			}
+
 		} catch (Exception ex) {
             ex.printStackTrace();
 		}
@@ -448,6 +472,10 @@ public class DataUtils {
 		System.out.println("getSortedOntologies run time (ms): " + (System.currentTimeMillis() - ms));
 
 		System.out.println("Total DataUtils initialization run time (ms): " + (System.currentTimeMillis() - ms0));
+	}
+
+	public static String get_checked_all_vocabularies_string() {
+		return checked_all_vocabularies_string;
 	}
 
 	public static Set getVocabularyNameSet() {

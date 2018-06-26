@@ -2537,6 +2537,8 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 
 				  } else if (numRemaining == 1) {
 						try {
+							ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
+							String code = rcr.getCode();
 							String nextJSP = "/ConceptReport.jsp?dictionary=NCI_Thesaurus&code=" + code;
 							RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 							dispatcher.forward(request,response);

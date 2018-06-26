@@ -2534,7 +2534,19 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 					  }
 					  request.getSession().setAttribute("message", msg);
 					//return "message";
+
+				  } else if (numRemaining == 1) {
+						try {
+							String nextJSP = "/ConceptReport.jsp?dictionary=NCI_Thesaurus&code=" + code;
+							RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+							dispatcher.forward(request,response);
+							return;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
 				  }
+
 			  } catch (Exception ex) {
 				msg = "No match found.";
 				if (simpleSearchOption == SimpleSearchUtils.BY_CODE) {
@@ -5361,7 +5373,7 @@ out.flush();
 		out.println("                                    <td align=\"right\">");
 
         out.println("<a href=\"/ncitbrowser/ajax?action=export_to_excel&from_download=true&vsd_uri=" + vsd_uri + "\"><font face=\"verdana\" size=\"1\">Export Excel</font></a>");
-		out.println("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"http://www.microsoft.com/downloads/details.aspx?FamilyID=1cd6acf9-ce06-4e1c-8dcf-f33f669dbc3a&amp;DisplayLang=en\" target=\"_blank\"><img");
+		out.println("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"https://products.office.com/en-US/excel?legRedir=true&CorrelationId=1229dc2e-5ff3-4e3b-adc8-2b6f59e21be4\" target=\"_blank\"><img");
 		out.println("     src=\"/ncitbrowser/images/link_xls.gif\" width=\"16\"");
 		out.println("     height=\"16\" border=\"0\"");
 		out.println("alt=\"Download Plugin Microsoft Excel Viewer\" /></a>");

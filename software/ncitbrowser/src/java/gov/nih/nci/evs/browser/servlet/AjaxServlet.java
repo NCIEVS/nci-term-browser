@@ -2513,6 +2513,10 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 
 		  int simpleSearchOption = SimpleSearchUtils.BY_CODE;
 
+			  request.getSession().setAttribute("searchTarget", searchOption);
+			  request.getSession().setAttribute("algorithm", algorithm);
+			  request.getSession().setAttribute("matchText", matchText);
+
           String checked_vocabularies = DataUtils.get_checked_all_vocabularies_string();
 		  LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		  String serviceUrl = RemoteServerUtil.getServiceUrl();
@@ -2549,8 +2553,6 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
               iteratorBean.setKey(key);
 
 			  request.getSession().setAttribute("value_set_entity_search_results", iteratorBean);
-			  request.getSession().setAttribute("searchTarget", searchOption);
-			  request.getSession().setAttribute("algorithm", algorithm);
 
 			  //return "value_set";
 		  }

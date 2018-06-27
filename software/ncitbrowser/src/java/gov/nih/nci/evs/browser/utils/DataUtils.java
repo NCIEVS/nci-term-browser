@@ -374,9 +374,11 @@ public class DataUtils {
 			_term_suggestion_application_url =
 				properties
 					.getProperty(NCItBrowserProperties.TERM_SUGGESTION_APPLICATION_URL);
+
 			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-			AssertedValueSetUtils lrvs = new AssertedValueSetUtils(_evsServiceURL, lbSvc);
-		    List<CodingScheme> choices = new ArrayList<CodingScheme>();
+			String serviceUrl = RemoteServerUtil.getServiceUrl();
+			AssertedValueSetUtils lrvs = new AssertedValueSetUtils(serviceUrl, lbSvc);
+		    //List<CodingScheme> choices = new ArrayList<CodingScheme>();
 			try {
 			  List<CodingScheme> schemes = lrvs.listAllResolvedValueSets();
 			  StringBuffer buf = new StringBuffer();
@@ -391,6 +393,13 @@ public class DataUtils {
 				  }
 				  checked_all_vocabularies_string = buf.toString();
 		      }
+		      if (checked_all_vocabularies_string == null || checked_all_vocabularies_string.length() == 0) {
+				  System.out.println("WARNING: (1) checked_all_vocabularies_string = null???");
+				  checked_all_vocabularies_string = construct_checked_all_vocabularies_string();
+			  }
+		      if (checked_all_vocabularies_string == null || checked_all_vocabularies_string.length() == 0) {
+				  System.out.println("WARNING: (2) checked_all_vocabularies_string = null???");
+			  }
 
 			} catch (Exception ex) {
 			  ex.printStackTrace();
@@ -474,6 +483,26 @@ public class DataUtils {
 		System.out.println("Total DataUtils initialization run time (ms): " + (System.currentTimeMillis() - ms0));
 	}
 
+
+	public static String construct_checked_all_vocabularies_string() {
+		  LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		  String serviceUrl = RemoteServerUtil.getServiceUrl();
+		  System.out.println(serviceUrl);
+   	      ValueSetTreeUtils vstu = new ValueSetTreeUtils(lbSvc, serviceUrl);
+          HashMap hmap = vstu.getSourceValueSetTreeKey2TreeItemMap();
+          Iterator it = hmap.keySet().iterator();
+          StringBuffer buf = new StringBuffer();
+          while (it.hasNext()) {
+			  String key = (String) it.next();
+			  Vector u = StringUtils.parseData(key, '$');
+			  String code = (String) u.elementAt(0);
+			  buf.append(code).append(",");
+		  }
+		  String str = buf.toString();
+		  return str.substring(0, str.length()-1);
+	}
+
+
 	public static String get_checked_all_vocabularies_string() {
 		return checked_all_vocabularies_string;
 	}
@@ -504,12 +533,10 @@ public class DataUtils {
 		try {
 			long ms = System.currentTimeMillis();
 			//LexBIGService lbs = RemoteServerUtil.createLexBIGService();
-			List<CodingScheme> choices = new ArrayList<CodingScheme>();
+			//List<CodingScheme> choices = new ArrayList<CodingScheme>();
 			//LexEVSResolvedValueSetService lrvs = new LexEVSResolvedValueSetServiceImpl(lbs);
 
-
 			List<CodingScheme> schemes = avsu.listAllResolvedValueSets();//lrvs.listAllResolvedValueSets();
-
 
 			if (schemes == null) return null;
 			for (int i = 0; i < schemes.size(); i++) {

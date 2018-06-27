@@ -143,11 +143,11 @@ public class AssertedValueSetUtils {
 
 	private LexEVSApplicationService getLexEVSAppService() {
 		LexEVSApplicationService lexevsAppService = null;
-
+/*
 		if (serviceUrl == null) {
 			return (LexEVSApplicationService) LexBIGServiceImpl.defaultInstance();
 	    }
-
+*/
 		try{
 		    lexevsAppService = (LexEVSApplicationService)ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
 			//goodToken = new SecurityToken();

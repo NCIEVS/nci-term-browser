@@ -1,3 +1,4 @@
+
 package gov.nih.nci.evs.browser.utils;
 
 import gov.nih.nci.evs.security.SecurityToken;
@@ -38,9 +39,9 @@ import org.lexgrid.valuesets.sourceasserted.impl.AssertedValueSetResolvedConcept
 import org.LexGrid.commonTypes.Properties;
 import org.LexGrid.commonTypes.Property;
 import javax.servlet.http.HttpServletRequest;
-import org.LexGrid.LexBIG.caCore.applicationservice.impl.*;
+
 import org.LexGrid.LexBIG.LexBIGService.*;
-import org.LexGrid.LexBIG.Impl.LexBIGServiceImpl;
+import org.LexGrid.LexBIG.Impl.*;
 
 /*
 	static SourceAssertedValueSetService svc;
@@ -79,9 +80,6 @@ public class AssertedValueSetUtils {
 	String serviceUrl = null;
 
     public AssertedValueSetUtils(String serviceUrl, LexBIGService lbSvc) {
-		if (serviceUrl != null && serviceUrl.compareToIgnoreCase("null") == 0) {
-			serviceUrl = null;
-		}
 		this.serviceUrl = serviceUrl;
 		this.lbSvc = lbSvc;
 		this.csdu = new CodingSchemeDataUtils(lbSvc);
@@ -138,30 +136,20 @@ public class AssertedValueSetUtils {
 		codingSchemeName(codingScheme).
 		codingSchemeURI(codingSchemeURI)
 		.build();
-
-		if (serviceUrl == null) {
-			service = new LexEVSResolvedValueSetServiceImpl();
-		} else {
-			service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
-		}
+		service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
 		service.initParams(params);
 		return service;
 	}
 
 	private LexEVSApplicationService getLexEVSAppService() {
 		LexEVSApplicationService lexevsAppService = null;
-		//testing
+
 		if (serviceUrl == null) {
-			try {
-				return (LexEVSApplicationService) LexBIGServiceImpl.defaultInstance();// new LexEVSApplicationServiceImpl(null, null);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			return lexevsAppService;
-		}
+			return (LexEVSApplicationService) LexBIGServiceImpl.defaultInstance();
+	    }
 
 		try{
-			lexevsAppService = (LexEVSApplicationService)ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
+		    lexevsAppService = (LexEVSApplicationService)ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
 			//goodToken = new SecurityToken();
 			//goodToken.setAccessToken(ConfigurationController.MEDDRA_TOKEN);
 		}
@@ -181,13 +169,8 @@ public class AssertedValueSetUtils {
 		codingSchemeName(codingScheme).
 		codingSchemeURI(codingSchemeURI)
 		.build();
-
-		// KLO, 04162018
-		if (serviceUrl == null) {
-		    service = new LexEVSResolvedValueSetServiceImpl();// LexEVSServiceHolder.instance().getLexEVSAppService().getLexEVSResolvedVSService(params);
-	    } else {
-		    service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
-	    }
+		//service = (LexEVSResolvedValueSetServiceImpl) LexEVSServiceHolder.instance().getLexEVSAppService().getLexEVSResolvedVSService(params);
+		service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
 		service.initParams(params);
 		return service;
 	}

@@ -758,11 +758,13 @@ public class UIUtils {
 		for (int i=0; i<keys.size(); i++) {
 			String key = (String) keys.elementAt(i);
 			String value = (String) hmap.get(key);
-			value = value.trim();
-			if (value.endsWith(":")) {
-				value = value.substring(0, value.length()-1);
-			}
-			w.add(key + ":" + value);
+			if (value != null) {
+				value = value.trim();
+				if (value.endsWith(":")) {
+					value = value.substring(0, value.length()-1);
+				}
+				w.add(key + ":" + value);
+		    }
 		}
 		return w;
 	}

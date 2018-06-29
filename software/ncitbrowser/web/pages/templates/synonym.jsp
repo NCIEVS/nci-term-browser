@@ -125,7 +125,7 @@ if (type.compareTo("synonym") == 0 || type.compareTo("all") == 0)
           String rowColor = (n%2 == 0) ? "dataRowDark" : "dataRowLight";
           %>
           <tr class="<%=rowColor%>">
-            <td class="dataCellText" scope="row"><%= DataUtils.encodeTerm(term_name) %></td>
+            <td style="word-wrap: break-word;" class="dataCellText" scope="row"><%= DataUtils.encodeTerm(term_name) %></td>
             <td class="dataCellText"><%= term_source %></td>
             <td class="dataCellText"><%= term_type %></td>
             <%

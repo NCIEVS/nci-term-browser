@@ -680,9 +680,7 @@ displayItemList != null && curr_concept != null) {
               <%
               boolean hasOtherProperties = false;
               Vector other_prop_names = propertyData.findOtherPropertyNames();
-
-
-              
+             
               if (other_prop_names != null && other_prop_names.size() > 0) {
                 hasOtherProperties = true;
               }
@@ -694,6 +692,7 @@ displayItemList != null && curr_concept != null) {
               } else {
                 String other_properties_str = propertyData.generatePropertyTable(curr_concept,
                 other_prop_names, "<b>Other Properties:</b>");
+               
                 %>
                 <p><%= other_properties_str %></p>
               <% } %>

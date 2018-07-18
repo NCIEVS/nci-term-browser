@@ -4,7 +4,7 @@ Clinical Data Interchange Standards Consortium Terminology|http://evs.nci.nih.go
 GAIA Terminology|http://evs.nci.nih.gov/valueset/GAIA/C125481|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/GAIA/GAIA-NCIt_Terminology.xls|1:all
 National Cancer Institute Terminology|http://evs.nci.nih.gov/valueset/C143048|null|null
 DICOM Terminology|http://evs.nci.nih.gov/valueset/C69186|null|null
-EDQM Health Care Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C148636|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:all
+EDQM Health Care Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C148636|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:all
 UCUM Terminology|http://evs.nci.nih.gov/valueset/UCUM/C67567|null|null
 NCPDP Terminology|http://evs.nci.nih.gov/valueset/NCPDP/C89415|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/NCPDP/NCPDP.xls|1:all
 Pediatric Medical Device Terminology|http://evs.nci.nih.gov/valueset/NICHD/C122636|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/NICHD/Pediatric_Medical_Device_Terminology_Subset/Pediatric_Medical_Device_Terminology_Subset.xls|1:11:C122636
@@ -978,21 +978,21 @@ Adverse Event Outcome ICSR Terminology|http://evs.nci.nih.gov/valueset/FDA/C5458
 Device Usage ICSR Terminology|http://evs.nci.nih.gov/valueset/FDA/C54595|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/ICSR/FDA-ICSR_NCIt_Subsets.xls|1:2:C54595
 Operator of Medical Device ICSR Terminology|http://evs.nci.nih.gov/valueset/FDA/C54584|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/ICSR/FDA-ICSR_NCIt_Subsets.xls|1:2:C54584
 Dose Denominator Qualifier ICSR Terminology|http://evs.nci.nih.gov/valueset/FDA/C94849|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/ICSR/FDA-ICSR_NCIt_Subsets.xls|1:2:C94849
-EDQM-HC Transformation Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150117|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150117
-EDQM-HC Combined Pack Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150106|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150106
-EDQM-HC Routes and Methods of Administration Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150107|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150107
-EDQM-HC Closure Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150108|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150108
-EDQM-HC Container Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150109|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150109
-EDQM-HC Basic Dose Form Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150113|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150113
-EDQM-HC Intended Site of Administration Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150114|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150114
-EDQM-HC Release Characteristics Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150115|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150115
-EDQM-HC Combined Pharmaceutical Dose Form Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150104|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150104
-EDQM-HC State of Matter Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150116|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150116
-EDQM-HC Combined Term Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150105|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150105
-EDQM-HC Administration Device Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150110|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150110
-EDQM-HC Units of Presentation Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150111|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150111
-EDQM-HC Pharmaceutical Dosage Form Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150103|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150103
-EDQM-HC Administration Method Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150112|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HC/NCIt-EDQM-HC_Subsets.xls|1:1:C150112
+EDQM-HC Transformation Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150117|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150117
+EDQM-HC Combined Pack Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150106|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150106
+EDQM-HC Routes and Methods of Administration Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150107|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150107
+EDQM-HC Closure Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150108|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150108
+EDQM-HC Container Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150109|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150109
+EDQM-HC Basic Dose Form Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150113|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150113
+EDQM-HC Intended Site of Administration Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150114|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150114
+EDQM-HC Release Characteristics Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150115|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150115
+EDQM-HC Combined Pharmaceutical Dose Form Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150104|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150104
+EDQM-HC State of Matter Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150116|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150116
+EDQM-HC Combined Term Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150105|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150105
+EDQM-HC Administration Device Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150110|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150110
+EDQM-HC Units of Presentation Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150111|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150111
+EDQM-HC Pharmaceutical Dosage Form Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150103|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150103
+EDQM-HC Administration Method Terminology|http://evs.nci.nih.gov/valueset/EDQM-HC/C150112|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/EDQM-HealthCare/EDQM-HealthCare_NCIt_Terminology_Subsets.xls|1:1:C150112
 NCPDP Measurement Unit Code Terminology|http://evs.nci.nih.gov/valueset/NCPDP/C91101|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/NCPDP/NCPDP.xls|1:1:C91101
 NCPDP DEA Schedule Terminology|http://evs.nci.nih.gov/valueset/NCPDP/C89507|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/NCPDP/NCPDP.xls|1:1:C89507
 NCPDP Strength Form Terminology|http://evs.nci.nih.gov/valueset/NCPDP/C89508|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/NCPDP/NCPDP.xls|1:1:C89508

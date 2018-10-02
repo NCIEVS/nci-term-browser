@@ -1,6 +1,5 @@
 package gov.nih.nci.evs.browser.utils;
 
-
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.XStream;
@@ -144,8 +143,8 @@ public class ValueSetFormatter {
 	private static String TYPE_PROPERTY = "PROPERTY";
 
 	private static String NCIT_CONCEPT_CODE = "NCIt Concept Code";
-	//private static String SOURCE_PREFERRED_TERM = "Source Preferred Term";
 	private static String SOURCE_PREFERRED_TERM = "Source Name";
+	private static String SOURCE_DISPLAY_NAME = "Source Display Name";
 	private static String SOURCE_PREFERRED_TERM_SOURCE_CODE = "Source Preferred Term Source Code";
 	private static String SOURCE_SYNONYMS = "Source Synonyms";
 	private static String SOURCE_SYNONYM_SOURCE_CODE= "Source Synonym Source Code";
@@ -153,29 +152,40 @@ public class ValueSetFormatter {
 	private static String SOURCE_SUBSET_CODE = "Source Subset Code";
 	private static String SOURCE_SUBSET_NAME = "Source Subset Name";
 
+	private static String NCIT_PREFERRED_NAME = "NCIt Preferred Name";
 	private static String NCIT_PREFERRED_TERM = "NCIt Preferred Term";
+	private static String NCIT_DISPLAY_NAME = "NCIt Display Name";
 	private static String NCIT_SYNONYMS = "NCIt Synonyms";
 	private static String NCIT_DEFINITION = "NCIt Definition";
+
+	private static String NCIT_SUBSET_CODE = "NCIt Subset Code";
+	private static String NCIT_SUBSET_NAME = "NCIt Subset Name";
 
 	private static String MALIGNANCY_STATUS = "Malignancy Status";
 	private static String NCI_METATHESAURUS_CUI = "NCI Metathesaurus CUI";
 
 	private static String UMLS_CUI = "UMLS CUI";
 	private static String CDISC = "CDISC";
+	private static String CTRP = "CTRP";
 	private static String NCI_SOURCE = "NCI";
 	private static String TYPE_AB = "AB";
 
 	private static String[] TYPES = {NCIT_CONCEPT_CODE,
 	                                 SOURCE_PREFERRED_TERM,
+	                                 SOURCE_DISPLAY_NAME,
 	                                 SOURCE_PREFERRED_TERM_SOURCE_CODE,
 	                                 SOURCE_SYNONYMS,
 	                                 SOURCE_SYNONYM_SOURCE_CODE,
 	                                 SOURCE_DEFINITION,
 	                                 SOURCE_SUBSET_CODE,
 	                                 SOURCE_SUBSET_NAME,
+	                                 NCIT_PREFERRED_NAME,
 	                                 NCIT_PREFERRED_TERM,
+	                                 NCIT_DISPLAY_NAME,
 	                                 NCIT_SYNONYMS,
 	                                 NCIT_DEFINITION,
+	                                 NCIT_SUBSET_CODE,
+	                                 NCIT_SUBSET_NAME,
 	                                 MALIGNANCY_STATUS,
 	                                 NCI_METATHESAURUS_CUI,
 	                                 UMLS_CUI
@@ -183,11 +193,19 @@ public class ValueSetFormatter {
     static HashMap vsHeading2VarHashMap = null;
 
 	private String NCITCODE = "ncitCode";
-	private String SOURCEPREFERREDTERM = "sourcePreferredTerm";  //*
-	private String NCITPREFERREDTERM = "ncitPreferredTerm"; //*
+	private String SOURCEPREFERREDTERM = "sourcePreferredTerm";
+	private String NCITPREFERREDTERM = "ncitPreferredTerm";
+	private String NCITPREFERREDNAME = "ncitPreferredName";
+
+	private String NCITSUBSETCODE = "ncitSubsetCode";
+	private String NCITSUBSETNAME = "ncitSubsetName";
+
+	private String SOURCEDISPLAYNAME = "sourceDisplayName";
+	private String NCITDISPLAYNAME = "ncitDisplayName";
+
 	private String NCITSYNONYMS = "ncitSynonyms";
-	private String SOURCESYNONYMS = "sourceSynonyms"; //*
-	private String NCITDEFINITIONS = "ncitDefinitions"; //*
+	private String SOURCESYNONYMS = "sourceSynonyms";
+	private String NCITDEFINITIONS = "ncitDefinitions";
 	private String SOURCEDEFINITIONS = "sourceDefinitions";
 
 	private	ValueSetMetadataUtils vsmdu = null;//new ValueSetMetadataUtils(vsd_service);
@@ -197,21 +215,18 @@ public class ValueSetFormatter {
 		vsHeading2VarHashMap = new HashMap();
 		vsHeading2VarHashMap.put("NCIt Concept Code", "ncitCode");
 		vsHeading2VarHashMap.put("Source Name", "sourcePreferredTerm");
+		vsHeading2VarHashMap.put("Source Display Name", "sourceDisplayName");
 		vsHeading2VarHashMap.put("NCIt Preferred Term", "ncitPreferredTerm");
+		vsHeading2VarHashMap.put("NCIt Preferred Name", "ncitPreferredName");
+		vsHeading2VarHashMap.put("NCIt Subset Code", "ncitSubsetCode");
+		vsHeading2VarHashMap.put("NCIt Subset Name", "ncitSubsetName");
+		vsHeading2VarHashMap.put("NCIt Display Name", "ncitDisplayName");
 		vsHeading2VarHashMap.put("NCIt Synonyms", "ncitSynonyms");
 		vsHeading2VarHashMap.put("Source Synonyms", "sourceSynonyms");
 		vsHeading2VarHashMap.put("NCIt Definition", "ncitDefinitions");
 		vsHeading2VarHashMap.put("Source Definition", "sourceDefinitions");
 	}
 
-/*
-// Default constructor
-	public ValueSetFormatter(String serviceUrl, LexBIGService lbSvc) {
-		this.serviceUrl = serviceUrl;
-		this.lbSvc = lbSvc;
-        this.uiUtils = new UIUtils(lbSvc);
-	}
-*/
 // Constructor
 
     public ValueSetFormatter(String serviceUrl, LexBIGService lbSvc, LexEVSValueSetDefinitionServices vsd_service) {
@@ -297,6 +312,19 @@ public class ValueSetFormatter {
 		return fields;
 	}
 
+    public static Vector getCTRPFields() {
+		Vector fields = new Vector();
+		fields.add(NCIT_SUBSET_CODE);
+		fields.add(NCIT_SUBSET_NAME);
+		fields.add(NCIT_CONCEPT_CODE);
+		fields.add(NCIT_PREFERRED_NAME);
+		fields.add(NCIT_DISPLAY_NAME);
+		fields.add(SOURCE_DISPLAY_NAME);
+		//fields.add(NCIT_SYNONYMS);
+		//fields.add(NCIT_DEFINITION);
+		return fields;
+	}
+
     public static Vector getDefaultFields() {
 		return getDefaultFields(true);
 	}
@@ -358,6 +386,12 @@ public class ValueSetFormatter {
 				 if (!property_names.contains("FULL_SYN")) {
 					 property_names.add("FULL_SYN");
 				 }
+				 if (!property_names.contains("Display_Name")) {
+					 property_names.add("Display_Name");
+				 }
+				 if (!property_names.contains("Preferred_Name")) {
+					 property_names.add("Preferred_Name");
+				 }
 			 } else if (type.endsWith("Definition")) {
 				 if (!property_names.contains("DEFINITION")) {
 					 property_names.add("DEFINITION");
@@ -406,7 +440,6 @@ public class ValueSetFormatter {
 		}
 
 		Vector w = new Vector();
-		//long ms = System.currentTimeMillis();
 		try {
 			CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
 			if (version == null) {
@@ -461,6 +494,7 @@ public class ValueSetFormatter {
 							ResolvedConceptReference ref = rcra[lcv];
 							Entity node = ref.getEntity();
 							String line = csdu.getPropertyValues(node);
+							//C111116|ncit|name$FULL_SYN$Diffusion Weighted MRI$form=SY$source=NCI|name$FULL_SYN$DWI$form=SY$source=CDISC|name$FULL_SYN$Diffusion Weighted Imaging$form=SY$source=CDISC|name$FULL_SYN$Diffusion-Weighted Magnetic Resonance Imaging$form=SY$source=NCI|name$FULL_SYN$Diffusion Weighted Imaging$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$Diffusion Weighted Imaging$form=DN$source=CTRP|name$FULL_SYN$DWI MRI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$DWI-MRI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$DWI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$Diffusion-Weighted MRI$form=SY$source=NCI|name$FULL_SYN$DIFFUSION WEIGHTED MRI$form=PT$source=CDISC|name$FULL_SYN$Diffusion Weighted Imaging$form=PT$source=NCI|name$FULL_SYN$DW-MRI$form=SY$source=CDISC|name$FULL_SYN$Diffusion-Weighted MR Imaging$form=SY$source=NCI|name$FULL_SYN$MR Diffusion-Weighted Imaging$form=SY$source=NCI
 							w.add(line);
 						}
 					}
@@ -472,6 +506,9 @@ public class ValueSetFormatter {
         return w;
     }
 
+
+//C111116|ncit|name$FULL_SYN$Diffusion Weighted MRI$form=SY$source=NCI|name$FULL_SYN$DWI$form=SY$source=CDISC|name$FULL_SYN$Diffusion Weighted Imaging$form=SY$source=CDISC|name$FULL_SYN$Diffusion-Weighted Magnetic Resonance Imaging$form=SY$source=NCI|name$FULL_SYN$Diffusion Weighted Imaging$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$Diffusion Weighted Imaging$form=DN$source=CTRP|name$FULL_SYN$DWI MRI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$DWI-MRI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$DWI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$Diffusion-Weighted MRI$form=SY$source=NCI|name$FULL_SYN$DIFFUSION WEIGHTED MRI$form=PT$source=CDISC|name$FULL_SYN$Diffusion Weighted Imaging$form=PT$source=NCI|name$FULL_SYN$DW-MRI$form=SY$source=CDISC|name$FULL_SYN$Diffusion-Weighted MR Imaging$form=SY$source=NCI|name$FULL_SYN$MR Diffusion-Weighted Imaging$form=SY$source=NCI
+
     public HashMap lineSegment2HashMap(String t) {
 		HashMap hmap = new HashMap();
 		Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(t, "$");
@@ -481,12 +518,14 @@ public class ValueSetFormatter {
 		hmap.put("prop_name", prop_name);
 		String prop_value = (String) w.elementAt(2);
 		hmap.put("prop_value", prop_value);
-		for (int i=3; i<w.size(); i++) {
-			String s = (String) w.elementAt(i);
-			Vector nv = gov.nih.nci.evs.browser.utils.StringUtils.parseData(s, "=");
-			String nm = (String) nv.elementAt(0);
-			String val = (String) nv.elementAt(1);
-			hmap.put(nm, val);
+		if (w.size() > 3) {
+			for (int i=3; i<w.size(); i++) {
+				String s = (String) w.elementAt(i);
+				Vector nv = gov.nih.nci.evs.browser.utils.StringUtils.parseData(s, "=");
+				String nm = (String) nv.elementAt(0);
+				String val = (String) nv.elementAt(1);
+				hmap.put(nm, val);
+			}
 		}
 		return hmap;
 	}
@@ -498,12 +537,32 @@ public class ValueSetFormatter {
 
     public String parseProperty(String line, String type, String source, String fullSynTermName) {
 		if (line == null) return null;
+
+//C111116|ncit|name$FULL_SYN$Diffusion Weighted MRI$form=SY$source=NCI|name$FULL_SYN$DWI$form=SY$source=CDISC|name$FULL_SYN$Diffusion Weighted Imaging$form=SY$source=CDISC|name$FULL_SYN$Diffusion-Weighted Magnetic Resonance Imaging$form=SY$source=NCI|name$FULL_SYN$Diffusion Weighted Imaging$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$Diffusion Weighted Imaging$form=DN$source=CTRP|name$FULL_SYN$DWI MRI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$DWI-MRI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$DWI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$Diffusion-Weighted MRI$form=SY$source=NCI|name$FULL_SYN$DIFFUSION WEIGHTED MRI$form=PT$source=CDISC|name$FULL_SYN$Diffusion Weighted Imaging$form=PT$source=NCI|name$FULL_SYN$DW-MRI$form=SY$source=CDISC|name$FULL_SYN$Diffusion-Weighted MR Imaging$form=SY$source=NCI|name$FULL_SYN$MR Diffusion-Weighted Imaging$form=SY$source=NCI
+
+
 		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line);
 		if (type.compareTo(NCIT_CONCEPT_CODE) == 0) {
 			String code = (String) u.elementAt(0);
 			return code;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		} else if (type.compareTo(SOURCE_DISPLAY_NAME) == 0) {
+			String term_name_found = null;
+            for (int i=0; i<u.size(); i++) {
+				String t = (String) u.elementAt(i);
+				if (t == null) return null;
+				if (t.startsWith("name")) {
+					HashMap hmap = lineSegment2HashMap(t);
+					String form = (String) hmap.get("form");
+					String src = (String) hmap.get("source");
+					if (form != null && form.compareTo("DN") == 0 && src != null && src.compareTo(source) == 0) {
+						String term_name = (String) hmap.get("prop_value");
+						return term_name;
+					}
+				}
+			}
+
 		} else if (type.compareTo(SOURCE_PREFERRED_TERM) == 0) {
 			String term_name_found = null;
             for (int i=0; i<u.size(); i++) {
@@ -544,7 +603,6 @@ public class ValueSetFormatter {
 					}
 				}
 			}
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -632,11 +690,7 @@ public class ValueSetFormatter {
 				s = s.substring(0, s.length()-1);
 			}
 			return s;
-			/*
-		} else if (type.compareTo(SOURCE_SUBSET_CODE) == 0) {
 
-		} else if (type.compareTo(SOURCE_SUBSET_NAME) == 0) {
-            */
 		} else if (type.compareTo(NCIT_PREFERRED_TERM) == 0) {
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
@@ -651,6 +705,34 @@ public class ValueSetFormatter {
 					}
 				}
 			}
+		} else if (type.compareTo(NCIT_PREFERRED_NAME) == 0) {
+            for (int i=0; i<u.size(); i++) {
+				String t = (String) u.elementAt(i);
+				if (t == null) return null;
+				if (t.startsWith("name")) {
+					HashMap hmap = lineSegment2HashMap(t);
+					String prop_name = (String) hmap.get("prop_name");
+					if (prop_name.compareTo("Preferred_Name") == 0) {
+						String term_name = (String) hmap.get("prop_value");
+						return term_name;
+					}
+				}
+			}
+
+		} else if (type.compareTo(NCIT_DISPLAY_NAME) == 0) {
+            for (int i=0; i<u.size(); i++) {
+				String t = (String) u.elementAt(i);
+				if (t == null) return null;
+				if (t.startsWith("name")) {
+					HashMap hmap = lineSegment2HashMap(t);
+					String prop_name = (String) hmap.get("prop_name");
+					if (prop_name.compareTo("Display_Name") == 0) {
+						String term_name = (String) hmap.get("prop_value");
+						return term_name;
+					}
+				}
+			}
+
 		} else if (type.compareTo(NCIT_SYNONYMS) == 0) {
 			Vector syn_vec = new Vector();
             for (int i=0; i<u.size(); i++) {
@@ -666,23 +748,6 @@ public class ValueSetFormatter {
 					}
 				}
 			}
-            /*
-			HashMap hmap = new HashMap();
-			Vector keys = new Vector();
-			Vector values = new Vector();
-			for (int i=0; i<syn_vec.size(); i++) {
-				String syn = (String) syn_vec.elementAt(i);
-				String syn_lower_case = syn.toLowerCase();
-				keys.add(syn_lower_case);
-				hmap.put(syn_lower_case, syn);
-			}
-			keys = new gov.nih.nci.evs.browser.utils.SortUtils().quickSort(keys);
-			for (int i=0; i<keys.size(); i++) {
-				String key = (String) keys.elementAt(i);
-				String value = (String) hmap.get(key);
-				values.add(value);
-			}
-			*/
             Vector values  = new gov.nih.nci.evs.browser.utils.SortUtils().caseInsensitiveSort(syn_vec);
 			StringBuffer buf = new StringBuffer();
             for (int i=0; i<values.size(); i++) {
@@ -730,6 +795,9 @@ public class ValueSetFormatter {
 					}
 				}
 			}
+
+
+
 		} else if (type.compareTo(NCI_METATHESAURUS_CUI) == 0 || type.compareTo("NCI_META_CUI") == 0) {
             for (int i=0; i<u.size(); i++) {
 				String t = (String) u.elementAt(i);
@@ -846,7 +914,7 @@ public class ValueSetFormatter {
 			if (w == null) return null;
 			if (w.size() == 1) {
 				String hyperlink = value;
-				if (key.compareTo(NCIT_CONCEPT_CODE) == 0) {
+				if (key.compareTo(NCIT_CONCEPT_CODE) == 0 || key.compareTo(NCIT_SUBSET_CODE) == 0) {
 					String code = value;
 					hyperlink = getHyperlink(code);
 				}
@@ -923,7 +991,7 @@ public class ValueSetFormatter {
 		return generate(vsd_uri, version, source, fields, codes, MAX_RETURN);
 	}
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public String generate(String vsd_uri, String version, String source, Vector fields, Vector codes, int maxReturn) {
         String fullSynTermName = null;
 		if (source != null && source.compareTo(CDISC) == 0) {
@@ -933,12 +1001,12 @@ public class ValueSetFormatter {
 		    }
 		}
 
-String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
-Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
-String defaultCodingScheme = (String) u.elementAt(6);
-if (defaultCodingScheme.compareTo("ncit") == 0) {
-	defaultCodingScheme = "NCI_Thesaurus";
-}
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+		String defaultCodingScheme = (String) u.elementAt(6);
+		if (defaultCodingScheme.compareTo("ncit") == 0) {
+			defaultCodingScheme = "NCI_Thesaurus";
+		}
 
 		if (codes == null) {
 		    codes = csdu.getCodesInValueSet(serviceUrl, vsd_uri);
@@ -946,11 +1014,15 @@ if (defaultCodingScheme.compareTo("ncit") == 0) {
         StringBuffer buf = new StringBuffer();
 		Vector w = resolve(defaultCodingScheme, version, source, fields, codes, maxReturn);
 
-		HashMap fieldValueHmap = new HashMap();
+        HashMap fieldValueHmap = new HashMap();
+		Entity e = null;
+		if (fields.contains(NCIT_SUBSET_CODE)) {
+			e = getValueSetHeaderConcept(vsd_uri);
+			if (e != null) fieldValueHmap.put(NCIT_SUBSET_CODE, e.getEntityCode());
+		}
+
         //[NCITERM-759] Term Browser: Rel 2.10: Values page table is formatted incorrectly
 		buf.append("<table class=\"datatable_960\">").append("\n");
-
-		//buf.append("<table width=\"900\">");
 		for (int k=0; k<fields.size(); k++) {
 			String field = (String) fields.elementAt(k);
 			buf.append("<th class=\"textbody\" align=\"left\">").append("\n");
@@ -962,14 +1034,19 @@ if (defaultCodingScheme.compareTo("ncit") == 0) {
 			buf.append(field).append("\n");
 			buf.append("</th>").append("\n");
 		}
+
+		if (fields.contains(NCIT_SUBSET_NAME)) {
+			if (e != null) fieldValueHmap.put(NCIT_SUBSET_NAME, e.getEntityDescription().getContent());
+		}
+
 		for (int i=0; i<w.size(); i++) {
-			//int j = i+1;
 			String line = (String) w.elementAt(i);
 			for (int k=0; k<fields.size(); k++) {
 				String type = (String) fields.elementAt(k);
-				//String value = parseProperty(line, type, source);
-				String value = parseProperty(line, type, source, fullSynTermName);
-				fieldValueHmap.put(type, value);
+				if (type.compareTo(NCIT_SUBSET_CODE) != 0 && type.compareTo(NCIT_SUBSET_NAME) != 0) {
+					String value = parseProperty(line, type, source, fullSynTermName);
+					fieldValueHmap.put(type, value);
+				}
 			}
 			boolean isEven = UIUtils.isEven(i);
 			String formatted_line = formatLine(fields, fieldValueHmap, isEven, fullSynTermName);
@@ -1123,6 +1200,7 @@ if (defaultCodingScheme.compareTo("ncit") == 0) {
 		return w;
 	}
 
+//to be modified
     public ValueSet instantiateValueSet(String vsd_uri, String version, Vector fields) {
 		Vector vs_data = export(vsd_uri, version, fields);
 		ValueSet vs = new ValueSet();
@@ -1180,18 +1258,19 @@ if (defaultCodingScheme.compareTo("ncit") == 0) {
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
 		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+
 		String defaultCodingScheme = (String) u.elementAt(6);
 		boolean non_ncit_source = true;
 		if (supported_source == null || supported_source.compareTo("null") == 0 || supported_source.compareTo("NCI") == 0) {
 			non_ncit_source = false;
 		}
+
+		String supportedsources = (String) u.elementAt(4);
 		if (codes == null) {
 			codes = new Vector();
 			ResolvedConceptReferencesIterator rcri = null;
 			boolean resolveObjects = false;
 			try {
-				//rcri = csdu.resolveCodingScheme(vsd_uri, null, resolveObjects);
-
     			rcri = csdu.resolveValueSet(serviceUrl, defaultCodingScheme, vsd_uri, null, resolveObjects);
 
 			} catch (Exception ex) {
@@ -1199,7 +1278,6 @@ if (defaultCodingScheme.compareTo("ncit") == 0) {
 			}
 			if (rcri != null) {
 				try {
-					//int numberRemaining = rcri.numberRemaining();
 					while (rcri.hasNext()) {
 						rcri = rcri.scroll(maxToReturn);
 						ResolvedConceptReferenceList rcrl = rcri.getNext();
@@ -1215,12 +1293,11 @@ if (defaultCodingScheme.compareTo("ncit") == 0) {
 				}
 			}
 		}
-		/*
-		ValueSetFormatter formatter = new ValueSetFormatter(lbSvc, vsd_service);
-		Vector fields = formatter.getDefaultFields(non_ncit_source);
-		rvs_tbl = formatter.generate(defaultCodingScheme, null, supported_source, fields, codes, codes.size());
-		*/
+
 		Vector fields = getDefaultFields(non_ncit_source);
+		if (supported_source != null && supported_source.compareTo(CTRP) == 0) {
+			fields = getCTRPFields();
+		}
 		rvs_tbl = generate(vsd_uri, null, supported_source, fields, codes, codes.size());
 		return rvs_tbl;
 	}
@@ -1295,6 +1372,22 @@ if (defaultCodingScheme.compareTo("ncit") == 0) {
 	    Utils.saveToFile(outputfile, u);
 	}
 
+    public Entity getValueSetHeaderConcept(String vsd_uri) {
+		Entity e = null;
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+		String defaultCodingScheme = (String) u.elementAt(6);
+		if (defaultCodingScheme.compareTo("ncit") == 0) {
+			defaultCodingScheme = "NCI_Thesaurus";
+		}
+		int n = vsd_uri.lastIndexOf("/");
+		if (n != -1) {
+			String code = vsd_uri.substring(n+1, vsd_uri.length());
+			e = cd.getConceptByCode(defaultCodingScheme, null, code, null, false);
+		}
+		return e;
+	}
+
 	public static void main(String[] args) {
 		String serviceUrl = null;
 		LexBIGService lbSvc = null;//RemoteServerUtil.createLexBIGService();
@@ -1303,6 +1396,7 @@ if (defaultCodingScheme.compareTo("ncit") == 0) {
 		ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
 		String vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C67154";
 		vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C66731";
+
 /*
 		System.out.println(vsd_uri);
 
@@ -1342,9 +1436,9 @@ if (defaultCodingScheme.compareTo("ncit") == 0) {
 		System.out.println(defaultCodingScheme);
 */
 
+/*
 	    String rvs_tbl = formatter.get_rvs_tbl(vsd_uri);
 	    Vector u = new Vector();
-
 	    u.add("<html>");
 	    u.add("<head>");
 	    u.add("</head>");
@@ -1352,7 +1446,7 @@ if (defaultCodingScheme.compareTo("ncit") == 0) {
 	    u.add(rvs_tbl);
 	    u.add("</body>");
 	    u.add("</html>");
-	    Utils.saveToFile("VS_C66731_02052018_v2.html", u);
-
+	    Utils.saveToFile("VS_C66731.html", u);
+*/
 	}
 }

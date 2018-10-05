@@ -105,7 +105,6 @@ String next_page_num_str = Integer.toString(next_page_num);
               <option value="<%=resultsPerPageValue%>"><%= resultsPerPageValue %></option>
               <%
             }
-
           }
           %>
         </select>

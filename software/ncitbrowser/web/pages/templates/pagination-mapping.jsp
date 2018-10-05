@@ -94,7 +94,6 @@
               <option value="<%=resultsPerPageValue%>"><%= resultsPerPageValue %></option>
               <%
             }
-
           }
           %>
         </select>

@@ -2350,43 +2350,40 @@ out.flush();
 				if (filename != null) {
 					filename = filename.trim();
 				}
+				System.out.println("Released file: " + filename);
 
-                 if (!DataUtils.isNull(filename) && filename.length() > 0) {
+                if (!DataUtils.isNull(filename) && filename.length() > 0) {
 					ResolvedValueSetIteratorHolder rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
 					request.getSession().setAttribute("rvsi", rvsi);
 
 					String content = getResolvedValueSetContent(rvsi);
 
-
-      out.println("            <div class=\"pagecontent\">");
-      out.println("               <a name=\"evs-content\" id=\"evs-content\"></a>");
-      out.println("                  <div class=\"tabTableContentContainer\">");
-      out.println("");
-      out.println("                  <div class=\"table-scroll\">");
-      //out.println("	                 <div class=\"table-wrap\">");
-
+					out.println("            <div class=\"pagecontent\">");
+					out.println("               <a name=\"evs-content\" id=\"evs-content\"></a>");
+					out.println("                  <div class=\"tabTableContentContainer\">");
+					out.println("");
+					out.println("                  <div class=\"table-scroll\">");
 
 					writeExportForm(out, vsd_uri);
-					//out.println("<div class=\"tabTableContentContainer\">");
-
 					out.println("<table border=\"0\" width=\"900\" role='presentation'>");
 					out.println("	<tr><td>");
 					out.println("	<div style=\"float:left;width:360px;\">");
 
-				if (content != null) {
-					out.println(content);
-				} else {
-					out.println("ERROR: Unable to generate value set tree.");
-				}
+					if (content != null) {
+						out.println(content);
+					} else {
+						out.println("ERROR: Unable to generate value set tree.");
+					}
 
 					out.println("	</div>");
 					out.println("	</td></tr>");
 					out.println("</table>");
 
 					out.println("</div></div>");
-					//out.println("</div>");
 			    }
 			}
+		} else {
+			System.out.println("No released file content.");
 		}
 
       out.flush();
@@ -3585,7 +3582,6 @@ out.flush();
 
       out.println("");
       out.println("        </div> <!-- popupContentArea -->");
-
 
       out.println("");
       out.println("");

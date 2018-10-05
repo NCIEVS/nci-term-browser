@@ -46,7 +46,7 @@
   Integer curr_sort_category = null;
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
   <title>NCI Term Browser</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

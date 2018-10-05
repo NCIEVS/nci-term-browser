@@ -1919,6 +1919,7 @@ response.setContentType("text/html;charset=utf-8");
         if (matchAlgorithm == null || matchAlgorithm.length() == 0) {
 			matchAlgorithm = "exactMatch";
 		}
+		System.out.println("adv_search_algorithm: " + matchAlgorithm);
         bean.setAlgorithm(matchAlgorithm);
 
         String source = HTTPUtils.cleanXSS((String) request.getParameter("adv_search_source"));

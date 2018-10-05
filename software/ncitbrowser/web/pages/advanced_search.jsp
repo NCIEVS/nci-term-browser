@@ -536,7 +536,7 @@
                               <td align="left" class="textbody">
                                 <input
                                     type="radio"
-                                    id="contains"
+                                    id="adv_contains"
                                     name="adv_search_algorithm"
                                     value="contains"
                                     alt="Contains"
@@ -544,10 +544,10 @@
                                     tabindex="4"
                                     onclick="refresh_algorithm()";>
 
-                                <label for="contains">Contains</label>
+                                <label for="adv_contains">Contains</label>
                                 <input
                                     type="radio"
-                                    id="exactMatch"
+                                    id="adv_exactMatch"
                                     name="adv_search_algorithm"
                                     value="exactMatch"
                                     alt="Exact Match"
@@ -555,10 +555,10 @@
                                     tabindex="5"
                                     onclick="refresh_algorithm()";>
 
-                                <label for="exactMatch">Exact Match&nbsp;</label>
+                                <label for="adv_exactMatch">Exact Match&nbsp;</label>
                                 <input
                                     type="radio"
-                                    id="startsWith"
+                                    id="adv_startsWith"
                                     name="adv_search_algorithm"
                                     value="startsWith"
                                     alt="Begins With"
@@ -566,7 +566,7 @@
                                     tabindex="6"
                                     onclick="refresh_algorithm()";>
 
-                                <label for="startsWith">Begins With&nbsp;</label>
+                                <label for="adv_startsWith">Begins With&nbsp;</label>
                                 <input
                                     type="radio"
                                     id="Lucene"

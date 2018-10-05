@@ -1,5 +1,6 @@
 package gov.nih.nci.evs.browser.utils;
 
+//aria-labelledby=
 
 import gov.nih.nci.evs.browser.bean.*;
 import gov.nih.nci.evs.browser.common.*;
@@ -1028,7 +1029,7 @@ if (m != -1) {
 
 			if (label_1.length() > 0) {
 
-				buf.append("\t<input type=\"checkbox\" id=\"" + label + "\"  name=\"" + label + "\" >" + displayed_label + "</input>\n");
+				buf.append("\t<input type=\"checkbox\" aria-labelledby=\"" + label + "\" id=\"" + label + "\"  name=\"" + label + "\" >" + displayed_label + "</input>\n");
 				buf.append("\t</td>");
 				buf.append("\t<td class=\"dataCellText\">\n");
 		    }
@@ -1041,7 +1042,7 @@ if (m != -1) {
 			}
 
             if (label_2.length() > 0) {
-				buf.append("\t<input type=\"checkbox\" id=\"" + label + "\"  name=\"" + label + "\" >" + displayed_label + "</input>\n");
+				buf.append("\t<input type=\"checkbox\" aria-labelledby=\"" + label + "\" id=\"" + label + "\"  name=\"" + label + "\" >" + displayed_label + "</input>\n");
 				buf.append("\t</td>\n");
 				buf.append("</tr>\n");
 		    }

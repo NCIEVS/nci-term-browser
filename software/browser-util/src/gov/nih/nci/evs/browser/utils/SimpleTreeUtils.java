@@ -372,7 +372,7 @@ public class SimpleTreeUtils {
 				pw.println("<img src=\"" + basePath + "images/minus.gif\" id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
 					+ getTabIndex()
 					+ ">"
-					+ "<input type=\"checkbox\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
+					+ "<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
 					+ " " + getTabIndex()
 					+ " " + getCheckBoxStatus(ti._code)
 					+ ">"
@@ -403,7 +403,7 @@ public class SimpleTreeUtils {
 			if (CHECKBOX_OPTION) {
 				pw.println("<img src=\"" + basePath + "images/dot.gif\" id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
 				+ ">"
-				+ "<input type=\"checkbox\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
+				+ "<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
 				+ " " + getTabIndex()
 				+ " " + getCheckBoxStatus(ti._code)
 				+ ">"
@@ -438,7 +438,7 @@ public class SimpleTreeUtils {
 				v.add("<img src=\"" + basePath + "images/minus.gif\" id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
 					+ getTabIndex()
 					+ ">"
-					+ "<input type=\"checkbox\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
+					+ "<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
 					+ " " + getTabIndex()
 					+ ">"
 					+ getHyperLink(ti));
@@ -468,7 +468,7 @@ public class SimpleTreeUtils {
 			if (CHECKBOX_OPTION) {
 				v.add("<img src=\"" + basePath + "images/dot.gif\" id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
 				+ ">"
-				+ "<input type=\"checkbox\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
+				+ "<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
 				+ " " + getTabIndex()
 				+ ">"
 				+ getHyperLink(ti));

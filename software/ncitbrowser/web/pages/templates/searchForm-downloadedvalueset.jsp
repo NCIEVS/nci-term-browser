@@ -53,7 +53,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
 
   <input type="hidden" name="resolvedValueSetSearchForm" value="resolvedValueSetSearchForm" />
 
-  <input
+  <input aria-labelledby="Match Text" 
       CLASS="searchbox-input"
       id="matchText"
       name="matchText"
@@ -64,7 +64,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
       tabindex="1"
   />
 
-  <input
+  <input aria-labelledby="Search" 
       id="resolvedValueSetSearchForm:resolvedvalueset_search"
       type="image"
       src="/ncitbrowser/images/search.gif"

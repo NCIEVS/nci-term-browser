@@ -230,6 +230,7 @@ public static final String ANSWER = "answer";
                 <td class="textbody">
                   <%= answer_label %>:
                   <i style="color:#FF0000;">*</i>
+<label for="answer">Answer</label>                  
                   <input type="text" id="answer" name="answer" value="<%=HTTPUtils.cleanXSS(answer)%>" />&nbsp;
                 </td>
               </tr>
@@ -252,7 +253,8 @@ public static final String ANSWER = "answer";
             <i>Subject of your email:</i>
             <i style="color:#FF0000;">*</i>
           </p>
-          <input
+      
+          <input aria-labelledby="Subject" 
               class="textbody"
               size="100"
               name="subject"
@@ -261,17 +263,17 @@ public static final String ANSWER = "answer";
               onFocus="active = true"
               onBlur="active = false"
               onKeyPress="return ifenter(event,this.form)">
-
           <p>
             <i>Detailed description of your problem or suggestion (no attachments):</i>
             <i style="color:#FF0000;">*</i>
           </p>
+<label for="<%= EMAIL_MSG %>"><%= EMAIL_MSG %></label>
           <TEXTAREA class="textbody" Name="<%= EMAIL_MSG %>" rows="4" cols="98"><%= message %></TEXTAREA>
           <p>
             <i>Your e-mail address:</i>
             <i style="color:#FF0000;">*</i>
           </p>
-          <input
+          <input aria-labelledby="Email Address" 
               class="textbody"
               size="100"
               name="<%= EMAIL_ADDRESS %>"

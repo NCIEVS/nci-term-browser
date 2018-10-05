@@ -208,7 +208,8 @@ if (display_release_date) {
 
 %>
 <div class="search-form">
-  <input CLASS="searchbox-input"
+  <input aria-labelledby="Match Text" 
+    CLASS="searchbox-input"
     name="matchText"
     value="<%=termbrowser_displayed_match_text%>"
     onFocus="active = true"
@@ -246,9 +247,9 @@ String algorithm = gov.nih.nci.evs.browser.utils.HTTPUtils.cleanXSS((String) req
   <table border="0" cellspacing="0" cellpadding="0">
     <tr valign="top" align="left">
       <td align="left" class="textbody">
-        <input type="radio" name="algorithm" value="contains" alt="Contains" <%=check_c%> tabindex="4">Contains&nbsp;
-        <input type="radio" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="4">Exact Match&nbsp;
-        <input type="radio" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="4">Begins With&nbsp;
+        <input type="radio" id="contains" name="algorithm" value="contains" alt="Contains" <%=check_c%> tabindex="4"><label for="contains">Contains&nbsp;</label>
+        <input type="radio" id="exactmatch" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="4"><label for="exactmatch">Exact Match&nbsp;</label>
+        <input type="radio" id="startswith" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="4"><label for="startswith">Begins With&nbsp;</label>
         <%
           String searchTarget = (String) request.getSession().getAttribute("searchTarget");
           String check_n = "", check_cd = "", check_p = "" , check_r ="";
@@ -268,10 +269,10 @@ String algorithm = gov.nih.nci.evs.browser.utils.HTTPUtils.cleanXSS((String) req
     </tr>
     <tr valign="top" align="left">
       <td align="left" class="textbody">
-        <input type="radio" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="5">Name&nbsp;
-        <input type="radio" name="searchTarget" value="names" alt="Names" <%=check_cd%> tabindex="5">Code&nbsp;
-        <input type="radio" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="5">Property&nbsp;
-        <input type="radio" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="5">Relationship&nbsp;
+        <input type="radio" id="names" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="5"><label for="names">Name</label>
+        <input type="radio" id="codes" name="searchTarget" value="codes" alt="Names" <%=check_cd%> tabindex="5"><label for="codes">Code&nbsp;</label>
+        <input type="radio" id="properties" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="5"><label for="properties">Property&nbsp;</label>
+        <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="5"><label for="relationships">Relationship&nbsp;</label>
       </td>
     </tr>
   </table>
@@ -409,9 +410,7 @@ if (mapping_scheme_and_version.compareTo("") == 0 && mapping_cs_knt == 1) {
 }
 %>
 
-    <input type="radio" name="scheme_and_version" value="<%=scheme%>$<%=version%>" <%=checkedStr%> tabinex="1" />
-
-
+    <input type="radio" id="scheme_and_version" name="scheme_and_version" value="<%=scheme%>$<%=version%>" <%=checkedStr%> tabinex="1" /><label for="scheme_and_version"><%=scheme%>$<%=version%></label>
 
 
 				    <a href="<%= request.getContextPath() %>/pages/vocabulary.jsf?dictionary=<%=http_scheme%>&version=<%=http_version%>">

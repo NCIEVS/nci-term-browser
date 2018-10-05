@@ -71,7 +71,7 @@ if (iend_int > match_size_int) {
       </tr>
       <tr>
         <td class="textbody" align=left>
-          Show
+          <label for="resultsPerPage">Show</label>
           <select name=resultsPerPage size=1 onChange="paginationForm.submit();">
             <%
             List resultsPerPageValues = UserSessionBean.getResultsPerPageValues();

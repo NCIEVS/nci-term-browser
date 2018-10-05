@@ -182,7 +182,7 @@ else
 check_r = "checked";
 %>
 <h:form id="searchTerm" styleClass="search-form" onsubmit="javascript:disableAnchor();" acceptcharset="UTF-8">
-  <input
+  <input aria-labelledby="Match Text" 
       CLASS="searchbox-input"
       id="matchText"
       name="matchText"
@@ -220,9 +220,7 @@ check_r = "checked";
             id="contains"
             name="algorithm"
             value="contains"
-             
             alt="Contains"
-             
              <%=check_c%>
             tabindex="4"
             onclick="onAlgorithmChanged('searchTerm');">

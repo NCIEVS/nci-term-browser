@@ -99,7 +99,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
           />
         <% } else { %>
 
-          <input
+          <input aria-labelledby="Match Text" 
               CLASS="searchbox-input-2"
               name="matchText"
               value="<%=_valueset_match_text%>"
@@ -178,7 +178,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
 
           <tr valign="top" align="left">
             <td align="left" class="textbody">
-              <input
+              <input 
                   type="radio"
                   id="selectValueSetSearchOption"
                   name="selectValueSetSearchOption"
@@ -187,7 +187,6 @@ if (_valueset_match_text == null) _valueset_match_text = "";
                   alt="Code"
                   tabindex="8"
                   onclick="javascript:refresh()">
-
               <label for="codes">Code&nbsp;</label>
               <input
                   type="radio"
@@ -209,8 +208,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
                   alt="Source"
                   tabindex="10"
                   onclick="javascript:refresh()">
-
-Source&nbsp;
+              <label for="source">Source&nbsp;</label>
               <input
                   type="radio"
                   id="selectValueSetSearchOption"
@@ -220,11 +218,9 @@ Source&nbsp;
                   alt="Coding Scheme"
                   tabindex="11"
                   onclick="javascript:refresh()">
-
-Terminology
+              <label for="CodingScheme">Coding Scheme&nbsp;</label>
             </td>
           </tr>
-
         </table>
       </td>
     </tr>

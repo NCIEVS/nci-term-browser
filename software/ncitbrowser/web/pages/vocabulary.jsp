@@ -183,7 +183,9 @@ String evs_service_url = DataUtils.getEVSServiceURL();
               <div class="pagecontent">
                 <a name="evs-content" id="evs-content" tabindex="1"></a>
                 <p><%= helper.getReviewAndAcceptMessage() %></p>
-                <textarea cols="87" rows="15" readonly align="left"><%= helper.getLicenseMessages(87) %></textarea>
+                
+<label for="license_stmt">License Statement</label>                
+                <textarea cols="87" name="license_msg" rows="15" readonly align="left"><%= helper.getLicenseMessages(87) %></textarea>
                 <p><%= helper.getButtonMessage() %></p>
                 <p>
                   <h:form>

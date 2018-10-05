@@ -510,7 +510,7 @@
                     <table role='presentation'>
                       <tr>
                         <td>
-                          <input
+                          <input aria-labelledby="Match Text" 
                               CLASS="searchbox-input"
                               name="matchText"
                               value="<%=HTTPUtils.cleanXSS(search_string)%>"
@@ -589,7 +589,7 @@
                         <tr>
                           <td>
                             <h:outputLabel id="rel_search_source_Label" value="Source" styleClass="textbody">
-                              <select id="adv_search_source" name="adv_search_source" size="1" tabindex="8">
+                              <select id="adv_search_source" name="adv_search_source" size="1" aria-labelledby="Select Source" tabindex="8">
                                 <%
                                 Vector src_vec = OntologyBean.getSupportedSources(adv_search_vocabulary, adv_search_version);
                                 t = "ALL";
@@ -718,7 +718,7 @@
                                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                 <td>
                                   <h:outputLabel id="selectPropertyLabel" value="Select one:" styleClass="textbody">
-                                    <select id="selectProperty" name="selectProperty" size="1" tabindex="13">
+                                    <select id="selectProperty" name="selectProperty" size="1" aria-labelledby="Select Property" tabindex="13">
                                       <%
                                       t = "ALL";
                                       if (t.compareTo(selectProperty) == 0) {
@@ -760,7 +760,7 @@
                                             value="Select one:"
                                             styleClass="textbody">
 
-                                          <select id="rel_search_association" name="rel_search_association" size="1">
+                                          <select id="rel_search_association" name="rel_search_association" aria-labelledby="Select Association" size="1">
                                             <%
                                             t = "ALL";
                                             if (t.compareTo(rel_search_association) == 0) {

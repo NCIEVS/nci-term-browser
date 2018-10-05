@@ -43,7 +43,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
 %>
 
 <h:form id="resolvedValueSetSearchForm" styleClass="search-form" acceptcharset="UTF-8">
-  <input
+  <input aria-labelledby="Match Text" 
       CLASS="searchbox-input"
       id="matchText"
       name="matchText"

@@ -385,7 +385,7 @@
                       <tr valign="top" align="left">
                         <td align="left" class="textbody">
 
-                          <input
+                          <input aria-labelledby="Match Text" 
                               CLASS="searchbox-input-2"
                               name="matchText"
                               value="<%=matchText%>"
@@ -395,7 +395,7 @@
                               tabindex="1"
                           />
 
-                          <input
+                          <input aria-labelledby="Search" 
                               id="valueSetSearchForm:valueset_search"
                               type="image"
                               src="/ncitbrowser/images/search.gif"

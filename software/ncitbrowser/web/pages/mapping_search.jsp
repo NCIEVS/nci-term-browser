@@ -261,7 +261,7 @@ Integer curr_sort_category = null;
                 searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbrowser//ncitbrowser", "//ncitbrowser");
                 %>
                 <div class="search-form">
-                  <input
+                  <input aria-labelledby="Match Text"
                       CLASS="searchbox-input"
                       name="matchText"
                       value="<%=termbrowser_displayed_match_text%>"
@@ -325,8 +325,7 @@ Integer curr_sort_category = null;
                             <%=check_c%>
                             tabindex="4"
                             onclick="onAlgorithmChanged('mappingSearch');">
-
-Contains&nbsp;
+                        <label for="contains">Contains&nbsp;</label>
                         <input
                             type="radio"
                             id="exactMatch"
@@ -335,7 +334,6 @@ Contains&nbsp;
                             alt="Exact Match"
                             <%=check_e%>
                             tabindex="5">
-
                         <label for="exactMatch">Exact Match&nbsp;</label>
                         <input
                             type="radio"
@@ -346,7 +344,6 @@ Contains&nbsp;
                             <%=check_s%>
                             tabindex="6"
                             onclick="onAlgorithmChanged('mappingSearch');">
-
                         <label for="startsWith">Begins With&nbsp;</label>
                         <%
                         String searchTarget = (String) request.getSession().getAttribute("searchTarget");
@@ -375,7 +372,6 @@ Contains&nbsp;
                             alt="Names"
                             <%=check_n%>
                             tabindex="7">
-
                         <label for="names">Name&nbsp;</label>
                         <input
                             type="radio"
@@ -524,17 +520,15 @@ Contains&nbsp;
                                 }
                                 %>
 
-                                <input
+                                <input aria-labelledby="<%=scheme%>$<%=version%>" 
                                     type="radio"
                                     name="scheme_and_version"
                                     value="<%=scheme%>$<%=version%>"
                                     <%=checkedStr%>
                                     tabinex="1"
                                 />
-
                                 <a
                                     href="<%= request.getContextPath() %>/pages/vocabulary.jsf?dictionary=<%=http_scheme%>&version=<%=http_version%>">
-
                                   <%= display_label %>
                                 </a>
 

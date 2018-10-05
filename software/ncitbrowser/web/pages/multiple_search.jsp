@@ -507,15 +507,14 @@ request.getSession().removeAttribute("m");
                                         %>
 
                                         <%= indent %>
-                                        <input
+                                        <input aria-labelledby="<%=label%>" 
                                             type="checkbox"
                                             name="ontology_list"
                                             value="<%=label%>"
                                             <%=checkedStr%>
                                         />
-
+                                        
                                         <%
-                                        //String full_name = DataUtils.getMetadataValue(scheme, version, "full_name");
                                         String full_name = DataUtils.getMetadataValue(DataUtils.getFormalName(scheme), version, "full_name");
                                         if (full_name == null || full_name.compareTo("null") == 0) {
                                           full_name = scheme;

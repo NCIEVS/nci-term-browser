@@ -134,7 +134,6 @@
                               <% } else { %>
                                 <tr class="dataRowLight">
                                 <% } %>
-
                                 <td scope="row">
                                   <input
                                       type="radio"
@@ -143,12 +142,11 @@
                                       <%=checked%>
                                       tabinex="1"
                                   />
+                                  <label for="<%=cs_name%>"><%=cs_name%></label>
                                 </td>
-
                                 <td class="dataCellText"><%= displayed_cs_name %></td>
                                 <td class="dataCellText"><%= cs_version %></td>
                                 <td class="dataCellText"><%= cs_tag %></td>
-
                               </tr>
 
                               <%

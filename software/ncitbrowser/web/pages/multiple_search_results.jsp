@@ -134,7 +134,7 @@
                 </div>
                 <div class="searchbox">
                   <div class="search-form">
-                    <input
+                    <input aria-labelledby="Match Text" 
                         CLASS="searchbox-input"
                         name="matchText"
                         type="text"
@@ -143,14 +143,13 @@
                         onBlur="active = false"
                         onkeypress="return submitEnter('searchTerm:search',event);"
                     />
-&nbsp;
+                    &nbsp;
                     <h:commandButton
                         id="search"
                         value="Search"
                         action="#{userSessionBean.multipleSearchAction}"
                         image="#{requestContextPath}/images/search.gif"
                         alt="Search">
-
                     </h:commandButton>
                     <h:outputLink value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp">
                       <h:graphicImage value="/images/search-help.gif" alt="Search Help" style="border-width:0;" />
@@ -161,17 +160,13 @@
                           <input
                               type="radio"
                               id="contains"
-                               
                               name="algorithm"
                               value="contains"
-                               
                               alt="Contains"
-                               
-                               <%=check_c%>
+                              <%=check_c%>
                               tabindex="1"
                               onclick="onAlgorithmChanged('searchTerm');">
-
-Contains&nbsp;
+                          <label for="contains">Contains&nbsp;</label>
                           <input
                               type="radio"
                               id="exactMatch"

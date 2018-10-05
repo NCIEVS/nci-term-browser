@@ -407,14 +407,14 @@
 
                   <h:form id="resolvedValueSetSearchForm" styleClass="search-form" acceptcharset="UTF-8">
                     <div class="textbody">
-                      <input
+                      <input aria-labelledby="Match Text" 
                           CLASS="searchbox-input"
                           id="matchText"
                           name="matchText"
                           value="<%=match_text%>"
                           onFocus="active=true"
                           onBlur="active=false"
-                           onkeypress="return submitEnter('resolvedValueSetSearchForm:resolvedvalueset_search',event)"
+                          onkeypress="return submitEnter('resolvedValueSetSearchForm:resolvedvalueset_search',event)"
                           tabindex="1"
                       />
                       <h:commandButton
@@ -557,7 +557,7 @@
                       <tr valign="top" align="left">
                         <td align="left" class="textbody">
                           <% if (selectValueSetSearchOption.compareTo("CodingScheme") == 0) { %>
-                            <input
+                            <input aria-labelledby="Match Text"
                                 CLASS="searchbox-input-2"
                                 name="matchText"
                                 value=""
@@ -566,7 +566,7 @@
                                 tabindex="10"
                             />
                           <% } else { %>
-                            <input
+                            <input aria-labelledby="Match Text"
                                 CLASS="searchbox-input-2"
                                 name="matchText"
                                 value="<%=valueset_match_text%>"
@@ -837,12 +837,13 @@
                                       <%
                                     }
                                     if (vsd_vec != null && vsd_vec.size() > 1) {
+                                       String radio_btn_id = "valueset" + "_" + i; 
                                       %>
                                       <td scope="row">
                                         <% if (i == 0) { %>
-                                          <input type=radio name="valueset" value="<%=uri%>" checked></input>&nbsp;
+                                          <input type=radio id="<%=radio_btn_id%>" name="valueset" value="<%=uri%>" checked></input>&nbsp;<label for="<%=radio_btn_id%>"><%=uri%></label>  
                                         <% } else { %>
-                                          <input type=radio name="valueset" value="<%=uri%>"></input>&nbsp;
+                                          <input type=radio id="<%=radio_btn_id%>" name="valueset" value="<%=uri%>"></input>&nbsp;<label for="<%=radio_btn_id%>"><%=uri%></label>
                                         <% } %>
                                       </td>
                                     <% } %>

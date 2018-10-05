@@ -10,7 +10,7 @@ String searchform_requestContextPath = request.getContextPath();
 searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbrowser//ncitbrowser", "//ncitbrowser");
 %>
 <div class="search-form">
-  <input
+  <input aria-labelledby="Match Text" 
       CLASS="searchbox-input"
       name="matchText"
       value="<%=termbrowser_displayed_match_text%>"
@@ -42,15 +42,6 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
   String algorithm = gov.nih.nci.evs.browser.utils.HTTPUtils.cleanXSS((String) request.getSession().getAttribute("algorithm"));
 
   String check_e = "", check_s = "" , check_c ="";
-  /*
-  if (algorithm == null || algorithm.compareTo("exactMatch") == 0)
-  check_e = "checked";
-  else if (algorithm.compareTo("startsWith") == 0)
-  check_s= "checked";
-  else
-  check_c = "checked";
-  */
-
   if (algorithm == null || algorithm.compareTo("contains") == 0)
   check_c = "checked";
   else if (algorithm.compareTo("startsWith") == 0)
@@ -70,8 +61,7 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
             <%=check_c%>
             tabindex="4"
             onclick="onAlgorithmChanged('searchTerm');">
-
-Contains&nbsp;
+        <label for="contains">Contains&nbsp;</label>    
         <input
             type="radio"
             id="exactMatch"
@@ -80,7 +70,6 @@ Contains&nbsp;
             alt="Exact Match"
             <%=check_e%>
             tabindex="5">
-
         <label for="exactMatch">Exact Match&nbsp;</label>
         <input
             type="radio"
@@ -91,7 +80,6 @@ Contains&nbsp;
             <%=check_s%>
             tabindex="6"
             onclick="onAlgorithmChanged('searchTerm');">
-
         <label for="startsWith">Begins With&nbsp;</label>
         <%
         String searchTarget = (String) request.getSession().getAttribute("searchTarget");

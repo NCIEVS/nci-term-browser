@@ -494,7 +494,7 @@
                     <table role='presentation'>
                       <tr>
                         <td>
-                          <input
+                          <input aria-labelledby="Match Text"
                               CLASS="searchbox-input"
                               name="matchText"
                               value="<%=HTTPUtils.cleanXSS(search_string)%>"
@@ -527,7 +527,6 @@
                                     <%=check__c%>
                                     tabindex="4"
                                     onclick="refresh_algorithm()";>
-
                                 <label for="contains">Contains</label>
                                 <input
                                     type="radio"
@@ -538,7 +537,6 @@
                                     <%=check__e%>
                                     tabindex="5"
                                     onclick="refresh_algorithm()";>
-
                                 <label for="exactMatch">Exact Match&nbsp;</label>
                                 <input
                                     type="radio"
@@ -549,13 +547,10 @@
                                     <%=check__s%>
                                     tabindex="6"
                                     onclick="refresh_algorithm()";>
-
                                 <label for="startsWith">Begins With&nbsp;</label>
-
                                 <%
                                 String luceneSearch = "<a href=\"#\" onmouseover=\"Tip('<h4>Match Algorithm</h4><table role='presentation'><tr><td>Wildcard (multiple characters)</b>: heart*</td></tr><tr>       <td><b>Wildcard (single character)</b>: he?rt</td></tr><tr><td><b>Fussy match</b>: heart~</td></tr><tr><td><b>Boolean</b>: heart AND attack</td></tr><td><b>Boosting</b>: heart^5 AND attack</td></tr><tr><td><b>Negation</b>: heart -attack</td></tr><tr><td><b>Code Field</b>: code:118797008 AND heart</td></tr></table>')\" onmouseout=\"UnTip()\">Lucene Search</a>";
                                 %>
-
                                 <input
                                     type="radio"
                                     id="lucene"
@@ -565,7 +560,6 @@
                                     <%=check__b%>
                                     tabindex="7"
                                     onclick="refresh_algorithm()";>
-
                                 <label for="lucene">Lucene</label>
                               </td>
                             </tr>
@@ -574,10 +568,12 @@
                       </tr>
 
                       <% if (adv_search_algorithm.compareToIgnoreCase("lucene") != 0) { %>
-
                         <tr>
                           <td>
-                            <h:outputLabel id="rel_search_source_Label" value="Source" styleClass="textbody">
+                          <!--
+                              <h:outputLabel id="rel_search_source_Label" value="Source" styleClass="textbody">
+                          -->    
+                              <label for="adv_search_source">Source</label>
                               <select id="adv_search_source" name="adv_search_source" size="1" tabindex="8">
                                 <%
                                 Vector src_vec = OntologyBean.getSupportedSources(adv_search_vocabulary, adv_search_version);
@@ -707,7 +703,10 @@
                               <tr>
                                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                 <td>
+                                <!--
                                   <h:outputLabel id="selectPropertyLabel" value="Select one:" styleClass="textbody">
+                                -->
+                                    <label for="selectProperty">Select one:</label>
                                     <select id="selectProperty" name="selectProperty" size="1" tabindex="13">
                                       <%
                                       t = "ALL";
@@ -745,12 +744,14 @@
                                     <tr>
                                       <td>&nbsp;&nbsp;&nbsp;</td>
                                       <td>
+                                      <!--
                                         <h:outputLabel
                                             id="rel_search_associationLabel"
                                             value="Select one:"
                                             styleClass="textbody">
-
-                                          <select id="rel_search_association" name="rel_search_association" size="1">
+                                       -->     
+                                           <label for="rel_search_association">Select one:</label>
+                                           <select id="rel_search_association" name="rel_search_association" size="1">
                                             <%
                                             t = "ALL";
                                             if (t.compareTo(rel_search_association) == 0) {

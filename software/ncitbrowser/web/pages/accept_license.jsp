@@ -65,7 +65,8 @@
               <b><%= display_name %></b>,
               please review and accept the copyright/license statement below:
             </p>
-            <textarea cols="87" rows="15" readonly align="left"><%= licenseStmt %></textarea>
+<label for="license_statement">License Statement</label>            
+            <textarea cols="87" rows="15" readonly align="left" id="license_statement"><%= licenseStmt %></textarea>
             <p>If and only if you agree to these terms and conditions, click the Accept button to proceed.</p>
             <h:form>
               <h:commandButton

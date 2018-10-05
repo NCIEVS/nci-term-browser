@@ -264,7 +264,7 @@
 
                         <input type="hidden" name="resolvedValueSetSearchForm" value="resolvedValueSetSearchForm" />
 
-                        <input
+                        <input aria-labelledby="Match Text"
                             CLASS="searchbox-input"
                             id="matchText"
                             name="matchText"
@@ -277,6 +277,7 @@
 
                         <input
                             id="resolvedValueSetSearchForm:resolvedvalueset_search"
+                            aria-labelledby="Search"
                             type="image"
                             src="/ncitbrowser/images/search.gif"
                             name="resolvedValueSetSearchForm:resolvedvalueset_search"
@@ -689,13 +690,12 @@
                             </tr>
                             <tr>
                               <td class="textbody" align=left>
-                                Show
+                                <label for="resultsPerPage">Show</label>
                                 <select
-                                    id=resultsPerPage
-                                    name=resultsPerPage
+                                    id="resultsPerPage"
+                                    name="resultsPerPage"
                                     size=1
                                     onChange="paginationForm.submit();">
-
                                   <%
                                   List resultsPerPageValues = UserSessionBean.getResultsPerPageValues();
                                   // Send redirect:

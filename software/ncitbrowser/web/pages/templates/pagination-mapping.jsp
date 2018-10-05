@@ -69,13 +69,7 @@
     </tr>
     <tr>
       <td class="textbody" align=left>
-        Show
-        <!--
-          <h:selectOneMenu id="pageSize" value="#{userSessionBean.selectedPageSize}"
-          valueChangeListener="#{userSessionBean.pageSizeChanged}" immediate="true" onchange="submit()"> <f:selectItems
-          value="#{userSessionBean.pageSizeList}" /> </h:selectOneMenu>
-        -->
-
+        <label for="resultsPerPage">Show</label>
         <select name="resultsPerPage" size=1 onChange="paginationForm.submit();">
           <%
           List resultsPerPageValues = UserSessionBean.getResultsPerPageValues();

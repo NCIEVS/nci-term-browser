@@ -75,7 +75,8 @@
   <a name="evs-content" id="evs-content" tabindex="1"></a>
   <p <%=fontColor%>><%= helper.getReviewAndAcceptMessage() %></p>
   <% if (rendered) { %>
-    <textarea cols="87" rows="15" readonly align="left"><%= helper.getLicenseMessages(87) %></textarea>
+    <label for="license_stmt">License Statement</label>
+    <textarea name="license_stmt" cols="87" rows="15" readonly align="left"><%= helper.getLicenseMessages(87) %></textarea>
   <% } %>
   <p><%= helper.getButtonMessage() %></p>
   <h:form>

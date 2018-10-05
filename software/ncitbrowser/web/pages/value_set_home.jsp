@@ -368,7 +368,7 @@
                               />
 
                               <div class="textbody">
-                                <input
+                                <input aria-labelledby="Match Text" 
                                     CLASS="searchbox-input"
                                     id="matchText"
                                     name="matchText"
@@ -378,7 +378,7 @@
                                      onkeypress="return submitEnter('resolvedValueSetSearchForm:resolvedvalueset_search',event)"
                                     tabindex="1"
                                 />
-                                <input
+                                <input aria-labelledby="Search Value Set" 
                                     id="resolvedValueSetSearchForm:resolvedvalueset_search"
                                     type="image"
                                     src="/ncitbrowser/images/search.gif"

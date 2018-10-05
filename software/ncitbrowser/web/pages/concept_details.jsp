@@ -440,7 +440,6 @@ code = HTTPUtils.cleanXSS(code);
             <input type="hidden" id="m" name="m" value="<%=m%>" />
             <%
           }
-
         }
         %>
       </h:form>

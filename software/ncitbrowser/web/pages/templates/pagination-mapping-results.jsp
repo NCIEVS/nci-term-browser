@@ -75,7 +75,7 @@
     <tr>
       <td class="textbody" align=left>
         <label for="resultsPerPage">Show</label>
-        <select name=resultsPerPage size=1 onChange="paginationForm.submit();">
+        <select aria-label="Pagination" id=resultsPerPage name=resultsPerPage size=1 onChange="paginationForm.submit();">
           <%
           List resultsPerPageValues = UserSessionBean.getResultsPerPageValues();
           // Send redirect:

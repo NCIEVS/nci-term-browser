@@ -182,7 +182,7 @@ else
 check_r = "checked";
 %>
 <h:form id="searchTerm" styleClass="search-form" onsubmit="javascript:disableAnchor();" acceptcharset="UTF-8">
-  <input aria-labelledby="Match Text" 
+  <input aria-label="Match Text" 
       CLASS="searchbox-input"
       id="matchText"
       name="matchText"
@@ -261,15 +261,7 @@ check_r = "checked";
             id="names"
             name="searchTarget"
             value="names"
-             
-             
-             
-             
             alt="Name"
-             
-             
-             
-             
             <%=check_n%>
              tabindex="7">
 
@@ -279,15 +271,7 @@ check_r = "checked";
             id="codes"
             name="searchTarget"
             value="codes"
-             
-             
-             
-             
             alt="Code"
-             
-             
-             
-             
             <%=check_cd%>
             tabindex="8"
             onclick="onCodeButtonPressed('searchTerm');">
@@ -298,10 +282,7 @@ check_r = "checked";
             id="properties"
             name="searchTarget"
             value="properties"
-             
-             alt="Property"
-             
-             
+            alt="Property"
             <%=check_p%>
              tabindex="9">
 
@@ -314,9 +295,7 @@ check_r = "checked";
             alt="Relationship"
             <%=check_r%>
              tabindex="10">
-
         <label for="relationships">Relationship</label>
-
       </td>
     </tr>
     <tr>

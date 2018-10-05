@@ -264,7 +264,7 @@
 
                         <input type="hidden" name="resolvedValueSetSearchForm" value="resolvedValueSetSearchForm" />
 
-                        <input aria-labelledby="Match Text"
+                        <input aria-label="Match Text"
                             CLASS="searchbox-input"
                             id="matchText"
                             name="matchText"
@@ -277,7 +277,7 @@
 
                         <input
                             id="resolvedValueSetSearchForm:resolvedvalueset_search"
-                            aria-labelledby="Search"
+                            aria-label="Search"
                             type="image"
                             src="/ncitbrowser/images/search.gif"
                             name="resolvedValueSetSearchForm:resolvedvalueset_search"

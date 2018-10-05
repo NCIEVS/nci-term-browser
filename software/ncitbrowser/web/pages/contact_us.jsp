@@ -254,7 +254,7 @@ public static final String ANSWER = "answer";
             <i style="color:#FF0000;">*</i>
           </p>
       
-          <input aria-labelledby="Subject" 
+          <input aria-label="Subject" 
               class="textbody"
               size="100"
               name="subject"
@@ -273,7 +273,7 @@ public static final String ANSWER = "answer";
             <i>Your e-mail address:</i>
             <i style="color:#FF0000;">*</i>
           </p>
-          <input aria-labelledby="Email Address" 
+          <input aria-label="Email Address" 
               class="textbody"
               size="100"
               name="<%= EMAIL_ADDRESS %>"

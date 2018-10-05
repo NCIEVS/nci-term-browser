@@ -16,8 +16,10 @@
         request.setAttribute("key", search_key);
         %>
         <input type="hidden" id="key" name="key" value="<%=key%>" />
+        <!--
         <input type="hidden" id="dictionary" name="dictionary" value="<%=search_results_dictionary%>" />
         <input type="hidden" id="version" version="key" value="<%=search_results_version%>" />
+        -->
         <%
         IteratorBeanManager iteratorBeanMgr = (IteratorBeanManager) FacesContext.getCurrentInstance().getExternalContext()
         .getSessionMap().get("iteratorBeanManager");
@@ -89,7 +91,7 @@
       <tr>
         <td class="textbody" align=left>
           <label for="resultsPerPage">Show</label>
-          <select name=resultsPerPage size=1 onChange="paginationForm.submit();">
+          <select aria-label="Pagination" id=resultsPerPage name=resultsPerPage size=1 onChange="paginationForm.submit();">
             <%
             List resultsPerPageValues = UserSessionBean.getResultsPerPageValues();
             // Send redirect:

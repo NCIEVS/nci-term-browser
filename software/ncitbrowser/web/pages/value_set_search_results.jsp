@@ -407,7 +407,7 @@
 
                   <h:form id="resolvedValueSetSearchForm" styleClass="search-form" acceptcharset="UTF-8">
                     <div class="textbody">
-                      <input aria-labelledby="Match Text" 
+                      <input aria-label="Match Text" 
                           CLASS="searchbox-input"
                           id="matchText"
                           name="matchText"
@@ -557,7 +557,7 @@
                       <tr valign="top" align="left">
                         <td align="left" class="textbody">
                           <% if (selectValueSetSearchOption.compareTo("CodingScheme") == 0) { %>
-                            <input aria-labelledby="Match Text"
+                            <input aria-label="Match Text"
                                 CLASS="searchbox-input-2"
                                 name="matchText"
                                 value=""
@@ -566,7 +566,7 @@
                                 tabindex="10"
                             />
                           <% } else { %>
-                            <input aria-labelledby="Match Text"
+                            <input aria-label="Match Text"
                                 CLASS="searchbox-input-2"
                                 name="matchText"
                                 value="<%=valueset_match_text%>"

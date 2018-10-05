@@ -261,7 +261,7 @@ Integer curr_sort_category = null;
                 searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbrowser//ncitbrowser", "//ncitbrowser");
                 %>
                 <div class="search-form">
-                  <input aria-labelledby="Match Text"
+                  <input aria-label="Match Text"
                       CLASS="searchbox-input"
                       name="matchText"
                       value="<%=termbrowser_displayed_match_text%>"
@@ -520,7 +520,7 @@ Integer curr_sort_category = null;
                                 }
                                 %>
 
-                                <input aria-labelledby="<%=scheme%>$<%=version%>" 
+                                <input aria-label="<%=scheme%>$<%=version%>" 
                                     type="radio"
                                     name="scheme_and_version"
                                     value="<%=scheme%>$<%=version%>"

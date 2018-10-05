@@ -10,7 +10,7 @@ String searchform_requestContextPath = request.getContextPath();
 searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbrowser//ncitbrowser", "//ncitbrowser");
 %>
 <div class="search-form">
-  <input aria-labelledby="Match Text" 
+  <input aria-label="Match Text" 
       CLASS="searchbox-input"
       name="matchText"
       value="<%=termbrowser_displayed_match_text%>"

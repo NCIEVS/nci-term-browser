@@ -134,7 +134,7 @@
                 </div>
                 <div class="searchbox">
                   <div class="search-form">
-                    <input aria-labelledby="Match Text" 
+                    <input aria-label="Match Text" 
                         CLASS="searchbox-input"
                         name="matchText"
                         type="text"

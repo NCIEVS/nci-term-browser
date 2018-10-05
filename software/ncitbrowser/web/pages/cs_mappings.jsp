@@ -208,7 +208,7 @@ if (display_release_date) {
 
 %>
 <div class="search-form">
-  <input aria-labelledby="Match Text" 
+  <input aria-label="Match Text" 
     CLASS="searchbox-input"
     name="matchText"
     value="<%=termbrowser_displayed_match_text%>"

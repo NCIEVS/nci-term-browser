@@ -507,7 +507,7 @@ request.getSession().removeAttribute("m");
                                         %>
 
                                         <%= indent %>
-                                        <input aria-labelledby="<%=label%>" 
+                                        <input aria-label="<%=label%>" 
                                             type="checkbox"
                                             id="<%=label%>"
                                             name="ontology_list"

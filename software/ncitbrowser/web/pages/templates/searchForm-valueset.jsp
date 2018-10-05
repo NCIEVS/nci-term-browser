@@ -99,7 +99,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
           />
         <% } else { %>
 
-          <input aria-labelledby="Match Text" 
+          <input aria-label="Match Text" 
               CLASS="searchbox-input-2"
               name="matchText"
               value="<%=_valueset_match_text%>"

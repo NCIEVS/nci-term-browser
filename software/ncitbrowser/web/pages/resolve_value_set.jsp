@@ -113,6 +113,7 @@
                             //cs_name = DataUtils.uri2CodingSchemeName(cs_name);
 
                             String cs_version = (String) u.elementAt(1);
+                            String label = cs_name + "(" + cs_version + ")";
 
                             String cs_tag = DataUtils.getVocabularyVersionTag(cs_name, cs_version);
                             if (cs_tag == null) cs_tag = "";
@@ -135,8 +136,9 @@
                                 <tr class="dataRowLight">
                                 <% } %>
                                 <td scope="row">
-                                  <input
+                                  <input aria-label="<%=label%>" 
                                       type="radio"
+                                      id="<%=label%>"
                                       name="<%=cs_name%>"
                                       value="<%=cs_version%>"
                                       <%=checked%>

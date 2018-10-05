@@ -494,7 +494,7 @@
                     <table role='presentation'>
                       <tr>
                         <td>
-                          <input aria-labelledby="Match Text"
+                          <input aria-label="Match Text"
                               CLASS="searchbox-input"
                               name="matchText"
                               value="<%=HTTPUtils.cleanXSS(search_string)%>"

@@ -954,19 +954,16 @@
                             <input
                                 type="hidden"
                                 name="referer"
-                                id="referer"
                                 value="<%=HTTPUtils.getRefererParmEncode(request)%>">
 
                             <input
                                 type="hidden"
                                 name="dictionary"
-                                id="dictionary"
                                 value="<%=HTTPUtils.cleanXSS(adv_search_vocabulary)%>">
 
                             <input
                                 type="hidden"
                                 name="version"
-                                id="version"
                                 value="<%=HTTPUtils.cleanXSS(adv_search_version)%>">
                             
                             <input

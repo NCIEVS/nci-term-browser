@@ -950,6 +950,7 @@
                                       </table></p></td></tr>                              <% } %>
 
                             </table>
+
                             <input
                                 type="hidden"
                                 name="referer"
@@ -967,7 +968,7 @@
                                 name="version"
                                 id="version"
                                 value="<%=HTTPUtils.cleanXSS(adv_search_version)%>">
-
+                            
                             <input
                                 type="hidden"
                                 name="adv_search_type"

@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-
 <%@ page import="gov.nih.nci.evs.browser.utils.DataUtils" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -52,53 +51,53 @@
 
             <p class="textbody">
               <a href="#introduction">Introduction</a>
-              <br />
+              <br/>
               <a href="#homePage">NCI Term Browser Home Page</a>
-              <br />
+              <br/>
               <a href="#terminologies">Terminologies Tab</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#sources">Sources</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#searchBox">Using the Search Box</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#searchResults">Search Results</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#searchingOther">Searching Other/Multiple Versions of a Terminology</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#advancedSearch">Advanced Search</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#conceptDetails">Concept Details</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#additionalLinks">Additional Links for Individual Terminologies</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#cartAndExport">Cart and Export Functionality</a>
-              <br />
+              <br/>
               <a href="#valueSetsTab">Value Sets Tab</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#valueSetsSearchBox">Using the Search Box</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#conceptDetails">Concept Details</a>
-              <br />
+              <br/>
               <a href="#mappingsTab">Mappings Tab</a>
-              <br />
+              <br/>
               <%= tab %>
               <a href="#mappingSearchBox">Using the Search Box</a>
-              <br />
+              <br/>
             </p>
 
             <%-- -------------------------------------------------------------- --%>
             <div class="textbody">
-              <br />
+              <br/>
               <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
                 <tr>
                   <td>
@@ -117,21 +116,26 @@
               <p>
                 <b>NCI Enterprise Vocabulary Services (EVS)</b>
                 provides terminology content, tools, and services to NCI and the biomedical research community.
+
+                </p><p>
                 <table class="textbody" border="0" cellspacing="0" cellpadding="0" role='presentation'>
                   <tr>
-                    <td><%= tab2 %></td>
+                    <td>&nbsp;</td>
                     <td>
+                      <ul>
                       <li>
                       For browser support or suggestions, use the browser's
-                      <a href="/ncitbrowser/pages/contact_us.jsf">Contact Us</a>
-                      page.</li></td></tr>
-                <tr>
-                  <td><%= tab2 %></td>
-                  <td>
-                    <li>
+                      <a href="ncitbrowser/pages/contact_us.jsf">Contact Us</a>
+                      page.
+                      </li>
+
+                      <li>
                     For all EVS resources, services and contacts, see the EVS Web site
                     <a href="http://evs.nci.nih.gov/" target="_blank">http://evs.nci.nih.gov/</a>.
-                  </li></td></tr></table></p>
+                      </li>
+                     </td>
+                  </tr>
+                </table></p>
 
           <p>
             <b>NCI Term Browser</b>
@@ -155,38 +159,28 @@
             search and the browser interface:
           </p>
 
+          <p>
           <table class="textbody" border="0" cellspacing="0" cellpadding="0" role='presentation'>
             <tr>
-              <td><%= tab2 %></td>
+              <td>&nbsp;</td>
               <td>
+                <ul>
                 <li>
-                <b>Bold:</b>
-              </li></td>
-            <td><%= tab %></td>
-            <td>Browser links, buttons, page tabs, and drop-down boxes.</td>
-          </tr>
-          <tr>
-            <td><%= tab2 %></td>
-            <td>
-              <li>
-              <tt>Fixed Width:</tt>
-            </li></td>
-          <td><%= tab %></td>
-          <td>Search strings.</td>
-        </tr>
-        <tr>
-          <td><%= tab2 %></td>
-          <td>
-            <li>
-            <i>Italics:</i>
-          </li></td>
-        <td><%= tab %></td>
-        <td>Concept terms.</td>
-      </tr></table></div>
+                <b>Bold:</b>&nbsp;&nbsp;Browser links, buttons, page tabs, and drop-down boxes.
+                </li>
+                <li>
+                <tt>Fixed Width:&nbsp;</tt>Search strings.
+                </li>
+		<li>
+		<i>Italics:&nbsp;&nbsp;</i>Concept terms.
+	        </li>
+              </td>
+            </tr>
+          </table></div>
 
   <%-- -------------------------------------------------------------- --%>
   <div class="textbody">
-    <br />
+    <br/>
     <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
       <tr>
         <td>
@@ -262,7 +256,7 @@ always appears at the far right, linking to this Help page.</li></ul></div>
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -290,7 +284,7 @@ always appears at the far right, linking to this Help page.</li></ul></div>
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -334,7 +328,7 @@ button: Starts a search in the same way as the Search button in the search box (
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -379,19 +373,22 @@ button: Starts a search in the same way as the Search button in the search box (
     but not
     <i>NAT2 Gene</i>).
   </li>
-  <li></li>Do
+  <li>Do
   not use quotes - they will be searched for literally, as characters to be matched.
+  </li>
   <li>Search
   multiple words requires that all search words be found in target terms. There are two different methods used:
   <ul>
-    <li></li>
+    <li>
     Method 1: For Exact Match and Begins With methods, and for all Property and Relationship targets, the words must be
     found together in the order entered with no separation.
-    <li></li>
+    </li>
+    <li>
     Method 2: Contains search on Name, however, now looks for those words separately. A special index makes these
     searches faster and more flexible than before, while still ranking best matches first. Note: The current
     implementation only finds matches at the start of words, not the middle or end; we plan to address this in a future
     release.
+    </li>
   </ul>
   For example, if you do a
   <b>Contains</b>
@@ -489,7 +486,7 @@ button brings you to this Search section of the Help file.</li></ul>
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -513,8 +510,9 @@ button brings you to this Search section of the Help file.</li></ul>
     (because this links to the separate NCIm Browser). Some details:
   </p>
   <ul>
-    <li></li>All
+    <li>All
     matching concepts are returned.
+    </li>
     <li>Results
     are listed from best match to weakest. For example, a
     <b>Contains</b>
@@ -543,11 +541,13 @@ there are too many to show on one page, you can page through the results, with a
 default number, use the
 <b>Show results per page</b>
 drop-down menu at the bottom of the results page.</li>
-<li></li>If
+<li>If
 a concept is retired, this will be indicated by the phrase "(Retired Concept") next to the name of the concept in the
 Results listing.
-<li></li>Click
+</li>
+<li>Click
 on the preferred name to see a concept's details.
+</li>
 <li>A
 <b>Back to search results</b>
 link appears in the search box when you leave the results page for other pages in the Terminologies tab; click on the
@@ -557,7 +557,7 @@ page is lost and the link disappears.
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -582,9 +582,10 @@ page is lost and the link disappears.
     terminologies for which this is possible will have a link to the right of them that says
     <b>show other versions</b>.
     Click on that link to see the non-production versions of the terminology that are available.</li>
-  <li></li>These
+  <li>These
   versions, which will appear directly underneath the production version, will have a check box to the left; click on
   that check box and the non-production version(s) will be included in the search.
+  </li>
 </ul>
 <p>
   Some details about searching other or multiple versions of a particular terminology from the
@@ -609,7 +610,7 @@ the terminology version the result came from.</li></ul></div>
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -667,7 +668,7 @@ is the "target").</li></ul></div>
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -749,7 +750,7 @@ goes to a special suggestion page with source and concept code filled in.
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -774,14 +775,18 @@ goes to a special suggestion page with source and concept code filled in.
     <b>Hierarchy</b>:
     Click the link to bring up a separate window showing the full terminology hierarchy. Some details:
     <ul>
-      <li></li>At
+      <li>At
       first, only the top level nodes of the hierarchy are shown.
-      <li></li>At
+      </li>
+      <li>At
       each level, concepts are listed alphabetically by concept preferred name.
-      <li></li>Browse
+      </li>
+      <li>Browse
       through the levels by clicking on the + next to each concept that has child concepts.
-      <li></li>Click
+      </li>
+      <li>Click
       on the concept name itself to see the concept's details in the main browser window.
+      </li>
     </ul>
   </li>
   <li>
@@ -804,7 +809,7 @@ tab below).</li></ul></div>
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -907,14 +912,15 @@ can be done in two formats:
 <li>
 <b>Export CSV</b>
 (Comma Separated Values) will generate a list of cart contents in CSV format readable from Excel.</li>
-<li></li>If
+<li>If
 a concept is available in more than one version of a terminology, the user is allowed to choose between the default
 production version of the terminology and other available versions.
+</li>
 </ul></ul></div>
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -940,14 +946,17 @@ production version of the terminology and other available versions.
     <b>Standards View</b>
     is the default view, and shows the available value sets listed by the authority responsible for their content.
     <ul>
-      <li></li>Authorities,
+      <li>Authorities,
       and value sets for each, are listed alphabetically. Some value sets are defined by combining component value sets,
       displayed as child entries.
-      <li></li>Browse
+      </li>
+      <li>Browse
       through the levels by clicking on the + next to entries having lower levels.
-      <li></li>If
+      </li>
+      <li>If
       you select one of the top-level authority entries, such as CDISC or FDA, you will go to a home page for that
       authority with descriptive text and a listing of value sets.
+      </li>
     </ul>
   </li></ul>
 <ul>
@@ -955,10 +964,12 @@ production version of the terminology and other available versions.
   <b>Terminology View</b>
   shows available value sets listed by the terminologies their values come from.
   <ul>
-    <li></li>Browse
+    <li>Browse
     through the levels by clicking on the + next to each terminology.
-    <li></li>If
+    </li>
+    <li>If
     you select one of the top-level terminologies, you will go to the home page for that terminology.
+    </li>
   </ul>
 </li></ul>
 <p>
@@ -972,10 +983,10 @@ production version of the terminology and other available versions.
   <b>Released File</b>
   Displays the content of a value set as it appears in the file published at the NCI EVS
   <a href="ftp://ftp1.nci.nih.gov/pub/cacore/EVS/">download site</a>.
-  <br />
+  <br/>
   There are two options for exporting all of the values from the displayed set:
-  <br />
-  <br />
+  <br/>
+  <br/>
   <ul>
     <li>
     <b>Export Excel</b>
@@ -983,7 +994,7 @@ production version of the terminology and other available versions.
   <li>
   <b>Export CSV</b>
   (Comma Separated Values) will open or save the value set in a delimited text format.</li></ul>
-<br />
+<br/>
 </li>
 
 <li>
@@ -1014,7 +1025,6 @@ The individual concept values that comprise the value set, presented as follows:
   first 50 concepts of the value set are listed. Use the
   <b>Show &lt;n&gt; results per page</b>
   drop-down menu at the bottom of the page to display up to 500 concepts at once.</li>
-
 <li>
 The columns for each concept listing depend on the structure of the set. First is the
 <b>code</b>
@@ -1035,10 +1045,10 @@ and
 for the terminology used.</li>
 
 </ul></li></ul>
-<br />
+<br/>
 There are two options for exporting all of the values from the displayed set:
-<br />
-<br />
+<br/>
+<br/>
 <ul>
   <li>
   <b>Export XML</b>
@@ -1046,7 +1056,7 @@ There are two options for exporting all of the values from the displayed set:
 <li>
 <b>Export CSV</b>
 (Comma Separated Values) will open or save the value set in a delimited text format.</li></ul>
-<br />
+<br/>
 </li>
 <li>
 <b>Versions</b>
@@ -1054,18 +1064,17 @@ allows you to select particular versions of each terminology participating in th
 CDISC ADaM Terminology and then the Versions button will show the currently available versions of NCI Thesaurus. The
 version information includes:
 <ul>
-  <li></li>Coding
-  Scheme
-  <li></li>Version
-  <li></li>Tag
+  <li>Coding Scheme</li>
+  <li>Version</li>
+  <li>Tag</li>
 </ul>
-<br />The
+<br/>The
 <b>Continue</b>
 button uses the selected version(s) to select the values contained in the set. See help section on
 <a href="#valueBullet">Values</a>
 above for information on the details contained there.
-<br />
-<br />
+<br/>
+<br/>
 </li>
 <li>
 <b>XML Definition</b>
@@ -1076,7 +1085,7 @@ multiple parts.
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -1135,15 +1144,16 @@ The code of the concept.</li></ul>
 <ul>
   <li>
   All matching value sets and concepts are returned.
-  <li></li>
+  <li>
   If there are too many to show on one page, you can page through the results with a default of 50 per page. To change
   the default number, use the Show results per page drop-down menu at the bottom of the page.
+  </li>
 </ul>
 </div>
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -1162,7 +1172,7 @@ The code of the concept.</li></ul>
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <p>
     The
     <b>Mappings</b>
@@ -1176,9 +1186,10 @@ The code of the concept.</li></ul>
     using the list of mapping data sets (by clicking on one of the
     <b>mapping set radio buttons</b>);
     or</li>
-  <li></li>Searching
+  <li>Searching
   within a particular mapping data set by clicking on its link and going to its home page (where the name of the mapping
   set will be prominently displayed as a banner in the upper left-hand corner of the home page).
+  </li>
 </ul>
 <p>
   If you choose to go to a particular mapping set's home page, you can also choose to view the full mapping set (which
@@ -1198,7 +1209,7 @@ The code of the concept.</li></ul>
 
 <%-- -------------------------------------------------------------- --%>
 <div class="textbody">
-  <br />
+  <br/>
   <table width="920px" cellpadding="0" cellspacing="0" border="0" role='presentation'>
     <tr>
       <td>
@@ -1295,10 +1306,12 @@ the name of a target concept to which a source concept has been mapped (for exam
 "Melanoma" to which the PDQ concept "melanoma" has been mapped)..</li></ul>
 <p>Some details regarding the results of mapping set searches:</p>
 <ul>
-  <li></li>All
+  <li>All
   mapping matches are returned.
-  <li></li>Results
+  </li>
+  <li>Results
   are listed from best match to weakest.
+  </li>
   <li>If
   there are too many to show on one page, you can page through the results with a default of 50 per page. To change the
   default number, use the

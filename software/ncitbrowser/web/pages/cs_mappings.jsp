@@ -410,7 +410,7 @@ if (mapping_scheme_and_version.compareTo("") == 0 && mapping_cs_knt == 1) {
 }
 %>
 
-<input type="radio" aria-label="<%=scheme%>$<%=version%>" id="scheme_and_version" name="scheme_and_version" value="<%=scheme%>$<%=version%>" <%=checkedStr%> tabinex="1" />
+<input type="radio" aria-label="<%=scheme%>$<%=version%>" id="<%=scheme%>$<%=version%>" name="scheme_and_version" value="<%=scheme%>$<%=version%>" <%=checkedStr%> tabinex="1" />
 
 
 				    <a href="<%= request.getContextPath() %>/pages/vocabulary.jsf?dictionary=<%=http_scheme%>&version=<%=http_version%>">

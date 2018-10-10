@@ -31,7 +31,7 @@
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
@@ -356,7 +356,7 @@ code = HTTPUtils.cleanXSS(code);
                 <a
                     href="#"
                     onclick="javascript:popup_window('<%=request.getContextPath()%>/ajax?action=view_graph&scheme=<%=dictionary%>&version=<%=version%>&ns=<%=ns%>&code=<%=code%>&type=ALL', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');"
-                    tabindex="1"
+                    tabindex="0"
                     title="This link displays a graph that recapitulates some information in the Relationships tab in a visual format.">
 
                   View Graph</a>
@@ -444,7 +444,7 @@ code = HTTPUtils.cleanXSS(code);
         %>
       </h:form>
 
-      <a name="evs-content" id="evs-content" tabindex="2"></a>
+      <a name="evs-content" id="evs-content" tabindex="0"></a>
       <table border="0" cellpadding="0" cellspacing="0" width="100%" role='presentation'>
         <tr>
           <% if (namespace_list != null && namespace_list.size() > 1) { %>

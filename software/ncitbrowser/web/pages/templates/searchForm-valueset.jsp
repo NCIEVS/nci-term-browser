@@ -95,7 +95,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
               name="matchText"
               value=""
               onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-              tabindex="1"
+              tabindex="0"
           />
         <% } else { %>
 
@@ -106,7 +106,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
               onFocus="active = true"
               onBlur="active = false"
               onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-              tabindex="2"
+              tabindex="0"
           />
         <% } %>
 
@@ -118,11 +118,11 @@ if (_valueset_match_text == null) _valueset_match_text = "";
             image="#{valueSetSearch_requestContextPath}/images/search.gif"
             styleClass="searchbox-btn"
             alt="Search concepts in value set"
-            tabindex="3">
+            tabindex="0">
 
         </h:commandButton>
 
-        <h:outputLink value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp" tabindex="4">
+        <h:outputLink value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp" tabindex="0">
           <h:graphicImage
               value="/images/search-help.gif"
               styleClass="searchbox-btn"
@@ -146,7 +146,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
                   value="contains"
                   alt="Contains"
                   <%=_check__c%>
-                  tabindex="5">
+                  tabindex="0">
 
               <label for="contains">Contains</label>
               <input
@@ -156,7 +156,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
                   value="exactMatch"
                   alt="Exact Match"
                   <%=_check__e%>
-                  tabindex="6">
+                  tabindex="0">
 
               <label for="exactMatch">Exact Match&nbsp;</label>
               <input
@@ -166,7 +166,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
                   value="startsWith"
                   alt="Begins With"
                   <%=_check__s%>
-                  tabindex="7">
+                  tabindex="0">
 
               <label for="startsWith">Begins With&nbsp;</label>
             </td>
@@ -185,7 +185,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
                   value="Code"
                   <%=_check_code%>
                   alt="Code"
-                  tabindex="8"
+                  tabindex="0"
                   onclick="javascript:refresh()">
               <label for="codes">Code&nbsp;</label>
               <input
@@ -195,7 +195,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
                   value="Name"
                   <%=_check_name%>
                   alt="Name"
-                  tabindex="9"
+                  tabindex="0"
                   onclick="javascript:refresh()">
 
               <label for="names">Name&nbsp;</label>
@@ -206,7 +206,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
                   value="Source"
                   <%=_check_src%>
                   alt="Source"
-                  tabindex="10"
+                  tabindex="0"
                   onclick="javascript:refresh()">
               <label for="source">Source&nbsp;</label>
               <input
@@ -216,7 +216,7 @@ if (_valueset_match_text == null) _valueset_match_text = "";
                   value="CodingScheme"
                   <%=_check_cs%>
                   alt="Coding Scheme"
-                  tabindex="11"
+                  tabindex="0"
                   onclick="javascript:refresh()">
               <label for="CodingScheme">Coding Scheme&nbsp;</label>
             </td>

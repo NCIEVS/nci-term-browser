@@ -1,4 +1,4 @@
-<html>
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core"> 
   <body>
     <jsp:forward page="/pages/templates/templatePopup.jsp">
       <jsp:param name="content_title" value="NCI Thesaurus: Display Report" />

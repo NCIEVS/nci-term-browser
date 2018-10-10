@@ -16,7 +16,7 @@
 <%@ page import="org.apache.log4j.*" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
@@ -164,7 +164,7 @@
                               value="contains"
                               alt="Contains"
                               <%=check_c%>
-                              tabindex="1"
+                              tabindex="0"
                               onclick="onAlgorithmChanged('searchTerm');">
                           <label for="contains">Contains&nbsp;</label>
                           <input
@@ -174,7 +174,7 @@
                               value="exactMatch"
                               alt="Exact Match"
                               <%=check_e%>
-                              tabindex="2">
+                              tabindex="0">
 
                           <label for="exactMatch">Exact Match&nbsp;</label>
                           <input
@@ -184,7 +184,7 @@
                               value="startsWith"
                               alt="Begins With"
                               <%=check_s%>
-                              tabindex="3"
+                              tabindex="0"
                               onclick="onAlgorithmChanged('searchTerm');">
 
                           <label for="startsWith">Begins With&nbsp;</label>
@@ -203,7 +203,7 @@
                               value="names"
                               alt="Names"
                               <%=check_n%>
-                              tabindex="4">
+                              tabindex="0">
 
                           <label for="names">Name&nbsp;</label>
                           <input
@@ -213,7 +213,7 @@
                               value="codes"
                               alt="Codes"
                               <%=check_cd%>
-                              tabindex="5"
+                              tabindex="0"
                               onclick="onCodeButtonPressed('searchTerm');">
 
                           <label for="codes">Code&nbsp;</label>
@@ -224,7 +224,7 @@
                               value="properties"
                               alt="Properties"
                               <%=check_p%>
-                              tabindex="6">
+                              tabindex="0">
 
                           <label for="properties">Property&nbsp;</label>
                           <input
@@ -234,7 +234,7 @@
                               value="relationships"
                               alt="Relationships"
                               <%=check_r%>
-                              tabindex="7">
+                              tabindex="0">
 
                           <label for="relationships">Relationship&nbsp;</label>
 
@@ -269,7 +269,7 @@
           <!-- end Quick links bar -->
           <!-- Page content -->
           <div class="pagecontent">
-            <a name="evs-content" id="evs-content" tabindex="8"></a>
+            <a name="evs-content" id="evs-content" tabindex="0"></a>
 
             <%
             String resultsPerPage = HTTPUtils.cleanXSS((String) request.getParameter("resultsPerPage"));

@@ -17,7 +17,7 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
       onFocus="active = true"
       onBlur="active = false"
       onkeypress="return submitEnter('searchTerm:multiple_search',event)"
-      tabindex="1"
+      tabindex="0"
   />
   <h:commandButton
       id="multiple_search"
@@ -26,10 +26,10 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
       image="#{searchform_requestContextPath}/images/search.gif"
       alt="Search"
       styleClass="searchbox-btn"
-      tabindex="2">
+      tabindex="0">
 
   </h:commandButton>
-  <h:outputLink value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp" tabindex="3">
+  <h:outputLink value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp" tabindex="0">
     <h:graphicImage
         value="/images/search-help.gif"
         styleClass="searchbox-btn"
@@ -59,7 +59,7 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
             value="contains"
             alt="Contains"
             <%=check_c%>
-            tabindex="4"
+            tabindex="0"
             onclick="onAlgorithmChanged('searchTerm');">
         <label for="contains">Contains&nbsp;</label>    
         <input
@@ -69,7 +69,7 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
             value="exactMatch"
             alt="Exact Match"
             <%=check_e%>
-            tabindex="5">
+            tabindex="0">
         <label for="exactMatch">Exact Match&nbsp;</label>
         <input
             type="radio"
@@ -78,7 +78,7 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
             value="startsWith"
             alt="Begins With"
             <%=check_s%>
-            tabindex="6"
+            tabindex="0"
             onclick="onAlgorithmChanged('searchTerm');">
         <label for="startsWith">Begins With&nbsp;</label>
         <%
@@ -100,7 +100,7 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
     </tr>
     <tr valign="top" align="left">
       <td align="left" class="textbody">
-        <input type="radio" id="names" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="7">
+        <input type="radio" id="names" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="0">
         <label for="names">Name&nbsp;</label>
         <input
             type="radio"
@@ -109,7 +109,7 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
             value="codes"
             alt="Codes"
             <%=check_cd%>
-            tabindex="8"
+            tabindex="0"
             onclick="onCodeButtonPressed('searchTerm');">
 
         <label for="codes">Code&nbsp;</label>
@@ -120,7 +120,7 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
             value="properties"
             alt="Properties"
             <%=check_p%>
-            tabindex="9">
+            tabindex="0">
 
         <label for="properties">Property&nbsp;</label>
         <input
@@ -130,7 +130,7 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
             value="relationships"
             alt="Relationships"
             <%=check_r%>
-            tabindex="10">
+            tabindex="0">
 
         <label for="relationships">Relationship&nbsp;</label>
       </td>

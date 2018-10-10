@@ -30,7 +30,7 @@
 <% String vsBasePath = request.getContextPath(); %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
@@ -392,7 +392,7 @@
                               onFocus="active = true"
                               onBlur="active = false"
                               onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-                              tabindex="1"
+                              tabindex="0"
                           />
 
                           <input aria-label="Search" 
@@ -402,10 +402,10 @@
                               name="valueSetSearchForm:valueset_search"
                               alt="Search value sets containing matched concepts"
                               onclick="javascript:getCheckedVocabularies();"
-                              tabindex="2"
+                              tabindex="0"
                               class="searchbox-btn"
                           />
-                          <a href="/ncitbrowser/pages/help.jsf#searchhelp" tabindex="3">
+                          <a href="/ncitbrowser/pages/help.jsf#searchhelp" tabindex="0">
                             <img
                                 src="/ncitbrowser/images/search-help.gif"
                                 alt="Search Help"
@@ -432,7 +432,7 @@
                                     <%=check__c%>
                                     alt="Contains"
                                     checked
-                                    tabindex="4"
+                                    tabindex="0"
                                      onclick="onVSAlgorithmChanged();">
 
                                 <label for="contains">Contains</label>
@@ -443,7 +443,7 @@
                                     value="exactMatch"
                                     <%=check__e%>
                                     alt="Exact Match"
-                                     tabindex="5">
+                                     tabindex="0">
 
                                 <label for="exactMatch">Exact Match&nbsp;</label>
                                 <input
@@ -453,7 +453,7 @@
                                     value="startsWith"
                                     <%=check__s%>
                                     alt="Begins With"
-                                     tabindex="6"
+                                     tabindex="0"
                                      onclick="onVSAlgorithmChanged();">
 
                                 <label for="startsWith">Begins With&nbsp;</label>
@@ -473,7 +473,7 @@
                                     <%=check_n%>
                                      alt="Name"
                                     checked
-                                    tabindex="7">
+                                    tabindex="0">
 
                                 <label for="names">Name&nbsp;</label>
                                 <input
@@ -483,7 +483,7 @@
                                     value="Code"
                                     <%=check_cd%>
                                     alt="Code"
-                                    tabindex="8"
+                                    tabindex="0"
                                     onclick="onVSCodeButtonPressed();">
 
                                 <label for="codes">Code&nbsp;</label>
@@ -534,7 +534,7 @@
             <!-- Page content -->
             <div class="pagecontent">
               <div>
-                <a name="evs-content" id="evs-content" tabindex="9"></a>
+                <a name="evs-content" id="evs-content" tabindex="0"></a>
 
                 <%
                 if (!DataUtils.isNullOrBlank(message)) {

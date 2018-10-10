@@ -190,7 +190,7 @@ check_r = "checked";
       onFocus="active=true"
       onBlur="active=false"
       onkeypress="return submitEnter('searchTerm:search', event)"
-      tabindex="1"
+      tabindex="0"
   />
   <h:commandButton
       id="search"
@@ -201,10 +201,10 @@ check_r = "checked";
       image="#{form_requestContextPath}/images/search.gif"
       alt="Search"
       styleClass="searchbox-btn"
-      tabindex="2">
+      tabindex="0">
 
   </h:commandButton>
-  <h:outputLink value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp" tabindex="3">
+  <h:outputLink value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp" tabindex="0">
     <h:graphicImage
         value="/images/search-help.gif"
         alt="Search Help"
@@ -222,7 +222,7 @@ check_r = "checked";
             value="contains"
             alt="Contains"
              <%=check_c%>
-            tabindex="4"
+            tabindex="0"
             onclick="onAlgorithmChanged('searchTerm');">
 
         <label for="contains">Contains</label>
@@ -233,7 +233,7 @@ check_r = "checked";
             value="exactMatch"
             alt="Exact Match"
             <%=check_e%>
-            tabindex="5">
+            tabindex="0">
 
         <label for="exactMatch">Exact Match&nbsp;</label>
         <input
@@ -243,7 +243,7 @@ check_r = "checked";
             value="startsWith"
             alt="Begins With"
             <%=check_s%>
-            tabindex="6"
+            tabindex="0"
             onclick="onAlgorithmChanged('searchTerm');">
 
         <label for="startsWith">Begins With&nbsp;</label>
@@ -263,7 +263,7 @@ check_r = "checked";
             value="names"
             alt="Name"
             <%=check_n%>
-             tabindex="7">
+             tabindex="0">
 
         <label for="names">Name&nbsp;</label>
         <input
@@ -273,7 +273,7 @@ check_r = "checked";
             value="codes"
             alt="Code"
             <%=check_cd%>
-            tabindex="8"
+            tabindex="0"
             onclick="onCodeButtonPressed('searchTerm');">
 
         <label for="codes">Code&nbsp;</label>
@@ -284,7 +284,7 @@ check_r = "checked";
             value="properties"
             alt="Property"
             <%=check_p%>
-             tabindex="9">
+             tabindex="0">
 
         <label for="properties">Property&nbsp;</label>
         <input
@@ -294,7 +294,7 @@ check_r = "checked";
             value="relationships"
             alt="Relationship"
             <%=check_r%>
-             tabindex="10">
+             tabindex="0">
         <label for="relationships">Relationship</label>
       </td>
     </tr>
@@ -321,7 +321,7 @@ check_r = "checked";
                     <a
                         class="global-nav"
                         href="<%=request.getContextPath()%>/pages/value_set_entity_search_results.jsf?key=<%=HTTPUtils.cleanXSS(search_key)%>&page_number=<%=page_number%>&vse=<%=vse%>"
-                        tabindex="11"
+                        tabindex="0"
                         title="Back to search results">
 
                       Back to search results</a>
@@ -334,7 +334,7 @@ check_r = "checked";
                       <a
                           class="global-nav"
                           href="<%=request.getContextPath()%>/pages/search_results.jsf?dictionary=<%=HTTPUtils.cleanXSS(vocab_name)%>&version=<%=HTTPUtils.cleanXSS(srchform_version)%>&key=<%=HTTPUtils.cleanXSS(search_key)%>&page_number=<%=page_number%>"
-                          tabindex="12"
+                          tabindex="0"
                           title="Back to search results">
 
                         Back to search results</a>
@@ -344,7 +344,7 @@ check_r = "checked";
                       <a
                           class="global-nav"
                           href="<%=request.getContextPath()%>/pages/multiple_search_results.jsf?key=<%=HTTPUtils.cleanXSS(search_key)%>&page_number=<%=page_number%>"
-                          tabindex="13"
+                          tabindex="0"
                           title="Back to search results">
 
                         Back to search results</a>
@@ -359,7 +359,7 @@ check_r = "checked";
                 <a
                     class="textbodyredsmall"
                     href="<%=request.getContextPath()%>/pages/advanced_search.jsf?dictionary=<%=HTTPUtils.cleanXSS(vocab_name)%>&version=<%=HTTPUtils.cleanXSS(srchform_version)%>"
-                    tabindex="14"
+                    tabindex="0"
                     title="Advanced Search">
 
                   Advanced Search</a>

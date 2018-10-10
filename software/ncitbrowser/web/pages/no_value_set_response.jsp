@@ -14,7 +14,7 @@
 <%@ page import="org.apache.log4j.*" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
@@ -143,13 +143,13 @@
                   <a
                       href="#"
                       onclick="javascript:window.open('/ncitbrowser/pages/source_help_info-termbrowser.jsf', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');"
-                      tabindex="1">
+                      tabindex="0">
 
                     Sources</a>
 
                 </td>
                 <td align="right" valign="bottom">
-                  <a href="/ncitbrowser/pages/help.jsf" tabindex="2">Help</a>
+                  <a href="/ncitbrowser/pages/help.jsf" tabindex="0">Help</a>
                 </td>
                 <td width="7"></td>
               </tr>
@@ -175,7 +175,7 @@
                       onmouseout="document.quicklinksimg.src='/ncitbrowser/images/quicklinks-inactive.gif';">
 
                     <li>
-                    <a href="#" tabindex="3">
+                    <a href="#" tabindex="0">
                       <img
                           src="/ncitbrowser/images/quicklinks-inactive.gif"
                           width="162"
@@ -189,29 +189,29 @@
                       <li>
                       <a
                           href="http://evs.nci.nih.gov/"
-                          tabindex="4"
+                          tabindex="0"
                           target="_blank"
                           alt="Enterprise Vocabulary Services">
 
                         EVS Home</a>
                     </li>
                     <li>
-                    <a href="http://ncim.nci.nih.gov/ncimbrowser" tabindex="5" target="_blank" alt="NCI Metathesaurus">
+                    <a href="http://ncim.nci.nih.gov/ncimbrowser" tabindex="0" target="_blank" alt="NCI Metathesaurus">
                       NCI Metathesaurus Browser</a>
                   </li>
 
                   <li>
-                  <a href="/ncitbrowser/index.jsp" tabindex="6" alt="NCI Thesaurus Browser">NCI Thesaurus Browser</a>
+                  <a href="/ncitbrowser/index.jsp" tabindex="0" alt="NCI Thesaurus Browser">NCI Thesaurus Browser</a>
                 </li>
 
                 <li>
-                <a href="/ncitbrowser/termbrowser.jsf" tabindex="7" alt="NCI Term Browser">NCI Term Browser</a>
+                <a href="/ncitbrowser/termbrowser.jsf" tabindex="0" alt="NCI Term Browser">NCI Term Browser</a>
               </li>
 
               <li>
               <a
                   href="http://www.cancer.gov/cancertopics/terminologyresources"
-                  tabindex="8"
+                  tabindex="0"
                   target="_blank"
                   alt="NCI Terminology Resources">
 

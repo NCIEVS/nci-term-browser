@@ -46,7 +46,7 @@
   Integer curr_sort_category = null;
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
   <title>NCI Term Browser</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -215,7 +215,7 @@ if (display_release_date) {
     onFocus="active = true"
     onBlur="active = false"
     onkeypress="return submitEnter('mappingSearch:search',event)"
-    tabindex="1"
+    tabindex="0"
   />
   <h:commandButton
     id="search"
@@ -224,11 +224,11 @@ if (display_release_date) {
     image="#{searchform_requestContextPath}/images/search.gif"
     alt="Search selected mapping"
     styleClass="searchbox-btn"
-    tabindex="2">
+    tabindex="0">
   </h:commandButton>
   <h:outputLink
     value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp"
-    tabindex="3">
+    tabindex="0">
     <h:graphicImage value="/images/search-help.gif" styleClass="searchbox-btn" alt="Search Help"
     style="border-width:0;"/>
   </h:outputLink>
@@ -247,9 +247,9 @@ String algorithm = gov.nih.nci.evs.browser.utils.HTTPUtils.cleanXSS((String) req
   <table border="0" cellspacing="0" cellpadding="0">
     <tr valign="top" align="left">
       <td align="left" class="textbody">
-        <input type="radio" id="contains" name="algorithm" value="contains" alt="Contains" <%=check_c%> tabindex="4"><label for="contains">Contains&nbsp;</label>
-        <input type="radio" id="exactmatch" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="4"><label for="exactmatch">Exact Match&nbsp;</label>
-        <input type="radio" id="startswith" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="4"><label for="startswith">Begins With&nbsp;</label>
+        <input type="radio" id="contains" name="algorithm" value="contains" alt="Contains" <%=check_c%> tabindex="0"><label for="contains">Contains&nbsp;</label>
+        <input type="radio" id="exactmatch" name="algorithm" value="exactMatch" alt="Exact Match" <%=check_e%> tabindex="0"><label for="exactmatch">Exact Match&nbsp;</label>
+        <input type="radio" id="startswith" name="algorithm" value="startsWith" alt="Begins With" <%=check_s%> tabindex="0"><label for="startswith">Begins With&nbsp;</label>
         <%
           String searchTarget = (String) request.getSession().getAttribute("searchTarget");
           String check_n = "", check_cd = "", check_p = "" , check_r ="";
@@ -269,10 +269,10 @@ String algorithm = gov.nih.nci.evs.browser.utils.HTTPUtils.cleanXSS((String) req
     </tr>
     <tr valign="top" align="left">
       <td align="left" class="textbody">
-        <input type="radio" id="names" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="5"><label for="names">Name</label>
-        <input type="radio" id="codes" name="searchTarget" value="codes" alt="Names" <%=check_cd%> tabindex="5"><label for="codes">Code&nbsp;</label>
-        <input type="radio" id="properties" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="5"><label for="properties">Property&nbsp;</label>
-        <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="5"><label for="relationships">Relationship&nbsp;</label>
+        <input type="radio" id="names" name="searchTarget" value="names" alt="Names" <%=check_n%> tabindex="0"><label for="names">Name</label>
+        <input type="radio" id="codes" name="searchTarget" value="codes" alt="Names" <%=check_cd%> tabindex="0"><label for="codes">Code&nbsp;</label>
+        <input type="radio" id="properties" name="searchTarget" value="properties" alt="Properties" <%=check_p%> tabindex="0"><label for="properties">Property&nbsp;</label>
+        <input type="radio" id="relationships" name="searchTarget" value="relationships" alt="Relationships" <%=check_r%> tabindex="0"><label for="relationships">Relationship&nbsp;</label>
       </td>
     </tr>
   </table>

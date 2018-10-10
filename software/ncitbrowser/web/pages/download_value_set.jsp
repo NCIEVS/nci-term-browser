@@ -19,7 +19,7 @@
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
@@ -272,7 +272,7 @@
                             onFocus="active=true"
                             onBlur="active=false"
                              onkeypress="return submitEnter('resolvedValueSetSearchForm:resolvedvalueset_search',event)"
-                            tabindex="1"
+                            tabindex="0"
                         />
 
                         <input
@@ -284,10 +284,10 @@
                             accesskey="13"
                             alt="Search concepts in value set"
                             onclick="javascript:cursor_wait();"
-                            tabindex="2"
+                            tabindex="0"
                             class="searchbox-btn"
                         />
-                        <a href="/ncitbrowser/pages/help.jsf#searchhelp" tabindex="3">
+                        <a href="/ncitbrowser/pages/help.jsf#searchhelp" tabindex="0">
                           <img
                               src="/ncitbrowser/images/search-help.gif"
                               alt="Search Help"
@@ -307,7 +307,7 @@
                                   value="contains"
                                   alt="Contains"
                                   <%=check_c%>
-                                  tabindex="4"
+                                  tabindex="0"
                                   onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"
                               />
                               <label for="contains">Contains</label>
@@ -318,7 +318,7 @@
                                   value="exactMatch"
                                   alt="Exact Match"
                                   <%=check_e%>
-                                  tabindex="5"
+                                  tabindex="0"
                               />
                               <label for="exactMatch">Exact Match&nbsp;</label>
                               <input
@@ -328,7 +328,7 @@
                                   value="startsWith"
                                   alt="Begins With"
                                   <%=check_s%>
-                                  tabindex="6"
+                                  tabindex="0"
                                   onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"
                               />
                               <label for="startsWith">Begins With&nbsp;</label>
@@ -354,7 +354,7 @@
                                   value="Name"
                                   alt="Name"
                                   <%=check_n%>
-                                  tabindex="7"
+                                  tabindex="0"
                               />
                               <label for="names">Name&nbsp;</label>
                               <input
@@ -364,7 +364,7 @@
                                   value="Code"
                                   alt="Code"
                                   <%=check_cd%>
-                                  tabindex="8"
+                                  tabindex="0"
                                   onclick="onCodeButtonPressed('resolvedValueSetSearchForm');"
                               />
                               <label for="codes">Code&nbsp;</label>
@@ -473,7 +473,7 @@
 
                 <div class="pagecontent">
 
-                  <a name="evs-content" id="evs-content" tabindex="9"></a>
+                  <a name="evs-content" id="evs-content" tabindex="0"></a>
                   <div class="tabTableContentContainer">
                     <h:form id="valueSetSearchResultsForm" styleClass="search-form" acceptcharset="UTF-8">
                       <% if (!DataUtils.isNull(message)) { %>
@@ -573,7 +573,7 @@
                                               src="/ncitbrowser/images/released_file.gif"
                                               alt="Value Set Released Files (FTP Server)"
                                               border="0"
-                                              tabindex="10">
+                                              tabindex="0">
 
                                         </a>
                                       </td>

@@ -14,7 +14,7 @@
 <%@ page import="org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
   <% String sel_dictionary = HTTPUtils.cleanXSS((String) request.getParameter("dictionary")); %>
 
@@ -83,7 +83,7 @@
           <% } %>
           <!-- Page content -->
           <div class="pagecontent">
-            <a name="evs-content" id="evs-content" tabindex="1"></a>
+            <a name="evs-content" id="evs-content" tabindex="0"></a>
             <%
             String message = null;
             if (list.size() == 0) {

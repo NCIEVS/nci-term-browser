@@ -21,7 +21,7 @@ String evs_service_url = DataUtils.getEVSServiceURL();
   <%=evs_service_url%>
 -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
@@ -181,7 +181,7 @@ String evs_service_url = DataUtils.getEVSServiceURL();
               <%@ include file="/pages/templates/quickLink.jsp" %>
               <!-- end Quick links bar -->
               <div class="pagecontent">
-                <a name="evs-content" id="evs-content" tabindex="1"></a>
+                <a name="evs-content" id="evs-content" tabindex="0"></a>
                 <p><%= helper.getReviewAndAcceptMessage() %></p>
                 
 <label for="license_stmt">License Statement</label>                
@@ -314,7 +314,7 @@ String evs_service_url = DataUtils.getEVSServiceURL();
                             <a
                                 href="#"
                                 onclick="javascript:window.open('<%=request.getContextPath()%>/pages/hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');"
-                                tabindex="2">
+                                tabindex="0">
 
                               Hierarchy</a>
                           <% } %>
@@ -323,11 +323,11 @@ String evs_service_url = DataUtils.getEVSServiceURL();
                             <!--
                               <a href="<%= request.getContextPath()
                               %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>"
-                              tabindex="3">Value Sets</a>
+                              tabindex="0">Value Sets</a>
                             -->
                             <a
                                 href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>"
-                                tabindex="4">
+                                tabindex="0">
 
                               Value Sets</a>
 
@@ -336,7 +336,7 @@ String evs_service_url = DataUtils.getEVSServiceURL();
                           <% if (hasMapping) { %><%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
                             <a
                                 href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>"
-                                tabindex="5">
+                                tabindex="0">
 
                               Maps</a>
                           <% } %>
@@ -344,14 +344,14 @@ String evs_service_url = DataUtils.getEVSServiceURL();
                           <c:choose>
                             <c:when test="${sessionScope.CartActionBean.count>
                               0}"><%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-                              <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="6">Cart</a>
+                              <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="0">Cart</a>
                             </c:when>
                           </c:choose>
 
                           <%= VisitedConceptUtils.getDisplayLink(request, isPipeDisplayed) %>
                         </td>
                         <td align="right">
-                          <a href="<%=request.getContextPath()%>/pages/help.jsf" tabindex="7">Help</a>
+                          <a href="<%=request.getContextPath()%>/pages/help.jsf" tabindex="0">Help</a>
                         </td>
                         <td width="7"></td>
                       </tr>

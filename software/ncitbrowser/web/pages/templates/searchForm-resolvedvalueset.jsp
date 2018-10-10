@@ -51,7 +51,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
       onFocus="active=true"
       onBlur="active=false"
        onkeypress="return submitEnter('resolvedValueSetSearchForm:resolvedvalueset_search',event)"
-      tabindex="1"
+      tabindex="0"
   />
 
   <h:commandButton
@@ -63,10 +63,10 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
       image="#{form_requestContextPath}/images/search.gif"
       alt="Search concepts in value set"
       styleClass="searchbox-btn"
-      tabindex="2">
+      tabindex="0">
 
   </h:commandButton>
-  <h:outputLink value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp" tabindex="3">
+  <h:outputLink value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp" tabindex="0">
     <h:graphicImage
         value="/images/search-help.gif"
         style="border-width:0;"
@@ -86,7 +86,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
             value="contains"
             alt="Contains"
             <%=check_c%>
-            tabindex="4"
+            tabindex="0"
             onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"
         />
         <label for="contains">Contains</label>
@@ -97,7 +97,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
             value="exactMatch"
             alt="Exact Match"
             <%=check_e%>
-            tabindex="5"
+            tabindex="0"
         />
         <label for="exactMatch">Exact Match&nbsp;</label>
         <input
@@ -107,7 +107,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
             value="startsWith"
             alt="Begins With"
             <%=check_s%>
-            tabindex="6"
+            tabindex="0"
             onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"
         />
         <label for="startsWith">Begins With&nbsp;</label>
@@ -126,7 +126,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
 
     <tr valign="top" align="left">
       <td align="left" class="textbody" colspan="2">
-        <input type="radio" name="searchTarget" id="names" value="names" alt="Names" <%=check_n%> tabindex="7" />
+        <input type="radio" name="searchTarget" id="names" value="names" alt="Names" <%=check_n%> tabindex="0" />
         <label for="names">Name&nbsp;</label>
         <input
             type="radio"
@@ -135,7 +135,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
             value="codes"
             alt="Code"
             <%=check_cd%>
-            tabindex="8"
+            tabindex="0"
             onclick="onCodeButtonPressed('resolvedValueSetSearchForm');"
         />
         <label for="codes">Code&nbsp;</label>

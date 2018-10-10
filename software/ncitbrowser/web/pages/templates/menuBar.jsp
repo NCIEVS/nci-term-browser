@@ -76,7 +76,7 @@ adjustedHeight = "height=\"42\"";
 <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
 <a href="<%=request.getContextPath()
 %>
-/pages/mapping.jsf?dictionary=<%= menubar_dictionary %>&version=<%= menubar_version %>" tabindex="1"> Mapping</a>
+/pages/mapping.jsf?dictionary=<%= menubar_dictionary %>&version=<%= menubar_version %>" tabindex="0"> Mapping</a>
 <% } else if (tree_access_allowed) { %>
 <%
 if (showMenuItems) {
@@ -88,7 +88,7 @@ if (showMenuItems) {
   <a
       href="#"
       onclick="javascript:window.open('<%=request.getContextPath() %>/pages/hierarchy.jsf?dictionary=<%=hdr_dictionary0%>&version=<%=menubar_version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');"
-      tabindex="2">
+      tabindex="0">
 
     Hierarchy</a>
 <% } %>
@@ -99,7 +99,7 @@ if (showMenuItems) {
 
 <a
     href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=menubar_dictionary%>&version=<%=menubar_version%>"
-    tabindex="3">
+    tabindex="0">
 
   Value Sets</a>
 
@@ -108,7 +108,7 @@ if (showMenuItems) {
 <% if (hasMapping) { %><%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
 <a
     href="<%= request.getContextPath() %>/pages/cs_mappings.jsf?dictionary=<%=menubar_dictionary%>&version=<%=menubar_version%>"
-    tabindex="4">
+    tabindex="0">
 
   Maps</a>
 <% } %>
@@ -116,14 +116,14 @@ if (showMenuItems) {
 <c:choose>
 <c:when test="${sessionScope.CartActionBean.count>
   0}"><%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-  <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="5">Cart</a>
+  <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="0">Cart</a>
 </c:when>
 </c:choose>
 
 <%= VisitedConceptUtils.getDisplayLink(request, isPipeDisplayed) %></td>
 
 <td align="right">
-<a href="<%= request.getContextPath() %>/pages/help.jsf" tabindex="6">Help</a>
+<a href="<%= request.getContextPath() %>/pages/help.jsf" tabindex="0">Help</a>
 </td>
 <td width="7"></td>
 </tr></table>

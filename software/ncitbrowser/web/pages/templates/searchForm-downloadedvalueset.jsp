@@ -61,7 +61,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
       onFocus="active=true"
       onBlur="active=false"
        onkeypress="return submitEnter('resolvedValueSetSearchForm:resolvedvalueset_search',event)"
-      tabindex="1"
+      tabindex="0"
   />
 
   <input aria-label="Search" 
@@ -72,10 +72,10 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
       accesskey="13"
       alt="Search concepts in value set"
       onclick="javascript:cursor_wait();"
-      tabindex="2"
+      tabindex="0"
       class="searchbox-btn"
   />
-  <a href="/ncitbrowser/pages/help.jsf#searchhelp" tabindex="3">
+  <a href="/ncitbrowser/pages/help.jsf#searchhelp" tabindex="0">
     <img src="/ncitbrowser/images/search-help.gif" alt="Search Help" style="border-width:0;" class="searchbox-btn" />
   </a>
 
@@ -90,7 +90,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
             value="contains"
             alt="Contains"
             <%=check_c%>
-            tabindex="4"
+            tabindex="0"
             onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"
         />
         <label for="contains">Contains</label>
@@ -101,7 +101,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
             value="exactMatch"
             alt="Exact Match"
             <%=check_e%>
-            tabindex="5"
+            tabindex="0"
         />
         <label for="exactMatch">Exact Match&nbsp;</label>
         <input
@@ -111,7 +111,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
             value="startsWith"
             alt="Begins With"
             <%=check_s%>
-            tabindex="6"
+            tabindex="0"
             onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"
         />
         <label for="startsWith">Begins With&nbsp;</label>
@@ -137,7 +137,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
             value="Name"
             alt="Name"
             <%=check_n%>
-            tabindex="7"
+            tabindex="0"
         />
         <label for="Name">Name&nbsp;</label>
         <input
@@ -147,7 +147,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
             value="Code"
             alt="Code"
             <%=check_cd%>
-            tabindex="8"
+            tabindex="0"
             onclick="onCodeButtonPressed('resolvedValueSetSearchForm');"
         />
         <label for="Code">Code&nbsp;</label>

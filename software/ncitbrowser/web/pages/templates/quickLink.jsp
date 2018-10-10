@@ -66,7 +66,7 @@ if (quicklink_dictionary != null) {
             onmouseout="document.quicklinksimg.src='<%=basePath%>/images/quicklinks-inactive.gif';">
 
           <li>
-          <a href="#" tabindex="1">
+          <a href="#" tabindex="0">
             <img
                 src="<%=basePath%>/images/quicklinks-inactive.gif"
                 width="162"
@@ -78,30 +78,30 @@ if (quicklink_dictionary != null) {
           </a>
           <ul>
             <li>
-            <a href="http://evs.nci.nih.gov/" tabindex="2" target="_blank" alt="Enterprise Vocabulary Services">
+            <a href="http://evs.nci.nih.gov/" tabindex="0" target="_blank" alt="Enterprise Vocabulary Services">
               EVS Home</a>
           </li>
           <li>
-          <a href="<%=ncim_url%>" tabindex="3" target="_blank" alt="NCI Metathesaurus">NCI Metathesaurus Browser</a>
+          <a href="<%=ncim_url%>" tabindex="0" target="_blank" alt="NCI Metathesaurus">NCI Metathesaurus Browser</a>
         </li>
 
         <% if (DataUtils.isNCIT(quicklink_dictionary)) { %>
 
           <li>
-          <a href="<%= request.getContextPath() %>/index.jsp" tabindex="4" alt="NCI Thesaurus Browser">
+          <a href="<%= request.getContextPath() %>/index.jsp" tabindex="0" alt="NCI Thesaurus Browser">
             NCI Thesaurus Browser</a>
         </li>
 
       <% } %>
 
       <li>
-      <a href="<%= request.getContextPath() %>/termbrowser.jsf" tabindex="5" alt="NCI Term Browser">NCI Term Browser</a>
+      <a href="<%= request.getContextPath() %>/termbrowser.jsf" tabindex="0" alt="NCI Term Browser">NCI Term Browser</a>
     </li>
 
     <li>
     <a
         href="http://www.cancer.gov/cancertopics/terminologyresources"
-        tabindex="6"
+        tabindex="0"
         target="_blank"
         alt="NCI Terminology Resources">
 
@@ -110,7 +110,7 @@ if (quicklink_dictionary != null) {
     <li>
     <a
         href="<%=term_suggestion_application_url2%>?dictionary=<%=dictionary_encoded2%>"
-        tabindex="7"
+        tabindex="0"
         target="_blank"
         alt="Term Suggestion">
 

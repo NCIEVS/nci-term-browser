@@ -28,7 +28,7 @@
 <% String vsBasePath = request.getContextPath(); %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
@@ -415,7 +415,7 @@
                           onFocus="active=true"
                           onBlur="active=false"
                           onkeypress="return submitEnter('resolvedValueSetSearchForm:resolvedvalueset_search',event)"
-                          tabindex="1"
+                          tabindex="0"
                       />
                       <h:commandButton
                           id="resolvedvalueset_search"
@@ -426,12 +426,12 @@
                           image="#{valueSetSearch_requestContextPath}/images/search.gif"
                           alt="Search Value Set"
                           styleClass="searchbox-btn"
-                          tabindex="2">
+                          tabindex="0">
 
                       </h:commandButton>
                       <h:outputLink
                           value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp"
-                          tabindex="3">
+                          tabindex="0">
 
                         <h:graphicImage
                             value="/images/search-help.gif"
@@ -451,7 +451,7 @@
                                 value="contains"
                                 alt="Contains"
                                 <%=check_c%>
-                                tabindex="4"
+                                tabindex="0"
                                 onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"
                             />
                             <label for="contains">Contains</label>
@@ -462,7 +462,7 @@
                                 value="exactMatch"
                                 alt="Exact Match"
                                 <%=check_e%>
-                                tabindex="5"
+                                tabindex="0"
                             />
                             <label for="exactMatch">Exact Match&nbsp;</label>
                             <input
@@ -472,7 +472,7 @@
                                 value="startsWith"
                                 alt="Begins With"
                                 <%=check_s%>
-                                tabindex="6"
+                                tabindex="0"
                                 onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"
                             />
                             <label for="startsWith">Begins With&nbsp;</label>
@@ -497,7 +497,7 @@
                                 value="names"
                                 alt="Names"
                                 <%=check_n%>
-                                tabindex="7"
+                                tabindex="0"
                             />
                             <label for="names">Name&nbsp;</label>
                             <input
@@ -507,7 +507,7 @@
                                 value="codes"
                                 alt="Code"
                                 <%=check_cd%>
-                                tabindex="8"
+                                tabindex="0"
                                 onclick="onCodeButtonPressed('resolvedValueSetSearchForm');"
                             />
                             <label for="codes">Code&nbsp;</label>
@@ -518,7 +518,7 @@
                                 value="properties"
                                 alt="Properties"
                                 <%=check_p%>
-                                tabindex="9"
+                                tabindex="0"
                             />
                             <label for="properties">Property</label>
                           </td>
@@ -563,7 +563,7 @@
                                 value=""
                                 disabled="disabled"
                                 onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-                                tabindex="10"
+                                tabindex="0"
                             />
                           <% } else { %>
                             <input aria-label="Match Text"
@@ -573,7 +573,7 @@
                                 onFocus="active = true"
                                 onBlur="active = false"
                                 onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-                                tabindex="11"
+                                tabindex="0"
                             />
                           <% } %>
 
@@ -585,13 +585,13 @@
                               image="#{valueSetSearch_requestContextPath}/images/search.gif"
                               styleClass="searchbox-btn"
                               alt="Search value sets containing matched concepts"
-                              tabindex="12">
+                              tabindex="0">
 
                           </h:commandButton>
 
                           <h:outputLink
                               value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp"
-                              tabindex="13">
+                              tabindex="0">
 
                             <h:graphicImage
                                 value="/images/search-help.gif"
@@ -616,7 +616,7 @@
                                     value="contains"
                                     alt="Contains"
                                     <%=check__c%>
-                                    tabindex="14">
+                                    tabindex="0">
 
                                 <label for="valueset_search_algorithm1">Contains</label>
                                 <input
@@ -626,7 +626,7 @@
                                     value="exactMatch"
                                     alt="Exact Match"
                                     <%=check__e%>
-                                    tabindex="15">
+                                    tabindex="0">
 
                                 <label for="valueset_search_algorithm2">Exact Match&nbsp;</label>
                                 <input
@@ -636,7 +636,7 @@
                                     value="startsWith"
                                     alt="Begins With"
                                     <%=check__s%>
-                                    tabindex="16">
+                                    tabindex="0">
 
                                 <label for="valueset_search_algorithm3">Begins With&nbsp;</label>
                               </td>
@@ -655,7 +655,7 @@
                                     value="Name"
                                     <%=check_name%>
                                     alt="Name"
-                                    tabindex="17"
+                                    tabindex="0"
                                     onclick="javascript:refresh()">
 
                                 <label for="selectValueSetSearchOption1">Name&nbsp;</label>
@@ -667,7 +667,7 @@
                                     value="Code"
                                     <%=check_code%>
                                     alt="Code"
-                                    tabindex="18"
+                                    tabindex="0"
                                     onclick="javascript:refresh()">
 
                                 <label for="selectValueSetSearchOption2">Code&nbsp;</label>
@@ -713,7 +713,7 @@
           <!-- Page content -->
           <div class="pagecontent">
             <div id="contentArea">
-              <a name="evs-content" id="evs-content" tabindex="19"></a>
+              <a name="evs-content" id="evs-content" tabindex="0"></a>
 
               <%-- 0 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
 
@@ -749,7 +749,7 @@
                                       onclick="javascript:cursor_wait();"
                                       image="#{valueSetSearch_requestContextPath}/images/values.gif"
                                       alt="Values"
-                                      tabindex="20">
+                                      tabindex="0">
 
                                   </h:commandButton>
                                   &nbsp;
@@ -760,7 +760,7 @@
                                       onclick="javascript:cursor_wait();"
                                       image="#{valueSetSearch_requestContextPath}/images/versions.gif"
                                       alt="Versions"
-                                      tabindex="21">
+                                      tabindex="0">
 
                                   </h:commandButton>
                                   &nbsp;
@@ -771,7 +771,7 @@
                                       onclick="javascript:cursor_wait();"
                                       image="#{valueSetSearch_requestContextPath}/images/xmldefinitions.gif"
                                       alt="XML Definition"
-                                      tabindex="22">
+                                      tabindex="0">
 
                                   </h:commandButton>
                                 </td>
@@ -906,7 +906,7 @@
                                       onclick="javascript:cursor_wait();"
                                       image="#{valueSetSearch_requestContextPath}/images/values.gif"
                                       alt="Values"
-                                      tabindex="23">
+                                      tabindex="0">
 
                                   </h:commandButton>
                                   &nbsp;
@@ -917,7 +917,7 @@
                                       onclick="javascript:cursor_wait();"
                                       image="#{valueSetSearch_requestContextPath}/images/versions.gif"
                                       alt="Versions"
-                                      tabindex="24">
+                                      tabindex="0">
 
                                   </h:commandButton>
                                   &nbsp;
@@ -928,7 +928,7 @@
                                       onclick="javascript:cursor_wait();"
                                       image="#{valueSetSearch_requestContextPath}/images/xmldefinitions.gif"
                                       alt="XML Definition"
-                                      tabindex="25">
+                                      tabindex="0">
 
                                   </h:commandButton>
                                 </td>

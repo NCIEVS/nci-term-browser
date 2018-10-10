@@ -47,7 +47,7 @@ boolean display_cabig_approval_indicator_note = false;
 Integer curr_sort_category = null;
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
 <script src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js"></script>
 <title>NCI Term Browser</title>
@@ -268,7 +268,7 @@ Integer curr_sort_category = null;
                       onFocus="active = true"
                       onBlur="active = false"
                       onkeypress="return submitEnter('mappingSearch:mapping_search',event)"
-                      tabindex="1"
+                      tabindex="0"
                   />
                   <h:commandButton
                       id="mapping_search"
@@ -277,12 +277,12 @@ Integer curr_sort_category = null;
                       image="#{searchform_requestContextPath}/images/search.gif"
                       alt="Search selected mapping"
                       styleClass="searchbox-btn"
-                      tabindex="2">
+                      tabindex="0">
 
                   </h:commandButton>
                   <h:outputLink
                       value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp"
-                      tabindex="3">
+                      tabindex="0">
 
                     <h:graphicImage
                         value="/images/search-help.gif"
@@ -323,7 +323,7 @@ Integer curr_sort_category = null;
                             value="contains"
                             alt="Contains"
                             <%=check_c%>
-                            tabindex="4"
+                            tabindex="0"
                             onclick="onAlgorithmChanged('mappingSearch');">
                         <label for="contains">Contains&nbsp;</label>
                         <input
@@ -333,7 +333,7 @@ Integer curr_sort_category = null;
                             value="exactMatch"
                             alt="Exact Match"
                             <%=check_e%>
-                            tabindex="5">
+                            tabindex="0">
                         <label for="exactMatch">Exact Match&nbsp;</label>
                         <input
                             type="radio"
@@ -342,7 +342,7 @@ Integer curr_sort_category = null;
                             value="startsWith"
                             alt="Begins With"
                             <%=check_s%>
-                            tabindex="6"
+                            tabindex="0"
                             onclick="onAlgorithmChanged('mappingSearch');">
                         <label for="startsWith">Begins With&nbsp;</label>
                         <%
@@ -371,7 +371,7 @@ Integer curr_sort_category = null;
                             value="names"
                             alt="Names"
                             <%=check_n%>
-                            tabindex="7">
+                            tabindex="0">
                         <label for="names">Name&nbsp;</label>
                         <input
                             type="radio"
@@ -380,7 +380,7 @@ Integer curr_sort_category = null;
                             value="codes"
                             alt="Codes"
                             <%=check_cd%>
-                            tabindex="8"
+                            tabindex="0"
                             onclick="onCodeButtonPressed('mappingSearch');">
 
                         <label for="codes">Code&nbsp;</label>
@@ -391,7 +391,7 @@ Integer curr_sort_category = null;
                             value="properties"
                             alt="Properties"
                             <%=check_p%>
-                            tabindex="9">
+                            tabindex="0">
 
                         <label for="properties">Property&nbsp;</label>
                         <input
@@ -401,7 +401,7 @@ Integer curr_sort_category = null;
                             value="relationships"
                             alt="Relationships"
                             <%=check_r%>
-                            tabindex="10">
+                            tabindex="0">
 
                         <label for="relationships">Relationship&nbsp;</label>
                       </td>
@@ -427,7 +427,7 @@ Integer curr_sort_category = null;
 
           <!-- Page content -->
           <div class="pagecontent">
-            <a name="evs-content" id="evs-content" tabindex="11"></a>
+            <a name="evs-content" id="evs-content" tabindex="0"></a>
 
             <%-- 1 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
 

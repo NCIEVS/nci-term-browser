@@ -14,7 +14,7 @@
 <%@ page import="org.apache.log4j.*" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
@@ -472,7 +472,7 @@
           check_target= "checked";
           %>
           <div class="pagecontent">
-            <a name="evs-content" id="evs-content" tabindex="1"></a>
+            <a name="evs-content" id="evs-content" tabindex="0"></a>
             <table role='presentation'>
               <tr>
                 <td class="texttitle-blue">Advanced Search</td>
@@ -499,7 +499,7 @@
                               name="matchText"
                               value="<%=HTTPUtils.cleanXSS(search_string)%>"
                               onkeypress="return submitEnter('advancedSearchForm:adv_search',event)"
-                              tabindex="2">
+                              tabindex="0">
 
                           <h:commandButton
                               id="adv_search"
@@ -508,7 +508,7 @@
                               onclick="javascript:cursor_wait();"
                               image="#{advSearch_requestContextPath}/images/search.gif"
                               alt="Search"
-                              tabindex="3">
+                              tabindex="0">
 
                           </h:commandButton>
                         </td>
@@ -525,7 +525,7 @@
                                     value="contains"
                                     alt="Contains"
                                     <%=check__c%>
-                                    tabindex="4"
+                                    tabindex="0"
                                     onclick="refresh_algorithm()";>
                                 <label for="contains">Contains</label>
                                 <input
@@ -535,7 +535,7 @@
                                     value="exactMatch"
                                     alt="Exact Match"
                                     <%=check__e%>
-                                    tabindex="5"
+                                    tabindex="0"
                                     onclick="refresh_algorithm()";>
                                 <label for="exactMatch">Exact Match&nbsp;</label>
                                 <input
@@ -545,7 +545,7 @@
                                     value="startsWith"
                                     alt="Begins With"
                                     <%=check__s%>
-                                    tabindex="6"
+                                    tabindex="0"
                                     onclick="refresh_algorithm()";>
                                 <label for="startsWith">Begins With&nbsp;</label>
                                 <%
@@ -558,7 +558,7 @@
                                     value="lucene"
                                     alt="Lucene"
                                     <%=check__b%>
-                                    tabindex="7"
+                                    tabindex="0"
                                     onclick="refresh_algorithm()";>
                                 <label for="lucene">Lucene</label>
                               </td>
@@ -574,7 +574,7 @@
                               <h:outputLabel id="rel_search_source_Label" value="Source" styleClass="textbody">
                           -->    
                               <label for="adv_search_source">Source</label>
-                              <select id="adv_search_source" name="adv_search_source" size="1" tabindex="8">
+                              <select id="adv_search_source" name="adv_search_source" size="1" tabindex="0">
                                 <%
                                 Vector src_vec = OntologyBean.getSupportedSources(adv_search_vocabulary, adv_search_version);
                                 t = "ALL";
@@ -633,7 +633,7 @@
                               alt="Name"
                               <%=check_n2%>
                               onclick="javascript:refresh()"
-                              tabindex="9">
+                              tabindex="0">
 
                           <label for="names">Name&nbsp;</label>
                           <input
@@ -644,7 +644,7 @@
                               alt="Code"
                               <%=check_c2%>
                               onclick="refresh_code()"
-                              tabindex="10">
+                              tabindex="0">
 
                           <label for="codes">Code&nbsp;</label>
 
@@ -657,7 +657,7 @@
                                 alt="Property"
                                 <%=check_p2%>
                                 onclick="javascript:refresh()"
-                                tabindex="11">
+                                tabindex="0">
 
                             <label for="searchTarget2">Property&nbsp;</label>
                             <input
@@ -668,7 +668,7 @@
                                 alt="Relationship"
                                 <%=check_r2%>
                                 onclick="javascript:refresh()"
-                                tabindex="12">
+                                tabindex="0">
 
                             <label for="searchTarget3">Relationship</label>
                           <% } else { %>
@@ -707,7 +707,7 @@
                                   <h:outputLabel id="selectPropertyLabel" value="Select one:" styleClass="textbody">
                                 -->
                                     <label for="selectProperty">Select one:</label>
-                                    <select id="selectProperty" name="selectProperty" size="1" tabindex="13">
+                                    <select id="selectProperty" name="selectProperty" size="1" tabindex="0">
                                       <%
                                       t = "ALL";
                                       if (t.compareTo(selectProperty) == 0) {
@@ -798,7 +798,7 @@
                                                   value="source"
                                                   alt="Source"
                                                   <%=check_source%>
-                                                  tabindex="14"
+                                                  tabindex="0"
                                               />
                                               <label for="source">source&nbsp;</label>
                                               <input
@@ -808,7 +808,7 @@
                                                   value="target"
                                                   alt="Target"
                                                   <%=check_target%>
-                                                  tabindex="15"
+                                                  tabindex="0"
                                               />
 target&nbsp;
                                               concept name matching the search criteria specified above.

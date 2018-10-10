@@ -28,7 +28,7 @@
 <% String vsBasePath = request.getContextPath(); %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
@@ -376,7 +376,7 @@
                                     onFocus="active=true"
                                     onBlur="active=false"
                                      onkeypress="return submitEnter('resolvedValueSetSearchForm:resolvedvalueset_search',event)"
-                                    tabindex="1"
+                                    tabindex="0"
                                 />
                                 <input aria-label="Search Value Set" 
                                     id="resolvedValueSetSearchForm:resolvedvalueset_search"
@@ -386,10 +386,10 @@
                                     accesskey="13"
                                     alt="Search Value Set"
                                     onclick="javascript:cursor_wait();"
-                                    tabindex="2"
+                                    tabindex="0"
                                     class="searchbox-btn"
                                 />
-                                <a href="/ncitbrowser/pages/help.jsf#searchhelp" tabindex="3">
+                                <a href="/ncitbrowser/pages/help.jsf#searchhelp" tabindex="0">
                                   <img
                                       src="/ncitbrowser/images/search-help.gif"
                                       alt="Search Help"
@@ -407,7 +407,7 @@
                                           id="contains"
                                           value="contains"
                                           alt="Contains"
-                                           tabindex="4"
+                                           tabindex="0"
                                           onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"
                                       />
                                       <label for="contains">Contains</label>
@@ -418,7 +418,7 @@
                                           value="exactMatch"
                                           alt="Exact Match"
                                           checked
-                                          tabindex="5"
+                                          tabindex="0"
                                       />
                                       <label for="exactMatch">Exact Match&nbsp;</label>
                                       <input
@@ -427,7 +427,7 @@
                                           id="startsWith"
                                           value="startsWith"
                                           alt="Begins With"
-                                           tabindex="6"
+                                           tabindex="0"
                                           onclick="onAlgorithmChanged('resolvedValueSetSearchForm');"
                                       />
                                       <label for="startsWith">Begins With&nbsp;</label>
@@ -450,7 +450,7 @@
                                           value="names"
                                           alt="Names"
                                           checked
-                                          tabindex="7"
+                                          tabindex="0"
                                       />
                                       <label for="names">Name&nbsp;</label>
                                       <input
@@ -459,7 +459,7 @@
                                           id="codes"
                                           value="codes"
                                           alt="Code"
-                                           tabindex="8"
+                                           tabindex="0"
                                           onclick="onCodeButtonPressed('resolvedValueSetSearchForm');"
                                       />
                                       <label for="codes">Code&nbsp;</label>
@@ -469,7 +469,7 @@
                                           id="properties"
                                           value="properties"
                                           alt="Properties"
-                                           tabindex="9"
+                                           tabindex="0"
                                       />
                                       <label for="properties">Property</label>
                                     </td>
@@ -526,13 +526,13 @@
                                 <a
                                     href="#"
                                     onclick="javascript:window.open('/ncitbrowser/pages/source_help_info-termbrowser.jsf', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');"
-                                    tabindex="10">
+                                    tabindex="0">
 
                                   Sources</a>
 
                               </td>
                               <td align="right" valign="bottom">
-                                <a href="/ncitbrowser/pages/help.jsf" tabindex="11">Help</a>
+                                <a href="/ncitbrowser/pages/help.jsf" tabindex="0">Help</a>
                               </td>
                               <td width="7"></td>
                             </tr>
@@ -577,7 +577,7 @@
                     <!-- Page content -->
                     <div class="pagecontent">
                       <div id="contentArea">
-                        <a name="evs-content" id="evs-content" tabindex="12"></a>
+                        <a name="evs-content" id="evs-content" tabindex="0"></a>
 
                         <%-- 0 <%@ include file="/pages/templates/navigationTabs.jsp"%> --%>
 
@@ -618,7 +618,7 @@
                                                 onclick="javascript:cursor_wait();"
                                                 image="#{valueSetSearch_requestContextPath}/images/values.gif"
                                                 alt="Values"
-                                                tabindex="13">
+                                                tabindex="0">
 
                                             </h:commandButton>
                                             &nbsp;
@@ -629,7 +629,7 @@
                                                 onclick="javascript:cursor_wait();"
                                                 image="#{valueSetSearch_requestContextPath}/images/versions.gif"
                                                 alt="Versions"
-                                                tabindex="14">
+                                                tabindex="0">
 
                                             </h:commandButton>
                                             &nbsp;
@@ -640,7 +640,7 @@
                                                 onclick="javascript:cursor_wait();"
                                                 image="#{valueSetSearch_requestContextPath}/images/xmldefinitions.gif"
                                                 alt="XML Definition"
-                                                tabindex="15">
+                                                tabindex="0">
 
                                             </h:commandButton>
                                           </td>

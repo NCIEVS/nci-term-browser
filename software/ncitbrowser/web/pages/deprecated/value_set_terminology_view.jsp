@@ -28,7 +28,7 @@
 -->
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
@@ -748,7 +748,7 @@
                                                             value=""
                                                             disabled="disabled"
                                                             onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-                                                            tabindex="1"
+                                                            tabindex="0"
                                                         />
                                                       <% } else { %>
                                                         <input
@@ -758,7 +758,7 @@
                                                             onFocus="active = true"
                                                             onBlur="active = false"
                                                             onkeypress="return submitEnter('valueSetSearchForm:valueset_search',event)"
-                                                            tabindex="2"
+                                                            tabindex="0"
                                                         />
                                                       <% } %>
 
@@ -770,13 +770,13 @@
                                                           image="#{valueSetSearch_requestContextPath}/images/search.gif"
                                                           styleClass="searchbox-btn"
                                                           alt="Search"
-                                                          tabindex="3">
+                                                          tabindex="0">
 
                                                       </h:commandButton>
 
                                                       <h:outputLink
                                                           value="#{facesContext.externalContext.requestContextPath}/pages/help.jsf#searchhelp"
-                                                          tabindex="4">
+                                                          tabindex="0">
 
                                                         <h:graphicImage
                                                             value="/images/search-help.gif"
@@ -806,7 +806,7 @@
                                                                 value="exactMatch"
                                                                 alt="Exact Match"
                                                                 <%=check__e%>
-                                                                tabindex="5">
+                                                                tabindex="0">
 
                                                             <label for="exactMatch">Exact Match&nbsp;</label>
                                                             <input
@@ -816,7 +816,7 @@
                                                                 value="startsWith"
                                                                 alt="Begins With"
                                                                 <%=check__s%>
-                                                                tabindex="6">
+                                                                tabindex="0">
 
                                                             <label for="startsWith">Begins With&nbsp;</label>
                                                             <input
@@ -826,7 +826,7 @@
                                                                 value="contains"
                                                                 alt="Contains"
                                                                 <%=check__c%>
-                                                                tabindex="7">
+                                                                tabindex="0">
 
                                                             <label for="contains">Contains</label>
                                                           </td>
@@ -844,7 +844,7 @@
                                                                 value="Code"
                                                                 <%=check_code%>
                                                                 alt="Code"
-                                                                tabindex="8">
+                                                                tabindex="0">
 
                                                             <label for="codes">Code&nbsp;</label>
                                                             <input
@@ -854,7 +854,7 @@
                                                                 value="Name"
                                                                 <%=check_name%>
                                                                 alt="Name"
-                                                                tabindex="9">
+                                                                tabindex="0">
 
                                                             <label for="names">Name&nbsp;</label>
                                                           </td>
@@ -912,7 +912,7 @@
                                           </p>
 
                                           <div id="popupContentArea">
-                                            <a name="evs-content" id="evs-content" tabindex="10"></a>
+                                            <a name="evs-content" id="evs-content" tabindex="0"></a>
 
                                             <table
                                                 width="580px"

@@ -4615,12 +4615,30 @@ out.flush();
 		    namespace = new ConceptDetails(lbSvc).getNamespaceByCode(scheme, version, code);
 	  }
 
+	  HashMap hmap = null;
+	  String focused_concept = scheme + "|" + version + "|" + namespace + "|" +code;
+	  String prev_focused_concept = (String) request.getSession().getAttribute("prev_focused_concept");
+	  if (prev_focused_concept == null || prev_focused_concept.compareTo(focused_concept) != 0) {
+		  RelationshipUtils relationshipUtils = new RelationshipUtils(lb_svc);
+		  hmap = relationshipUtils.getRelationshipHashMap(scheme, version, code, namespace, true);
+		  request.getSession().setAttribute("RelationshipHashMap", hmap);
+		  request.getSession().setAttribute("prev_focused_concept", focused_concept);
+	  } else {
+		  hmap = (HashMap) request.getSession().getAttribute("RelationshipHashMap");
+	  }
+
+/*
+KLO 11282018
 	  HashMap hmap = (HashMap) request.getSession().getAttribute("RelationshipHashMap");
 	  if (hmap == null) {
 		  RelationshipUtils relationshipUtils = new RelationshipUtils(lb_svc);
 		  hmap = relationshipUtils.getRelationshipHashMap(scheme, version, code, namespace, true);
 		  request.getSession().setAttribute("RelationshipHashMap", hmap);
 	  }
+*/
+
+	  //RelationshipUtils relationshipUtils = new RelationshipUtils(lb_svc);
+	  //HashMap hmap = relationshipUtils.getRelationshipHashMap(scheme, version, code, namespace, true);
 
 	  // compute nodes and edges using hmap
 	  VisUtils visUtils = new VisUtils(lb_svc);

@@ -1,6 +1,5 @@
 package gov.nih.nci.evs.browser.utils;
 
-
 import java.io.*;
 import java.net.URI;
 import java.text.*;

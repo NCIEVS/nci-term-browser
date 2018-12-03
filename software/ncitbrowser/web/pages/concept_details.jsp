@@ -715,7 +715,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
           }
           link = ")";
           %>
-          <%= link %>/p>
+          <%= link %>
           <%
         }
       }

@@ -170,7 +170,7 @@ displayItemList != null && curr_concept != null) {
           }
           link = ")";
           %>
-          <%= link %>/p>
+          <%= link %>
           <%
         }
       }

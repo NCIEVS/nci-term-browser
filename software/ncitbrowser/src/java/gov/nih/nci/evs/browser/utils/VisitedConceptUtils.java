@@ -122,6 +122,23 @@ public class VisitedConceptUtils {
         request.getSession().setAttribute("visitedConcepts", visitedConcepts);
     }
 
+
+    public static String replaceDoubleQuotes(String term) {
+		if (term == null) return null;
+		if (term.length() == 0) return term;
+		StringBuffer buf = new StringBuffer();
+		for (int i=0; i<term.length(); i++) {
+			char c = term.charAt(i);
+			if (c != '"') {
+				buf.append(c);
+			} else {
+				buf.append("&quot;");
+			}
+		}
+		return buf.toString();
+	}
+
+
     private static String getLink(Vector<VisitedConcept> visitedConcepts) {
         StringBuffer strbuf = new StringBuffer();
         String line = "<A href=\"#\" onmouseover=\"Tip('";
@@ -145,6 +162,7 @@ public class VisitedConceptUtils {
             String name = visitedConcept.name;
             String ns = visitedConcept.namespace;
             name = DataUtils.encode_term(name);
+            name = replaceDoubleQuotes(name);
 
             strbuf.append("<li>");
 

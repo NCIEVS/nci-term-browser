@@ -18,14 +18,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.text.*;
 import javax.swing.tree.*;
 import org.apache.log4j.*;
-import org.LexGrid.LexBIG.caCore.interfaces.*;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
-import org.LexGrid.LexBIG.Impl.*;
-import org.LexGrid.LexBIG.LexBIGService.*;
-import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
-import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
-
 
 public class CDISCPublisher extends JPanel
                              implements ActionListener {
@@ -204,10 +196,10 @@ public class CDISCPublisher extends JPanel
 
             textarea.setText("");
             okButton.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-            // generate tthe file
+            // generate the file
             datafile = (String) dataFile.getText();
             outputfile = (String) outputFile.getText();
-            new gov.nih.nci.evs.service.RDFGenerator().generate(datafile, outputfile);
+            new RDFGenerator().generate(datafile, outputfile);
             okButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             textarea.setText(outputfile + " generated.");
 
@@ -227,7 +219,6 @@ public class CDISCPublisher extends JPanel
 			}
 
         } else if (action == saveButton) {
-			System.out.println("Save button pressed");
 			JFileChooser chooser = new JFileChooser();
 			chooser.setDialogTitle("Save File As...");
 			int returnVal = chooser.showSaveDialog(dialog);
@@ -235,7 +226,6 @@ public class CDISCPublisher extends JPanel
 			{
 				File file = chooser.getSelectedFile();
 				if (file.exists()) {
-				    // If file already exists, ask before replacing it.
 				    int action0 = JOptionPane.showConfirmDialog(this,
 				                 "Replace existing file?");
 					if (action0 != JOptionPane.YES_OPTION) return;

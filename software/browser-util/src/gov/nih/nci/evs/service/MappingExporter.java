@@ -327,7 +327,6 @@ public class MappingExporter extends JPanel
 			{
 				File file = chooser.getSelectedFile();
 				if (file.exists()) {
-				    // If file already exists, ask before replacing it.
 				    int action0 = JOptionPane.showConfirmDialog(this,
 				                 "Replace existing file?");
 					if (action0 != JOptionPane.YES_OPTION) return;
@@ -339,12 +338,9 @@ public class MappingExporter extends JPanel
 			JComboBox cb = (JComboBox) action;
 	;       Object selectedServiceUrlObj = cb.getSelectedItem();
 			String selectedServiceUrl = selectedServiceUrlObj.toString();
-			//if (selectedServiceUrl.compareTo(serviceUrl) != 0) {
-				serviceUrl = selectedServiceUrl;
-				updateMappings((String) serviceUrl);
-				//mappingList = new JComboBox(mappings);
-				//dialog.show();
-			//}
+			serviceUrl = selectedServiceUrl;
+			updateMappings((String) serviceUrl);
+
         } else if (action == mappingList) {
 			JComboBox cb = (JComboBox) action;
 	;       Object mapping = cb.getSelectedItem();

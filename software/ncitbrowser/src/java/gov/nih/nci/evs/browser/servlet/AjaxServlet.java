@@ -4505,6 +4505,7 @@ out.flush();
 
 	}
 
+/*
     public void export_mapping(HttpServletRequest request, HttpServletResponse response) {
         String mapping_schema = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
         String mapping_version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
@@ -4587,7 +4588,226 @@ out.flush();
 		FacesContext.getCurrentInstance().responseComplete();
 		return;
 	}
+*/
 
+    // testing
+    public void export_mapping(HttpServletRequest request, HttpServletResponse response) {
+        String mapping_schema = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
+        String mapping_version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
+
+        ResolvedConceptReferencesIterator _iterator = DataUtils.getMappingDataIterator(mapping_schema, mapping_version);
+		int numRemaining = 0;
+		if (_iterator != null) {
+			try {
+				numRemaining = _iterator.numberRemaining();
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+        StringBuffer sb = new StringBuffer();
+        try {
+			ServletOutputStream ouputStream = response.getOutputStream();
+
+			sb.append("Source Code,");
+			sb.append("Source Name,");
+			sb.append("Source Coding Scheme,");
+			sb.append("Source Coding Scheme Version,");
+			sb.append("Source Coding Scheme Namespace,");
+
+			sb.append("Association Name,");
+			sb.append("REL,");
+			sb.append("Map Rank,");
+
+			sb.append("Target Code,");
+			sb.append("Target Name,");
+			sb.append("Target Coding Scheme,");
+			sb.append("Target Coding Scheme Version,");
+			sb.append("Target Coding Scheme Namespace");
+			sb.append("\r\n");
+			ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+			ouputStream.flush();
+
+			while (_iterator.hasNext()) {
+				sb = new StringBuffer();
+				ResolvedConceptReference ref = _iterator.next();
+				description = null;
+				if(ref.getEntityDescription() == null) {
+					description = "NOT AVAILABLE";
+				} else {
+					description = ref.getEntityDescription().getContent();
+				}
+				sourceCode = ref.getCode();
+				sourceName = description;
+				sourceCodingScheme = ref.getCodingSchemeName();
+				sourceCodingSchemeVesion = ref.getCodingSchemeVersion();
+				sourceCodeNamespace = ref.getCodeNamespace();
+				rel = null;
+				score = 0;
+
+				AssociationList assocs = ref.getSourceOf();
+				if(assocs != null){
+					for(Association assoc : assocs.getAssociation()){
+						associationName = assoc.getAssociationName();
+						int lcv = 0;
+						for(AssociatedConcept ac : assoc.getAssociatedConcepts().getAssociatedConcept()){
+							lcv++;
+							if(ac.getEntityDescription() == null) {
+								description = "NOT AVAILABLE";
+							} else {
+								description = ac.getEntityDescription().getContent();
+							}
+							targetCode = ac.getCode();
+							targetName = description;
+							targetCodingScheme = ac.getCodingSchemeName();
+							targetCodingSchemeVesion = ac.getCodingSchemeVersion();
+							targetCodeNamespace = ac.getCodeNamespace();
+
+							if (ac.getAssociationQualifiers() != null && ac.getAssociationQualifiers().getNameAndValue() != null) {
+								for (NameAndValue qual : ac.getAssociationQualifiers().getNameAndValue()) {
+									String qualifier_name = qual.getName();
+									String qualifier_value = qual.getContent();
+									if (qualifier_name.compareTo("rel") == 0) {
+										rel = qualifier_value;
+									} else if (qualifier_name.compareTo("score") == 0) {
+										score = Integer.parseInt(qualifier_value);
+									}
+								}
+							}
+
+							MappingData mappingData = new MappingData(
+								sourceCode,
+								sourceName,
+								sourceCodingScheme,
+								sourceCodingSchemeVesion,
+								sourceCodeNamespace,
+								associationName,
+								rel,
+								score,
+								targetCode,
+								targetName,
+								targetCodingScheme,
+								targetCodingSchemeVesion,
+								targetCodeNamespace);
+
+							sb = new StringBuffer();
+							sb.append("\"" + mappingData.getSourceCode() + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
+							sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
+							sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
+							sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
+
+							sb.append("\"" + mappingData.getAssociationName() + "\",");
+							sb.append("\"" + mappingData.getRel() + "\",");
+							sb.append("\"" + mappingData.getScore() + "\",");
+
+							sb.append("\"" + mappingData.getTargetCode() + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
+							sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
+							sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
+							sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
+							sb.append("\r\n");
+							ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+							ouputStream.flush();
+						}
+					}
+				}
+
+				assocs = ref.getTargetOf();
+				if(assocs != null){
+					for(Association assoc : assocs.getAssociation()){
+						associationName = assoc.getAssociationName();
+
+						int lcv = 0;
+						for(AssociatedConcept ac : assoc.getAssociatedConcepts().getAssociatedConcept()){
+							lcv++;
+							if(ac.getEntityDescription() == null) {
+								description = "NOT AVAILABLE";
+							} else {
+								description = ac.getEntityDescription().getContent();
+							}
+							targetCode = ac.getCode();
+							targetName = description;
+							targetCodingScheme = ac.getCodingSchemeName();
+							targetCodingSchemeVesion = ac.getCodingSchemeVersion();
+							targetCodeNamespace = ac.getCodeNamespace();
+
+							if (ac.getAssociationQualifiers() != null && ac.getAssociationQualifiers().getNameAndValue() != null) {
+								for (NameAndValue qual : ac.getAssociationQualifiers().getNameAndValue()) {
+									String qualifier_name = qual.getName();
+									String qualifier_value = qual.getContent();
+									if (qualifier_name.compareTo("rel") == 0) {
+										rel = qualifier_value;
+									} else if (qualifier_name.compareTo("score") == 0) {
+										score = Integer.parseInt(qualifier_value);
+									}
+								}
+							}
+
+							MappingData mappingData = new MappingData(
+								sourceCode,
+								sourceName,
+								sourceCodingScheme,
+								sourceCodingSchemeVesion,
+								sourceCodeNamespace,
+								associationName,
+								rel,
+								score,
+								targetCode,
+								targetName,
+								targetCodingScheme,
+								targetCodingSchemeVesion,
+								targetCodeNamespace);
+
+
+							sb = new StringBuffer();
+							sb.append("\"" + mappingData.getSourceCode() + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
+							sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
+							sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
+							sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
+
+							sb.append("\"" + mappingData.getAssociationName() + "\",");
+							sb.append("\"" + mappingData.getRel() + "\",");
+							sb.append("\"" + mappingData.getScore() + "\",");
+
+							sb.append("\"" + mappingData.getTargetCode() + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
+							sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
+							sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
+							sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
+							sb.append("\r\n");
+							ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+							ouputStream.flush();
+						}
+					}
+				}
+			}
+		} catch (Exception ex)	{
+			sb.append("WARNING: Export to CVS action failed.");
+			ex.printStackTrace();
+		}
+
+		String filename = mapping_schema + "_" + mapping_version;
+		filename = filename.replaceAll(" ", "_");
+		filename = filename + ".csv";
+
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ filename);
+
+		//response.setContentLength(sb.length());
+		try {
+			//ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+			//ouputStream.flush();
+			ouputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			//sb.append("WARNING: Export to CVS action failed.");
+		}
+		FacesContext.getCurrentInstance().responseComplete();
+		return;
+	}
 
 	public int countEdges(HashMap relMap, String[] types) {
 		if (relMap == null || types == null) return 0;

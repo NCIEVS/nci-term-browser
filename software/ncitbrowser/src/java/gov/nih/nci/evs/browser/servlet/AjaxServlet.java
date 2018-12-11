@@ -4634,6 +4634,16 @@ out.flush();
 			}
 		}
 		ServletOutputStream ouputStream = null;
+
+		String filename = mapping_schema + "_" + mapping_version;
+		filename = filename.replaceAll(" ", "_");
+		filename = filename + ".csv";
+
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ filename);
+
+
         StringBuffer sb = new StringBuffer();
         try {
 			ouputStream = response.getOutputStream();
@@ -4816,14 +4826,6 @@ out.flush();
 			sb.append("WARNING: Export to CVS action failed.");
 			ex.printStackTrace();
 		}
-
-		String filename = mapping_schema + "_" + mapping_version;
-		filename = filename.replaceAll(" ", "_");
-		filename = filename + ".csv";
-
-		response.setContentType("text/csv");
-		response.setHeader("Content-Disposition", "attachment; filename="
-				+ filename);
 
 		//response.setContentLength(sb.length());
 		try {

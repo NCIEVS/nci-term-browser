@@ -4591,9 +4591,37 @@ out.flush();
 */
 
     // testing
+	public static String escapeCommaCharacters(String s) {
+		if (s == null) return null;
+		StringBuffer buf = new StringBuffer();
+		for (int i=0; i<s.length(); i++) {
+			char c = s.charAt(i);
+			if (c != ',') {
+				buf.append(c);
+			} else {
+				buf.append(c).append(c);
+			}
+		}
+		return buf.toString();
+	}
+
     public void export_mapping(HttpServletRequest request, HttpServletResponse response) {
         String mapping_schema = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
         String mapping_version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
+		String sourceCode = null;
+		String sourceName = null;
+		String sourceCodingScheme = null;
+		String sourceCodingSchemeVesion = null;
+		String sourceCodeNamespace = null;
+		String rel = null;
+		int score = 0;
+		String targetCode = null;
+		String targetName = null;
+		String targetCodingScheme = null;
+		String targetCodingSchemeVesion = null;
+		String targetCodeNamespace = null;
+		String description = null;
+		String associationName = null;
 
         ResolvedConceptReferencesIterator _iterator = DataUtils.getMappingDataIterator(mapping_schema, mapping_version);
 		int numRemaining = 0;
@@ -4605,9 +4633,10 @@ out.flush();
 				ex.printStackTrace();
 			}
 		}
+		ServletOutputStream ouputStream = null;
         StringBuffer sb = new StringBuffer();
         try {
-			ServletOutputStream ouputStream = response.getOutputStream();
+			ouputStream = response.getOutputStream();
 
 			sb.append("Source Code,");
 			sb.append("Source Name,");
@@ -4626,7 +4655,7 @@ out.flush();
 			sb.append("Target Coding Scheme Namespace");
 			sb.append("\r\n");
 			ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
-			ouputStream.flush();
+			//ouputStream.flush();
 
 			while (_iterator.hasNext()) {
 				sb = new StringBuffer();

@@ -1,6 +1,7 @@
 package gov.nih.nci.evs.service;
 
 import gov.nih.nci.evs.browser.bean.*;
+import gov.nih.nci.evs.browser.common.*;
 import gov.nih.nci.evs.browser.properties.*;
 import gov.nih.nci.evs.browser.utils.*;
 import gov.nih.nci.evs.security.*;
@@ -25,11 +26,22 @@ import javax.swing.tree.*;
 import org.apache.log4j.*;
 import org.LexGrid.LexBIG.caCore.interfaces.*;
 import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+import org.LexGrid.LexBIG.DataModel.Collections.AssociationList;
+import org.LexGrid.LexBIG.DataModel.Core.*;
+import org.LexGrid.LexBIG.DataModel.Core.AssociatedConcept;
+import org.LexGrid.LexBIG.DataModel.Core.Association;
+import org.LexGrid.LexBIG.DataModel.Core.NameAndValue;
+import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
 import org.LexGrid.LexBIG.Impl.*;
 import org.LexGrid.LexBIG.LexBIGService.*;
+import org.LexGrid.LexBIG.Utility.Iterators.*;
 import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
+import org.LexGrid.naming.SupportedAssociation;
+import org.LexGrid.relations.AssociationPredicate;
+import org.LexGrid.relations.Relations;
 import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
 import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
+
 
 public class MappingExporter extends JPanel
                              implements ActionListener {
@@ -310,8 +322,8 @@ public class MappingExporter extends JPanel
 			String metadata = (String) codingSchemeHashMap.get(mappingCodingSchemeName);
 			Vector u = StringUtils.parseData(metadata, '|');
 			String mapping_version = (String) u.elementAt(1);
-			export_mapping_search_results(lbSvc, mappingCodingSchemeName, mapping_version);
 			String outputfile = (String) outputFile.getText();
+			export_mapping(lbSvc, mappingCodingSchemeName, mapping_version, outputfile);
             if (!output_file_generated) {
 			    JOptionPane.showMessageDialog(null, outputfile + " generated.", "Information",JOptionPane.INFORMATION_MESSAGE);
 			    output_file_generated = true;
@@ -379,15 +391,23 @@ public class MappingExporter extends JPanel
         frame.pack();
         frame.setVisible(true);
     }
-
+/*
     public Vector getMappingCodingSchemes(String serviceUrl) {
 		lbSvc = RemoteServerUtil.createLexBIGService(serviceUrl);
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		Vector v = csdu.getMappingCodingSchemes();
 		return v;
 	}
+*/
 
-	public String escapeCommaCharacters(String s) {
+    public static Vector getMappingCodingSchemes(String serviceUrl) {
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService(serviceUrl);
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+		Vector v = csdu.getMappingCodingSchemes();
+		return v;
+	}
+
+	public static String escapeCommaCharacters(String s) {
 		if (s == null) return null;
 		StringBuffer buf = new StringBuffer();
 		for (int i=0; i<s.length(); i++) {
@@ -401,7 +421,8 @@ public class MappingExporter extends JPanel
 		return buf.toString();
 	}
 
-    public void export_mapping_search_results(LexBIGService lbSvc, String mapping_schema, String mapping_version) {
+/*
+    public void export_mapping(LexBIGService lbSvc, String mapping_schema, String mapping_version) {
         ResolvedConceptReferencesIterator iterator = new MappingUtils(lbSvc).getMappingDataIterator(mapping_schema, mapping_version);
 		int numRemaining = 0;
 		if (iterator != null) {
@@ -441,8 +462,8 @@ public class MappingExporter extends JPanel
             java.util.List<MappingData> list = bean.getData(0, numRemaining-1);
             if (list == null) return;
             for (int k=0; k<list.size(); k++) {
-				sb = new StringBuffer();
 				MappingData mappingData = (MappingData) list.get(k);
+				sb = new StringBuffer();
 				sb.append("\"" + mappingData.getSourceCode() + "\",");
 				sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
 				sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
@@ -458,6 +479,7 @@ public class MappingExporter extends JPanel
 				sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
 				sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
 				sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
+
 				//sb.append("\r\n");
 				pw.println(sb.toString());
 			}
@@ -476,15 +498,236 @@ public class MappingExporter extends JPanel
 		}
 		return;
 	}
+*/
+
+    public static void export_mapping(String serviceUrl, String mapping_schema, String mapping_version, String outputfile) {
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService(serviceUrl);
+		export_mapping(lbSvc, mapping_schema, mapping_version, outputfile);
+	}
+
+
+    public static void export_mapping(LexBIGService lbSvc, String mapping_schema, String mapping_version, String outputfile) {
+		long ms = System.currentTimeMillis();
+        ResolvedConceptReferencesIterator _iterator = new MappingUtils(lbSvc).getMappingDataIterator(mapping_schema, mapping_version);
+        System.out.println("Total getMappingDataIterator run time (ms): " + (System.currentTimeMillis() - ms));
+        ms = System.currentTimeMillis();
+		int numRemaining = 0;
+		if (_iterator != null) {
+			try {
+				numRemaining = _iterator.numberRemaining();
+                System.out.println("numRemaining: " + numRemaining);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+        System.out.println("Exsporting mapping data to " + outputfile + ". Please wait...");
+		String sourceCode = null;
+		String sourceName = null;
+		String sourceCodingScheme = null;
+		String sourceCodingSchemeVesion = null;
+		String sourceCodeNamespace = null;
+		String rel = null;
+		int score = 0;
+		String targetCode = null;
+		String targetName = null;
+		String targetCodingScheme = null;
+		String targetCodingSchemeVesion = null;
+		String targetCodeNamespace = null;
+		String description = null;
+		String associationName = null;
+
+		PrintWriter pw = null;
+		//String outputfile = (String) outputFile.getText();
+		try {
+			pw = new PrintWriter(outputfile, "UTF-8");
+	        StringBuffer sb = new StringBuffer();
+			sb.append("Source Code,");
+			sb.append("Source Name,");
+			sb.append("Source Coding Scheme,");
+			sb.append("Source Coding Scheme Version,");
+			sb.append("Source Coding Scheme Namespace,");
+
+			sb.append("Association Name,");
+			sb.append("REL,");
+			sb.append("Map Rank,");
+
+			sb.append("Target Code,");
+			sb.append("Target Name,");
+			sb.append("Target Coding Scheme,");
+			sb.append("Target Coding Scheme Version,");
+			sb.append("Target Coding Scheme Namespace");
+			pw.println(sb.toString());
+
+			while (_iterator.hasNext()) {
+				ResolvedConceptReference ref = _iterator.next();
+				description = null;
+				if(ref.getEntityDescription() == null) {
+					description = "NOT AVAILABLE";
+				} else {
+					description = ref.getEntityDescription().getContent();
+				}
+				sourceCode = ref.getCode();
+				sourceName = description;
+				sourceCodingScheme = ref.getCodingSchemeName();
+				sourceCodingSchemeVesion = ref.getCodingSchemeVersion();
+				sourceCodeNamespace = ref.getCodeNamespace();
+				rel = null;
+				score = 0;
+
+				AssociationList assocs = ref.getSourceOf();
+				if(assocs != null){
+					for(Association assoc : assocs.getAssociation()){
+						associationName = assoc.getAssociationName();
+						int lcv = 0;
+						for(AssociatedConcept ac : assoc.getAssociatedConcepts().getAssociatedConcept()){
+							lcv++;
+							if(ac.getEntityDescription() == null) {
+								description = "NOT AVAILABLE";
+							} else {
+								description = ac.getEntityDescription().getContent();
+							}
+							targetCode = ac.getCode();
+							targetName = description;
+							targetCodingScheme = ac.getCodingSchemeName();
+							targetCodingSchemeVesion = ac.getCodingSchemeVersion();
+							targetCodeNamespace = ac.getCodeNamespace();
+
+							if (ac.getAssociationQualifiers() != null && ac.getAssociationQualifiers().getNameAndValue() != null) {
+								for (NameAndValue qual : ac.getAssociationQualifiers().getNameAndValue()) {
+									String qualifier_name = qual.getName();
+									String qualifier_value = qual.getContent();
+									if (qualifier_name.compareTo("rel") == 0) {
+										rel = qualifier_value;
+									} else if (qualifier_name.compareTo("score") == 0) {
+										score = Integer.parseInt(qualifier_value);
+									}
+								}
+							}
+
+							MappingData mappingData = new MappingData(
+								sourceCode,
+								sourceName,
+								sourceCodingScheme,
+								sourceCodingSchemeVesion,
+								sourceCodeNamespace,
+								associationName,
+								rel,
+								score,
+								targetCode,
+								targetName,
+								targetCodingScheme,
+								targetCodingSchemeVesion,
+								targetCodeNamespace);
+
+							sb = new StringBuffer();
+							sb.append("\"" + mappingData.getSourceCode() + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
+							sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
+							sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
+							sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
+
+							sb.append("\"" + mappingData.getAssociationName() + "\",");
+							sb.append("\"" + mappingData.getRel() + "\",");
+							sb.append("\"" + mappingData.getScore() + "\",");
+
+							sb.append("\"" + mappingData.getTargetCode() + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
+							sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
+							sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
+							sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
+							pw.println(sb.toString());
+						}
+					}
+				}
+
+				assocs = ref.getTargetOf();
+				if(assocs != null){
+					for(Association assoc : assocs.getAssociation()){
+						associationName = assoc.getAssociationName();
+
+						int lcv = 0;
+						for(AssociatedConcept ac : assoc.getAssociatedConcepts().getAssociatedConcept()){
+							lcv++;
+							if(ac.getEntityDescription() == null) {
+								description = "NOT AVAILABLE";
+							} else {
+								description = ac.getEntityDescription().getContent();
+							}
+							targetCode = ac.getCode();
+							targetName = description;
+							targetCodingScheme = ac.getCodingSchemeName();
+							targetCodingSchemeVesion = ac.getCodingSchemeVersion();
+							targetCodeNamespace = ac.getCodeNamespace();
+
+							if (ac.getAssociationQualifiers() != null && ac.getAssociationQualifiers().getNameAndValue() != null) {
+								for (NameAndValue qual : ac.getAssociationQualifiers().getNameAndValue()) {
+									String qualifier_name = qual.getName();
+									String qualifier_value = qual.getContent();
+									if (qualifier_name.compareTo("rel") == 0) {
+										rel = qualifier_value;
+									} else if (qualifier_name.compareTo("score") == 0) {
+										score = Integer.parseInt(qualifier_value);
+									}
+								}
+							}
+
+							MappingData mappingData = new MappingData(
+								sourceCode,
+								sourceName,
+								sourceCodingScheme,
+								sourceCodingSchemeVesion,
+								sourceCodeNamespace,
+								associationName,
+								rel,
+								score,
+								targetCode,
+								targetName,
+								targetCodingScheme,
+								targetCodingSchemeVesion,
+								targetCodeNamespace);
+
+
+							sb = new StringBuffer();
+							sb.append("\"" + mappingData.getSourceCode() + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
+							sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
+							sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
+							sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
+
+							sb.append("\"" + mappingData.getAssociationName() + "\",");
+							sb.append("\"" + mappingData.getRel() + "\",");
+							sb.append("\"" + mappingData.getScore() + "\",");
+
+							sb.append("\"" + mappingData.getTargetCode() + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
+							sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
+							sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
+							sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
+							pw.println(sb.toString());
+						}
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		System.out.println("Total export run time (ms): " + (System.currentTimeMillis() - ms));
+	}
 
     public static void main(String[] args) {
 		String serviceUrl = args[0];
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI(serviceUrl);
-            }
-        });
-
+		if (args.length == 1) {
+			javax.swing.SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					createAndShowGUI(serviceUrl);
+				}
+			});
+		} else {
+			String mapping_schema = args[1];
+			String mapping_version = args[2];
+			String outputfile = args[3];
+			export_mapping(serviceUrl, mapping_schema, mapping_version, outputfile);
+		}
     }
 }
 

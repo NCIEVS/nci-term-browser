@@ -254,10 +254,15 @@ public class RDFGenerator {
 		}
 	}
 
+//"/Users/safrant/EVS/data/CDISC/190107/sdtm_terminology.owl"
     public String get_terminology_abbr(String datafile) {
-		int n = datafile.indexOf("_");
+		int m = datafile.lastIndexOf("/");
+		if (m != -1) {
+			datafile = datafile.substring(m+1, datafile.length());
+		}
+		int n = datafile.indexOf(" ");
 		if (n == -1) {
-			n = datafile.indexOf(" ");
+			n = datafile.indexOf("_");
 		}
 		String abbr = datafile.substring(0, n);
 		return abbr.toLowerCase();
@@ -310,6 +315,9 @@ public class RDFGenerator {
 		String datafile = args[0];
 		String owlfile = args[1];
 		RDFGenerator rdfGenerator = new RDFGenerator();
+		//String datafile = "/Users/safrant/EVS/data/CDISC/190107/sdtm_terminology.owl";
+		//String abbrev = new RDFGenerator().get_terminology_abbr(datafile);
+		//System.out.println(abbrev);
 		rdfGenerator.generate(datafile, owlfile);
 	}
 }

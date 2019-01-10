@@ -256,6 +256,9 @@ public class RDFGenerator {
 
     public String get_terminology_abbr(String datafile) {
 		int n = datafile.indexOf("_");
+		if (n == -1) {
+			n = datafile.indexOf(" ");
+		}
 		String abbr = datafile.substring(0, n);
 		return abbr.toLowerCase();
 	}

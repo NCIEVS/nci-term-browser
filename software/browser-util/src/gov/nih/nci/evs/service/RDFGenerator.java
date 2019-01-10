@@ -111,6 +111,8 @@ public class RDFGenerator {
 				buf.append("&lt;");
 			} else if (c == '>') {
 				buf.append("&gt;");
+			} else if (c == '&') {
+				buf.append("&amp;");
 			} else {
 				buf.append(c);
 			}
@@ -145,17 +147,17 @@ public class RDFGenerator {
 		return sdf.format(date);
 	}
 
-	public void writeHeader(PrintWriter out) {
+	public void writeHeader(PrintWriter out, String terminology_abbr) {
 		out.println("<?xml version=\"1.0\"?>");
 		out.println("<rdf:RDF");
 		out.println("    xmlns:mms=\"http://rdf.cdisc.org/mms#\"");
 		out.println("    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"");
-		out.println("    xmlns=\"http://rdf.cdisc.org/cdash-terminology#\"");
+		out.println("    xmlns=\"http://rdf.cdisc.org/" + terminology_abbr + "-terminology#\"");
 		out.println("    xmlns:owl=\"http://www.w3.org/2002/07/owl#\"");
 		out.println("    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"");
 		out.println("    xmlns:cts=\"http://rdf.cdisc.org/ct/schema#\"");
 		out.println("    xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"");
-		out.println("  xml:base=\"http://rdf.cdisc.org/cdash-terminology\">");
+		out.println("  xml:base=\"http://rdf.cdisc.org/" + terminology_abbr + "-terminology\">");
 		out.println("  <owl:Ontology rdf:about=\"\">");
 		out.println("    <owl:imports rdf:resource=\"http://rdf.cdisc.org/mms\"/>");
 		out.println("    <owl:imports rdf:resource=\"http://rdf.cdisc.org/ct/schema\"/>");
@@ -252,7 +254,14 @@ public class RDFGenerator {
 		}
 	}
 
+    public String get_terminology_abbr(String datafile) {
+		int n = datafile.indexOf("_");
+		String abbr = datafile.substring(0, n);
+		return abbr.toLowerCase();
+	}
+
 	public void generate(String datafile, String outputfile) {
+		String terminology_abbr = get_terminology_abbr(datafile);
 		subset_codes = new HashSet();
 		code_subsetcode_set = new HashSet();
         code2dataHashMap = getCode2dataHashMap(datafile);
@@ -260,7 +269,7 @@ public class RDFGenerator {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(outputfile, "UTF-8");
-	        writeHeader(pw);
+	        writeHeader(pw, terminology_abbr);
 			Vector codes = new Vector();
             Iterator it = code2dataHashMap.keySet().iterator();
 	        while (it.hasNext()) {

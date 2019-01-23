@@ -172,6 +172,7 @@ public class HTTPUtils {
 
         //if (value.length() == 0) return value;
         if (value.length() <= 1) return value;
+
         //[NCITERM-806] Fixing AppScan Issue from Security Team.
         value = value.replaceAll(");", "");
 

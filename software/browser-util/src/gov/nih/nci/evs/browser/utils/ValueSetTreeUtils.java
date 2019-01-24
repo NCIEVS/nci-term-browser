@@ -408,7 +408,7 @@ public class ValueSetTreeUtils {
 		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(Constants.TERMINOLOGY_VALUE_SET_NAME, Constants.PRODUCTION);
 		_terminologyValueSetDescriptionHashMap = new HashMap();
 		if (prod_version != null) {
-			getPropertyValues(Constants.TERMINOLOGY_VALUE_SET_NAME, prod_version, "GENERIC", "Description");
+			_terminologyValueSetDescriptionHashMap = getPropertyValues(Constants.TERMINOLOGY_VALUE_SET_NAME, prod_version, "GENERIC", "Description");
 		}
 	}
 

@@ -25,7 +25,9 @@
     />
   </map>
 </div>
+
 <%@ include file="/pages/templates/navigationTabs.jsp" %>
+
 <div class="mainbox-top">
   <img src="<%=basePath%>/images/mainbox-top.gif" width="945" height="5" alt="" />
 </div>

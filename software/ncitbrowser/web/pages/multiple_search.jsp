@@ -38,9 +38,18 @@ String ncit_build_info = DataUtils.getNCITBuildInfo();
 String application_version = DataUtils.getApplicationVersion();
 String anthill_build_tag_built = DataUtils.getNCITAnthillBuildTagBuilt();
 String evs_service_url = DataUtils.getEVSServiceURL();
-
 String requestContextPath = request.getContextPath();
+
+System.out.println("nci_meta_url: " + nci_meta_url);
+System.out.println("ncit_url: " + ncit_url);
+System.out.println("ncit_build_info: " + ncit_build_info);
+System.out.println("application_version: " + application_version);
+System.out.println("anthill_build_tag_built: " + anthill_build_tag_built);
+System.out.println("evs_service_url: " + evs_service_url);
+
 requestContextPath = requestContextPath.replace("//ncitbrowser//ncitbrowser", "//ncitbrowser");
+System.out.println("requestContextPath: " + requestContextPath);
+
 //boolean display_cabig_approval_indicator_note = false;
 // 04242014
 Integer curr_sort_category = null;
@@ -197,6 +206,7 @@ request.getSession().removeAttribute("m");
   if (display_name_vec == null) {
     display_name_vec = DataUtils.getSortedOntologies();
   }
+ 
   // Send redirect:
   if (display_name_vec == null) {
     try {

@@ -1353,6 +1353,10 @@ public class DataUtils {
         ValueSetTreeUtils util = null;
         try {
 			util = new ValueSetTreeUtils(lbSvc, serviceUrl);
+			if (util == null) {
+				System.out.println("ERROR: Unable to instantiate ValueSetTreeUtils: " + serviceUrl);
+				return;
+			}
 			sourceValueSetTree = util.getSourceValueSetTree();
 			terminologyValueSetTree = util.getTerminologyValueSetTree();
 

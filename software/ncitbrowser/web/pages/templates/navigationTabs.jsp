@@ -46,10 +46,13 @@
     request.getSession().setAttribute("mode", mode);
     tab_valueset_link = request.getContextPath() + "/ajax?action=create_src_vs_tree&nav_type=valuesets&mode=" + mode;
 
-    String tab_mappings_image = nav_type.equalsIgnoreCase("mappings")
-    ? "tab_map_clicked.gif" : "tab_map.gif";
+    String tab_mappings_image = nav_type.equalsIgnoreCase("mappings")? "tab_map_clicked.gif" : "tab_map.gif";
     tab_mappings_image = imagesPath + tab_mappings_image;
+    
     String tab_mappings_link = pagesPath + mapping_jsp_page_name + "?nav_type=mappings&b=0&m=0";
+
+String test_tab_terms_link = HTTPUtils.cleanXSS(tab_terms_link);  
+
     %>
 
     <%--
@@ -67,7 +70,9 @@
     </td>
 
     <%
+    
     Boolean value_set_tab_available = DataUtils.VALUE_SET_TAB_AVAILABLE;
+    
     if (value_set_tab_available != null && value_set_tab_available.equals(Boolean.TRUE)) {
       %>
 

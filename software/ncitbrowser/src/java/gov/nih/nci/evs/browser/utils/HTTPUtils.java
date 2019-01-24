@@ -165,36 +165,26 @@ public class HTTPUtils {
 		return value;
 	}
 
-
     public static String cleanXSS(String value) {
         if (value == null) return null;
-        value = value.trim();
+		value = value.trim();
+		//if (value.length() == 0) return value;
+		if (value.length() <= 1) {
+			return value;
+		}
+		// Remove XSS attacks
+		value = replaceAll(value, "<\\s*script\\s*>.*</\\s*script\\s*>", "");
+		value = replaceAll(value, ".*<\\s*iframe.*>", "");
+		value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+		//value = value.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
+		//[NCITERM-679] Terms with apostrophes return no results.
+		//value = value.replaceAll("'", "&#39;");
+		value = value.replaceAll("eval\\((.*)\\)", "");
+		value = replaceAll(value, "[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']",   "\"");
+		value = value.replaceAll("\"", "&quot;");
 
-        //if (value.length() == 0) return value;
-        if (value.length() <= 1) return value;
-
-        //[NCITERM-806] Fixing AppScan Issue from Security Team.
-        value = value.replaceAll(");", "");
-
-        // Remove XSS attacks
-        value = replaceAll(value, "<\\s*script\\s*>.*</\\s*script\\s*>", "");
-        value = replaceAll(value, ".*<\\s*iframe.*>", "");
-        value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-        //value = value.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
-
-        //[NCITERM-679] Terms with apostrophes return no results.
-        //value = value.replaceAll("'", "&#39;");
-        value = value.replaceAll("eval\\((.*)\\)", "");
-        value =
-            replaceAll(value, "[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']",
-                "\"\"");
-        value = value.replaceAll("\"", "&quot;");
         return value;
-
     }
-
-
-
 
     public static String appendNCIT(String link) {
     	String nciturl = null;

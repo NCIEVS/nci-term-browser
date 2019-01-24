@@ -52,21 +52,26 @@ String evs_service_url = DataUtils.getEVSServiceURL();
     if (vocabulary_version != null) {
       request.setAttribute("version", vocabulary_version);
     }
+    
     %>
     <f:view>
       <!-- Begin Skip Top Navigation -->
       <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">
         skip navigation links</A>
       <!-- End Skip Top Navigation -->
+      
       <%@ include file="/pages/templates/header.jsp" %>
       <div class="center-page_960">
+      
         <%@ include file="/pages/templates/sub-header.jsp" %>
         <!-- Main box -->
         <div id="main-area_960">
+       
           <%@ include file="/pages/templates/content-header-other.jsp" %>
           <!-- Page content -->
           <div class="pagecontent">
             <a name="evs-content" id="evs-content" tabindex="0"></a>
+            
             <%@ include file="/pages/templates/welcome.jsp" %>
             <%@ include file="/pages/templates/nciFooter.jsp" %>
           </div>

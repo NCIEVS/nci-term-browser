@@ -190,13 +190,31 @@ Entity c = null;
              } 
            }
 
-
-ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
+ns = (String) request.getParameter("ns");
 if (ns == null) {
-    ns = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("ns"));
+    ns = (String) request.getSession().getAttribute("ns");
 }
 if (ns == null || ns.compareTo("null") == 0) {
     ns = cd.getNamespaceByCode(dictionary, version, code);
+} else {
+    Vector ns_vec = null;
+    HashMap vocabularyNameVersion2NamespaceHashMap = (HashMap) request.getSession().getAttribute("vocabularyNameVersion2NamespaceHashMap");
+    if (vocabularyNameVersion2NamespaceHashMap == null) {
+        vocabularyNameVersion2NamespaceHashMap = new HashMap();
+        request.getSession().setAttribute("vocabularyNameVersion2NamespaceHashMap", vocabularyNameVersion2NamespaceHashMap);
+    }
+    if (vocabularyNameVersion2NamespaceHashMap.containsKey(dictionary + "$" + version)) {
+        ns_vec = (Vector) vocabularyNameVersion2NamespaceHashMap.get(dictionary + "$" + version);
+    } else {
+        ns_vec = csdu.getNamespaceNames(dictionary, version);
+        vocabularyNameVersion2NamespaceHashMap.put(dictionary + "$" + version, ns_vec);
+        request.getSession().setAttribute("vocabularyNameVersion2NamespaceHashMap", vocabularyNameVersion2NamespaceHashMap);
+    }
+
+    if (!ns_vec.contains(ns)) {
+        System.out.println("WARNING: unknown namespace -- " + ns);
+        ns = cd.getNamespaceByCode(dictionary, version, code);
+    }
 }
 
 sessionMonitor.execute(request, dictionary, version, code, ns);

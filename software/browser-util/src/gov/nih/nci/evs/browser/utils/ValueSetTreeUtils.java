@@ -182,7 +182,12 @@ public class ValueSetTreeUtils {
 
 	public void initialize() throws Exception{
         service = createSourceAssertedValueSetHierarchyServices();
+        if (service == null) {
+			System.out.println("ERRROR: createSourceAssertedValueSetHierarchyServices failed??? ");
+			return;
+		}
 		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(ValueSetHierarchyService.SCHEME, "PRODUCTION");
+		System.out.println("prod_version: " + prod_version);
 		service.preprocessSourceHierarchyData(ValueSetHierarchyService.SCHEME, prod_version, ValueSetHierarchyService.HIERARCHY, ValueSetHierarchyService.SOURCE,ValueSetHierarchyService.PUBLISH_DESIGNATION, ValueSetHierarchyService.ROOT_CODE);
 	    constructSourceValueSetTree();
 	    constructTerminologyValueSetTree();
@@ -200,8 +205,10 @@ public class ValueSetTreeUtils {
     public SourceAssertedValueSetHierarchyServicesImpl createSourceAssertedValueSetHierarchyServices() {
 		SourceAssertedValueSetHierarchyServicesImpl service = null;
 		if (this.mode) {
+			System.out.println("mode: local");
 			service = (SourceAssertedValueSetHierarchyServicesImpl) SourceAssertedValueSetHierarchyServicesImpl.defaultInstance();
 		} else {
+			System.out.println("mode: remote");
 			service = ((LexEVSApplicationService)lbSvc).getLexEVSSourceAssertedValueSetHierarchyServices();
 			service.setLexBIGService(lbSvc);
 		}
@@ -397,10 +404,12 @@ public class ValueSetTreeUtils {
 		return sourceValueSetCheckboxid2NodeIdMap;
 	}
 
-
     private void setTerminologyValueSetDescriptionHashMap() {
 		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(Constants.TERMINOLOGY_VALUE_SET_NAME, Constants.PRODUCTION);
-		_terminologyValueSetDescriptionHashMap = getPropertyValues(Constants.TERMINOLOGY_VALUE_SET_NAME, prod_version, "GENERIC", "Description");
+		_terminologyValueSetDescriptionHashMap = new HashMap();
+		if (prod_version != null) {
+			getPropertyValues(Constants.TERMINOLOGY_VALUE_SET_NAME, prod_version, "GENERIC", "Description");
+		}
 	}
 
     public static String getPropertyQualfierValues(

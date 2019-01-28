@@ -397,10 +397,18 @@ public class ValueSetTreeUtils {
 		return sourceValueSetCheckboxid2NodeIdMap;
 	}
 
-
+/*
     private void setTerminologyValueSetDescriptionHashMap() {
 		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(Constants.TERMINOLOGY_VALUE_SET_NAME, Constants.PRODUCTION);
 		_terminologyValueSetDescriptionHashMap = getPropertyValues(Constants.TERMINOLOGY_VALUE_SET_NAME, prod_version, "GENERIC", "Description");
+	}
+*/
+    private void setTerminologyValueSetDescriptionHashMap() {
+		String prod_version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(Constants.TERMINOLOGY_VALUE_SET_NAME, Constants.PRODUCTION);
+		_terminologyValueSetDescriptionHashMap = new HashMap();
+		if (prod_version != null) {
+			_terminologyValueSetDescriptionHashMap = getPropertyValues(Constants.TERMINOLOGY_VALUE_SET_NAME, prod_version, "GENERIC", "Description");
+		}
 	}
 
     public static String getPropertyQualfierValues(

@@ -1,5 +1,7 @@
 package gov.nih.nci.evs.service;
 
+import org.LexGrid.LexBIG.Impl.Extensions.GenericExtensions.mapping.*;
+
 import gov.nih.nci.evs.browser.bean.*;
 import gov.nih.nci.evs.browser.common.*;
 import gov.nih.nci.evs.browser.properties.*;
@@ -42,6 +44,9 @@ import org.LexGrid.relations.Relations;
 import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
 import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
 
+import org.LexGrid.naming.SupportedAssociation;
+import org.LexGrid.relations.AssociationPredicate;
+import org.LexGrid.custom.relations.*;
 
 public class MappingExporter extends JPanel
                              implements ActionListener {
@@ -77,8 +82,10 @@ public class MappingExporter extends JPanel
 	JComboBox serviceUrlList = null;
 
 	String mapping = null;
-	String serviceUrl = "null";
-	LexBIGService lbSvc = null;
+
+	static String serviceUrl = "null";
+	static LexBIGService lbSvc = null;
+
 	String SERVICE_URL_PROD = "https://lexevsapi65.nci.nih.gov";
 	String DEFAULT_SERVICE_URL = "null";
 	boolean output_file_generated = false;
@@ -92,6 +99,13 @@ public class MappingExporter extends JPanel
 							 "https://lexevsapi65.nci.nih.gov"
 							 };
 
+	static String[] remoteServiceUrls = {
+							 "https://lexevsapi65-dev.nci.nih.gov",
+							 "https://lexevsapi65-qa.nci.nih.gov",
+							 "https://lexevsapi65-data-qa.nci.nih.gov",
+							 "https://lexevsapi65-stage.nci.nih.gov",
+							 "https://lexevsapi65.nci.nih.gov"
+							 };
 	String[] mappings = null;
 	Vector mapping_data = null;
 	HashMap codingSchemeHashMap = null;
@@ -103,6 +117,7 @@ public class MappingExporter extends JPanel
     public MappingExporter(String serviceUrl) {
         super(new BorderLayout());
         this.selectedServicerUrl = serviceUrl;
+        LexBIGService lbSvc = createLexBIGService(serviceUrl);
         fc = new JFileChooser();
 
         highlighter = new DefaultHighlighter();
@@ -222,7 +237,6 @@ public class MappingExporter extends JPanel
 		closeButton.addActionListener(this);
 		buttonPanel.add(closeButton);
 
-		okButton.addActionListener(this);
 		dialog.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -259,7 +273,6 @@ public class MappingExporter extends JPanel
 			System.out.println("ERROR: Unable to retrieve mapping data from the server.");
 		}
 	}
-
 
     private void outputLine(String s)
 	{
@@ -311,24 +324,34 @@ public class MappingExporter extends JPanel
 
     public void actionPerformed(ActionEvent event) {
         Object action = event.getSource();
-
         if (action == closeButton) {
 			frame.setVisible(false);
             System.exit(0);
+
 		} else if (action == okButton) {
             okButton.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            selectedServicerUrl = (String) serviceUrlList.getSelectedItem();
 			Object mapping = mappingList.getSelectedItem();
 			String mappingCodingSchemeName = mapping.toString();
 			String metadata = (String) codingSchemeHashMap.get(mappingCodingSchemeName);
 			Vector u = StringUtils.parseData(metadata, '|');
 			String mapping_version = (String) u.elementAt(1);
 			String outputfile = (String) outputFile.getText();
-			export_mapping(lbSvc, mappingCodingSchemeName, mapping_version, outputfile);
+			if (selectedServicerUrl == null || selectedServicerUrl.compareTo("null") == 0) {
+				System.out.println("Local mode...");
+				export_mapping(mappingCodingSchemeName, mapping_version, outputfile);
+			} else {
+				System.out.println("Remote mode...");
+				export_mapping(selectedServicerUrl, mappingCodingSchemeName, mapping_version, outputfile);
+			}
+
             if (!output_file_generated) {
 			    JOptionPane.showMessageDialog(null, outputfile + " generated.", "Information",JOptionPane.INFORMATION_MESSAGE);
 			    output_file_generated = true;
 			}
+
             okButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            return;
 
         } else if (action == saveButton) {
 			System.out.println("Save button pressed");
@@ -345,6 +368,7 @@ public class MappingExporter extends JPanel
 				}
 				outputFile.setText(file.getAbsolutePath());
 			}
+			return;
 
         } else if (action == serviceUrlList) {
 			JComboBox cb = (JComboBox) action;
@@ -371,9 +395,13 @@ public class MappingExporter extends JPanel
 			outputFile.setText("");
 			textarea.setText("");
 		}
+		return;
     }
 
     private static void createAndShowGUI(String serviceUrl) {
+		System.out.println("Initializing ...-- please wait.");
+		serviceUrl = serviceUrl;
+		lbSvc = createLexBIGService(serviceUrl);
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
@@ -391,17 +419,9 @@ public class MappingExporter extends JPanel
         frame.pack();
         frame.setVisible(true);
     }
-/*
-    public Vector getMappingCodingSchemes(String serviceUrl) {
-		lbSvc = RemoteServerUtil.createLexBIGService(serviceUrl);
-		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
-		Vector v = csdu.getMappingCodingSchemes();
-		return v;
-	}
-*/
 
     public static Vector getMappingCodingSchemes(String serviceUrl) {
-		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService(serviceUrl);
+		LexBIGService lbSvc = createLexBIGService(serviceUrl);
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		Vector v = csdu.getMappingCodingSchemes();
 		return v;
@@ -421,93 +441,24 @@ public class MappingExporter extends JPanel
 		return buf.toString();
 	}
 
-/*
-    public void export_mapping(LexBIGService lbSvc, String mapping_schema, String mapping_version) {
-        ResolvedConceptReferencesIterator iterator = new MappingUtils(lbSvc).getMappingDataIterator(mapping_schema, mapping_version);
-		int numRemaining = 0;
-		if (iterator != null) {
-			try {
-				numRemaining = iterator.numberRemaining();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+	/*
+    public static void export_mapping(String serviceUrl, String mapping_schema, String mapping_version, String outputfile) {
+		if (serviceUrl == null || serviceUrl.compareTo("null") == 0) {
+			export_mapping(mapping_schema, mapping_version, outputfile);
+		} else {
+			LexBIGService lbSvc = createLexBIGService(serviceUrl);
+			export_mapping(lbSvc, mapping_schema, mapping_version, outputfile);
 		}
-
-		long ms = System.currentTimeMillis();
-		PrintWriter pw = null;
-		String outputfile = (String) outputFile.getText();
-		try {
-			pw = new PrintWriter(outputfile, "UTF-8");
-	        StringBuffer sb = new StringBuffer();
-			sb.append("Source Code,");
-			sb.append("Source Name,");
-			sb.append("Source Coding Scheme,");
-			sb.append("Source Coding Scheme Version,");
-			sb.append("Source Coding Scheme Namespace,");
-
-			sb.append("Association Name,");
-			sb.append("REL,");
-			sb.append("Map Rank,");
-
-			sb.append("Target Code,");
-			sb.append("Target Name,");
-			sb.append("Target Coding Scheme,");
-			sb.append("Target Coding Scheme Version,");
-			sb.append("Target Coding Scheme Namespace");
-			//sb.append("\r\n");
-			pw.println(sb.toString());
-
-			MappingIteratorBean bean = new MappingIteratorBean(iterator);
-            java.util.List<MappingData> list = bean.getData(0, numRemaining-1);
-            if (list == null) return;
-            for (int k=0; k<list.size(); k++) {
-				MappingData mappingData = (MappingData) list.get(k);
-				sb = new StringBuffer();
-				sb.append("\"" + mappingData.getSourceCode() + "\",");
-				sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
-				sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
-				sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
-				sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
-
-				sb.append("\"" + mappingData.getAssociationName() + "\",");
-				sb.append("\"" + mappingData.getRel() + "\",");
-				sb.append("\"" + mappingData.getScore() + "\",");
-
-				sb.append("\"" + mappingData.getTargetCode() + "\",");
-				sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
-				sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
-				sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
-				sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
-
-				//sb.append("\r\n");
-				pw.println(sb.toString());
-			}
-		    System.out.println("Total run time (ms): " + (System.currentTimeMillis() - ms));
-
-		} catch (Exception ex)	{
-			System.out.println("ERROR: Export to CVS action failed.");
-			ex.printStackTrace();
-		} finally {
-			try {
-				pw.close();
-				System.out.println("Output file " + outputfile + " generated.");
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-		return;
 	}
-*/
+	*/
 
     public static void export_mapping(String serviceUrl, String mapping_schema, String mapping_version, String outputfile) {
-		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService(serviceUrl);
-		export_mapping(lbSvc, mapping_schema, mapping_version, outputfile);
-	}
-
-
-    public static void export_mapping(LexBIGService lbSvc, String mapping_schema, String mapping_version, String outputfile) {
+		if (serviceUrl == null || serviceUrl.compareTo("null") == 0) {
+			export_mapping(mapping_schema, mapping_version, outputfile);
+			return;
+		}
 		long ms = System.currentTimeMillis();
+		LexBIGService lbSvc = createLexBIGService(serviceUrl);
         ResolvedConceptReferencesIterator _iterator = new MappingUtils(lbSvc).getMappingDataIterator(mapping_schema, mapping_version);
         System.out.println("Total getMappingDataIterator run time (ms): " + (System.currentTimeMillis() - ms));
         ms = System.currentTimeMillis();
@@ -520,7 +471,7 @@ public class MappingExporter extends JPanel
 				ex.printStackTrace();
 			}
 		}
-        System.out.println("Exsporting mapping data to " + outputfile + ". Please wait...");
+        System.out.println("Exporting mapping data to " + outputfile + ". Please wait...");
 		String sourceCode = null;
 		String sourceName = null;
 		String sourceCodingScheme = null;
@@ -714,6 +665,125 @@ public class MappingExporter extends JPanel
 		System.out.println("Total export run time (ms): " + (System.currentTimeMillis() - ms));
 	}
 
+
+    public static java.util.List<TerminologyMapBean> resolveBulkMapping(final String mappingName, String mappingVersion) {
+		java.util.List<TerminologyMapBean> tmb_list = new MappingExtensionImpl().resolveBulkMapping(mappingName, mappingVersion);
+		return tmb_list;
+	}
+
+
+    public static String getMappingMetadata(String serviceUrl, String mappingCodingScheme, String mappingCodingSchemeVersion) {
+		LexBIGService lbSvc = createLexBIGService(serviceUrl);
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+		return csdu.getMappingMetadata(mappingCodingScheme, mappingCodingSchemeVersion);
+	}
+
+    public static String getMappingMetadata(String mappingCodingScheme, String mappingCodingSchemeVersion) {
+		LexBIGService lbSvc = createLexBIGService(null);
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+		return csdu.getMappingMetadata(mappingCodingScheme, mappingCodingSchemeVersion);
+	}
+
+    public static void export_mapping(String mapping_schema, String mapping_version, String outputfile) {
+		/*
+		if (serviceUrl != null && remoteServiceUrl.contains(serviceUrl)) {
+			export_mapping(serviceUrl, mapping_schema, mapping_version, outputfile);
+			return;
+		}
+		*/
+		long ms = System.currentTimeMillis();
+		String metadata = getMappingMetadata(mapping_schema, mapping_version);
+		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+		String sourceCodingScheme = (String) u.elementAt(0);
+		String sourceCodingSchemeVersion = (String) u.elementAt(1);
+		String targetCodingScheme = (String) u.elementAt(2);
+		String targetCodingSchemeVersion = (String) u.elementAt(3);
+        String sssociationName = (String) u.elementAt(4);
+        java.util.List<TerminologyMapBean> tmb_list = resolveBulkMapping(mapping_schema, mapping_version);
+        System.out.println("Total resolveBulkMapping run time (ms): " + (System.currentTimeMillis() - ms));
+        ms = System.currentTimeMillis();
+		int	numRemaining = tmb_list.size();
+        System.out.println("numRemaining: " + numRemaining);
+        System.out.println("Exporting mapping data to " + outputfile + ". Please wait...");
+		String sourceCode = null;
+		String sourceName = null;
+		String sourceCodeNamespace = null;
+		String rel = null;
+		int score = 0;
+		String targetCode = null;
+		String targetName = null;
+		String targetCodeNamespace = null;
+		String description = null;
+
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter(outputfile, "UTF-8");
+	        StringBuffer sb = new StringBuffer();
+			sb.append("Source Code,");
+			sb.append("Source Name,");
+			sb.append("Source Coding Scheme,");
+			sb.append("Source Coding Scheme Version,");
+			sb.append("Source Coding Scheme Namespace,");
+
+			sb.append("Association Name,");
+			sb.append("REL,");
+			sb.append("Map Rank,");
+
+			sb.append("Target Code,");
+			sb.append("Target Name,");
+			sb.append("Target Coding Scheme,");
+			sb.append("Target Coding Scheme Version,");
+			sb.append("Target Coding Scheme Namespace");
+			pw.println(sb.toString());
+
+			for (int i=0; i<tmb_list.size(); i++) {
+				TerminologyMapBean tmb = (TerminologyMapBean) tmb_list.get(i);
+				sourceCode = tmb.getSourceCode();
+				sourceName = tmb.getSourceName();
+				sourceCodeNamespace = tmb.getSource();
+				rel = tmb.getRel();
+				score = Integer.parseInt(tmb.getMapRank());
+				targetCode = tmb.getTargetCode();
+				targetName = tmb.getTargetName();
+				targetCodeNamespace = tmb.getTarget();
+				sb = new StringBuffer();
+				sb.append("\"" + sourceCode + "\",");
+				sb.append("\"" + escapeCommaCharacters(sourceName) + "\",");
+				sb.append("\"" + sourceCodingScheme + "\",");
+				sb.append("\"" + sourceCodingSchemeVersion + "\",");
+				sb.append("\"" + sourceCodeNamespace + "\",");
+				sb.append("\"" + sssociationName + "\",");
+				sb.append("\"" + rel + "\",");
+				sb.append("\"" + score + "\",");
+				sb.append("\"" + targetCode + "\",");
+				sb.append("\"" + escapeCommaCharacters(targetName) + "\",");
+				sb.append("\"" + targetCodingScheme + "\",");
+				sb.append("\"" + targetCodingSchemeVersion + "\",");
+				sb.append("\"" + targetCodeNamespace + "\"");
+				pw.println(sb.toString());
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		System.out.println("Total export run time (ms): " + (System.currentTimeMillis() - ms));
+	}
+
+    public static LexBIGService createLexBIGService(String serviceUrl) {
+        try {
+            if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
+                LexBIGService lbSvc = LexBIGServiceImpl.defaultInstance();
+                return lbSvc;
+            }
+            LexEVSApplicationService lexevsService =
+                (LexEVSApplicationService) ApplicationServiceProvider
+                    .getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
+            return (LexBIGService) lexevsService;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
 		String serviceUrl = args[0];
 		if (args.length == 1) {
@@ -726,7 +796,7 @@ public class MappingExporter extends JPanel
 			String mapping_schema = args[1];
 			String mapping_version = args[2];
 			String outputfile = args[3];
-			export_mapping(serviceUrl, mapping_schema, mapping_version, outputfile);
+			MappingExporter.export_mapping(serviceUrl, mapping_schema, mapping_version, outputfile);
 		}
     }
 }

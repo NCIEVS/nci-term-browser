@@ -121,6 +121,8 @@ public class HTTPUtils {
 
 	public static boolean checkPotentialMaliciousContent(String s) {
 		if (s == null) return false;
+		//[NCITERM-806] Fixing AppScan Issue from Security Team.
+		if (s.indexOf(");") != -1) return true;
 		// appscan response:
 		//if (StringUtils.isSmallIrrationalNumber(s)) return true;
 		char c1 = '<';
@@ -150,9 +152,12 @@ public class HTTPUtils {
 		return true;
 	}
 
+
+//ns=ncit21681%27);confirm(1234)//301
     public static String cleanMatchTextXSS(String value) {
 		if (value == null) return null;
 		value = value.trim();
+
 		if (value.compareTo(">") == 0) return cleanXSS(value);
 		if (value.compareTo("<") == 0) return cleanXSS(value);
 
@@ -167,8 +172,11 @@ public class HTTPUtils {
     public static String cleanXSS(String value) {
         if (value == null) return null;
         value = value.trim();
+
         //if (value.length() == 0) return value;
         if (value.length() <= 1) return value;
+        //[NCITERM-806] Fixing AppScan Issue from Security Team.
+        value = value.replaceAll(");", "");
 
         // Remove XSS attacks
         value = replaceAll(value, "<\\s*script\\s*>.*</\\s*script\\s*>", "");

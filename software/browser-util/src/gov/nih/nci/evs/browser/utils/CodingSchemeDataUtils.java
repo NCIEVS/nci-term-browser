@@ -1878,4 +1878,44 @@ public class CodingSchemeDataUtils {
         }
         return list;
     }
+
+    public String getMappingMetadata(String scheme, String version) {
+        CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();
+        StringBuffer buf = new StringBuffer();
+        if (version != null)
+            csvt.setVersion(version);
+
+		List list = new ArrayList();
+		try {
+			CodingScheme cs = lbSvc.resolveCodingScheme(scheme, csvt);
+			Relations[] relations = cs.getRelations();
+			if (relations == null || relations.length == 0) return null;
+			Relations relation = relations[0];
+			String sourceCodingScheme = relation.getSourceCodingScheme();
+			String sourceCodingSchemeVersion = relation.getSourceCodingSchemeVersion();
+			String targetCodingScheme = relation.getTargetCodingScheme();
+			String targetCodingSchemeVersion = relation.getTargetCodingSchemeVersion();
+			if (sourceCodingSchemeVersion == null) {
+				sourceCodingSchemeVersion = getVocabularyVersionByTag(sourceCodingScheme, "PRODUCTION");
+			}
+			if (targetCodingSchemeVersion == null) {
+				targetCodingSchemeVersion = getVocabularyVersionByTag(targetCodingScheme, "PRODUCTION");
+			}
+			buf.append(sourceCodingScheme).append("|")
+			   .append(sourceCodingSchemeVersion).append("|")
+			   .append(targetCodingScheme).append("|")
+			   .append(targetCodingSchemeVersion).append("|");
+				org.LexGrid.relations.AssociationPredicate[] asso_array =
+					relation.getAssociationPredicate();
+			for (int j = 0; j < asso_array.length; j++) {
+				org.LexGrid.relations.AssociationPredicate association =
+					(org.LexGrid.relations.AssociationPredicate) asso_array[j];
+				buf = buf.append(association.getAssociationName());
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+        }
+		return buf.toString();
+	}
+
 }

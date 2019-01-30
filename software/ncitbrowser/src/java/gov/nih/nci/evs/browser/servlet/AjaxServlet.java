@@ -5790,7 +5790,7 @@ KLO 11282018
 		String description = null;
 		String associationName = null;
 
-        java.util.List<MappingData> list = MappingUtils(lbSvc).getMappingData(mapping_schema, mapping_version);
+        java.util.List<MappingData> list = new MappingUtils(lbSvc).getMappingData(mapping_schema, mapping_version);
 		ServletOutputStream ouputStream = null;
 
 		String filename = mapping_schema + "_" + mapping_version;

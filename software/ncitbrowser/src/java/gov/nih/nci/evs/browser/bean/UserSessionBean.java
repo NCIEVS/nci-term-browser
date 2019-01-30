@@ -3088,6 +3088,7 @@ ontologiesToSearchOnStr = s;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
     public void export_mapping_search_results(HttpServletRequest request, HttpServletResponse response) {
         String mapping_schema = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
         String mapping_version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
@@ -3171,6 +3172,77 @@ ontologiesToSearchOnStr = s;
 		FacesContext.getCurrentInstance().responseComplete();
 		return;
 	}
+	*/
 
+    public void export_mapping_search_results(HttpServletRequest request, HttpServletResponse response) {
+        String mapping_schema = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
+        String mapping_version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
 
+        LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+        java.util.List<MappingData> list = new MappingUtils(lbSvc).getMappingData(mapping_schema, mapping_version);
+        StringBuffer sb = new StringBuffer();
+        try {
+			sb.append("Source Code,");
+			sb.append("Source Name,");
+			sb.append("Source Coding Scheme,");
+			sb.append("Source Coding Scheme Version,");
+			sb.append("Source Coding Scheme Namespace,");
+
+			sb.append("Association Name,");
+			sb.append("REL,");
+			sb.append("Map Rank,");
+
+			sb.append("Target Code,");
+			sb.append("Target Name,");
+			sb.append("Target Coding Scheme,");
+			sb.append("Target Coding Scheme Version,");
+			sb.append("Target Coding Scheme Namespace");
+			sb.append("\r\n");
+
+            for (int k=0; k<list.size(); k++) {
+				MappingData mappingData = (MappingData) list.get(k);
+				sb.append("\"" + mappingData.getSourceCode() + "\",");
+				sb.append("\"" + mappingData.getSourceName() + "\",");
+				sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
+				sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
+				sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
+
+				sb.append("\"" + mappingData.getAssociationName() + "\",");
+				sb.append("\"" + mappingData.getRel() + "\",");
+				sb.append("\"" + mappingData.getScore() + "\",");
+
+				sb.append("\"" + mappingData.getTargetCode() + "\",");
+				sb.append("\"" + mappingData.getTargetName() + "\",");
+				sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
+				sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
+				sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
+				sb.append("\r\n");
+			}
+		} catch (Exception ex)	{
+			sb.append("WARNING: Export to CVS action failed.");
+			ex.printStackTrace();
+		}
+
+		String filename = mapping_schema + "_" + mapping_version;
+		filename = filename.replaceAll(" ", "_");
+		filename = filename + ".csv";
+
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ filename);
+
+		response.setContentLength(sb.length());
+
+		try {
+			ServletOutputStream ouputStream = response.getOutputStream();
+			ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+			ouputStream.flush();
+			ouputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			sb.append("WARNING: Export to CVS action failed.");
+		}
+		FacesContext.getCurrentInstance().responseComplete();
+		return;
+	}
 }

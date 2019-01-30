@@ -188,10 +188,6 @@ public class MappingIteratorBean extends Object {
         String associationName = (String) u.elementAt(4);
 
         java.util.List<TerminologyMapBean> tmb_list = new MappingExtensionImpl().resolveBulkMapping(mappingCodingScheme, mappingCodingSchemeVersion);
-/*
-        int knt = 1020;
-		java.util.List<TerminologyMapBean> tmb_list = simulateResolveBulkMapping(sourceCodingScheme, targetCodingScheme, knt);
-*/
 	    java.util.List<MappingData> md_list = terminologyMapBean2MappingData(tmb_list,
 			  sourceCodingScheme,
 			  sourceCodingSchemeVersion,
@@ -201,6 +197,29 @@ public class MappingIteratorBean extends Object {
 		this._list = md_list;
 		initialize_bean();
 	}
+
+    // for testing use:
+	public MappingIteratorBean(String serviceUrl, String mappingCodingScheme, String mappingCodingSchemeVersion) {
+	    String metadata = getMappingMetadata(serviceUrl, mappingCodingScheme, mappingCodingSchemeVersion);
+	    System.out.println(metadata);
+		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+		String sourceCodingScheme = (String) u.elementAt(0);
+		String sourceCodingSchemeVersion = (String) u.elementAt(1);
+		String targetCodingScheme = (String) u.elementAt(2);
+		String targetCodingSchemeVersion = (String) u.elementAt(3);
+        String associationName = (String) u.elementAt(4);
+
+        java.util.List<TerminologyMapBean> tmb_list = new MappingExtensionImpl().resolveBulkMapping(mappingCodingScheme, mappingCodingSchemeVersion);
+	    java.util.List<MappingData> md_list = terminologyMapBean2MappingData(tmb_list,
+			  sourceCodingScheme,
+			  sourceCodingSchemeVersion,
+			  associationName,
+			  targetCodingScheme,
+			  targetCodingSchemeVersion);
+		this._list = md_list;
+		initialize_bean();
+	}
+
 
 	public void initialize_bean() {
 		//this._list = md_list;

@@ -1,5 +1,6 @@
 package gov.nih.nci.evs.browser.utils;
 
+import org.LexGrid.LexBIG.Impl.Extensions.GenericExtensions.mapping.*;
 
 import gov.nih.nci.evs.browser.bean.*;
 import java.sql.*;
@@ -34,7 +35,7 @@ import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
 import org.LexGrid.naming.*;
 import org.LexGrid.relations.AssociationPredicate;
 import org.LexGrid.relations.Relations;
-
+import org.LexGrid.custom.relations.*;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -346,7 +347,68 @@ public class MappingUtils {
 		return v;
 	}
 
+    public String getMappingMetadata(String mappingCodingScheme, String mappingCodingSchemeVersion) {
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+		return csdu.getMappingMetadata(mappingCodingScheme, mappingCodingSchemeVersion);
+	}
 
+
+	public java.util.List<MappingData> terminologyMapBean2MappingData(java.util.List<TerminologyMapBean> tmb_list,
+			  String sourceCodingScheme,
+			  String sourceCodingSchemeVersion,
+			  String associationName,
+			  String targetCodingScheme,
+			  String targetCodingSchemeVersion) {
+
+        java.util.List<MappingData> mb_list = new ArrayList();
+        for (int i=0; i<tmb_list.size(); i++) {
+			TerminologyMapBean tmb = (TerminologyMapBean) tmb_list.get(i);
+			MappingData md = new MappingData(
+		       tmb.getSourceCode(),
+		       tmb.getSourceName(),
+		       sourceCodingScheme,
+		       sourceCodingSchemeVersion,
+		       tmb.getSource(),
+		       associationName,
+		       tmb.getRel(),
+		       Integer.parseInt(tmb.getMapRank()),
+		       tmb.getTargetCode(),
+		       tmb.getTargetName(),
+		       targetCodingScheme,
+		       targetCodingSchemeVersion,
+		       tmb.getTarget());
+		    mb_list.add(md);
+		}
+		return mb_list;
+	}
+
+    public static java.util.List<TerminologyMapBean> resolveBulkMapping(final String mappingName, String mappingVersion) {
+		java.util.List<TerminologyMapBean> tmb_list = new MappingExtensionImpl().resolveBulkMapping(mappingName, mappingVersion);
+		return tmb_list;
+	}
+
+    public java.util.List<MappingData> getMappingData(String mapping_schema, String mapping_version) {
+		long ms = System.currentTimeMillis();
+		String metadata = getMappingMetadata(mapping_schema, mapping_version);
+		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+		String sourceCodingScheme = (String) u.elementAt(0);
+		String sourceCodingSchemeVersion = (String) u.elementAt(1);
+		String targetCodingScheme = (String) u.elementAt(2);
+		String targetCodingSchemeVersion = (String) u.elementAt(3);
+        String associationName = (String) u.elementAt(4);
+        java.util.List<TerminologyMapBean> tmb_list = resolveBulkMapping(mapping_schema, mapping_version);
+        System.out.println("Total resolveBulkMapping run time (ms): " + (System.currentTimeMillis() - ms));
+        ms = System.currentTimeMillis();
+
+	    java.util.List<MappingData> md_list = terminologyMapBean2MappingData(tmb_list,
+			  sourceCodingScheme,
+			  sourceCodingSchemeVersion,
+			  associationName,
+			  targetCodingScheme,
+			  targetCodingSchemeVersion);
+		System.out.println("Total export run time (ms): " + (System.currentTimeMillis() - ms));
+		return md_list;
+	}
 }
 
 

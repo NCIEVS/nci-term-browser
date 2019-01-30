@@ -371,7 +371,8 @@ if (display_name_vec == null) {
             exportToExcelAction(request, response);
         } else if (action.equals("export_to_csv")) {
             exportToCSVAction(request, response);
-        } else if (action.equals("export_mapping")) {
+        //} else if (action.equals("export_mapping")) {
+		} else if (action.equals("exportMapping")) {
             exportMappingAction(request, response);
         } else if (action.equals("export_vsrc")) {
             export_vsrc(request, response);
@@ -400,44 +401,40 @@ if (display_name_vec == null) {
 				 } catch (Exception ex) {
 					 ex.printStackTrace();
 				 }
-
-        //search_value_set
         }
 
-//search_hierarchy ns=npo
+		if (action == null) {
+			action = "create_src_vs_tree";
+		}
 
-if (action == null) {
-	action = "create_src_vs_tree";
-}
+		if (action.compareTo("create_alt_src_vs_tree") == 0) {
+			action = "create_src_vs_tree";
+		}
 
-if (action.compareTo("create_alt_src_vs_tree") == 0) {
-	action = "create_src_vs_tree";
-}
-
-if (action.compareTo("create_alt_cs_vs_tree") == 0) {
-	action = "create_cs_vs_tree";
-}
+		if (action.compareTo("create_alt_cs_vs_tree") == 0) {
+			action = "create_cs_vs_tree";
+		}
 
 
-if (action.compareTo("values") == 0) {
-	resolveValueSetAction(request, response);
-	return;
-}
+		if (action.compareTo("values") == 0) {
+			resolveValueSetAction(request, response);
+			return;
+		}
 
-if (action.compareTo("download") == 0) {
-	downloadValueSetAction(request, response);
-	return;
-}
+		if (action.compareTo("download") == 0) {
+			downloadValueSetAction(request, response);
+			return;
+		}
 
-if (action.compareTo("versions") == 0) {
-	selectCSVersionAction(request, response);
-	return;
-}
+		if (action.compareTo("versions") == 0) {
+			selectCSVersionAction(request, response);
+			return;
+		}
 
-if (action.compareTo("xmldefinitions") == 0) {
-	exportVSDToXMLAction(request, response);
-	return;
-}
+		if (action.compareTo("xmldefinitions") == 0) {
+			exportVSDToXMLAction(request, response);
+			return;
+		}
 
         String node_id = HTTPUtils.cleanXSS(request.getParameter("ontology_node_id"));// DataConstants.ONTOLOGY_NODE_ID);
         String ns = HTTPUtils.cleanXSS(request.getParameter("ontology_node_ns"));// DataConstants.ONTOLOGY_NODE_ID);
@@ -488,53 +485,8 @@ if (action.compareTo("xmldefinitions") == 0) {
             }
         }
 
-        /*
-         * else if (action.equals("search_tree")) {
-         *
-         *
-         * if (node_id != null && ontology_display_name != null) {
-         * response.setContentType("text/html");
-         * response.setHeader("Cache-Control", "no-cache"); JSONObject json =
-         * new JSONObject(); try { // testing // JSONArray rootsArray = //
-         * CacheController.getInstance().getPathsToRoots(ontology_display_name,
-         * // null, node_id, true);
-         *
-         * String max_tree_level_str = null; int maxLevel = -1; try {
-         * max_tree_level_str = NCItBrowserProperties .getInstance()
-         * .getProperty( NCItBrowserProperties.MAXIMUM_TREE_LEVEL); maxLevel =
-         * Integer.parseInt(max_tree_level_str);
-         *
-         * } catch (Exception ex) {
-         *
-         * }
-         *
-         * JSONArray rootsArray = CacheController.getInstance()
-         * .getPathsToRoots(ontology_display_name, null, node_id, true,
-         * maxLevel);
-         *
-         * if (rootsArray.length() == 0) { rootsArray =
-         * CacheController.getInstance() .getRootConcepts(ontology_display_name,
-         * null);
-         *
-         * boolean is_root = isRoot(rootsArray, node_id); if (!is_root) {
-         * //rootsArray = null; json.put("dummy_root_nodes", rootsArray);
-         * response.getWriter().write(json.toString());
-         * response.getWriter().flush();
-         *
-         * _logger.debug("Run time (milliseconds): " +
-         * (System.currentTimeMillis() - ms)); return; } }
-         * json.put("root_nodes", rootsArray); } catch (Exception e) {
-         * e.printStackTrace(); }
-         *
-         * response.getWriter().write(json.toString());
-         * response.getWriter().flush();
-         *
-         * _logger.debug("Run time (milliseconds): " +
-         * (System.currentTimeMillis() - ms)); return; } }
-         */
-
         if (action.equals("export_mapping")) {
-            export_mapping(request, response);
+            export_mapping_data(request, response);
         } else if (action.equals("export_mapping_search")) {
             export_mapping_search(request, response);
         } else if (action.equals("search_all_value_sets")) {
@@ -5815,7 +5767,97 @@ KLO 11282018
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-
 		FacesContext.getCurrentInstance().responseComplete();
 	}
+
+
+    public void export_mapping_data(HttpServletRequest request, HttpServletResponse response) {
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+        String mapping_schema = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
+        String mapping_version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
+		String sourceCode = null;
+		String sourceName = null;
+		String sourceCodingScheme = null;
+		String sourceCodingSchemeVesion = null;
+		String sourceCodeNamespace = null;
+		String rel = null;
+		int score = 0;
+		String targetCode = null;
+		String targetName = null;
+		String targetCodingScheme = null;
+		String targetCodingSchemeVesion = null;
+		String targetCodeNamespace = null;
+		String description = null;
+		String associationName = null;
+
+        java.util.List<MappingData> list = MappingUtils(lbSvc).getMappingData(mapping_schema, mapping_version);
+		ServletOutputStream ouputStream = null;
+
+		String filename = mapping_schema + "_" + mapping_version;
+		filename = filename.replaceAll(" ", "_");
+		filename = filename + ".csv";
+
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ filename);
+
+        StringBuffer sb = new StringBuffer();
+        try {
+			ouputStream = response.getOutputStream();
+
+			sb.append("Source Code,");
+			sb.append("Source Name,");
+			sb.append("Source Coding Scheme,");
+			sb.append("Source Coding Scheme Version,");
+			sb.append("Source Coding Scheme Namespace,");
+
+			sb.append("Association Name,");
+			sb.append("REL,");
+			sb.append("Map Rank,");
+
+			sb.append("Target Code,");
+			sb.append("Target Name,");
+			sb.append("Target Coding Scheme,");
+			sb.append("Target Coding Scheme Version,");
+			sb.append("Target Coding Scheme Namespace");
+			sb.append("\r\n");
+			ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+
+			for (int i=0; i<list.size(); i++) {
+				sb = new StringBuffer();
+				MappingData mappingData = (MappingData) list.get(i);
+				sb = new StringBuffer();
+				sb.append("\"" + mappingData.getSourceCode() + "\",");
+				sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
+				sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
+				sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
+				sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
+
+				sb.append("\"" + mappingData.getAssociationName() + "\",");
+				sb.append("\"" + mappingData.getRel() + "\",");
+				sb.append("\"" + mappingData.getScore() + "\",");
+
+				sb.append("\"" + mappingData.getTargetCode() + "\",");
+				sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
+				sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
+				sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
+				sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
+				sb.append("\r\n");
+				ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+				ouputStream.flush();
+			}
+		} catch (Exception ex)	{
+			sb.append("WARNING: Export to CVS action failed.");
+			ex.printStackTrace();
+		}
+
+		try {
+			ouputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		FacesContext.getCurrentInstance().responseComplete();
+		return;
+	}
+
 }

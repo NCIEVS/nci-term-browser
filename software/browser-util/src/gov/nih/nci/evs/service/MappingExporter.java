@@ -698,7 +698,7 @@ public class MappingExporter extends JPanel
 		String sourceCodingSchemeVersion = (String) u.elementAt(1);
 		String targetCodingScheme = (String) u.elementAt(2);
 		String targetCodingSchemeVersion = (String) u.elementAt(3);
-        String sssociationName = (String) u.elementAt(4);
+        String associationName = (String) u.elementAt(4);
         java.util.List<TerminologyMapBean> tmb_list = resolveBulkMapping(mapping_schema, mapping_version);
         System.out.println("Total resolveBulkMapping run time (ms): " + (System.currentTimeMillis() - ms));
         ms = System.currentTimeMillis();
@@ -752,7 +752,7 @@ public class MappingExporter extends JPanel
 				sb.append("\"" + sourceCodingScheme + "\",");
 				sb.append("\"" + sourceCodingSchemeVersion + "\",");
 				sb.append("\"" + sourceCodeNamespace + "\",");
-				sb.append("\"" + sssociationName + "\",");
+				sb.append("\"" + associationName + "\",");
 				sb.append("\"" + rel + "\",");
 				sb.append("\"" + score + "\",");
 				sb.append("\"" + targetCode + "\",");

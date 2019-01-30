@@ -1,22 +1,47 @@
 package gov.nih.nci.evs.browser.bean;
 
-
 import gov.nih.nci.evs.browser.common.*;
 import gov.nih.nci.evs.browser.properties.*;
+import gov.nih.nci.evs.browser.utils.*;
+import gov.nih.nci.evs.security.*;
+import gov.nih.nci.system.client.*;
+import java.awt.*;
+import java.awt.event.* ;
+import java.awt.event.*;
+import java.awt.event.ActionEvent;
 import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.*;
+import javax.swing.* ;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.text.*;
+import javax.swing.tree.*;
 import org.apache.log4j.*;
+import org.LexGrid.custom.relations.*;
+import org.LexGrid.LexBIG.caCore.interfaces.*;
+import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.LexGrid.LexBIG.DataModel.Collections.AssociationList;
 import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.DataModel.Core.AssociatedConcept;
 import org.LexGrid.LexBIG.DataModel.Core.Association;
 import org.LexGrid.LexBIG.DataModel.Core.NameAndValue;
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
+import org.LexGrid.LexBIG.Impl.*;
+import org.LexGrid.LexBIG.Impl.Extensions.GenericExtensions.mapping.*;
+import org.LexGrid.LexBIG.LexBIGService.*;
 import org.LexGrid.LexBIG.Utility.Iterators.*;
 import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
 import org.LexGrid.naming.SupportedAssociation;
 import org.LexGrid.relations.AssociationPredicate;
 import org.LexGrid.relations.Relations;
+import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
+import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
+
 
 
 /**
@@ -77,7 +102,7 @@ public class MappingIteratorBean extends Object {
 
     private ResolvedConceptReferencesIterator _iterator = null;
     private int _size = 0;
-    private List _list = null;
+    private java.util.List _list = null;
 
     private int _pageNumber;
     private int _pageSize;
@@ -93,9 +118,7 @@ public class MappingIteratorBean extends Object {
 
     private String _key = null;
     private boolean _timeout = false;
-
-    //static final long MILLISECONDS_PER_MINUTE = 60L * 1000;
-
+    private java.util.List<TerminologyMapBean> _tmb_list = null;
 
 	public MappingIteratorBean() {
 	}
@@ -140,7 +163,7 @@ public class MappingIteratorBean extends Object {
 		int endIndex,
 		int pageNumber,
 		int numberOfPages,
-		List list) {
+		java.util.List list) {
 
 		this._iterator = iterator;
 		this._size = size;
@@ -153,6 +176,50 @@ public class MappingIteratorBean extends Object {
 	}
 
 
+
+	public MappingIteratorBean(String mappingCodingScheme, String mappingCodingSchemeVersion) {
+	    String metadata = getMappingMetadata(mappingCodingScheme, mappingCodingSchemeVersion);
+	    System.out.println(metadata);
+		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+		String sourceCodingScheme = (String) u.elementAt(0);
+		String sourceCodingSchemeVersion = (String) u.elementAt(1);
+		String targetCodingScheme = (String) u.elementAt(2);
+		String targetCodingSchemeVersion = (String) u.elementAt(3);
+        String associationName = (String) u.elementAt(4);
+
+        java.util.List<TerminologyMapBean> tmb_list = new MappingExtensionImpl().resolveBulkMapping(mappingCodingScheme, mappingCodingSchemeVersion);
+/*
+        int knt = 1020;
+		java.util.List<TerminologyMapBean> tmb_list = simulateResolveBulkMapping(sourceCodingScheme, targetCodingScheme, knt);
+*/
+	    java.util.List<MappingData> md_list = terminologyMapBean2MappingData(tmb_list,
+			  sourceCodingScheme,
+			  sourceCodingSchemeVersion,
+			  associationName,
+			  targetCodingScheme,
+			  targetCodingSchemeVersion);
+		this._list = md_list;
+		initialize_bean();
+	}
+
+	public void initialize_bean() {
+		//this._list = md_list;
+		this._iterator = null;
+		this._size = _list.size();
+		this._startIndex = 0;
+		this._endIndex = _size;
+		this._pageNumber = 1;
+		this._pageSize = 50;
+		this._numberOfPages = _size / _pageSize;
+
+		_pageNumber = 1;
+		_pageSize = Constants.DEFAULT_PAGE_SIZE;
+		_numberOfPages = _size / _pageSize;
+		if (_pageSize * _numberOfPages < _size) {
+			_numberOfPages = _numberOfPages + 1;
+		}
+		_lastResolved = -1;
+	}
 
     public int getNumberOfPages() {
         return _numberOfPages;
@@ -172,11 +239,8 @@ public class MappingIteratorBean extends Object {
         return _timeout;
     }
 
-/*
     public void initialize() {
-
 		MappingData mappingData = null;
-
 		String sourceCode = null;
 		String sourceName = null;
 		String sourceCodingScheme = null;
@@ -191,194 +255,12 @@ public class MappingIteratorBean extends Object {
 		String targetCodingSchemeVesion = null;
 		String targetCodeNamespace = null;
 
-
         try {
             if (_iterator == null) {
                 _size = 0;
             } else {
 				_list = new ArrayList();
                 _size = _iterator.numberRemaining();
-
-
-                //KLO, work-around #2
-                int knt = 0;
-                while (_iterator.hasNext()) {
-					knt++;
-					if (knt > INITIAL_ITERATOR_RESOLUTION) break;
-
-					ResolvedConceptReference ref = _iterator.next();
-
-					_lastResolved++;
-
-					//upper_bound = _lastResolved;
-
-					String description;
-
-					if(ref.getEntityDescription() == null) {
-						description = "NOT AVAILABLE";
-					} else {
-						description = ref.getEntityDescription().getContent();
-					}
-					sourceCode = ref.getCode();
-					sourceName = description;
-					sourceCodingScheme = ref.getCodingSchemeName();
-					sourceCodingSchemeVesion = ref.getCodingSchemeVersion();
-					sourceCodeNamespace = ref.getCodeNamespace();
-
-					rel = null;
-					score = 0;
-
-					AssociationList assocs = ref.getSourceOf();
-					if(assocs != null){
-						for(Association assoc : assocs.getAssociation()){
-							associationName = assoc.getAssociationName();
-							int lcv = 0;
-							for(AssociatedConcept ac : assoc.getAssociatedConcepts().getAssociatedConcept()){
-								lcv++;
-								if(ac.getEntityDescription() == null) {
-									description = "NOT AVAILABLE";
-								} else {
-									description = ac.getEntityDescription().getContent();
-								}
-								targetCode = ac.getCode();
-								targetName = description;
-								targetCodingScheme = ac.getCodingSchemeName();
-								targetCodingSchemeVesion = ac.getCodingSchemeVersion();
-								targetCodeNamespace = ac.getCodeNamespace();
-
-								if (ac.getAssociationQualifiers() != null && ac.getAssociationQualifiers().getNameAndValue() != null) {
-									for (NameAndValue qual : ac.getAssociationQualifiers().getNameAndValue()) {
-										String qualifier_name = qual.getName();
-										String qualifier_value = qual.getContent();
-										if (qualifier_name.compareTo("rel") == 0) {
-											rel = qualifier_value;
-										} else if (qualifier_name.compareTo("score") == 0) {
-											score = Integer.parseInt(qualifier_value);
-										}
-									}
-								}
-
-								mappingData = new MappingData(
-									sourceCode,
-									sourceName,
-									sourceCodingScheme,
-									sourceCodingSchemeVesion,
-									sourceCodeNamespace,
-									associationName,
-									rel,
-									score,
-									targetCode,
-									targetName,
-									targetCodingScheme,
-									targetCodingSchemeVesion,
-									targetCodeNamespace);
-								_list.add(mappingData);
-
-							}
-						}
-					}
-
-					assocs = ref.getTargetOf();
-					if(assocs != null){
-						for(Association assoc : assocs.getAssociation()){
-							associationName = assoc.getAssociationName();
-
-							int lcv = 0;
-							for(AssociatedConcept ac : assoc.getAssociatedConcepts().getAssociatedConcept()){
-								lcv++;
-								if(ac.getEntityDescription() == null) {
-									description = "NOT AVAILABLE";
-								} else {
-									description = ac.getEntityDescription().getContent();
-								}
-								targetCode = ac.getCode();
-								targetName = description;
-								targetCodingScheme = ac.getCodingSchemeName();
-								targetCodingSchemeVesion = ac.getCodingSchemeVersion();
-								targetCodeNamespace = ac.getCodeNamespace();
-
-								if (ac.getAssociationQualifiers() != null && ac.getAssociationQualifiers().getNameAndValue() != null) {
-									for (NameAndValue qual : ac.getAssociationQualifiers().getNameAndValue()) {
-										String qualifier_name = qual.getName();
-										String qualifier_value = qual.getContent();
-										if (qualifier_name.compareTo("rel") == 0) {
-											rel = qualifier_value;
-										} else if (qualifier_name.compareTo("score") == 0) {
-											score = Integer.parseInt(qualifier_value);
-										}
-									}
-								}
-
-								mappingData = new MappingData(
-									sourceCode,
-									sourceName,
-									sourceCodingScheme,
-									sourceCodingSchemeVesion,
-									sourceCodeNamespace,
-									associationName,
-									rel,
-									score,
-									targetCode,
-									targetName,
-									targetCodingScheme,
-									targetCodingSchemeVesion,
-									targetCodeNamespace);
-								_list.add(mappingData);
-
-							}
-						}
-					}
-
-				}
-                if (knt > _size) _size = knt;
-            }
-
-
-            _pageNumber = 1;
-            //_list = new ArrayList();
-
-            _pageSize = Constants.DEFAULT_PAGE_SIZE;
-            _numberOfPages = _size / _pageSize;
-            if (_pageSize * _numberOfPages < _size) {
-                _numberOfPages = _numberOfPages + 1;
-            }
-            _lastResolved = -1;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-*/
-
-
-    public void initialize() {
-
-		MappingData mappingData = null;
-
-		String sourceCode = null;
-		String sourceName = null;
-		String sourceCodingScheme = null;
-		String sourceCodingSchemeVesion = null;
-		String sourceCodeNamespace = null;
-		String associationName = null;
-		String rel = null;
-		int score = 0;
-		String targetCode = null;
-		String targetName = null;
-		String targetCodingScheme = null;
-		String targetCodingSchemeVesion = null;
-		String targetCodeNamespace = null;
-
-		//String source_ns = null;
-		//String target_ns = null;
-
-
-        try {
-            if (_iterator == null) {
-                _size = 0;
-            } else {
-				_list = new ArrayList();
-                _size = _iterator.numberRemaining();
-
 
                 //KLO, work-around #2
                 int knt = 0;
@@ -527,6 +409,7 @@ public class MappingIteratorBean extends Object {
             ex.printStackTrace();
         }
     }
+
 
 
     public int getMumberOfPages() {
@@ -564,8 +447,8 @@ public class MappingIteratorBean extends Object {
     }
 
 
-     public List copyData(int idx1, int idx2) {
-		List arrayList = new ArrayList();
+     public java.util.List copyData(int idx1, int idx2) {
+		java.util.List arrayList = new ArrayList();
 
         if (_list.size() == 0) return arrayList;
 
@@ -585,29 +468,19 @@ public class MappingIteratorBean extends Object {
 			arrayList.add(ref);
 			if (i > _list.size()) break;
 		}
-
 		return arrayList;
 	}
 
 
-
-
-
-    public List getData(int pageNumber) {
+    public java.util.List getData(int pageNumber) {
         int idx1 = getStartIndex(pageNumber);
         int idx2 = getEndIndex(pageNumber);
         return getData(idx1, idx2);
     }
 
-
-
-
-    public List getData(int idx1, int idx2) {
-
+    public java.util.List getData(int idx1, int idx2) {
         if (idx2 <= _list.size()) return copyData(idx1, idx2);
-
 		MappingData mappingData = null;
-
 		String sourceCode = null;
 		String sourceName = null;
 		String sourceCodingScheme = null;
@@ -623,7 +496,7 @@ public class MappingIteratorBean extends Object {
 		String targetCodeNamespace = null;
 
 
-        _logger.debug("Retrieving data (from: " + idx1 + " to: " + idx2 + ")");
+        //_logger.debug("Retrieving data (from: " + idx1 + " to: " + idx2 + ")");
         //long ms = System.currentTimeMillis();
         //long dt = 0;
         //long total_delay = 0;
@@ -806,7 +679,7 @@ public class MappingIteratorBean extends Object {
         }
     }
 
-    public void dumpData(List list) {
+    public void dumpData(java.util.List list) {
         if (list == null) {
             _logger.warn("WARNING: dumpData list = null???");
             return;
@@ -819,7 +692,7 @@ public class MappingIteratorBean extends Object {
         }
     }
 
-    public void dumpData(OutputStreamWriter osWriter, List list) {
+    public void dumpData(OutputStreamWriter osWriter, java.util.List list) {
         if (list == null) {
             _logger.warn("WARNING: dumpData list = null???");
             return;
@@ -856,4 +729,123 @@ public class MappingIteratorBean extends Object {
     public String getMatchText() {
         return _matchText;
     }
+
+
+
+    public java.util.List<TerminologyMapBean> resolveBulkMapping(String mappingName, String mappingVersion) {
+		java.util.List<TerminologyMapBean> tmb_list = new MappingExtensionImpl().resolveBulkMapping(mappingName, mappingVersion);
+		return tmb_list;
+	}
+
+    public static LexBIGService createLexBIGService(String serviceUrl) {
+        try {
+            if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
+                LexBIGService lbSvc = LexBIGServiceImpl.defaultInstance();
+                return lbSvc;
+            }
+            LexEVSApplicationService lexevsService =
+                (LexEVSApplicationService) ApplicationServiceProvider
+                    .getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
+            return (LexBIGService) lexevsService;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getMappingMetadata(String mappingCodingScheme, String mappingCodingSchemeVersion) {
+		return getMappingMetadata(null, mappingCodingScheme, mappingCodingSchemeVersion);
+	}
+
+    public static String getMappingMetadata(String serviceUrl, String mappingCodingScheme, String mappingCodingSchemeVersion) {
+		LexBIGService lbSvc = createLexBIGService(serviceUrl);
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+		return csdu.getMappingMetadata(mappingCodingScheme, mappingCodingSchemeVersion);
+	}
+
+	public static java.util.List<MappingData> terminologyMapBean2MappingData(java.util.List<TerminologyMapBean> tmb_list,
+			  String sourceCodingScheme,
+			  String sourceCodingSchemeVersion,
+			  String associationName,
+			  String targetCodingScheme,
+			  String targetCodingSchemeVersion) {
+
+        java.util.List<MappingData> mb_list = new ArrayList();
+        for (int i=0; i<tmb_list.size(); i++) {
+			TerminologyMapBean tmb = (TerminologyMapBean) tmb_list.get(i);
+			MappingData md = new MappingData(
+		       tmb.getSourceCode(),
+		       tmb.getSourceName(),
+		       sourceCodingScheme,
+		       sourceCodingSchemeVersion,
+		       tmb.getSource(),
+		       associationName,
+		       tmb.getRel(),
+		       Integer.parseInt(tmb.getMapRank()),
+		       tmb.getTargetCode(),
+		       tmb.getTargetName(),
+		       targetCodingScheme,
+		       targetCodingSchemeVersion,
+		       tmb.getTarget());
+		    mb_list.add(md);
+		}
+		return mb_list;
+	}
+
+    public static java.util.List<TerminologyMapBean> simulateResolveBulkMapping(String source, String target, int knt) {
+		//java.util.List<TerminologyMapBean> tmb_list = new MappingExtensionImpl().resolveBulkMapping(mappingName, mappingVersion);
+		java.util.List<TerminologyMapBean> tmb_list = new ArrayList();
+		//String source = "ICD10";
+		String sourceCode;
+		String sourceName;
+		String rel = "SY";
+		String mapRank = "1";
+		//String target = "ncit";
+		String targetCode;
+		String targetName;
+		for (int i=0; i<knt; i++) {
+			sourceCode = "src_code_" + i;
+			sourceName = "src_name_" + i;
+			targetCode = "target_code_" + i;
+			targetName = "target_name_" + i;
+			TerminologyMapBean tmb = new TerminologyMapBean();
+			tmb.setSourceCode(sourceCode);
+			tmb.setSourceName(sourceName);
+			tmb.setRel(rel);
+			tmb.setMapRank(mapRank);
+			tmb.setTargetCode(targetCode);
+			tmb.setTargetName(targetName);
+			tmb_list.add(tmb);
+		}
+		return tmb_list;
+	}
+
+	public static void simulation(String mappingCodingScheme, String mappingCodingSchemeVersion) {
+        MappingIteratorBean mib = new MappingIteratorBean(mappingCodingScheme, mappingCodingSchemeVersion);
+
+        java.util.List md_list = mib.getData(101, 430);
+        for (int i=0; i<md_list.size(); i++) {
+			MappingData md = (MappingData) md_list.get(i);
+			int j = i+1;
+            System.out.println("(" + j + ") " + md.getSourceName() + " (" + md.getSourceCode() + ")");
+		}
+	}
+
+
+	public static void main(String[] args) {
+		//java.util.List<TerminologyMapBean> tmb_list = simulateResolveBulkMapping("ICD10", "ncit", 1020);
+	    //MappingIteratorBean mib = new MappingIteratorBean(tmb_list);
+	    //System.out.println("tmb_list: " + tmb_list.size());
+
+	    String serviceUrl = args[0];
+	    String mappingCodingScheme = args[1];
+	    String mappingCodingSchemeVersion = args[2];
+	    //String metadata = getMappingMetadata(serviceUrl, mappingCodingScheme, mappingCodingSchemeVersion);
+	    //System.out.println(metadata);
+	    simulation(mappingCodingScheme, mappingCodingSchemeVersion);
+
+
+
+	}
 }
+

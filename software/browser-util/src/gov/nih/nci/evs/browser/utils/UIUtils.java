@@ -1125,7 +1125,7 @@ if (m != -1) {
 				String url = (String) u.elementAt(3);
 				buf.append("<tr>").append("\n");
 				buf.append("<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").append("\n");
-				buf.append("<a href=\"/ncitbrowser/ajax?action=export_mapping&uri=" + url + "\">").append("\n");
+				buf.append("<a href=\"/ncitbrowser/ajax?action=exportMapping&uri=" + url + "\">").append("\n");
 				buf.append(	name + ": " + display_name ).append("\n");
 				buf.append("</a>").append("\n");
 

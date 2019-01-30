@@ -175,7 +175,10 @@ public class MappingIteratorBean extends Object {
 		this._list = list;
 	}
 
-
+	public MappingIteratorBean(java.util.List<MappingData> md_list) {
+		this._list = md_list;
+		initialize_bean();
+	}
 
 	public MappingIteratorBean(String mappingCodingScheme, String mappingCodingSchemeVersion) {
 	    String metadata = getMappingMetadata(mappingCodingScheme, mappingCodingSchemeVersion);

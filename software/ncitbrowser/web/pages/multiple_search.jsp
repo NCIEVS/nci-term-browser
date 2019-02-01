@@ -49,6 +49,8 @@ request.getSession().removeAttribute("n");
 request.getSession().removeAttribute("b");
 request.getSession().removeAttribute("m");
 
+System.out.println("miltiple_search.jsp ncit_url: " + ncit_url);
+
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -194,6 +196,10 @@ request.getSession().removeAttribute("m");
   request.getSession().removeAttribute("dictionary");
 
   Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
+  
+  System.out.println("miltiple_search.jsp display_name_vec: " + display_name_vec.size());
+
+
   if (display_name_vec == null) {
     display_name_vec = DataUtils.getSortedOntologies();
   }

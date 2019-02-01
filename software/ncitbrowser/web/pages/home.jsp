@@ -12,6 +12,9 @@ String ncit_build_info = DataUtils.getNCITBuildInfo();
 String application_version = DataUtils.getApplicationVersion();
 String anthill_build_tag_built = DataUtils.getNCITAnthillBuildTagBuilt();
 String evs_service_url = DataUtils.getEVSServiceURL();
+
+System.out.println("home.jsp evs_service_url: " + evs_service_url); 
+
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -52,21 +55,26 @@ String evs_service_url = DataUtils.getEVSServiceURL();
     if (vocabulary_version != null) {
       request.setAttribute("version", vocabulary_version);
     }
+    
     %>
     <f:view>
       <!-- Begin Skip Top Navigation -->
       <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">
         skip navigation links</A>
       <!-- End Skip Top Navigation -->
+      
       <%@ include file="/pages/templates/header.jsp" %>
       <div class="center-page_960">
+      
         <%@ include file="/pages/templates/sub-header.jsp" %>
         <!-- Main box -->
         <div id="main-area_960">
+        
           <%@ include file="/pages/templates/content-header-other.jsp" %>
           <!-- Page content -->
           <div class="pagecontent">
             <a name="evs-content" id="evs-content" tabindex="0"></a>
+            
             <%@ include file="/pages/templates/welcome.jsp" %>
             <%@ include file="/pages/templates/nciFooter.jsp" %>
           </div>

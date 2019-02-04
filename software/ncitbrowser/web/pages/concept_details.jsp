@@ -717,13 +717,9 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
       
       if (descendantCodes != null) {
         if (descendantCodes.size() > 0) {
-         
-        
           String link = "&nbsp;(See:&nbsp;";
-         
-          
           %>
-          <%= link %>
+          <%=link%>
           <%
           String coding_scheme_name = ns;//mappingTab.getCSName(dictionary);
           for (int i=0; i<descendantCodes.size(); i++) {
@@ -735,14 +731,13 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
             %>
             <a
                 href="<%= request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=coding_scheme_name%>&ns=<%=coding_scheme_name%>&code=<%=descendantCode%>">
-
-              <%= descendantName %>
+              <%=descendantName%>
             </a>
             <%
           }
           link = ")";
           %>
-          <%= link %>
+          <%=link%>
           <%
         }
       }

@@ -22,11 +22,6 @@
     if (nav_type == null) {
       nav_type = "terminologies";
     }
-
-       
-System.out.println("navigationTabs.jsp nav_type " + nav_type);          
-  
-
     request.getSession().setAttribute("nav_type", nav_type);
 
     String tab_terms_image = nav_type.equalsIgnoreCase("terminologies")

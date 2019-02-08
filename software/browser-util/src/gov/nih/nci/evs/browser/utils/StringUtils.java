@@ -119,7 +119,6 @@ public class StringUtils {
 	   }
 	}
 
-
     public static boolean isNull(String value) {
 		if (value == null || value.compareToIgnoreCase("null") == 0 || value.compareToIgnoreCase("undefined") == 0) return true;
 		return false;
@@ -217,12 +216,12 @@ public class StringUtils {
 
     public static String encodeTerm(String s) {
 		if (s == null) return null;
-		if (isAlphanumeric(s)) return s;
+		//if (isAlphanumeric(s)) return s;
 
         StringBuilder buf = new StringBuilder(s.length());
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-		if (isLetterOrDigit(c)) {
+		    if (isLetterOrDigit(c)) {
                 buf.append(c);
             } else {
                 buf.append("&#").append((int) c).append(";");

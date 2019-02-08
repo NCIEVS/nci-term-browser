@@ -188,6 +188,7 @@ public class StringUtils {
         return retstr;
     }
 
+/*
     public static String encodeTerm(String s) {
 		if (s == null) return null;
 		if (StringUtils.isAlphanumeric(s)) return s;
@@ -196,6 +197,32 @@ public class StringUtils {
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
 			if (Character.isLetterOrDigit(c)) {
+                buf.append(c);
+            } else {
+                buf.append("&#").append((int) c).append(";");
+            }
+        }
+        return buf.toString();
+    }
+*/
+
+//  [NCITERM-808] Terms with Latin small letter o with diaeresis not rendered correctly.
+    public static boolean isLetterOrDigit(char c) {
+		//boolean bool = Character.isLetterOrDigit(c);
+		if (c >=48 && c <=57) return true;
+		if (c >=65 && c <=90) return true;
+		if (c >=97 && c <=122) return true;
+		return false;
+	}
+
+    public static String encodeTerm(String s) {
+		if (s == null) return null;
+		if (isAlphanumeric(s)) return s;
+
+        StringBuilder buf = new StringBuilder(s.length());
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+		if (isLetterOrDigit(c)) {
                 buf.append(c);
             } else {
                 buf.append("&#").append((int) c).append(";");

@@ -6815,6 +6815,7 @@ if (lbSvc == null) {
 		return createVisualizationWidgetURL(abbreviation, code);
 	}
 
+/*
     public static String encodeTerm(String s) {
 		if (s == null) return null;
 		if (gov.nih.nci.evs.browser.utils.StringUtils.isAlphanumeric(s)) return s;
@@ -6830,7 +6831,10 @@ if (lbSvc == null) {
         }
         return buf.toString();
     }
-
+*/
+    public static String encodeTerm(String s) {
+		return gov.nih.nci.evs.browser.utils.StringUtils.encodeTerm(s);
+	}
 
 // Reference: http://www.walterzorn.de/en/tooltip_old/tooltip_e.htm
 // (whilespace after &lt; is intentional)

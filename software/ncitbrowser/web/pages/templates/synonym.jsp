@@ -123,6 +123,12 @@ if (type.compareTo("synonym") == 0 || type.compareTo("all") == 0)
           }
 
           String rowColor = (n%2 == 0) ? "dataRowDark" : "dataRowLight";
+          
+          
+System.out.println("term: " + term_name);
+System.out.println("encodeTerm: " + DataUtils.encodeTerm(term_name));
+          
+          
           %>
           <tr class="<%=rowColor%>">
             <td style="word-wrap: break-word;" class="dataCellText" scope="row"><%= DataUtils.encodeTerm(term_name) %></td>

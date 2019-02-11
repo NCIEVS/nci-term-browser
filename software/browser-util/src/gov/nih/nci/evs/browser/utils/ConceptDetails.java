@@ -365,6 +365,7 @@ public class ConceptDetails {
     }
 
     public String encodeTerm(String s) {
+		/*
 		if (s == null) return null;
 		if (gov.nih.nci.evs.browser.utils.StringUtils.isAlphanumeric(s)) return s;
 
@@ -378,6 +379,8 @@ public class ConceptDetails {
             }
         }
         return buf.toString();
+        */
+        return gov.nih.nci.evs.browser.utils.StringUtils.encodeTerm(s);
     }
 
     public Vector getPresentationProperties(String codingSchemeName, String vers, String code) {

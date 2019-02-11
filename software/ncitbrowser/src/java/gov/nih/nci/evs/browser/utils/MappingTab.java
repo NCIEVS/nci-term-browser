@@ -488,6 +488,8 @@ public class MappingTab {
 
 
     public String encodeTerm(String s) {
+		return gov.nih.nci.evs.browser.utils.StringUtils.encodeTerm(s);
+		/*
 		if (s == null) return null;
 		if (gov.nih.nci.evs.browser.utils.StringUtils.isAlphanumeric(s)) return s;
 
@@ -501,6 +503,7 @@ public class MappingTab {
             }
         }
         return buf.toString();
+        */
     }
 
     public String getCSName(String codingScheme) {

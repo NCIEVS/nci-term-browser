@@ -214,6 +214,7 @@ public class StringUtils {
 		return false;
 	}
 
+/*
     public static String encodeTerm(String s) {
 		if (s == null) return null;
 		//if (isAlphanumeric(s)) return s;
@@ -229,7 +230,10 @@ public class StringUtils {
         }
         return buf.toString();
     }
-
+*/
+   public static String encodeTerm(String s) {
+	   return s;
+   }
 
 // Reference: http://www.walterzorn.de/en/tooltip_old/tooltip_e.htm
 // (whilespace after &lt; is intentional)

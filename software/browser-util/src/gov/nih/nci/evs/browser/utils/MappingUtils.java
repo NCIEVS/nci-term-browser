@@ -352,6 +352,16 @@ public class MappingUtils {
 		return csdu.getMappingMetadata(mappingCodingScheme, mappingCodingSchemeVersion);
 	}
 
+    public int mapRank2Score(String mapRank) {
+		int score = 0;
+		if (mapRank == null) return score;
+		try {
+			score = Integer.parseInt(mapRank);
+		} catch (NumberFormatException e) {
+			System.out.println("Invalid mapRank: " + mapRank);
+		}
+		return score;
+	}
 
 	public java.util.List<MappingData> terminologyMapBean2MappingData(java.util.List<TerminologyMapBean> tmb_list,
 			  String sourceCodingScheme,
@@ -363,6 +373,7 @@ public class MappingUtils {
         java.util.List<MappingData> mb_list = new ArrayList();
         for (int i=0; i<tmb_list.size(); i++) {
 			TerminologyMapBean tmb = (TerminologyMapBean) tmb_list.get(i);
+			int score = mapRank2Score(tmb.getMapRank());
 			MappingData md = new MappingData(
 		       tmb.getSourceCode(),
 		       tmb.getSourceName(),
@@ -371,7 +382,7 @@ public class MappingUtils {
 		       tmb.getSource(),
 		       associationName,
 		       tmb.getRel(),
-		       Integer.parseInt(tmb.getMapRank()),
+		       score,
 		       tmb.getTargetCode(),
 		       tmb.getTargetName(),
 		       targetCodingScheme,

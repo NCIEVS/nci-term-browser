@@ -119,7 +119,7 @@ public class RandomVariateGenerator {
 		}
 		Collections.shuffle(arrayList);
 		ArrayList<Integer> targetList = new ArrayList<Integer>();
-		for (int j=0; j<n; j++) {
+		for (int j=0; j<max; j++) {
 			Integer int_obj = arrayList.get(j);
 			targetList.add(int_obj);
 		}

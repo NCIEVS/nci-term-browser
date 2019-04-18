@@ -689,6 +689,20 @@ public class CacheController {
         return getRootConcepts(scheme, version, true);
     }
 
+    public void dumpRoots(List rootlist) {
+		if (rootlist == null) {
+			System.out.println("rootlist == null???");
+			return;
+		}
+		Vector w = new Vector();
+        for (int i=0; i<rootlist.size(); i++) {
+			ResolvedConceptReference rcr = (ResolvedConceptReference) rootlist.get(i);
+			w.add(rcr.getEntityDescription().getContent() + " (" + rcr.getConceptCode() + ")");
+		}
+		w = new gov.nih.nci.evs.browser.utils.SortUtils().quickSort(w);
+		gov.nih.nci.evs.browser.utils.StringUtils.dumpVector("root concepts", w);
+    }
+
     public JSONArray getRootConcepts(String scheme, String version, boolean fromCache) {
         List list = null;// new ArrayList();
         String key = scheme + "$" + version + "$root";
@@ -718,6 +732,9 @@ public class CacheController {
                 // null);
                 LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
                 list = new TreeUtils(lbSvc).getHierarchyRoots(scheme, version, null);
+
+                //dumpRoots(list);
+
                 nodeArray = list2JSONArray(scheme, list);
 
                 if (fromCache) {

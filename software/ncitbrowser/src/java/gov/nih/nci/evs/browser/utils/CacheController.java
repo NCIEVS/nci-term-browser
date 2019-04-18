@@ -731,10 +731,8 @@ public class CacheController {
                 // list = new DataUtils().getHierarchyRoots(scheme, version,
                 // null);
                 LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-                list = new TreeUtils(lbSvc).getHierarchyRoots(scheme, version, null);
-
-                //dumpRoots(list);
-
+                //list = new TreeUtils(lbSvc).getHierarchyRoots(scheme, version, null);
+                list = new TreeUtils(lbSvc).getHierarchyRoots(scheme, version);
                 nodeArray = list2JSONArray(scheme, list);
 
                 if (fromCache) {

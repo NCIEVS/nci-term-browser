@@ -2063,6 +2063,9 @@ public class TreeUtils {
 
         // HL7
         // scheme = DataUtils.searchFormalName(scheme);
+        if (hierarchyID == null) {
+			hierarchyID = getHierarchyID(scheme, version);
+		}
         return getHierarchyRoots(scheme, csvt, hierarchyID);
     }
 

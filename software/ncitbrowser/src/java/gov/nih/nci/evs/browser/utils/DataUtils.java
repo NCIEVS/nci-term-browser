@@ -293,6 +293,8 @@ public class DataUtils {
 
     public static String checked_all_vocabularies_string = null;
 
+    public static HashMap _URI2VSDHashMap = null;
+
     // ==================================================================================
 
     public DataUtils() {
@@ -300,7 +302,6 @@ public class DataUtils {
     }
 
     static {
-
 
         _terminologySubsetDownloadURL = null;
         _term_suggestion_application_url = null;
@@ -310,7 +311,6 @@ public class DataUtils {
         _ncitAnthillBuildTagBuilt = null;
         _evsServiceURL = null;
         _ncimURL = null;
-
 
 		System.out.println("Initialization ...");
 		String default_url = "ncicb@pop.nci.nih.gov";
@@ -480,6 +480,8 @@ public class DataUtils {
 		_sortedOntologies = getSortedOntologies();
 		System.out.println("getSortedOntologies run time (ms): " + (System.currentTimeMillis() - ms));
 
+		_URI2VSDHashMap = createURI2VSDHashMap();
+
 		System.out.println("Total DataUtils initialization run time (ms): " + (System.currentTimeMillis() - ms0));
 	}
 
@@ -581,6 +583,7 @@ public class DataUtils {
 
 
     private static void setTerminologyValueSetDescriptionHashMap() {
+		System.out.println("DataUtils setTerminologyValueSetDescriptionHashMap...");
 		if (_terminologyValueSetDescriptionHashMap == null) {
 			String prod_version = getVocabularyVersionByTag(Constants.TERMINOLOGY_VALUE_SET_NAME, Constants.PRODUCTION);
 			_terminologyValueSetDescriptionHashMap = getPropertyValues(Constants.TERMINOLOGY_VALUE_SET_NAME, prod_version, "GENERIC", "Description");
@@ -593,12 +596,24 @@ public class DataUtils {
 	}
 
     public static String getTerminologyValueSetDescription(String node_id) {
+		System.out.println("getTerminologyValueSetDescription " + node_id);
 		if (node_id == null) return null;
+		/*
 		if (_terminologyValueSetDescriptionHashMap == null) {
 			return "DESCRIPTION NOT AVAILABLE";
 		}
+		*/
+		if (_terminologyValueSetDescriptionHashMap == null) {
+			 setTerminologyValueSetDescriptionHashMap();
+		}
+		System.out.println("find description...");
+		if (!_terminologyValueSetDescriptionHashMap.containsKey(node_id)) {
+			System.out.println("getTerminologyValueSetDescription -- key not found..." + node_id);
+			return "DESCRIPTION NOT AVAILABLE";
+		}
+
 		String description = (String) _terminologyValueSetDescriptionHashMap.get(node_id);
-		if (description == null) return "DESCRIPTION NOT AVAILABLE";
+		//if (description == null) return "DESCRIPTION NOT AVAILABLE";
 		return description;
 	}
 
@@ -1415,13 +1430,18 @@ public class DataUtils {
 	}
 
     public static TreeItem getSourceValueSetTreeItem(String node_id) {
+		System.out.println("DataUtils getSourceValueSetTreeItem " + node_id);
 		String vsd_name = null;
 		TreeItem ti = null;
 		ValueSetDefinition vsd = findValueSetDefinitionByURI(node_id);
 		if (vsd != null) {
 			vsd_name = vsd.getValueSetDefinitionName();
+			System.out.println("vsd_name: " + vsd_name);
+
 			ti = (TreeItem) _sourceValueSetTreeKey2TreeItemMap.get(node_id + "$" + vsd_name);
 		} else {
+			System.out.println("vsd = null??? " + node_id);
+
 			Entity entity = getConceptByCode(Constants.TERMINOLOGY_VALUE_SET_NAME, null, node_id);
 			if (entity == null) return null;
 			vsd_name = entity.getEntityDescription().getContent();
@@ -1462,6 +1482,7 @@ public class DataUtils {
 
 
     public static HashMap getSourceValueSetTree(String node_id) {
+		System.out.println("DataUtils getSourceValueSetTree " + node_id);
 		HashMap hmap = new HashMap();
 		TreeItem super_root = new TreeItem("<Root>", "Root node");
 		TreeItem root_node = getSourceValueSetTreeItem(node_id);
@@ -5485,27 +5506,53 @@ if (lbSvc == null) {
 		return new SortUtils().quickSort(v);
 	}
 
+    public static String findValueSetNameByURI(String uri) {
+		ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
+		if (vsd == null) return null;
+        return vsd.getValueSetDefinitionName();
+	}
+
+    public static String findValueSetDescriptionByURI(String uri) {
+		ValueSetDefinition vsd = findValueSetDefinitionByURI(uri);
+		if (vsd == null) return null;
+        return vsd.getEntityDescription().getContent();
+	}
+
 
     public static ValueSetDefinition findValueSetDefinitionByURI(String uri) {
+		if (_URI2VSDHashMap == null) {
+			_URI2VSDHashMap = createURI2VSDHashMap();
+		}
+
+		if (_URI2VSDHashMap.containsKey(uri)) {
+			return (ValueSetDefinition) _URI2VSDHashMap.get(uri);
+		}
+		return null;
+		/*
+		//System.out.println("DataUtils findValueSetDefinitionByURI " + uri);
 	    if (uri == null) return null;
 	    if (uri.indexOf("|") != -1) {
 			Vector u = parseData(uri);
 			uri = (String) u.elementAt(1);
 		}
+		//System.out.println("DataUtils findValueSetDefinitionByURI " + uri);
 
 		String valueSetDefinitionRevisionId = null;
 		try {
 			LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 			if (vsd_service == null) {
+				System.out.println("vsd_service == null");
 				System.out.println("Unable to instantiate LexEVSValueSetDefinitionServices???");
 				return null;
 			}
 			ValueSetDefinition vsd = vsd_service.getValueSetDefinition(new URI(uri), valueSetDefinitionRevisionId);
+			System.out.println("vsd != null");
 			return vsd;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return null;
+		*/
 	}
 
 
@@ -7363,6 +7410,37 @@ if (lbSvc == null) {
     public static String getTermSuggestionURL() {
         return _term_suggestion_application_url;
     }
+
+    public static HashMap createURI2VSDHashMap() {
+		if (_URI2VSDHashMap != null) return _URI2VSDHashMap;
+		String valueSetDefinitionRevisionId = null;
+		HashMap hmap = new HashMap();
+		try {
+			LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+			if (vsd_service == null) {
+				System.out.println("vsd_service == null");
+				System.out.println("Unable to instantiate LexEVSValueSetDefinitionServices???");
+				return null;
+			}
+			List list = vsd_service.listValueSetDefinitionURIs();
+			for (int i=0; i<list.size(); i++) {
+				String uri = (String) list.get(i);
+				try {
+					ValueSetDefinition vsd = vsd_service.getValueSetDefinition(new URI(uri), valueSetDefinitionRevisionId);
+					if (vsd != null) {
+						hmap.put(uri, vsd);
+					} else {
+						System.out.println("WARNING: vsd not found??? " + uri);
+					}
+			    } catch (Exception ex) {
+					ex.printStackTrace();
+				}
+		    }
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return hmap;
+	}
 
 
     public static void main(String[] args) {

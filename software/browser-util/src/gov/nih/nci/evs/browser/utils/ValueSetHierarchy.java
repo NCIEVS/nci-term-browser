@@ -2494,5 +2494,28 @@ if (root_cs_vec != null) {
         return hmap;
 	}
 
+
+    public static HashMap createURI2VSDHashMap(LexEVSValueSetDefinitionServices vsd_service) {
+		String valueSetDefinitionRevisionId = null;
+		HashMap hmap = new HashMap();
+		try {
+			List list = vsd_service.listValueSetDefinitionURIs();
+			for (int i=0; i<list.size(); i++) {
+				String uri = (String) list.get(i);
+				try {
+					ValueSetDefinition vsd = vsd_service.getValueSetDefinition(new URI(uri), valueSetDefinitionRevisionId);
+					if (vsd != null) {
+						hmap.put(uri, vsd);
+					}
+			    } catch (Exception ex) {
+					ex.printStackTrace();
+				}
+		    }
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return hmap;
+	}
 }
 

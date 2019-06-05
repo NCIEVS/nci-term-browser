@@ -390,6 +390,9 @@ public class ValueSetTreeUtils {
 	}
 
     public HashMap getTerminologyValueSetDescriptionHashMap() {
+		if (_terminologyValueSetDescriptionHashMap == null) {
+			setTerminologyValueSetDescriptionHashMap();
+		}
         return _terminologyValueSetDescriptionHashMap;
 	}
 

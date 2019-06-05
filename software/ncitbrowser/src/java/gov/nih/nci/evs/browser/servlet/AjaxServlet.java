@@ -1524,6 +1524,7 @@ if (display_name_vec == null) {
 
 
     public void create_vs_tree(HttpServletRequest request, HttpServletResponse response, int view, String vsd_uri) {
+		System.out.println("create_vs_tree " + vsd_uri);
         SimpleTreeUtils stu = new SimpleTreeUtils(DataUtils.getVocabularyNameSet());
 
 String mode = HTTPUtils.cleanXSS((String) request.getParameter("mode"));
@@ -1561,7 +1562,10 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 
         String vsd_description =  "DESCRIPTION NOT AVAILABLE";
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if (vsd_uri != null) {
+			isValueSet = true;
+			/*
 			vsd = DataUtils.findValueSetDefinitionByURI(vsd_uri);
 			if (vsd != null) {
 					vsd_name = vsd.getValueSetDefinitionName();
@@ -1582,7 +1586,13 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 					}
 					vsd_description = DataUtils.getTerminologyValueSetDescription(vsd_uri);
 			}
+			*/
+			//vsd_description = NCItBrowserProperties.getResolvedValueSetName(vsd_uri);
+			vsd_name = DataUtils.findValueSetNameByURI(vsd_uri);
+			vsd_description = DataUtils.findValueSetDescriptionByURI(vsd_uri);
 	    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      System.out.println("vsd_description: " + vsd_description);
 
 	  request.getSession().removeAttribute("b");
 	  request.getSession().removeAttribute("m");
@@ -2115,54 +2125,53 @@ out.print("/pages/subset.jsf\">NCI Thesaurus Subsets</a> page).");
 
       if (!DataUtils.isNull(vsd_uri)) {
 
-
 		  if (isValueSet) {
 			  out.println("            <tr class=\"textbody\">");
 
-      out.println("                      <td>");
-      out.println("                         <div class=\"texttitle-blue\">Welcome</div>");
-      out.println("                      </td>");
-      out.println("");
-      out.println("                      <td>");
+			  out.println("                      <td>");
+			  out.println("                         <div class=\"texttitle-blue\">Welcome</div>");
+			  out.println("                      </td>");
+			  out.println("");
+			  out.println("                      <td>");
 
 
-ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
-if (show_released_file_button) {
+			ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
+			if (show_released_file_button) {
+				if (vsc != null && !DataUtils.isNullOrBlank(vsc.getReportURI())) {
 
-	if (vsc != null && !DataUtils.isNullOrBlank(vsc.getReportURI())) {
-
-		  out.println("<table role='presentation'>");
-		  out.println("<tr><td>");
-		  out.println("<a href=\"/ncitbrowser/ajax?action=download&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/released_file.gif\" alt=\"Value Set Released Files (FTP Server)\" border=\"0\" tabindex=\"2\"></a>");
-		  out.println("</td>");
-		  out.println("</tr>");
-		  out.println("</table>");
+					  out.println("<table role='presentation'>");
+					  out.println("<tr><td>");
+					  out.println("<a href=\"/ncitbrowser/ajax?action=download&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/released_file.gif\" alt=\"Value Set Released Files (FTP Server)\" border=\"0\" tabindex=\"2\"></a>");
+					  out.println("</td>");
+					  out.println("</tr>");
+					  out.println("</table>");
 
 
-	} else {
-		  out.println("&nbsp;");
-	}
-} else {
-      out.println("&nbsp;");
-}
-      out.println("                      </td>");
-      out.println("");
-      out.println("                      <td>");
-      out.println("<table role='presentation'>");
-      //out.println("<tr><td>CTS2 Value Sets (Online Term Server/Browser)</td></tr>");
-      out.println("<tr><td>");
+				} else {
+					  out.println("&nbsp;");
+				}
+			} else {
+				  out.println("&nbsp;");
+			}
 
-	  out.println("<a href=\"/ncitbrowser/ajax?action=values&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/values.gif\" alt=\"Values\" border=\"0\" tabindex=\"2\"></a>");
-	  out.println("&nbsp;");
-	  out.println("<a href=\"/ncitbrowser/ajax?action=versions&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/versions.gif\" alt=\"Versions\" border=\"0\" tabindex=\"2\"></a>");
-	  out.println("&nbsp;");
-	  out.println("<a href=\"/ncitbrowser/ajax?action=xmldefinitions&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/xmldefinitions.gif\" alt=\"XML Definition\" border=\"0\" tabindex=\"2\"></a>");
 
-      out.println("</td>");
-      out.println("</tr>");
-      out.println("</table>");
-      out.println("                      </td>");
 
+			  out.println("                      </td>");
+			  out.println("");
+			  out.println("                      <td>");
+			  out.println("<table role='presentation'>");
+			  out.println("<tr><td>");
+
+			  out.println("<a href=\"/ncitbrowser/ajax?action=values&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/values.gif\" alt=\"Values\" border=\"0\" tabindex=\"2\"></a>");
+			  out.println("&nbsp;");
+			  out.println("<a href=\"/ncitbrowser/ajax?action=versions&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/versions.gif\" alt=\"Versions\" border=\"0\" tabindex=\"2\"></a>");
+			  out.println("&nbsp;");
+			  out.println("<a href=\"/ncitbrowser/ajax?action=xmldefinitions&vsd_uri=" + vsd_uri + "\"><img src=\"/ncitbrowser/images/xmldefinitions.gif\" alt=\"XML Definition\" border=\"0\" tabindex=\"2\"></a>");
+
+			  out.println("</td>");
+			  out.println("</tr>");
+			  out.println("</table>");
+			  out.println("                      </td>");
 
 
               out.println("            </tr>");

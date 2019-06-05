@@ -636,7 +636,12 @@ public class CacheController {
 
         if (nodesArray == null) {
             try {
-                HashMap hmap = DataUtils.getValueSetHierarchy().build_src_vs_tree();
+				////////////////////////////////// 06/04/2019
+                //HashMap hmap = DataUtils.getValueSetHierarchy().build_src_vs_tree();
+                HashMap hmap = NCItBrowserProperties.getSourceValueSetTree();
+                if (!bySource) {
+					hmap = NCItBrowserProperties.getTerminologyValueSetTree();
+				}
 
                 TreeItem root = (TreeItem) hmap.get("<Root>");
                 nodesArray = new JSONArray();

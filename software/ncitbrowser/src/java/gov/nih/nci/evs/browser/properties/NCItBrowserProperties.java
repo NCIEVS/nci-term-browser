@@ -4,6 +4,9 @@ import java.util.*;
 import org.apache.log4j.*;
 import gov.nih.nci.evs.browser.common.*;
 import gov.nih.nci.evs.browser.utils.*;
+import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
+import gov.nih.nci.evs.browser.utils.*;
+import org.LexGrid.codingSchemes.CodingScheme;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -148,6 +151,13 @@ public class NCItBrowserProperties {
     public static final String NCIT_MAPPING_URL = "NCIT_MAPPING_URL";
     private static String _ncit_mapping_url = null;
 
+    private static HashMap terminologyValueSetTree = null;
+    private static TreeItem terminologyValueSetTreeRoot = null;
+
+    private static HashMap sourceValueSetTree = null;
+    private static TreeItem sourceValueSetTreeRoot = null;
+
+    private static HashMap rvsURI2NameHashMap = null;
 
     /**
      * Private constructor for singleton pattern.
@@ -280,9 +290,57 @@ public class NCItBrowserProperties {
 			_standard_ftp_report_url = getProperty(STANDARD_FTP_REPORT_URL);
 			_standard_ftp_report_info_list = StandardFtpReportInfo.parse(
 				STANDARD_FTP_REPORT_INFO, STANDARD_FTP_REPORT_INFO_MAX);
+
+			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+			String serviceUrl = RemoteServerUtil.getServiceUrl();
+			ValueSetTreeUtils valueSetTreeUtils = new ValueSetTreeUtils(lbSvc, serviceUrl);
+
+			terminologyValueSetTree = valueSetTreeUtils.getTerminologyValueSetTree();
+			terminologyValueSetTreeRoot = (TreeItem) terminologyValueSetTree.get("<Root>");
+
+			sourceValueSetTree = valueSetTreeUtils.getSourceValueSetTree();
+			sourceValueSetTreeRoot = (TreeItem) sourceValueSetTree.get("<Root>");
+
+			AssertedValueSetUtils assertedValueSetUtils = new AssertedValueSetUtils(serviceUrl, lbSvc);
+			rvsURI2NameHashMap = new HashMap();
+			try {
+				List<CodingScheme> schemes = assertedValueSetUtils.listAllResolvedValueSets();
+				if (schemes != null) {
+					for (int i = 0; i < schemes.size(); i++) {
+						CodingScheme cs = schemes.get(i);
+						int j = i+1;
+						String key = cs.getCodingSchemeURI();
+						String name = cs.getCodingSchemeName();
+						rvsURI2NameHashMap.put(key, name);
+					}
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public static String getResolvedValueSetName(String rvs_uri) {
+		return (String) rvsURI2NameHashMap.get(rvs_uri);
+	}
+
+	public static HashMap getTerminologyValueSetTree() {
+		return terminologyValueSetTree;
+	}
+
+	public static HashMap getSourceValueSetTree() {
+		return sourceValueSetTree;
+	}
+
+	public static TreeItem getTerminologyValueSetTreeRoot() {
+		return terminologyValueSetTreeRoot;
+	}
+
+	public static TreeItem getSourceValueSetTreeRoot() {
+		return sourceValueSetTreeRoot;
 	}
 
 	public static HashMap getBioportalAcronym2NameHashMap() {

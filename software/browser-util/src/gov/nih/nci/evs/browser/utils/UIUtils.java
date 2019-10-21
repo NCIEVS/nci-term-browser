@@ -421,7 +421,22 @@ public class UIUtils {
 			}
 
             Vector qualifiers = (Vector) qualifierHashMap.get(n_v);
-            qualifiers = new SortUtils().quickSort(qualifiers);
+
+			 boolean is_maps_to = false;
+
+			 for (int i2=0; i2<qualifiers.size(); i2++) {
+				 String t = (String) qualifiers.elementAt(i2);
+				 if (t.indexOf("Target_Terminology") != -1) {
+					 is_maps_to = true;
+					 break;
+				 }
+			 }
+
+			 if (is_maps_to) {
+				 qualifiers = sort_maps_to_qualifiers(qualifiers);
+			 } else {
+				 qualifiers = new SortUtils().quickSort(qualifiers);
+			 }
 
 			if ((n++) % 2 == 0) {
 				  buf.append("	<tr class=\"dataRowDark\">").append("\n");
@@ -474,6 +489,7 @@ public class UIUtils {
 
 						if (displayQualifier(qualifier_name)) {
 							String t = qualifier_name + ":" + qualifier_value;
+
 							if (t == null) return null;
 							if (t.length() > 1) {
 								buf.append("			 <tr>").append("\n");
@@ -521,10 +537,14 @@ public class UIUtils {
 							qualifier_value = (String) u.elementAt(1);
 						}
 
+
 						if (displayQualifier(qualifier_name)) {
 							String t = qualifier_name + ":" + qualifier_value;
 							if (t == null) return null;
 							if (t.length() > 1) {
+								if (t.endsWith(":")) {
+									t = t.substring(0, t.length()-1);
+								}
 								buf.append("			 <tr>").append("\n");
 								buf.append("			 <td class=\"dataCellText\" >" + Constants.INDENT + t + "</td>").append("\n");
 								buf.append("			 </tr>").append("\n");
@@ -958,10 +978,10 @@ public class UIUtils {
 									t = t.substring(0, t.length()-1);
 								}
 
-int m = t.indexOf(":");
-if (m != -1) {
-	t = t.substring(0, m) + ":&nbsp;" + t.substring(m+1, t.length());
-}
+								int m = t.indexOf(":");
+								if (m != -1) {
+									t = t.substring(0, m) + ":&nbsp;" + t.substring(m+1, t.length());
+								}
 
 								if (t.length() > 1) {
 									buf.append("			 <tr>").append("\n");
@@ -1161,9 +1181,9 @@ if (url.endsWith(".xls")) {
 	}
 
 
-
 	public static String otherProperty2HTMLString(String propertyName, String propertyValue, HashMap qualifierMap, Vector keys) {
-	    return otherProperty2HTMLString(propertyName, propertyValue, qualifierMap, keys);
+		//KLO
+	    return otherProperty2HTMLString(propertyName, propertyValue, qualifierMap, keys, false);
     }
 
 	public static String otherProperty2HTMLString(String propertyName, String propertyValue, HashMap qualifierMap, Vector keys, boolean inner_qualifier_table_only) {
@@ -1191,10 +1211,12 @@ if (url.endsWith(".xls")) {
 		for (int i=0; i<keys.size(); i++) {
 			String key = (String) keys.elementAt(i);
 			String value = (String) qualifierMap.get(key);
-			buf.append("<tr>").append("\n");
-			String target_terminology = (String) qualifierMap.get(TARGET_TERMINOLOGY);
-			buf.append("<td class=\"dataCellText\">" + NGSP + "" + key + ":&nbsp;" + value + "</td>").append("\n");
-			buf.append("</tr>").append("\n");
+			if (value != null) {
+				buf.append("<tr>").append("\n");
+				//String target_terminology = (String) qualifierMap.get(TARGET_TERMINOLOGY);
+				buf.append("<td class=\"dataCellText\">" + NBSP + "" + key + ":&nbsp;" + value + "</td>").append("\n");
+				buf.append("</tr>").append("\n");
+			}
 		}
         buf.append("</table>").append("\n");
         if (!inner_qualifier_table_only) {
@@ -1206,15 +1228,17 @@ if (url.endsWith(".xls")) {
 
     private static final String MAPS_TO = "Maps_To";
 	private static final String TARGET_TERMINOLOGY = "Target_Terminology";
+	private static final String TARGET_TERMINOLOGY_VERSION = "Target_Terminology_Version";
 	private static final String RELATIONSHIP_TO_TARGET = "Relationship_to_Target";
 	private static final String TARGET_TERM_TYPE = "Target_Term_Type";
 	private static final String TARGET_CODE = "Target_Code";
 	private static final String RDFS_COMMENT = "comment";
-	private static final String NGSP = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+	private static final String NBSP = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
 	public static Vector getMapsToQualifierNames() {
 		Vector v = new Vector();
 		v.add(TARGET_TERMINOLOGY);
+		v.add(TARGET_TERMINOLOGY_VERSION);
 		v.add(RELATIONSHIP_TO_TARGET);
 		v.add(TARGET_TERM_TYPE);
 		v.add(TARGET_CODE);

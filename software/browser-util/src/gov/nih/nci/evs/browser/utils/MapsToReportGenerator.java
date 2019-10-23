@@ -131,7 +131,7 @@ public class MapsToReportGenerator {
 		}
         try {
 			int numRemaining = iterator.numberRemaining();
-			System.out.println("Number of matches: " + numRemaining);
+			System.out.println("Number of maps_to entries: " + numRemaining);
 			while (iterator.hasNext()) {
 				ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
 				//System.out.println(rcr.getEntityDescription().getContent() + " (" + rcr.getCode() + ")");

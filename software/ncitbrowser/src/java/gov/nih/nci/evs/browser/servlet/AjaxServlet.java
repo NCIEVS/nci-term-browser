@@ -5649,34 +5649,7 @@ KLO 11282018
 	}
 
 
-    public void exportMapsToMappingAction(HttpServletRequest request, HttpServletResponse response) {
-		Vector maps_to_vec = DataUtils.get_maps_to_vec();
-		if (maps_to_vec == null) return;
 
-        StringBuffer sb = new StringBuffer();
-        sb.append(MapsToReportGenerator.MAPS_TO_HEADING).append("\n");
-        for (int i=0; i<maps_to_vec.size(); i++) {
-			String line = (String) maps_to_vec.elementAt(i);
-			sb.append(line);
-			if (i<maps_to_vec.size()-1) {
-				sb.append("\n");
-			}
-		}
-		String filename = "Maps_To.csv";
-		response.setContentType("text/csv");
-		response.setHeader("Content-Disposition", "attachment; filename="
-				+ filename);
-		response.setContentLength(sb.length());
-		try {
-			ServletOutputStream ouputStream = response.getOutputStream();
-			ouputStream.write(sb.toString().getBytes("UTF8"), 0, sb.length());
-			ouputStream.flush();
-			ouputStream.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		FacesContext.getCurrentInstance().responseComplete();
-	}
 
     public void exportToExcelAction(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -5904,4 +5877,31 @@ KLO 11282018
 		return;
 	}
 
+
+    public void exportMapsToMappingAction(HttpServletRequest request, HttpServletResponse response) {
+		Vector maps_to_vec = DataUtils.get_maps_to_vec();
+		if (maps_to_vec == null) {
+			System.out.println("exportMapsToMappingAction ...maps_to_vec == null??? ");
+			return;
+		}
+		System.out.println("exportMapsToMappingAction ..." + maps_to_vec.size());
+		String maps_to_string = DataUtils.getMapsToString();
+		int len = maps_to_string.length();
+		String filename = "Maps_To.csv";
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ filename);
+		response.setContentLength(len);
+		System.out.println("exportMapsToMappingAction ..." + len);
+		try {
+			ServletOutputStream ouputStream = response.getOutputStream();
+			ouputStream.write(maps_to_string.getBytes("UTF8"), 0, len);
+			ouputStream.flush();
+			ouputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		FacesContext.getCurrentInstance().responseComplete();
+		System.out.println("exportMapsToMappingAction completed.");
+	}
 }

@@ -294,8 +294,9 @@ public class DataUtils {
     public static String checked_all_vocabularies_string = null;
 
     public static HashMap _URI2VSDHashMap = null;
-    public static boolean cache_maps_to = false;
+    public static boolean cache_maps_to = true;
     public static Vector maps_to_vec = null;
+    public static String maps_to_string = null;
     public static String ncit_maps_to_version = null;
 
     // ==================================================================================
@@ -426,7 +427,7 @@ public class DataUtils {
         NCIT_MAPPING_DATA = FTPDownload.extractMappingsFromURL(ncit_mapping_url);
 
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
-		ncit_maps_to_version = csdu.getVocabularyVersionByTag(scheme, "PRODUCTION");
+		ncit_maps_to_version = csdu.getVocabularyVersionByTag("NCI_Thesaurus", "PRODUCTION");
 
 		FILE_BASED_MAPPING_STRING = uiUtils.getOtherMappingString(ncit_mapping_url, cache_maps_to, ncit_maps_to_version);
 
@@ -484,7 +485,6 @@ public class DataUtils {
 		_URI2VSDHashMap = createURI2VSDHashMap();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-boolean cache_maps_to = false;
 if (cache_maps_to) {
         ms = System.currentTimeMillis();
 		MapsToReportGenerator mapsToReportGenerator = new MapsToReportGenerator(lbSvc);
@@ -493,12 +493,31 @@ if (cache_maps_to) {
 		//Vector w = new Vector();
 		//w.add(MapsToReportGenerator.MAPS_TO_HEADING);
 		maps_to_vec = mapsToReportGenerator.getMapsToData(scheme, ncit_maps_to_version);
+		maps_to_string = get_maps_to_string(maps_to_vec);
 		System.out.println("getMapsToData run time (ms): " + (System.currentTimeMillis() - ms));
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		System.out.println("Total DataUtils initialization run time (ms): " + (System.currentTimeMillis() - ms0));
 	}
+
+	public static String getMapsToString() {
+		return maps_to_string;
+	}
+
+	public static String get_maps_to_string(Vector maps_to_vec) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(MapsToReportGenerator.MAPS_TO_HEADING).append("\n");
+        for (int i=0; i<maps_to_vec.size(); i++) {
+			String line = (String) maps_to_vec.elementAt(i);
+			sb.append(line);
+			if (i<maps_to_vec.size()-1) {
+				sb.append("\n");
+			}
+		}
+		return sb.toString();
+	}
+
 
 	public static Vector get_maps_to_vec() {
 		return maps_to_vec;

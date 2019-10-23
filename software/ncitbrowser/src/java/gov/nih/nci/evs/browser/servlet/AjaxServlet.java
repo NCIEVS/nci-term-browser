@@ -5884,7 +5884,6 @@ KLO 11282018
 			System.out.println("exportMapsToMappingAction ...maps_to_vec == null??? ");
 			return;
 		}
-		System.out.println("exportMapsToMappingAction ..." + maps_to_vec.size());
 		String maps_to_string = DataUtils.getMapsToString();
 		int len = maps_to_string.length();
 		String filename = "Maps_To.csv";
@@ -5892,7 +5891,6 @@ KLO 11282018
 		response.setHeader("Content-Disposition", "attachment; filename="
 				+ filename);
 		response.setContentLength(len);
-		System.out.println("exportMapsToMappingAction ..." + len);
 		try {
 			ServletOutputStream ouputStream = response.getOutputStream();
 			ouputStream.write(maps_to_string.getBytes("UTF8"), 0, len);
@@ -5902,6 +5900,5 @@ KLO 11282018
 			ex.printStackTrace();
 		}
 		FacesContext.getCurrentInstance().responseComplete();
-		System.out.println("exportMapsToMappingAction completed.");
 	}
 }

@@ -376,6 +376,11 @@ if (display_name_vec == null) {
             exportMappingAction(request, response);
         } else if (action.equals("export_vsrc")) {
             export_vsrc(request, response);
+
+		} else if (action.equals("export_maps_to_mapping")) {
+            exportMapsToMappingAction(request, response);
+
+
         } else if (action.compareTo("show") == 0) {
             show_other_versions(request, true);
 
@@ -5639,6 +5644,36 @@ KLO 11282018
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			//sb.append("WARNING: Export to CVS action failed.");
+		}
+		FacesContext.getCurrentInstance().responseComplete();
+	}
+
+
+    public void exportMapsToMappingAction(HttpServletRequest request, HttpServletResponse response) {
+		Vector maps_to_vec = DataUtils.get_maps_to_vec();
+		if (maps_to_vec == null) return;
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(MapsToReportGenerator.MAPS_TO_HEADING).append("\n");
+        for (int i=0; i<maps_to_vec.size(); i++) {
+			String line = (String) maps_to_vec.elementAt(i);
+			sb.append(line);
+			if (i<maps_to_vec.size()-1) {
+				sb.append("\n");
+			}
+		}
+		String filename = "Maps_To.csv";
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ filename);
+		response.setContentLength(sb.length());
+		try {
+			ServletOutputStream ouputStream = response.getOutputStream();
+			ouputStream.write(sb.toString().getBytes("UTF8"), 0, sb.length());
+			ouputStream.flush();
+			ouputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 	}

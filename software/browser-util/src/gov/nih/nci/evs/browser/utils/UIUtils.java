@@ -1124,7 +1124,7 @@ public class UIUtils {
 	}
 
 
-	public String getOtherMappingString(String page_url) {
+	public String getOtherMappingString(String page_url, boolean cache_maps_to, String ncit_version) {
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 
 		StringBuffer buf = new StringBuffer();
@@ -1162,6 +1162,18 @@ if (url.endsWith(".xls")) {
 				buf.append("</tr>").append("\n");
 			}
 		}
+
+        if (cache_maps_to) {
+				buf.append("<tr>").append("\n");
+				buf.append("<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").append("\n");
+				buf.append("<a href=\"/ncitbrowser/ajax?action=export_maps_to_mapping" + "\">").append("\n");
+				buf.append(	MapsToReportGenerator.maps_to_name + ": " + MapsToReportGenerator.maps_to_display_name + " (" + ncit_version + ")").append("\n");
+				buf.append("</a>").append("\n");
+				buf.append("</td>").append("\n");
+				buf.append("<td>&nbsp;</td>").append("\n");
+				buf.append("</tr>").append("\n");
+	    }
+
 		buf.append("</table>");
         return buf.toString();
 	}

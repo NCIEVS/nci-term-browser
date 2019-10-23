@@ -27,6 +27,9 @@ public class MapsToReportGenerator {
 	public static String MAPS_TO = "Maps_To";
 	public static int NUMER_OF_FIELDS = 8;
 
+	public static String maps_to_name = "Maps_To_Mapping_Data";
+	public static String maps_to_display_name = "NCI Thesaurus Maps To Target Terminologies";
+
     private LexBIGService lbSvc = null;
 
     public MapsToReportGenerator(LexBIGService lbSvc) {

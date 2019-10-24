@@ -505,12 +505,49 @@ if (cache_maps_to) {
 		return maps_to_string;
 	}
 
+/*
 	public static String get_maps_to_string(Vector maps_to_vec) {
         StringBuffer sb = new StringBuffer();
         sb.append(MapsToReportGenerator.MAPS_TO_HEADING).append("\n");
         for (int i=0; i<maps_to_vec.size(); i++) {
 			String line = (String) maps_to_vec.elementAt(i);
 			sb.append(line);
+			if (i<maps_to_vec.size()-1) {
+				sb.append("\n");
+			}
+		}
+		return sb.toString();
+	}
+*/
+
+
+	public static String get_maps_to_string(Vector maps_to_vec) {
+        StringBuffer sb = new StringBuffer();
+        String header = MapsToReportGenerator.MAPS_TO_HEADING;
+		Vector u = StringUtils.parseData(header, '|');
+		for (int j=0; j<u.size(); j++) {
+			String t = (String) u.elementAt(j);
+			t = "\"" + t + "\"";
+			sb2.append(t);
+			if (j<u.size()-1) {
+				sb2.append(",");
+			}
+		}
+		sb.append(sb2.toString()).append("\n");
+
+        for (int i=0; i<maps_to_vec.size(); i++) {
+			String line = (String) maps_to_vec.elementAt(i);
+			StringBuffer sb2 = new StringBuffer();
+			Vector u = StringUtils.parseData(line, '|');
+			for (int j=0; j<u.size(); j++) {
+				String t = (String) u.elementAt(j);
+				t = "\"" + t + "\"";
+				sb2.append(t);
+				if (j<u.size()-1) {
+					sb2.append(",");
+				}
+			}
+			sb.append(sb2.toString());
 			if (i<maps_to_vec.size()-1) {
 				sb.append("\n");
 			}

@@ -524,6 +524,7 @@ if (cache_maps_to) {
 	public static String get_maps_to_string(Vector maps_to_vec) {
         StringBuffer sb = new StringBuffer();
         String header = MapsToReportGenerator.MAPS_TO_HEADING;
+        StringBuffer sb2 = new StringBuffer();
 		Vector u = StringUtils.parseData(header, '|');
 		for (int j=0; j<u.size(); j++) {
 			String t = (String) u.elementAt(j);
@@ -537,8 +538,8 @@ if (cache_maps_to) {
 
         for (int i=0; i<maps_to_vec.size(); i++) {
 			String line = (String) maps_to_vec.elementAt(i);
-			StringBuffer sb2 = new StringBuffer();
-			Vector u = StringUtils.parseData(line, '|');
+			sb2 = new StringBuffer();
+			u = StringUtils.parseData(line, '|');
 			for (int j=0; j<u.size(); j++) {
 				String t = (String) u.elementAt(j);
 				t = "\"" + t + "\"";

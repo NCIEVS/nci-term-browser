@@ -1369,6 +1369,22 @@ if (display_name_vec == null) {
       println(out, "    YAHOO.util.Event.addListener(window, \"load\", init);");
       println(out, "");
       println(out, "  </script>");
+println(out, "<script>");
+println(out, "(function(i, s, o, g, r, a, m){");
+println(out, "  i['GoogleAnalyticsObject'] = r;");
+println(out, "  i[r] = i[r] || function(){");
+println(out, "    (i[r].q = i[r].q || []).push(arguments)");
+println(out, "  },");
+println(out, "  i[r].l =1 * new Date();");
+println(out, "  a = s.createElement(o),");
+println(out, "  m = s.getElementsByTagName(o)[0];");
+println(out, "  a.async = 1;");
+println(out, "  a.src = g;");
+println(out, "  m.parentNode.insertBefore(a, m)");
+println(out, "})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');");
+println(out, "   ga('create, 'UA-150112876-1', 'auto');");
+println(out, "   ga('send', 'pageview');");
+println(out, "</script>");
       println(out, "</head>");
       println(out, "<body>");
 
@@ -1810,6 +1826,22 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
       out.println("}");
       out.println("</style>");
 
+println(out, "<script>");
+println(out, "(function(i, s, o, g, r, a, m){");
+println(out, "  i['GoogleAnalyticsObject'] = r;");
+println(out, "  i[r] = i[r] || function(){");
+println(out, "    (i[r].q = i[r].q || []).push(arguments)");
+println(out, "  },");
+println(out, "  i[r].l =1 * new Date();");
+println(out, "  a = s.createElement(o),");
+println(out, "  m = s.getElementsByTagName(o)[0];");
+println(out, "  a.async = 1;");
+println(out, "  a.src = g;");
+println(out, "  m.parentNode.insertBefore(a, m)");
+println(out, "})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');");
+println(out, "   ga('create, 'UA-150112876-1', 'auto');");
+println(out, "   ga('send', 'pageview');");
+println(out, "</script>");
       out.println("</head>");
       out.println("");
 
@@ -2995,6 +3027,22 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
 }
 
 
+println(out, "<script>");
+println(out, "(function(i, s, o, g, r, a, m){");
+println(out, "  i['GoogleAnalyticsObject'] = r;");
+println(out, "  i[r] = i[r] || function(){");
+println(out, "    (i[r].q = i[r].q || []).push(arguments)");
+println(out, "  },");
+println(out, "  i[r].l =1 * new Date();");
+println(out, "  a = s.createElement(o),");
+println(out, "  m = s.getElementsByTagName(o)[0];");
+println(out, "  a.async = 1;");
+println(out, "  a.src = g;");
+println(out, "  m.parentNode.insertBefore(a, m)");
+println(out, "})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');");
+println(out, "   ga('create, 'UA-150112876-1', 'auto');");
+println(out, "   ga('send', 'pageview');");
+println(out, "</script>");
       out.println("</head>");
       out.println("");
 
@@ -5101,6 +5149,22 @@ KLO 11282018
 
       out.println("    }");
       out.println("  </script>");
+println(out, "<script>");
+println(out, "(function(i, s, o, g, r, a, m){");
+println(out, "  i['GoogleAnalyticsObject'] = r;");
+println(out, "  i[r] = i[r] || function(){");
+println(out, "    (i[r].q = i[r].q || []).push(arguments)");
+println(out, "  },");
+println(out, "  i[r].l =1 * new Date();");
+println(out, "  a = s.createElement(o),");
+println(out, "  m = s.getElementsByTagName(o)[0];");
+println(out, "  a.async = 1;");
+println(out, "  a.src = g;");
+println(out, "  m.parentNode.insertBefore(a, m)");
+println(out, "})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');");
+println(out, "   ga('create, 'UA-150112876-1', 'auto');");
+println(out, "   ga('send', 'pageview');");
+println(out, "</script>");
       out.println("</head>");
       out.println("");
       out.println("<body onload=\"draw();\">");

@@ -298,6 +298,9 @@ public class DataUtils {
     public static Vector maps_to_vec = null;
     public static String maps_to_string = null;
     public static String ncit_maps_to_version = null;
+    public static HashMap targetTerminology2StringHashMap = null;
+
+    public static Vector target_terminologies = null;
 
     // ==================================================================================
 
@@ -429,7 +432,7 @@ public class DataUtils {
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		ncit_maps_to_version = csdu.getVocabularyVersionByTag("NCI_Thesaurus", "PRODUCTION");
 
-		FILE_BASED_MAPPING_STRING = uiUtils.getOtherMappingString(ncit_mapping_url, cache_maps_to, ncit_maps_to_version);
+		//FILE_BASED_MAPPING_STRING = uiUtils.getOtherMappingString(ncit_mapping_url, cache_maps_to, ncit_maps_to_version);
 
 		VALUE_SET_TAB_AVAILABLE = isCodingSchemeAvailable(Constants.TERMINOLOGY_VALUE_SET_NAME);
 
@@ -493,9 +496,25 @@ if (cache_maps_to) {
 		//Vector w = new Vector();
 		//w.add(MapsToReportGenerator.MAPS_TO_HEADING);
 		maps_to_vec = mapsToReportGenerator.getMapsToData(scheme, ncit_maps_to_version);
-		maps_to_string = get_maps_to_string(maps_to_vec);
+
+		//maps_to_string = get_maps_to_string(maps_to_vec);
+		//targetTerminology2StringHashMap = getTargetTerminology2StringHashMap(maps_to_vec);
+		targetTerminology2StringHashMap = new HashMap();
+		MapsToReportProcessor processor = new MapsToReportProcessor(maps_to_vec);
+		target_terminologies = processor.getTargetTerminologies();
+        for (int i=0; i<target_terminologies.size(); i++) {
+		    String terminology = (String) target_terminologies.elementAt(i);
+		    String str = get_maps_to_string(maps_to_vec, terminology);
+		    targetTerminology2StringHashMap.put(terminology, str);
+		}
+
+
 		System.out.println("getMapsToData run time (ms): " + (System.currentTimeMillis() - ms));
 }
+		FILE_BASED_MAPPING_STRING = uiUtils.getOtherMappingString(ncit_mapping_url, target_terminologies, ncit_maps_to_version);
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		System.out.println("Total DataUtils initialization run time (ms): " + (System.currentTimeMillis() - ms0));
@@ -505,23 +524,7 @@ if (cache_maps_to) {
 		return maps_to_string;
 	}
 
-/*
-	public static String get_maps_to_string(Vector maps_to_vec) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(MapsToReportGenerator.MAPS_TO_HEADING).append("\n");
-        for (int i=0; i<maps_to_vec.size(); i++) {
-			String line = (String) maps_to_vec.elementAt(i);
-			sb.append(line);
-			if (i<maps_to_vec.size()-1) {
-				sb.append("\n");
-			}
-		}
-		return sb.toString();
-	}
-*/
-
-
-	public static String get_maps_to_string(Vector maps_to_vec) {
+	public static String get_maps_to_string(Vector maps_to_vec, String target_termonology) {
         StringBuffer sb = new StringBuffer();
         String header = MapsToReportGenerator.MAPS_TO_HEADING;
         StringBuffer sb2 = new StringBuffer();
@@ -535,27 +538,45 @@ if (cache_maps_to) {
 			}
 		}
 		sb.append(sb2.toString()).append("\n");
-
         for (int i=0; i<maps_to_vec.size(); i++) {
 			String line = (String) maps_to_vec.elementAt(i);
-			sb2 = new StringBuffer();
-			u = StringUtils.parseData(line, '|');
-			for (int j=0; j<u.size(); j++) {
-				String t = (String) u.elementAt(j);
-				t = "\"" + t + "\"";
-				sb2.append(t);
-				if (j<u.size()-1) {
-					sb2.append(",");
+			Vector u2 = StringUtils.parseData(line, '|');
+			String s = (String) u2.elementAt(6);
+			if (s.compareTo(target_termonology) == 0) {
+				sb2 = new StringBuffer();
+				u = StringUtils.parseData(line, '|');
+				for (int j=0; j<u.size(); j++) {
+					String t = (String) u.elementAt(j);
+					t = "\"" + t + "\"";
+					sb2.append(t);
+					if (j<u.size()-1) {
+						sb2.append(",");
+					}
 				}
-			}
-			sb.append(sb2.toString());
-			if (i<maps_to_vec.size()-1) {
-				sb.append("\n");
-			}
+				sb.append(sb2.toString());
+				if (i<maps_to_vec.size()-1) {
+					sb.append("\n");
+				}
+		    }
 		}
 		return sb.toString();
 	}
 
+	public static HashMap getTargetTerminology2StringHashMap(Vector maps_to_vec) {
+		HashMap hmap = new HashMap();
+		MapsToReportProcessor processor = new MapsToReportProcessor(maps_to_vec);
+		Vector terminologies = processor.getTargetTerminologies();
+        for (int i=0; i<terminologies.size(); i++) {
+		    String terminology = (String) terminologies.elementAt(i);
+		    String str = get_maps_to_string(maps_to_vec, terminology);
+		    hmap.put(terminology, str);
+		}
+		return hmap;
+	}
+
+	public static String getTargetTerminologyResponseString(String terminology) {
+		return (String) targetTerminology2StringHashMap.get(terminology);
+	}
 
 	public static Vector get_maps_to_vec() {
 		return maps_to_vec;

@@ -5948,9 +5948,10 @@ println(out, "</script>");
 			System.out.println("exportMapsToMappingAction ...maps_to_vec == null??? ");
 			return;
 		}
-		String maps_to_string = DataUtils.getMapsToString();
+		String target = HTTPUtils.cleanXSS((String) request.getParameter("target"));
+		String maps_to_string = DataUtils.getTargetTerminologyResponseString(target);
 		int len = maps_to_string.length();
-		String filename = "Maps_To.csv";
+		String filename = MapsToReportProcessor.getMapsToMappingyName(target) + ".csv";
 		response.setContentType("text/csv");
 		response.setHeader("Content-Disposition", "attachment; filename="
 				+ filename);

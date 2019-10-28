@@ -1124,7 +1124,7 @@ public class UIUtils {
 	}
 
 
-	public String getOtherMappingString(String page_url, boolean cache_maps_to, String ncit_version) {
+	public String getOtherMappingString(String page_url, Vector target_terminologies, String ncit_version) {
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 
 		StringBuffer buf = new StringBuffer();
@@ -1163,15 +1163,18 @@ if (url.endsWith(".xls")) {
 			}
 		}
 
-        if (cache_maps_to) {
+        if (target_terminologies != null && target_terminologies.size() > 0) {
+			for (int i=0; i<target_terminologies.size(); i++) {
+				String terminology = (String) target_terminologies.elementAt(i);
 				buf.append("<tr>").append("\n");
 				buf.append("<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").append("\n");
-				buf.append("<a href=\"/ncitbrowser/ajax?action=export_maps_to_mapping" + "\">").append("\n");
-				buf.append(	MapsToReportGenerator.maps_to_name + ": " + MapsToReportGenerator.maps_to_display_name + " (" + ncit_version + ")").append("\n");
+				buf.append("<a href=\"/ncitbrowser/ajax?action=export_maps_to_mapping&target=" + terminology + "\">").append("\n");
+				buf.append(	MapsToReportProcessor.getMapsToMappingyDisplayName(terminology, ncit_version)).append("\n");
 				buf.append("</a>").append("\n");
 				buf.append("</td>").append("\n");
 				buf.append("<td>&nbsp;</td>").append("\n");
 				buf.append("</tr>").append("\n");
+			}
 	    }
 
 		buf.append("</table>");

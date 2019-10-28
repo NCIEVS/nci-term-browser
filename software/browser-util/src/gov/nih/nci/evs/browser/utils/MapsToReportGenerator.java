@@ -136,12 +136,13 @@ public class MapsToReportGenerator {
 				ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
 				//System.out.println(rcr.getEntityDescription().getContent() + " (" + rcr.getCode() + ")");
                 Entity e = rcr.getReferencedEntry();
-                Vector values = new Vector();
-                for (int i=0; i<NUMER_OF_FIELDS; i++) {
-					values.add("N/A");
-				}
+
                 Property[] properties = e.getProperty();
                 for (int j=0; j<properties.length; j++) {
+					Vector values = new Vector();
+					for (int i=0; i<NUMER_OF_FIELDS; i++) {
+						values.add("N/A");
+					}
 					Property property = properties[j];
                     String propName = property.getPropertyName();
                     //System.out.println(propName);

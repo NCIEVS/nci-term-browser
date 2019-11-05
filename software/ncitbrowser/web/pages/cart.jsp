@@ -110,7 +110,7 @@
   %>                
               <td align="right" valign="bottom" nowrap>
               
-<input type=image src="<%=request.getContextPath() %>/images/selectall.gif"  id="cartAction" name="cartAction1" value="selectall" alt="Select All" title="Select all concepts" onclick="this.form.submit();">
+<input type=image src="<%=request.getContextPath() %>/images/select_all.gif"  id="cartAction" name="cartAction1" value="selectall" alt="Select All" title="Select all concepts" onclick="this.form.submit();">
 &nbsp;
 <input type=image src="<%=request.getContextPath() %>/images/clearselections.gif"  id="cartAction" name="cartAction2" value="unselectall" alt="Unselect" title="Unselect all concepts"  onclick="this.form.submit();">
 &nbsp;

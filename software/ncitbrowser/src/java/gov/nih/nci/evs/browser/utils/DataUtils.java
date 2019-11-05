@@ -148,7 +148,10 @@ public class DataUtils {
     private static HashMap _csnv2codingSchemeNameMap = null;
     private static HashMap _csnv2VersionMap = null;
 
+    // ==================================================================================
     private static boolean initializeValueSetHierarchy = true; //PROD - set to true; TEST - set to false
+    // ==================================================================================
+
     private static boolean valueSetHierarchyInitialized = false;
     private static boolean hasNoValueSet = false;
 
@@ -294,7 +297,11 @@ public class DataUtils {
     public static String checked_all_vocabularies_string = null;
 
     public static HashMap _URI2VSDHashMap = null;
+
+    //////////////////////////////////////////////////////////////////////////
     public static boolean cache_maps_to = true;
+    //////////////////////////////////////////////////////////////////////////
+
     public static Vector maps_to_vec = null;
     public static String maps_to_string = null;
     public static String ncit_maps_to_version = null;

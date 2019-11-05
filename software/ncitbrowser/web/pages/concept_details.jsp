@@ -29,6 +29,10 @@
 <%@ page import="org.LexGrid.LexBIG.LexBIGService.LexBIGService" %>
 <%@ page import="org.LexGrid.LexBIG.Utility.Iterators.*" %>
 
+<%@ page import="gov.nih.nci.evs.browser.bean.CartActionBean" %>
+<%@ page import="gov.nih.nci.evs.browser.bean.CartActionBean.Concept" %>
+
+
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -40,7 +44,12 @@
 
 long ms = System.currentTimeMillis();
 
- 
+CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean"); 
+if (cartActionBean == null) {
+    cartActionBean = new CartActionBean();
+    cartActionBean._init();
+    request.getSession().setAttribute("cartActionBean", cartActionBean); 
+}
     
     LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
     ConceptDetails cd = new ConceptDetails(lbSvc);
@@ -124,6 +133,10 @@ Entity c = null;
     String is_virtual = "true";
     String ncbo_widget_info = NCItBrowserProperties.getNCBO_WIDGET_INFO();
     boolean view_graph = DataUtils.visualizationWidgetSupported(dictionary);
+    
+    
+    
+    
     %>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -406,19 +419,38 @@ code = HTTPUtils.cleanXSS(code);
               <% } %>
 
               <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-
+<!--
               <h:commandLink action="#{CartActionBean.addToCart}" value="Add to Cart">
                 <f:setPropertyActionListener target="#{CartActionBean.entity}" value="concept" />
                 <f:setPropertyActionListener target="#{CartActionBean.codingScheme}" value="dictionary" />
                 <f:setPropertyActionListener target="#{CartActionBean.version}" value="version" />
               </h:commandLink>
-
               <c:choose>
-                <c:when test="${sessionScope.CartActionBean.count>
+                <c:when test="${sessionScope.cartActionBean.count>
                   0}"> (
-                  <h:outputText value="#{CartActionBean.count}" />)
+                  <h:outputText value="#{cartActionBean.count}" />)
                 </c:when>
               </c:choose>
+-->
+              <a href="<%=request.getContextPath()%>/ajax?action=addtocart&scheme=<%=dictionary%>&version=<%=version%>&ns=<%=ns%>&code=<%=code%>" title="Add concept to cart.">Add to Cart</a>
+
+<%
+if (cartActionBean != null && cartActionBean.getCount()>0) {
+%>
+     (<%=cartActionBean.getCount()%>)
+<%     
+}
+%>                 
+
+<!--                 
+              <c:choose>
+                <c:when test="${sessionScope.cartActionBean.count>
+                  0}"> (
+                  <h:outputText value="#{cartActionBean.count}" />)
+                </c:when>
+              </c:choose>
+-->              
+              
               <%
               if (term_suggestion_application_url != null && term_suggestion_application_url
               .compareTo("") != 0) {

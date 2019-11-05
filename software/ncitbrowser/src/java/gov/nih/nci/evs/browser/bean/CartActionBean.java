@@ -128,8 +128,8 @@ public class CartActionBean {
     private HashMap<String, Concept> _cart = null;
     private String _version = null;
     private String _backurl = null;
-    private boolean _messageflag = false;
-    private String _message = null;
+    public boolean _messageflag = false;
+    public String _message = null;
     private List<SelectItem> _selectVersionItems = null;
     private List<String> _selectedVersionItems = null;
 
@@ -161,6 +161,9 @@ public class CartActionBean {
     	}
     }
 
+    public CartActionBean() {
+
+	}
 
     // Getters & Setters
 
@@ -228,6 +231,12 @@ public class CartActionBean {
         return _backurl;
     }
 
+
+    public void setCart(HashMap _cart) {
+         this._cart = _cart;
+    }
+
+
     /**
      * Return the concept collection
      * @return
@@ -261,7 +270,7 @@ public class CartActionBean {
     /**
      * Initialize the cart container
      */
-	private void _init() {
+	public void _init() {
 		if (_cart == null)
 			_cart = new HashMap<String, Concept>();
 	}
@@ -284,6 +293,8 @@ public class CartActionBean {
      * @return
      * @throws Exception
      */
+
+ /*
     public String addToCart() throws Exception {
         String code = null;
         String codingScheme = null;
@@ -301,25 +312,118 @@ public class CartActionBean {
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
-/*
-        // Get Entity object
-        Entity curr_concept = (Entity) request.getSession().getAttribute(_entity);
+        codingScheme = HTTPUtils.cleanXSS((String) request.getParameter("cart_dictionary"));
+        version = HTTPUtils.cleanXSS((String) request.getParameter("cart_version"));
+        code = HTTPUtils.cleanXSS((String) request.getParameter("cart_code"));
+
+        Entity curr_concept = DataUtils.getConceptByCode(codingScheme,
+            version, null, code);
         if (curr_concept == null) {
         	// Called from a non search area
         	_logger.error("*** Cart error: Entity object is null!");
         	return null;
         }
-        code = curr_concept.getEntityCode(); // Store identifier
 
-        // Get coding scheme
-        codingScheme = (String)request.getSession().getAttribute(_codingScheme);
-        version = (String)request.getSession().getAttribute(_version);
+        type = (String)request.getSession().getAttribute("type");
+
+        // Get concept name space
+        nameSpace = curr_concept.getEntityCodeNamespace();
+
+        // Get concept name
+        name = curr_concept.getEntityDescription().getContent();
+
+        // Get concept URL
+        String protocol = request.getScheme();
+        String domain = request.getServerName();
+        String port = Integer.toString(request.getServerPort());
+        if (port.equals("80")) port = ""; else port = ":" + port;
+        String path = request.getContextPath();
+        url = protocol + "://" + domain
+            + port + path
+            + "/pages/concept_details.jsf?dictionary=" + codingScheme
+            + "&version=" + version
+            + "&code=" + code;
+
+        // Add concept to cart
+        if (_cart == null) _init();
+        Concept item = new Concept();
+        item.setCode(code);
+        item.setCodingScheme(codingScheme);
+        item.setNameSpace(nameSpace);
+        item.setName(name);
+        item.setVersion(version);
+        item.setUrl(url);
+
+        if (!_cart.containsKey(code))
+        	_cart.put(code,item);
+
+        // Add scheme and version back in for redisplay
+        request.setAttribute("dictionary", codingScheme);
+        request.setAttribute("version", version);
+        request.setAttribute("code_from_cart_action", code);
+        request.setAttribute("type", type);
+
+        // Rebuild version selected lists
+        _initDisplayItems();
+
+
+String b = HTTPUtils.cleanXSS((String) request.getParameter("b"));
+String n = HTTPUtils.cleanXSS((String) request.getParameter("n"));
+String m = HTTPUtils.cleanXSS((String) request.getParameter("m"));
+
+        if (!DataUtils.isInteger(b)) {
+            b = "0";
+        }
+
+        if (!DataUtils.isInteger(n)) {
+            n = "1";
+        }
+
+        if (!DataUtils.isInteger(m)) {
+            m = "0";
+        }
+
+
+String key = HTTPUtils.cleanXSS((String) request.getParameter("key"));
+
+if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
+
+	request.getSession().setAttribute("b", b);
+	request.getSession().setAttribute("n", n);
+	request.getSession().setAttribute("key", key);
+
+    if (!DataUtils.isNull(m)) {
+		request.getSession().setAttribute("m", m);
+	}
+
+}
+        updateCartSizeSessionVariable(request);
+		return "concept_details";
+    }
 */
 
-        codingScheme = HTTPUtils.cleanXSS((String) request.getParameter("cart_dictionary"));
-        version = HTTPUtils.cleanXSS((String) request.getParameter("cart_version"));
-        code = HTTPUtils.cleanXSS((String) request.getParameter("cart_code"));
+////      nclick="<%=request.getContextPath()%>/ajax?action=addtocart&scheme=<%=dictionary%>&version=<%=version%>&ns=<%=ns%>&code=<%=code%>"
 
+    public String addToCart(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String code = null;
+        String codingScheme = null;
+        String nameSpace = null;
+        String name = null;
+        String url = null;
+        String version = null;
+        String type = null;
+
+        _messageflag = false;
+
+        // Get concept information from the Entity item passed in
+/*
+        HttpServletRequest request =
+            (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
+*/
+        codingScheme = HTTPUtils.cleanXSS((String) request.getParameter("scheme"));
+        version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
+        code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
 
         Entity curr_concept = DataUtils.getConceptByCode(codingScheme,
             version, null, code);
@@ -415,6 +519,8 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
         String cartSize = Integer.valueOf(_cart.size()).toString();
 
         request.getSession().setAttribute("cart_size", cartSize);
+
+
 	}
 
 
@@ -512,11 +618,12 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
      * @return
      * @throws Exception
      */
-    public String exportCartXML() throws Exception {
+    public String exportCartXML(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        /*
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
-
+        */
         //SearchCart search = new SearchCart();
         ResolvedConceptReference ref = null;
         HashMap<String, SchemeVersion> versionList = null;
@@ -705,8 +812,10 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 			}
 
             // Send export XML string to browser
+            /*
             HttpServletResponse response = (HttpServletResponse) FacesContext
                     .getCurrentInstance().getExternalContext().getResponse();
+            */
             response.setContentType(XML_CONTENT_TYPE);
             response.setHeader("Content-Disposition", "attachment; filename="
                     + XML_FILE_NAME);
@@ -729,13 +838,13 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
      */
 
     // Garcia implementation:
-    public String exportCartToCSV() throws Exception {
+    public String exportCartToCSV(HttpServletRequest request, HttpServletResponse response) throws Exception {
         _messageflag = false;
-
+/*
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
-
+*/
         //SearchCart search = new SearchCart();
         ResolvedConceptReference ref = null;
         StringBuffer sb = new StringBuffer();
@@ -782,9 +891,11 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
             }
 
             // Send export file to browser
-
+/*
             HttpServletResponse response = (HttpServletResponse) FacesContext
                     .getCurrentInstance().getExternalContext().getResponse();
+
+*/
             response.setContentType(CSV_CONTENT_TYPE);
             response.setHeader("Content-Disposition", "attachment; filename="
                     + CSV_FILE_NAME);
@@ -815,6 +926,8 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
         private String displayStatus = "";
         private String displayCodingSchemeName = "[Not Set]";
         private HtmlSelectBooleanCheckbox checkbox = null;
+
+        private boolean selected = false;
 
         // Getters & setters
 
@@ -893,13 +1006,21 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
         }
 
         // *** Private Methods ***
-
-        private void setSelected(boolean selected) {
+/*
+        public void setSelected(boolean selected) {
         	this.checkbox.setSelected(selected);
         }
 
-        private boolean getSelected() {
+        public boolean getSelected() {
         	return this.checkbox.isSelected();
+        }
+*/
+        public void setSelected(boolean selected) {
+        	this.selected = selected;
+        }
+
+        public boolean getSelected() {
+        	return this.selected;
         }
 
         private void initDisplayStatus() {
@@ -1261,12 +1382,12 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
     }
 
 
-    public String exportCartCSV() throws Exception {
-
+    public String exportCartCSV(HttpServletRequest request, HttpServletResponse response) throws Exception {
+/*
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
-
+*/
 		//AbsoluteCodingSchemeVersionReferenceList csvList = new AbsoluteCodingSchemeVersionReferenceList();
 		HashSet uri_hset = new HashSet();
 		Vector uri_vec = new Vector();
@@ -1373,9 +1494,11 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 			}
 
             // Send export file to browser
-
+/*
             HttpServletResponse response = (HttpServletResponse) FacesContext
                     .getCurrentInstance().getExternalContext().getResponse();
+*/
+
             response.setContentType(CSV_CONTENT_TYPE);
             response.setHeader("Content-Disposition", "attachment; filename="
                     + CSV_FILE_NAME);

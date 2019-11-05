@@ -6,7 +6,7 @@
     <a href="http://www.cancer.gov" target="_blank" alt="National Cancer Institute">NCI Home</a>
     |</li>
   <li>
-  <a href="<%= request.getContextPath() %>/pages/contact_us.jsf?nav_type=<%=nav_type%>">Contact Us</a>
+  <a href="<%= request.getContextPath() %>/pages/contact_us.jsf?nav_type=terminologies">Contact Us</a>
   |</li>
 <li>
 <a href="http://www.cancer.gov/policies" target="_blank" alt="National Cancer Institute Policies">Policies</a>

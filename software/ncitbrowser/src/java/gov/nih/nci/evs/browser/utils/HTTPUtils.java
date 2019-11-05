@@ -516,142 +516,144 @@ public class HTTPUtils {
 
             while (enumeration.hasMoreElements()) {
 				String name = (String) enumeration.nextElement();
+				if (!name.startsWith("code_")) {
 
-				Boolean checkedVocabularies = isCheckedVocabulariesParameter(name);
-				if (checkedVocabularies != null && checkedVocabularies.equals(Boolean.TRUE)) {
-                    value = (String) request.getParameter(name);
-                    if (!DataUtils.isNullOrBlank(value)) {
-						Vector selected_vocabularies_vec = gov.nih.nci.evs.browser.utils.StringUtils.parseData(name, ",");
-						String nm = name.toLowerCase();
-						if (nm == null) return false;
-						if (nm.compareTo("selected_vocabularies") != 0) {
-							for (int k=0; k<selected_vocabularies_vec.size(); k++) {
-								String vocabularyNm = (String) selected_vocabularies_vec.elementAt(k);
-								String formal_name = DataUtils.getFormalName(vocabularyNm);
+					Boolean checkedVocabularies = isCheckedVocabulariesParameter(name);
+					if (checkedVocabularies != null && checkedVocabularies.equals(Boolean.TRUE)) {
+						value = (String) request.getParameter(name);
+						if (!DataUtils.isNullOrBlank(value)) {
+							Vector selected_vocabularies_vec = gov.nih.nci.evs.browser.utils.StringUtils.parseData(name, ",");
+							String nm = name.toLowerCase();
+							if (nm == null) return false;
+							if (nm.compareTo("selected_vocabularies") != 0) {
+								for (int k=0; k<selected_vocabularies_vec.size(); k++) {
+									String vocabularyNm = (String) selected_vocabularies_vec.elementAt(k);
+									String formal_name = DataUtils.getFormalName(vocabularyNm);
 
-								if (formal_name == null && vocabularyNm.indexOf("evs.nci.nih.gov/valueset") == 0) {
-									String error_msg = createErrorMessage(2, name);
-									request.getSession().setAttribute("error_msg", error_msg);
-									System.out.println("WARNING: Unknown vocabulary: " + value);
-									return false;
+									if (formal_name == null && vocabularyNm.indexOf("evs.nci.nih.gov/valueset") == 0) {
+										String error_msg = createErrorMessage(2, name);
+										request.getSession().setAttribute("error_msg", error_msg);
+										System.out.println("WARNING: Unknown vocabulary: " + value);
+										return false;
+									}
 								}
 							}
-					    }
+						}
 					}
-				}
 
-				if (name.compareTo("nav_type") == 0) {
-					value = (String) request.getParameter(name);
-					String[] types = Constants.NAV_TYPE_VALUES;
-					if (!Arrays.asList(types).contains(value)) {
-						String error_msg = createErrorMessage(2, name);
-						request.getSession().setAttribute("error_msg", error_msg);
-						System.out.println("WARNING: Unknown nav_type: " + value);
-						return false;
-					}
-				}
-
-				if (name.compareTo("value_set_home") == 0) {
-					value = (String) request.getParameter(name);
-					String[] types = Constants.TRUE_OR_FALSE;
-					if (!Arrays.asList(types).contains(value)) {
-						String error_msg = createErrorMessage(2, name);
-						request.getSession().setAttribute("error_msg", error_msg);
-						System.out.println("WARNING: Unknown nav_type: " + value);
-						return false;
-					}
-				}
-
-			    if (name.compareTo("view") == 0) {
-					value = (String) request.getParameter(name);
-					if (value != null) {
-						boolean isInteger = gov.nih.nci.evs.browser.utils.StringUtils.isInteger(value);
-						if (!isInteger) {
-							System.out.println("Integer value violation???");
-							String error_msg = createErrorMessage(name, value, 1);
+					if (name.compareTo("nav_type") == 0) {
+						value = (String) request.getParameter(name);
+						String[] types = Constants.NAV_TYPE_VALUES;
+						if (!Arrays.asList(types).contains(value)) {
+							String error_msg = createErrorMessage(2, name);
 							request.getSession().setAttribute("error_msg", error_msg);
+							System.out.println("WARNING: Unknown nav_type: " + value);
 							return false;
 						}
 					}
-				}
-/*
-temporarily commented out
-			    if (name.compareTo("vsd_uri") == 0) {
-					value = (String) request.getParameter(name);
-					if (!DataUtils.isNull(value)) {
-						//https://tracker.nci.nih.gov/browse/NCITERM-715
-						//WARNING: Invalid parameter value encountered -  (name: vsd_uri value: TVS_CDISC)
-						if (!value.startsWith("TVS_")) {
-							String vsd_md = DataUtils.getValueSetDefinitionMetadata(value);
-							if (vsd_md == null) {
-								String error_msg = createErrorMessage(name, value, 2);
+
+					if (name.compareTo("value_set_home") == 0) {
+						value = (String) request.getParameter(name);
+						String[] types = Constants.TRUE_OR_FALSE;
+						if (!Arrays.asList(types).contains(value)) {
+							String error_msg = createErrorMessage(2, name);
+							request.getSession().setAttribute("error_msg", error_msg);
+							System.out.println("WARNING: Unknown nav_type: " + value);
+							return false;
+						}
+					}
+
+					if (name.compareTo("view") == 0) {
+						value = (String) request.getParameter(name);
+						if (value != null) {
+							boolean isInteger = gov.nih.nci.evs.browser.utils.StringUtils.isInteger(value);
+							if (!isInteger) {
+								System.out.println("Integer value violation???");
+								String error_msg = createErrorMessage(name, value, 1);
 								request.getSession().setAttribute("error_msg", error_msg);
 								return false;
 							}
-					    }
+						}
 					}
-				}
-*/
-                Boolean issearchFormParameter = isSearchFormParameter(name);
-                // 09182015
-                if (issearchFormParameter != null && issearchFormParameter.equals(Boolean.TRUE)) {
-					value = (String) request.getParameter(name);
-					if (value != null) {
-						boolean isInteger = gov.nih.nci.evs.browser.utils.StringUtils.isInteger(value);
-						if (!isInteger) {
-							System.out.println("Integer value violation???" + value);
-							String error_msg = createErrorMessage(name, value, 3);
-							request.getSession().setAttribute("error_msg", error_msg);
-							return false;
-						}
-				    }
-				}
-
-                if (issearchFormParameter != null && issearchFormParameter.equals(Boolean.FALSE)) {
-					Boolean isDynamic = isDynamicId(name);
-
-					if (isDynamic != null && isDynamic.equals(Boolean.FALSE)) {
-						if (name.endsWith("value=")) return true;
-						String formal_name = DataUtils.getFormalName(name);
-                        if (formal_name == null && !name.startsWith("TVS_") && !name.startsWith("http:") && !list.contains(name)) {
-							System.out.println("WARNING: parameter name: " + name + " is not in the list.");
-							String error_msg = createErrorMessage(1, name);
-							request.getSession().setAttribute("error_msg", error_msg);
-							return false;
-						}
+	/*
+	temporarily commented out
+					if (name.compareTo("vsd_uri") == 0) {
 						value = (String) request.getParameter(name);
-						Boolean bool_obj = containsHazardCharacters(value);
-						// Cross-Site Scripting:
-						if (bool_obj != null && bool_obj.equals(Boolean.TRUE)) {
-							String error_msg = createErrorMessage(2, name);
-							request.getSession().setAttribute("error_msg", error_msg);
-							System.out.println("WARNING: Hazardous -- " + name + ": " + value);
-							return false;
+						if (!DataUtils.isNull(value)) {
+							//https://tracker.nci.nih.gov/browse/NCITERM-715
+							//WARNING: Invalid parameter value encountered -  (name: vsd_uri value: TVS_CDISC)
+							if (!value.startsWith("TVS_")) {
+								String vsd_md = DataUtils.getValueSetDefinitionMetadata(value);
+								if (vsd_md == null) {
+									String error_msg = createErrorMessage(name, value, 2);
+									request.getSession().setAttribute("error_msg", error_msg);
+									return false;
+								}
+							}
 						}
-						bool_obj = validateRadioButtonNameAndValue(name, value);
-						if (bool_obj != null && bool_obj.equals(Boolean.FALSE)) {
-							String error_msg = createErrorMessage(name, value, 4);
-							request.getSession().setAttribute("error_msg", error_msg);
-							return false;
+					}
+	*/
+					Boolean issearchFormParameter = isSearchFormParameter(name);
+					// 09182015
+					if (issearchFormParameter != null && issearchFormParameter.equals(Boolean.TRUE)) {
+						value = (String) request.getParameter(name);
+						if (value != null) {
+							boolean isInteger = gov.nih.nci.evs.browser.utils.StringUtils.isInteger(value);
+							if (!isInteger) {
+								System.out.println("Integer value violation???" + value);
+								String error_msg = createErrorMessage(name, value, 3);
+								request.getSession().setAttribute("error_msg", error_msg);
+								return false;
+							}
 						}
-						bool_obj = containsPercentSign(name, value);
-						if (bool_obj != null && bool_obj.equals(Boolean.FALSE)) {
-							String error_msg = createErrorMessage(name, value, 5);
-							request.getSession().setAttribute("error_msg", error_msg);
-							return false;
-						}
-						bool_obj = validateValueSetCheckBox(name, value);
-						if (bool_obj != null && bool_obj.equals(Boolean.FALSE)) {
-							String error_msg = createErrorMessage(name, value, 6);
-							request.getSession().setAttribute("error_msg", error_msg);
-							return false;
-						}
-						//09182015
-						bool_obj = checkLimitedLengthCondition(name, value);
-						if (bool_obj != null && bool_obj.equals(Boolean.FALSE)) {
-							String error_msg = createErrorMessage(name, value, 7);
-							request.getSession().setAttribute("error_msg", error_msg);
-							return false;
+					}
+
+					if (issearchFormParameter != null && issearchFormParameter.equals(Boolean.FALSE)) {
+						Boolean isDynamic = isDynamicId(name);
+
+						if (isDynamic != null && isDynamic.equals(Boolean.FALSE)) {
+							if (name.endsWith("value=")) return true;
+							String formal_name = DataUtils.getFormalName(name);
+							if (formal_name == null && !name.startsWith("TVS_") && !name.startsWith("http:") && !list.contains(name)) {
+								System.out.println("WARNING: parameter name: " + name + " is not in the list.");
+								String error_msg = createErrorMessage(1, name);
+								request.getSession().setAttribute("error_msg", error_msg);
+								return false;
+							}
+							value = (String) request.getParameter(name);
+							Boolean bool_obj = containsHazardCharacters(value);
+							// Cross-Site Scripting:
+							if (bool_obj != null && bool_obj.equals(Boolean.TRUE)) {
+								String error_msg = createErrorMessage(2, name);
+								request.getSession().setAttribute("error_msg", error_msg);
+								System.out.println("WARNING: Hazardous -- " + name + ": " + value);
+								return false;
+							}
+							bool_obj = validateRadioButtonNameAndValue(name, value);
+							if (bool_obj != null && bool_obj.equals(Boolean.FALSE)) {
+								String error_msg = createErrorMessage(name, value, 4);
+								request.getSession().setAttribute("error_msg", error_msg);
+								return false;
+							}
+							bool_obj = containsPercentSign(name, value);
+							if (bool_obj != null && bool_obj.equals(Boolean.FALSE)) {
+								String error_msg = createErrorMessage(name, value, 5);
+								request.getSession().setAttribute("error_msg", error_msg);
+								return false;
+							}
+							bool_obj = validateValueSetCheckBox(name, value);
+							if (bool_obj != null && bool_obj.equals(Boolean.FALSE)) {
+								String error_msg = createErrorMessage(name, value, 6);
+								request.getSession().setAttribute("error_msg", error_msg);
+								return false;
+							}
+							//09182015
+							bool_obj = checkLimitedLengthCondition(name, value);
+							if (bool_obj != null && bool_obj.equals(Boolean.FALSE)) {
+								String error_msg = createErrorMessage(name, value, 7);
+								request.getSession().setAttribute("error_msg", error_msg);
+								return false;
+							}
 						}
 					}
 			    }

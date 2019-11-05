@@ -6067,10 +6067,13 @@ println(out, "</script>");
 				}
 			}
 			String ans = (String) request.getParameter("ans");
+			System.out.println("ans: " + ans);
+
+
 			if (ans == null) {
-				String message = "Are you sure you want to permanently remove the following seleced concepts from the cart? Confirm by clicking " +
-				"<a href=\"javascript:submitform()\">here</a>." +
-				"<input type=\"hidden\" id=\"ans\" name=\"ans\" value=\"yes\">";
+				String message = "Are you sure you want to permanently remove the following seleced concepts from the cart? " +
+				"&nbsp;<input type=\"radio\" name=\"ans\" checked=\"checked\" value=\"yes\" >Yes</input>&nbsp;<input type=\"radio\" value=\"no\" name=\"ans\">No</input>" +
+				". &nbsp;Click <a href=\"javascript:submitform()\">here</a> to confirm.";
 				request.getSession().setAttribute("message", message);
 				request.getSession().setAttribute("confirmation", "true");
 				String nextJSP = "/pages/cart.jsf";
@@ -6081,14 +6084,16 @@ println(out, "</script>");
 					ex.printStackTrace();
 				}
 				return null;
+			} else {
+			    if (ans.compareToIgnoreCase("yes") == 0) {
+					for (int i=0; i<removed_codes.size(); i++) {
+						String code = (String) removed_codes.elementAt(i);
+						cart_hmap.remove(code);
+					}
+					cartActionBean.setCart(cart_hmap);
+				}
 			}
-			for (int i=0; i<removed_codes.size(); i++) {
-				String code = (String) removed_codes.elementAt(i);
-				cart_hmap.remove(code);
-			}
-			cartActionBean.setCart(cart_hmap);
 			request.getSession().setAttribute("cartActionBean", cartActionBean);
-
 			String nextJSP = "/pages/cart.jsf";
 
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);

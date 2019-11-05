@@ -825,7 +825,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
             ouputStream.flush();
             ouputStream.close();
             // Don't allow JSF to forward to cart.jsf
-            FacesContext.getCurrentInstance().responseComplete();
+            //FacesContext.getCurrentInstance().responseComplete();
         }
 
         return null;
@@ -906,7 +906,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
             ouputStream.close();
 
             // Don't allow JSF to forward to cart.jsf
-            FacesContext.getCurrentInstance().responseComplete();
+            // FacesContext.getCurrentInstance().responseComplete();
         }
 
 		return null;

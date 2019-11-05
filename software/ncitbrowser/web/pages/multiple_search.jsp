@@ -337,7 +337,7 @@ System.out.println("miltiple_search.jsp ncit_url: " + ncit_url);
                           />
                           &nbsp;&nbsp;
                           <img
-                              src="<%= request.getContextPath() %>/images/selectAll.gif"
+                              src="<%= request.getContextPath() %>/images/selectall.gif"
                               name="selectAll"
                               alt="selectAll"
                               tabindex="0"
@@ -627,7 +627,7 @@ System.out.println("miltiple_search.jsp ncit_url: " + ncit_url);
                   />
                   &nbsp;&nbsp;
                   <img
-                      src="<%= request.getContextPath() %>/images/selectAll.gif"
+                      src="<%= request.getContextPath() %>/images/selectall.gif"
                       name="selectAll"
                       alt="selectAll"
                       tabindex="0"

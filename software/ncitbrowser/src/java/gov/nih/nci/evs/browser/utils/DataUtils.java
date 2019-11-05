@@ -149,7 +149,7 @@ public class DataUtils {
     private static HashMap _csnv2VersionMap = null;
 
     // ==================================================================================
-    private static boolean initializeValueSetHierarchy = true; //PROD - set to true; TEST - set to false
+    private static boolean initializeValueSetHierarchy = false; //PROD - set to true; TEST - set to false
     // ==================================================================================
 
     private static boolean valueSetHierarchyInitialized = false;
@@ -299,7 +299,7 @@ public class DataUtils {
     public static HashMap _URI2VSDHashMap = null;
 
     //////////////////////////////////////////////////////////////////////////
-    public static boolean cache_maps_to = true;
+    public static boolean cache_maps_to = false;
     //////////////////////////////////////////////////////////////////////////
 
     public static Vector maps_to_vec = null;

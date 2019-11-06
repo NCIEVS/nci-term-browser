@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Vector;
 import java.util.HashSet;
+import java.util.Set;
+
 
 import javax.faces.event.*;
 
@@ -619,11 +621,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
      * @throws Exception
      */
     public String exportCartXML(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        /*
-        HttpServletRequest request =
-            (HttpServletRequest) FacesContext.getCurrentInstance()
-                .getExternalContext().getRequest();
-        */
+        updateSelection(request);
         //SearchCart search = new SearchCart();
         ResolvedConceptReference ref = null;
         HashMap<String, SchemeVersion> versionList = null;
@@ -1794,6 +1792,8 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
     }
 
 
+
+
     public Vector get_cart_coding_scheme_ref_vec(HttpServletRequest request) {
 		Vector cart_coding_scheme_ref_vec = new Vector();
         int selectedCount = 0;
@@ -1840,6 +1840,8 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
     }
 
     public String exportCartCSV(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		updateSelection(request);
+
 		HashSet uri_hset = new HashSet();
 		Vector uri_vec = new Vector();
 		HashMap cs_uri2version_map = new HashMap();
@@ -1884,6 +1886,8 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
         	_message = NOTHING_SELECTED;
         	return null;
     	}
+
+
 
         // Get Entities to be exported and build export file
         // in memory
@@ -1953,12 +1957,6 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 				}
 			}
 
-            // Send export file to browser
-/*
-            HttpServletResponse response = (HttpServletResponse) FacesContext
-                    .getCurrentInstance().getExternalContext().getResponse();
-*/
-
             response.setContentType(CSV_CONTENT_TYPE);
             response.setHeader("Content-Disposition", "attachment; filename="
                     + CSV_FILE_NAME);
@@ -1973,6 +1971,41 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
         }
 
 		return null;
+    }
+
+
+    public void updateSelection(HttpServletRequest request) {
+		gov.nih.nci.evs.browser.bean.CartActionBean.Concept item = null;
+        Set<String> paramNames = request.getParameterMap().keySet();
+		Collection<gov.nih.nci.evs.browser.bean.CartActionBean.Concept> items = getConcepts();
+		int count = items.size();//cartActionBean.getCount();
+		if (count == 0) {
+			return;
+		}
+		Iterator it = null;
+		it = items.iterator();
+		while (it.hasNext()) {
+			item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it.next();
+			item.setSelected(false);
+		}
+
+        for (String name : paramNames) {
+            String value = request.getParameter(name);
+			it = items.iterator();
+			while (it.hasNext()) {
+				item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it.next();
+				if (item.getCode().compareTo(value) == 0) {
+					item.setSelected(true);
+				}
+			}
+		}
+		HashMap cart = new HashMap();
+		it = items.iterator();
+		while (it.hasNext()) {
+			item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it.next();
+			cart.put(item.getCode(), item);
+		}
+		setCart(cart);
     }
 
 } // End of CartActionBean

@@ -1383,12 +1383,6 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 
 
     public String exportCartCSV(HttpServletRequest request, HttpServletResponse response) throws Exception {
-/*
-        HttpServletRequest request =
-            (HttpServletRequest) FacesContext.getCurrentInstance()
-                .getExternalContext().getRequest();
-*/
-		//AbsoluteCodingSchemeVersionReferenceList csvList = new AbsoluteCodingSchemeVersionReferenceList();
 		HashSet uri_hset = new HashSet();
 		Vector uri_vec = new Vector();
 		HashMap cs_uri2version_map = new HashMap();
@@ -1509,7 +1503,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
             ouputStream.close();
 
             // Don't allow JSF to forward to cart.jsf
-            FacesContext.getCurrentInstance().responseComplete();
+            // FacesContext.getCurrentInstance().responseComplete();
         }
 
 		return null;

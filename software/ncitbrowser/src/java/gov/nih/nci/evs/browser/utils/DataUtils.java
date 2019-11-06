@@ -128,6 +128,13 @@ import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.ActiveOption;
  */
 public class DataUtils {
     private static Logger _logger = Logger.getLogger(DataUtils.class);
+
+    // ==================================================================================
+    private static boolean initializeValueSetHierarchy = false; //PROD - set to true; TEST - set to false
+    public static boolean cache_maps_to = false;
+    // ==================================================================================
+
+
     private static Set _vocabularyNameSet = null;
     private static String NCIT_MAPPING_URL = "https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings";
     private static Vector NCIT_MAPPING_DATA = null;
@@ -148,9 +155,6 @@ public class DataUtils {
     private static HashMap _csnv2codingSchemeNameMap = null;
     private static HashMap _csnv2VersionMap = null;
 
-    // ==================================================================================
-    private static boolean initializeValueSetHierarchy = true; //PROD - set to true; TEST - set to false
-    // ==================================================================================
 
     private static boolean valueSetHierarchyInitialized = false;
     private static boolean hasNoValueSet = false;
@@ -298,9 +302,6 @@ public class DataUtils {
 
     public static HashMap _URI2VSDHashMap = null;
 
-    //////////////////////////////////////////////////////////////////////////
-    public static boolean cache_maps_to = true;
-    //////////////////////////////////////////////////////////////////////////
 
     public static Vector maps_to_vec = null;
     public static String maps_to_string = null;

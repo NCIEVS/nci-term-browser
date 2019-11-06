@@ -1310,12 +1310,12 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
      * Unselect all concept(s) in the Cart
      * @return
      */
-    public String cartVersionSelectionAction() {
-
+    public String cartVersionSelectionAction(HttpServletRequest request) {
+/*
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
-
+*/
 		String format = HTTPUtils.cleanXSS((String) request.getParameter("format"));
 		//System.out.println("cartVersionSelectionAction format: " + format);
 
@@ -1382,132 +1382,6 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
     }
 
 
-    public String exportCartCSV(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HashSet uri_hset = new HashSet();
-		Vector uri_vec = new Vector();
-		HashMap cs_uri2version_map = new HashMap();
-		Vector cart_coding_scheme_ref_vec = (Vector) request.getSession().getAttribute("cart_coding_scheme_ref_vec");
-		if (cart_coding_scheme_ref_vec == null) return null;
-		for (int i=0; i<cart_coding_scheme_ref_vec.size(); i++) {
-			String cart_coding_scheme_ref = (String) cart_coding_scheme_ref_vec.elementAt(i);
-			Vector u = DataUtils.parseData(cart_coding_scheme_ref);
-			String cs_uri = (String) u.elementAt(0);
-			if (!uri_hset.contains(cs_uri)) {
-				uri_hset.add(cs_uri);
-				uri_vec.add(cs_uri);
-				String version = HTTPUtils.cleanXSS((String) request.getParameter(cs_uri));
-				if (version != null) {
-					cs_uri2version_map.put(cs_uri, version);
-				}
-			}
-		}
-		uri_vec = new SortUtils().quickSort(uri_vec);
-
-        _messageflag = false;
-
-        ResolvedConceptReference ref = null;
-        StringBuffer sb = new StringBuffer();
-
-    	if (getCount() < 1) {
-        	_messageflag = true;
-        	_message = NO_CONCEPTS;
-        	return null;
-    	}
-    	if (!hasSelected()) {
-        	_messageflag = true;
-        	_message = NOTHING_SELECTED;
-        	return null;
-    	}
-
-        // Get Entities to be exported and build export file
-        // in memory
-
-        HashMap cs2codes_map = new HashMap();
-        if (_cart != null && _cart.size() > 0) {
-
-            // Add header
-            sb.append("Concept Name,");
-            sb.append("Terminology,");
-            sb.append("Version,");
-            sb.append("Concept Code,");
-            sb.append("URI");
-            sb.append("\r\n");
-
-
-			// uri_hset
-            for (Iterator<Concept> i = getConcepts().iterator(); i.hasNext();) {
-                Concept item = (Concept)i.next();
-
-				String cs = item.getCodingScheme();
-				cs = DataUtils.codingSchemeName2URI(cs);
-				String code = item.getCode();
-
-                if (item.getSelected()) {
-
-					Vector v = new Vector();
-					if (cs2codes_map.containsKey(cs)) {
-						v = (Vector) cs2codes_map.get(cs);
-					}
-					if (!v.contains(code)) {
-						v.add(code);
-					}
-					cs2codes_map.put(cs, v);
-				}
-			}
-
-			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-			for (int i=0; i<uri_vec.size(); i++) {
-				String scheme = (String) uri_vec.elementAt(i);
-				String version = (String) cs_uri2version_map.get(scheme);
-
-                CodingSchemeVersionOrTag versionOrTag =
-                    new CodingSchemeVersionOrTag();
-                versionOrTag.setVersion(version);
-
-                CodedNodeSet cns = new SearchUtils(lbSvc).getNodeSet(scheme, versionOrTag);
-
-                Vector v = (Vector) cs2codes_map.get(scheme);
-                scheme = DataUtils.uri2CodingSchemeName(scheme);
-
-                if (v != null && v.size() > 0) {
-					ConceptReferenceList crefs = createConceptReferenceList(v, scheme);
-					cns = cns.restrictToCodes(crefs);
-					ResolvedConceptReferencesIterator iterator = cns.resolve(null, null, null, null, false);
-					if (iterator == null) return null;
-					while (iterator.hasNext()) {
-						ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
-
-						sb.append("\"" + clean(rcr.getEntityDescription().getContent()) + "\",");
-						sb.append("\"" + clean(rcr.getCodingSchemeName()) + "\",");
-						sb.append("\"" + clean(rcr.getCodingSchemeVersion()) + "\",");
-						sb.append("\"" + clean(rcr.getConceptCode()) + "\",");
-						sb.append("\"" + clean(rcr.getCodingSchemeURI()) + "\"");
-						sb.append("\r\n");
-					}
-				}
-			}
-
-            // Send export file to browser
-/*
-            HttpServletResponse response = (HttpServletResponse) FacesContext
-                    .getCurrentInstance().getExternalContext().getResponse();
-*/
-
-            response.setContentType(CSV_CONTENT_TYPE);
-            response.setHeader("Content-Disposition", "attachment; filename="
-                    + CSV_FILE_NAME);
-            response.setContentLength(sb.length());
-            ServletOutputStream ouputStream = response.getOutputStream();
-            ouputStream.write(sb.toString().getBytes("UTF8"), 0, sb.length());
-            ouputStream.flush();
-            ouputStream.close();
-
-            // Don't allow JSF to forward to cart.jsf
-            // FacesContext.getCurrentInstance().responseComplete();
-        }
-
-		return null;
-    }
 
     public void formatListener(ActionEvent evt) {
         FacesContext ctx = FacesContext.getCurrentInstance();
@@ -1917,6 +1791,188 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
             list.addConceptReference(cr);
         }
         return list;
+    }
+
+
+    public Vector get_cart_coding_scheme_ref_vec(HttpServletRequest request) {
+		Vector cart_coding_scheme_ref_vec = new Vector();
+        int selectedCount = 0;
+		for (Iterator<Concept> i = getConcepts().iterator(); i.hasNext();) {
+			Concept item = (Concept)i.next();
+			if (item.getSelected()) selectedCount++;
+		}
+
+    	if (selectedCount == 0) {
+        	String message = "No concept is selected.";
+ 			request.getSession().setAttribute("message", message);
+			return cart_coding_scheme_ref_vec;
+
+    	} else {
+			//Vector cart_coding_scheme_ref_vec = new Vector();
+			HashSet hset = new HashSet();
+            for (Iterator<Concept> i = getConcepts().iterator(); i.hasNext();) {
+                Concept item = (Concept)i.next();
+
+                if (item.getSelected()) {
+					String cs_name = item.getCodingScheme();
+					String cs_uri = DataUtils.codingSchemeName2URI(cs_name);
+					if (!hset.contains(cs_uri)) {
+						hset.add(cs_uri);
+					}
+				}
+			}
+			Iterator it = hset.iterator();
+			if (it == null) return null;
+			while (it.hasNext()) {
+				String cs_uri = (String) it.next();
+				Vector versions = DataUtils.getCodingSchemeVersionsByURN(cs_uri);
+				if (versions == null) return null;
+				for (int i=0; i<versions.size(); i++) {
+					String version = (String) versions.elementAt(i);
+					cart_coding_scheme_ref_vec.add(cs_uri + "|" + version);
+				}
+			}
+
+            cart_coding_scheme_ref_vec = new SortUtils().quickSort(cart_coding_scheme_ref_vec);
+			//request.getSession().setAttribute("cart_coding_scheme_ref_vec", cart_coding_scheme_ref_vec);
+			return cart_coding_scheme_ref_vec;
+		}
+    }
+
+    public String exportCartCSV(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HashSet uri_hset = new HashSet();
+		Vector uri_vec = new Vector();
+		HashMap cs_uri2version_map = new HashMap();
+		Vector cart_coding_scheme_ref_vec = get_cart_coding_scheme_ref_vec(request);//(Vector) request.getSession().getAttribute("cart_coding_scheme_ref_vec");
+
+/*
+		if (cart_coding_scheme_ref_vec == null) {
+			String retstr = cartVersionSelectionAction(request);
+			cart_coding_scheme_ref_vec = (Vector) request.getSession().getAttribute("cart_coding_scheme_ref_vec");
+		}
+
+		if (cart_coding_scheme_ref_vec == null) return null;
+*/
+
+		for (int i=0; i<cart_coding_scheme_ref_vec.size(); i++) {
+			String cart_coding_scheme_ref = (String) cart_coding_scheme_ref_vec.elementAt(i);
+			Vector u = DataUtils.parseData(cart_coding_scheme_ref);
+			String cs_uri = (String) u.elementAt(0);
+			if (!uri_hset.contains(cs_uri)) {
+				uri_hset.add(cs_uri);
+				uri_vec.add(cs_uri);
+				String version = HTTPUtils.cleanXSS((String) request.getParameter(cs_uri));
+				if (version != null) {
+					cs_uri2version_map.put(cs_uri, version);
+				}
+			}
+		}
+		uri_vec = new SortUtils().quickSort(uri_vec);
+
+        _messageflag = false;
+        ResolvedConceptReference ref = null;
+
+        StringBuffer sb = new StringBuffer();
+
+    	if (getCount() < 1) {
+        	_messageflag = true;
+        	_message = NO_CONCEPTS;
+        	return null;
+    	}
+    	if (!hasSelected()) {
+        	_messageflag = true;
+        	_message = NOTHING_SELECTED;
+        	return null;
+    	}
+
+        // Get Entities to be exported and build export file
+        // in memory
+
+        HashMap cs2codes_map = new HashMap();
+        if (_cart != null && _cart.size() > 0) {
+
+            // Add header
+            sb.append("Concept Name,");
+            sb.append("Terminology,");
+            sb.append("Version,");
+            sb.append("Concept Code,");
+            sb.append("URI");
+            sb.append("\r\n");
+
+
+			// uri_hset
+            for (Iterator<Concept> i = getConcepts().iterator(); i.hasNext();) {
+                Concept item = (Concept)i.next();
+
+				String cs = item.getCodingScheme();
+				cs = DataUtils.codingSchemeName2URI(cs);
+				String code = item.getCode();
+
+                if (item.getSelected()) {
+
+					Vector v = new Vector();
+					if (cs2codes_map.containsKey(cs)) {
+						v = (Vector) cs2codes_map.get(cs);
+					}
+					if (!v.contains(code)) {
+						v.add(code);
+					}
+					cs2codes_map.put(cs, v);
+				}
+			}
+
+			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+			for (int i=0; i<uri_vec.size(); i++) {
+				String scheme = (String) uri_vec.elementAt(i);
+				String version = (String) cs_uri2version_map.get(scheme);
+
+                CodingSchemeVersionOrTag versionOrTag =
+                    new CodingSchemeVersionOrTag();
+                versionOrTag.setVersion(version);
+
+                CodedNodeSet cns = new SearchUtils(lbSvc).getNodeSet(scheme, versionOrTag);
+
+                Vector v = (Vector) cs2codes_map.get(scheme);
+                scheme = DataUtils.uri2CodingSchemeName(scheme);
+
+                if (v != null && v.size() > 0) {
+					ConceptReferenceList crefs = createConceptReferenceList(v, scheme);
+					cns = cns.restrictToCodes(crefs);
+					ResolvedConceptReferencesIterator iterator = cns.resolve(null, null, null, null, false);
+					if (iterator == null) return null;
+					while (iterator.hasNext()) {
+						ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
+
+						sb.append("\"" + clean(rcr.getEntityDescription().getContent()) + "\",");
+						sb.append("\"" + clean(rcr.getCodingSchemeName()) + "\",");
+						sb.append("\"" + clean(rcr.getCodingSchemeVersion()) + "\",");
+						sb.append("\"" + clean(rcr.getConceptCode()) + "\",");
+						sb.append("\"" + clean(rcr.getCodingSchemeURI()) + "\"");
+						sb.append("\r\n");
+					}
+				}
+			}
+
+            // Send export file to browser
+/*
+            HttpServletResponse response = (HttpServletResponse) FacesContext
+                    .getCurrentInstance().getExternalContext().getResponse();
+*/
+
+            response.setContentType(CSV_CONTENT_TYPE);
+            response.setHeader("Content-Disposition", "attachment; filename="
+                    + CSV_FILE_NAME);
+            response.setContentLength(sb.length());
+            ServletOutputStream ouputStream = response.getOutputStream();
+            ouputStream.write(sb.toString().getBytes("UTF8"), 0, sb.length());
+            ouputStream.flush();
+            ouputStream.close();
+
+            // Don't allow JSF to forward to cart.jsf
+            // FacesContext.getCurrentInstance().responseComplete();
+        }
+
+		return null;
     }
 
 } // End of CartActionBean

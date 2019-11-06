@@ -5993,7 +5993,7 @@ println(out, "</script>");
 
 
     public String exportCart2XML(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("exportCart2XML");
+		//System.out.println("exportCart2XML");
 		try {
 			CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
 			cartActionBean.exportCartXML(request, response);
@@ -6004,7 +6004,7 @@ println(out, "</script>");
 	}
 
     public String exportCart2CSV(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("exportCart2CSV");
+		//System.out.println("exportCart2CSV");
 		try {
 			CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
 			cartActionBean.exportCartCSV(request, response);
@@ -6106,6 +6106,8 @@ println(out, "</script>");
 	}
 
     public String processCartActions(HttpServletRequest request, HttpServletResponse response) {
+		String ans = (String) request.getSession().getAttribute("ans");
+
 		request.getSession().removeAttribute("message");
         Set<String> paramNames = request.getParameterMap().keySet();
 		CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
@@ -6186,7 +6188,7 @@ println(out, "</script>");
 		}
 
 
-        if (cart_action > 2 && cart_hmap.keySet().size() == 0) {
+        if ((cart_action == 0 || cart_action > 2) && cart_hmap.keySet().size() == 0) {
 			String message = "INFORMATION: The cart is empty.";
 			request.getSession().setAttribute("message", message);
 			String nextJSP = "/pages/cart.jsf";
@@ -6199,11 +6201,6 @@ println(out, "</script>");
 			return null;
 		}
 
-        String ans = (String) request.getSession().getAttribute("ans");
-        if (ans != null) {
-			System.out.println("ans: " + ans);
-			cart_action = 3;
-		}
         switch (cart_action) {
             case 0:  removeFromCart(request, response);
                      break;

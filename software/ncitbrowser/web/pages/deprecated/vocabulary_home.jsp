@@ -42,7 +42,7 @@ String evs_service_url = new DataUtils().getEVSServiceURL();
   a.async = 1;
   a.src = g;
   m.parentNode.insertBefore(a, m)
-})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
    ga('create, 'UA-150112876-1', 'auto');
    ga('send', 'pageview');
 </script>

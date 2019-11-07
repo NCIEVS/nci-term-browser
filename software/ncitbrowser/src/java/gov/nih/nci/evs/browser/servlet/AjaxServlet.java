@@ -1387,7 +1387,7 @@ println(out, "  m = s.getElementsByTagName(o)[0];");
 println(out, "  a.async = 1;");
 println(out, "  a.src = g;");
 println(out, "  m.parentNode.insertBefore(a, m)");
-println(out, "})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');");
+println(out, "})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');");
 println(out, "   ga('create, 'UA-150112876-1', 'auto');");
 println(out, "   ga('send', 'pageview');");
 println(out, "</script>");
@@ -1845,6 +1845,22 @@ println(out, "  a.async = 1;");
 println(out, "  a.src = g;");
 println(out, "  m.parentNode.insertBefore(a, m)");
 println(out, "})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');");
+println(out, "   ga('create, 'UA-150112876-1', 'auto');");
+println(out, "   ga('send', 'pageview');");
+println(out, "</script>");
+println(out, "<script>");
+println(out, "(function(i, s, o, g, r, a, m){");
+println(out, "  i['GoogleAnalyticsObject'] = r;");
+println(out, "  i[r] = i[r] || function(){");
+println(out, "    (i[r].q = i[r].q || []).push(arguments)");
+println(out, "  },");
+println(out, "  i[r].l =1 * new Date();");
+println(out, "  a = s.createElement(o),");
+println(out, "  m = s.getElementsByTagName(o)[0];");
+println(out, "  a.async = 1;");
+println(out, "  a.src = g;");
+println(out, "  m.parentNode.insertBefore(a, m)");
+println(out, "})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');");
 println(out, "   ga('create, 'UA-150112876-1', 'auto');");
 println(out, "   ga('send', 'pageview');");
 println(out, "</script>");
@@ -3006,6 +3022,22 @@ println(out, "  a.async = 1;");
 println(out, "  a.src = g;");
 println(out, "  m.parentNode.insertBefore(a, m)");
 println(out, "})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');");
+println(out, "   ga('create, 'UA-150112876-1', 'auto');");
+println(out, "   ga('send', 'pageview');");
+println(out, "</script>");
+println(out, "<script>");
+println(out, "(function(i, s, o, g, r, a, m){");
+println(out, "  i['GoogleAnalyticsObject'] = r;");
+println(out, "  i[r] = i[r] || function(){");
+println(out, "    (i[r].q = i[r].q || []).push(arguments)");
+println(out, "  },");
+println(out, "  i[r].l =1 * new Date();");
+println(out, "  a = s.createElement(o),");
+println(out, "  m = s.getElementsByTagName(o)[0];");
+println(out, "  a.async = 1;");
+println(out, "  a.src = g;");
+println(out, "  m.parentNode.insertBefore(a, m)");
+println(out, "})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');");
 println(out, "   ga('create, 'UA-150112876-1', 'auto');");
 println(out, "   ga('send', 'pageview');");
 println(out, "</script>");
@@ -5131,6 +5163,22 @@ println(out, "})(window, document, 'script', '//www.google-analytics.com/analyti
 println(out, "   ga('create, 'UA-150112876-1', 'auto');");
 println(out, "   ga('send', 'pageview');");
 println(out, "</script>");
+println(out, "<script>");
+println(out, "(function(i, s, o, g, r, a, m){");
+println(out, "  i['GoogleAnalyticsObject'] = r;");
+println(out, "  i[r] = i[r] || function(){");
+println(out, "    (i[r].q = i[r].q || []).push(arguments)");
+println(out, "  },");
+println(out, "  i[r].l =1 * new Date();");
+println(out, "  a = s.createElement(o),");
+println(out, "  m = s.getElementsByTagName(o)[0];");
+println(out, "  a.async = 1;");
+println(out, "  a.src = g;");
+println(out, "  m.parentNode.insertBefore(a, m)");
+println(out, "})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');");
+println(out, "   ga('create, 'UA-150112876-1', 'auto');");
+println(out, "   ga('send', 'pageview');");
+println(out, "</script>");
       out.println("</head>");
       out.println("");
       out.println("<body onload=\"draw();\">");
@@ -6042,8 +6090,6 @@ println(out, "</script>");
 
     public String removeFromCart(HttpServletRequest request, HttpServletResponse response) {
 		request.getSession().removeAttribute("message");
-		System.out.println("calling removeFromCart: ");
-
 		try {
 			Set<String> paramNames = request.getParameterMap().keySet();
 			CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
@@ -6067,9 +6113,6 @@ println(out, "</script>");
 				}
 			}
 			String ans = (String) request.getParameter("ans");
-			System.out.println("ans: " + ans);
-
-
 			if (ans == null) {
 				String message = "Are you sure you want to permanently remove the following seleced concepts from the cart? " +
 				"&nbsp;<input type=\"radio\" name=\"ans\" checked=\"checked\" value=\"yes\" >Yes</input>&nbsp;<input type=\"radio\" value=\"no\" name=\"ans\">No</input>" +

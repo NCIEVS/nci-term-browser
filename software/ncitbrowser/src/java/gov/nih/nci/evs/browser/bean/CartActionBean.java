@@ -423,7 +423,7 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 */
-        codingScheme = HTTPUtils.cleanXSS((String) request.getParameter("scheme"));
+        codingScheme = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
         version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
         code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
 

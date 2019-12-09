@@ -175,7 +175,7 @@
                          </td>
                          <td>
   			     <label for=<%=item.getCode()%>>
-<a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=default_cs%>&code=<%=item.getCode()%>"><%=DataUtils.encodeTerm(item.getName())%></a>
+<a href="<%=request.getContextPath() %>/ConceptReport.jsp?dictionary=<%=item.getCodingScheme()%>&code=<%=item.getCode()%>"><%=DataUtils.encodeTerm(item.getName())%></a>
   			     </label>
   			 </td>
   

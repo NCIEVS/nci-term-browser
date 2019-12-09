@@ -130,7 +130,8 @@ public class DataUtils {
     private static Logger _logger = Logger.getLogger(DataUtils.class);
 
     // ==================================================================================
-    private static boolean initializeValueSetHierarchy = true; //PROD - set to true; TEST - set to false
+    // PROD - set to true; for development - set to false to speed up the initialization time
+    private static boolean initializeValueSetHierarchy = true;
     public static boolean cache_maps_to = true;
     // ==================================================================================
 

@@ -6068,7 +6068,7 @@ println(out, "</script>");
 		String retval = null;
 		try {
 			retval = cartActionBean.addToCart(request, response);
-			String codingScheme = HTTPUtils.cleanXSS((String) request.getParameter("scheme"));
+			String codingScheme = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
 			String version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
 			String ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
 			String code = HTTPUtils.cleanXSS((String) request.getParameter("code"));

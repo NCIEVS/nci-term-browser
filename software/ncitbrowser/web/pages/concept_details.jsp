@@ -432,7 +432,7 @@ code = HTTPUtils.cleanXSS(code);
                 </c:when>
               </c:choose>
 -->
-              <a href="<%=request.getContextPath()%>/ajax?action=addtocart&scheme=<%=dictionary%>&version=<%=version%>&ns=<%=ns%>&code=<%=code%>" title="Add concept to cart.">Add to Cart</a>
+              <a href="<%=request.getContextPath()%>/ajax?action=addtocart&dictionary=<%=dictionary%>&version=<%=version%>&ns=<%=ns%>&code=<%=code%>" title="Add concept to cart.">Add to Cart</a>
 
 <%
 if (cartActionBean != null && cartActionBean.getCount()>0) {

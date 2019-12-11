@@ -1375,23 +1375,7 @@ if (display_name_vec == null) {
       println(out, "    YAHOO.util.Event.addListener(window, \"load\", init);");
       println(out, "");
       println(out, "  </script>");
-println(out, "<script>");
-println(out, "(function(i, s, o, g, r, a, m){");
-println(out, "  i['GoogleAnalyticsObject'] = r;");
-println(out, "  i[r] = i[r] || function(){");
-println(out, "    (i[r].q = i[r].q || []).push(arguments)");
-println(out, "  },");
-println(out, "  i[r].l =1 * new Date();");
-println(out, "  a = s.createElement(o),");
-println(out, "  m = s.getElementsByTagName(o)[0];");
-println(out, "  a.async = 1;");
-println(out, "  a.src = g;");
-println(out, "  m.parentNode.insertBefore(a, m)");
-println(out, "})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');");
-println(out, "   ga('create, 'UA-150112876-1', 'auto');");
-println(out, "   ga('send', 'pageview');");
-println(out, "   ga('set', 'anonymizeIP', true);");
-println(out, "</script>");
+      println(out, "<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
       println(out, "</head>");
       println(out, "<body>");
 
@@ -1832,25 +1816,7 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
       out.println("	overflow:auto;");
       out.println("}");
       out.println("</style>");
-
-out.println("<script>");
-out.println("(function(i, s, o, g, r, a, m){");
-out.println("  i['GoogleAnalyticsObject'] = r;");
-out.println("  i[r] = i[r] || function(){");
-out.println("    (i[r].q = i[r].q || []).push(arguments)");
-out.println("  },");
-out.println("  i[r].l =1 * new Date();");
-out.println("  a = s.createElement(o),");
-out.println("  m = s.getElementsByTagName(o)[0];");
-out.println("  a.async = 1;");
-out.println("  a.src = g;");
-out.println("  m.parentNode.insertBefore(a, m)");
-out.println("})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');");
-out.println("   ga('create, 'UA-150112876-1', 'auto');");
-out.println("   ga('send', 'pageview');");
-out.println("   ga('set', 'anonymizeIP', true);");
-out.println("</script>");
-
+      out.println("<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
       out.println("</head>");
       out.println("");
 
@@ -2994,26 +2960,7 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
 	option_name = "checked";
 	option_code = "";
 }
-
-
-out.println("<script>");
-out.println("(function(i, s, o, g, r, a, m){");
-out.println("  i['GoogleAnalyticsObject'] = r;");
-out.println("  i[r] = i[r] || function(){");
-out.println("    (i[r].q = i[r].q || []).push(arguments)");
-out.println("  },");
-out.println("  i[r].l =1 * new Date();");
-out.println("  a = s.createElement(o),");
-out.println("  m = s.getElementsByTagName(o)[0];");
-out.println("  a.async = 1;");
-out.println("  a.src = g;");
-out.println("  m.parentNode.insertBefore(a, m)");
-out.println("})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');");
-out.println("   ga('create, 'UA-150112876-1', 'auto');");
-out.println("   ga('send', 'pageview');");
-out.println("   ga('set', 'anonymizeIP', true);");
-out.println("</script>");
-
+      out.println("<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
       out.println("</head>");
       out.println("");
 
@@ -5120,24 +5067,7 @@ KLO 11282018
 
       out.println("    }");
       out.println("  </script>");
-
-out.println("<script>");
-out.println("(function(i, s, o, g, r, a, m){");
-out.println("  i['GoogleAnalyticsObject'] = r;");
-out.println("  i[r] = i[r] || function(){");
-out.println("    (i[r].q = i[r].q || []).push(arguments)");
-out.println("  },");
-out.println("  i[r].l =1 * new Date();");
-out.println("  a = s.createElement(o),");
-out.println("  m = s.getElementsByTagName(o)[0];");
-out.println("  a.async = 1;");
-out.println("  a.src = g;");
-out.println("  m.parentNode.insertBefore(a, m)");
-out.println("})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');");
-out.println("   ga('create, 'UA-150112876-1', 'auto');");
-out.println("   ga('send', 'pageview');");
-out.println("   ga('set', 'anonymizeIP', true);");
-out.println("</script>");
+      out.println("<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
 
       out.println("</head>");
       out.println("");

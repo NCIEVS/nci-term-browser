@@ -135,7 +135,6 @@ public class DataUtils {
     public static boolean cache_maps_to = true;
     // ==================================================================================
 
-
     private static Set _vocabularyNameSet = null;
     private static String NCIT_MAPPING_URL = "https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings";
     private static Vector NCIT_MAPPING_DATA = null;
@@ -155,7 +154,6 @@ public class DataUtils {
     private static HashSet _codingSchemeHashSet = null;
     private static HashMap _csnv2codingSchemeNameMap = null;
     private static HashMap _csnv2VersionMap = null;
-
 
     private static boolean valueSetHierarchyInitialized = false;
     private static boolean hasNoValueSet = false;

@@ -773,6 +773,10 @@ if (!retval) {
 			    } catch (Exception ex) {
 				   ex.printStackTrace();
 			    }
+			    //to be modified
+			    if (graphdb_uri == null) {
+					graphdb_uri = "https://graphresolve-dev.nci.nih.gov";
+				}
                 System.out.println("***************** graphdb_uri: " + graphdb_uri);
 
                 SearchUtilsExt searchUtilsExt = new SearchUtilsExt(lbSvc, graphdb_uri);

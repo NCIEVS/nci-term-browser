@@ -213,6 +213,7 @@ if (single_mapping_search != null && single_mapping_search.compareTo("true") == 
 			ex.printStackTrace();
         }
         ResolvedConceptReferencesIterator iterator = null;
+        List rcr_list = null;
 
         String matchAlgorithm = HTTPUtils.cleanXSS((String) request.getParameter("algorithm"));
         // 051512 KLO AppScan
@@ -730,8 +731,11 @@ if (!retval) {
                 iteratorBean = iteratorBeanManager.getIteratorBean(key);
                 iterator = iteratorBean.getIterator();
             } else {
+
+                /*
 				ResolvedConceptReferencesIteratorWrapper wrapper = null;
                 try {
+
                     wrapper =
                     new SearchUtils(lbSvc).searchByAssociations(schemes, versions,
                         matchText, source, matchAlgorithm, designationOnly,
@@ -740,7 +744,6 @@ if (!retval) {
 				} catch (Exception ex) {
                     ex.printStackTrace();
 				}
-
 
                 if (wrapper != null) {
                     iterator = wrapper.getIterator();
@@ -755,6 +758,33 @@ if (!retval) {
                         iteratorBeanManager.addIteratorBean(iteratorBean);
                     }
                 }
+                */
+				// To be modified, lexevs 6.5.4
+				System.out.println("search by association using  lexevs 6.5.4 gragh db API.");
+				System.out.println("matchText: " + matchText);
+				System.out.println("matchAlgorithm: " + matchAlgorithm);
+				System.out.println("source: " + source);
+
+                //String graphdb_uri = "https://graphresolve-dev.nci.nih.gov";
+
+                String graphdb_uri = null;
+                try {
+                   graphdb_uri = NCItBrowserProperties.getInstance().getGraphDBURL();
+			    } catch (Exception ex) {
+				   ex.printStackTrace();
+			    }
+                System.out.println("***************** graphdb_uri: " + graphdb_uri);
+
+                SearchUtilsExt searchUtilsExt = new SearchUtilsExt(lbSvc, graphdb_uri);
+				boolean getInbound = true;
+				int depth = 1;
+				String assocName = null;
+				rcr_list = searchUtilsExt.getAssociatedConcepts(schemes, versions, matchText, matchAlgorithm, source, getInbound, depth, assocName);
+				//System.out.println("list: " + rcr_list.size());
+				iteratorBean = new IteratorBean(rcr_list);
+				System.out.println("key: " + key);
+				iteratorBean.setKey(key);
+				iteratorBeanManager.addIteratorBean(iteratorBean);
             }
         }
 
@@ -770,7 +800,8 @@ if (!retval) {
 		request.getSession().setAttribute("key", key);
 		_logger.debug("searchAction Iterator key: " + key);
 
-        if (iterator != null) {
+//      To be modified, lexevs 6.5.4
+        if (iterator != null || rcr_list != null) {
             int size = iteratorBean.getSize();
             List list = null;
             // LexEVS API itersator.numberRemaining is inaccurate, and can cause issues.
@@ -783,7 +814,6 @@ if (!retval) {
 			}
 
             if (size > 1) {
-
                 request.getSession().setAttribute("search_results", v);
                 String match_size = Integer.toString(size);
                 request.getSession().setAttribute("match_size", match_size);

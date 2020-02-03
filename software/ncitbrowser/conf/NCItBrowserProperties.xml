@@ -603,9 +603,12 @@
          <ConfigurableItem>
                  <key>NCIT_MAPPING_URL</key>
                  <value>@ncit.mapping.url@</value>
-        </ConfigurableItem>       
+        </ConfigurableItem>    
         
-        //OWL_ROLE_QUALIFIER_LIST
+         <ConfigurableItem>
+                 <key>GRAPH_DB_URL</key>
+                 <value>@graph.db.url@</value>
+        </ConfigurableItem>          
         
         
         <!-- Standard FTP Report List (End) ================================ -->

@@ -99,6 +99,14 @@ public class IteratorBean extends Object implements Serializable {
         initialize();
     }
 
+    public IteratorBean(List<ResolvedConceptReference> list) {
+        _iterator = null;
+        _list = list;
+        _size = list.size();
+        _maxReturn = DEFAULT_MAX_RETURN;
+        initialize();
+    }
+
     public int getNumberOfPages() {
         return _numberOfPages;
     }
@@ -119,30 +127,25 @@ public class IteratorBean extends Object implements Serializable {
 
     public void initialize() {
         try {
-            if (_iterator == null) {
+            if (_iterator == null && _list == null) {
                 _size = 0;
-            } else {
+            } else if (_iterator != null) {
                 _size = _iterator.numberRemaining();
 
+            } else if (_list != null) {
+                _size = _list.size();
             }
             _pageNumber = 1;
 
-/*
-            _list = new ArrayList(_size);
-            for (int i = 0; i < _size; i++) {
-                _list.add(null);
-            }
-*/
-
-            _list = new ArrayList<ResolvedConceptReference>();
+            if (_iterator != null && _list == null) {
+                _list = new ArrayList<ResolvedConceptReference>();
+			}
 
             _pageSize = Constants.DEFAULT_PAGE_SIZE;
             _numberOfPages = _size / _pageSize;
             if (_pageSize * _numberOfPages < _size) {
                 _numberOfPages = _numberOfPages + 1;
             }
-
-
             _lastResolved = -1;
 
 

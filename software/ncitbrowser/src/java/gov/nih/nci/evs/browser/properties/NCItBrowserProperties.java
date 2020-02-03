@@ -149,7 +149,10 @@ public class NCItBrowserProperties {
     private static String _application_version = null;
 
     public static final String NCIT_MAPPING_URL = "NCIT_MAPPING_URL";
+    public static final String GRAPH_DB_URL = "GRAPH_DB_URL";
+
     private static String _ncit_mapping_url = null;
+    private static String _graph_db_url = null;
 
     private static HashMap terminologyValueSetTree = null;
     private static TreeItem terminologyValueSetTreeRoot = null;
@@ -203,6 +206,10 @@ public class NCItBrowserProperties {
 			_ncit_mapping_url =
 				_browserProperties
 					.getProperty(_browserProperties.NCIT_MAPPING_URL);
+
+			_graph_db_url =
+				_browserProperties
+					.getProperty(_browserProperties.GRAPH_DB_URL);
 
 			_application_version =
 				_browserProperties
@@ -614,5 +621,9 @@ public class NCItBrowserProperties {
 
 	public static String getNCItMappingURL() {
 		return _ncit_mapping_url;
+	}
+
+	public static String getGraphDBURL() {
+		return _graph_db_url;
 	}
 }

@@ -108,6 +108,7 @@ public class UserSessionBean extends Object {
     private String _selectedPageSize = null;
     private List _pageSizeList = null;
 
+    private String graphdb_uri = null;
 
     public UserSessionBean() {
         _ontologiesToSearchOn = new ArrayList<String>();
@@ -115,6 +116,17 @@ public class UserSessionBean extends Object {
         _ontologyInfo_map = new HashMap<String, OntologyInfo>();
 
         _selectedPageSize = "50";
+
+		try {
+		   graphdb_uri = NCItBrowserProperties.getInstance().getGraphDBURL();
+		} catch (Exception ex) {
+		   ex.printStackTrace();
+		}
+		//to be modified
+		if (graphdb_uri == null) {
+			graphdb_uri = "https://graphresolve-dev.nci.nih.gov";
+		}
+
     }
 
 
@@ -765,20 +777,6 @@ if (!retval) {
 				System.out.println("matchAlgorithm: " + matchAlgorithm);
 				System.out.println("source: " + source);
 
-                //String graphdb_uri = "https://graphresolve-dev.nci.nih.gov";
-
-                String graphdb_uri = null;
-                try {
-                   graphdb_uri = NCItBrowserProperties.getInstance().getGraphDBURL();
-			    } catch (Exception ex) {
-				   ex.printStackTrace();
-			    }
-			    //to be modified
-			    if (graphdb_uri == null) {
-					graphdb_uri = "https://graphresolve-dev.nci.nih.gov";
-				}
-                System.out.println("***************** graphdb_uri: " + graphdb_uri);
-
                 SearchUtilsExt searchUtilsExt = new SearchUtilsExt(lbSvc, graphdb_uri);
 				boolean getInbound = true;
 				int depth = 1;
@@ -1205,6 +1203,13 @@ if (!retval) {
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
+        IteratorBeanManager iteratorBeanManager =
+            (IteratorBeanManager) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap()
+                .get("iteratorBeanManager");
+
+        List rcr_list = null;
+
         request.getSession().removeAttribute("error_msg");
 		String selected_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("selected_vocabularies"));
 
@@ -1622,10 +1627,28 @@ request.getSession().setAttribute("code", matchText);
         } else if (searchTarget.compareTo("relationships") == 0) {
             designationOnly = true;
 
+// to be modified:
+/*
             ResolvedConceptReferencesIteratorWrapper wrapper =
                 new SearchUtils(lbSvc).searchByAssociations(schemes, versions,
                     matchText, source, matchAlgorithm, designationOnly,
                     ranking, maxToReturn);
+
+public List<ResolvedConceptReference> getAssociatedConcepts(Vector schemes, Vector versions, String matchText, String matchAlgorithm, String source, boolean getInbound, int depth, String assocName) {
+
+*/
+            ResolvedConceptReferencesIteratorWrapper wrapper = null;
+			SearchUtilsExt searchUtilsExt = new SearchUtilsExt(lbSvc, graphdb_uri);
+			boolean getInbound = true;
+			int depth = 1;
+			String assocName = null;
+			rcr_list = searchUtilsExt.getAssociatedConcepts(schemes, versions, matchText, matchAlgorithm, source, getInbound, depth, assocName);
+			String key = IteratorBeanManager.createIteratorKey(ontologiesToSearchOnStr, matchText, searchTarget, matchAlgorithm);
+			IteratorBean iteratorBean = new IteratorBean(rcr_list);
+			System.out.println("key: " + key);
+			iteratorBean.setKey(key);
+			iteratorBeanManager.addIteratorBean(iteratorBean);
+
             if (wrapper != null) {
                 iterator = wrapper.getIterator();
            }
@@ -1643,10 +1666,12 @@ request.getSession().setAttribute("code", matchText);
         request.getSession().removeAttribute("AssociationTargetHashMap");
         request.getSession().removeAttribute("type");
 
+        /*
         IteratorBeanManager iteratorBeanManager =
             (IteratorBeanManager) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap()
                 .get("iteratorBeanManager");
+        */
 
         if (iteratorBeanManager == null) {
             iteratorBeanManager = new IteratorBeanManager();

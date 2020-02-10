@@ -244,8 +244,26 @@ schemes.add(scheme);
 versions.add(null);
 String matchAlgorithm = "contains";
 String source = null;
+String error_msg = null;
+try {
+    rcr_list = searchUtilsExt.getAssociatedConcepts(schemes, versions, matchText, matchAlgorithm, source, getInbound, depth, assocName);
+} catch (Exception ex) {
+ex.printstacktrace();
+    ex.printstacktrace();
+    error_msg = "searchUtilsExt.getAssociatedConcepts failed."; 
+    
 
-rcr_list = searchUtilsExt.getAssociatedConcepts(schemes, versions, matchText, matchAlgorithm, source, getInbound, depth, assocName);
+}
+
+if (error_msg != null) {
+%>
+    <p class="textbodyred">&nbsp;<%= error_msg %></p>
+<%
+} else {
+%>
+
+
+<%
 long time_elapsed = System.currentTimeMillis() - ms;
 %>
 <p>Graph DB URI: <%= graphdb_uri %></p>
@@ -254,6 +272,9 @@ long time_elapsed = System.currentTimeMillis() - ms;
 <p>Number of matched concepts: <%= rcr_list.size() %></p>
 <p> <%= rcr_list.size() %></p>
 <p>"Total run time (ms): " <%= time_elapsed %></p>
+<%
+}
+%>
 
 <div class="footer" style="width:940px">
   <ul class="textbody">

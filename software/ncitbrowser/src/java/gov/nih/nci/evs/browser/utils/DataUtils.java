@@ -131,8 +131,8 @@ public class DataUtils {
 
     // ==================================================================================
     // PROD - set to true; for development - set to false for testing to speed up the initialization time
-    private static boolean initializeValueSetHierarchy = true;
-    public static boolean cache_maps_to = true;
+    private static boolean initializeValueSetHierarchy = false;
+    public static boolean cache_maps_to = false;
     // ==================================================================================
 
     private static Set _vocabularyNameSet = null;

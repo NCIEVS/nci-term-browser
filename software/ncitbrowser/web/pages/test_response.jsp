@@ -248,8 +248,8 @@ String error_msg = null;
 try {
     rcr_list = searchUtilsExt.getAssociatedConcepts(schemes, versions, matchText, matchAlgorithm, source, getInbound, depth, assocName);
 } catch (Exception ex) {
-ex.printstacktrace();
-    ex.printstacktrace();
+ex.printStackTrace();
+    ex.printStackTrace();
     error_msg = "searchUtilsExt.getAssociatedConcepts failed."; 
     
 

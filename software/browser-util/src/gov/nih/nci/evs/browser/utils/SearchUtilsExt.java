@@ -103,63 +103,6 @@ import org.LexGrid.LexBIG.Utility.Constructors;
 
 	}
 
-/*
-    public List<ResolvedConceptReference> search(String scheme, String version, String matchText, String matchAlgorithm) {
-		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
-		if (version == null) {
-			version = csdu.scheme, "PRODUCTION");
-		}
-		System.out.println("scheme: " + scheme);
-		System.out.println("version: " + version);
-
-		//String version = "201908";
-		String sourceAbbr = "ALL";
-		String code = "BLOOD DYSCRASIA";
-		//String code = "blood";
-
-		int maxToReturn = -1;
-		boolean searchInactive = false;
-
-		try {
-			Vector schemes = new Vector();
-			Vector versions = new Vector();
-			schemes.add(scheme);
-			versions.add(version);
-			ResolvedConceptReferencesIterator iterator = new SimpleSearchUtils(lbSvc).search(schemes, versions, matchText, SimpleSearchUtils.BY_NAME, matchAlgorithm);
-			if (iterator == null) {
-				System.out.println("iterator == null???");
-				System.exit(0);
-			}
-			try {
-				List<ResolvedConceptReference> list = new ArrayList<ResolvedConceptReference>();
-				int numRemaining = iterator.numberRemaining();
-				int maxReturn = 200;
-				int knt = 0;
-				System.out.println("Number of matches: " + numRemaining);
-				while (iterator.hasNext()) {
-					knt++;
-					ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
-					//System.out.println("(" + knt + ") " + rcr.getEntityDescription().getContent() + " (" + rcr.getCode() + ")" + " " + rcr.getCodingSchemeURI() + " "
-					//    + rcr.getCodingSchemeName() + " " + rcr.getCodingSchemeVersion());
-					list.add(rcr);
-					if (knt == maxReturn) break;
-				}
-				return list;
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
-
-		} catch (Exception ex) {
-			System.out.println("Unable to connect to the server???");
-			ex.printStackTrace();
-		}
-
-		return null;
-	}
-*/
-
     private CodedNodeSet union(Vector<CodedNodeSet> cns_vec) {
         if (cns_vec == null)
             return null;
@@ -331,119 +274,19 @@ import org.LexGrid.LexBIG.Utility.Constructors;
 		Direction direction = getDirection(getInbound);
 		NameAndValueList nameAndValueList = null;
 		if (assocName != null) {
-			//nameAndValueList = createNameAndValueList(new String[] { assocName }, null);
 			nameAndValueList = Constructors.createNameAndValueList("association", assocName);
 	    }
 		CodedNodeSet cns = matchByDesignations(schemes, versions, matchText, matchAlgorithm, source);
 		return getAssociatedConcepts(cns, direction, depth, nameAndValueList);
 	}
 
-    public List toList(ResolvedConceptReferenceList rcrl) {
-		List list = new ArrayList();
-		for (int i=0; i<rcrl.getResolvedConceptReferenceCount(); i++) {
-			ResolvedConceptReference rcr = rcrl.getResolvedConceptReference(i);
-			list.add(rcr);
-		}
-        return list;
-	}
-
-    public List toList(ResolvedConceptReferencesIterator iterator) {
-		List list = new ArrayList();
-		try {
-			while (iterator.hasNext()) {
-				ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
-				list.add(rcr);
-			}
-		} catch (LBResourceUnavailableException ex) {
-			ex.printStackTrace();
-			return null;
-		} catch (LBInvocationException ex) {
-			ex.printStackTrace();
-			return null;
-		}
-		return list;
-	}
-
-    public List toList(ResolvedConceptReferencesIterator iterator, int max) {
-		List list = new ArrayList();
-		int lcv = 0;
-		try {
-			while (iterator.hasNext()) {
-				ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
-				list.add(rcr);
-				lcv++;
-				if (lcv == max) break;
-			}
-		} catch (LBResourceUnavailableException ex) {
-			ex.printStackTrace();
-			return null;
-		} catch (LBInvocationException ex) {
-			ex.printStackTrace();
-			return null;
-		}
-        return list;
-	}
-
 	public List<ResolvedConceptReference> getAssociatedConcepts(CodedNodeSet cns, Direction direction, int depth, NameAndValueList nameAndValueList) {
         return ngr.getAssociatedConcepts(
                 cns,
-                direction, //Direction.SOURCE_OF,
+                direction,
                 depth,
                 nameAndValueList);
 	}
 
-/*
-    public IteratorBean createRelationshipSearchIteratorBean(Vector schemes, Vector versions,
-                        String matchText, String source, String matchAlgorithm) {
-
-    //public IteratorBean createRelationshipSearchIteratorBean(Vector schemes, Vector versions,
-    //                    String matchText, String source, String matchAlgorithm, boolean designationOnly,
-    //                    boolean ranking, int maxToReturn) {
-        boolean getInbound = true;
-        int depth = 1;
-        String assocName = null;
-	    List<ResolvedConceptReference> list = getAssociatedConcepts(schemes, versions, matchText, matchAlgorithm, source, getInbound, depth, assocName);
-	    return new IteratorBean(list);
-    }
-*/
-
-    /*
-            String key =
-	            iteratorBeanManager.createIteratorKey(schemes, versions, matchText,
-	                searchTarget, matchAlgorithm, maxToReturn);
-    */
-
-/*
-    public static void main(String[] args) {
-		String[] serviceUrls = new String[] {
-			        ConfigurationController.prod_serviceUrl,
-					ConfigurationController.stage_serviceUrl,
-					ConfigurationController.dataqa_serviceUrl,
-					ConfigurationController.qa_serviceUrl,
-					ConfigurationController.dev_serviceUrl};
-
-		try {
-			String serviceUrl = serviceUrls[0];
-			String scheme = "NCI Metathesaurus";
-			String version = null;
-			String matchText = "blood";
-			String matchAlgorithm = "startsWith";
-			String assocName = null;
-			//
-			boolean getInbound = true;
-			int depth = 1;
-			String source = null;
-			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService(serviceUrl);
-
-			SearchUtilsExt util = new SearchUtilsExt(lbSvc);
-			List<ResolvedConceptReference> list = null;
-
-		    list = util.getAssociatedConcepts(scheme, version, matchText, matchAlgorithm, source, getInbound, depth, assocName);
-            util.dumpData(list, 100);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-*/
 }
 

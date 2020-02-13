@@ -427,6 +427,26 @@
             <hyperlinkText>Search for linked caDSR metadata</hyperlinkText>
             <isExternalCode>false</isExternalCode>
        </DisplayItem>
+       
+<!-- DUO properties -->
+       <DisplayItem>
+            <propertyName>textual definition</propertyName>
+            <itemLabel>textual definition</itemLabel>
+            <url>null</url>
+            <hyperlinkText>null</hyperlinkText>
+            <isExternalCode>false</isExternalCode>
+       </DisplayItem>
+ 
+        <DisplayItem>
+             <propertyName>definition source</propertyName>
+             <itemLabel>definition source</itemLabel>
+             <url>null</url>
+             <hyperlinkText>null</hyperlinkText>
+             <isExternalCode>false</isExternalCode>
+       </DisplayItem>
+       
+       
+=============================================      
 
     </DisplayItems>
 

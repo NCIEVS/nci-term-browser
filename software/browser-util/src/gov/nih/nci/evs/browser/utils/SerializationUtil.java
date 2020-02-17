@@ -57,48 +57,60 @@ import java.io.*;
 
 public class SerializationUtil {
 
-   public SerializationUtil() {
+	public SerializationUtil() {
 
-   }
+	}
 
-
-   public static boolean serialize(Object obj, String filename) {
-      try {
-         FileOutputStream fileOut = new FileOutputStream(filename);
-         ObjectOutputStream out = new ObjectOutputStream(fileOut);
-         out.writeObject(obj);
-         out.close();
-         fileOut.close();
-         System.out.printf("\nSerialized data is saved in " + filename);
-         return true;
-      } catch(IOException ex) {
-         ex.printStackTrace();
-      }
-      return false;
-   }
-
-
-   public static Object deSerialize(String filename) {
-      try
-      {
-         FileInputStream fileIn = new FileInputStream(filename);
-         ObjectInputStream in = new ObjectInputStream(fileIn);
-         Object obj = in.readObject();
-         in.close();
-         fileIn.close();
-         return obj;
-      } catch(IOException i) {
-         i.printStackTrace();
-         return null;
-      } catch(ClassNotFoundException c) {
-         c.printStackTrace();
-         return null;
-      }
-    }
+	public static boolean serialize(Object obj, String filename) {
+		try {
+			FileOutputStream fileOut = new FileOutputStream(filename);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(obj);
+			out.close();
+			fileOut.close();
+			System.out.printf("\nSerialized data is saved in " + filename);
+			return true;
+		} catch(IOException ex) {
+			ex.printStackTrace();
+		}
+		return false;
+	}
 
 
-   public static void main(String [] args) {
+	public static Object deSerialize(String filename) {
+		try
+		{
+			FileInputStream fileIn = new FileInputStream(filename);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			Object obj = in.readObject();
+			in.close();
+			fileIn.close();
+			return obj;
+		} catch(IOException i) {
+			i.printStackTrace();
+			return null;
+		} catch(ClassNotFoundException c) {
+			c.printStackTrace();
+			return null;
+		}
+	}
 
-   }
+
+    public long sizeOf(Serializable ser) {
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(ser);
+			oos.close();
+			return baos.size();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return -1;
+	}
+
+	public static void main(String [] args) {
+
+	}
 }
 

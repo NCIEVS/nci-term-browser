@@ -97,9 +97,6 @@
 <table cellspacing="0" cellpadding="0" role='presentation'>
   <tr>
 
-
-
-
     <td width="5"></td>
     <td>
       <a href="/ncitbrowser/pages/multiple_search.jsf?nav_type=terminologies">
@@ -154,19 +151,6 @@
     role='presentation'>
 
   <tr>
-    <td align="left" valign="bottom">
-      <a
-          href="#"
-          onclick="javascript:window.open('/ncitbrowser/pages/source_help_info-termbrowser.jsf', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');"
-          tabindex="0">
-
-        Sources</a>
-
-
-
-
-      | <A href="#" onmouseover="Tip('<ul><li><a href=\'/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&version=20.01d&ns=ncit&code=C16394\'>Cell&#32;Aging &#40;NCI Thesaurus 20.01d&#41;</a><br></li></ul>',WIDTH, 300, TITLE, 'Visited Concepts', SHADOW, true, FADEIN, 300, FADEOUT, 300, STICKY, 1, CLOSEBTN, true, CLICKCLOSE, true)" onmouseout=UnTip() >Visited Concepts</A>
-    </td>
     <td align="right" valign="bottom">
       <a href="/ncitbrowser/pages/help.jsf" tabindex="0">Help</a>
     </td>
@@ -254,11 +238,60 @@
             <div class="pagecontent">
               <a name="evs-content" id="evs-content" tabindex="0"></a>
 
- <form name="cartFormId" method="post" action="/ncitbrowser/ajax?action=cart"><br>
 
+<%
+String scheme = (String) request.getSession().getAttribute("cs");
+String matchAlgorithm = (String) request.getSession().getAttribute("matchAlgorithm");
+String matchText = (String) request.getSession().getAttribute("matchText");
 
+System.out.println("graphdb_test_results cs: " + scheme);
+System.out.println("graphdb_test_results algorithm: " + matchAlgorithm);
+System.out.println("graphdb_test_results matchText: " + matchText);
+
+Vector v = StringUtils.parseData(matchText, '\n');
+System.out.println("v.size: " + v.size());
+
+String graphdb_uri = null;
+try {
+   graphdb_uri = NCItBrowserProperties.getInstance().getGraphDBURL();
+} catch (Exception ex) {
+   ex.printStackTrace();
+}
+if (graphdb_uri == null) {
+   graphdb_uri = "https://graphresolve-dev.nci.nih.gov";
+}
+		
+long ms = System.currentTimeMillis();
+LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+
+//String matchText = (String) request.getParameter("matchText");
+List rcr_list = null;
+SearchUtilsExt searchUtilsExt = new SearchUtilsExt(lbSvc, graphdb_uri);
+boolean getInbound = true;
+int depth = 1;
+String assocName = null;
+Vector schemes = new Vector();
+Vector versions = new Vector();
+schemes.add(scheme);
+versions.add(null);
+String source = null;
+
+String error_msg = (String) request.getSession().getAttribute("message");
+
+%>
+
+ <form name="testForm" method="post" action="/ncitbrowser/test?action=graphdb"><br>
 
           <table class="datatable_960" summary="" cellpadding="3" cellspacing="0" border="0" width="100%">
+          
+<%
+if (error_msg != null) {
+%>
+<p class="textbodyred">&nbsp;<%= error_msg %></p>
+<%
+}
+%>          
+          
           <tr>
           <td align="left"><b><h1>Relationship Search Test Results (using Graph DB API)</h1></b></td>
           </tr>
@@ -276,23 +309,35 @@
                 <th class="dataTableHeader" scope="col" align="left" width="15%">Response Time</th>
               </tr>
 
-              <tr class="dataRowDark">
-                  <td>NCI Thesaurus</td>
-                  <td>Blood</td>
-                  <td>contains</td>
-                  <td>1520</td>
-                  <td>3.23 MB</td>
-                  <td>120 milli sec</td>
-   		      </tr>
-
-              <tr class="dataRowLight">
-                  <td>NCI Thesaurus</td>
-                  <td>Cell</td>
-                  <td>contains</td>
-                  <td>1230</td>
-                  <td>4.29 MB</td>
-                  <td>325 milli sec</td>
-   		      </tr>
+<%
+Vector graphdb_results = (Vector) request.getSession().getAttribute("graphdb_results");
+if (graphdb_results != null) {
+for (int i=0; i<graphdb_results.size(); i++) {
+    String t = (String) graphdb_results.elementAt(i);
+    Vector u = StringUtils.parseData(t, '|');
+    scheme = (String) u.elementAt(0);
+    String match_text = (String) u.elementAt(1);
+    matchAlgorithm = (String) u.elementAt(2);
+    String num_matches = (String) u.elementAt(3);
+    String memory_use = (String) u.elementAt(4);
+    String time_elapsed = (String) u.elementAt(5);
+    String color = "dataRowDark";
+    if (i % 2 == 0) {
+        color = "dataRowLight";
+    }
+%>
+              <tr class="<=color%>">
+                  <td>"<=scheme%>"</td>
+                  <td>"<=match_text%>"</td>
+                  <td>"<=matchAlgorithm%>"</td>
+                  <td>"<=num_matches%>"</td>
+                  <td>"<=memory_use%>"</td>
+                  <td>"<=time_elapsed%>"</td>
+   	      </tr>    
+<%
+    }
+}
+%>
 
           </table>
         </form>

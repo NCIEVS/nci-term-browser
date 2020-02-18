@@ -96,7 +96,7 @@ public class SerializationUtil {
 	}
 
 
-    public long sizeOf(Serializable ser) {
+    public static long sizeOf(Serializable ser) {
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ObjectOutputStream oos = new ObjectOutputStream(baos);

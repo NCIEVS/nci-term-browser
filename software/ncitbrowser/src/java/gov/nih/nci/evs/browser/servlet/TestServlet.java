@@ -2,6 +2,7 @@ package gov.nih.nci.evs.browser.servlet;
 
 import gov.nih.nci.evs.browser.utils.*;
 import gov.nih.nci.evs.browser.common.*;
+import gov.nih.nci.evs.browser.properties.*;
 
 import java.io.*;
 import java.util.*;
@@ -130,21 +131,87 @@ public final class TestServlet extends HttpServlet {
         execute(request, response);
     }
 
+    public long getSizeOf(List<ResolvedConceptReference> rcr_list) {
+		long size = (long) 0;
+		for (int i=0; i<rcr_list.size(); i++) {
+			ResolvedConceptReference rcr = rcr_list.get(i);
+			size = size + SerializationUtil.sizeOf(rcr);
+		}
+		return size;
+	}
+
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         String action = HTTPUtils.cleanXSS(request.getParameter("action"));
         if (action.compareTo("graphdb") == 0) {
 			try {
-				 String dictionary = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
-                 String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
-				 String nextJSP = "/pages/test_response.jsf?action=" + action + "&dictionary" + dictionary + "?matchText=" + matchText;
-				 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-				 dispatcher.forward(request,response);
-				 return;
+				String graphdb_uri = null;
+				try {
+				   graphdb_uri = NCItBrowserProperties.getInstance().getGraphDBURL();
+				} catch (Exception ex) {
+				   ex.printStackTrace();
+				}
+				if (graphdb_uri == null) {
+				   graphdb_uri = "https://graphresolve-dev.nci.nih.gov";
+				}
+
+				String scheme = HTTPUtils.cleanXSS((String) request.getParameter("codingscheme"));
+                String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
+                String matchAlgorithm = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchAlgorithm"));
+                System.out.println("TestServlet cs: " + scheme);
+                System.out.println("TestServlet algorithm: " + matchAlgorithm);
+
+				request.getSession().setAttribute("cs", scheme);
+				request.getSession().setAttribute("matchAlgorithm", matchAlgorithm);
+				request.getSession().setAttribute("matchText", matchText);
+
+				LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+				List<ResolvedConceptReference> rcr_list = null;
+				boolean getInbound = true;
+				int depth = 1;
+				String assocName = null;
+				Vector schemes = new Vector();
+				Vector versions = new Vector();
+				schemes.add(scheme);
+				versions.add(null);
+				String source = null;
+				SearchUtilsExt searchUtilsExt = null;
+				searchUtilsExt = new SearchUtilsExt(lbSvc, graphdb_uri);
+
+				int lcv = 0;
+				Vector v = StringUtils.parseData(matchText, '\n');
+				Vector graphdb_results = new Vector();
+				for (int i=0; i<v.size(); i++) {
+					String match_text = (String) v.elementAt(i);
+					lcv++;
+					try {
+						long ms = System.currentTimeMillis();
+						rcr_list = searchUtilsExt.getAssociatedConcepts(schemes, versions, match_text, matchAlgorithm, source, getInbound, depth, assocName);
+                        long time_elapsed = System.currentTimeMillis() - ms;
+                        long memory_use = getSizeOf(rcr_list);
+                        graphdb_results.add(scheme + "|" + match_text
+                                                   + "|" + matchAlgorithm
+                                                   + "|" + rcr_list.size()
+                                                   + "|" + memory_use
+                                                   + "|" + time_elapsed);
+
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						String err_msg = "ERROR: searchUtilsExt.getAssociatedConcepts failed.";
+						request.getSession().setAttribute("message", err_msg);
+					}
+			    }
+			    request.getSession().setAttribute("graphdb_results", graphdb_results);
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				String err_msg = "ERROR: Failed to connect to graph db server.";
+				request.getSession().setAttribute("message", err_msg);
 			}
+			String nextJSP = "/pages/graphdb_test_results.jsf";
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+			dispatcher.forward(request,response);
+			return;
 		}
 	}
 }

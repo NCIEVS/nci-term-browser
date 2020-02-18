@@ -274,9 +274,18 @@ String selected_algorithm = HTTPUtils.cleanXSS((String) request.getParameter("al
 if (selected_algorithm == null) {
     selected_algorithm = "contains";
 }
-
+String error_msg = (String) request.getSession().getAttribute("message");
 %>
           <table><tr><td class="textbody">
+
+<%
+if (error_msg != null) {
+%>
+<p class="textbodyred">&nbsp;<%= error_msg %></p>
+<%
+}
+%>
+          
           <b>Please enter one search string per line in the text area below. Press Search to proceed.</b>
           </td></tr></table>
           
@@ -309,10 +318,10 @@ for (int i=0; i<codingschemes.size(); i++) {
 
               <tr>
               <td width="100">
-                <label for="algorithm" align="center"><b>Algorithm</b>&nbsp;</label>
+                <label for="matchAlgorithm" align="center"><b>Algorithm</b>&nbsp;</label>
               </td>
               <td>
-				<select name="algorithm" >
+				<select name="matchAlgorithm" >
 				  <%
 				  if (selected_algorithm.compareTo("exactMatch") == 0) {
 				  %>
@@ -354,10 +363,10 @@ for (int i=0; i<codingschemes.size(); i++) {
 
               <tr>
               <td width="100">
-                <label for="searchtext" align="center"><b>Search Strings</b>&nbsp;</label>
+                <label for="matchText" align="center"><b>Search Strings</b>&nbsp;</label>
                </td>
               <td>
-				<textarea rows = "5" cols = "50" name = "searchtext">
+				<textarea rows = "5" cols = "50" name = "matchText">
 <%=testcases%>
 		 </textarea>
 	      </td>

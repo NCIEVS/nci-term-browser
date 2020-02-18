@@ -327,12 +327,12 @@ for (int i=0; i<graphdb_results.size(); i++) {
     }
 %>
               <tr class="<=color%>">
-                  <td>"<=scheme%>"</td>
-                  <td>"<=match_text%>"</td>
-                  <td>"<=matchAlgorithm%>"</td>
-                  <td>"<=num_matches%>"</td>
-                  <td>"<=memory_use%>"</td>
-                  <td>"<=time_elapsed%>"</td>
+                  <td><=scheme%></td>
+                  <td><=match_text%></td>
+                  <td><=matchAlgorithm%></td>
+                  <td><=num_matches%></td>
+                  <td><=memory_use%></td>
+                  <td><=time_elapsed%></td>
    	      </tr>    
 <%
     }

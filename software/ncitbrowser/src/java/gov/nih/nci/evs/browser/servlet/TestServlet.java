@@ -151,7 +151,8 @@ public final class TestServlet extends HttpServlet {
 				} catch (Exception ex) {
 				   ex.printStackTrace();
 				}
-				if (graphdb_uri == null) {
+				if (graphdb_uri == null || graphdb_uri.indexOf("graph.db.url") != -1) {
+				   System.out.println("ERROR: graphdb_uri might have not been configured correctly.");
 				   graphdb_uri = "https://graphresolve-dev.nci.nih.gov";
 				}
 

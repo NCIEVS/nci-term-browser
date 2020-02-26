@@ -2080,6 +2080,7 @@ response.setContentType("text/html;charset=utf-8");
         searchTarget = searchType;
 
         _logger.debug("SearchUtils.java searchType: " + searchType);
+        List rcr_list = null;
 
 
 
@@ -2246,7 +2247,36 @@ if (!retval) {
 			}
 		}
 
+			SearchUtilsExt searchUtilsExt = new SearchUtilsExt(lbSvc, graphdb_uri);
+			boolean getInbound = true;
+			int depth = 1;
+			String assocName = rel_search_association;
+			rcr_list = searchUtilsExt.getAssociatedConcepts(scheme, version, matchText, matchAlgorithm, source, getInbound, depth, assocName);
 
+			try {
+				int numberRemaining = rcr_list.size();
+				if (numberRemaining == 0) {
+					iterator = null;
+				} else {
+					if (iterator.hasNext()) {
+						iteratorBean = new IteratorBean(rcr_list);
+						iteratorBean.setKey(key);
+						iteratorBean.setMatchText(matchText);
+						iteratorBeanManager.addIteratorBean(iteratorBean);
+						request.getSession().setAttribute("key", key);
+					} else {
+						iterator = null;
+					}
+				}
+
+			} catch (Exception ex) {
+				//020713 KLO
+				iterator = null;
+				ex.printStackTrace();
+
+			}
+
+/*
                 wrapper =
                     new SearchUtils(lbSvc).searchByAssociations(scheme, version,
                         matchText, associationsToNavigate,
@@ -2258,6 +2288,7 @@ if (!retval) {
                 if (wrapper != null) {
                     iterator = wrapper.getIterator();
                 }
+
                 if (iterator != null) {
 
 						try {
@@ -2282,15 +2313,8 @@ if (!retval) {
 							ex.printStackTrace();
 
 						}
-/*
-                    iteratorBean = new IteratorBean(iterator);
-                    iteratorBean.setKey(key);
-                    iteratorBean.setMatchText(matchText);
-                    iteratorBeanManager.addIteratorBean(iteratorBean);
-
-                    request.getSession().setAttribute("key", key);
-*/
                 }
+*/
             }
 
         } else if (searchType != null && searchType.compareTo("Name") == 0) {
@@ -2334,7 +2358,6 @@ if (!retval) {
                         iteratorBean.setKey(key);
                         iteratorBean.setMatchText(matchText);
                         iteratorBeanManager.addIteratorBean(iteratorBean);
-
                         request.getSession().setAttribute("key", key);
                     }
                 }
@@ -2361,23 +2384,13 @@ if (!retval) {
 
                 wrapper = new CodeSearchUtils(lbSvc).searchByCode(schemes, versions, matchText, source, matchAlgorithm, ranking, maxToReturn, false);
 
-                /*
-                wrapper =
-                    new SearchUtils().searchByCode(scheme, version, matchText,
-                        source, matchAlgorithm, ranking, maxToReturn);
-                */
-
                 if (wrapper != null) {
                     iterator = wrapper.getIterator();
                     if (iterator != null) {
                         iteratorBean = new IteratorBean(iterator);
                         iteratorBean.setKey(key);
-
                         iteratorBean.setMatchText(matchText);
-
-
                         iteratorBeanManager.addIteratorBean(iteratorBean);
-
                         request.getSession().setAttribute("key", key);
                     }
                 }
@@ -2395,10 +2408,8 @@ if (!retval) {
         request.getSession().removeAttribute("AssociationTargetHashMap");
         request.getSession().removeAttribute("type");
 
-        if (iterator != null) {
-
+        if (iterator != null || rcr_list != null) {
             int size = iteratorBean.getSize();
-
             // LexEVS API iterator.numberRemaining is inaccurate, and can cause issues.
             // the following code is a work around.
             if (size == 1) {

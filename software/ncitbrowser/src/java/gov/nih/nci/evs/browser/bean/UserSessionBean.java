@@ -2252,7 +2252,14 @@ if (!retval) {
 			int depth = 1;
 			String assocName = rel_search_association;
 			rcr_list = searchUtilsExt.getAssociatedConcepts(scheme, version, matchText, matchAlgorithm, source, getInbound, depth, assocName);
-
+			if (rcr_list != null) {
+				iteratorBean = new IteratorBean(rcr_list);
+				iteratorBean.setKey(key);
+				iteratorBean.setMatchText(matchText);
+				iteratorBeanManager.addIteratorBean(iteratorBean);
+				request.getSession().setAttribute("key", key);
+		    }
+/*
 			try {
 				int numberRemaining = rcr_list.size();
 				if (numberRemaining == 0) {
@@ -2275,6 +2282,7 @@ if (!retval) {
 				ex.printStackTrace();
 
 			}
+*/
 
 /*
                 wrapper =

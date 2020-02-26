@@ -212,12 +212,12 @@ public class NCItBrowserProperties {
 			_graph_db_url =
 				_browserProperties
 					.getProperty(_browserProperties.GRAPH_DB_URL);
-
+/*
 			if (_graph_db_url == null || _graph_db_url.indexOf("graph.db.url") != -1) {
 			   System.out.println("ERROR: graphdb_uri might have not been configured correctly.");
 			   _graph_db_url = default_graph_db_url;
 			}
-
+*/
 			_application_version =
 				_browserProperties
 					.getProperty(_browserProperties.NCIT_APP_VERSION);

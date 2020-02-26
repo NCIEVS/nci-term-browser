@@ -275,7 +275,12 @@ if (selected_algorithm == null) {
     selected_algorithm = "contains";
 }
 String error_msg = (String) request.getSession().getAttribute("message");
+String graph_db_url = NCItBrowserProperties.getGraphDBURL();
 %>
+          <table><tr><td class="textbody">
+<p class="textbodyred">Graph REST Service URL: <%= graph_db_url %></p>          
+          </td></tr></table>
+
           <table><tr><td class="textbody">
 
 <%

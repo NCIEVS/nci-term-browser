@@ -1642,12 +1642,8 @@ public List<ResolvedConceptReference> getAssociatedConcepts(Vector schemes, Vect
 			boolean getInbound = true;
 			int depth = 1;
 			String assocName = null;
+
 			rcr_list = searchUtilsExt.getAssociatedConcepts(schemes, versions, matchText, matchAlgorithm, source, getInbound, depth, assocName);
-			String key = IteratorBeanManager.createIteratorKey(ontologiesToSearchOnStr, matchText, searchTarget, matchAlgorithm);
-			IteratorBean iteratorBean = new IteratorBean(rcr_list);
-			System.out.println("key: " + key);
-			iteratorBean.setKey(key);
-			iteratorBeanManager.addIteratorBean(iteratorBean);
 
             if (wrapper != null) {
                 iterator = wrapper.getIterator();
@@ -1680,30 +1676,32 @@ public List<ResolvedConceptReference> getAssociatedConcepts(Vector schemes, Vect
                 .put("iteratorBeanManager", iteratorBeanManager);
         }
 
-        if (iterator != null) {
-
+        if (iterator != null || rcr_list != null) {
             int size = 0;
-
             IteratorBean iteratorBean =
                 (IteratorBean) FacesContext.getCurrentInstance()
                     .getExternalContext().getSessionMap().get("iteratorBean");
 
-            iteratorBean = new IteratorBean(iterator);
+            if (iterator != null) {
+				iteratorBean = new IteratorBean(iterator);
+				String itr_key = IteratorBeanManager.createIteratorKey(ontologiesToSearchOnStr, matchText, searchTarget, matchAlgorithm);
+				iteratorBean.setKey(itr_key);
+				FacesContext.getCurrentInstance().getExternalContext()
+					.getSessionMap().put("iteratorBean", iteratorBean);
+				try {
+					size = iterator.numberRemaining();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			} else if (rcr_list != null) {
+				String key = IteratorBeanManager.createIteratorKey(ontologiesToSearchOnStr, matchText, searchTarget, matchAlgorithm);
+				iteratorBean = new IteratorBean(rcr_list);
+				iteratorBean.setKey(key);
+				FacesContext.getCurrentInstance().getExternalContext()
+					.getSessionMap().put("iteratorBean", iteratorBean);
 
-
-            String itr_key = IteratorBeanManager.createIteratorKey(ontologiesToSearchOnStr, matchText, searchTarget, matchAlgorithm);
-            iteratorBean.setKey(itr_key);
-
-
-            FacesContext.getCurrentInstance().getExternalContext()
-                .getSessionMap().put("iteratorBean", iteratorBean);
-
-
-			try {
-				size = iterator.numberRemaining();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
+				iteratorBeanManager.addIteratorBean(iteratorBean);
+				size = iteratorBean.getSize();
 			}
 
             if (size == 1) {

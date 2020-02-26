@@ -162,6 +162,8 @@ public class NCItBrowserProperties {
 
     private static HashMap rvsURI2NameHashMap = null;
 
+    private static String default_graph_db_url = "https://graphresolve-dev.nci.nih.gov";
+
     /**
      * Private constructor for singleton pattern.
      */
@@ -211,12 +213,10 @@ public class NCItBrowserProperties {
 				_browserProperties
 					.getProperty(_browserProperties.GRAPH_DB_URL);
 
-			/*
 			if (_graph_db_url == null || _graph_db_url.indexOf("graph.db.url") != -1) {
 			   System.out.println("ERROR: graphdb_uri might have not been configured correctly.");
-			   _graph_db_url = "https://graphresolve-dev.nci.nih.gov";
+			   _graph_db_url = default_graph_db_url;
 			}
-			*/
 
 			_application_version =
 				_browserProperties

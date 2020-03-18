@@ -108,7 +108,6 @@ public class UserSessionBean extends Object {
     private String _selectedPageSize = null;
     private List _pageSizeList = null;
 
-    private String graphdb_uri = null;
 
     public UserSessionBean() {
         _ontologiesToSearchOn = new ArrayList<String>();
@@ -116,17 +115,6 @@ public class UserSessionBean extends Object {
         _ontologyInfo_map = new HashMap<String, OntologyInfo>();
 
         _selectedPageSize = "50";
-
-		try {
-		   graphdb_uri = NCItBrowserProperties.getInstance().getGraphDBURL();
-		} catch (Exception ex) {
-		   ex.printStackTrace();
-		}
-		//to be modified
-		if (graphdb_uri == null) {
-			graphdb_uri = "https://graphresolve-dev.nci.nih.gov";
-		}
-
     }
 
 
@@ -225,7 +213,6 @@ if (single_mapping_search != null && single_mapping_search.compareTo("true") == 
 			ex.printStackTrace();
         }
         ResolvedConceptReferencesIterator iterator = null;
-        List rcr_list = null;
 
         String matchAlgorithm = HTTPUtils.cleanXSS((String) request.getParameter("algorithm"));
         // 051512 KLO AppScan
@@ -743,11 +730,8 @@ if (!retval) {
                 iteratorBean = iteratorBeanManager.getIteratorBean(key);
                 iterator = iteratorBean.getIterator();
             } else {
-
-                /*
 				ResolvedConceptReferencesIteratorWrapper wrapper = null;
                 try {
-
                     wrapper =
                     new SearchUtils(lbSvc).searchByAssociations(schemes, versions,
                         matchText, source, matchAlgorithm, designationOnly,
@@ -756,6 +740,7 @@ if (!retval) {
 				} catch (Exception ex) {
                     ex.printStackTrace();
 				}
+
 
                 if (wrapper != null) {
                     iterator = wrapper.getIterator();
@@ -770,23 +755,6 @@ if (!retval) {
                         iteratorBeanManager.addIteratorBean(iteratorBean);
                     }
                 }
-                */
-				// To be modified, lexevs 6.5.4
-				System.out.println("search by association using  lexevs 6.5.4 gragh db API.");
-				System.out.println("matchText: " + matchText);
-				System.out.println("matchAlgorithm: " + matchAlgorithm);
-				System.out.println("source: " + source);
-
-                SearchUtilsExt searchUtilsExt = new SearchUtilsExt(lbSvc, graphdb_uri);
-				boolean getInbound = true;
-				int depth = 1;
-				String assocName = null;
-				rcr_list = searchUtilsExt.getAssociatedConcepts(schemes, versions, matchText, matchAlgorithm, source, getInbound, depth, assocName);
-				//System.out.println("list: " + rcr_list.size());
-				iteratorBean = new IteratorBean(rcr_list);
-				System.out.println("key: " + key);
-				iteratorBean.setKey(key);
-				iteratorBeanManager.addIteratorBean(iteratorBean);
             }
         }
 
@@ -802,8 +770,7 @@ if (!retval) {
 		request.getSession().setAttribute("key", key);
 		_logger.debug("searchAction Iterator key: " + key);
 
-//      To be modified, lexevs 6.5.4
-        if (iterator != null || rcr_list != null) {
+        if (iterator != null) {
             int size = iteratorBean.getSize();
             List list = null;
             // LexEVS API itersator.numberRemaining is inaccurate, and can cause issues.
@@ -816,6 +783,7 @@ if (!retval) {
 			}
 
             if (size > 1) {
+
                 request.getSession().setAttribute("search_results", v);
                 String match_size = Integer.toString(size);
                 request.getSession().setAttribute("match_size", match_size);
@@ -1202,13 +1170,6 @@ if (!retval) {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
-
-        IteratorBeanManager iteratorBeanManager =
-            (IteratorBeanManager) FacesContext.getCurrentInstance()
-                .getExternalContext().getSessionMap()
-                .get("iteratorBeanManager");
-
-        List rcr_list = null;
 
         request.getSession().removeAttribute("error_msg");
 		String selected_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("selected_vocabularies"));
@@ -1627,24 +1588,10 @@ request.getSession().setAttribute("code", matchText);
         } else if (searchTarget.compareTo("relationships") == 0) {
             designationOnly = true;
 
-// to be modified:
-/*
             ResolvedConceptReferencesIteratorWrapper wrapper =
                 new SearchUtils(lbSvc).searchByAssociations(schemes, versions,
                     matchText, source, matchAlgorithm, designationOnly,
                     ranking, maxToReturn);
-
-public List<ResolvedConceptReference> getAssociatedConcepts(Vector schemes, Vector versions, String matchText, String matchAlgorithm, String source, boolean getInbound, int depth, String assocName) {
-
-*/
-            ResolvedConceptReferencesIteratorWrapper wrapper = null;
-			SearchUtilsExt searchUtilsExt = new SearchUtilsExt(lbSvc, graphdb_uri);
-			boolean getInbound = true;
-			int depth = 1;
-			String assocName = null;
-
-			rcr_list = searchUtilsExt.getAssociatedConcepts(schemes, versions, matchText, matchAlgorithm, source, getInbound, depth, assocName);
-
             if (wrapper != null) {
                 iterator = wrapper.getIterator();
            }
@@ -1662,12 +1609,10 @@ public List<ResolvedConceptReference> getAssociatedConcepts(Vector schemes, Vect
         request.getSession().removeAttribute("AssociationTargetHashMap");
         request.getSession().removeAttribute("type");
 
-        /*
         IteratorBeanManager iteratorBeanManager =
             (IteratorBeanManager) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap()
                 .get("iteratorBeanManager");
-        */
 
         if (iteratorBeanManager == null) {
             iteratorBeanManager = new IteratorBeanManager();
@@ -1676,32 +1621,30 @@ public List<ResolvedConceptReference> getAssociatedConcepts(Vector schemes, Vect
                 .put("iteratorBeanManager", iteratorBeanManager);
         }
 
-        if (iterator != null || rcr_list != null) {
+        if (iterator != null) {
+
             int size = 0;
+
             IteratorBean iteratorBean =
                 (IteratorBean) FacesContext.getCurrentInstance()
                     .getExternalContext().getSessionMap().get("iteratorBean");
 
-            if (iterator != null) {
-				iteratorBean = new IteratorBean(iterator);
-				String itr_key = IteratorBeanManager.createIteratorKey(ontologiesToSearchOnStr, matchText, searchTarget, matchAlgorithm);
-				iteratorBean.setKey(itr_key);
-				FacesContext.getCurrentInstance().getExternalContext()
-					.getSessionMap().put("iteratorBean", iteratorBean);
-				try {
-					size = iterator.numberRemaining();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			} else if (rcr_list != null) {
-				String key = IteratorBeanManager.createIteratorKey(ontologiesToSearchOnStr, matchText, searchTarget, matchAlgorithm);
-				iteratorBean = new IteratorBean(rcr_list);
-				iteratorBean.setKey(key);
-				FacesContext.getCurrentInstance().getExternalContext()
-					.getSessionMap().put("iteratorBean", iteratorBean);
+            iteratorBean = new IteratorBean(iterator);
 
-				iteratorBeanManager.addIteratorBean(iteratorBean);
-				size = iteratorBean.getSize();
+
+            String itr_key = IteratorBeanManager.createIteratorKey(ontologiesToSearchOnStr, matchText, searchTarget, matchAlgorithm);
+            iteratorBean.setKey(itr_key);
+
+
+            FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().put("iteratorBean", iteratorBean);
+
+
+			try {
+				size = iterator.numberRemaining();
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 
             if (size == 1) {
@@ -2078,7 +2021,6 @@ response.setContentType("text/html;charset=utf-8");
         searchTarget = searchType;
 
         _logger.debug("SearchUtils.java searchType: " + searchType);
-        List rcr_list = null;
 
 
 
@@ -2245,44 +2187,7 @@ if (!retval) {
 			}
 		}
 
-			SearchUtilsExt searchUtilsExt = new SearchUtilsExt(lbSvc, graphdb_uri);
-			boolean getInbound = true;
-			int depth = 1;
-			String assocName = rel_search_association;
-			rcr_list = searchUtilsExt.getAssociatedConcepts(scheme, version, matchText, matchAlgorithm, source, getInbound, depth, assocName);
-			if (rcr_list != null) {
-				iteratorBean = new IteratorBean(rcr_list);
-				iteratorBean.setKey(key);
-				iteratorBean.setMatchText(matchText);
-				iteratorBeanManager.addIteratorBean(iteratorBean);
-				request.getSession().setAttribute("key", key);
-		    }
-/*
-			try {
-				int numberRemaining = rcr_list.size();
-				if (numberRemaining == 0) {
-					iterator = null;
-				} else {
-					if (iterator.hasNext()) {
-						iteratorBean = new IteratorBean(rcr_list);
-						iteratorBean.setKey(key);
-						iteratorBean.setMatchText(matchText);
-						iteratorBeanManager.addIteratorBean(iteratorBean);
-						request.getSession().setAttribute("key", key);
-					} else {
-						iterator = null;
-					}
-				}
 
-			} catch (Exception ex) {
-				//020713 KLO
-				iterator = null;
-				ex.printStackTrace();
-
-			}
-*/
-
-/*
                 wrapper =
                     new SearchUtils(lbSvc).searchByAssociations(scheme, version,
                         matchText, associationsToNavigate,
@@ -2294,7 +2199,6 @@ if (!retval) {
                 if (wrapper != null) {
                     iterator = wrapper.getIterator();
                 }
-
                 if (iterator != null) {
 
 						try {
@@ -2319,8 +2223,15 @@ if (!retval) {
 							ex.printStackTrace();
 
 						}
-                }
+/*
+                    iteratorBean = new IteratorBean(iterator);
+                    iteratorBean.setKey(key);
+                    iteratorBean.setMatchText(matchText);
+                    iteratorBeanManager.addIteratorBean(iteratorBean);
+
+                    request.getSession().setAttribute("key", key);
 */
+                }
             }
 
         } else if (searchType != null && searchType.compareTo("Name") == 0) {
@@ -2364,6 +2275,7 @@ if (!retval) {
                         iteratorBean.setKey(key);
                         iteratorBean.setMatchText(matchText);
                         iteratorBeanManager.addIteratorBean(iteratorBean);
+
                         request.getSession().setAttribute("key", key);
                     }
                 }
@@ -2390,13 +2302,23 @@ if (!retval) {
 
                 wrapper = new CodeSearchUtils(lbSvc).searchByCode(schemes, versions, matchText, source, matchAlgorithm, ranking, maxToReturn, false);
 
+                /*
+                wrapper =
+                    new SearchUtils().searchByCode(scheme, version, matchText,
+                        source, matchAlgorithm, ranking, maxToReturn);
+                */
+
                 if (wrapper != null) {
                     iterator = wrapper.getIterator();
                     if (iterator != null) {
                         iteratorBean = new IteratorBean(iterator);
                         iteratorBean.setKey(key);
+
                         iteratorBean.setMatchText(matchText);
+
+
                         iteratorBeanManager.addIteratorBean(iteratorBean);
+
                         request.getSession().setAttribute("key", key);
                     }
                 }
@@ -2414,8 +2336,10 @@ if (!retval) {
         request.getSession().removeAttribute("AssociationTargetHashMap");
         request.getSession().removeAttribute("type");
 
-        if (iterator != null || rcr_list != null) {
+        if (iterator != null) {
+
             int size = iteratorBean.getSize();
+
             // LexEVS API iterator.numberRemaining is inaccurate, and can cause issues.
             // the following code is a work around.
             if (size == 1) {

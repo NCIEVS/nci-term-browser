@@ -141,7 +141,7 @@ public class CDISCPublisher extends JPanel
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		dialog.setLocation(100,20);
 		dialog.setModal(true);
-		dialog.setTitle("EVS Support -- Mapping Exporter");
+		dialog.setTitle("EVS Service - CDISC Publication");
 		dialog.pack();
 		dialog.show();
 		frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

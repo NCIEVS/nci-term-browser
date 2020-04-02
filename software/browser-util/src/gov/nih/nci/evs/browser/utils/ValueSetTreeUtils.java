@@ -346,6 +346,16 @@ public class ValueSetTreeUtils {
 		return map;
 	}
 
+    public Boolean is_value_set_available() {
+        try {
+			Map<String, LexEVSTreeItem> terminology_items = service.getSourceDefinedTree();
+			if (terminology_items != null) return Boolean.TRUE;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return Boolean.FALSE;
+	}
+
     public void constructTerminologyValueSetTree() {
         long ms = System.currentTimeMillis();
         try {

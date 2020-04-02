@@ -156,6 +156,7 @@ public class DataUtils {
     private static HashMap _csnv2VersionMap = null;
 
     private static boolean valueSetHierarchyInitialized = false;
+
     private static boolean hasNoValueSet = false;
 
     // ==================================================================================
@@ -441,7 +442,9 @@ public class DataUtils {
 
 		//FILE_BASED_MAPPING_STRING = uiUtils.getOtherMappingString(ncit_mapping_url, cache_maps_to, ncit_maps_to_version);
 
-		VALUE_SET_TAB_AVAILABLE = isCodingSchemeAvailable(Constants.TERMINOLOGY_VALUE_SET_NAME);
+		//VALUE_SET_TAB_AVAILABLE = isCodingSchemeAvailable(Constants.TERMINOLOGY_VALUE_SET_NAME);
+
+		VALUE_SET_TAB_AVAILABLE = new ValueSetTreeUtils(lbSvc, RemoteServerUtil.getServiceUrl()).is_value_set_available();
 
         if (VALUE_SET_TAB_AVAILABLE != null && VALUE_SET_TAB_AVAILABLE.equals(Boolean.TRUE)) {
 			System.out.println("getResolvedValueSetHashMap ...");
@@ -451,6 +454,8 @@ public class DataUtils {
 		} else {
 			hasNoValueSet = true;
 		}
+		System.out.println("is_value_set_available? " + hasNoValueSet);
+
 		//resovedValueSetHashMap = getResolvedValueSetHashMap();
 		ms = System.currentTimeMillis();
         System.out.println("Sort coding schemes... ");

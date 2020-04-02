@@ -1200,7 +1200,8 @@ public class CodingSchemeDataUtils {
 				return Boolean.TRUE;
 			}
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			//ex.printStackTrace();
+			System.out.println("WARNING: lbSvc.resolveCodingScheme(" + cs_name + ") throws exception.");
 		}
 		return Boolean.FALSE;
     }

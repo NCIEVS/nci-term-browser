@@ -132,7 +132,7 @@ public class DataUtils {
     // ==================================================================================
     // PROD - set to true; for development - set to false for testing to speed up the initialization time
     private static boolean initializeValueSetHierarchy = false;
-    public static boolean cache_maps_to = false;
+    public static boolean cache_maps_to = true;
     // ==================================================================================
 
     private static Set _vocabularyNameSet = null;
@@ -435,7 +435,8 @@ public class DataUtils {
 			ncit_mapping_url = NCIT_MAPPING_URL;
 		}
 
-        NCIT_MAPPING_DATA = FTPDownload.extractMappingsFromURL(ncit_mapping_url);
+        //NCIT_MAPPING_DATA = FTPDownload.extractMappingsFromURL(ncit_mapping_url);
+        NCIT_MAPPING_DATA = FTPDownload.getOtherMappingData();
 
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		ncit_maps_to_version = csdu.getVocabularyVersionByTag("NCI_Thesaurus", "PRODUCTION");
@@ -501,7 +502,7 @@ public class DataUtils {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if (cache_maps_to) {
-        ms = System.currentTimeMillis();
+		ms = System.currentTimeMillis();
 		MapsToReportGenerator mapsToReportGenerator = new MapsToReportGenerator(lbSvc);
 		String scheme = "NCI_Thesaurus";
 
@@ -514,18 +515,17 @@ if (cache_maps_to) {
 		targetTerminology2StringHashMap = new HashMap();
 		MapsToReportProcessor processor = new MapsToReportProcessor(maps_to_vec);
 		target_terminologies = processor.getTargetTerminologies();
-        for (int i=0; i<target_terminologies.size(); i++) {
-		    String terminology = (String) target_terminologies.elementAt(i);
-		    String str = get_maps_to_string(maps_to_vec, terminology);
-		    targetTerminology2StringHashMap.put(terminology, str);
-		}
+		for (int i=0; i<target_terminologies.size(); i++) {
+			String terminology = (String) target_terminologies.elementAt(i);
 
+			System.out.println(terminology);
+			String str = get_maps_to_string(maps_to_vec, terminology);
+			targetTerminology2StringHashMap.put(terminology, str);
+		}
 
 		System.out.println("getMapsToData run time (ms): " + (System.currentTimeMillis() - ms));
 }
-		FILE_BASED_MAPPING_STRING = uiUtils.getOtherMappingString(ncit_mapping_url, target_terminologies, ncit_maps_to_version);
-
-
+    	FILE_BASED_MAPPING_STRING = new gov.nih.nci.evs.browser.utils.UIUtils(lbSvc).getOtherMappingString(NCIT_MAPPING_URL, target_terminologies, ncit_maps_to_version);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

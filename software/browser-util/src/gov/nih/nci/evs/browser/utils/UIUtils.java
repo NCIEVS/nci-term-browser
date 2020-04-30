@@ -1132,7 +1132,9 @@ public class UIUtils {
         buf.append("<table class=\"termstable_960\" border=\"0\">").append("\n");
         buf.append("<tr><td class=\"textbody\">Other mappings available for download:</td><td></td></tr>").append("\n");
 
-		Vector v = FTPDownload.extractMappingsFromURL(page_url);
+		//Vector v = FTPDownload.extractMappingsFromURL(page_url);
+		Vector v = FTPDownload.getOtherMappingData();
+
 		if (v == null) return null;
 		for (int i=0; i<v.size(); i++) {
 			String line = (String) v.elementAt(i);

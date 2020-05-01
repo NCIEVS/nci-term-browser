@@ -10,7 +10,7 @@ import org.apache.commons.io.FilenameUtils;
 
 /**
  * <!-- LICENSE_TEXT_START -->
- * Copyright 2008,2009 NGIT. This software was developed in conjunction
+ * Copyright 2020 MSC. This software was developed in conjunction
  * with the National Cancer Institute, and so to the extent government
  * employees are co-authors, any rights in such works shall be subject
  * to Title 17 of the United States Code, section 105.
@@ -25,21 +25,21 @@ import org.apache.commons.io.FilenameUtils;
  *      with the distribution.
  *   2. The end-user documentation included with the redistribution,
  *      if any, must include the following acknowledgment:
- *      "This product includes software developed by NGIT and the National
+ *      "This product includes software developed by MSC and the National
  *      Cancer Institute."   If no such end-user documentation is to be
  *      included, this acknowledgment shall appear in the software itself,
  *      wherever such third-party acknowledgments normally appear.
- *   3. The names "The National Cancer Institute", "NCI" and "NGIT" must
+ *   3. The names "The National Cancer Institute", "NCI" and "MSC" must
  *      not be used to endorse or promote products derived from this software.
  *   4. This license does not authorize the incorporation of this software
  *      into any third party proprietary programs. This license does not
  *      authorize the recipient to use any trademarks owned by either NCI
- *      or NGIT
+ *      or MSC
  *   5. THIS SOFTWARE IS PROVIDED "AS IS," AND ANY EXPRESSED OR IMPLIED
  *      WARRANTIES, (INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  *      OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE) ARE
  *      DISCLAIMED. IN NO EVENT SHALL THE NATIONAL CANCER INSTITUTE,
- *      NGIT, OR THEIR AFFILIATES BE LIABLE FOR ANY DIRECT, INDIRECT,
+ *      MSC, OR THEIR AFFILIATES BE LIABLE FOR ANY DIRECT, INDIRECT,
  *      INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
  *      BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *      LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
@@ -450,12 +450,6 @@ public class FTPDownload {
         return v;
 	}
 
-/*
-	(1) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Morphology_Mapping.txt|ICD-O-3.1-NCIt Morphology|ICD-O-3.1-NCIt_Morphology.txt
-	(2) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Topography_Mapping.txt|ICD-O-3.1-NCIt Topography|ICD-O-3.1-NCIt_Topography.txt
-	(3) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-SwissProt_Mapping.txt|NCIt-SwissProt_Mapping.txt|NCIt-SwissProt_Mapping.txt.txt
-*/
-
 	public static Vector addUpdatedData(Vector w) {
 		HashMap hmap = lastUpdatedHashMap;
 		Vector v = new Vector();
@@ -477,114 +471,6 @@ public class FTPDownload {
 		return new SortUtils().quickSort(v);
 	}
 
-/*
-	public static Vector searchForHrefLinks(Vector w) {
-		Vector v = new Vector();
-		for (int i=0; i<w.size(); i++) {
-			String line = (String) w.elementAt(i);
-			Vector u = new Vector();
-			if (line.indexOf("\r\n") != -1) {
-				u = StringUtils.parseData(line, "\r\n");
-			} else {
-				u.add(line);
-			}
-			for (int j=0; j<u.size(); j++) {
-				String t = (String) u.elementAt(j);
-				if (t.indexOf("href=") != -1) {
-					v.add(line);
-				}
-			}
-		}
-		v = trimHrefLinks(v);
-
-
-		v = hrefLinkQA(v);
-		v = addUpdatedData(v);
-        return v;
-	}
-*/
-
-/*
-
-	public static Vector searchForHrefLinks() {
-		String mapping_page_url = "https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings";
-		String ICDO3_mapping_url = "https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/About.html";
-		String ncit_mapping_url = "https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/About.html";
-        Vector w = new Vector();
-        w = downloadPage(ICDO3_mapping_url);
-		Vector w2 = downloadPage(ncit_mapping_url);
-		w.addAll(w2);
-		return searchForHrefLinks(w);
-	}
-
-	public static Vector trimHrefLinks(Vector w) {
-		HashSet hset = new HashSet();
-		Vector v = new Vector();
-		for (int i=0; i<w.size(); i++) {
-			String line = (String) w.elementAt(i);
-			int n = line.indexOf("=");
-			if (n != -1) {
-				line = line.substring(n+2, line.length());
-			}
-			if (line.indexOf("ftp") != -1 && line.indexOf("About.html") == -1 && line.indexOf("Archive") == -1) {
-				int m = line.indexOf("</a>");
-				if (m != -1) {
-					String t = line.substring(0, m);
-					t = t.replaceAll("\">", "|");
-					if (!hset.contains(t)) {
-					    v.add(t);
-					    hset.add(t);
-					}
-				}
-				int m2 = line.indexOf(" and ");
-				if (m2 != -1) {
-					int m3 = line.indexOf("href");
-					if (m3 != -1) {
-						String s = line.substring(m3+6, line.length());
-
-						int m4 = line.indexOf("</a>");
-						if (m4 != -1) {
-							s = s.substring(0, m4);
-							s = s.replaceAll("\">", "|");
-							if (!hset.contains(s)) {
-								v.add(s);
-								hset.add(s);
-							}
-						}
-                        if (!hset.contains(s)) {
-							v.add(s);
-							hset.add(s);
-						}
-					}
-			    }
-			}
-		}
-		v = filterHrefLinks(v);
-		Vector avail_Mappings = new Vector();
-		avail_Mappings.add("GO to NCIt Mapping");
-		avail_Mappings.add("MA to NCIt Mapping");
-		avail_Mappings.add("NCIt to ChEBI Mapping");
-		avail_Mappings.add("NCIt to HGNC Mapping");
-		avail_Mappings.add("PDQ to NCIt Mapping");
-		avail_Mappings.add("SNOMEDCT to ICD10 Mapping");
-		avail_Mappings.add("SNOMEDCT_US to ICD-10-CM Mapping");
-		return removeAvailableMappings(v, avail_Mappings);
-
-	}
-*/
-/*
-searchForHrefLinks:
-	(1) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Morphology_Mapping.txt|ICD-O-3.1-NCIt Morphology
-	(2) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Topography_Mapping.txt|ICD-O-3.1-NCIt Topography
-	(3) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/|http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/
-	(4) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/GO-NCIt_Mapping.txt|GO-NCIt_Mapping.txt
-	(5) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-ChEBI_Mapping.txt|NCIt-ChEBI_Mapping.txt
-	(6) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-HGNC_Mapping.txt|NCIt-HGNC_Mapping.txt
-	(7) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-SwissProt_Mapping.txt|NCIt-SwissProt_Mapping.txt
-	(8) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt_Mapping_Version.txt|NCIt_Mapping_Version.txt
-	(9) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings|ICD-O-3_Mappings
-*/
-
 	public static Vector filterHrefLinks(Vector w) {
 		Vector v = new Vector();
 		for (int i=0; i<w.size(); i++) {
@@ -599,84 +485,6 @@ searchForHrefLinks:
 		return v;
 	}
 
-	/*
- GO to NCIt Mapping: GO to NCIt Mapping (February2020)
-
- MA to NCIt Mapping: MA to NCIt Mapping (November2011)
-
- NCIt to ChEBI Mapping: NCIt to ChEBI Mapping (January2020)
-
- NCIt to HGNC Mapping: NCIt to HGNC Mapping (April2020)
-
- PDQ to NCIt Mapping: PDQ to NCIt Mapping (201607)
-
- SNOMEDCT to ICD10 Mapping: SNOMED CT International Edition to ICD-10 Mapping (2017_03_01)
-
- SNOMEDCT_US to ICD-10-CM Mapping: SNOMED CT US Edition to ICD-10-CM Mapping (2017_03_01)
-
-
-	(1) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Morphology_Mapping.txt|ICD-O-3.1-NCIt Morphology
-	(2) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Topography_Mapping.txt|ICD-O-3.1-NCIt Topography
-	(3) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/GO-NCIt_Mapping.txt|GO-NCIt_Mapping.txt
-	(4) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-ChEBI_Mapping.txt|NCIt-ChEBI_Mapping.txt
-	(5) http://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-HGNC_Mapping.txt|NCIt-HGNC_Mapping.txt
-	(6) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-SwissProt_Mapping.txt|NCIt-SwissProt_Mapping.txt
-
-
-	*/
-	/*
-	public static Vector removeAvailableMappings(Vector w, Vector availableMappings) {
-
-		Utils.dumpVector("removeAvailableMappings", availableMappings);
-
-		Vector v = new Vector();
-		for (int i=0; i<w.size(); i++) {
-			String t = (String) w.elementAt(i);
-			Vector u = StringUtils.parseData(t, '|');
-			String mapping_label = (String) u.elementAt(1);
-			String mapping_link = (String) u.elementAt(0);
-			int n = mapping_label.lastIndexOf(".");
-			if (n != -1) {
-				String trimmed_mapping_label = mapping_label;
-
-				System.out.println("(*) " + trimmed_mapping_label);
-
-			    trimmed_mapping_label = mapping_label.replace(".txt", "");
-
-			    System.out.println("(0) " + trimmed_mapping_label);
-
-                String source = null;
-                String target = null;
-                String mapping = null;
-			    int m = trimmed_mapping_label.indexOf("NCIt-");
-			    if (m != -1) {
-					source = trimmed_mapping_label.substring(0, m+4);
-					target = trimmed_mapping_label.substring(m+5, trimmed_mapping_label.length());
-				} else {
-					m = trimmed_mapping_label.indexOf("-NCIt");
-					if (m != -1) {
-						source = trimmed_mapping_label.substring(0, m);
-						target = trimmed_mapping_label.substring(m+1, trimmed_mapping_label.length());
-					}
-				}
-				target = target.replace("_", " ");
-				mapping = source + " to " + target;
-
-				System.out.println("(source) " + source);
-				System.out.println("(target) " + target);
-				System.out.println("(mapping) " + mapping);
-
-
-			    System.out.println("(2) " + trimmed_mapping_label);
-			    if (!availableMappings.contains(mapping)) {
-					v.add(t);
-				}
-			}
-		}
-		return v;
-	}
-	*/
-
 	public static String replaceChar(String str, char from, char to) {
 		StringBuffer buf = new StringBuffer();
 		for (int i=0; i<str.length(); i++) {
@@ -688,30 +496,6 @@ searchForHrefLinks:
 		}
 		return buf.toString();
 	}
-/*
-    public static Vector hrefLinkQA(Vector w) {
-		Vector v = new Vector();
-		for (int i=0; i<w.size(); i++) {
-			String line = (String) w.elementAt(i);
-			Vector u = StringUtils.parseData(line, '|');
-			String uri = (String) u.elementAt(0);
-			String mapping = (String) u.elementAt(1);
-			if (uri.indexOf("http:") != -1 && uri.indexOf("https:") == -1) {
-				uri = uri.replace("http:", "https:");
-			}
-			int n = uri.lastIndexOf("/");
-			String filename = uri.substring(n+1, uri.length());
-
-			int m = filename.lastIndexOf(".");
-			String displayName = filename.substring(0, m);
-			displayName = reLabelMapping(displayName);
-
-			mapping = filename;
-			v.add(uri + "|" + displayName + "|" + filename);
-		}
-		return v;
-    }
-*/
 
     public static void dumpHashMap(HashMap hmap) {
         Iterator it = hmap.keySet().iterator();
@@ -842,34 +626,14 @@ searchForHrefLinks:
 				}
 			}
 		}
-		//v = trimHrefLinks(v);
-        return v;
+       return v;
 	}
-
-/*
-Archive/ --> 2017-12-21
-About.html --> 2017-12-21
-NCIt-ChEBI_Mapping.txt --> 2020-01-28
-ICD-O-3.1-NCIt_Morphology_Mapping.txt --> 2017-12-21
-NCIt-HGNC_Mapping.txt --> 2020-04-27
-ICD-O-3.1-NCIt_Axis_Mappings.xls --> 2017-12-21
-ICD-O-3.1-NCIt_Topography_Mapping.txt --> 2017-12-21
-GO-NCIt_Mapping.txt --> 2020-02-25
-ICD-O-3_Mappings/ --> 2017-12-21
-NCIt-SwissProt_Mapping.txt --> 2020-04-27
-NCIt_Mapping_Version.txt --> 2020-02-25
-archive/ --> 2020-04-27
-*/
-
 
     public static String filename2MappingData(Vector otherMappings, String filename) {
 		HashMap hmap = lastUpdatedHashMap;
 		String uri = null;
 		String mapping = null;
 		String retstr = null;
-
-//NCIt-SwissProt_Mapping.txt
-
 
 		if (filename.indexOf("ICD-O") != -1) {
 			uri = ICDO3_MAPPIGNS_SITE + filename;
@@ -883,15 +647,10 @@ archive/ --> 2020-04-27
 		String displayName = mapping + " (" + lastUpdated + ")";
 
 		String cs_name = getCSName(mapping);
-
-
-		//retstr = mapping + "|" + uri + "|" + displayName + "|" + filename;
 		retstr = cs_name + "|" + mapping + "|" + displayName + "|" + uri;
-
 		return retstr;
 	}
 
-//String mapping = "NCIt to SwissProt Mapping";
     public static String getCSName(String mapping) {
 		String source = null;
 		String target = null;
@@ -915,92 +674,10 @@ archive/ --> 2020-04-27
 
 
     public static void main (String[] args) {
-		/*
-		String uri = "http://evs.nci.nih.gov/ftp1/FDA/CDRH/FDA-CDRH_NCIt_Subsets.txt";
-		uri = "ftp://ftp1.nci.nih.gov/pub/cacore/EVS/CDISC/SDTM/SDTM Terminology.xls";
-		if (args.length == 1) {
-		    uri = args[0];
-		}
-		String s = tear_page(uri);
-		System.out.println(s);
-
-		Vector v = extractMappingsFromURL(page_url);
-		Utils.dumpVector(page_url, v);
-
-		*/
-/*
-		Vector w = searchForHrefLinks();
-		Utils.dumpVector("searchForHrefLinks", w);
-
-		String line = filename2MappingData("ICD-O-3.1-NCIt_Axis_Mappings.xls");
-		System.out.println(line);
-*/
-/*
-        Vector w = findHrefLinks();
-        Utils.dumpVector("HREF", w);
-*/
         Vector otherMappings = new Vector();
         otherMappings.add("ICD-O");
         otherMappings.add("SwissProt");
 	    Vector w = constructOtherMappingData(otherMappings);
 	    Utils.dumpVector("constructOtherMappingData", w);
-
-/*
-	    String mapping = "NCIt to SwissProt Mapping";
-	    mapping = "ICD-O-3.1 to NCIt_Axis_Mappings";
-	    String cs = getCSName(mapping);
-	    System.out.println(cs);
-*/
-
-/*
-		dumpMappingSites();
-        HashMap hmap = retrieveLastUpdatedData();
-        dumpHashMap(hmap);
-*/
-        //Utils.dumpHashMap("retrieveLastUpdatedData", hmap);
     }
 }
-
-
-/*
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
-<html>
- <head>
-  <title>Index of /ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings</title>
- </head>
- <body>
-<h1>Index of /ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings</h1>
-  <table>
-   <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th><th><a href="?C=D;O=A">Description</a></th></tr>
-   <tr><th colspan="5"><hr></th></tr>
-<tr><td valign="top"><img src="/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="/ftp1/NCI_Thesaurus/Mappings/">Parent Directory</a>       </td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="About.html">About.html</a>             </td><td align="right">2017-12-21 09:49  </td><td align="right">3.5K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="Archive/">Archive/</a>               </td><td align="right">2017-12-21 09:26  </td><td align="right">  - </td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="ICD-O-3.1-NCIt_Axis_Mappings.xls">ICD-O-3.1-NCIt_Axis_..&gt;</a></td><td align="right">2017-12-21 09:49  </td><td align="right">748K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="ICD-O-3.1-NCIt_Morphology_Mapping.txt">ICD-O-3.1-NCIt_Morph..&gt;</a></td><td align="right">2017-12-21 09:25  </td><td align="right">243K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="ICD-O-3.1-NCIt_Topography_Mapping.txt">ICD-O-3.1-NCIt_Topog..&gt;</a></td><td align="right">2017-12-21 09:25  </td><td align="right"> 97K</td><td>&nbsp;</td></tr>
-   <tr><th colspan="5"><hr></th></tr>
-</table>
-</body></html>
-
-
-   <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th><th><a href="?C=D;O=A">Description</a></th></tr>
-<tr><td valign="top"><img src="/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="/ftp1/NCI_Thesaurus/">Parent Directory</a>       </td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="About.html">About.html</a>             </td><td align="right">2020-02-25 12:27  </td><td align="right">4.8K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="GO-NCIt_Mapping.txt">GO-NCIt_Mapping.txt</a>    </td><td align="right">2020-02-25 12:19  </td><td align="right">5.7K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="ICD-O-3_Mappings/">ICD-O-3_Mappings/</a>      </td><td align="right">2017-12-21 09:49  </td><td align="right">  - </td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="NCIt-ChEBI_Mapping.txt">NCIt-ChEBI_Mapping.txt</a> </td><td align="right">2020-01-28 09:59  </td><td align="right"> 69K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="NCIt-HGNC_Mapping.txt">NCIt-HGNC_Mapping.txt</a>  </td><td align="right">2020-04-27 18:07  </td><td align="right"> 94K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="NCIt-SwissProt_Mapping.txt">NCIt-SwissProt_Mappi..&gt;</a></td><td align="right">2020-04-27 18:07  </td><td align="right">233K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="NCIt_Mapping_Version.txt">NCIt_Mapping_Version..&gt;</a></td><td align="right">2020-02-25 12:27  </td><td align="right">  6 </td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="archive/">archive/</a>               </td><td align="right">2020-04-27 18:08  </td><td align="right">  - </td><td>&nbsp;</td></tr>
-   <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th><th><a href="?C=D;O=A">Description</a></th></tr>
-<tr><td valign="top"><img src="/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="/ftp1/NCI_Thesaurus/Mappings/">Parent Directory</a>       </td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="About.html">About.html</a>             </td><td align="right">2017-12-21 09:49  </td><td align="right">3.5K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="Archive/">Archive/</a>               </td><td align="right">2017-12-21 09:26  </td><td align="right">  - </td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="ICD-O-3.1-NCIt_Axis_Mappings.xls">ICD-O-3.1-NCIt_Axis_..&gt;</a></td><td align="right">2017-12-21 09:49  </td><td align="right">748K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="ICD-O-3.1-NCIt_Morphology_Mapping.txt">ICD-O-3.1-NCIt_Morph..&gt;</a></td><td align="right">2017-12-21 09:25  </td><td align="right">243K</td><td>&nbsp;</td></tr>
-<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="ICD-O-3.1-NCIt_Topography_Mapping.txt">ICD-O-3.1-NCIt_Topog..&gt;</a></td><td align="right">2017-12-21 09:25  </td><td align="right"> 97K</td><td>&nbsp;</td></tr>
-
-
-*/

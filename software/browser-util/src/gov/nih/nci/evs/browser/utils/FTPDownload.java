@@ -76,6 +76,7 @@ public class FTPDownload {
 
    public static Vector otherMappingData = null;
 
+/*
    static {
 	   lastUpdatedHashMap = retrieveLastUpdatedData();
        Vector otherMappings = new Vector();
@@ -83,7 +84,7 @@ public class FTPDownload {
        otherMappings.add("SwissProt");
 	   otherMappingData = constructOtherMappingData(otherMappings);
    }
-
+*/
    public static Vector getOtherMappingData() {
 	   return otherMappingData;
    }

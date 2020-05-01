@@ -436,7 +436,8 @@ public class DataUtils {
 		}
 
         //NCIT_MAPPING_DATA = FTPDownload.extractMappingsFromURL(ncit_mapping_url);
-        NCIT_MAPPING_DATA = FTPDownload.getOtherMappingData();
+        //NCIT_MAPPING_DATA = FTPDownload.getOtherMappingData();
+        NCIT_MAPPING_DATA = FTPCrawler.getOtherMappingData();
 
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		ncit_maps_to_version = csdu.getVocabularyVersionByTag("NCI_Thesaurus", "PRODUCTION");

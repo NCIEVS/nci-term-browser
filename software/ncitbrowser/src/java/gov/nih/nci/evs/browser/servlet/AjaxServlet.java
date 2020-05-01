@@ -5672,9 +5672,9 @@ KLO 11282018
 		try {
 			String uri = HTTPUtils.cleanXSS((String) request.getParameter("uri"));
 			if (uri == null) return;
-			System.out.println("uri: " + uri);
+			//System.out.println("uri: " + uri);
 			String format = DataUtils.getMappingFileFormat(uri);
-			System.out.println("format: " + format);
+			//System.out.println("format: " + format);
 			ServletOutputStream ouputStream = null;
             if (format.compareTo("txt") == 0) {
 				response.setContentType("text/html");

@@ -61,6 +61,23 @@ import org.apache.commons.lang3.StringEscapeUtils;
 public class StringUtils {
 	static char DOUBLE_QUOTE = '"';
 
+	public static Vector parseData(String t, String delimStr) {
+		String delim_vec = "|$%#&*@^!?<>-+=:;\"";
+		for (int i=0; i<delim_vec.length(); i++) {
+			char c = delim_vec.charAt(i);
+			String ch = "" + c;
+			if (t.indexOf(ch) == -1) {
+				t = replace(t, delimStr, ch);
+				return parseData(t, c);
+			}
+		}
+		return null;
+	}
+
+	public static String replace(String s, String from, String to) {
+		return s.replace(from, to);
+	}
+
     public static Vector parseData(String line, char delimiter) {
 		if(line == null) return null;
 		Vector w = new Vector();
@@ -80,24 +97,10 @@ public class StringUtils {
 
     public static Vector<String> parseData(String line) {
 		if (line == null) return null;
-        String tab = "|";
-        return parseData(line, tab);
+        String delim = "|";
+        return parseData(line, delim);
     }
 
-    public static Vector<String> parseData(String line, String tab) {
-		if (line == null) return null;
-        Vector data_vec = new Vector();
-        StringTokenizer st = new StringTokenizer(line, tab);
-        if (st == null) return null;
-        while (st.hasMoreTokens()) {
-            String value = st.nextToken();
-            if (value == null) return null;
-            if (value.compareTo("null") == 0)
-                value = "";
-            data_vec.add(value);
-        }
-        return data_vec;
-    }
 
     public static boolean isAlphanumeric(String str) {
         for (int i=0; i<str.length(); i++) {

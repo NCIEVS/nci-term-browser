@@ -556,8 +556,6 @@ if (cartActionBean != null && cartActionBean.getCount()>0) {
       
 */   
 
-
-
       %>
       <%@ include file="/pages/templates/typeLinks.jsp" %>
       <div class="tabTableContentContainer">
@@ -568,17 +566,19 @@ if (cartActionBean != null && cartActionBean.getCount()>0) {
           <h1 class="textsubtitle-blue">Table of Contents</h1>
           <ul>
             <li>
-            <a href="#properties">Terms &amp; Properties</a>
+            <a href="#properties_div">Terms &amp; Properties</a>
           </li>
           <li>
-          <a href="#synonyms">Synonym Details</a>
+        <a href="#synonyms_div">Synonym Details</a>
         </li>
         <li>
-        <a href="#relationships">Relationships</a>
-      </li>      <% if (!isMappingCD) { %>
-        <li>
-        <a href="#mappings">Mapping Details</a>
-        </li>      <% } %></ul>
+        <a href="#relationships_div">Relationships</a>
+      </li>      
+        <% if (!isMappingCD) { %>
+           <li>
+             <a href="#mappings_div">Mapping Details</a>
+           </li>
+        <% } %></ul>
       <br>
     <% } %>    
     
@@ -636,53 +636,14 @@ try {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 curr_concept = (Entity) request.getSession().getAttribute("concept");
 
-
-
-  //if (curr_concept != null) {
-  
-  /*
-    String property_data_key = (String) request.getSession().getAttribute("property_data_key");
-    //if (property_data_key == null || property_data_key.compareTo(curr_concept.getEntityCode()) != 0) {
-        try {
-		  request.getSession().removeAttribute("propertyData");
-		  propertyData = new PropertyData(lbSvc, cs_name, version);
-		
-		  propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantifiers());
-		  def_map = NCItBrowserProperties.getDefSourceMappingHashMap();
-		  propertyData.setDefSourceMapping(def_map);
-
-		  displayItemList = NCItBrowserProperties.getInstance().getDisplayItemList();
-		  propertyData.setDisplayItemList(displayItemList);		
-		
-		propertyData.set_owl_role_quantifiers(NCItBrowserProperties.get_owl_role_quantifiers());
-		propertyData.setCurr_concept(curr_concept);
-		request.getSession().setAttribute("property_data_key", curr_concept.getEntityCode());
-	} catch (Exception ex) {
-		ex.printStackTrace();
-	}
-    //}
-    */
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
     propertyData = (PropertyData) request.getSession().getAttribute("propertyData");
-    
-    /*
-    codingScheme = propertyData.getCodingScheme();
-    dictionary = codingScheme;
-    
-    version = propertyData.getVersion();
-    code = propertyData.getCode();
-    namespace = propertyData.getNamespace();
-    */
-  
     ns = namespace;
     
     isActive = propertyData.getIsActive();
     concept_status = propertyData.getConcept_status();
     
-
     properties_to_display_label = propertyData.getProperties_to_display_label();
     properties_to_display_url = propertyData.getProperties_to_display_url();
     properties_to_display_linktext = propertyData.getProperties_to_display_linktext();
@@ -702,8 +663,6 @@ curr_concept = (Entity) request.getSession().getAttribute("concept");
     
     request.getSession().setAttribute("code", curr_concept.getEntityCode());
 
-
-  //}
 
 } catch (Exception ex) {
   ex.printStackTrace();
@@ -726,7 +685,7 @@ if (type.compareTo("properties") == 0 || type.compareTo("all") == 0) {
     <tr>
       <td class="textsubtitle-blue" align="left">
         <% if (type != null && type.compareTo("all") == 0) { %>
-          <A name="properties">Terms & Properties</A>
+          <div id="properties_div">Terms & Properties</div>
         <% } else { %> Terms & Properties        <% } %>
       </td>
     </tr>
@@ -1378,7 +1337,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
        <td class="textsubtitle-blue" align="left">
  
          <% if (type != null && type.compareTo("all") == 0) { %>
-           <A name="synonyms">Synonym Details</A>
+           <div id="synonyms_div">Synonym Details</div>
          <% } else { %> Synonym Details
            <%
          }
@@ -1614,9 +1573,8 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
      <table class="datatable_960" border="0" width="100%">
        <tr>
          <td class="textsubtitle-blue" align="left">
- 
-           <% if (type != null && type.compareTo("all") == 0) { %>
-             <A name="relationships">Relationships with other&nbsp;<%= DataUtils.encodeTerm(rel_display_name)%>&nbsp;Concepts</A>
+            <% if (type != null && type.compareTo("all") == 0) { %>
+             <div id="relationships_div">Relationships with other&nbsp;<%= DataUtils.encodeTerm(rel_display_name)%>&nbsp;Concepts</div>
            <% } else { %> Relationships with other&nbsp;<%=rel_display_name%>&nbsp;Concepts          <% } %>
          </td>
        </tr>
@@ -1779,10 +1737,8 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
     
           <tr>
             <td class="textsubtitle-blue" align="left">
-    
               <% if (type != null && type.compareTo("all") == 0) { %>
-                <A name="mappings">Mapping Details</A>
-    
+                <div id="mappings_div">Mapping Details</div>
               <% } else { %> Mapping Details          <% } %>
     
             </td>

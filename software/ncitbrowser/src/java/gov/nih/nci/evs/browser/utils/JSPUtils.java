@@ -88,6 +88,10 @@ public class JSPUtils {
         protected boolean debugAll = false;
         protected boolean debug = false;
 
+        public void setDictionary(String dictionary) {
+			dictionary = dictionary;
+		}
+
         public void setVersion(String ver) {
 			version = ver;
 		}
@@ -188,6 +192,10 @@ public class JSPUtils {
     public static class JSPHeaderInfoMore extends JSPHeaderInfo {
         public String display_name;
         public String term_browser_version;
+
+        public void set_display_name(String display_name) {
+			this.display_name = display_name;
+		}
 
         public JSPHeaderInfoMore(HttpServletRequest request) {
             super(request);

@@ -5,19 +5,31 @@
 <div class="bannerarea_960">
   <%
   JSPUtils.JSPHeaderInfoMore info3 = new JSPUtils.JSPHeaderInfoMore(request);
-  String nciturl = request.getContextPath() + "/pages/home.jsf" + "?version=" + info3.version;
 
-  if (JSPUtils.isNull(info3.dictionary)) {
+System.out.println("***** content_header.jsp " + info3.dictionary);
+System.out.println("***** content_header.jsp " + info3.version);
+
+search_results_dictionary = (String) request.getSession().getAttribute("search_results_dictionary");
+String display_name = null;
+String info3_dictionary = info3.dictionary;
+if (info3.dictionary == null && search_results_dictionary != null) {
+    info3.setDictionary(search_results_dictionary);
+    display_name = DataUtils.getMetadataValue(search_results_dictionary, "display_name");
+    info3_dictionary = search_results_dictionary;
+    info3.set_display_name(display_name);
+}
+  String nciturl = request.getContextPath() + "/pages/home.jsf" + "?version=" + info3.version;
+  if (JSPUtils.isNull(info3_dictionary)) {
+  
     %>
     <a href="<%=basePath%>/start.jsf" style="text-decoration: none;">
       <div class="vocabularynamebanner_tb">
         <span class="vocabularynamelong_tb"><%= JSPUtils.getApplicationVersionDisplay() %></span>
       </div>
     </a>
-  <% } else if (DataUtils.isNCIT(info3.dictionary)) { %>
+  <% } else if (DataUtils.isNCIT(info3_dictionary)) { %>
     <a href="<%=nciturl%>" style="text-decoration: none;">
       <div class="vocabularynamebanner_ncit">
-
         <%
         String content_header_other_dictionary = HTTPUtils.cleanXSS(info3.dictionary);
         String content_header_other_version = HTTPUtils.cleanXSS(info3.version);
@@ -29,7 +41,6 @@
         }
         if (display_release_date) {
           %>
-
           <span class="vocabularynamelong_ncit">
             Version:<%= HTTPUtils.cleanXSS(info3.term_browser_version) %> (Release date:<%= release_date %>)
           </span>
@@ -41,7 +52,10 @@
 
       </div>
     </a>
-  <% } else { %>
+  <% } else { 
+      System.out.println("info3_dictionary: " + info3_dictionary);
+   %>
+  
     <a
         class="vocabularynamebanner"
         href="<%=request.getContextPath()%>/pages/vocabulary.jsf?dictionary=<%=HTTPUtils.cleanXSS(info3.dictionary)%>">
@@ -74,7 +88,9 @@
 
       </div>
     </a>
-  <% } %>  <% if (! JSPUtils.isNull(info3.dictionary)) { %>
+  <% } %>  
+  
+  <% if (! JSPUtils.isNull(info3.dictionary)) { %>
     <div class="search-globalnav_960">
       <!-- Search box -->
       <div class="searchbox-top">

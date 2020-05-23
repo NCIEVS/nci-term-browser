@@ -1171,6 +1171,8 @@ if (!retval) {
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
+        request.getSession().removeAttribute("search_results_dictionary");
+
         request.getSession().removeAttribute("error_msg");
 		String selected_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("selected_vocabularies"));
 

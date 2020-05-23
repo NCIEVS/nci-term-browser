@@ -24,6 +24,11 @@
     JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
     //KLO, 012714
     String search_results_dictionary = DataUtils.getCSName(info.dictionary);
+System.out.println("search_results_dictionary: " + search_results_dictionary);
+if (search_results_dictionary != null) {
+request.getSession().setAttribute("search_results_dictionary", search_results_dictionary); 
+}
+
     %>
     <title><%= search_results_dictionary %></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -79,9 +84,9 @@
 
           if (search_results_dictionary == null || search_results_dictionary.compareTo("NCI Thesaurus") == 0) {
             %>
-
             <%@ include file="/pages/templates/content-header.jsp" %>
-          <% } else { %>            <%@ include file="/pages/templates/content-header-other.jsp" %>
+          <% } else { %>            
+          <%@ include file="/pages/templates/content-header-other.jsp" %>
           <% } %>
           <!-- Page content -->
           <div class="pagecontent">
@@ -161,10 +166,6 @@
             }
 
             int iend = istart + pageSize - 1;
-            //if (page_num == 1 && iend > size) {
-              //    iend = size - 1;
-            //}
-
             try {
               list = iteratorBean.getData(istart, iend);
               int prev_size = size;
@@ -210,101 +211,6 @@
             int prev_page_num = page_num - 1;
             String prev_page_num_str = Integer.toString(prev_page_num);
             String next_page_num_str = Integer.toString(next_page_num);
-
-            /*
-
-            String matchText = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("matchText"));
-            //String match_size = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("match_size"));
-            String page_string = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("page_string"));
-            Boolean new_search = (Boolean) request.getSession().getAttribute("new_search");
-            String page_number = HTTPUtils.cleanXSS((String) request.getParameter("page_number"));
-            //String selectedResultsPerPage = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("selectedResultsPerPage"));
-            String contains_warning_msg = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("contains_warning_msg"));
-
-            if (page_number != null)
-            {
-
-              bool_val = JSPUtils.isInteger(page_number);
-              if (!bool_val) {
-                String redirectURL = request.getContextPath() + "/pages/appscan_response.jsf";
-                String error_msg = HTTPUtils.createErrorMsg("page_number", page_number);
-                request.getSession().setAttribute("error_msg", error_msg);
-                response.sendRedirect(redirectURL);
-              }
-
-            }
-
-            if (page_number != null && new_search == Boolean.FALSE)
-            {
-              page_string = page_number;
-            }
-            request.getSession().setAttribute("new_search", Boolean.FALSE);
-
-            int page_num = Integer.parseInt(page_string);
-            int next_page_num = page_num + 1;
-            int prev_page_num = page_num - 1;
-            int page_size = 50;
-
-            if (selectedResultsPerPage != null && selectedResultsPerPage.compareTo("") != 0)
-            {
-              page_size = Integer.parseInt(selectedResultsPerPage);
-            }
-
-            int iend = page_num * page_size;
-            int istart = iend - page_size;
-            iend = iend-1;
-            int size = 0;
-            String match_size = "0";
-
-            if (iteratorBean != null) {
-              size = iteratorBean.getSize();
-              match_size = Integer.valueOf(size).toString();
-
-            }
-
-            if (iend > size-1) iend = size-1;
-            int num_pages = size / page_size;
-            if (num_pages * page_size < size) num_pages++;
-            String istart_str = Integer.toString(istart+1);
-            String iend_str = Integer.toString(iend+1);
-            String prev_page_num_str = Integer.toString(prev_page_num);
-            String next_page_num_str = Integer.toString(next_page_num);
-
-            int numberRemaining_before = iteratorBean.getSize();
-            List list = iteratorBean.getData(istart, iend);
-            int numberRemaining_after = iteratorBean.getSize();
-
-            if (numberRemaining_before != numberRemaining_after) {
-              iend_str = Integer.valueOf(numberRemaining_after).toString();
-              match_size = Integer.valueOf(numberRemaining_after).toString();
-              size = iteratorBean.getSize();
-              iend = page_num * page_size;
-              istart = iend - page_size;
-              iend = iend-1;
-
-              if (iend > size-1) iend = size-1;
-              num_pages = size / page_size;
-              if (num_pages * page_size < size) num_pages++;
-              istart_str = Integer.toString(istart+1);
-              iend_str = Integer.toString(iend+1);
-              prev_page_num_str = Integer.toString(prev_page_num);
-              next_page_num_str = Integer.toString(next_page_num);
-              list = iteratorBean.getData(istart, iend);
-            }
-
-            int expected_count = (iend - istart) + 1;
-            int actual_count = list.size();
-            if (expected_count != actual_count) {
-              if (actual_count < expected_count) {
-                int upper_bound = istart + actual_count;
-
-                iend_str = Integer.valueOf(upper_bound).toString();
-                match_size = Integer.valueOf(upper_bound).toString();
-
-              }
-            }
-
-            */
 
             String message = null;
             if (list.size() == 0) {
@@ -352,20 +258,6 @@
                       <% } %>
 
                       <%
-                      /*
-                      Vector code_vec = new Vector();
-                      for (int k=0; k<list.size(); k++) {
-                        ResolvedConceptReference rcr = (ResolvedConceptReference) list.get(k);
-                        if (rcr != null) {
-                          code_vec.add(rcr.getConceptCode());
-                        } else {
-                          code_vec.add(null);
-                        }
-                      }
-
-                      //to be modified:
-                      Vector status_vec = DataUtils.getConceptStatusByConceptCodes(search_results_dictionary, search_results_version, null, code_vec);
-                      */
 
                       HashMap concept_status_hmap = DataUtils.getPropertyValuesInBatch(list, "Concept_Status");
 
@@ -383,8 +275,6 @@
 
                           coding_scheme_version = rcr.getCodingSchemeVersion();
                           if (isMapping || isExtension) {
-
-                            //vocabulary_name = (String) DataUtils.getFormalName(rcr.getCodingSchemeName());
                             vocabulary_name = (String) DataUtils.getFormalName(rcr.getCodeNamespace());
                             if (vocabulary_name == null) {
                               vocabulary_name = (String) hmap.get(rcr.getCodingSchemeName());

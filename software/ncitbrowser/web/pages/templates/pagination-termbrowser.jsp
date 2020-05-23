@@ -1,6 +1,9 @@
 <%@ page import="gov.nih.nci.evs.browser.properties.NCItBrowserProperties" %>
 
+
 <FORM NAME="paginationForm" METHOD="POST" action="<%=request.getContextPath() %>/pages/multiple_search_results.jsf?">
+
+
   <table role='presentation'>
     <tr>
       <td class="textbody" align=left>
@@ -86,12 +89,6 @@
             }
             %>
           </select>
-
-          <!--
-            <h:selectOneMenu id="id" value="#{userSessionBean.selectedResultsPerPage}"
-            valueChangeListener="#{userSessionBean.resultsPerPageChanged}" immediate="true" onchange="submit()">
-            <f:selectItems value="#{userSessionBean.resultsPerPageList}"/> </h:selectOneMenu>
-          -->
           &nbsp;results per page
         </td>
         <td>&nbsp;&nbsp;</td>

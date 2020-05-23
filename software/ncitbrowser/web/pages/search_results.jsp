@@ -23,10 +23,13 @@
     <%
     JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
     //KLO, 012714
-    String search_results_dictionary = DataUtils.getCSName(info.dictionary);
+String search_results_dictionary = DataUtils.getCSName(info.dictionary);
 System.out.println("search_results_dictionary: " + search_results_dictionary);
 if (search_results_dictionary != null) {
-request.getSession().setAttribute("search_results_dictionary", search_results_dictionary); 
+     request.getSession().setAttribute("search_results_dictionary", search_results_dictionary); 
+} else {
+     search_results_dictionary = (String) request.getSession().getAttribute("search_results_dictionary");
+     info.setDictionary(search_results_dictionary);
 }
 
     %>

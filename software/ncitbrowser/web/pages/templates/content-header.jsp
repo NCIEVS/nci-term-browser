@@ -5,10 +5,6 @@
 <div class="bannerarea_960">
   <%
   JSPUtils.JSPHeaderInfoMore info3 = new JSPUtils.JSPHeaderInfoMore(request);
-
-System.out.println("***** content_header.jsp " + info3.dictionary);
-System.out.println("***** content_header.jsp " + info3.version);
-
 String search_results_dictionary_hc = (String) request.getSession().getAttribute("search_results_dictionary");
 String display_name = null;
 String info3_dictionary = info3.dictionary;

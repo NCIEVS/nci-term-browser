@@ -30,7 +30,7 @@ if (info3.dictionary == null && search_results_dictionary_oth != null) {
       <div class="vocabularynamebanner_ncit">
 
         <%
-        String content_header_other_dictionary = HTTPUtils.cleanXSS(info3.dictionary);
+        String content_header_other_dictionary = HTTPUtils.cleanXSS(info3_dictionary);
         String content_header_other_version = HTTPUtils.cleanXSS(info3.version);
 
         String release_date = DataUtils.getVersionReleaseDate(content_header_other_dictionary, content_header_other_version);
@@ -40,7 +40,6 @@ if (info3.dictionary == null && search_results_dictionary_oth != null) {
         }
         if (display_release_date) {
           %>
-
           <span class="vocabularynamelong_ncit">
             Version:<%= HTTPUtils.cleanXSS(info3.term_browser_version) %> (Release date:<%= release_date %>)
           </span>
@@ -66,7 +65,7 @@ if (info3.dictionary == null && search_results_dictionary_oth != null) {
         </div>
 
         <%
-        String content_header_other_dictionary = HTTPUtils.cleanXSS(info3.dictionary);
+        String content_header_other_dictionary = HTTPUtils.cleanXSS(info3_dictionary);
         String content_header_other_version = HTTPUtils.cleanXSS(info3.version);
 
         String release_date = DataUtils.getVersionReleaseDate(content_header_other_dictionary, content_header_other_version);

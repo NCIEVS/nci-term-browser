@@ -372,7 +372,7 @@ if (!retval) {
 							matchAlgorithm, maxToReturn);
 					}
 				} else if (searchTarget.compareTo("codes") == 0) {
-					//System.out.println("mapping search matchText: " + matchText);
+					System.out.println("mapping code search matchText: " + matchText + " on " + scheme + " (" + version + ")");
 
 					iterator = new MappingSearchUtils(lbSvc).searchByNameOrCode(
 						scheme, version, matchText,
@@ -414,7 +414,7 @@ if (!retval) {
 
 				if (iterator == null) {
 					String msg = "No match.";
-					//System.out.println("No match -- return_to_mapping_home");
+					System.out.println("No match -- return_to_mapping_home");
 
 					if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
 						String t = searchTarget.toLowerCase();
@@ -425,6 +425,7 @@ if (!retval) {
 							msg = Constants.ERROR_NO_MATCH_FOUND_TRY_OTHER_ALGORITHMS;
 						}
 					}
+
 					request.getSession().setAttribute("message", msg);
 					request.getSession().setAttribute("dictionary", scheme);
 					request.getSession().setAttribute("version", version);
@@ -432,6 +433,7 @@ if (!retval) {
 					if (mapping_search) {
 						return "return_to_mapping_home";
 					} else {
+						request.getSession().removeAttribute("mapping_search_results");
 						return "message";
 				    }
 				}

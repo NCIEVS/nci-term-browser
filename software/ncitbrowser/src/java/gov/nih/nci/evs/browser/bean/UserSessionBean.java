@@ -350,24 +350,9 @@ if (!retval) {
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		if (isMapping) {
 				if (searchTarget.compareTo("names") == 0) {
-					/*
-					ResolvedConceptReferencesIteratorWrapper wrapper = new MappingSearchUtils().searchByCode(
-						scheme, version, matchText,
-						matchAlgorithm, maxToReturn);
-					*/
-
-					//ResolvedConceptReferencesIteratorWrapper wrapper = new MappingSearchUtils().searchByNameOrCode(
-					//	scheme, version, matchText,
-					//	matchAlgorithm, maxToReturn, SearchUtils.SEARCH_BY_NAME_ONLY);
-
 					iterator = new MappingSearchUtils(lbSvc).searchByNameOrCode(
 						scheme, version, matchText,
 						matchAlgorithm, maxToReturn, SearchUtils.SEARCH_BY_NAME_ONLY);
-
-
-					//if (wrapper != null) {
-					//	iterator = wrapper.getIterator();
-					//}
 
                     if (iterator != null) {
 						try {
@@ -381,38 +366,22 @@ if (!retval) {
 						}
 				    }
 
-                    /*
 					if (iterator == null) {
-						wrapper = new MappingSearchUtils().searchByName(
-							scheme, version, matchText,
-							matchAlgorithm, maxToReturn);
-						if (wrapper != null) {
-							iterator = wrapper.getIterator();
-						} else {
-							iterator = null;
-						}
-					}
-					*/
-
-					if (iterator == null) {
-
 						iterator = new MappingSearchUtils(lbSvc).searchByName(
 							scheme, version, matchText,
 							matchAlgorithm, maxToReturn);
 					}
 				} else if (searchTarget.compareTo("codes") == 0) {
-					//ResolvedConceptReferencesIteratorWrapper wrapper = new MappingSearchUtils().searchByCode(
+					//System.out.println("mapping search matchText: " + matchText);
+
 					iterator = new MappingSearchUtils(lbSvc).searchByNameOrCode(
 						scheme, version, matchText,
 						matchAlgorithm, maxToReturn, SearchUtils.SEARCH_BY_CODE_ONLY);
-/*
-					if (wrapper != null) {
-						iterator = wrapper.getIterator();
-					}
-*/
+
                     if (iterator != null) {
 						try {
 							int numberRemaining = iterator.numberRemaining();
+							//System.out.println("mapping search numberRemaining: " + numberRemaining);
 							if (numberRemaining == 0) {
 								iterator = null;
 							}
@@ -421,52 +390,32 @@ if (!retval) {
 							ex.printStackTrace();
 						}
 				    }
-
+                    /*
 					if (iterator == null) {
 						iterator = new MappingSearchUtils(lbSvc).searchByCode(
 							scheme, version, matchText,
 							matchAlgorithm, maxToReturn);
-							/*
-						if (wrapper != null) {
-							iterator = wrapper.getIterator();
-						} else {
-							iterator = null;
-						}
-						*/
 					}
-
+					*/
 
 				} else if (searchTarget.compareTo("properties") == 0) {
 
 					iterator = new MappingSearchUtils(lbSvc).searchByProperties(
 						scheme, version, matchText,
 						matchAlgorithm, maxToReturn);
-						/*
-					if (wrapper != null) {
-						iterator = wrapper.getIterator();
-					} else {
-						iterator = null;
-					}
-					*/
-
 
 				} else if (searchTarget.compareTo("relationships") == 0) {
 
 					iterator = new MappingSearchUtils(lbSvc).searchByRelationships(
 						scheme, version, matchText,
 						matchAlgorithm, maxToReturn);
-						/*
-					if (wrapper != null) {
-						iterator = wrapper.getIterator();
-					} else {
-						iterator = null;
-					}
-					*/
 
 				}
 
 				if (iterator == null) {
 					String msg = "No match.";
+					//System.out.println("No match -- return_to_mapping_home");
+
 					if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
 						String t = searchTarget.toLowerCase();
 						if (t == null) return null;

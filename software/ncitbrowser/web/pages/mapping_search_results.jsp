@@ -318,7 +318,17 @@
               if (map_rank_applicable != null && map_rank_applicable.compareTo("false") == 0) {
                 show_rank_column = false;
               }
+              
+              
+              String no_mapping_search_result = (String) request.getSession().getAttribute("no_mapping_search_result");
+              request.getSession().removeAttribute("no_mapping_search_result");
+              
+              System.out.println("no_mapping_search_result: " + no_mapping_search_result);
+              if (no_mapping_search_result == null) {
+              
               %>
+                            
+              
               <table class="datatable_960">
 
                 <th class="dataTableHeader" width="100px" scope="col" align="left">Source</th>
@@ -446,8 +456,9 @@
                   <% } %>
 
                 </table>
-
                 <%@ include file="/pages/templates/pagination-mapping-results.jsp" %>
+
+                <% } %>
 
               <% } %>
 

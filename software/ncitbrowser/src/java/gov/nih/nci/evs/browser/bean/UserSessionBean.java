@@ -349,6 +349,8 @@ if (!retval) {
 
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		if (isMapping) {
+			request.getSession().removeAttribute("no_mapping_search_result");
+
 				if (searchTarget.compareTo("names") == 0) {
 					iterator = new MappingSearchUtils(lbSvc).searchByNameOrCode(
 						scheme, version, matchText,
@@ -433,6 +435,8 @@ if (!retval) {
 System.out.println("No match -- message: " + msg);
 
 						request.getSession().removeAttribute("mapping_search_results");
+						request.getSession().setAttribute("no_mapping_search_result", "true");
+
 						return "message";
 
 					/*

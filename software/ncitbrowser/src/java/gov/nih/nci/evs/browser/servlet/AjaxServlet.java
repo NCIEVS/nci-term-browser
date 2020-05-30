@@ -5979,9 +5979,6 @@ KLO 11282018
 	}
 
     public String removeFromCart(HttpServletRequest request, HttpServletResponse response) {
-
-System.out.println("*********** removeFromCart");
-
 		request.getSession().removeAttribute("message");
 		try {
 			Set<String> paramNames = request.getParameterMap().keySet();
@@ -6006,10 +6003,6 @@ System.out.println("*********** removeFromCart");
 				}
 			}
 			String ans = (String) request.getParameter("ans");
-
-
-System.out.println("*********** removeFromCart ans " + ans);
-
 			if (ans == null) {
 				/*
 				String message = "Are you sure you want to permanently remove the following selected concepts from the cart? " +

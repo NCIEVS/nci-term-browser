@@ -5979,6 +5979,9 @@ KLO 11282018
 	}
 
     public String removeFromCart(HttpServletRequest request, HttpServletResponse response) {
+
+System.out.println("*********** removeFromCart");
+
 		request.getSession().removeAttribute("message");
 		try {
 			Set<String> paramNames = request.getParameterMap().keySet();
@@ -6003,10 +6006,19 @@ KLO 11282018
 				}
 			}
 			String ans = (String) request.getParameter("ans");
+
+
+System.out.println("*********** removeFromCart ans " + ans);
+
 			if (ans == null) {
-				String message = "Are you sure you want to permanently remove the following seleced concepts from the cart? " +
+				/*
+				String message = "Are you sure you want to permanently remove the following selected concepts from the cart? " +
 				"&nbsp;<input type=\"radio\" name=\"ans\" checked=\"checked\" value=\"yes\" >Yes</input>&nbsp;<input type=\"radio\" value=\"no\" name=\"ans\">No</input>" +
 				". &nbsp;Click <a href=\"javascript:submitform()\">here</a> to confirm.";
+				*/
+				String message = "Are you sure you want to permanently remove the following selected concepts from the cart? " +
+				"&nbsp;<input type=\"radio\" name=\"ans\" checked=\"checked\" value=\"yes\" >Yes</input>&nbsp;<input type=\"radio\" value=\"no\" name=\"ans\">No</input>";
+
 				request.getSession().setAttribute("message", message);
 				request.getSession().setAttribute("confirmation", "true");
 				String nextJSP = "/pages/cart.jsf";
@@ -6040,7 +6052,6 @@ KLO 11282018
 
     public String processCartActions(HttpServletRequest request, HttpServletResponse response) {
 		String ans = (String) request.getSession().getAttribute("ans");
-
 		request.getSession().removeAttribute("message");
         Set<String> paramNames = request.getParameterMap().keySet();
 		CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
@@ -6087,7 +6098,6 @@ KLO 11282018
 				}
 			}
         }
-
         HashMap cart_hmap = new HashMap();
 		Iterator it = items.iterator();
 		int selected_count = 0;
@@ -6133,7 +6143,6 @@ KLO 11282018
 			}
 			return null;
 		}
-
         switch (cart_action) {
             case 0:  removeFromCart(request, response);
                      break;

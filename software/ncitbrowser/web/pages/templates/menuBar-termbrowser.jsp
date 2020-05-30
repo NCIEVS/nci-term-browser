@@ -82,13 +82,28 @@ int globalNavHeight = JSPUtils.parseInt(
 
           Maps</a>
       <% } %>
-
+<!--
       <c:choose>
         <c:when test="${sessionScope.CartActionBean.count>
           0}"> |
           <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="0">Cart</a>
         </c:when>
       </c:choose>
+-->
+
+<%
+Boolean[] isPipeDisplayed = new Boolean[] { Boolean.FALSE };
+CartActionBean cartbean = (CartActionBean) request.getSession().getAttribute("cartActionBean"); 
+if (cartbean != null && cartbean.getCount() > 0) {
+%>
+  <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
+  <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="0">Cart</a>
+<%  
+}
+%>
+
+
+      
       <%= VisitedConceptUtils.getDisplayLink(request, true) %>
     </td>
     <td align="right" valign="bottom">

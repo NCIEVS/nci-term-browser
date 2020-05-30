@@ -113,14 +113,7 @@ if (showMenuItems) {
 
   Maps</a>
 <% } %>
-<!--
-<c:choose>
-<c:when test="${sessionScope.CartActionBean.count>
-  0}"><%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-  <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="0">Cart</a>
-</c:when>
-</c:choose>
--->
+
 <%
 CartActionBean cartbean = (CartActionBean) request.getSession().getAttribute("cartActionBean"); 
 if (cartbean != null && cartbean.getCount() > 0) {
@@ -130,6 +123,7 @@ if (cartbean != null && cartbean.getCount() > 0) {
 <%  
 }
 %>
+
 <%= VisitedConceptUtils.getDisplayLink(request, isPipeDisplayed) %></td>
 
 <td align="right">

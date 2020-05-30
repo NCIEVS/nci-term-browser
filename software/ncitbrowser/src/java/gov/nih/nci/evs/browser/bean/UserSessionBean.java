@@ -414,7 +414,7 @@ if (!retval) {
 
 				if (iterator == null) {
 					String msg = "No match.";
-					System.out.println("No match -- return_to_mapping_home");
+
 
 					if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
 						String t = searchTarget.toLowerCase();
@@ -430,12 +430,20 @@ if (!retval) {
 					request.getSession().setAttribute("dictionary", scheme);
 					request.getSession().setAttribute("version", version);
 
+System.out.println("No match -- message: " + msg);
+
+						request.getSession().removeAttribute("mapping_search_results");
+						return "message";
+
+					/*
 					if (mapping_search) {
 						return "return_to_mapping_home";
+
 					} else {
 						request.getSession().removeAttribute("mapping_search_results");
 						return "message";
 				    }
+				    */
 				}
 
 				int numberRemaining = 0;

@@ -15,6 +15,7 @@ public class HTTPParameterConstants {
        "b",
        "btn",
        "captcha_option",
+       "cartAction",
        "cart_code",
        "cart_dictionary",
        "cart_version",

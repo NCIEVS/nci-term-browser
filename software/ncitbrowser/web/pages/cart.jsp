@@ -84,16 +84,24 @@
                 <td width="200px">
                 <table border="0" width="100%" role='presentation'>
                   <tr>
+                  
                     <td class="texttitle-blue" width="40">Cart</td>
                     <td class="texttitle-gray"> (<%=count%>)</td>
-                   
                     <td class="texttitle-gray">
-  
-  
+<!--
+<% 
+if (count > 0) {  
+%>
        <a href="javascript:submitform('exit_cart')">
-       <font size="2">Exit Cart</font></a>  
-
-   
+<%
+} else {
+%>
+       <a href="javascript:go_to_browser_home()">
+<%
+} 
+%>
+-->
+       <a href="javascript:submitform('exit_cart')"><font size="2">Exit Cart</font></a>  
                     </td>
                   </tr>
                 </table>
@@ -116,15 +124,15 @@
 <input type=image src="<%=request.getContextPath() %>/images/exportcsv.gif"  id="cartAction" name="cartAction5" value="exportcsv" alt="Export CSV" title="Generate a list of cart concepts in CSV format readable from Excel" onclick="this.form.submit();">
 -->
 
-<input type=image src="<%=request.getContextPath() %>/images/select_all.gif"  id="cartAction" name="cartAction1" value="selectall" alt="Select All" title="Select all concepts" onclick="submitform('selectall');">
+<input type=image src="<%=request.getContextPath() %>/images/select_all.gif"  id="cartAction" name="cartAction" value="selectall" alt="Select All" title="Select all concepts" onclick="submitform('selectall');">
 &nbsp;
-<input type=image src="<%=request.getContextPath() %>/images/clearselections.gif"  id="cartAction" name="cartAction2" value="unselectall" alt="Unselect" title="Unselect all concepts" onclick="submitform('unselectall');">
+<input type=image src="<%=request.getContextPath() %>/images/clearselections.gif"  id="cartAction" name="cartAction" value="unselectall" alt="Unselect" title="Unselect all concepts" onclick="submitform('unselectall');">
 &nbsp;
-<input type=image src="<%=request.getContextPath() %>/images/remove.gif"  id="cartAction" name="cartAction3" value="removefromcart" alt="Remove" title="Remove concepts from the cart" onclick="submitform('removefromcart');">
+<input type=image src="<%=request.getContextPath() %>/images/remove.gif"  id="cartAction" name="cartAction" value="removefromcart" alt="Remove" title="Remove concepts from the cart" onclick="submitform('removefromcart');">
 &nbsp; 
-<input type=image src="<%=request.getContextPath() %>/images/exportxml.gif"  id="cartAction" name="cartAction4" value="exportxml" alt="Export XML" title="Export cart contents in LexGrid XML format" onclick="submitform('exportxml');">
+<input type=image src="<%=request.getContextPath() %>/images/exportxml.gif"  id="cartAction" name="cartAction" value="exportxml" alt="Export XML" title="Export cart contents in LexGrid XML format" onclick="submitform('exportxml');">
 &nbsp; 
-<input type=image src="<%=request.getContextPath() %>/images/exportcsv.gif"  id="cartAction" name="cartAction5" value="exportcsv" alt="Export CSV" title="Generate a list of cart concepts in CSV format readable from Excel" onclick="submitform('exportcsv');">
+<input type=image src="<%=request.getContextPath() %>/images/exportcsv.gif"  id="cartAction" name="cartAction" value="exportcsv" alt="Export CSV" title="Generate a list of cart concepts in CSV format readable from Excel" onclick="submitform('exportcsv');">
 
 
               </td>              

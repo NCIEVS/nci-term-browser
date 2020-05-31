@@ -6030,7 +6030,9 @@ KLO 11282018
 				}
 			}
 			request.getSession().setAttribute("cartActionBean", cartActionBean);
-			String nextJSP = "/pages/cart.jsf";
+			//items = cartActionBean.getConcepts();
+			//int count = items.size();
+		    String nextJSP = "/pages/cart.jsf";
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 			dispatcher.forward(request,response);
 
@@ -6041,11 +6043,39 @@ KLO 11282018
 	}
 
     public String processCartActions(HttpServletRequest request, HttpServletResponse response) {
+		Set<String> paramNames = request.getParameterMap().keySet();
+		CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
 		gov.nih.nci.evs.browser.bean.CartActionBean.Concept item = null;
+		Collection<gov.nih.nci.evs.browser.bean.CartActionBean.Concept> items = cartActionBean.getConcepts();
+
+		Iterator it0 = items.iterator();
+		while (it0.hasNext()) {
+			item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it0.next();
+			item.setSelected(false);
+		}
+
+		for (String name : paramNames) {
+			String value = request.getParameter(name);
+			Iterator it2 = items.iterator();
+			while (it2.hasNext()) {
+				item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it2.next();
+				if (item.getCode().compareTo(value) == 0) {
+					item.setSelected(true);
+				}
+			}
+		}
+
+		HashMap cart_hmap = new HashMap();
+		Iterator it = items.iterator();
+		while (it.hasNext()) {
+			item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it.next();
+			cart_hmap.put(item.getCode(), item);
+		}
+        cartActionBean.setCart(cart_hmap);
+        request.getSession().setAttribute("cartActionBean", cartActionBean);
+
 		String ans = (String) request.getSession().getAttribute("ans");
 		request.getSession().removeAttribute("message");
-		CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
-		Collection<gov.nih.nci.evs.browser.bean.CartActionBean.Concept> items = cartActionBean.getConcepts();
 		int count = items.size();
 		String btn = (String) request.getParameter("btn");
 		if (count == 0 && btn.compareTo("exit_cart") != 0) {
@@ -6055,7 +6085,6 @@ KLO 11282018
 			if (cartActionBean.getCount() == 0) {
 				nextJSP = "/pages/home.jsf";
 			}
-
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 			try {
 				dispatcher.forward(request,response);
@@ -6065,18 +6094,14 @@ KLO 11282018
 			return null;
 		}
 
-        HashMap cart_hmap = new HashMap();
-		Iterator it = items.iterator();
+		Iterator it3 = items.iterator();
 		int selected_count = 0;
-		while (it.hasNext()) {
-			item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it.next();
+		while (it3.hasNext()) {
+			item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it3.next();
 			if (item.getSelected()) {
 				selected_count++;
 			}
-			cart_hmap.put(item.getCode(), item);
 		}
-        cartActionBean.setCart(cart_hmap);
-        request.getSession().setAttribute("cartActionBean", cartActionBean);
 		if ((btn.compareTo("removefromcart") == 0
 		    || btn.compareTo("exportxml") == 0
 		    || btn.compareTo("exportcsv") == 0)
@@ -6100,12 +6125,16 @@ KLO 11282018
 		if (btn.compareTo("exit_cart") == 0) {
 			String scheme = (String) request.getParameter("scheme");
 			String version = (String) request.getParameter("version");
-			String nextJSP = "/multiple_search.jsf?nav_type=terminologies";
-			if (scheme == null || scheme.compareTo("null") == 0 || scheme.compareTo("NCI Thesaurus") == 0) {
-			     nextJSP = "/pages/home.jsf";
-			} else if (scheme != null && scheme.compareTo("null") != 0 && version != null && version.compareTo("null") != 0) {
-				 nextJSP = "/pages/vocabulary.jsf?dictionary=" + scheme + "&version=" + version;
-			}
+			String nextJSP = "/pages/multiple_search.jsf?nav_type=terminologies";
+
+			if (count > 0) {
+				if (scheme == null || scheme.compareTo("null") == 0 || scheme.compareTo("NCI Thesaurus") == 0) {
+					 nextJSP = "/pages/home.jsf";
+				} else if (scheme != null && scheme.compareTo("null") != 0 && version != null && version.compareTo("null") != 0) {
+					 nextJSP = "/pages/vocabulary.jsf?dictionary=" + scheme + "&version=" + version;
+				}
+		    }
+
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 			try {
 				dispatcher.forward(request,response);
@@ -6126,7 +6155,7 @@ KLO 11282018
             case "exportcsv":  exportCart2CSV(request, response);
                      break;
 		}
-       return "refresh_cart";
+        return "refresh_cart";
 	}
 }
 

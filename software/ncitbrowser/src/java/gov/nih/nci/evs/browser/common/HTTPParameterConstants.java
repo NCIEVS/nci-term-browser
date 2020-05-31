@@ -13,6 +13,7 @@ public class HTTPParameterConstants {
        "algorithm",
        "answer",
        "b",
+       "btn",
        "captcha_option",
        "cart_code",
        "cart_dictionary",

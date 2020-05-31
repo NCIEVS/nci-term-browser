@@ -41,13 +41,25 @@ int globalNavHeight = JSPUtils.parseInt(
           tabindex="0">
 
         Sources</a>
-
+<!--
       <c:choose>
         <c:when test="${sessionScope.CartActionBean.count>
           0}"> |
           <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="0">Cart</a>
         </c:when>
       </c:choose>
+-->      
+<%
+CartActionBean cartbean = (CartActionBean) request.getSession().getAttribute("cartActionBean"); 
+if (cartbean != null && cartbean.getCount() > 0) {
+%>
+  |
+  <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="0">Cart</a>
+<%  
+}
+%>
+
+      
       <%= VisitedConceptUtils.getDisplayLink(request, true) %>
     </td>
     <td align="right" valign="bottom">

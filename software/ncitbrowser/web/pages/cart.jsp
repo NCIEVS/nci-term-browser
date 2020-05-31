@@ -29,16 +29,28 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_centerwindow.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_followscroll.js"></script>
 
-	<script type="text/javascript">
-	function submitform()
+<script type="text/javascript">
+	function submitform(btn)
 	{
-	  document.cartFormId.submit();
+	    document.getElementById('btn').value=btn;
+	    document.cartFormId.submit();
 	}
-	</script>
+</script>
 
 
 <f:view>
     <%
+      JSPUtils.JSPHeaderInfoMore info = new JSPUtils.JSPHeaderInfoMore(request);
+      String scheme = info.dictionary;
+      String dictionary = null;
+      if (scheme == null) {
+          scheme = (String) request.getSession().getAttribute("scheme");
+      } 
+      if (scheme == null) {
+          scheme = (String) request.getSession().getAttribute("search_results_dictionary");
+      }       
+      String version = info.version;
+        
       String default_cs = "NCI_Thesaurus";
       String contactUsUrl = request.getContextPath() + "/pages/contact_us.jsf";
       String subsetsUrl = request.getContextPath() + "/pages/subset.jsf";
@@ -63,6 +75,9 @@
   
  <form name="cartFormId" method="post" action="<%=request.getContextPath() %>/ajax?action=cart"><br>
  
+ <input type="hidden" id="btn" name="btn" value="not_selected">
+ <input type="hidden" id="scheme" name="scheme" value="<%=scheme%>">
+ <input type="hidden" id="version" name="version" value="<%=version%>">
             
             <table border="0" class="datatable_960">
               <tr>
@@ -74,17 +89,11 @@
                    
                     <td class="texttitle-gray">
   
-  <%
-  if (count > 0) {
-  %>
-       <a href="javascript:history.back()"><font size="2">Exit Cart</font></a>  
-  <%     
-  } else {
-  %>
-       <a href="<%=request.getContextPath() %>/pages/home.jsf"><font size="2">Exit Cart</font></a>
-  <%        
-  }
-  %>  
+  
+       <a href="javascript:submitform('exit_cart')">
+       <font size="2">Exit Cart</font></a>  
+
+   
                     </td>
                   </tr>
                 </table>
@@ -94,7 +103,8 @@
   if (count > 0) {              
   %>                
               <td align="right" valign="bottom" nowrap>
-              
+
+<!--              
 <input type=image src="<%=request.getContextPath() %>/images/select_all.gif"  id="cartAction" name="cartAction1" value="selectall" alt="Select All" title="Select all concepts" onclick="this.form.submit();">
 &nbsp;
 <input type=image src="<%=request.getContextPath() %>/images/clearselections.gif"  id="cartAction" name="cartAction2" value="unselectall" alt="Unselect" title="Unselect all concepts"  onclick="this.form.submit();">
@@ -104,6 +114,18 @@
 <input type=image src="<%=request.getContextPath() %>/images/exportxml.gif"  id="cartAction" name="cartAction4" value="exportxml" alt="Export XML" title="Export cart contents in LexGrid XML format" onclick="this.form.submit();">
 &nbsp; 
 <input type=image src="<%=request.getContextPath() %>/images/exportcsv.gif"  id="cartAction" name="cartAction5" value="exportcsv" alt="Export CSV" title="Generate a list of cart concepts in CSV format readable from Excel" onclick="this.form.submit();">
+-->
+
+<input type=image src="<%=request.getContextPath() %>/images/select_all.gif"  id="cartAction" name="cartAction1" value="selectall" alt="Select All" title="Select all concepts" onclick="submitform('selectall');">
+&nbsp;
+<input type=image src="<%=request.getContextPath() %>/images/clearselections.gif"  id="cartAction" name="cartAction2" value="unselectall" alt="Unselect" title="Unselect all concepts" onclick="submitform('unselectall');">
+&nbsp;
+<input type=image src="<%=request.getContextPath() %>/images/remove.gif"  id="cartAction" name="cartAction3" value="removefromcart" alt="Remove" title="Remove concepts from the cart" onclick="submitform('removefromcart');">
+&nbsp; 
+<input type=image src="<%=request.getContextPath() %>/images/exportxml.gif"  id="cartAction" name="cartAction4" value="exportxml" alt="Export XML" title="Export cart contents in LexGrid XML format" onclick="submitform('exportxml');">
+&nbsp; 
+<input type=image src="<%=request.getContextPath() %>/images/exportcsv.gif"  id="cartAction" name="cartAction5" value="exportcsv" alt="Export CSV" title="Generate a list of cart concepts in CSV format readable from Excel" onclick="submitform('exportcsv');">
+
 
               </td>              
             </tr>

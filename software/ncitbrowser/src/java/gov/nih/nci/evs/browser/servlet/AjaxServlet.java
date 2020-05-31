@@ -1536,7 +1536,6 @@ if (display_name_vec == null) {
 
 
     public void create_vs_tree(HttpServletRequest request, HttpServletResponse response, int view, String vsd_uri) {
-		System.out.println("create_vs_tree " + vsd_uri);
         SimpleTreeUtils stu = new SimpleTreeUtils(DataUtils.getVocabularyNameSet());
 
 String mode = HTTPUtils.cleanXSS((String) request.getParameter("mode"));
@@ -1604,7 +1603,6 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 			vsd_description = DataUtils.findValueSetDescriptionByURI(vsd_uri);
 	    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      System.out.println("vsd_description: " + vsd_description);
 
 	  request.getSession().removeAttribute("b");
 	  request.getSession().removeAttribute("m");
@@ -5596,7 +5594,7 @@ KLO 11282018
 		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
 		vsd_name = vsd_name.replaceAll(" ", "_");
 		vsd_name = vsd_name + ".txt";
-		System.out.println("vsd_name: " + vsd_name);
+		//System.out.println("vsd_name: " + vsd_name);
 
 		response.setContentType("text/csv");
 		response.setHeader("Content-Disposition", "attachment; filename="
@@ -5628,7 +5626,7 @@ KLO 11282018
 			String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
 			vsd_name = vsd_name.replaceAll(" ", "_");
 			vsd_name = vsd_name + ".xls";
-			System.out.println("vsd_name: " + vsd_name);
+			//System.out.println("vsd_name: " + vsd_name);
 
 		    response.setHeader("Content-Disposition", "attachment; filename="
 					+ vsd_name);
@@ -5680,7 +5678,7 @@ KLO 11282018
 				response.setContentType("text/html");
 				int n = uri.lastIndexOf("/");
 				String mapping_name = uri.substring(n+1, uri.length());
-				System.out.println("mapping_name: " + mapping_name);
+				//System.out.println("mapping_name: " + mapping_name);
 				response.setHeader("Content-Disposition", "attachment; filename="
 						+ mapping_name);
 
@@ -5712,7 +5710,7 @@ KLO 11282018
 
 					int n = uri.lastIndexOf("/");
 					String mapping_name = uri.substring(n+1, uri.length());
-					System.out.println("mapping_name: " + mapping_name);
+					//System.out.println("mapping_name: " + mapping_name);
 					response.setHeader("Content-Disposition", "attachment; filename="
 							+ mapping_name);
 
@@ -5931,9 +5929,11 @@ KLO 11282018
 
 
     public String exportCart2XML(HttpServletRequest request, HttpServletResponse response) {
-		//System.out.println("exportCart2XML");
 		try {
 			CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
+			if (cartActionBean == null) {
+				System.out.println("WARNING: exportCart2XML detects a null cartActionBean???");
+			}
 			cartActionBean.exportCartXML(request, response);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -5942,7 +5942,6 @@ KLO 11282018
 	}
 
     public String exportCart2CSV(HttpServletRequest request, HttpServletResponse response) {
-		//System.out.println("exportCart2CSV");
 		try {
 			CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
 			cartActionBean.exportCartCSV(request, response);
@@ -5953,7 +5952,6 @@ KLO 11282018
 	}
 
     public String addToCart(HttpServletRequest request, HttpServletResponse response) {
-//      nclick="<%=request.getContextPath()%>/ajax?action=addtocart&scheme=<%=dictionary%>&version=<%=version%>&ns=<%=ns%>&code=<%=code%>"
 		CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
 		String retval = null;
 		try {
@@ -6033,7 +6031,6 @@ KLO 11282018
 			}
 			request.getSession().setAttribute("cartActionBean", cartActionBean);
 			String nextJSP = "/pages/cart.jsf";
-
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 			dispatcher.forward(request,response);
 
@@ -6044,72 +6041,17 @@ KLO 11282018
 	}
 
     public String processCartActions(HttpServletRequest request, HttpServletResponse response) {
+		gov.nih.nci.evs.browser.bean.CartActionBean.Concept item = null;
 		String ans = (String) request.getSession().getAttribute("ans");
 		request.getSession().removeAttribute("message");
-        Set<String> paramNames = request.getParameterMap().keySet();
 		CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean");
 		Collection<gov.nih.nci.evs.browser.bean.CartActionBean.Concept> items = cartActionBean.getConcepts();
-		int count = items.size();//cartActionBean.getCount();
-		if (count == 0) {
-			String message = "WARNING: The cart is empty.";
+		int count = items.size();
+		String btn = (String) request.getParameter("btn");
+		if (count == 0 && btn.compareTo("exit_cart") != 0) {
+			String message = "INFO: The cart is empty.";
 			request.getSession().setAttribute("message", message);
 			String nextJSP = "/pages/cart.jsf";
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-			try {
-				dispatcher.forward(request,response);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			return null;
-		}
-		gov.nih.nci.evs.browser.bean.CartActionBean.Concept item = null;
-		int cart_action = 0;
-        // iterating over parameter names and get its value
-        for (String name : paramNames) {
-            String value = request.getParameter(name);
-			Iterator it = items.iterator();
-			while (it.hasNext()) {
-				item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it.next();
-				if (item.getCode().compareTo(value) == 0) {
-					item.setSelected(true);
-				}
-				if (name.startsWith("cartAction1")) {
-					//select all
-					cart_action = 1;
-				} else if (name.startsWith("cartAction2")) {
-					//unselect all
-					cart_action = 2;
-				} else if (name.startsWith("cartAction3")) {
-					//remove selected
-					cart_action = 3;
-				} else if (name.startsWith("cartAction4")) {
-					//export xml
-					cart_action = 4;
-				} else if (name.startsWith("cartAction5")) {
-					//export csv
-					cart_action = 5;
-				}
-			}
-        }
-        HashMap cart_hmap = new HashMap();
-		Iterator it = items.iterator();
-		int selected_count = 0;
-		while (it.hasNext()) {
-			item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it.next();
-			if (item.getSelected()) {
-				selected_count++;
-			}
-			cart_hmap.put(item.getCode(), item);
-		}
-        cartActionBean.setCart(cart_hmap);
-        request.getSession().setAttribute("cartActionBean", cartActionBean);
-
-        if (cart_action > 2 && selected_count == 0) {
-			String message = "WARNING: No concept is selected.";
-			request.getSession().setAttribute("message", message);
-
-			String nextJSP = "/pages/cart.jsf";
-
 			if (cartActionBean.getCount() == 0) {
 				nextJSP = "/pages/home.jsf";
 			}
@@ -6123,11 +6065,30 @@ KLO 11282018
 			return null;
 		}
 
-
-        if ((cart_action == 0 || cart_action > 2) && cart_hmap.keySet().size() == 0) {
-			String message = "INFORMATION: The cart is empty.";
+        HashMap cart_hmap = new HashMap();
+		Iterator it = items.iterator();
+		int selected_count = 0;
+		while (it.hasNext()) {
+			item = (gov.nih.nci.evs.browser.bean.CartActionBean.Concept) it.next();
+			if (item.getSelected()) {
+				selected_count++;
+			}
+			cart_hmap.put(item.getCode(), item);
+		}
+        cartActionBean.setCart(cart_hmap);
+        request.getSession().setAttribute("cartActionBean", cartActionBean);
+		if ((btn.compareTo("removefromcart") == 0
+		    || btn.compareTo("exportxml") == 0
+		    || btn.compareTo("exportcsv") == 0)
+		    && selected_count == 0) {
+			String message = "WARNING: No concept is selected.";
 			request.getSession().setAttribute("message", message);
+
 			String nextJSP = "/pages/cart.jsf";
+			if (cartActionBean.getCount() == 0) {
+				nextJSP = "/pages/home.jsf";
+			}
+
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 			try {
 				dispatcher.forward(request,response);
@@ -6136,21 +6097,36 @@ KLO 11282018
 			}
 			return null;
 		}
-        switch (cart_action) {
-            case 0:  removeFromCart(request, response);
+		if (btn.compareTo("exit_cart") == 0) {
+			String scheme = (String) request.getParameter("scheme");
+			String version = (String) request.getParameter("version");
+			String nextJSP = "/multiple_search.jsf?nav_type=terminologies";
+			if (scheme == null || scheme.compareTo("null") == 0 || scheme.compareTo("NCI Thesaurus") == 0) {
+			     nextJSP = "/pages/home.jsf";
+			} else if (scheme != null && scheme.compareTo("null") != 0 && version != null && version.compareTo("null") != 0) {
+				 nextJSP = "/pages/vocabulary.jsf?dictionary=" + scheme + "&version=" + version;
+			}
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+			try {
+				dispatcher.forward(request,response);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			return null;
+		}
+        switch (btn) {
+            case "selectall":  selectAllInCart(request, response);
                      break;
-            case 1:  selectAllInCart(request, response);
+            case "unselectall":  unselectAllInCart(request, response);
                      break;
-            case 2:  unselectAllInCart(request, response);
+            case "removefromcart":  removeFromCart(request, response);
                      break;
-            case 3:  removeFromCart(request, response);
+            case "exportxml":  exportCart2XML(request, response);
                      break;
-            case 4:  exportCart2XML(request, response);
-                     break;
-            case 5:  exportCart2CSV(request, response);
+            case "exportcsv":  exportCart2CSV(request, response);
                      break;
 		}
-        return "refresh_cart";
+       return "refresh_cart";
 	}
 }
 

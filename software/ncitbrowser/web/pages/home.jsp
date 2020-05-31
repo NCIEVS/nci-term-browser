@@ -12,9 +12,6 @@ String ncit_build_info = DataUtils.getNCITBuildInfo();
 String application_version = DataUtils.getApplicationVersion();
 String anthill_build_tag_built = DataUtils.getNCITAnthillBuildTagBuilt();
 String evs_service_url = DataUtils.getEVSServiceURL();
-
-System.out.println("home.jsp evs_service_url: " + evs_service_url); 
-
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">

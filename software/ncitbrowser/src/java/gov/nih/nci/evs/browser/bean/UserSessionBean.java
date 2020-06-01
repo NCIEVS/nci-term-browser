@@ -1496,11 +1496,11 @@ if (!retval) {
             if (SimpleSearchUtils.isSimpleSearchSupported(matchAlgorithm, SimpleSearchUtils.NAMES)) {
 				try {
 					String matchTextStr = matchText;
+					/*
 					if (matchAlgorithm.compareTo("contains") == 0) {
 						matchTextStr = matchText.replaceAll(":", " ");
 					}
-
-
+					*/
 					iterator = new SimpleSearchUtils(lbSvc).search(schemes, versions, matchTextStr, SimpleSearchUtils.BY_NAME, matchAlgorithm);
 
 				} catch (Exception ex) {
@@ -1508,9 +1508,11 @@ if (!retval) {
 				}
 			} else {
 				String matchTextStr = matchText;
+				/*
 				if (matchAlgorithm.compareTo("contains") == 0) {
 					matchTextStr = matchText.replaceAll(":", " ");
 				}
+				*/
 
 				wrapper = new SearchUtils(lbSvc).searchByNameOrCode(
 						schemes, versions, matchTextStr,
@@ -1544,7 +1546,10 @@ request.getSession().setAttribute("code", matchText);
 
 
         } else if (searchTarget.compareTo("properties") == 0) {
+			String matchTextStr = matchText;
+			/*
 			String matchTextStr = matchText.replaceAll(":", " ");
+			*/
             ResolvedConceptReferencesIteratorWrapper wrapper =
                 new SearchUtils(lbSvc).searchByProperties(schemes, versions,
                     matchTextStr, source, matchAlgorithm, excludeDesignation,
@@ -2207,9 +2212,11 @@ if (!retval) {
 			String matchTextStr = matchText;
 			if (matchAlgorithm.compareTo("contains") == 0) {
 				// KLO 01/31/2018
+				/*
 				if (matchTextStr.compareTo(":") != 0) {
 					matchTextStr = matchTextStr.replaceAll(":", " ");
 				}
+				*/
 			}
 
             searchFields =

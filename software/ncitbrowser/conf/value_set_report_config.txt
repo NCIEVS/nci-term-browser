@@ -974,7 +974,7 @@ SPL Blood and Tissue Form Terminology|http://evs.nci.nih.gov/valueset/FDA/C13323
 SPL Unit of Presentation Terminology|http://evs.nci.nih.gov/valueset/FDA/C87300|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/SPL/FDA-SPL_NCIt_Subsets.xls|1:2:C87300
 SPL Shape Terminology|http://evs.nci.nih.gov/valueset/FDA/C54454|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/SPL/FDA-SPL_NCIt_Subsets.xls|1:2:C54454
 SPL Lot Distribution Data - Distribution Codes|http://evs.nci.nih.gov/valueset/FDA/C106324|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/SPL/FDA-SPL_NCIt_Subsets.xls|1:2:C106324
-SPL Color Terminology|http://evs.nci.nih.gov/valueset/FDA/C54453|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/SPL/FDA-SPL_NCIt_Subsets.xls|1:2:C54453
+SPL Color Terminology|http://evs.nci.nih.gov/valueset/FDA/C54453|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/SPL/FDA-SPL_NCIt_Subsets.xls|1:2:C54452
 SPL Miscellaneous Identifier Types Terminology|http://evs.nci.nih.gov/valueset/FDA/C99288|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/SPL/FDA-SPL_NCIt_Subsets.xls|1:2:C99288
 SPL Sex Terminology|http://evs.nci.nih.gov/valueset/FDA/C113350|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/SPL/FDA-SPL_NCIt_Subsets.xls|1:2:C113350
 SPL DEA Schedule Terminology|http://evs.nci.nih.gov/valueset/FDA/C54459|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/SPL/FDA-SPL_NCIt_Subsets.xls|1:2:C54459

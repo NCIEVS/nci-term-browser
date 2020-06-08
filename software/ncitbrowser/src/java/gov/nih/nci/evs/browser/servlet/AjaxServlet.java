@@ -1144,73 +1144,6 @@ if (display_name_vec == null) {
       println(out, "    }");
       println(out, "");
 
-/*
-      out.println("    function loadNodeData(node, fnLoadComplete) {");
-      out.println("      var id = node.data.id;");
-      out.println("      var ns = node.data.ns;");
-      out.println("");
-      out.println("      var responseSuccess = function(o)");
-      out.println("      {");
-      out.println("        var path;");
-      out.println("        var dirs;");
-      out.println("        var files;");
-      out.println("        var respTxt = o.responseText;");
-
-
-      out.println("        var respObj = eval('(' + respTxt + ')');");
-      out.println("        var fileNum = 0;");
-      out.println("        var categoryNum = 0;");
-      out.println("        var pos = id.indexOf(\"_dot_\");");
-      out.println("        if ( typeof(respObj.nodes) != \"undefined\") {");
-      out.println("	    if (pos == -1) {");
-      out.println("	      for (var i=0; i < respObj.nodes.length; i++) {");
-      out.println("		var name = respObj.nodes[i].ontology_node_name;");
-
-
-      out.println("      var nodeDetails = \"javascript:onClickTreeNode('\" ");
-      out.println("                         + respObj.nodes[i].ontology_node_id");
-      //out.println("                         + \",\"");
-      out.println("                         + \"','\"");
-      out.println("                         + respObj.nodes[i].ontology_node_ns");
-      out.println("                         + \"');\";");
-      out.println("      var newNodeData = { label:name, id:respObj.nodes[i].ontology_node_id, ns:respObj.nodes[i].ontology_node_ns, href:nodeDetails };");
-
-
-      out.println("		var newNode = new YAHOO.widget.TextNode(newNodeData, node, false);");
-      out.println("		if (respObj.nodes[i].ontology_node_child_count > 0) {");
-      out.println("		    newNode.setDynamicLoad(loadNodeData);");
-      out.println("		}");
-      out.println("	      }");
-      out.println("");
-      out.println("	    } else {");
-      out.println("");
-      out.println("		var parent = node.parent;");
-      out.println("		for (var i=0; i < respObj.nodes.length; i++) {");
-      out.println("		  var name = respObj.nodes[i].ontology_node_name;");
-
-
-      out.println("      var nodeDetails = \"javascript:onClickTreeNode('\" ");
-      out.println("                         + respObj.nodes[i].ontology_node_id");
-      //out.println("                         + \",\"");
-      out.println("                         + \"','\"");
-      out.println("                         + respObj.nodes[i].ontology_node_ns");
-      out.println("                         + \"');\";");
-      out.println("      var newNodeData = { label:name, id:respObj.nodes[i].ontology_node_id, ns:respObj.nodes[i].ontology_node_ns, href:nodeDetails };");
-
-
-      out.println("");
-      out.println("		  var newNode = new YAHOO.widget.TextNode(newNodeData, parent, true);");
-      out.println("		  if (respObj.nodes[i].ontology_node_child_count > 0) {");
-      out.println("		     newNode.setDynamicLoad(loadNodeData);");
-      out.println("		  }");
-      out.println("		}");
-      out.println("		tree.removeNode(node,true);");
-      out.println("	    }");
-      out.println("        }");
-      out.println("        fnLoadComplete();");
-      out.println("      }");
-*/
-
       out.println("    function loadNodeData(node, fnLoadComplete) {");
       out.println("      var id = node.data.id;");
       out.println("      var ns = node.data.ns;");
@@ -2327,7 +2260,7 @@ out.flush();
 					ResolvedValueSetIteratorHolder rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
 					request.getSession().setAttribute("rvsi", rvsi);
 
-					String content = getResolvedValueSetContent(rvsi);
+					String content = rvsi.getResolvedValueSetContent();
 
 					out.println("            <div class=\"pagecontent\">");
 					out.println("               <a name=\"evs-content\" id=\"evs-content\"></a>");
@@ -2559,37 +2492,16 @@ String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getSession().get
 		}
 
 		String msg = null;
-/*
-String checked_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("checked_vocabularies"));
-if (checked_vocabularies == null) return;
-if (checked_vocabularies == null || checked_vocabularies.length() == 0) {
-	checked_vocabularies = get_checked_vocabularies(request);
-}
-*/
-String checked_vocabularies = get_checked_vocabularies(request);
+
+        String checked_vocabularies = get_checked_vocabularies(request);
 
 		if (checked_vocabularies == null || checked_vocabularies.length() <= 1) {
 			checked_vocabularies = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("checked_vocabularies"));
 		}
 
-//request.getSession().removeAttribute("checked_vocabularies");
-
 //04182018
 //System.out.println(checked_vocabularies);
 request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
-
-/*
-if (checked_vocabularies != null) {
-	checked_vocabularies = checked_vocabularies.trim();
-}
-if (DataUtils.isNullOrBlank(checked_vocabularies)) {
-    checked_vocabularies = find_checked_value_sets(request);
-}
-
-if (DataUtils.isNullOrBlank(checked_vocabularies)) {
-    checked_vocabularies = vsd_uri;
-}
-*/
 
 		request.getSession().removeAttribute("partial_checked_vocabularies");
         String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
@@ -2650,29 +2562,6 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 	    }
     }
 
-/*
-    private String get_checked_nodes(HttpServletRequest request) {
-		StringBuffer buf = new StringBuffer();
-		Enumeration<String> parameterNames = request.getParameterNames();
-		if (parameterNames == null) return null;
-		while (parameterNames.hasMoreElements()) {
-			String paramName = parameterNames.nextElement();
-			if (paramName == null) return null;
-				String paramValue = HTTPUtils.cleanXSS((String) request.getParameter(paramName));
-				if (paramValue == null) return null;
-				if (paramValue.compareTo("on") == 0) {
-					buf.append(paramName).append(",");
-				}
-			}
-		}
-		String checked_vocabularies = buf.toString();
-		if (checked_vocabularies == null) return null;
-		if (checked_vocabularies.length() > 0) {
-			checked_vocabularies = checked_vocabularies.substring(0, checked_vocabularies.length()-1);
-		}
-		return checked_vocabularies;
-	}
-*/
     private String get_checked_vocabularies(HttpServletRequest request) {
 		StringBuffer buf = new StringBuffer();
 		Enumeration<String> parameterNames = request.getParameterNames();
@@ -3729,276 +3618,6 @@ out.flush();
 		}
 	}
 
-/*
-    public void resolveValueSetAction(HttpServletRequest request, HttpServletResponse response) {
-        String selectedvalueset = null;
-        //String selectedvalueset = (String) request.getParameter("valueset");
-        String multiplematches = HTTPUtils.cleanXSS((String) request.getParameter("multiplematches"));
-        if (multiplematches != null) {
-			selectedvalueset = HTTPUtils.cleanXSS((String) request.getParameter("valueset"));
-		} else {
-			selectedvalueset = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
-			if (selectedvalueset != null && selectedvalueset.indexOf("|") != -1) {
-				Vector u = DataUtils.parseData(selectedvalueset);
-				selectedvalueset = (String) u.elementAt(1);
-			}
-		}
-
-		String valueset_search_algorithm = HTTPUtils.cleanXSS((String) request.getParameter("valueset_search_algorithm"));
-		String selectValueSetSearchOption = HTTPUtils.cleanXSS((String) request.getParameter("selectValueSetSearchOption"));
-		request.getSession().setAttribute("valueset_search_algorithm", valueset_search_algorithm);
-		request.getSession().setAttribute("searchTarget", selectValueSetSearchOption);
-
-        String vsd_uri = selectedvalueset;
-		request.getSession().setAttribute("selectedvalueset", selectedvalueset);
-        request.getSession().setAttribute("vsd_uri", vsd_uri);
-        String[] coding_scheme_ref = null;
-        String key = vsd_uri;
-
-        Vector w = DataUtils.getCodingSchemeReferencesInValueSetDefinition(vsd_uri, "PRODUCTION");
-        if (w != null) {
-			coding_scheme_ref = new String[w.size()];
-			for (int i=0; i<w.size(); i++) {
-				String s = (String) w.elementAt(i);
-				coding_scheme_ref[i] = s;
-
-			}
-		}
-        if (coding_scheme_ref == null || coding_scheme_ref.length == 0) {
-			String msg = "No PRODUCTION version of coding scheme is available.";
-			request.getSession().setAttribute("message", msg);
-
-			try {
-				String nextJSP = "/pages/resolve_value_set.jsf";
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-				dispatcher.forward(request,response);
-				return;
-
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			return;
-		}
-
-		AbsoluteCodingSchemeVersionReferenceList csvList = new AbsoluteCodingSchemeVersionReferenceList();
-        StringBuffer buf = new StringBuffer();
-        for (int i=0; i<coding_scheme_ref.length; i++) {
-			String t = coding_scheme_ref[i];
-			String delim = "|";
-			if (t.indexOf("|") == -1) {
-				delim = "$";
-			}
-			Vector u = DataUtils.parseData(t, delim);
-			String uri = (String) u.elementAt(0);
-			String version = (String) u.elementAt(1);
-			if (version == null || version.compareTo("null") == 0) {
-				version = DataUtils.getVocabularyVersionByTag(uri, "PRODUCTION");
-			}
-			buf.append("|" + uri + "$" + version);
-            csvList.addAbsoluteCodingSchemeVersionReference(Constructors.createAbsoluteCodingSchemeVersionReference(uri, version));
-		}
-		key = key + buf.toString();
-
-        request.getSession().setAttribute("coding_scheme_ref", coding_scheme_ref);
-
-		try {
-			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-            CodingSchemeDataUtils codingSchemeDataUtils = new CodingSchemeDataUtils(lbSvc);
-			ResolvedConceptReferencesIterator itr = codingSchemeDataUtils.resolveCodingScheme(vsd_uri, null, false);
-
-			IteratorBeanManager iteratorBeanManager = null;
-
-			if (FacesContext.getCurrentInstance() != null &&
-				FacesContext.getCurrentInstance().getExternalContext() != null &&
-				FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null) {
-				 iteratorBeanManager = (IteratorBeanManager) FacesContext.getCurrentInstance().getExternalContext()
-				.getSessionMap().get("iteratorBeanManager");
-			}
-
-			if (iteratorBeanManager == null) {
-				iteratorBeanManager = new IteratorBeanManager();
-				request.getSession().setAttribute("iteratorBeanManager", iteratorBeanManager);
-			}
-
-			request.getSession().setAttribute("ResolvedConceptReferencesIterator", itr);
-			IteratorBean iteratorBean = iteratorBeanManager.getIteratorBean(key);
-			if (iteratorBean == null) {
-				iteratorBean = new IteratorBean(itr);
-				iteratorBean.initialize();
-				iteratorBean.setKey(key);
-				iteratorBeanManager.addIteratorBean(iteratorBean);
-			}
-
-			request.getSession().setAttribute("coding_scheme_ref", coding_scheme_ref);
-			request.getSession().setAttribute("ResolvedConceptReferencesIterator", itr);
-			request.getSession().setAttribute("resolved_vs_key", key);
-
-			try {
-				String nextJSP = "/pages/resolved_value_set.jsf";
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-				dispatcher.forward(request,response);
-				return;
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			return;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		String msg = "Unable to resolve the value set " + vsd_uri;
-		request.getSession().setAttribute("message", msg);
-        try {
-			String nextJSP = "/pages/resolved_value_set.jsf?vsd_uri="+vsd_uri;
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-			dispatcher.forward(request,response);
-			return;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-        //return "resolved_value_set";
-	}
-	*/
-
-
-/*
-    public void resolveValueSetAction(HttpServletRequest request, HttpServletResponse response) {
-        String selectedvalueset = null;
-        String multiplematches = HTTPUtils.cleanXSS((String) request.getParameter("multiplematches"));
-        if (multiplematches != null) {
-			selectedvalueset = HTTPUtils.cleanXSS((String) request.getParameter("valueset"));
-		} else {
-			selectedvalueset = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
-			if (selectedvalueset != null && selectedvalueset.indexOf("|") != -1) {
-				Vector u = StringUtils.parseData(selectedvalueset);
-				selectedvalueset = (String) u.elementAt(1);
-			}
-		}
-
-		String valueset_search_algorithm = HTTPUtils.cleanXSS((String) request.getParameter("valueset_search_algorithm"));
-		String selectValueSetSearchOption = HTTPUtils.cleanXSS((String) request.getParameter("selectValueSetSearchOption"));
-		request.getSession().setAttribute("valueset_search_algorithm", valueset_search_algorithm);
-		request.getSession().setAttribute("searchTarget", selectValueSetSearchOption);
-
-        String vsd_uri = selectedvalueset;
-		request.getSession().setAttribute("selectedvalueset", selectedvalueset);
-        request.getSession().setAttribute("vsd_uri", vsd_uri);
-        String[] coding_scheme_ref = null;
-        String key = vsd_uri;
-
-        LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-        CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
-        LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-        ValueSetDefUtils vsdu = new ValueSetDefUtils(lbSvc, vsd_service);
-        Vector w = vsdu.getCodingSchemeReferencesInValueSetDefinition(vsd_uri, "PRODUCTION");
-        if (w != null) {
-			coding_scheme_ref = new String[w.size()];
-			for (int i=0; i<w.size(); i++) {
-				String s = (String) w.elementAt(i);
-				coding_scheme_ref[i] = s;
-
-			}
-		}
-        if (coding_scheme_ref == null || coding_scheme_ref.length == 0) {
-			String msg = "No PRODUCTION version of coding scheme is available.";
-			request.getSession().setAttribute("message", msg);
-
-			try {
-				String nextJSP = "/pages/resolve_value_set.jsf";
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-				dispatcher.forward(request,response);
-				return;
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			return;
-		}
-
-		AbsoluteCodingSchemeVersionReferenceList csvList = new AbsoluteCodingSchemeVersionReferenceList();
-        StringBuffer buf = new StringBuffer();
-        for (int i=0; i<coding_scheme_ref.length; i++) {
-			String t = coding_scheme_ref[i];
-			String delim = "|";
-			if (t.indexOf("|") == -1) {
-				delim = "$";
-			}
-			Vector u = StringUtils.parseData(t, delim);
-			String uri = (String) u.elementAt(0);
-			String version = (String) u.elementAt(1);
-			if (version == null || version.compareTo("null") == 0) {
-				version = csdu.getVocabularyVersionByTag(uri, "PRODUCTION");
-			}
-			buf.append("|" + uri + "$" + version);
-            csvList.addAbsoluteCodingSchemeVersionReference(Constructors.createAbsoluteCodingSchemeVersionReference(uri, version));
-		}
-
-		key = key + buf.toString();
-        request.getSession().setAttribute("coding_scheme_ref", coding_scheme_ref);
-
-		try {
-			//LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-            //CodingSchemeDataUtils codingSchemeDataUtils = new CodingSchemeDataUtils(lbSvc);
-			ResolvedConceptReferencesIterator itr = csdu.resolveCodingScheme(vsd_uri, null, false);
-
-			IteratorBeanManager iteratorBeanManager = null;
-
-			if (FacesContext.getCurrentInstance() != null &&
-				FacesContext.getCurrentInstance().getExternalContext() != null &&
-				FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null) {
-				 iteratorBeanManager = (IteratorBeanManager) FacesContext.getCurrentInstance().getExternalContext()
-				.getSessionMap().get("iteratorBeanManager");
-			}
-
-			if (iteratorBeanManager == null) {
-				iteratorBeanManager = new IteratorBeanManager();
-				request.getSession().setAttribute("iteratorBeanManager", iteratorBeanManager);
-			}
-
-			request.getSession().setAttribute("ResolvedConceptReferencesIterator", itr);
-			IteratorBean iteratorBean = iteratorBeanManager.getIteratorBean(key);
-			if (iteratorBean == null) {
-				iteratorBean = new IteratorBean(itr);
-				iteratorBean.initialize();
-				iteratorBean.setKey(key);
-				iteratorBeanManager.addIteratorBean(iteratorBean);
-			}
-
-			request.getSession().setAttribute("coding_scheme_ref", coding_scheme_ref);
-			request.getSession().setAttribute("ResolvedConceptReferencesIterator", itr);
-			request.getSession().setAttribute("resolved_vs_key", key);
-
-			try {
-				String nextJSP = "/pages/resolved_value_set.jsf";
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-				dispatcher.forward(request,response);
-				return;
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			return;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		String msg = "Unable to resolve the value set " + vsd_uri;
-		request.getSession().setAttribute("message", msg);
-        try {
-			String nextJSP = "/pages/resolved_value_set.jsf?vsd_uri="+vsd_uri;
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-			dispatcher.forward(request,response);
-			return;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-*/
 
     //[NCITERM-768] Migrate to lexevsapi65-6.5.1.
     public void resolveValueSetAction(HttpServletRequest request, HttpServletResponse response) {
@@ -4027,54 +3646,7 @@ out.flush();
 
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
         String serviceUrl = RemoteServerUtil.getServiceUrl();
-        /*
-        CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
-        LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-        ValueSetDefUtils vsdu = new ValueSetDefUtils(lbSvc, vsd_service);
-        Vector w = vsdu.getCodingSchemeReferencesInValueSetDefinition(vsd_uri, "PRODUCTION");
-        if (w != null) {
-			coding_scheme_ref = new String[w.size()];
-			for (int i=0; i<w.size(); i++) {
-				String s = (String) w.elementAt(i);
-				coding_scheme_ref[i] = s;
 
-			}
-		}
-        if (coding_scheme_ref == null || coding_scheme_ref.length == 0) {
-			String msg = "No PRODUCTION version of coding scheme is available.";
-			request.getSession().setAttribute("message", msg);
-
-			try {
-				String nextJSP = "/pages/resolve_value_set.jsf";
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-				dispatcher.forward(request,response);
-				return;
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			return;
-		}
-
-		AbsoluteCodingSchemeVersionReferenceList csvList = new AbsoluteCodingSchemeVersionReferenceList();
-        StringBuffer buf = new StringBuffer();
-        for (int i=0; i<coding_scheme_ref.length; i++) {
-			String t = coding_scheme_ref[i];
-			String delim = "|";
-			if (t.indexOf("|") == -1) {
-				delim = "$";
-			}
-			Vector u = StringUtils.parseData(t, delim);
-			String uri = (String) u.elementAt(0);
-			String version = (String) u.elementAt(1);
-			if (version == null || version.compareTo("null") == 0) {
-				version = csdu.getVocabularyVersionByTag(uri, "PRODUCTION");
-			}
-			buf.append("|" + uri + "$" + version);
-            csvList.addAbsoluteCodingSchemeVersionReference(Constructors.createAbsoluteCodingSchemeVersionReference(uri, version));
-		}
-
-		key = key + buf.toString();
-		*/
 		key = vsd_uri;
 		coding_scheme_ref = new String[1];
 		coding_scheme_ref[0] = "NCI_Thesaurus";
@@ -4169,9 +3741,7 @@ out.flush();
 		}
 
         if (DataUtils.isNull(refresh)) {
-
 			ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
-
 			String table_content = null;
 			StringBuffer table_content_buf = new StringBuffer();
 
@@ -4200,11 +3770,11 @@ out.flush();
 					code = (String) u.elementAt(2);
 				}
 
-				int startIndex = ExcelUtil.getHSSFStartRow(excelfile, sheet, col, code);
+				int startIndex = ExcelUtil.getExcelStartRow(excelfile, sheet, col, code);
 
 				boolean cdisc = false;
 				if (vsc.getExtractionRule() != null && !vsc.getExtractionRule().endsWith(":all")) {
-					String header = ExcelUtil.getHSSFHeader(excelfile, sheet);
+					String header = ExcelUtil.getExcelHeader(excelfile, sheet);
 					if (header != null && header.indexOf(Constants.CDISC_SUBMISSION_VALUE) != -1) {
 						startIndex = startIndex - 1;
 						cdisc = true;
@@ -4212,7 +3782,6 @@ out.flush();
 				}
 
 				request.getSession().removeAttribute("rvsi");
-
 				//if (startIndex != -1 && endIndex != -1) {
 				if (startIndex != -1) {
 					try {
@@ -4323,42 +3892,7 @@ out.flush();
 		}
 
 		FacesContext.getCurrentInstance().responseComplete();
-
 	}
-
-/*
-    public void value_set_home(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		try {
-			response.setContentType("text/plain");
-			PrintWriter out = null;
-
-		    try {
-			    out = response.getWriter();
-		    } catch (Exception ex) {
-			    ex.printStackTrace();
-			    return;
-		    }
-
-			String vsd_uri =  HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
-			//String response_str = "This is a test " + vsd_uri;
-
-	        int view = Constants.STANDARD_VIEW;
-		    HashMap value_set_tree_hmap = DataUtils.getSourceValueSetTree(vsd_uri);
-			TreeItem root = null;
-			Boolean value_set_tab = Boolean.FALSE;
-			if (value_set_tree_hmap != null) {
-				 root = (TreeItem) value_set_tree_hmap.get("<Root>");
-			     new ValueSetUtils().printTree(out, root, view, value_set_tab);
-			}
-
-			out.flush();
-			out.close();
-
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-*/
 
     public void export_mapping_search(HttpServletRequest request, HttpServletResponse response) {
         String mapping_schema = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
@@ -4435,92 +3969,6 @@ out.flush();
 
 	}
 
-/*
-    public void export_mapping(HttpServletRequest request, HttpServletResponse response) {
-        String mapping_schema = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
-        String mapping_version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
-
-        ResolvedConceptReferencesIterator iterator = DataUtils.getMappingDataIterator(mapping_schema, mapping_version);
-		int numRemaining = 0;
-		if (iterator != null) {
-			try {
-				numRemaining = iterator.numberRemaining();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-        StringBuffer sb = new StringBuffer();
-        try {
-			sb.append("Source Code,");
-			sb.append("Source Name,");
-			sb.append("Source Coding Scheme,");
-			sb.append("Source Coding Scheme Version,");
-			sb.append("Source Coding Scheme Namespace,");
-
-			sb.append("Association Name,");
-			sb.append("REL,");
-			sb.append("Map Rank,");
-
-			sb.append("Target Code,");
-			sb.append("Target Name,");
-			sb.append("Target Coding Scheme,");
-			sb.append("Target Coding Scheme Version,");
-			sb.append("Target Coding Scheme Namespace");
-			sb.append("\r\n");
-
-			MappingIteratorBean bean = new MappingIteratorBean(iterator);
-            List list = bean.getData(0, numRemaining-1);
-            if (list == null) return;
-            for (int k=0; k<list.size(); k++) {
-				MappingData mappingData = (MappingData) list.get(k);
-				sb.append("\"" + mappingData.getSourceCode() + "\",");
-				sb.append("\"" + mappingData.getSourceName() + "\",");
-				sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
-				sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
-				sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
-
-				sb.append("\"" + mappingData.getAssociationName() + "\",");
-				sb.append("\"" + mappingData.getRel() + "\",");
-				sb.append("\"" + mappingData.getScore() + "\",");
-
-				sb.append("\"" + mappingData.getTargetCode() + "\",");
-				sb.append("\"" + mappingData.getTargetName() + "\",");
-				sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
-				sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
-				sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
-				sb.append("\r\n");
-			}
-		} catch (Exception ex)	{
-			sb.append("WARNING: Export to CVS action failed.");
-			ex.printStackTrace();
-		}
-
-		String filename = mapping_schema + "_" + mapping_version;
-		filename = filename.replaceAll(" ", "_");
-		filename = filename + ".csv";
-
-		response.setContentType("text/csv");
-		response.setHeader("Content-Disposition", "attachment; filename="
-				+ filename);
-
-		response.setContentLength(sb.length());
-
-		try {
-			ServletOutputStream ouputStream = response.getOutputStream();
-			ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
-			ouputStream.flush();
-			ouputStream.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			sb.append("WARNING: Export to CVS action failed.");
-		}
-		FacesContext.getCurrentInstance().responseComplete();
-		return;
-	}
-*/
-
-    // testing
 	public static String escapeCommaCharacters(String s) {
 		if (s == null) return null;
 		StringBuffer buf = new StringBuffer();
@@ -4807,19 +4255,6 @@ out.flush();
 	  } else {
 		  hmap = (HashMap) request.getSession().getAttribute("RelationshipHashMap");
 	  }
-
-/*
-KLO 11282018
-	  HashMap hmap = (HashMap) request.getSession().getAttribute("RelationshipHashMap");
-	  if (hmap == null) {
-		  RelationshipUtils relationshipUtils = new RelationshipUtils(lb_svc);
-		  hmap = relationshipUtils.getRelationshipHashMap(scheme, version, code, namespace, true);
-		  request.getSession().setAttribute("RelationshipHashMap", hmap);
-	  }
-*/
-
-	  //RelationshipUtils relationshipUtils = new RelationshipUtils(lb_svc);
-	  //HashMap hmap = relationshipUtils.getRelationshipHashMap(scheme, version, code, namespace, true);
 
 	  // compute nodes and edges using hmap
 	  VisUtils visUtils = new VisUtils(lb_svc);
@@ -5300,33 +4735,13 @@ KLO 11282018
 			//return "message";
 		} else {
 			Vector matched_concept_codes = new Vector();
-			//ResolvedConceptReferencesIterator iterator = wrapper.getIterator();
-			/*
-			if (iterator == null) {
-				msg = "No match found.";
-				if (searchOption == SimpleSearchUtils.BY_CODE) {
-					msg = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
-				}
-				request.getSession().setAttribute("message", msg);
-				//return "message";
-			} else {
-				*/
+
 				try {
 					while (iterator.hasNext()) {
-						/*
-						iterator = iterator.scroll(100);
-						ResolvedConceptReferenceList rcrl = iterator.getNext();
-						ResolvedConceptReference[] rcra =
-							rcrl.getResolvedConceptReference();
-						for (int i = 0; i < rcra.length; i++) {
-							ResolvedConceptReference rcr = rcra[i];
-					    */
 					        ResolvedConceptReference rcr = (ResolvedConceptReference) iterator.next();
 							//String name = rcr.getEntityDescription().getContent();
 							String concept_code = rcr.getConceptCode();
 							matched_concept_codes.add(concept_code);
-
-						//}
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -5378,46 +4793,10 @@ KLO 11282018
 		}
 	}
 
-    public String getResolvedValueSetContent(ResolvedValueSetIteratorHolder rvsi) {
-        Vector matched_concept_codes = new Vector();//(Vector) request.getSession().getAttribute("matched_concept_codes");
-		String table_content = "";
-		StringBuffer table_content_buf = new StringBuffer();
-		boolean bool_val;
-		if (rvsi != null) {
-			table_content_buf.append(rvsi.getOpenTableTag("rvs_table"));
-			List list = rvsi.getResolvedValueSetList();
-			boolean filter = false;
-			if (matched_concept_codes != null && matched_concept_codes.size() > 0) {
-				filter = true;
-			}
-			String first_line = (String) list.get(0);
-			first_line = first_line.replaceAll("td", "th");
-			table_content_buf.append(first_line);
-
-			for (int k=1; k<list.size(); k++) {
-				String line = (String) list.get(k);
-				boolean include = true;
-				if (filter) {
-					include = false;
-					for (int m=0; m<matched_concept_codes.size(); m++) {
-						String matched_concept_code = (String) matched_concept_codes.elementAt(m);
-						if (line.indexOf(matched_concept_code) != -1) {
-							include = true;
-							break;
-						}
-					}
-				}
-				if (include) table_content_buf.append(line);
-			}
-		}
-		table_content_buf.append(rvsi.getCloseTableTag());
-		table_content = table_content_buf.toString();
-		return table_content_buf.toString();
-	}
-
     public String getReleasedFileContent(ResolvedValueSetIteratorHolder rvsi) {
 		if (rvsi == null) return null;
-		String content = getResolvedValueSetContent(rvsi);
+		//String content = getResolvedValueSetContent(rvsi);
+		String content = rvsi.getResolvedValueSetContent();
         return content;
 	}
 
@@ -5427,7 +4806,6 @@ KLO 11282018
 	}
 
     public ResolvedValueSetIteratorHolder constructResolvedValueSetIteratorHolder(ValueSetConfig vsc) {
-
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
         CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 
@@ -5456,12 +4834,13 @@ KLO 11282018
 				col = Integer.parseInt((String) u.elementAt(1)) - 1;
 				code = (String) u.elementAt(2);
 			}
-			int startIndex = ExcelUtil.getHSSFStartRow(excelfile, sheet, col, code);
+			int startIndex = ExcelUtil.getExcelStartRow(excelfile, sheet, col, code);
 			boolean cdisc = false;
 			if (vsc.getExtractionRule() != null && !vsc.getExtractionRule().endsWith(":all")) {
-				String header = ExcelUtil.getHSSFHeader(excelfile, sheet);
+				String header = ExcelUtil.getExcelHeader(excelfile, sheet);
 				if (header != null && header.indexOf(Constants.CDISC_SUBMISSION_VALUE) != -1) {
-					startIndex = startIndex - 1;
+					//KLO
+					//startIndex = startIndex - 1;
 					cdisc = true;
 				}
 			}
@@ -5472,26 +4851,19 @@ KLO 11282018
 					if (ncit_production_version != null) {
 						url = url + "&version=" + ncit_production_version;
 					}
-					//LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCIT_CS_NAME, ncit_production_version, code);
 					url = url + "&ns=" + ns;
 					rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, url, cdisc);
     				return rvsi;
-
-    				//String content = getResolvedValueSetContent(rvsi);
-                    //return content;
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
 		}
-		//String msg = Constants.NO_VALUE_SET_REPORT_AVAILABLE;
-		//return(msg);
-
 		return null;
 	}
 
-
+/*
     public String getReleasedFileContent(ValueSetConfig vsc) {
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
@@ -5538,7 +4910,8 @@ KLO 11282018
 					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCIT_CS_NAME, ncit_production_version, code);
 					url = url + "&ns=" + ns;
 					ResolvedValueSetIteratorHolder rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, url, cdisc);
-    				String content = getResolvedValueSetContent(rvsi);
+    				//String content = getResolvedValueSetContent(rvsi);
+    				String content = rvsi.getResolvedValueSetContent();
                     return content;
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -5548,6 +4921,66 @@ KLO 11282018
 		String msg = Constants.NO_VALUE_SET_REPORT_AVAILABLE;
 		return(msg);
 	}
+*/
+
+    public String getReleasedFileContent(ValueSetConfig vsc) {
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+
+		String table_content = null;
+		StringBuffer table_content_buf = new StringBuffer();
+		String filename = vsc.getReportURI();
+		String excelfile = ValueSetDefinitionConfig.getValueSetDownloadFilename(vsc);
+		FTPDownload.download(vsc.getReportURI(), excelfile);
+		Vector u = ValueSetDefinitionConfig.interpretExtractionRule(vsc.getExtractionRule());
+		int col = -1;
+		int sheet = -1;
+		String code = null;
+
+		if (u == null || (u.size() != 2 && u.size() != 3)) {
+			System.out.println("Data not found.");
+			return "Data not found.";
+		} else {
+			sheet = Integer.parseInt((String) u.elementAt(0)) - 1;
+			if (u.size() == 2) {
+				code = (String) u.elementAt(1);
+			} else if (u.size() == 3) {
+				col = Integer.parseInt((String) u.elementAt(1)) - 1;
+				code = (String) u.elementAt(2);
+			}
+			int startIndex = ExcelUtil.getExcelStartRow(excelfile, sheet, col, code);
+			boolean cdisc = false;
+			if (vsc.getExtractionRule() != null && !vsc.getExtractionRule().endsWith(":all")) {
+				String header = ExcelUtil.getExcelHeader(excelfile, sheet);
+				if (header != null && header.indexOf(Constants.CDISC_SUBMISSION_VALUE) != -1) {
+					startIndex = startIndex - 1;
+					cdisc = true;
+				}
+			}
+			if (startIndex != -1) {
+				try {
+					//String url = "/ncitbrowser/ConceptReport.jsp?dictionary=NCI%20Thesaurus";
+					String url = "/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus";
+					String ncit_production_version = csdu.getVocabularyVersionByTag(Constants.NCIT_CS_NAME, "PRODUCTION");
+					if (ncit_production_version != null) {
+						url = url + "&version=" + ncit_production_version;
+					}
+					//LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+					String ns = new ConceptDetails(lbSvc).getNamespaceByCode(Constants.NCIT_CS_NAME, ncit_production_version, code);
+					url = url + "&ns=" + ns;
+					ResolvedValueSetIteratorHolder rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, url, cdisc);
+    				//String content = getResolvedValueSetContent(rvsi);
+    				String content = rvsi.getResolvedValueSetContent();
+                    return content;
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+		String msg = Constants.NO_VALUE_SET_REPORT_AVAILABLE;
+		return(msg);
+	}
+
 
 	public void writeExportForm(PrintWriter out, String vsd_uri) {
 		out.println("                     <table border=\"0\" role='presentation'>");

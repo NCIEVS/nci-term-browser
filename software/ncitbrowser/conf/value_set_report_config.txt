@@ -1001,7 +1001,7 @@ FDA Device Problem Code Hierarchy|http://evs.nci.nih.gov/valueset/FDA/C54451|ftp
 FDA Manufacturer Evaluation Conclusion Code Hierarchy|http://evs.nci.nih.gov/valueset/FDA/C91802|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/CDRH/FDA-CDRH_NCIt_Subsets.xls|1:2:C91802
 FDA Manufacturer Evaluation Method Code Hierarchy|http://evs.nci.nih.gov/valueset/FDA/C91800|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/CDRH/FDA-CDRH_NCIt_Subsets.xls|1:2:C91800
 FDA Patient Problem Code Hierarchy|http://evs.nci.nih.gov/valueset/FDA/C54450|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/CDRH/FDA-CDRH_NCIt_Subsets.xls|1:2:C54450
-FDA Device Component Code Hierarchy|http://evs.nci.nih.gov/valueset/FDA/C54577|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/CDRH/FDA-CDRH_NCIt_Subsets.xls|1:2:C54577
+FDA Device Component Code Hierarchy|http://evs.nci.nih.gov/valueset/FDA/C54577|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/CDRH/FDA-CDRH_NCIt_Subsets.xlsx|1:1:C54577
 FDA Establishment Activity Terminology|http://evs.nci.nih.gov/valueset/FDA/C123268|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/QualityMetrics/FDA-Quality_Metrics_Terminology.xls|1:2:C123268
 FDA Application Type Terminology|http://evs.nci.nih.gov/valueset/FDA/C123270|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/QualityMetrics/FDA-Quality_Metrics_Terminology.xls|1:2:C123270
 Location of Event Occurrence ICSR Terminology|http://evs.nci.nih.gov/valueset/FDA/C54590|ftp://ftp1.nci.nih.gov/pub/cacore/EVS/FDA/ICSR/FDA-ICSR_NCIt_Subsets.xls|1:2:C54590

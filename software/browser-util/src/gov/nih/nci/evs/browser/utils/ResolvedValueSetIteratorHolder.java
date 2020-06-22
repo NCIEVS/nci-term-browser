@@ -1881,42 +1881,42 @@ public class ResolvedValueSetIteratorHolder {
 		return table_content_buf.toString();
 	}
 
-/*
-    public String getResolvedValueSetContent() {
-        Vector matched_concept_codes = new Vector();//(Vector) request.getSession().getAttribute("matched_concept_codes");
-		String table_content = "";
-		StringBuffer table_content_buf = new StringBuffer();
-		boolean bool_val;
-		table_content_buf.append(getOpenTableTag("rvs_table"));
-		List list = getResolvedValueSetList();
-		boolean filter = false;
-		if (matched_concept_codes != null && matched_concept_codes.size() > 0) {
-			filter = true;
-		}
-		String first_line = (String) list.get(0);
-		first_line = first_line.replaceAll("td", "th");
-		table_content_buf.append(first_line);
-
-		for (int k=1; k<list.size(); k++) {
-			String line = (String) list.get(k);
-			boolean include = true;
-			if (filter) {
-				include = false;
-				for (int m=0; m<matched_concept_codes.size(); m++) {
-					String matched_concept_code = (String) matched_concept_codes.elementAt(m);
-					if (line.indexOf(matched_concept_code) != -1) {
-						include = true;
-						break;
-					}
-				}
-			}
-			if (include) table_content_buf.append(line);
-		}
-		table_content_buf.append(getCloseTableTag());
-		table_content = table_content_buf.toString();
-		return table_content_buf.toString();
+    public HSSFWorkbook createHSSFWorkbook(String sheet_name) throws IOException {
+		String delim = "|";
+		return createHSSFWorkbook(sheet_name, this.getTableContent());
 	}
-*/
+
+    public HSSFWorkbook createHSSFWorkbook(String sheet_name, Vector delimitedData) throws IOException {
+		String delim = "|";
+		return createHSSFWorkbook(sheet_name, delimitedData, delim);
+	}
+
+
+    public HSSFWorkbook createHSSFWorkbook(String sheet_name, Vector delimitedData, String delim) throws IOException {
+        HSSFWorkbook hwb = new HSSFWorkbook();
+        char delimiter = delim.charAt(0);
+        try {
+            HSSFSheet sheet = hwb.createSheet(sheet_name);
+            //for (int k = 0; k < arList.size(); k++) {
+			for (int j = 0; j < delimitedData.size(); j++) {
+				String line = (String) delimitedData.elementAt(j);
+				Vector u = StringUtils.parseData(line, delimiter);
+                //ArrayList<String> ardata = (ArrayList<String>) arList.get(k);
+                HSSFRow row = sheet.createRow((short) 0 + j);
+                //for (int p = 0; p < ardata.size(); p++) {
+				for (int k = 0; k < u.size(); k++) {
+					String cell_val = (String) u.elementAt(k);
+                    //System.out.print(ardata.get(p));
+                    HSSFCell cell = row.createCell((short) k);
+                    cell.setCellValue(cell_val);
+                    //cell.setCellValue(ardata.get(p).toString());
+                }
+            }
+        } catch (Exception ex) {
+        }
+
+        return hwb;
+    }
 
 
 	public static void main(String [ ] args)
@@ -1988,6 +1988,7 @@ public class ResolvedValueSetIteratorHolder {
 			ex.printStackTrace();
 		}
 	}
+
 
 }
 

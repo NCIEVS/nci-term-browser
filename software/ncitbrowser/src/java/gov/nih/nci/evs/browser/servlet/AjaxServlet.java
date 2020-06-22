@@ -73,6 +73,9 @@ import org.LexGrid.LexBIG.Impl.Extensions.tree.service.*;
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
 import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -5049,7 +5052,7 @@ out.flush();
 
 
 
-
+/*
     public void exportToExcelAction(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
@@ -5094,10 +5097,32 @@ out.flush();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-
 		FacesContext.getCurrentInstance().responseComplete();
 	}
+*/
 
+   public void exportToExcelAction(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+    		response.setContentType("application/vnd.ms-excel");
+			String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
+			vsd_name = vsd_name.replaceAll(" ", "_");
+			String sheet_name = vsd_name;
+			vsd_name = vsd_name + ".xls";
+		    response.setHeader("Content-Disposition", "attachment; filename="
+					+ vsd_name);
+			ResolvedValueSetIteratorHolder rvsi = (ResolvedValueSetIteratorHolder) request.getSession().getAttribute("rvsi");
+			HSSFWorkbook hssfWorkbook = rvsi.createHSSFWorkbook(sheet_name);
+			ServletOutputStream ouputStream = response.getOutputStream();
+            hssfWorkbook.write(ouputStream);
+			ouputStream.flush();
+			ouputStream.close();
+
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		FacesContext.getCurrentInstance().responseComplete();
+	}
 
     public void exportMappingAction(HttpServletRequest request, HttpServletResponse response) {
 		try {

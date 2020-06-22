@@ -421,6 +421,60 @@ public class ExcelUtil {
 		System.out.println("getExcelEndRow: " + end_row);
 	}
 
+	public static void csvToXLSX(String csvfile, String xlsxfile, String sheet_name) {
+		try {
+			String csvFileAddress = csvfile;
+			String xlsxFileAddress = xlsxfile;
+			XSSFWorkbook workBook = new XSSFWorkbook();
+			XSSFSheet sheet = workBook.createSheet(sheet_name);
+			String currentLine=null;
+			int RowNum=0;
+			BufferedReader br = new BufferedReader(new FileReader(csvFileAddress));
+			while ((currentLine = br.readLine()) != null) {
+				String str[] = currentLine.split(",");
+
+				XSSFRow currentRow=sheet.createRow(RowNum);
+				for(int i=0;i<str.length;i++){
+					currentRow.createCell(i).setCellValue(str[i]);
+				}
+				RowNum++;
+			}
+
+			FileOutputStream fileOutputStream =  new FileOutputStream(xlsxFileAddress);
+			workBook.write(fileOutputStream);
+			fileOutputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public static void csvToXLS(String csvfile, String xlsfile, String sheet_name) {
+		try {
+			String csvFileAddress = csvfile;
+			String xlsFileAddress = xlsfile;
+			HSSFWorkbook workBook = new HSSFWorkbook();
+			HSSFSheet sheet = workBook.createSheet(sheet_name);
+			String currentLine=null;
+			int RowNum=0;
+			BufferedReader br = new BufferedReader(new FileReader(csvFileAddress));
+			while ((currentLine = br.readLine()) != null) {
+				String str[] = currentLine.split(",");
+
+				HSSFRow currentRow=sheet.createRow(RowNum);
+				for(int i=0;i<str.length;i++){
+					currentRow.createCell(i).setCellValue(str[i]);
+				}
+				RowNum++;
+			}
+
+			FileOutputStream fileOutputStream =  new FileOutputStream(xlsFileAddress);
+			workBook.write(fileOutputStream);
+			fileOutputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
 
 	//String getHSSFHeader(String file, int sheet)
 	public static void main(String [] args)

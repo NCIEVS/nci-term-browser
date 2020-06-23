@@ -488,12 +488,16 @@
                                   <td align="left" class="texttitle-blue">Value Set:&nbsp;<%= vsd_uri %></td>
                                   <td align="right">
 
+<!--
                                     <h:commandLink
                                         value="Export Excel"
                                         action="#{valueSetBean.exportToExcelAction}"
                                         styleClass="texttitle-blue-small"
                                         title="Export VSD in MS Excel format"
                                     />
+-->
+
+<a href="/ncitbrowser/ajax?action=export_to_excel&from_download=true&vsd_uri=<%= vsd_uri %>"><font face="verdana" size="1">Export Excel</font></a>
 
                                     <a
                                         title="Download Plugin Microsoft Excel Viewer"
@@ -509,12 +513,17 @@
                                       />
                                     </a>
                                     |
+
+<!--                                    
                                     <h:commandLink
                                         value="Export CSV"
                                         action="#{valueSetBean.exportToCSVAction}"
                                         styleClass="texttitle-blue-small"
                                         title="Export VSD in CSV format"
                                     />
+-->
+<a href="/ncitbrowser/ajax?action=export_to_csv&from_download=true&vsd_uri=<%= vsd_uri %>"><font face="verdana" size="1">Export CSV</font></a>
+
                                   </td>
                                 </tr>
                               </table>

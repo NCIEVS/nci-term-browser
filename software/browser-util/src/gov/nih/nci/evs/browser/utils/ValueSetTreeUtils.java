@@ -1,6 +1,5 @@
 package gov.nih.nci.evs.browser.utils;
 
-
 import gov.nih.nci.evs.browser.bean.*;
 import gov.nih.nci.evs.browser.bean.MappingData;
 import gov.nih.nci.evs.browser.common.Constants;
@@ -371,6 +370,12 @@ public class ValueSetTreeUtils {
 			terminologyValueSetTreeStringBuffer = new StringBuffer();
 			SimpleTreeUtils stu_2 = new SimpleTreeUtils(_vocabularyNameSet);
 			terminologyValueSetTreeStringBuffer = stu_2.getValueSetTreeStringBuffer(terminologyValueSetTree);
+
+            if (terminologyValueSetTreeStringBuffer != null) {
+				String str = disableNCItRootNodeHyperlink(terminologyValueSetTreeStringBuffer.toString());
+				StringBuffer buf = new StringBuffer();
+				terminologyValueSetTreeStringBuffer = buf.append(str);
+		    }
             setTerminologyValueSetDescriptionHashMap();
 
 		} catch (Exception ex) {
@@ -547,6 +552,30 @@ public class ValueSetTreeUtils {
 			ex.printStackTrace();
 		}
 		return hmap;
+	}
+
+	public static String disableNCItRootNodeHyperlink(String str) {
+		String target = "<a href=\"#\" onclick=\"onValueSetNodeClicked('http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#";
+		String s3 = str;
+		int n = str.indexOf(target);
+		if (n != -1) {
+			String s1 = str.substring(0, n);
+			String s2 = str.substring(n+target.length(), str.length());
+            int m2 = s2.indexOf(">");
+			s2 = s2.substring(m2+1, s2.length());
+            m2 = s2.indexOf("</a>");
+			s2 = s2.substring(m2+"</a>".length(), s2.length());
+			s3 = s1 + "NCI Thesaurus" + s2;
+ 		}
+		return s3;
+	}
+
+	public static void main(String[] args) {
+		Vector v = Utils.readFile("str.txt");
+		String str = (String) v.elementAt(0);
+		System.out.println(str);
+		String t = disableNCItRootNodeHyperlink(str);
+		System.out.println(t);
 	}
 }
 

@@ -34,7 +34,7 @@ import nl.captcha.Captcha;
 
 import nl.captcha.audio.AudioCaptcha;
 import javax.servlet.ServletOutputStream;
-
+import org.json.JSONObject;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -107,6 +107,8 @@ public class UserSessionBean extends Object {
 
     private String _selectedPageSize = null;
     private List _pageSizeList = null;
+
+    public static final String INCOMPLETE_CAPTCHA_RESPONSE = "WARNING: Incomplete Captcha Response";
 
 
     public UserSessionBean() {
@@ -2887,6 +2889,18 @@ ontologiesToSearchOnStr = s;
 		request.getSession().setAttribute("emailaddress", from);
 
 
+        String str = HTTPUtils.cleanXSS((String) request.getParameter("g-recaptcha-response"));
+        String recaptcha_security_key = NCItBrowserProperties.getRecaptchaSecurityKey();
+        JSONObject json = new CaptchaUtils().getCaptchaJsonResponse(recaptcha_security_key, request.getParameter("g-recaptcha-response"));
+        String json_str = json.toString();
+
+        if (str.length() == 0 || json_str.indexOf("error-code") != -1) {
+			msg = INCOMPLETE_CAPTCHA_RESPONSE;
+			request.getSession().setAttribute("errorMsg", msg);
+			request.getSession().setAttribute("retry", "true");
+			return "retry";
+		}
+
         String captcha_option = HTTPUtils.cleanXSS((String) request.getParameter("captcha_option"));
         if (isNull(captcha_option)) {
 			captcha_option = "default";
@@ -2900,7 +2914,8 @@ ontologiesToSearchOnStr = s;
 			return "retry";
 		}
 
-		if (isNull(answer) || isNull(subject) || isNull(message) || isNull(from)) {
+		//if (isNull(answer) || isNull(subject) || isNull(message) || isNull(from)) {
+		if (isNull(subject) || isNull(message) || isNull(from)) {
 			msg = Constants.PLEASE_COMPLETE_DATA_ENTRIES;
 			request.getSession().setAttribute("errorMsg", msg);
 			request.getSession().setAttribute("retry", "true");
@@ -2914,7 +2929,7 @@ ontologiesToSearchOnStr = s;
 			request.getSession().setAttribute("retry", "true");
 			return "retry";
 		}
-
+/*
         try {
     		String retstr = null;
     		if (captcha_option.compareTo("audio") == 0) {
@@ -2945,6 +2960,22 @@ ontologiesToSearchOnStr = s;
             request.getSession().setAttribute("errorType", "user");
             return "retry";
 
+        } catch (Exception e) {
+            msg = "Your message was not sent.\n";
+            msg += "    (If possible, please contact NCI systems team.)\n";
+            msg += "\n";
+            msg += e.getMessage();
+            request.getSession().setAttribute("errorMsg", Utils.toHtml(msg));
+            request.getSession().setAttribute("errorType", "system");
+            e.printStackTrace();
+            return "error";
+        }
+*/
+        try {
+            String recipientStr = NCItBrowserProperties.getNCICB_CONTACT_URL();
+            String mail_smtp_server = NCItBrowserProperties.getMAIL_SMTP_SERVER();
+            MailUtils.postMail(from, recipientStr, subject, message, mail_smtp_server);
+			request.getSession().setAttribute("message", msg);
         } catch (Exception e) {
             msg = "Your message was not sent.\n";
             msg += "    (If possible, please contact NCI systems team.)\n";

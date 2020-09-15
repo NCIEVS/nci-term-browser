@@ -207,7 +207,9 @@
                 <filter token="owl_role_quantifiers" value="${owl_role_quantifiers}"/>
                 <filter token="ncit.mapping.url" value="${ncit.mapping.url}"/>
                 <filter token="graph.db.url" value="${graph.db.url}"/>
-              
+                <filter token="recaptcha.site.key" value="${recaptcha.site.key}"/>
+                <filter token="recaptcha.security.key" value="${recaptcha.security.key}"/>
+             
             </filterset>
             <resources>
                 <file file="${bda.conf.dir}/${webapp.prop.file}"/>
@@ -306,6 +308,9 @@
                 <filter token="standard.ftp.report.info.1" value="${standard.ftp.report.info.1}"/>
                 <filter token="standard.ftp.report.info.2" value="${standard.ftp.report.info.2}"/>
                 <filter token="standard.ftp.report.info.3" value="${standard.ftp.report.info.3}"/>
+                <filter token="recaptcha.site.key" value="${recaptcha.site.key}"/>
+                <filter token="recaptcha.security.key" value="${recaptcha.security.key}"/>
+                
             </filterset>
             <resources>
                 <file file="${exploded.dir}/deploy/${webapp.prop.file}"/>

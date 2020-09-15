@@ -164,6 +164,12 @@ public class NCItBrowserProperties {
 
     private static String default_graph_db_url = "https://graphresolve-dev.nci.nih.gov";
 
+    public static String RECAPTCHA_SITE_KEY = "RECAPTCHA_SITE_KEY";
+    public static String RECAPTCHA_SECURITY_KEY = "RECAPTCHA_SECURITY_KEY";
+
+    private static String _recaptcha_site_key = null;
+    private static String _recaptcha_security_key = null;
+
     /**
      * Private constructor for singleton pattern.
      */
@@ -290,6 +296,15 @@ public class NCItBrowserProperties {
 						min_search_string_length;
 				}
 			}
+
+			_recaptcha_site_key =
+				_browserProperties
+					.getProperty(_browserProperties.RECAPTCHA_SITE_KEY);
+
+			_recaptcha_security_key =
+				_browserProperties
+					.getProperty(_browserProperties.RECAPTCHA_SECURITY_KEY);
+
 			String sliding_window_half_width_str =
 				_browserProperties
 					.getProperty(_browserProperties.SLIDING_WINDOW_HALF_WIDTH);
@@ -592,6 +607,14 @@ public class NCItBrowserProperties {
 
     public static String getNCICB_CONTACT_URL() {
         return _ncicb_contact_url;
+    }
+
+    public static String getRecaptchaSiteKey() {
+        return _recaptcha_site_key;
+    }
+
+    public static String getRecaptchaSecurityKey() {
+        return _recaptcha_security_key;
     }
 
     public static int getPaginationTimeOut() {

@@ -126,7 +126,7 @@
                       <ul>
                       <li>
                       For browser support or suggestions, use the browser's
-                      <a href="ncitbrowser/pages/contact_us.jsf">Contact Us</a>
+                      <a href="<%=basePath%>/pages/contact_us.jsf">Contact Us</a>
                       page.
                       </li>
 

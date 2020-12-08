@@ -1238,11 +1238,13 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 
     public String getDefSource(String qualifier_str) {
 		if (qualifier_str == null) return null;
-		if (qualifier_str.indexOf("def-source") == -1) return null;
+		//if (qualifier_str.indexOf("def-source") == -1) return null;
+		if (qualifier_str.indexOf("source") == -1) return null;
 		Vector u = StringUtils.parseData(qualifier_str, '$');
 		for (int i=0; i<u.size(); i++) {
 			String t = (String) u.elementAt(i);
-			if (t.indexOf("def-source") != -1) {
+			//if (t.indexOf("def-source") != -1) {
+			if (t.indexOf("source=") != -1) {
 				Vector u2 = StringUtils.parseData(t, '=');
 				return (String) u2.elementAt(1);
 			}

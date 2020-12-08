@@ -43,7 +43,6 @@
     <%
 
 long ms = System.currentTimeMillis();
-
 CartActionBean cartActionBean = (CartActionBean) request.getSession().getAttribute("cartActionBean"); 
 if (cartActionBean == null) {
     cartActionBean = new CartActionBean();
@@ -653,7 +652,23 @@ curr_concept = (Entity) request.getSession().getAttribute("concept");
     external_source_codes_url = propertyData.getExternal_source_codes_url();
     external_source_codes_linktext = propertyData.getExternal_source_codes_linktext();
     descendantCodes = propertyData.getDescendantCodes();
+    
     propertyName2ValueHashMap = propertyData.getPropertyName2ValueHashMap();
+    /*
+    Iterator it = propertyName2ValueHashMap.keySet().iterator();
+    while (it.hasNext()) {
+        String map_key = (String) it.next();
+        Vector map_values = (Vector) propertyName2ValueHashMap.get(map_key);
+        if (map_values != null && map_values.size() > 0) {
+            for (int k=0; k<map_values.size(); k++) {
+                String map_value = (String) map_values.elementAt(k);
+                System.out.println(map_key + " --> " + map_value);
+            }
+        }
+    }
+    */
+  
+    
     propertyQualifierHashMap = propertyData.getPropertyQualifierHashMap();
     displayLabel2PropertyNameHashMap = propertyData.getDisplayLabel2PropertyNameHashMap();
 
@@ -795,26 +810,27 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
         String qualifier = "";
 
         if (propName_label.indexOf("Synonyms") == -1) {
-
           displayed_properties.add(propName);
           propertyData.add_displayed_property(propName);
 
           Vector value_vec = (Vector) propertyName2ValueHashMap.get(propName);
-
           if (value_vec != null && value_vec.size() > 0) {
 
             int k = -1;
             for (int j=0; j<value_vec.size(); j++) {
               String value = (String) value_vec.elementAt(j);
               k++;
-
               if (propName.compareTo("NCI_META_CUI") == 0) {
                 ncim_cui_code_vec.add(value);
               }
 
               if(propName_label.compareTo("Definition") == 0) {
+              //if(propName_label.compareTo("DEFINITION") == 0) {
+             
+              
                 String value_pre = value;
                 value = JSPUtils.reformatPDQDefinition(value);
+                
                 String value_post = value;
                 // Send redirect:
                 if (value_post == null) {
@@ -834,16 +850,22 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
 
               String value_wo_qualifier = value;
               int n = value.indexOf("|");
-
+ 
               is_definition = false;
+              String def_source = null;
+              
               if (n != -1 && (propName_label.indexOf("Definition") != -1 || propName_label.indexOf("DEFINITION") != -1 || propName_label.indexOf("definition") != -1)) {
                 is_definition = true;
+                
                 Vector def_vec = StringUtils.parseData(value);
                 value_wo_qualifier = (String) def_vec.elementAt(0);
+                
                 qualifier = "";
                 if (def_vec.size() > 1) {
                   qualifier = (String) def_vec.elementAt(1);
                 }
+		def_source = propertyData.getDefSource(qualifier);
+		qualifier = def_source;
 
                 if (def_map != null && def_map.containsKey(qualifier)) {
                   String def_source_display_value = (String) def_map.get(qualifier);
@@ -851,6 +873,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                   propName_label = def_source_display_value + " " + propName_label2;
 
                 } else {
+                
                   if (qualifier.indexOf("PDQ") != -1) {
                     //value = JSPUtils.reformatPDQDefinition(value);
                   } else if (qualifier.compareTo("NCI") != 0) {
@@ -874,7 +897,16 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                     value = value_wo_qualifier;
                   }
                 }
+ 
+ /*
                 if (qualifier.compareToIgnoreCase("NCI") == 0) {
+                  nci_def_label_value.add(propName_label2 + "|" + value);
+                } else {
+                  non_nci_def_label_value.add(propName_label + "|" + value);
+                }
+*/
+
+                if (def_source.compareToIgnoreCase("NCI") == 0) {
                   nci_def_label_value.add(propName_label2 + "|" + value);
                 } else {
                   non_nci_def_label_value.add(propName_label + "|" + value);

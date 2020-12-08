@@ -281,8 +281,16 @@ public class PropertyData
 		   }
 		}
 
-		this.propertyName2ValueHashMap = conceptDetails.getPropertyName2ValueHashMap(curr_concept);
-		this.propertyQualifierHashMap = conceptDetails.getPropertyQualifierHashMap(curr_concept);
+// missing source-def
+		//this.propertyName2ValueHashMap = conceptDetails.getPropertyName2ValueHashMap(curr_concept);
+this.propertyName2ValueHashMap = null;
+try {
+	this.propertyName2ValueHashMap = conceptDetails.constructPropertyHashMap(curr_concept);
+} catch (Exception ex) {
+	ex.printStackTrace();
+}
+
+
 		Vector propertyvalues = new Vector();
 		concept_id = curr_concept.getEntityCode();
 		propertyvalues.add(concept_id);
@@ -1227,6 +1235,21 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 		buf.append("</table>");
 		return buf.toString();
 	}
+
+    public String getDefSource(String qualifier_str) {
+		if (qualifier_str == null) return null;
+		if (qualifier_str.indexOf("def-source") == -1) return null;
+		Vector u = StringUtils.parseData(qualifier_str, '$');
+		for (int i=0; i<u.size(); i++) {
+			String t = (String) u.elementAt(i);
+			if (t.indexOf("def-source") != -1) {
+				Vector u2 = StringUtils.parseData(t, '=');
+				return (String) u2.elementAt(1);
+			}
+		}
+		return null;
+	}
+
 
 /*
 	public static void main(String[] args) {

@@ -11,6 +11,10 @@
 <%@ page import="org.LexGrid.LexBIG.LexBIGService.LexBIGService" %>
 
 <%
+
+System.out.println("************************* property.jsp*************************************");
+
+
 HashMap def_map = null;
 
 int other_src_alt_def_count = 0;
@@ -217,6 +221,21 @@ displayItemList != null && curr_concept != null) {
       String url = (String) properties_to_display_url.elementAt(i);
       String linktext = (String) properties_to_display_linktext.elementAt(i);
 
+
+
+System.out.println("************ propName: " + propName_label);
+
+System.out.println("************ propName_label: " + propName_label);
+
+System.out.println("************ propName_label2: " + propName_label);
+
+System.out.println("************ url: " + propName_label);
+
+System.out.println("************ linktext: " + linktext);
+
+
+
+
       //KLO 102611
       //if (propName.compareTo(ncim_cui_propName) == 0 || propName.compareTo(umls_cui_propName) == 0) {
         if (propName.compareTo(ncim_cui_propName) == 0) {
@@ -235,7 +254,6 @@ displayItemList != null && curr_concept != null) {
         }
 
         String qualifier = "";
-
         if (propName_label.indexOf("Synonyms") == -1) {
 
           displayed_properties.add(propName);
@@ -248,15 +266,31 @@ displayItemList != null && curr_concept != null) {
             int k = -1;
             for (int j=0; j<value_vec.size(); j++) {
               String value = (String) value_vec.elementAt(j);
+              
+              
+System.out.println("************ value: " + value);
+              
+              
               k++;
 
               if (propName.compareTo("NCI_META_CUI") == 0) {
                 ncim_cui_code_vec.add(value);
               }
 
-              if(propName_label.compareTo("Definition") == 0) {
+              //if(propName_label.compareTo("Definition") == 0) {
+              if(propName_label.compareTo("DEFINITION") == 0) {
+              
+              
+System.out.println("************ propName_label: " + propName_label);
+              
+              
                 String value_pre = value;
                 value = JSPUtils.reformatPDQDefinition(value);
+                
+System.out.println("************ value: " + value);
+                
+                
+                
                 String value_post = value;
                 // Send redirect:
                 if (value_post == null) {
@@ -275,11 +309,22 @@ displayItemList != null && curr_concept != null) {
               }
 
               String value_wo_qualifier = value;
+              
+                 
+System.out.println("************ value_wo_qualifier: " + value_wo_qualifier);
+                
+             
+              
               int n = value.indexOf("|");
 
               is_definition = false;
               if (n != -1 && (propName_label.indexOf("Definition") != -1 || propName_label.indexOf("DEFINITION") != -1 || propName_label.indexOf("definition") != -1)) {
                 is_definition = true;
+                
+System.out.println("************ is_definition: " + is_definition);
+                
+                
+                
                 Vector def_vec = StringUtils.parseData(value);
                 value_wo_qualifier = (String) def_vec.elementAt(0);
                 qualifier = "";
@@ -287,10 +332,15 @@ displayItemList != null && curr_concept != null) {
                   qualifier = (String) def_vec.elementAt(1);
                 }
 
+System.out.println("************ qualifier: " + qualifier);
+
                 if (def_map != null && def_map.containsKey(qualifier)) {
                   String def_source_display_value = (String) def_map.get(qualifier);
                   value = value_wo_qualifier + " (" + qualifier + ")";
                   propName_label = def_source_display_value + " " + propName_label2;
+
+System.out.println("************ propName_label: " + propName_label);
+
 
                 } else {
                   if (qualifier.indexOf("PDQ") != -1) {
@@ -315,12 +365,22 @@ displayItemList != null && curr_concept != null) {
                   } else {
                     value = value_wo_qualifier;
                   }
+                  
+ System.out.println("************ value: " + value);
+                 
+                  
                 }
                 if (qualifier.compareToIgnoreCase("NCI") == 0) {
                   nci_def_label_value.add(propName_label2 + "|" + value);
                 } else {
                   non_nci_def_label_value.add(propName_label + "|" + value);
                 }
+                
+  System.out.println("************ nci_def_label_value: " + nci_def_label_value);
+  System.out.println("************ non_nci_def_label_value: " + non_nci_def_label_value);
+                 
+               
+                
               }
 
               if (propName_label.indexOf("textualPresentation") == -1) {

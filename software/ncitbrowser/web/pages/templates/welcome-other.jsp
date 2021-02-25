@@ -47,7 +47,7 @@ boolean isMapping = DataUtils.isMapping(scheme, null);
   if (vocabulary_version != null) {
     request.setAttribute("version", _version);
   }
-
+  
   String html_compatable_description_value = DataUtils.getMetadataValue(scheme, _version, "html_compatable_description");
   String version_value = DataUtils.getMetadataValue(scheme, _version, "term_browser_version");
   if (version_value == null)

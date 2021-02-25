@@ -195,6 +195,9 @@ System.out.println("miltiple_search.jsp ncit_url: " + ncit_url);
   </script>
   <%
   request.getSession().removeAttribute("dictionary");
+  request.getSession().setAttribute("active_scheme", "none");
+  
+  
   Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
   if (display_name_vec == null) {
     display_name_vec = DataUtils.getSortedOntologies();

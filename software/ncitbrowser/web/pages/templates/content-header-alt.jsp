@@ -16,6 +16,7 @@
     }
   }
   if (DataUtils.isNCIT(info.dictionary)) {
+   
     %>
     <div class="banner">
       <a href="<%=basePath%>">
@@ -29,6 +30,9 @@
       </a>
     </div>
   <% } else if (info.dictionary != null) { %>
+  
+    request.getSession().setAttribute("active_vocabulary", info.dictionary);
+
     <a
         class="vocabularynamebanner"
         href="<%=request.getContextPath()%>/pages/vocabulary.jsf?dictionary=<%=HTTPUtils.cleanXSS(info.dictionary)%>">

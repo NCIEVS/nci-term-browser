@@ -16,14 +16,19 @@ if (info3.dictionary == null && search_results_dictionary_hc != null) {
 }
   String nciturl = request.getContextPath() + "/pages/home.jsf" + "?version=" + info3.version;
   if (JSPUtils.isNull(info3_dictionary)) {
-  
+ 
     %>
     <a href="<%=basePath%>/start.jsf" style="text-decoration: none;">
       <div class="vocabularynamebanner_tb">
         <span class="vocabularynamelong_tb"><%= JSPUtils.getApplicationVersionDisplay() %></span>
       </div>
     </a>
-  <% } else if (DataUtils.isNCIT(info3_dictionary)) { %>
+  <% } else if (DataUtils.isNCIT(info3_dictionary)) { 
+  
+  request.getSession().setAttribute("active_vocabulary", Constants.CODING_SCHEME_NAME);
+  
+  %>
+ 
     <a href="<%=nciturl%>" style="text-decoration: none;">
       <div class="vocabularynamebanner_ncit">
         <%

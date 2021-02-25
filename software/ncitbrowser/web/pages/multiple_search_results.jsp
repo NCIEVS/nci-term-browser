@@ -70,6 +70,9 @@
     private static Logger _logger = Utils.getJspLogger("multiple_search_results.jsp");
     private static String _ncimUrl = NCItBrowserProperties.getNCIM_URL();
     %>
+    <%
+    request.getSession().setAttribute("active_scheme", "none");
+    %>
 
     <f:view>
       <!-- Begin Skip Top Navigation -->

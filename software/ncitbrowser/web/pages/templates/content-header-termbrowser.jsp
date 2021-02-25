@@ -1,4 +1,5 @@
 <!-- Thesaurus, banner search area -->
+
 <div class="bannerarea_960">
   <a href="<%=basePath%>/start.jsf" style="text-decoration: none;">
     <div class="vocabularynamebanner_tb">

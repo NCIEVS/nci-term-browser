@@ -30,8 +30,16 @@
 <%@ page import="javax.faces.model.SelectItem" %>
 
 <%
+
 String ncim_url = DataUtils.getNCImURL();
+String active_scheme = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("active_scheme"));
+request.getSession().removeAttribute("active_scheme");
+
 String quicklink_dictionary = (String) request.getSession().getAttribute("dictionary");
+
+System.out.println("quicklink_dictionary: " + quicklink_dictionary);
+System.out.println("active_scheme: " + active_scheme);
+
 quicklink_dictionary = DataUtils.getFormalName(quicklink_dictionary);
 String term_suggestion_application_url2 = "";
 String dictionary_encoded2 = "";
@@ -90,7 +98,19 @@ if (quicklink_dictionary != null) {
           <li>
           <a href="<%= request.getContextPath() %>/index.jsp" tabindex="0" alt="NCI Thesaurus Browser">
             NCI Thesaurus Browser</a>
-        </li>
+          </li>
+          
+<%
+if (active_scheme == null) {
+%>          
+           <li>
+          <a href="<%= NCItBrowserProperties.getEVS_REPORT_EXPORTER_URL() %>" tabindex="0" alt="EVS Report Exporter">
+            EVS Report Exporter</a>
+          </li>         
+<%
+}          
+%>          
+          
 
       <% } %>
 

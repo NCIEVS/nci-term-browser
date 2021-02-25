@@ -1,5 +1,9 @@
 <!-- Thesaurus, banner search area -->
 
+<%
+request.getSession().setAttribute("active_scheme", "none");
+%>
+
 <div class="bannerarea_960">
   <a href="<%=basePath%>/start.jsf" style="text-decoration: none;">
     <div class="vocabularynamebanner_tb">

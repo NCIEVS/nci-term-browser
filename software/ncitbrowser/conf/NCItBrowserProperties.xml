@@ -544,6 +544,11 @@
         </ConfigurableItem>
 
         <ConfigurableItem>
+                 <key>EVS_REPORT_EXPORTER_URL</key>
+                 <value>@evsreportexporter.url@</value>
+        </ConfigurableItem>
+
+        <ConfigurableItem>
                  <key>NCIT_URL</key>
                  <value>@ncit.url@</value>
         </ConfigurableItem>

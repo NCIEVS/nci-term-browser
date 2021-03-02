@@ -104,8 +104,8 @@ if (quicklink_dictionary != null) {
 if (active_scheme == null) {
 %>          
            <li>
-          <a href="<%= NCItBrowserProperties.getEVS_REPORT_EXPORTER_URL() %>" tabindex="0" alt="EVS Report Exporter">
-            EVS Report Exporter</a>
+          <a href="<%= NCItBrowserProperties.getEVS_REPORT_EXPORTER_URL() %>" tabindex="0" alt="NCI Thesaurus Exporter">
+            NCI Thesaurus Exporter</a>
           </li>         
 <%
 }          

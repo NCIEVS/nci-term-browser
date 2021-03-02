@@ -195,7 +195,7 @@ JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
                <td class="textbody" valign="top">
            <a href="<%= NCItBrowserProperties.getEVS_REPORT_EXPORTER_URL() %>" tabindex="0" alt="NCI Thesaurus Exporter">
             NCI Thesaurus Exporter</a>:                
-                 An application for exporting NCI Thesaurus data.
+                 A tool to customize exports of data from NCI Thesaurus (NCIt).
                </td>
             </tr>
             

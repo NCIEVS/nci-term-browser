@@ -37,9 +37,6 @@ request.getSession().removeAttribute("active_scheme");
 
 String quicklink_dictionary = (String) request.getSession().getAttribute("dictionary");
 
-System.out.println("quicklink_dictionary: " + quicklink_dictionary);
-System.out.println("active_scheme: " + active_scheme);
-
 quicklink_dictionary = DataUtils.getFormalName(quicklink_dictionary);
 String term_suggestion_application_url2 = "";
 String dictionary_encoded2 = "";

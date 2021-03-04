@@ -183,10 +183,10 @@ JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
                <td>
                  <a href="<%= NCItBrowserProperties.getEVS_REPORT_EXPORTER_URL() %>" tabindex="0" alt="NCI Thesaurus Exporter">
                    <img
-                       src="<%=basePath%>/images/ExpTile.png"
+                       src="<%=basePath%>/images/ExpTile.jpg"
                        width="77"
                        height="38px"
-                       alt="NCI Term Browser"
+                       alt="NCI Thesaurus Exporter"
                        border="0"
                    />
                  </a>

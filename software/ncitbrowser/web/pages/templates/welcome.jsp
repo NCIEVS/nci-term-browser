@@ -181,20 +181,20 @@ JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
              <tr valign="top">
                <td width="10px"></td>
                <td>
-                 <a href="<%= NCItBrowserProperties.getEVS_REPORT_EXPORTER_URL() %>" tabindex="0" alt="NCI Thesaurus Exporter">
+                 <a href="<%= NCItBrowserProperties.getEVS_REPORT_EXPORTER_URL() %>" tabindex="0" alt="NCI Thesaurus Report Exporter">
                    <img
                        src="<%=basePath%>/images/ExpTile.jpg"
                        width="77"
                        height="38px"
-                       alt="NCI Thesaurus Exporter"
+                       alt="NCI Thesaurus Report Exporter"
                        border="0"
                    />
                  </a>
                </td>
                <td width="3px"></td>
                <td class="textbody" valign="top">
-           <a href="<%= NCItBrowserProperties.getEVS_REPORT_EXPORTER_URL() %>" tabindex="0" alt="NCI Thesaurus Exporter">
-            NCI Thesaurus Exporter</a>:                
+           <a href="<%= NCItBrowserProperties.getEVS_REPORT_EXPORTER_URL() %>" tabindex="0" alt="NCI Thesaurus Report Exporter">
+            NCI Thesaurus Report Exporter</a>:                
                  A tool to customize exports of data from NCI Thesaurus (NCIt).
                </td>
             </tr>

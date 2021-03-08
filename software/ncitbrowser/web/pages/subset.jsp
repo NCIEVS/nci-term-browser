@@ -112,7 +112,6 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                       href="http://www.cancer.gov/cancertopics/terminologyresources/CDISC"
                       target="_blank"
                       alt="Clinical Data Interchange Standards Consortium (CDISC) Terminology">
-
                     <img
                         src="<%=basePath%>/images/CDISC_Logo.png"
                         border="0"

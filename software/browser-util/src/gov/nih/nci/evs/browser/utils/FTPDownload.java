@@ -169,7 +169,7 @@ public class FTPDownload {
          try {
             if (is != null) is.close();
             if (pw != null) pw.close();
-            System.out.println("Output file " + outputfile + " generated.");
+            //System.out.println("Output file " + outputfile + " generated.");
          } catch (IOException ioe) {
             ioe.printStackTrace();
          }
@@ -206,8 +206,6 @@ public class FTPDownload {
 		  }
 	  } catch (Exception ex) {
 		  ex.printStackTrace();
-	  } finally {
-		  System.out.println("Output file " + outputfile + " generated.");
 	  }
    }
 
@@ -245,7 +243,7 @@ public class FTPDownload {
          try {
             if (is != null) is.close();
             if (pw != null) pw.close();
-            System.out.println("Output file " + outputfile + " generated.");
+            //System.out.println("Output file " + outputfile + " generated.");
          } catch (IOException ioe) {
             ioe.printStackTrace();
          }
@@ -276,8 +274,6 @@ public class FTPDownload {
 		  }
 	  } catch (Exception ex) {
 		  ex.printStackTrace();
-	  } finally {
-		  System.out.println("Output file " + outputfile + " generated.");
 	  }
    }
 

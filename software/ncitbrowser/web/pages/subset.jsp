@@ -114,6 +114,8 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                       alt="Clinical Data Interchange Standards Consortium (CDISC) Terminology">
                     <img
                         src="<%=basePath%>/images/CDISC_Logo.png"
+                        width="77"
+                        height="38px"                        
                         border="0"
                         alt="Clinical Data Interchange Standards Consortium (CDISC) Terminology"
                     />

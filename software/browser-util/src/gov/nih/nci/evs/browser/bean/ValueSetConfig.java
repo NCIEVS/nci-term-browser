@@ -122,7 +122,10 @@ public class ValueSetConfig
 		StringBuffer buf = new StringBuffer();
 		buf.append("name: ").append(name);
 		buf.append("\n\turi: ").append(uri);
-		String report_uri = reportURI.replaceAll(" ", "%20");
+		String report_uri = reportURI;
+		if (report_uri != null) {
+			report_uri = reportURI.replaceAll(" ", "%20");
+		}
 		buf.append("\n\treportURI: ").append(report_uri);
 		buf.append("\n\textractionRule: ").append(extractionRule);
 		return buf.toString();

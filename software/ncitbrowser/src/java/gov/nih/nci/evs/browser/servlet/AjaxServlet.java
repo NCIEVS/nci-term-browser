@@ -4300,6 +4300,10 @@ out.flush();
 			  if (group_node_ids == null) return;
 			  for (int k=0; k<group_node_ids.size(); k++) {
 				  String node_id = (String) group_node_ids.elementAt(k);
+				  String content = verify_group_node_data(node_id, group_node_data);
+				  if (content.compareTo(group_node_data) != 0) {
+					  group_node_data = content;
+				  }
 				  if (!group_node_id2dataMap.containsKey(node_id)) {
 					  group_node_id2dataMap.put(node_id, group_node_data);
 					  break;
@@ -4310,7 +4314,6 @@ out.flush();
 			  v = (Vector) w.clone();
 		  }
 
-
 		  direction = false;
 		  w = graphReductionUtils.reduce_graph(v, direction);
 		  graph_reduced = graphReductionUtils.graph_reduced(v, w);
@@ -4320,6 +4323,10 @@ out.flush();
 			  if (group_node_ids == null) return;
 			  for (int k=0; k<group_node_ids.size(); k++) {
 				  String node_id = (String) group_node_ids.elementAt(k);
+				  String content = verify_group_node_data(node_id, group_node_data_2);
+				  if (content.compareTo(group_node_data_2) != 0) {
+					  group_node_data_2 = content;
+				  }
 				  if (!group_node_id2dataMap.containsKey(node_id)) {
 					  group_node_id2dataMap.put(node_id, group_node_data_2);
 					  break;
@@ -5615,5 +5622,15 @@ out.flush();
 		}
         return "refresh_cart";
 	}
+
+    public String verify_group_node_data(String node_id, String group_node_data) {
+        int n = group_node_data.indexOf("Node ");
+        int m = group_node_data.indexOf(" content:");
+        String group_node_id = group_node_data.substring(n+5, m);
+        String s1 = group_node_data.substring(0, n+5);
+        String s2 = group_node_data.substring(m, group_node_data.length());
+        return s1 + node_id + s2;
+	}
+
 }
 

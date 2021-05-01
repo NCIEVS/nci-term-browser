@@ -195,6 +195,7 @@ public class ResolvedValueSetIteratorHolder {
 			XSSFWorkbook hssfWorkbook = (XSSFWorkbook) book;
 			table(hssfWorkbook.getSheetAt(sheet), startIndex, endIndex);
 		}
+
         rvs_content_vec = extractRawDataFromTableContent();
    }
 
@@ -438,7 +439,6 @@ public class ResolvedValueSetIteratorHolder {
 				tr(sheet.getRow(i), buf);
 				t = buf.toString();
 				resolvedValueSetList.add(t);
-
 			}
 			out.append("</table>\n");
             setHeadingBackGroundColor();
@@ -449,10 +449,10 @@ public class ResolvedValueSetIteratorHolder {
 
     private void table(Sheet workbook_sheet, int startIndex, int col, String code, boolean cdisc) {
 		HashSet hset = new HashSet();
-
 		if (workbook_sheet == null) {
 			return;
 		}
+
 		if (workbook_sheet instanceof HSSFSheet) {
 			HSSFSheet sheet = (HSSFSheet) workbook_sheet;
 			resolvedValueSetList = new ArrayList();
@@ -493,7 +493,6 @@ public class ResolvedValueSetIteratorHolder {
 					}
 				}
 			}
-
 			out.append("<table id=\"" + "rvs_table" + "\" width=\"915\" class=\"mt\">\n");
 			StringBuffer buf = new StringBuffer();
 			tr(sheet.getRow(0), buf);
@@ -507,7 +506,6 @@ public class ResolvedValueSetIteratorHolder {
 				t = buf.toString();
 				resolvedValueSetList.add(t);
 			}
-
 			for (int i=startIndex; i<=rows; i++) {
 				buf = new StringBuffer();
 				HSSFRow row = sheet.getRow(i);
@@ -729,8 +727,11 @@ public class ResolvedValueSetIteratorHolder {
 			}
 			buf.append("'>");
 			for (colIndex = 0; colIndex < row.getLastCellNum(); ++colIndex) {
-				//td(row.getCell(colIndex));
-				td(row.getCell(colIndex), buf);
+				Cell cell = row.getCell(colIndex);
+				if (cell == null) {
+					//System.out.println("WARNING: column " + colIndex + " is null???");
+				}
+				td(row.getCell(colIndex), buf, colIndex);
 			}
 			buf.append("</tr>");
 
@@ -1142,10 +1143,18 @@ public class ResolvedValueSetIteratorHolder {
 		}
 	}
 
-
     private void td(Cell row_cell, StringBuffer buf) {
+		td(row_cell, buf, -1);
+	}
+
+    private void td(Cell row_cell, StringBuffer buf, int columnIndex) {
 		if (row_cell == null) {
-			buf.append("/>");
+			if (columnIndex != -1) {
+				//System.out.println("WARNING: row_cell == null columnIndex: " + columnIndex);
+			}
+			//KLO
+			//buf.append("/>");
+			buf.append("<td></td>");
 			return;
 		}
 
@@ -1314,9 +1323,6 @@ public class ResolvedValueSetIteratorHolder {
 			}
 			buf.append(val);
 			buf.append("</td>");
-
-
-
 
 		} else {
 			XSSFCell cell = (XSSFCell) row_cell;
@@ -1770,7 +1776,6 @@ public class ResolvedValueSetIteratorHolder {
 			return null;
 		}
 		Vector w = new Vector();
-
 		for (int i=0; i<resolvedValueSetList.size(); i++) {
             String line = (String) resolvedValueSetList.get(i);
             int k = i+1;
@@ -1864,10 +1869,12 @@ public class ResolvedValueSetIteratorHolder {
 		boolean bool_val;
 		table_content_buf.append(getOpenTableTag("rvs_table")).append("\n");
 		List list = getResolvedValueSetList();
-
 		String first_line = (String) list.get(0);
 		String first_line0 = first_line;
+
 		first_line = first_line.replaceAll("td", "th");
+
+
 		table_content_buf.append(first_line).append("\n");
 
 		for (int k=1; k<list.size(); k++) {
@@ -1918,10 +1925,9 @@ public class ResolvedValueSetIteratorHolder {
         return hwb;
     }
 
-
 	public static void main(String [ ] args)
 	{
-		String excelfile = args[0];
+		String excelfile = null;
 		try {
 			excelfile = "FDA-CDRH_NCIt_Subsets.xls";
 			int sheet = 0;
@@ -1944,16 +1950,22 @@ public class ResolvedValueSetIteratorHolder {
 			code = "C78418";
 			htmlfile = "test3.html";
 
-
             cdisc = true;
 			excelfile = "ADaM_Terminology.xls";
 			sheet = 1;
-			col = 1;
+			col = 0;
 			code = "C81223";
 			htmlfile = "test4.html";
+			//5:1:C178127
+            cdisc = false;
+			excelfile = "PCDC_Terminology.xls";
+			//2:1:C173217
+			sheet = 4;
+			col = 0;
+			code = "C178127";
+			htmlfile = "test7.html";
 
-
-            String DEFAULT_URL = "https://nciterms.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit";
+            String DEFAULT_URL = "https://nciterms65.nci.nih.gov/ncitbrowser/ConceptReport.jsp?dictionary=NCI_Thesaurus&ns=ncit";
 
 			int startIndex = ExcelUtil.getExcelStartRow(excelfile, sheet, col, code);
             ResolvedValueSetIteratorHolder rvsi = new ResolvedValueSetIteratorHolder(excelfile, sheet, startIndex, col, code, DEFAULT_URL, cdisc);
@@ -1965,9 +1977,6 @@ public class ResolvedValueSetIteratorHolder {
 			int lcv = 0;
 			while (iterator.hasNext()) {
 				String t = (String) iterator.next();
-				//if (lcv == 0) {
-				//	t = t.replace("255,255,255", "192,192,192");
-				//}
 				w.add(t);
 				lcv++;
 			}
@@ -1977,18 +1986,13 @@ public class ResolvedValueSetIteratorHolder {
 			Vector content = rvsi.getTableContent();
 			Utils.saveToFile("content.txt", content);
 
-
 			String content_str = rvsi.getResolvedValueSetContent();
 			w = new Vector();
 			w.add(content_str);
 			Utils.saveToFile("content_str.txt", content);
-
-
     	} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-
-
 }
 

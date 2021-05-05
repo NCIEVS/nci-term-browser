@@ -248,6 +248,14 @@
        </DisplayItem>
 
        <DisplayItem>
+            <propertyName>NCI_Drug_Dictionary_ID</propertyName>
+            <itemLabel>NCI Drug Dictionary ID</itemLabel>
+            <url>https://www.cancer.gov/publications/dictionaries/cancer-drug/def/</url>
+            <hyperlinkText>see NCI Drug Dictionary info</hyperlinkText>
+            <isExternalCode>true</isExternalCode>
+       </DisplayItem>  
+       
+       <DisplayItem>
             <propertyName>FDA_UNII_Code</propertyName>
             <itemLabel>FDA UNII Code</itemLabel>
             <url>null</url>

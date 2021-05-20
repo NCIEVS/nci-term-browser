@@ -332,6 +332,7 @@
           <%@ include file="/pages/templates/content-header-other.jsp" %>
 
           <%
+          String x = HTTPUtils.getRefererParmEncode(request);
           String refresh = HTTPUtils.cleanXSS((String) request.getParameter("refresh"));
           boolean refresh_page = false;
           if (!DataUtils.isNull(refresh)) {
@@ -949,7 +950,7 @@ target&nbsp;
                                 type="hidden"
                                 name="referer"
                                 id="referer"
-                                value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                                value="<%=x%>">
 
                             <input
                                 type="hidden"

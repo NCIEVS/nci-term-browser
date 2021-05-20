@@ -1,5 +1,6 @@
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 <%
+String x3 = HTTPUtils.getRefererParmEncode(request);
 String checked_valuesets = (String) request.getSession().getAttribute("checked_vocabularies");
 String match_text = gov.nih.nci.evs.browser.utils.HTTPUtils
 .cleanXSS((String) request.getSession().getAttribute("matchText_RVS"));
@@ -162,7 +163,7 @@ if (DataUtils.isNullOrBlank(searchTarget)) {
         <table border="0" cellspacing="0" cellpadding="0" width="100%" role='presentation'>
           <tr valign="top">
 
-            <input type="hidden" name="referer" id="referer" value="<%=HTTPUtils.getRefererParmEncode(request)%>" />
+            <input type="hidden" name="referer" id="referer" value="<%=x3%>" />
 
             <%
             String valuesetdef_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));

@@ -3180,7 +3180,15 @@ if (DataUtils.isNull(matchText)) {
       out.println("    </td>");
       out.println("  </tr>");
       out.println("</table>");
-      out.println("                <input type=\"hidden\" name=\"referer\" id=\"referer\" value=\"<%=HTTPUtils.getRefererParmEncode(request)%>\">");
+
+out.println("<%");
+out.println("String x = HTTPUtils.getRefererParmEncode(request);");
+out.println("%>");
+
+
+//      out.println("                <input type=\"hidden\" name=\"referer\" id=\"referer\" value=\"<%=HTTPUtils.getRefererParmEncode(request)%>\">");
+      out.println("                <input type=\"hidden\" name=\"referer\" id=\"referer\" value=\"<%=x%>\">");
+
       out.println("                <input type=\"hidden\" id=\"nav_type\" name=\"nav_type\" value=\"valuesets\" />");
       out.println("                <input type=\"hidden\" id=\"view\" name=\"view\" value=\"source\" />");
 

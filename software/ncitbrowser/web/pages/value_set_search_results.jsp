@@ -125,6 +125,7 @@
       <input type="hidden" id="view" name="view" value="<%=VSD_view%>" />
     </form>
     <%
+    String x = HTTPUtils.getRefererParmEncode(request);
     String vd_uri = null;
     String valueSetSearch_requestContextPath = request.getContextPath();
     String selected_ValueSetSearchOption = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("selectValueSetSearchOption"));
@@ -534,7 +535,7 @@
                           type="hidden"
                           name="referer"
                           id="referer"
-                          value="<%=HTTPUtils.getRefererParmEncode(request)%>"
+                          value="<%=x%>"
                       />
                       <% if (vd_uri != null) { %>
                         <input type="hidden" name="vsd_uri" id="vsd_uri" value="<%=vd_uri%>" />
@@ -682,7 +683,7 @@
                         type="hidden"
                         name="referer"
                         id="referer"
-                        value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                        value="<%=x%>">
 
                     <input type="hidden" id="nav_type" name="nav_type" value="valuesets" />
                     <input type="hidden" id="view" name="view" value="source" />
@@ -958,7 +959,7 @@
                                 type="hidden"
                                 name="referer"
                                 id="referer"
-                                value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                                value="<%=x%>">
 
                           </h:form>
 

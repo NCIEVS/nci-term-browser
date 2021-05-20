@@ -20,6 +20,7 @@
 </script>
 
 <%
+String x1 = HTTPUtils.getRefererParmEncode(request);
 String _searchform_requestContextPath = request.getContextPath();
 _searchform_requestContextPath = _searchform_requestContextPath.replace("//ncitbrowser//ncitbrowser", "//ncitbrowser");
 
@@ -247,6 +248,6 @@ if (_valueset_match_text == null) _valueset_match_text = "";
 
   </table>
 
-  <input type="hidden" name="referer" id="referer" value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+  <input type="hidden" name="referer" id="referer" value="<%=x1%>">
 
 </h:form>

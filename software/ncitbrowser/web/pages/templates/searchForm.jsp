@@ -67,6 +67,7 @@
 
 </script>
 <%
+String x0 = HTTPUtils.getRefererParmEncode(request);
 boolean back_to_search_results_link = false;
 boolean value_set_entity_search = false;
 String multiple_search_flag = HTTPUtils.cleanXSS((String) request.getParameter("m"));
@@ -370,7 +371,7 @@ check_r = "checked";
       </td>
     </tr>
   </table>
-  <input type="hidden" name="referer" id="referer" value="<%=HTTPUtils.getRefererParmEncode(request)%>" />
+  <input type="hidden" name="referer" id="referer" value="<%=x0%>" />
   <% if (vocab_name != null) { %>
     <input type="hidden" id="vocabulary" name="vocabulary" value="<%=HTTPUtils.cleanXSS(vocab_name)%>" />
     <input type="hidden" id="dictionary" name="dictionary" value="<%=HTTPUtils.cleanXSS(vocab_name)%>" />

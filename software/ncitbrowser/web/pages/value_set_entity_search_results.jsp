@@ -117,6 +117,7 @@
     <%! private static Logger _logger = Utils.getJspLogger("value_set_entity_search_results.jsp"); %>
 
     <%
+    String x = HTTPUtils.getRefererParmEncode(request);
     String VSD_view = (String) request.getSession().getAttribute("view");
     String valueSetSearch_requestContextPath = request.getContextPath();
     String selected_ValueSetSearchOption = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("selectValueSetSearchOption"));
@@ -507,7 +508,7 @@
                         type="hidden"
                         name="referer"
                         id="referer"
-                        value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                        value="<%=x%>">
 
                   </form>
 
@@ -715,7 +716,7 @@
                                   type="hidden"
                                   name="referer"
                                   id="referer"
-                                  value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                                  value="<%=x%>">
 
                             </h:form>
 

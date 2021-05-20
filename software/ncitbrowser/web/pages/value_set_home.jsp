@@ -178,6 +178,7 @@
               </script>
 
               <%
+              String x = HTTPUtils.getRefererParmEncode(request);
               String vd_uri = null;
               boolean isValueSet = true;
               String valueSetSearch_requestContextPath = request.getContextPath();
@@ -485,7 +486,7 @@
                                     type="hidden"
                                     name="referer"
                                     id="referer"
-                                    value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                                    value="<%=x%>">
 
                                 <input type="hidden" name="vsd_uri" id="vsd_uri" value="<%=vsd_uri%>" />
 
@@ -683,7 +684,7 @@
                                       type="hidden"
                                       name="referer"
                                       id="referer"
-                                      value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                                      value="<%=x%>">
 
                                 </h:form></td></tr>                          <% } %>
                         </table>

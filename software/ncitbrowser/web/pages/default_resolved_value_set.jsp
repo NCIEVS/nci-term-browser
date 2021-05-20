@@ -83,7 +83,7 @@
           <div id="main-area_960">
             <%@ include file="/pages/templates/content-header-resolvedvalueset.jsp" %>
             <%
-            
+String x = HTTPUtils.getRefererParmEncode(request);            
 String serviceUrl = RemoteServerUtil.getServiceUrl();
 LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
@@ -471,7 +471,7 @@ ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_servi
                             type="hidden"
                             name="referer"
                             id="referer"
-                            value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                            value="<%=x%>">
 
                         <%
                         if (version_selection != null)

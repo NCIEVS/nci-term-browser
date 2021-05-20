@@ -83,7 +83,7 @@
           <div id="main-area_960">
             <%@ include file="/pages/templates/content-header-resolvedvalueset.jsp" %>
             <%
-
+            String x = HTTPUtils.getRefererParmEncode(request);
 	    String serviceUrl = RemoteServerUtil.getServiceUrl();
 	    LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
@@ -457,7 +457,7 @@
                     </table>
                   <% } %>
                   <input type="hidden" name="vsd_uri" id="vsd_uri" value="<%=vsd_uri%>">
-                  <input type="hidden" name="referer" id="referer" value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                  <input type="hidden" name="referer" id="referer" value="<%=x%>">
                   <%
                   if (version_selection != null)
                   {

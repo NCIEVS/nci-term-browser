@@ -47,6 +47,7 @@
           <%@ include file="/pages/templates/content-header-resolvedvalueset.jsp" %>
 
           <%
+          String x = HTTPUtils.getRefererParmEncode(request);
           String valueSetSearch_requestContextPath = request.getContextPath();
           String message = (String) request.getSession().getAttribute("message");
           request.getSession().removeAttribute("message");
@@ -186,7 +187,7 @@
                           type="hidden"
                           name="referer"
                           id="referer"
-                          value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                          value="<%=x%>">
 
                     </h:form>
 

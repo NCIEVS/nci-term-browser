@@ -131,6 +131,7 @@
               <div id="main-area_960">
 
                 <%
+                String x = HTTPUtils.getRefererParmEncode(request);
                 String message = (String) request.getSession().getAttribute("message");
                 request.getSession().removeAttribute("message");
                 //System.out.println(message);
@@ -384,7 +385,7 @@
                                       type="hidden"
                                       name="referer"
                                       id="referer"
-                                      value="<%=HTTPUtils.getRefererParmEncode(request)%>"
+                                      value="<%=x%>"
                                   />
                                   <% if (vsd_uri != null) { %>
                                     <input type="hidden" name="vsd_uri" id="vsd_uri" value="<%=vsd_uri%>" />
@@ -617,7 +618,7 @@
                               type="hidden"
                               name="referer"
                               id="referer"
-                              value="<%=HTTPUtils.getRefererParmEncode(request)%>">
+                              value="<%=x%>">
 
                         </h:form>
 

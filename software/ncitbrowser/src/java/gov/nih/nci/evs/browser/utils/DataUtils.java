@@ -311,6 +311,8 @@ public class DataUtils {
 
     public static Vector target_terminologies = null;
 
+    public static HashSet _versions = null;
+
     // ==================================================================================
 
     public DataUtils() {
@@ -498,6 +500,8 @@ public class DataUtils {
 		ms = System.currentTimeMillis();
 
 		_sortedOntologies = getSortedOntologies();
+
+
 		System.out.println("getSortedOntologies run time (ms): " + (System.currentTimeMillis() - ms));
 
 		_URI2VSDHashMap = createURI2VSDHashMap();
@@ -1601,13 +1605,16 @@ if (cache_maps_to) {
         return hmap;
 	}
 
-
-
     public static HashMap getCodingSchemeValueSetTree(String vsd_uri) {
 		if (terminologyValueSetTree == null) {
 			initializeValueSetHierarchy();
 		}
 		return terminologyValueSetTree;
+	}
+
+	public static boolean isValidVersion(String version) {
+		if (version == null || version.compareTo("null") == 0) return true;
+		return _versions.contains(version);
 	}
 
 //////////////////////////////////////////////////////////
@@ -7060,6 +7067,8 @@ if (lbSvc == null) {
    public static Vector getSortedOntologies() {
 	   if (_sortedOntologies != null) return _sortedOntologies;
 
+	   _versions = new HashSet();
+
 	   Vector display_name_vec = new Vector();
 	   List ontology_list = getOntologyList();
 	   int num_vocabularies = ontology_list.size();
@@ -7072,6 +7081,7 @@ if (lbSvc == null) {
 			String short_scheme_name = uri2CodingSchemeName(scheme);
 
 			String version = key2CodingSchemeVersion(value);
+
 			String display_name = getMetadataValue(short_scheme_name, version, "display_name");
 			if (isNull(display_name)) {
 			   display_name = getLocalName(scheme);
@@ -7099,8 +7109,14 @@ if (lbSvc == null) {
 			}
 	   }
 
+       _versions = new HashSet();
 	   for (int i = 0; i < display_name_vec.size(); i++) {
 		    OntologyInfo info = (OntologyInfo) display_name_vec.elementAt(i);
+
+			if (!_versions.contains(info.getVersion())) {
+				_versions.add(info.getVersion());
+			}
+
 		    if (info == null) return null;
 		    if (!isNull(info.getTag()) && info.getTag().compareToIgnoreCase(Constants.PRODUCTION) == 0) {
 			    Vector w = getNonProductionOntologies(display_name_vec, info.getCodingScheme());

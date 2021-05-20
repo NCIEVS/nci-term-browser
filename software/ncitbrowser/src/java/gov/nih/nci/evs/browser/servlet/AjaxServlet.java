@@ -455,6 +455,10 @@ if (display_name_vec == null) {
 			ontology_version = DataUtils.getVocabularyVersionByTag(ontology_display_name, "PRODUCTION");
 		}
 
+		if (!DataUtils.isValidVersion(ontology_version)) {
+			appscanResponse(request, response, "WARNING: Invalid version \"" + ontology_version + "\" detected.");
+		}
+
         long ms = System.currentTimeMillis();
         if (action.equals("expand_tree")) {
             if (node_id != null && ontology_display_name != null) {
@@ -767,6 +771,11 @@ if (display_name_vec == null) {
         } else if (action.equals("view_graph")) {
             String scheme =  HTTPUtils.cleanXSS(request.getParameter("scheme"));
             String version =  HTTPUtils.cleanXSS(request.getParameter("version"));
+
+            if (!DataUtils.isValidVersion(version)) {
+                appscanResponse(request, response, "WARNING: Invalid version \"" + version + "\" detected.");
+			}
+
             ns =  HTTPUtils.cleanXSS(request.getParameter("ns"));
             String code =  HTTPUtils.cleanXSS(request.getParameter("code"));
             String type =  HTTPUtils.cleanXSS(request.getParameter("type"));
@@ -781,6 +790,11 @@ if (display_name_vec == null) {
             String id =  HTTPUtils.cleanXSS(request.getParameter("id"));
             String scheme = (String) request.getSession().getAttribute("scheme");
             String version = (String) request.getSession().getAttribute("version");
+
+            if (!DataUtils.isValidVersion(version)) {
+                appscanResponse(request, response, "WARNING: Invalid version \"" + version + "\" detected.");
+			}
+
             ns = (String) request.getSession().getAttribute("ns");
             String nodes_and_edges = (String) request.getSession().getAttribute("nodes_and_edges");
             String code = findCodeInGraph(nodes_and_edges, id);
@@ -864,6 +878,12 @@ if (display_name_vec == null) {
       String localName = DataUtils.getLocalName(ontology_display_name);
       String formalName = DataUtils.getFormalName(localName);
       String term_browser_version = DataUtils.getMetadataValue(formalName, ontology_version, "term_browser_version");
+
+	  if (!DataUtils.isValidVersion(term_browser_version)) {
+		  appscanResponse(request, response, "WARNING: Invalid version \"" + term_browser_version + "\" detected.");
+	  }
+
+
       String display_name = DataUtils.getMetadataValue(formalName, ontology_version, "display_name");
 
       println(out, "");
@@ -1443,6 +1463,12 @@ if (display_name_vec == null) {
 		String dictionary = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
 		if (!DataUtils.isNull(dictionary)) {
 			String version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
+
+			if (!DataUtils.isValidVersion(version)) {
+				appscanResponse(request, response, "WARNING: Invalid version \"" + version + "\" detected.");
+			}
+
+
 			create_vs_tree(request, response, Constants.TERMINOLOGY_VIEW, dictionary, version);
 		} else {
 		    create_vs_tree(request, response, Constants.TERMINOLOGY_VIEW);
@@ -1589,8 +1615,8 @@ if (DataUtils.isNull(vsd_uri)) {
       out.println("}");
       out.println("</style>");
       out.println("");
-      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/fonts/fonts-min.css\" />");
-      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/treeview/assets/skins/sam/treeview.css\" />");
+      //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/fonts/fonts-min.css\" />");
+      //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/treeview/assets/skins/sam/treeview.css\" />");
       out.println("");
 	  out.println("<script type=\"text/javascript\" src=\"/ncitbrowser/js/event_simulate.js\"></script>");
 	  out.println("<script type=\"text/javascript\" src=\"/ncitbrowser/js/value_set_tree_navigation.js\"></script>");
@@ -1685,6 +1711,9 @@ request.getSession().setAttribute("valueset_search_algorithm", algorithm);
 			matchText = "";
 		} else {
 			matchText = matchText.trim();
+            if (matchText.indexOf("\"") != -1) {
+                matchText = matchText.replace("\"", " ");
+			}
 		}
         request.getSession().setAttribute("matchText", matchText);
         request.getSession().setAttribute("matchText_RVS", matchText);
@@ -2513,9 +2542,21 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
 		} else {
 			matchText = matchText.trim();
 		}
+
+
+            if (matchText.indexOf("\"") != -1) {
+                matchText = matchText.replace("\"", " ");
+			}
+
+
         request.getSession().setAttribute("matchText", matchText);
 		String ontology_display_name = HTTPUtils.cleanXSS((String) request.getParameter("ontology_display_name"));
 		String ontology_version = HTTPUtils.cleanXSS((String) request.getParameter("ontology_version"));
+
+
+            if (!DataUtils.isValidVersion(ontology_version)) {
+                appscanResponse(request, response, "WARNING: Invalid version \"" + ontology_version + "\" detected.");
+			}
 
 		if (matchText.compareTo("") == 0) {
 			msg = "Please enter a search string.";
@@ -2628,7 +2669,17 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
         //LexEVSValueSetDefinitionServices vsd_service = null;
         //vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 
-        if (matchText != null) matchText = matchText.trim();
+        if (matchText != null) {
+			matchText = matchText.trim();
+            if (matchText.indexOf("\"") != -1) {
+                matchText = matchText.replace("\"", " ");
+			}
+
+		}
+
+
+
+
         int searchOption = SimpleSearchUtils.BY_CODE;
         if (selectValueSetSearchOption.compareToIgnoreCase("Name") == 0 || selectValueSetSearchOption.compareToIgnoreCase("Names") == 0) {
 			searchOption = SimpleSearchUtils.BY_NAME;
@@ -2722,22 +2773,22 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
       out.println("<body>");
 
       out.println("");
-      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/fonts/fonts-min.css\" />");
-      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/treeview/assets/skins/sam/treeview.css\" />");
+      //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/fonts/fonts-min.css\" />");
+      //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/treeview/assets/skins/sam/treeview.css\" />");
       out.println("");
-      out.println("<script type=\"text/javascript\" src=\"http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js\"></script>");
+      //out.println("<script type=\"text/javascript\" src=\"http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js\"></script>");
       out.println("<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/treeview-min.js\" ></script>");
       out.println("");
       out.println("");
       out.println("<!-- Dependency -->");
-      out.println("<script src=\"http://yui.yahooapis.com/2.9.0/build/yahoo/yahoo-min.js\"></script>");
+      //out.println("<script src=\"http://yui.yahooapis.com/2.9.0/build/yahoo/yahoo-min.js\"></script>");
       out.println("");
       out.println("<!-- Source file -->");
       out.println("<!--");
       out.println("	If you require only basic HTTP transaction support, use the");
       out.println("	connection_core.js file.");
       out.println("-->");
-      out.println("<script src=\"http://yui.yahooapis.com/2.9.0/build/connection/connection_core-min.js\"></script>");
+      //out.println("<script src=\"http://yui.yahooapis.com/2.9.0/build/connection/connection_core-min.js\"></script>");
       out.println("");
       out.println("<!--");
       out.println("	Use the full connection.js if you require the following features:");
@@ -2745,7 +2796,7 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
       out.println("	- File Upload using the iframe transport.");
       out.println("	- Cross-domain(XDR) transactions.");
       out.println("-->");
-      out.println("<script src=\"http://yui.yahooapis.com/2.9.0/build/connection/connection-min.js\"></script>");
+      //out.println("<script src=\"http://yui.yahooapis.com/2.9.0/build/connection/connection-min.js\"></script>");
       out.println("");
       out.println("");
       out.println("");
@@ -3068,6 +3119,9 @@ String matchText = (String) request.getSession().getAttribute("matchText");
 if (DataUtils.isNull(matchText)) {
 	matchText = "";
 }
+            if (matchText.indexOf("\"") != -1) {
+                matchText = matchText.replace("\"", " ");
+			}
 
 
 
@@ -4721,7 +4775,12 @@ out.flush();
         //LexEVSValueSetDefinitionServices vsd_service = null;
         //vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 
-        if (matchText != null) matchText = matchText.trim();
+        if (matchText != null) {
+			matchText = matchText.trim();
+            if (matchText.indexOf("\"") != -1) {
+                matchText = matchText.replace("\"", " ");
+			}
+		}
 
         int searchOption = SimpleSearchUtils.BY_CODE;
         if (selectValueSetSearchOption.compareTo("Name") == 0) {
@@ -5423,6 +5482,11 @@ out.flush();
 			retval = cartActionBean.addToCart(request, response);
 			String codingScheme = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
 			String version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
+
+            if (!DataUtils.isValidVersion(version)) {
+                appscanResponse(request, response, "WARNING: Invalid version \"" + version + "\" detected.");
+			}
+
 			String ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
 			String code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
 
@@ -5590,6 +5654,12 @@ out.flush();
 		if (btn.compareTo("exit_cart") == 0) {
 			String scheme = (String) request.getParameter("scheme");
 			String version = (String) request.getParameter("version");
+
+            if (!DataUtils.isValidVersion(version)) {
+                appscanResponse(request, response, "WARNING: Invalid version \"" + version + "\" detected.");
+			}
+
+
 			String nextJSP = "/pages/multiple_search.jsf?nav_type=terminologies";
 
 			if (count > 0) {
@@ -5632,5 +5702,19 @@ out.flush();
         return s1 + node_id + s2;
 	}
 
+
+	public void appscanResponse(HttpServletRequest request, HttpServletResponse response,
+	    String error_msg) {
+		try {
+			 request.getSession().setAttribute("error_msg", error_msg);
+			 String nextJSP = "/pages/appscan_response.jsf";
+			 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+			 dispatcher.forward(request,response);
+			 return;
+
+		} catch (Exception ex) {
+			 ex.printStackTrace();
+		}
+	}
 }
 

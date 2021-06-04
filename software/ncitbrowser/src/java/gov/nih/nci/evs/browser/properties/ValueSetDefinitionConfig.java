@@ -77,14 +77,16 @@ public class ValueSetDefinitionConfig {
 		vsd_config_file = System.getProperty(Constants.VALUE_SET_REPORT_CONFIG);
 		_logger.info("VALUE_SET_REPORT_CONFIG File Location= " + vsd_config_file);
 		if (vsd_config_file == null) {
-			System.out.println("ERROR: Unable to find system property " + Constants.VALUE_SET_REPORT_CONFIG);
-		} else {
+			vsd_config_file = "value_set_report_config.txt";
+		}
+		try {
 			vsd_config_file_dir = new File(vsd_config_file).getParent();
 			valueSetConfigHashMap = readValueSetDefinitionConfigFile(vsd_config_file);
 			System.out.println("ValueSetDefinitionConfig initialization run time (ms): " + (System.currentTimeMillis() - ms));
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
-
 
     public ValueSetDefinitionConfig() {
 

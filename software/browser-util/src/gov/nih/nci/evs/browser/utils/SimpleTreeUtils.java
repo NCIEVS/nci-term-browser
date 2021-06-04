@@ -255,6 +255,17 @@ public class SimpleTreeUtils {
 	  out.println("	<script type=\"text/javascript\" src=\"" + basePath + "js/value_set_tree_navigation.js\"></script>");
 
 
+out.println("	<style>");
+out.println("	ul.no-bullets {");
+out.println("	  list-style-type: none;");
+out.println("	  margin: 0;");
+out.println("	  padding: 0;");
+out.println("	}");
+out.println("	</style>");
+
+
+//<ul class="no-bullets">
+
       out.println("	</head>");
       if (collapse_all_at_initialization) {
       	  out.println("	<body onload=\"collapse_all();\">");
@@ -399,9 +410,10 @@ public class SimpleTreeUtils {
 		    pw.println(indentation + "</div>");
 		    pw.flush();
 	    } else {
+			/*
 			String div_id = "DIV_" + checkbox_id;
 			if (CHECKBOX_OPTION) {
-				pw.println("<img src=\"" + basePath + "images/dot.gif\" id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
+				pw.println("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
 				+ ">"
 				+ "<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
 				+ " " + getTabIndex()
@@ -409,9 +421,24 @@ public class SimpleTreeUtils {
 				+ ">"
 				+ getHyperLink(ti));
 		    } else {
-				pw.println("<img src=\"" + basePath + "images/dot.gif\" id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
+				pw.println("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
 				+ ">"
 				+ getHyperLink(ti));
+			}
+			*/
+			String div_id = "DIV_" + checkbox_id;
+			if (CHECKBOX_OPTION) {
+				//pw.println("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
+				//+ ">"
+				pw.println("<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
+				+ " " + getTabIndex()
+				+ " " + getCheckBoxStatus(ti._code)
+				+ ">"
+				+ getHyperLink(ti));
+		    } else {
+				//pw.println("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
+				//+ ">"
+				pw.println(getHyperLink(ti));
 			}
 		}
 		pw.println(indentation + "</li>");
@@ -465,36 +492,35 @@ public class SimpleTreeUtils {
 		    //pw.flush();
 	    } else {
 			String div_id = "DIV_" + checkbox_id;
+			/*
 			if (CHECKBOX_OPTION) {
-				v.add("<img src=\"" + basePath + "images/dot.gif\" id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
+				v.add("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
 				+ ">"
 				+ "<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
 				+ " " + getTabIndex()
 				+ ">"
 				+ getHyperLink(ti));
 		    } else {
-				v.add("<img src=\"" + basePath + "images/dot.gif\" id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
+				v.add("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
 				+ ">"
 				+ getHyperLink(ti));
+			}
+			*/
+			if (CHECKBOX_OPTION) {
+				//v.add("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
+				//+ ">"
+				v.add("<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
+				+ " " + getTabIndex()
+				+ ">"
+				+ getHyperLink(ti));
+		    } else {
+				//v.add("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
+				//+ ">"
+				v.add(getHyperLink(ti));
 			}
 		}
 		v.add(indentation + "</li>");
 	}
-
-
-    // Make root node clickable:
-
-/*
-	private String getHyperLink(TreeItem ti) {
-		if (isFormalName(ti._code) || isFormalName(ti._text)) {
-			return ti._text;
-		}
-		if (focusNodeId != null && ti._code.compareTo(focusNodeId) == 0) {
-			return ti._text;
-		}
-	    return "<a href=\"#\" onclick=\"onValueSetNodeClicked('" + ti._code + "');return false;\" " + getTabIndex() + ">" + ti._text + "</a>";
-    }
-*/
 
 	private String getHyperLink(TreeItem ti) {
 		if (isFormalName(ti._code) || isFormalName(ti._text)) {
@@ -536,25 +562,7 @@ public class SimpleTreeUtils {
 		}
 		printTree(pw, root);
 	}
-/*
-    public void printTree(Vector v, HashMap tree_map) {
-		if (tree_map == null) return;
-		TreeItem root = (TreeItem) tree_map.get("<Root>");
 
-		int knt = 0;
-		for (String asso_name : root._assocToChildMap.keySet()) {
-			List<TreeItem> cs_vs_children = root._assocToChildMap.get(asso_name);
-			for (TreeItem child_item : cs_vs_children) {
-				knt++;
-				assignNodeId(null, child_item, knt);
-			}
-		}
-
-
-		v = new Vector();
-		printTree(v, root);
-	}
-*/
     public void printTree(PrintWriter pw, TreeItem root) {
 		if (root == null) return;
 		pw.println("<ul>");
@@ -889,6 +897,24 @@ public class SimpleTreeUtils {
 
 	}
 
+    public static void main(String[] args) {
+        String parent_child_file = args[0];
+        String htmlfile = args[1];
+        TreeItemBuilder treeItemBuilder = new TreeItemBuilder(parent_child_file);
+		TreeItem ti = treeItemBuilder.run();
+		//TreeItem.printTree(ti, 0, false);
+
+		HashMap hmap = new HashMap();
+		hmap.put("<Root>", ti);
+		SimpleTreeUtils stu = new SimpleTreeUtils(null);
+		int mode = 0;
+		String url = "https://nciterms.nci.nih.gov/ncitbrowser/ajax?action=create_src_vs_tree&mode=" + mode;
+		stu.setUrl(url);
+		stu.writeTree2HTML(hmap, url, htmlfile);
+	}
 
 }
 
+//"<ul class=\"no-bullets\">
+
+//"<ul>"

@@ -366,8 +366,10 @@ code = HTTPUtils.cleanXSS(code);
  <%
  } else {
  %>
-       
-                            <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/ajax?action=search_hierarchy&ontology_node_id=<%=code%>&ontology_node_ns=<%=ns%>&ontology_display_name=<%=short_name%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
+ 
+ 
+
+                            <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/pages/hierarchy.jsf?code=<%=code%>&ns=<%=ns%>&ontology_display_name=<%=short_name%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
 
  
  <%

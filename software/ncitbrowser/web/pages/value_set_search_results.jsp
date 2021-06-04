@@ -15,17 +15,6 @@
 <%@ page import="org.LexGrid.valueSets.ValueSetDefinition" %>
 <%@ page import="org.LexGrid.concepts.Entity" %>
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/dropdown.js"></script>
-
-<% String vsBasePath = request.getContextPath(); %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -125,6 +114,7 @@
       <input type="hidden" id="view" name="view" value="<%=VSD_view%>" />
     </form>
     <%
+    String vsBasePath = request.getContextPath();
     String x = HTTPUtils.getRefererParmEncode(request);
     String vd_uri = null;
     String valueSetSearch_requestContextPath = request.getContextPath();

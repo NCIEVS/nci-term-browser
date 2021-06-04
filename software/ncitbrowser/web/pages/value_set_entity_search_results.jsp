@@ -17,17 +17,7 @@
 <%@ page import="org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator" %>
 <%@ page import="org.LexGrid.valueSets.ValueSetDefinition" %>
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/dropdown.js"></script>
 
-<% String vsBasePath = request.getContextPath(); %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -117,6 +107,7 @@
     <%! private static Logger _logger = Utils.getJspLogger("value_set_entity_search_results.jsp"); %>
 
     <%
+    String vsBasePath = request.getContextPath();
     String x = HTTPUtils.getRefererParmEncode(request);
     String VSD_view = (String) request.getSession().getAttribute("view");
     String valueSetSearch_requestContextPath = request.getContextPath();

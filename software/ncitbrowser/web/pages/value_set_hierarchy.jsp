@@ -13,19 +13,6 @@
 
 <!-- Note: This tree is used in concept detail page (see Value Sets link). -->
 
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/yahoo-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/event-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/dom-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/animation-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/container-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/connection-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/autocomplete-min.js"></script>
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/yui/treeview-min.js"></script>
-
-<script type="text/javascript" src="<%= request.getContextPath() %>/js/dropdown.js"></script>
-
-<% String vsBasePath = request.getContextPath(); %>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
   <head>
@@ -438,6 +425,7 @@
             <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_followscroll.js"></script>
             <%! private static Logger _logger = Utils.getJspLogger("search_results.jsp"); %>
             <%
+            String vsBasePath = request.getContextPath();
             JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
             String search_results_dictionary = info.dictionary;
 

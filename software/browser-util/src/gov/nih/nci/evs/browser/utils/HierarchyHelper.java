@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * <!-- LICENSE_TEXT_START -->
- * Copyright 2008,2009 NGIT. This software was developed in conjunction
+ * Copyright 2008-2017 NGIS. This software was developed in conjunction
  * with the National Cancer Institute, and so to the extent government
  * employees are co-authors, any rights in such works shall be subject
  * to Title 17 of the United States Code, section 105.
@@ -22,21 +22,21 @@ import java.util.*;
  *      with the distribution.
  *   2. The end-user documentation included with the redistribution,
  *      if any, must include the following acknowledgment:
- *      "This product includes software developed by NGIT and the National
+ *      "This product includes software developed by NGIS and the National
  *      Cancer Institute."   If no such end-user documentation is to be
  *      included, this acknowledgment shall appear in the software itself,
  *      wherever such third-party acknowledgments normally appear.
- *   3. The names "The National Cancer Institute", "NCI" and "NGIT" must
+ *   3. The names "The National Cancer Institute", "NCI" and "NGIS" must
  *      not be used to endorse or promote products derived from this software.
  *   4. This license does not authorize the incorporation of this software
  *      into any third party proprietary programs. This license does not
  *      authorize the recipient to use any trademarks owned by either NCI
- *      or NGIT
+ *      or NGIS
  *   5. THIS SOFTWARE IS PROVIDED "AS IS," AND ANY EXPRESSED OR IMPLIED
  *      WARRANTIES, (INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  *      OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE) ARE
  *      DISCLAIMED. IN NO EVENT SHALL THE NATIONAL CANCER INSTITUTE,
- *      NGIT, OR THEIR AFFILIATES BE LIABLE FOR ANY DIRECT, INDIRECT,
+ *      NGIS, OR THEIR AFFILIATES BE LIABLE FOR ANY DIRECT, INDIRECT,
  *      INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
  *      BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *      LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
@@ -51,12 +51,13 @@ import java.util.*;
  * @author EVS Team
  * @version 1.0
  *
- *          Modification history Initial implementation kim.ong@ngc.com
+ * Modification history:
+ *     Initial implementation kim.ong@ngc.com
  *
  */
 
 
-public class HierarchyHelper {
+public class HierarchyHelper implements Serializable {
     private static String TYPE_ROOT = "TYPE_ROOT";
     private static String TYPE_LEAF = "TYPE_LEAF";
 
@@ -65,7 +66,6 @@ public class HierarchyHelper {
 
     //private HashMap code2NameMap = null;
     private HashMap code2LabelMap = null;
-
 
     private Vector _PARENT_CHILDREN = null;
 	private String _ROOTS = null;
@@ -76,11 +76,14 @@ public class HierarchyHelper {
 	private Vector roots = null;
 	private Vector leaves = null;
 
+	private HashSet root_set = null;
+	private HashSet leaf_set = null;
+
 	private HashMap _parent2childcodesMap = null;
 	private HashMap _child2parentcodesMap = null;
 
-	private int FORMAT_PARENT_CHILD = 1;
-	private int FORMAT_CHILD_PARENT = 2;
+	public static int FORMAT_PARENT_CHILD = 1;
+	public static int FORMAT_CHILD_PARENT = 2;
 
 	private int format = 0;
     private boolean show_code = true;
@@ -98,7 +101,7 @@ public class HierarchyHelper {
 
 
     public HierarchyHelper(Vector v, int format) {
-		//long ms = System.currentTimeMillis();
+		long ms = System.currentTimeMillis();
         this.rel_vec = v;
         this.format = format;
         initialize(v, format);
@@ -124,11 +127,9 @@ public class HierarchyHelper {
 	private HashMap getInverseHashMap(HashMap hmap) {
 		HashMap inverse_hmap = new HashMap();
 		Iterator it = hmap.keySet().iterator();
-		if (it == null) return null;
 		while (it.hasNext()) {
 			String key = (String) it.next();
 			Vector v = (Vector) hmap.get(key);
-			if (v == null) return null;
 			for (int k=0; k<v.size(); k++) {
 				String value = (String) v.elementAt(k);
 				Vector w = new Vector();
@@ -155,6 +156,67 @@ public class HierarchyHelper {
         this.code2LabelMap = createCode2LabelMap(v, format);
 		//System.out.println("createCode2LabelMap run time (ms): " + (System.currentTimeMillis() - ms));
 		//System.out.println("Total initialization run time (ms): " + (System.currentTimeMillis() - ms0));
+
+        HashSet set_parent = new HashSet();
+        HashSet set_child = new HashSet();
+        for (int i=0; i<v.size(); i++) {
+			String line = (String) v.elementAt(i);
+			Vector u = StringUtils.parseData(line, '|');
+
+			String parent_code = null;
+			String child_code = null;
+			if (format == FORMAT_PARENT_CHILD) {
+				if (u.size() == 2) {
+					// parent_code|child_code
+					parent_code = (String) u.elementAt(0);
+					child_code = (String) u.elementAt(1);
+				} else {
+					// parent_label|parent_code|child_label|child_code
+					parent_code = (String) u.elementAt(1);
+					child_code = (String) u.elementAt(3);
+				}
+		    } else if (format == FORMAT_CHILD_PARENT) {
+				if (u.size() == 2) {
+					// child_code|parent_code
+					parent_code = (String) u.elementAt(1);
+					child_code = (String) u.elementAt(0);
+				} else {
+					// // child_label|child_code|parent_label|parent_code
+					parent_code = (String) u.elementAt(3);
+					child_code = (String) u.elementAt(1);
+				}
+			}
+
+			set_parent.add(parent_code);
+			set_child.add(child_code);
+		}
+		HashSet set1 = (HashSet) set_parent.clone();
+		HashSet set2 = (HashSet) set_child.clone();
+		set1.removeAll(set2);
+		this.root_set = set1;
+		set1 = (HashSet) set_parent.clone();
+		set2 = (HashSet) set_child.clone();
+		set2.removeAll(set1);
+		this.leaf_set = set2;
+        this.roots = hashSet2Vector(this.root_set);
+
+        System.out.println("ROOTS: " + this.roots.size());
+
+        this.leaves = hashSet2Vector(this.leaf_set);
+
+        //findRootAndLeafNodes();
+	}
+
+	public static Vector hashSet2Vector(HashSet hset) {
+		if (hset == null) return null;
+		Vector v = new Vector();
+		Iterator it = hset.iterator();
+		while (it.hasNext()) {
+			String t = (String) it.next();
+			v.add(t);
+		}
+		v = new SortUtils().quickSort(v);
+		return v;
 	}
 
 	public Vector getRoots() {
@@ -185,8 +247,8 @@ public class HierarchyHelper {
 	}
 
 	public void findRootAndLeafNodes() {
-        roots = findRoots(_parent2childcodesMap);
-        leaves = findLeaves(_parent2childcodesMap);
+        //roots = findRoots(_parent2childcodesMap);
+        //leaves = findLeaves(_parent2childcodesMap);
         roots = sortCodesByNames(roots);
         leaves = sortCodesByNames(leaves);
 	}
@@ -231,7 +293,6 @@ public class HierarchyHelper {
 		Vector child_codes = new Vector();
 
 		Iterator it = _parent2childcodesMap.keySet().iterator();
-		if (it == null) return null;
 		while (it.hasNext()) {
 			String parent_code = (String) it.next();
 			parent_codes.add(parent_code);
@@ -241,7 +302,6 @@ public class HierarchyHelper {
 		while (it.hasNext()) {
 			String parent_code = (String) it.next();
 			Vector w = (Vector) _parent2childcodesMap.get(parent_code);
-			if (w == null) return null;
 			for (int i=0; i<w.size(); i++) {
 				String s = (String) w.elementAt(i);
 				child_codes.add(s);
@@ -253,7 +313,6 @@ public class HierarchyHelper {
 		Vector roots = new Vector();
 		for (int i=0; i<all_codes.size(); i++) {
 			String s = (String) all_codes.elementAt(i);
-			if (s == null) return null;
 			if (parent_codes.contains(s) && !child_codes.contains(s)) {
 				roots.add(s);
 			}
@@ -266,7 +325,6 @@ public class HierarchyHelper {
 		Vector child_codes = new Vector();
 
 		Iterator it = _parent2childcodesMap.keySet().iterator();
-		if (it == null) return null;
 		while (it.hasNext()) {
 			String parent_code = (String) it.next();
 			parent_codes.add(parent_code);
@@ -276,7 +334,6 @@ public class HierarchyHelper {
 		while (it.hasNext()) {
 			String parent_code = (String) it.next();
 			Vector w = (Vector) _parent2childcodesMap.get(parent_code);
-			if (w == null) return null;
 			for (int i=0; i<w.size(); i++) {
 				String s = (String) w.elementAt(i);
 				child_codes.add(s);
@@ -288,7 +345,6 @@ public class HierarchyHelper {
 		Vector leaf_nodes = new Vector();
 		for (int i=0; i<all_codes.size(); i++) {
 			String s = (String) all_codes.elementAt(i);
-			if (s == null) return null;
 			if (!parent_codes.contains(s) && child_codes.contains(s)) {
 				leaf_nodes.add(s);
 			}
@@ -347,7 +403,6 @@ public class HierarchyHelper {
         for (int i=0; i<w.size(); i++) {
 			String t = (String) w.elementAt(i);
 			Vector u = StringUtils.parseData(t);
-			if (u == null) return null;
 			if (u.size() == 2) {
 				String code = (String) u.elementAt(0);
 				String label = (String) u.elementAt(1);
@@ -399,26 +454,42 @@ public class HierarchyHelper {
 		return v;
 	}
 
-    public Vector getTransitiveClosure(String c) {
-		if (c == null) return null;
-		return getTransitiveClosure(new Vector(), c);
-	}
-
-	public Vector getTransitiveClosure(Vector v, String c) {
-		Vector child_codes = getSubclassCodes(c);
-		if (child_codes == null || child_codes.size() == 0) return v;
-		for (int i=0; i<child_codes.size(); i++) {
-			String child_code = (String) child_codes.elementAt(i);
-			System.out.println("Parent " + c + " child: " + child_code);
-			Vector w = getTransitiveClosure(v, child_code);
-			if (w != null && w.size() > 0) {
-				v = mergeVector(v, w);
-			}
-			if (!v.contains(child_code)) {
-				v.add(child_code);
+	public Vector removeDuplicates(Vector codes) {
+		HashSet hset = new HashSet();
+		Vector w = new Vector();
+		for (int i=0; i<codes.size(); i++) {
+			String code = (String) codes.elementAt(i);
+			if (!hset.contains(code)) {
+				hset.add(code);
+				w.add(code);
 			}
 		}
-		return v;
+		return w;
+	}
+
+  	public Vector getTransitiveClosure(String code) {
+		return getTransitiveClosure(code, true);
+	}
+
+  	public Vector getTransitiveClosure(String code, boolean traverseDown) {
+		Vector w = new Vector();
+		w.add(code);
+		Vector v = new Vector();
+		if (traverseDown) {
+		    v = getSubclassCodes(code);
+		} else {
+			v = getSuperclassCodes(code);
+		}
+		if (v == null) return w;
+		for (int i=0; i<v.size(); i++) {
+			String child_code = (String) v.elementAt(i);
+			Vector u = getTransitiveClosure(child_code, traverseDown);
+			if (u != null && u.size() > 0) {
+				w.addAll(u);
+			}
+		}
+		w = removeDuplicates(w);
+		return w;
 	}
 
 	public void printTree() {
@@ -437,7 +508,6 @@ public class HierarchyHelper {
 			indent = indent + "\t";
 		}
 		String label = getLabel(code);
-		//System.out.println(indent + code);
 		System.out.println(indent + label + " (" + code + ")");
 		Vector child_codes = getSubclassCodes(code);
 		if (child_codes != null && child_codes.size() > 0) {
@@ -448,13 +518,10 @@ public class HierarchyHelper {
 		}
 	}
 
-
-
 	public void printTree(PrintWriter pw) {
 		if (roots == null) {
 			findRootAndLeafNodes();
 		}
-
 		Vector label_vec = new Vector();
 		HashMap label2codeMap = new HashMap();
 		for (int i=0; i<roots.size(); i++) {
@@ -469,7 +536,6 @@ public class HierarchyHelper {
 			String code = (String) label2codeMap.get(label);
 			printTree(pw, code, 0);
 		}
-
 	}
 
 	public void printTree(PrintWriter pw, String code, int level) {
@@ -504,6 +570,71 @@ public class HierarchyHelper {
 		}
 	}
 
+//////////////////////////////////////////////////////////////////////////////////////////
+
+	public Vector exportTree() {
+		return exportTree(new Vector());
+	}
+
+	public Vector exportTree(Vector v) {
+		if (roots == null) {
+			findRootAndLeafNodes();
+		}
+		Vector label_vec = new Vector();
+		HashMap label2codeMap = new HashMap();
+		for (int i=0; i<roots.size(); i++) {
+			String root = (String) roots.elementAt(i);
+			String label = getLabel(root);
+			label2codeMap.put(label, root);
+			label_vec.add(label);
+		}
+		label_vec = new SortUtils().quickSort(label_vec);
+		for (int i=0; i<label_vec.size(); i++) {
+			String label = (String) label_vec.elementAt(i);
+			String code = (String) label2codeMap.get(label);
+			v = exportTree(v, code, 0);
+			//v.addAll(w);
+		}
+		return v;
+	}
+
+	public Vector exportTree(Vector v, String code, int level) {
+		String indent = INDENT;
+		for (int i=0; i<level; i++) {
+			indent = indent + "\t";
+		}
+		String label = getLabel(code);
+		if (show_code) {
+			v.add(indent + label + " (" + code + ")");
+		} else {
+			v.add(indent + label);
+		}
+
+		Vector child_codes = getSubclassCodes(code);
+        if (child_codes != null && child_codes.size() > 0) {
+			Vector label_vec = new Vector();
+			HashMap label2codeMap = new HashMap();
+			for (int i=0; i<child_codes.size(); i++) {
+				String root = (String) child_codes.elementAt(i);
+				label = getLabel(root);
+				label2codeMap.put(label, root);
+				label_vec.add(label);
+			}
+			label_vec = new SortUtils().quickSort(label_vec);
+
+			for (int i=0; i<label_vec.size(); i++) {
+				label = (String) label_vec.elementAt(i);
+				String child_code = (String) label2codeMap.get(label);
+				v = exportTree(v, child_code, level+1);
+				//v.addAll(w);
+			}
+		}
+		return v;
+	}
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 	public static int TRAVERSE_UP = 1;
 	public static int TRAVERSE_DOWN = 0;
 
@@ -516,7 +647,7 @@ public class HierarchyHelper {
 		stack.push("0|"+code);
         while (!stack.isEmpty()) {
 			String s = (String) stack.pop();
-			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(s);
+			Vector u = StringUtils.parseData(s, '|');
 			String level_str = (String) u.elementAt(0);
 			int level = Integer.parseInt(level_str);
 			String curr_code = (String) u.elementAt(1);
@@ -555,9 +686,158 @@ public class HierarchyHelper {
 		code2LabelMap.put(code, label);
 	}
 
+	public HashMap getCode2LabelMap() {
+		return this.code2LabelMap;
+	}
+
+	public Vector dumpTallies(HashMap hmap) {
+		Vector v = new Vector();
+		v.add("Root|Size");
+		int count = 0;
+		Vector keys = new Vector();
+		Iterator it = hmap.keySet().iterator();
+		while (it.hasNext()) {
+			String key = (String) it.next();
+			keys.add(key);
+		}
+		keys = new SortUtils().quickSort(keys);
+		it = hmap.keySet().iterator();
+		for (int i=0; i<keys.size(); i++) {
+			String key = (String) keys.elementAt(i);
+			Integer int_obj = (Integer) hmap.get(key);
+			v.add(key + "|" + Integer.valueOf(int_obj));
+			count = count + Integer.valueOf(int_obj);
+		}
+		v.add("Total|" + count);
+		return v;
+	}
+
+
+   	public HashMap getBranchSizes() {
+		HashMap hmap = new HashMap();
+		for (int i=0; i<roots.size(); i++) {
+			String root = (String) roots.elementAt(i);
+			String label = getLabel(root);
+			String key = label + " (" + root + ")";
+			Vector v = getTransitiveClosure(root, true);
+			hmap.put(key, new Integer(v.size()));
+		}
+
+		return hmap;
+	}
+
+    public int get_transitive_closure(String code) {
+		int count = 0;
+		Vector v = null;
+		Stack stack = new Stack();
+		stack.push(code);
+		while (!stack.isEmpty()) {
+			String next_code = (String) stack.pop();
+			count++;
+			v = getSubclassCodes(next_code);
+			if (v != null) {
+				for (int i=0; i<v.size(); i++) {
+					String child_code = (String) v.elementAt(i);
+					stack.push(child_code);
+				}
+			}
+		}
+		return count;
+	}
+
+    public int get_transitive_closure_v2(String code) {
+		int count = 0;
+		Vector v = null;
+		Stack stack = new Stack();
+		stack.push(code);
+		HashSet hset = new HashSet();
+
+		while (!stack.isEmpty()) {
+			String next_code = (String) stack.pop();
+			if (!hset.contains(next_code)) {
+				hset.add(next_code);
+				count++;
+			}
+			v = getSubclassCodes(next_code);
+			if (v != null) {
+				for (int i=0; i<v.size(); i++) {
+					String child_code = (String) v.elementAt(i);
+					stack.push(child_code);
+				}
+			}
+		}
+		hset.clear();
+		return count;
+	}
+
+    public Vector get_transitive_closure_v3(String code) {
+		Vector w = new Vector();
+		Vector v = null;
+		Stack stack = new Stack();
+		stack.push(code);
+		w.add(code);
+		HashSet hset = new HashSet();
+		while (!stack.isEmpty()) {
+			String next_code = (String) stack.pop();
+			if (!hset.contains(next_code)) {
+				hset.add(next_code);
+				w.add(next_code);
+			}
+			v = getSubclassCodes(next_code);
+			if (v != null) {
+				for (int i=0; i<v.size(); i++) {
+					String child_code = (String) v.elementAt(i);
+					stack.push(child_code);
+				}
+			}
+		}
+		hset.clear();
+		return w;
+	}
+
+    public void printPath2Roots(PrintWriter pw, String line) {
+        Vector v = StringUtils.parseData(line, '|');
+        String indent = "";
+		for (int i=0; i<v.size(); i++) {
+			String code = (String) v.elementAt(i);
+			String label = getLabel(code);
+			if (pw != null) {
+				pw.println(indent + label + " (" + code + ")");
+			} else {
+				System.out.println(indent + label + " (" + code + ")");
+			}
+			indent = indent + "\t";
+		}
+	}
+
+	public void path2Roots(PrintWriter pw, String code) {
+		Stack stack = new Stack();
+		stack.push(code);
+		while (!stack.isEmpty()) {
+            String line = (String) stack.pop();
+            Vector u = StringUtils.parseData(line, '|');
+            String next_code = (String) u.elementAt(u.size()-1);
+            Vector v = getSuperclassCodes(next_code);
+            if (v != null) {
+                for (int i=0; i<v.size(); i++) {
+					String sup = (String) v.elementAt(i);
+					String nextLine = line + "|" + sup;
+					stack.push(nextLine);
+				}
+			} else {
+				printPath2Roots(pw, line);
+			}
+		}
+	}
+
+	public void path2Roots(String code) {
+		path2Roots(null, code);
+	}
+
     public static void main(String[] args) {
-		Vector v = Utils.readFile("tvs_rel.txt");
-		HierarchyHelper test = new HierarchyHelper(v, 2);
+		String filename = args[0];
+		Vector v = Utils.readFile(filename);
+		HierarchyHelper test = new HierarchyHelper(v, 1);
 		Vector roots = test.getRoots();
 		StringUtils.dumpVector("roots", roots);
 		Vector leaves = test.getLeaves();

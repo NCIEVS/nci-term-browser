@@ -370,7 +370,17 @@ if (display_name_vec == null) {
 
         // Determine request by attributes
         String action = HTTPUtils.cleanXSS(request.getParameter("action"));
-        if (action.equals("export_to_excel")) {
+
+ System.out.println("ajax action: " + action);
+
+
+        if (action.equals("expand_hierarchy")) {
+            expand_hierarchy(request, response);
+        } else if (action.equals("build_hierarchy")) {
+            build_hierarchy(request, response);
+        } else if (action.equals("search_concept_in_tree")) {
+            search_hierarcy(request, response);
+        } else if (action.equals("export_to_excel")) {
             exportToExcelAction(request, response);
         } else if (action.equals("export_to_csv")) {
             exportToCSVAction(request, response);
@@ -870,11 +880,7 @@ if (display_name_vec == null) {
 		  ex.printStackTrace();
 		  return;
 	  }
-/*
-      if (_debug) {
-          _debugBuffer = new StringBuffer();
-      }
-*/
+
       String localName = DataUtils.getLocalName(ontology_display_name);
       String formalName = DataUtils.getFormalName(localName);
       String term_browser_version = DataUtils.getMetadataValue(formalName, ontology_version, "term_browser_version");
@@ -886,17 +892,7 @@ if (display_name_vec == null) {
 
       String display_name = DataUtils.getMetadataValue(formalName, ontology_version, "display_name");
 
-      println(out, "");
-      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/yahoo-min.js\" ></script>");
-      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/event-min.js\" ></script>");
-      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/dom-min.js\" ></script>");
-      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/animation-min.js\" ></script>");
-      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/container-min.js\" ></script>");
-      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/connection-min.js\" ></script>");
-      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/treeview-min.js\" ></script>");
 
-      println(out, "");
-      println(out, "");
       println(out, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">");
       println(out, "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">");
       println(out, "  <head>");
@@ -909,11 +905,18 @@ if (display_name_vec == null) {
       println(out, "  <link rel=\"stylesheet\" type=\"text/css\" href=\"/ncitbrowser/css/yui/code.css\" />");
       println(out, "  <link rel=\"stylesheet\" type=\"text/css\" href=\"/ncitbrowser/css/yui/tree.css\" />");
 
-
       println(out, "  <script type=\"text/javascript\" src=\"/ncitbrowser/js/script.js\"></script>");
       println(out, "  <script type=\"text/javascript\" src=\"/ncitbrowser/js/search.js\"></script>");
       println(out, "  <script type=\"text/javascript\" src=\"/ncitbrowser/js/dropdown.js\"></script>");
 
+      println(out, "");
+      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/yahoo-min.js\" ></script>");
+      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/event-min.js\" ></script>");
+      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/dom-min.js\" ></script>");
+      //println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/animation-min.js\" ></script>");
+      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/container-min.js\" ></script>");
+      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/connection-min.js\" ></script>");
+      println(out, "<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/treeview-min.js\" ></script>");
 
       println(out, "");
       println(out, "  <script language=\"JavaScript\">");
@@ -2777,7 +2780,7 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
       //out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://yui.yahooapis.com/2.9.0/build/treeview/assets/skins/sam/treeview.css\" />");
       out.println("");
       //out.println("<script type=\"text/javascript\" src=\"http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js\"></script>");
-      out.println("<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/treeview-min.js\" ></script>");
+      //out.println("<script type=\"text/javascript\" src=\"/ncitbrowser/js/yui/treeview-min.js\" ></script>");
       out.println("");
       out.println("");
       out.println("<!-- Dependency -->");
@@ -5724,5 +5727,111 @@ out.flush();
 			 ex.printStackTrace();
 		}
 	}
+
+    public void search_hierarcy(HttpServletRequest request, HttpServletResponse response) {
+		response.setContentType("text/csv");
+		ServletOutputStream ouputStream = null;
+		StringBuffer sb = new StringBuffer();
+		try {
+			ouputStream = response.getOutputStream();
+			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+			TreeNavigationUtils treeNavigationUtils = new TreeNavigationUtils(lbSvc);
+			String scheme = request.getParameter("ontology_display_name");
+			String code = request.getParameter("ontology_node_id");
+			String version = treeNavigationUtils.getVocabularyVersionByTag(scheme);
+			String namespace = treeNavigationUtils.getNamespaceByCode(scheme, version, code);
+			String content = treeNavigationUtils.search_tree(scheme, version, namespace, code);
+			sb.append(content);
+			ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+			ouputStream.flush();
+
+			try {
+				ouputStream.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			//FacesContext.getCurrentInstance().responseComplete();
+			return;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+    public void build_hierarchy(HttpServletRequest request, HttpServletResponse response) {
+
+
+System.out.println(	"build_hierarchy" );
+
+
+		response.setContentType("text/csv");
+		ServletOutputStream ouputStream = null;
+		StringBuffer sb = new StringBuffer();
+		try {
+			ouputStream = response.getOutputStream();
+			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+			TreeNavigationUtils treeNavigationUtils = new TreeNavigationUtils(lbSvc);
+			String scheme = request.getParameter("ontology_display_name");
+			String code = request.getParameter("ontology_node_id");
+			String version = treeNavigationUtils.getVocabularyVersionByTag(scheme);
+
+			String namespace = null;
+			if (scheme.compareTo("NCI_Thesaurus") == 0) {
+				namespace = "ncit";
+			} else {
+				Vector namespaces = new CodingSchemeDataUtils(lbSvc).getNamespaceNames(scheme, version);
+				if (namespaces != null) {
+					if (namespaces.size() == 1) {
+						namespace = (String) namespaces.elementAt(0);
+					}
+				}
+			}
+			String content = treeNavigationUtils.build_tree(scheme, version, namespace);
+			sb.append(content);
+			ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+			ouputStream.flush();
+
+			try {
+				ouputStream.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			//FacesContext.getCurrentInstance().responseComplete();
+			return;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+    public void expand_hierarchy(HttpServletRequest request, HttpServletResponse response) {
+		response.setContentType("text/csv");
+		ServletOutputStream ouputStream = null;
+		StringBuffer sb = new StringBuffer();
+		try {
+			ouputStream = response.getOutputStream();
+			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+			TreeNavigationUtils treeNavigationUtils = new TreeNavigationUtils(lbSvc);
+			String scheme = request.getParameter("ontology_display_name");
+			String code = request.getParameter("ontology_node_id");
+			String id = request.getParameter("id");
+			String version = treeNavigationUtils.getVocabularyVersionByTag(scheme);
+			String namespace = treeNavigationUtils.getNamespaceByCode(scheme, version, code);
+			String content = treeNavigationUtils.expand_tree(scheme, version, namespace, code, id);
+			sb.append(content);
+			ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+			ouputStream.flush();
+
+			try {
+				ouputStream.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			//FacesContext.getCurrentInstance().responseComplete();
+			return;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	//expand_hierarchy
+
 }
 

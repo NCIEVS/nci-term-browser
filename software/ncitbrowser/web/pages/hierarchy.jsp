@@ -29,7 +29,7 @@ div {text-align: left;}
 
     <script type="text/javascript">
 
-
+        var currOpener = opener;
 	function load(url,target) {
 		if (target != '')
 			target.window.location.href = url;
@@ -379,8 +379,7 @@ div {text-align: left;}
               </div>
             </f:view>
             
-<div id="tree"><div>            
-            
+		<div id="tree"><div>            
             
             <script type="text/javascript">_satellite.pageBottom();</script>
           </body>

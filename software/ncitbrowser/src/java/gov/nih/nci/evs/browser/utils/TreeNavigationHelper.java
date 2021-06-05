@@ -396,7 +396,7 @@ public class TreeNavigationHelper {
 		if (focusCode.compareTo(code) == 0) {
 			label = "<font color=\"red\">" + label + "</font>";
 		}
-        return "&nbsp;<a href=\"" + this.contextPath + "/pages/concept_details.jsf?dictionary=NCI_Thesaurus&code="+ code +"\">" + label + "</a>";
+        return "&nbsp;<a href=\"#\" onclick=\"javascript:onClickTreeNode('" + code + "');\">" + label + "</a>";
 	}
 
 

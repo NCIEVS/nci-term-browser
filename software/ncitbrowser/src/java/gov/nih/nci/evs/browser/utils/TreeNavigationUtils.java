@@ -367,7 +367,7 @@ public class TreeNavigationUtils {
 	}
 
 	private String getHyperLink(String label, String code) {
-        return "&nbsp;<a href=\"" + this.contextPath + "/pages/concept_details.jsf?dictionary=NCI_Thesaurus&code="+ code +"\">" + label + "</a>";
+        return "&nbsp;<a href=\"#\" onclick=\"javascript:onClickTreeNode('" + code + "');\">" + label + "</a>";
 	}
 
     public StringBuffer print_node(StringBuffer buf, String label, String code, String id, int level, boolean expandable, boolean expanded) {

@@ -29,6 +29,36 @@ div {text-align: left;}
 
     <script type="text/javascript">
 
+
+	function load(url,target) {
+		if (target != '')
+			target.window.location.href = url;
+		else
+			window.location.href = url;
+	}
+      
+	function onClickTreeNode(ontology_node_id) {
+		var ontology_display_name = document.forms["pg_form"].ontology_display_name.value;
+		var ontology_version = document.forms["pg_form"].ontology_version.value;
+		var ontology_node_ns = document.forms["pg_form"].ontology_node_ns.value;
+
+		load('/ncitbrowser/ConceptReport.jsp?dictionary='+ ontology_display_name
+		+ '&version='+ ontology_version
+		+ '&code=' + ontology_node_id
+		+ '&ns=' + ontology_node_ns, currOpener);
+	}  
+	
+	function show_hide_div(div_id) {
+		var img_id = "IMG_" + div_id.substring(4, div_id.length);
+		var img_obj = document.getElementById(img_id);
+		if (img_obj.getAttribute("src").indexOf("minus") != -1) {
+			document.getElementById(div_id).style.display = "none";
+		} else if (img_obj.getAttribute("src").indexOf("plus") != -1) {
+			document.getElementById(div_id).style.display = "block";
+		}
+		changeImage(img_id);
+	}
+	
 	function show_hide(div_id) {
 		var curr_node = document.getElementById(div_id);
 		var code = curr_node.getAttribute("code");
@@ -39,7 +69,19 @@ div {text-align: left;}
 		        expand_node(div_id, code);
 		        changeImage(img_id); 
 		} else if (img_obj.getAttribute("src").indexOf("minus") != -1) {
-
+		     var i = 1;
+		     var next_div_id = div_id + "_" + i;
+		     var next_img_id = img_id + "_" + i;
+		     var e = document.getElementById(next_div_id);
+		     while (e != null) {
+		             document.getElementById(next_img_id).remove();
+		             document.getElementById(next_div_id).remove();
+			     i = i+1;
+			     next_div_id = div_id + "_" + i;
+			     next_img_id = img_id + "_" + i;
+			     e = document.getElementById(next_div_id);
+		     }
+		     changeImage(img_id); 
 		}
 	}
 

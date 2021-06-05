@@ -538,7 +538,7 @@ public class TreeNavigationUtils {
 					if (child.getExpandableStatus() == LexEvsTreeNode.ExpandableStatus.IS_EXPANDABLE) {
 						expandable = true;
 					}
-					String child_id = id + "_" + String.valueOf(lcv+1);
+					String child_id = id + "_" + String.valueOf(lcv);
 					StringBuffer buf2 = print_node(new StringBuffer(), child_label, child_code, child_id, 0, expandable, expanded);
 					buf.append(buf2);
 				}

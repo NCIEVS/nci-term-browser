@@ -32,8 +32,29 @@ div {text-align: left;}
 	function show_hide(div_id) {
 		var curr_node = document.getElementById(div_id);
 		var code = curr_node.getAttribute("code");
-		expand_node(div_id, code);
+		var img_id = "IMG_" + div_id.substring(4, div_id.length);
+		var img_obj = document.getElementById(img_id);
+		
+		if (img_obj.getAttribute("src").indexOf("plus") != -1) {
+		        expand_node(div_id, code);
+		        changeImage(img_id); 
+		} else if (img_obj.getAttribute("src").indexOf("minus") != -1) {
+
+		}
 	}
+
+	function changeImage(img_id) {
+		var img_obj = document.getElementById(img_id);
+		if (img_obj.getAttribute("src").indexOf("minus") != -1) {
+			var s = img_obj.getAttribute("src");
+			s = s.replace("minus", "plus");
+			img_obj.setAttribute("src", s);
+		} else if (img_obj.getAttribute("src").indexOf("plus") != -1) {
+			var s = img_obj.getAttribute("src");
+			s = s.replace("plus", "minus");
+			img_obj.setAttribute("src", s);
+		}
+	} 
 
 	function search(ontology_node_id, ontology_display_name) {
 		var ajax = new XMLHttpRequest();
@@ -82,7 +103,6 @@ div {text-align: left;}
 			     document.getElementById(div_id).innerHTML = content + this.responseText;
 			}
 		}
-		return expand_content;
 	}
 
 

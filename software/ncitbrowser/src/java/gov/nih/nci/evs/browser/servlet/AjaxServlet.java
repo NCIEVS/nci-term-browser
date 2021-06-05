@@ -370,10 +370,6 @@ if (display_name_vec == null) {
 
         // Determine request by attributes
         String action = HTTPUtils.cleanXSS(request.getParameter("action"));
-
- System.out.println("ajax action: " + action);
-
-
         if (action.equals("expand_hierarchy")) {
             expand_hierarchy(request, response);
         } else if (action.equals("build_hierarchy")) {

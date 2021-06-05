@@ -372,6 +372,9 @@ public class TreeNavigationUtils {
 
     public StringBuffer print_node(StringBuffer buf, String label, String code, String id, int level, boolean expandable, boolean expanded) {
 		String indentation = getIndentation(level);
+		if (id.length() > 4) {
+			id = id.substring(4, id.length());
+		}
 		String div_id = "DIV_" + id;
 		buf.append("<li id=\"" + div_id + "\"" + " code=\"" + code + "\"><span>");
 		//buf.append(indentation + "<li>");

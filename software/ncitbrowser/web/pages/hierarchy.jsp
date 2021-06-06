@@ -115,11 +115,15 @@ div {text-align: left;}
 		var ontology_node_ns = document.forms["pg_form"].ontology_node_ns.value;
 		if (ontology_node_id == null || ontology_node_id == "null")
 		{
+		        document.getElementById("tree").innerHTML = "Loading hierarchy. Please wait...";
 			init(ontology_node_id, ontology_display_name);
+			document.getElementById("tree").innerHTML = "";
 		}
 		else
 		{
+		        document.getElementById("tree").innerHTML = "Searching concept in hierarchy. Please wait...";
 			search(ontology_node_id, ontology_node_ns, ontology_display_name);
+			document.getElementById("tree").innerHTML = "";
 		}
 	}
 
@@ -401,7 +405,7 @@ div {text-align: left;}
                 </div>
               </div>
             </f:view>
-            
+                <div id="status"><div>
 		<div id="tree"><div>            
             
             <script type="text/javascript">_satellite.pageBottom();</script>

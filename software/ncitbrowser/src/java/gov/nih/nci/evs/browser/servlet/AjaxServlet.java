@@ -1537,29 +1537,6 @@ if (!DataUtils.isNullOrBlank(checked_nodes)) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if (vsd_uri != null) {
 			isValueSet = true;
-			/*
-			vsd = DataUtils.findValueSetDefinitionByURI(vsd_uri);
-			if (vsd != null) {
-					vsd_name = vsd.getValueSetDefinitionName();
-					isValueSet = true;
-
-					//KLO, 10182017
-					if (DataUtils.getValueSetHierarchy() != null) {
-						vsd_description = DataUtils.getValueSetHierarchy().getValueSetDecription(vsd_uri);
-					} else {
-						System.out.println("WARNING: DataUtils.getValueSetHierarchy() = null.");
-					}
-					//vsd_description = vsd.getEntityDescription().getContent();
-
-			} else {
-					Entity entity = DataUtils.getConceptByCode(Constants.TERMINOLOGY_VALUE_SET_NAME, null, vsd_uri);
-					if (entity != null) {
-						vsd_name = entity.getEntityDescription().getContent();
-					}
-					vsd_description = DataUtils.getTerminologyValueSetDescription(vsd_uri);
-			}
-			*/
-			//vsd_description = NCItBrowserProperties.getResolvedValueSetName(vsd_uri);
 			vsd_name = DataUtils.findValueSetNameByURI(vsd_uri);
 			vsd_description = DataUtils.findValueSetDescriptionByURI(vsd_uri);
 	    }
@@ -5103,7 +5080,6 @@ out.flush();
 		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
 		vsd_name = vsd_name.replaceAll(" ", "_");
 		vsd_name = vsd_name + ".txt";
-		//System.out.println("vsd_name: " + vsd_name);
 
 		response.setContentType("text/csv");
 		response.setHeader("Content-Disposition", "attachment; filename="
@@ -5733,9 +5709,25 @@ out.flush();
 			LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 			TreeNavigationUtils treeNavigationUtils = new TreeNavigationUtils(lbSvc);
 			String scheme = request.getParameter("ontology_display_name");
+
 			String code = request.getParameter("ontology_node_id");
 			String version = treeNavigationUtils.getVocabularyVersionByTag(scheme);
-			String namespace = treeNavigationUtils.getNamespaceByCode(scheme, version, code);
+			String namespace = request.getParameter("ontology_node_ns");
+			if (namespace == null) {
+				namespace = request.getParameter("ns");
+			}
+
+			System.out.println("In AjaxServlet search_hierarcy namespace: " + namespace);
+
+			if (namespace == null || namespace.compareTo("") == 0) {
+				namespace = treeNavigationUtils.getNamespaceByCode(scheme, version, code);
+			}
+
+            System.out.println("In AjaxServlet #2 search_hierarcy namespace: " + namespace);
+            if (namespace == null) {
+				namespace = (String) request.getSession().getAttribute("ns");
+			}
+
 			String content = treeNavigationUtils.search_tree(scheme, version, namespace, code);
 			sb.append(content);
 			ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
@@ -5754,11 +5746,6 @@ out.flush();
 	}
 
     public void build_hierarchy(HttpServletRequest request, HttpServletResponse response) {
-
-
-System.out.println(	"build_hierarchy" );
-
-
 		response.setContentType("text/csv");
 		ServletOutputStream ouputStream = null;
 		StringBuffer sb = new StringBuffer();
@@ -5768,16 +5755,18 @@ System.out.println(	"build_hierarchy" );
 			TreeNavigationUtils treeNavigationUtils = new TreeNavigationUtils(lbSvc);
 			String scheme = request.getParameter("ontology_display_name");
 			String code = request.getParameter("ontology_node_id");
+			String namespace = request.getParameter("ontology_node_ns");
 			String version = treeNavigationUtils.getVocabularyVersionByTag(scheme);
 
-			String namespace = null;
-			if (scheme.compareTo("NCI_Thesaurus") == 0) {
-				namespace = "ncit";
-			} else {
-				Vector namespaces = new CodingSchemeDataUtils(lbSvc).getNamespaceNames(scheme, version);
-				if (namespaces != null) {
-					if (namespaces.size() == 1) {
-						namespace = (String) namespaces.elementAt(0);
+            if (namespace == null || (namespace != null && namespace.compareTo("") == 0)) {
+				if (scheme.compareTo("NCI_Thesaurus") == 0) {
+					namespace = "ncit";
+				} else {
+					Vector namespaces = new CodingSchemeDataUtils(lbSvc).getNamespaceNames(scheme, version);
+					if (namespaces != null) {
+						if (namespaces.size() == 1) {
+							namespace = (String) namespaces.elementAt(0);
+						}
 					}
 				}
 			}
@@ -5827,7 +5816,5 @@ System.out.println(	"build_hierarchy" );
 			ex.printStackTrace();
 		}
 	}
-	//expand_hierarchy
-
 }
 

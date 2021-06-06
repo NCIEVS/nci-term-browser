@@ -70,6 +70,7 @@ Entity c = null;
          
     JSPUtils.JSPHeaderInfo prop_info = new JSPUtils.JSPHeaderInfo(request);
     String dictionary = prop_info.dictionary;
+    
     String formalName = mappingTab.getFormalName(dictionary);
     if (dictionary != null) {
       dictionary = StringUtils.replaceAll(dictionary, "&#40;", "(");
@@ -77,7 +78,7 @@ Entity c = null;
     }
 
     String version = prop_info.version;
-
+ 
     // appscan fix: 09082015
     boolean retval = HTTPUtils.validateRequestParameters(request);
     if (!retval) {
@@ -203,20 +204,16 @@ Entity c = null;
              } 
            }
 
-/*
-ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
-if (ns == null) {
-    ns = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("ns"));
-}
-if (ns == null || ns.compareTo("null") == 0) {
-    ns = cd.getNamespaceByCode(dictionary, version, code);
-}
-*/
+
 ns = (String) request.getParameter("ns");
+if (ns == null) {
+    ns = (String) request.getParameter("ontology_node_ns");
+}
+
 if (ns == null) {
     ns = (String) request.getSession().getAttribute("ns");
 }
-if (ns == null || ns.compareTo("null") == 0) {
+if (ns == null || ns.compareTo("null") == 0 || ns.compareTo("") == 0) {
     ns = cd.getNamespaceByCode(dictionary, version, code);
 } else {
     Vector ns_vec = null;
@@ -239,8 +236,8 @@ if (ns == null || ns.compareTo("null") == 0) {
     }
 }
 
+request.getSession().setAttribute("ns", ns);
 sessionMonitor.execute(request, dictionary, version, code, ns);
- 
 code = HTTPUtils.cleanXSS(code);    
           
           request.getSession().setAttribute("code", code);
@@ -330,6 +327,10 @@ code = HTTPUtils.cleanXSS(code);
 
             String tg_dictionary_0 = dictionary;
             String tg_dictionary = StringUtils.replaceAll(dictionary, " ", "%20");
+            
+            
+            
+            
             if (c != null) {
               request.getSession().setAttribute("type", type);
               request.getSession().setAttribute("singleton", "false");
@@ -352,7 +353,7 @@ code = HTTPUtils.cleanXSS(code);
 
                 <%
                 if (DataUtils.isNullOrBlank(ns)) {
-                    ns = cd.getNamespaceByCode(dictionary, version, code);
+                   ns = cd.getNamespaceByCode(dictionary, version, code);
                 }
                 %>
       
@@ -360,18 +361,13 @@ code = HTTPUtils.cleanXSS(code);
  if (DataUtils.isNullOrBlank(ns)) {
  %>
        
-                            <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/ajax?action=search_hierarchy&ontology_node_id=<%=code%>&ontology_display_name=<%=short_name%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
+                            <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/ajax?action=search_hierarchy&ontology_node_id=<%=code%>&ontology_node_ns=<%=ns%>&ontology_display_name=<%=short_name%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
 
  
  <%
  } else {
  %>
- 
- 
-
-                            <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/pages/hierarchy.jsf?code=<%=code%>&ns=<%=ns%>&ontology_display_name=<%=short_name%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
-
- 
+                           <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/pages/hierarchy.jsf?vih=true&code=<%=code%>&ns=<%=ns%>&ontology_display_name=<%=dictionary%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
  <%
  }
  %>

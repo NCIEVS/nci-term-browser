@@ -42,7 +42,7 @@ div {text-align: left;}
 		var ontology_version = document.forms["pg_form"].ontology_version.value;
 		var ontology_node_ns = document.forms["pg_form"].ontology_node_ns.value;
 
-		load('/ncitbrowser/ConceptReport.jsp?dictionary='+ ontology_display_name
+		load('/ncitbrowser/pages/concept_details.jsf?dictionary='+ ontology_display_name
 		+ '&version='+ ontology_version
 		+ '&code=' + ontology_node_id
 		+ '&ns=' + ontology_node_ns, currOpener);
@@ -98,9 +98,9 @@ div {text-align: left;}
 		}
 	} 
 
-	function search(ontology_node_id, ontology_display_name) {
+	function search(ontology_node_id, ontology_node_ns, ontology_display_name) {
 		var ajax = new XMLHttpRequest();
-		ajax.open("GET", '/ncitbrowser/ajax?action=search_concept_in_tree&ontology_display_name=' + ontology_display_name + '&ontology_node_id=' + ontology_node_id, true);
+		ajax.open("GET", '/ncitbrowser/ajax?action=search_concept_in_tree&ontology_display_name=' + ontology_display_name + '&ontology_node_ns=' + ontology_node_ns + '&ontology_node_id=' + ontology_node_id, true);
 		ajax.send(); 
 		ajax.onreadystatechange = function() {
 			if (ajax.readyState == 4 && ajax.status == 200) {
@@ -112,13 +112,14 @@ div {text-align: left;}
 	function initTree() {
 		var ontology_node_id = document.forms["pg_form"].ontology_node_id.value;
 		var ontology_display_name = document.forms["pg_form"].ontology_display_name.value;
+		var ontology_node_ns = document.forms["pg_form"].ontology_node_ns.value;
 		if (ontology_node_id == null || ontology_node_id == "null")
 		{
 			init(ontology_node_id, ontology_display_name);
 		}
 		else
 		{
-			search(ontology_node_id, ontology_display_name);
+			search(ontology_node_id, ontology_node_ns, ontology_display_name);
 		}
 	}
 
@@ -215,8 +216,36 @@ div {text-align: left;}
 
                   <%
                   JSPUtils.JSPHeaderInfoMore info = new JSPUtils.JSPHeaderInfoMore(request);
-                  String hierarchy_dictionary = info.dictionary;
-                  String hierarchy_version = info.version;
+                  
+                      
+	      String ontology_display_name = null;
+	      String ontology_node_id = null;
+	      String ontology_node_ns= null;
+	      String ontology_version = null;
+
+	      String vih = HTTPUtils.cleanXSS((String) request.getParameter("vih"));
+	      if (vih != null) {
+		      ontology_display_name = HTTPUtils.cleanXSS((String) request.getParameter("ontology_display_name"));
+		      ontology_node_id = HTTPUtils.cleanXSS((String) request.getParameter("code"));
+		      ontology_node_ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
+		      ontology_version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
+	      } else {
+
+		      ontology_display_name = info.dictionary;
+		      ontology_node_id = HTTPUtils.cleanXSS((String) request.getParameter("code"));
+		      ontology_node_ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
+		      ontology_version = info.version;
+	      }
+
+	      if (ontology_node_ns == null) {
+		   ontology_node_ns = HTTPUtils.cleanXSS((String) request.getParameter("ontology_node_ns"));
+	      }
+
+	      String schema = ontology_display_name;                  
+                  
+                  
+                  String hierarchy_dictionary = ontology_display_name;
+                  String hierarchy_version = ontology_version;
 
                   String hierarchy_schema = HTTPUtils.cleanXSS((String) request.getParameter("schema"));
                   if (hierarchy_dictionary != null && hierarchy_schema == null) hierarchy_schema = hierarchy_dictionary;
@@ -323,18 +352,14 @@ div {text-align: left;}
 
                     <form id="pg_form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
                       <%
-                      String ontology_node_id = HTTPUtils.cleanXSS((String) request.getParameter("code"));
-                      String ontology_node_ns = HTTPUtils.cleanXSS((String) request.getParameter("ns"));
 
-                      String ontology_display_name = info.dictionary;
-                      String ontology_version = info.version;
-                      String schema = ontology_display_name;
 
                       //11202013, KLO
                       //ontology_display_name = DataUtils.uri2CodingSchemeName(ontology_display_name);
                       ontology_display_name = DataUtils.getCSName(ontology_display_name);
+                      
                       if (DataUtils.isNull(ontology_display_name)) {
-                        ontology_display_name = Constants.NCIT_CS_NAME;
+                          ontology_display_name = Constants.NCIT_CS_NAME;
                       }
                       %>
                       <input
@@ -363,14 +388,12 @@ div {text-align: left;}
                           value="<%=HTTPUtils.cleanXSS(ontology_version)%>"
                       />
 
-                      <% if (ontology_node_ns != null && ontology_node_ns.compareToIgnoreCase("na") != 0) { %>
-                        <input
+                      <input
                             type="hidden"
                             id="ontology_node_ns"
                             name="ontology_node_ns"
-                            value="<%=ontology_node_ns%>"
-                        />
-                      <% } %>
+                            value="<%=HTTPUtils.cleanXSS(ontology_node_ns)%>"
+                      />
 
                     </form>
                     <!-- End of Tree control content -->

@@ -137,14 +137,44 @@ public class TreeNavigationUtils {
 		return new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(codingSchemeName, "PRODUCTION");
 	}
 
+/*
+		LexEvsTree tree = null;
+		if (StringUtils.isNullOrBlank(namespace)) {
+			String ns = getNamespaceByCode(codingScheme, versionOrTag.getVersion(), code);
+			tree = treeService.getTree(codingScheme, versionOrTag, code, ns);
+		} else {
+			tree = treeService.getTree(codingScheme, versionOrTag, code, namespace);
+		}
+*/
+
 	public Vector searchTree(String scheme, String version, String ns, String code) {
-		TreeService service =
+
+System.out.println(	"*** TreeNavigationUtils searchTree scheme: " + scheme + " version: " + version + " ns: " + ns + " code: " + code);
+
+		TreeService treeService =
 				TreeServiceFactory.getInstance().getTreeService(lbSvc);
 
         CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
         versionOrTag.setVersion(version);
 
-	    LexEvsTree tree = service.getTree(scheme, versionOrTag, code);
+        if (ns == null) {
+			ns = getNamespaceByCode(scheme, version, code);
+		}
+		System.out.println("namespace: " + ns);
+		LexEvsTree tree = treeService.getTree(scheme, versionOrTag, code, ns);
+
+/*
+        LexEvsTree tree = null;
+		if (StringUtils.isNullOrBlank(ns)) {
+			ns = getNamespaceByCode(scheme, versionOrTag.getVersion(), code);
+			tree = treeService.getTree(scheme, versionOrTag, code, ns);
+		} else {
+			tree = treeService.getTree(scheme, versionOrTag, code, ns);
+		}
+*/
+
+	    //tree = service.getTree(scheme, versionOrTag, code);
+
 	    Map<String, LexEvsTreeNode> codeMap = tree.getCodeMap();
 	    Iterator it = codeMap.keySet().iterator();
 
@@ -185,6 +215,7 @@ public class TreeNavigationUtils {
 		}
 
 		parent_child_vec = new SortUtils().quickSort(parent_child_vec);
+		System.out.println("parent_child_vec: " + parent_child_vec.size());
         return parent_child_vec;
 	}
 
@@ -316,6 +347,7 @@ public class TreeNavigationUtils {
 
 
 	public String buildTree(String scheme, String version, String ns) {
+
         JSONArray jsonArray = new JSONArray();
 		TreeService service =
 				TreeServiceFactory.getInstance().getTreeService(lbSvc);
@@ -323,7 +355,17 @@ public class TreeNavigationUtils {
         CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
         versionOrTag.setVersion(version);
 
-	    LexEvsTreeNode focusNode = service.getSubConcepts(scheme, versionOrTag, "@@", ns);
+	    LexEvsTreeNode focusNode = null;
+		try {
+			focusNode = service.getSubConcepts(scheme, versionOrTag, "@@", ns);
+			if (focusNode == null) {
+				focusNode = service.getSubConcepts(scheme, versionOrTag, "@", ns);
+			}
+		} catch (Exception ex) {
+			System.out.println(	"service.getSubConcepts failed.");
+			return null;
+		}
+
 
 		ChildTreeNodeIterator itr = focusNode.getChildIterator();
 		try {
@@ -402,19 +444,47 @@ public class TreeNavigationUtils {
 		return buf;
 	}
 
-	public String build_tree(String scheme, String version, String ns) {
+/*
+	public String build_tree0(String scheme, String version, String ns) {
+
+System.out.println(	"build_tree -- scheme:"  +  scheme + " version: " + version + " ns: " + ns);
+
 		StringBuffer buf = new StringBuffer();
 		TreeService service =
 				TreeServiceFactory.getInstance().getTreeService(lbSvc);
 
         if (ns == null) {
 			 Vector namespaces = new CodingSchemeDataUtils(lbSvc).getNamespaceNames(scheme, version);
-			 ns = (String) namespaces.elementAt(0);
+			 if (namespaces != null && namespaces.size() == 1) {
+			 	 ns = (String) namespaces.elementAt(0);
+			 }
 		}
+
+System.out.println(	"build_tree -- scheme:"  +  scheme + " version: " + version + " ns: " + ns);
 
         CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
         versionOrTag.setVersion(version);
-	    LexEvsTreeNode focusNode = service.getSubConcepts(scheme, versionOrTag, "@@", ns);
+
+	    //LexEvsTreeNode focusNode = service.getSubConcepts(scheme, versionOrTag, "@@", ns);
+
+Vector namespaces = new CodingSchemeDataUtils(lbSvc).getNamespaceNames(scheme, version);
+if (namespaces == null) {
+	System.out.println("build_tree namespaces: " + namespaces == null);
+} else {
+	Utils.dumpVector("build_tree namespaces", namespaces);
+}
+
+	    LexEvsTreeNode focusNode = null;
+		try {
+			focusNode = service.getSubConcepts(scheme, versionOrTag, "@@", ns);
+			if (focusNode == null) {
+				focusNode = service.getSubConcepts(scheme, versionOrTag, "@", ns);
+			}
+		} catch (Exception ex) {
+			System.out.println(	"service.getSubConcepts failed.");
+			return null;
+		}
+
 		ChildTreeNodeIterator itr = focusNode.getChildIterator();
 
 		buf.append("<ul>");
@@ -433,6 +503,8 @@ public class TreeNavigationUtils {
 				LexEvsTreeNode child = (LexEvsTreeNode) hmap.get(key);
 				String label = child.getEntityDescription();
 				String code = child.getCode();
+
+
 				ns = child.getNamespace();
 				boolean expandable = false;
 				boolean expanded = false;
@@ -440,6 +512,38 @@ public class TreeNavigationUtils {
 					expandable = true;
 				}
 
+				String id = "N_" + String.valueOf(i+1);
+				StringBuffer buf2 = print_node(new StringBuffer(), label, code, id, 0, expandable, expanded);
+				buf.append(buf2);
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		buf.append("<ul>");
+		return buf.toString();
+	}
+*/
+
+	public String build_tree(String scheme, String version, String ns) {
+        Vector roots = getRoots(scheme, version);
+		StringBuffer buf = new StringBuffer();
+
+System.out.println(	"build_tree -- scheme:"  +  scheme + " version: " + version + " ns: " + ns);
+
+		buf.append("<ul>");
+		try {
+			for (int i=0; i<roots.size(); i++) {
+				String line = (String) roots.elementAt(i);
+				Vector u = StringUtils.parseData(line, '|');
+				String label = (String) u.elementAt(5);
+				String code = (String) u.elementAt(4);
+				String expandable_str = (String) u.elementAt(6);
+				boolean expandable = false;
+				boolean expanded = false;
+				if (expandable_str.compareTo("true") == 0) {
+					expandable = true;
+				}
 				String id = "N_" + String.valueOf(i+1);
 				StringBuffer buf2 = print_node(new StringBuffer(), label, code, id, 0, expandable, expanded);
 				buf.append(buf2);
@@ -551,6 +655,67 @@ public class TreeNavigationUtils {
 		return buf.toString();
 	}
 
+    public ResolvedConceptReferenceList getHierarchyRoots(
+        String codingScheme, String version) {
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		return new TreeUtils(lbSvc).getHierarchyRoots(codingScheme, version);
+	}
+
+	public boolean isExpandable(TreeService treeService, String scheme, String version, String code, String namespace) {
+		CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
+		if (version != null) {
+			versionOrTag.setVersion(version);
+		}
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		LexEvsTreeNode node = treeService.getSubConcepts(scheme, versionOrTag, code, namespace);
+        if (node != null && node.getExpandableStatus().toString().compareTo("IS_EXPANDABLE") == 0) return true;
+        return false;
+	}
+
+    public Vector getRoots(String codingScheme, String version) {
+		Vector roots = new Vector();
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		ResolvedConceptReferenceList rcrl = getHierarchyRoots(codingScheme, version);
+		TreeService treeService =
+			TreeServiceFactory.getInstance().getTreeService(lbSvc);
+
+        Vector w = new Vector();
+        for (int i=0; i<rcrl.getResolvedConceptReferenceCount(); i++) {
+			ResolvedConceptReference rcr = rcrl.getResolvedConceptReference(i);
+			w.add(rcr);
+		}
+
+		CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
+		if (version != null) {
+			versionOrTag.setVersion(version);
+		}
+/*
+
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		LexEvsTreeNode node = treeService.getSubConcepts(scheme, versionOrTag, code, namespace);
+        if (node != null && node.getExpandableStatus().toString().compareTo("IS_EXPANDABLE") == 0) return true;
+        return false;
+*/
+
+		w = new SortUtils().quickSort(w);
+        for (int i=0; i<w.size(); i++) {
+			ResolvedConceptReference rcr = (ResolvedConceptReference) w.elementAt(i);
+			String cs_name = rcr.getCodingSchemeName();
+			String cs_version = rcr.getCodingSchemeVersion();
+			String cs_ns = rcr.getCodeNamespace();
+			String code = rcr.getConceptCode();
+			String name = rcr.getEntityDescription().getContent();
+
+			LexEvsTreeNode node = treeService.getSubConcepts(cs_name, versionOrTag, code, cs_ns);
+			boolean is_expandable = false;
+			if (node != null && node.getExpandableStatus().toString().compareTo("IS_EXPANDABLE") == 0) {
+				is_expandable = true;
+			}
+			roots.add(cs_name + "|" + cs_version + "|" + cs_version + "|" + cs_ns + "|" + code + "|" + name + "|" + is_expandable);
+		}
+		return roots;
+	}
+
 
     public static void main(String[] args) throws Exception {
 		//LexBIGService lbSvc = LexBIGServiceImpl.defaultInstance();
@@ -580,5 +745,4 @@ public class TreeNavigationUtils {
 
     }
 }
-
 

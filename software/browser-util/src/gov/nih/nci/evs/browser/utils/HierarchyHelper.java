@@ -199,12 +199,7 @@ public class HierarchyHelper implements Serializable {
 		set2.removeAll(set1);
 		this.leaf_set = set2;
         this.roots = hashSet2Vector(this.root_set);
-
-        System.out.println("ROOTS: " + this.roots.size());
-
         this.leaves = hashSet2Vector(this.leaf_set);
-
-        //findRootAndLeafNodes();
 	}
 
 	public static Vector hashSet2Vector(HashSet hset) {

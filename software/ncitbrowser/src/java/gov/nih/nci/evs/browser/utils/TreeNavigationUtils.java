@@ -148,9 +148,6 @@ public class TreeNavigationUtils {
 */
 
 	public Vector searchTree(String scheme, String version, String ns, String code) {
-
-System.out.println(	"*** TreeNavigationUtils searchTree scheme: " + scheme + " version: " + version + " ns: " + ns + " code: " + code);
-
 		TreeService treeService =
 				TreeServiceFactory.getInstance().getTreeService(lbSvc);
 
@@ -160,7 +157,6 @@ System.out.println(	"*** TreeNavigationUtils searchTree scheme: " + scheme + " v
         if (ns == null) {
 			ns = getNamespaceByCode(scheme, version, code);
 		}
-		System.out.println("namespace: " + ns);
 		LexEvsTree tree = treeService.getTree(scheme, versionOrTag, code, ns);
 
 /*
@@ -215,7 +211,6 @@ System.out.println(	"*** TreeNavigationUtils searchTree scheme: " + scheme + " v
 		}
 
 		parent_child_vec = new SortUtils().quickSort(parent_child_vec);
-		System.out.println("parent_child_vec: " + parent_child_vec.size());
         return parent_child_vec;
 	}
 
@@ -444,93 +439,10 @@ System.out.println(	"*** TreeNavigationUtils searchTree scheme: " + scheme + " v
 		return buf;
 	}
 
-/*
-	public String build_tree0(String scheme, String version, String ns) {
-
-System.out.println(	"build_tree -- scheme:"  +  scheme + " version: " + version + " ns: " + ns);
-
-		StringBuffer buf = new StringBuffer();
-		TreeService service =
-				TreeServiceFactory.getInstance().getTreeService(lbSvc);
-
-        if (ns == null) {
-			 Vector namespaces = new CodingSchemeDataUtils(lbSvc).getNamespaceNames(scheme, version);
-			 if (namespaces != null && namespaces.size() == 1) {
-			 	 ns = (String) namespaces.elementAt(0);
-			 }
-		}
-
-System.out.println(	"build_tree -- scheme:"  +  scheme + " version: " + version + " ns: " + ns);
-
-        CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
-        versionOrTag.setVersion(version);
-
-	    //LexEvsTreeNode focusNode = service.getSubConcepts(scheme, versionOrTag, "@@", ns);
-
-Vector namespaces = new CodingSchemeDataUtils(lbSvc).getNamespaceNames(scheme, version);
-if (namespaces == null) {
-	System.out.println("build_tree namespaces: " + namespaces == null);
-} else {
-	Utils.dumpVector("build_tree namespaces", namespaces);
-}
-
-	    LexEvsTreeNode focusNode = null;
-		try {
-			focusNode = service.getSubConcepts(scheme, versionOrTag, "@@", ns);
-			if (focusNode == null) {
-				focusNode = service.getSubConcepts(scheme, versionOrTag, "@", ns);
-			}
-		} catch (Exception ex) {
-			System.out.println(	"service.getSubConcepts failed.");
-			return null;
-		}
-
-		ChildTreeNodeIterator itr = focusNode.getChildIterator();
-
-		buf.append("<ul>");
-		try {
-			HashMap hmap = new HashMap();
-			Vector keys = new Vector();
-			int lcv = 0;
-			while(itr.hasNext()){
-				LexEvsTreeNode child = itr.next();
-				keys.add(child.getEntityDescription());
-				hmap.put(child.getEntityDescription(), child);
-			}
-			keys = new SortUtils().quickSort(keys);
-			for (int i=0; i<keys.size(); i++) {
-				String key = (String) keys.elementAt(i);
-				LexEvsTreeNode child = (LexEvsTreeNode) hmap.get(key);
-				String label = child.getEntityDescription();
-				String code = child.getCode();
-
-
-				ns = child.getNamespace();
-				boolean expandable = false;
-				boolean expanded = false;
-				if (child.getExpandableStatus() == LexEvsTreeNode.ExpandableStatus.IS_EXPANDABLE) {
-					expandable = true;
-				}
-
-				String id = "N_" + String.valueOf(i+1);
-				StringBuffer buf2 = print_node(new StringBuffer(), label, code, id, 0, expandable, expanded);
-				buf.append(buf2);
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		buf.append("<ul>");
-		return buf.toString();
-	}
-*/
 
 	public String build_tree(String scheme, String version, String ns) {
         Vector roots = getRoots(scheme, version);
 		StringBuffer buf = new StringBuffer();
-
-System.out.println(	"build_tree -- scheme:"  +  scheme + " version: " + version + " ns: " + ns);
-
 		buf.append("<ul>");
 		try {
 			for (int i=0; i<roots.size(); i++) {

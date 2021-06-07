@@ -5716,14 +5716,9 @@ out.flush();
 			if (namespace == null) {
 				namespace = request.getParameter("ns");
 			}
-
-			System.out.println("In AjaxServlet search_hierarcy namespace: " + namespace);
-
 			if (namespace == null || namespace.compareTo("") == 0) {
 				namespace = treeNavigationUtils.getNamespaceByCode(scheme, version, code);
 			}
-
-            System.out.println("In AjaxServlet #2 search_hierarcy namespace: " + namespace);
             if (namespace == null) {
 				namespace = (String) request.getSession().getAttribute("ns");
 			}

@@ -49,7 +49,6 @@ request.getSession().removeAttribute("n");
 request.getSession().removeAttribute("b");
 request.getSession().removeAttribute("m");
 
-System.out.println("miltiple_search.jsp ncit_url: " + ncit_url);
 
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">

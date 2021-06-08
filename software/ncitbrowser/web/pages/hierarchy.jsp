@@ -115,17 +115,21 @@ div {text-align: left;}
 		var ontology_node_ns = document.forms["pg_form"].ontology_node_ns.value;
 		if (ontology_node_id == null || ontology_node_id == "null")
 		{
-		        document.getElementById("tree").innerHTML = "Loading hierarchy. Please wait...";
+                   var content = "<center><br></br><img src='/ncitbrowser/images/loading.gif' alt='Loading'/>" + 
+                        "<p>Loading hierarchy. Please wait...</p><center>";
+		        document.getElementById("tree").innerHTML = content;
 			init(ontology_node_id, ontology_display_name);
-			document.getElementById("tree").innerHTML = "";
+			
 		}
 		else
 		{
-		        document.getElementById("tree").innerHTML = "Searching concept in hierarchy. Please wait...";
+                   var content = "<center><br></br><img src='/ncitbrowser/images/loading.gif' alt='Loading'/>" + 
+                        "<p>Searching concept in hierarchy. Please wait...</p><center>";
+		        document.getElementById("tree").innerHTML = content;
 			search(ontology_node_id, ontology_node_ns, ontology_display_name);
-			document.getElementById("tree").innerHTML = "";
 		}
 	}
+
 
     
 	function init(ontology_node_id, ontology_display_name) {

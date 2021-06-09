@@ -104,14 +104,15 @@ if (active_scheme == null) {
           <a href="<%= NCItBrowserProperties.getEVS_EXPLORE_URL() %>" tabindex="0" alt="EVS Explore">
             NCI Thesaurus Exporter</a>
           </li> 
-           <li>
-          <a href="<%= NCItBrowserProperties.getEVS_EXPLORE_URL() %>" tabindex="0" alt="EVS Explore">
-            EVS Explore</a>
-          </li>            
+       
           
 <%
 }          
 %>          
+           <li>
+          <a href="<%= NCItBrowserProperties.getEVS_EXPLORE_URL() %>" tabindex="0" alt="EVS Explore">
+            EVS Explore</a>
+          </li>     
           
 
       <% } %>

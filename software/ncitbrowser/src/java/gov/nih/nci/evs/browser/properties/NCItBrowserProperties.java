@@ -92,6 +92,7 @@ public class NCItBrowserProperties {
     public static final String NCIM_URL = "NCIM_URL";
     public static final String NCIT_URL = "NCIT_URL";
     public static final String EVS_REPORT_EXPORTER_URL = "EVS_REPORT_EXPORTER_URL";
+    public static final String EVS_EXPLORE_URL = "EVS_EXPLORE_URL";
 
     public static final String TERM_SUGGESTION_APPLICATION_URL =
         "TERM_SUGGESTION_APPLICATION_URL";
@@ -137,6 +138,7 @@ public class NCItBrowserProperties {
     private static String _ncim_url = null;
     private static String _ncit_url = null;
     private static String _evsreportexporter_url = null;
+    private static String _evsexplore_url = null;
 
     private static int _pagination_time_out = 4;
     private static int _minimum_search_string_length = 1;
@@ -280,6 +282,10 @@ public class NCItBrowserProperties {
 			_evsreportexporter_url =
 				_browserProperties
 					.getProperty(_browserProperties.EVS_REPORT_EXPORTER_URL);
+
+			_evsexplore_url =
+				_browserProperties
+					.getProperty(_browserProperties.EVS_EXPLORE_URL);
 
 			_owl_role_quantifiers =
 				_browserProperties
@@ -603,6 +609,10 @@ public class NCItBrowserProperties {
 
     public static String getEVS_REPORT_EXPORTER_URL() {
         return _evsreportexporter_url;
+    }
+
+    public static String getEVS_EXPLORE_URL() {
+        return _evsexplore_url;
     }
 
     public static String getNCBO_API_KEY() {

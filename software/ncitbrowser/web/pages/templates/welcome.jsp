@@ -198,6 +198,27 @@ JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
                  A tool to customize exports of data from NCI Thesaurus (NCIt).
                </td>
             </tr>
+
+            <tr valign="top">
+               <td width="10px"></td>
+               <td>
+                 <a href="<%= NCItBrowserProperties.getEVS_EXPLORE_URL() %>" tabindex="0" alt="EVS Explore">
+                   <img
+                       src="<%=basePath%>/images/ExploreTile.jpg"
+                       width="77"
+                       height="38px"
+                       alt="EVS Explore"
+                       border="0"
+                   />
+                 </a>
+               </td>
+               <td width="3px"></td>
+               <td class="textbody" valign="top">
+           <a href="<%= NCItBrowserProperties.getEVS_EXPLORE_URL() %>" tabindex="0" alt="EVS Explore">
+            EVS Explore</a>:                
+                 EVS next generation terminology browser.
+               </td>
+            </tr>
             
             
             <tr valign="top">

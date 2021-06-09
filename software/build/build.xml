@@ -293,6 +293,7 @@
                 <filter token="ncit.url" value="${ncit.url}"/>
                 <filter token="ncim.url" value="${ncim.url}"/>
                 <filter token="evsreportexporter.url" value="${evsreportexporter.url}"/>
+                <filter token="evsexplore.url" value="${evsexplore.url}"/>
                 <filter token="lex.evs.api.url" value="${lex.evs.api.url}"/>
                 <filter token="ncit.mapping.url" value="${ncit.mapping.url}"/>
                 <filter token="graph.db.url" value="${graph.db.url}"/>

@@ -3157,9 +3157,11 @@ if (DataUtils.isNull(matchText)) {
       out.println("  </tr>");
       out.println("</table>");
 
+/*
 out.println("<%");
 out.println("String x = HTTPUtils.getRefererParmEncode(request);");
 out.println("%>");
+*/
 
 
 //      out.println("                <input type=\"hidden\" name=\"referer\" id=\"referer\" value=\"<%=HTTPUtils.getRefererParmEncode(request)%>\">");

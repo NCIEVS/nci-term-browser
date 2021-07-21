@@ -567,8 +567,8 @@
                                     <%=check__s%>
                                     tabindex="0"
                                     onclick="refresh_algorithm()";>
-
                                 <label for="adv_startsWith">Begins With&nbsp;</label>
+<!--                                
                                 <input
                                     type="radio"
                                     id="Lucene"
@@ -580,6 +580,7 @@
                                     onclick="refresh_algorithm()";>
 
                                 <label for="Lucene">Lucene</label>
+-->                                
                               </td>
                             </tr>
                           </table>

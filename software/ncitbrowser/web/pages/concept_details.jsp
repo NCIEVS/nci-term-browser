@@ -1033,7 +1033,6 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                 <a href="<%= url_str %>">(<%= linktext %>)</a>
               <% } %>
               <%
-              //////////////////////////////
               String vs_uri_2 = ValueSetDefinitionConfig.getValueSetURI(curr_concept.getEntityCode());
               String url_str_2 = request.getContextPath() + "/ajax?action=search_all_value_sets&code=" + curr_concept.getEntityCode();
               url_str_2 = url_str_2.replaceAll(":", "%3A");
@@ -1216,6 +1215,13 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                   String propName_label = (String) external_source_codes_label.elementAt(i);
                   String prop_url = (String) external_source_codes_url.elementAt(i);
                   String prop_linktext = (String) external_source_codes_linktext.elementAt(i);
+                  
+ System.out.println("DEBUGGING *************************************************");                 
+ System.out.println("propName: " + propName);
+ System.out.println("propName_label: " + propName_label);
+ System.out.println("prop_url: " + prop_url);
+ System.out.println("prop_linktext: " + prop_linktext);
+                  
 
                   displayed_properties.add(propName);
                   propertyData.add_displayed_property(propName);
@@ -1226,6 +1232,9 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                     if (value_vec != null && value_vec.size() > 0) {
                       for (int j=0; j<value_vec.size(); j++) {
                         String value = (String) value_vec.elementAt(j);
+                        
+  System.out.println("value: " + value);
+                        
 
                         if (n % 2 == 0) {
                           %>
@@ -1241,6 +1250,12 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                               <%= cd.encodeTerm(value) %>
                               <%
                               if (propName.compareTo("UMLS_CUI") != 0 && prop_url != null && prop_url.compareTo("null") != 0) {
+                              
+                                if (value.indexOf("|") != -1) {
+                                    int m = value.indexOf("|");
+                                    value = value.substring(0, m);
+                                }
+                              
                                 String url_str = prop_url + value;
                                 %>
                                 <a href="javascript:redirect_site('<%= url_str %>')">(<%= prop_linktext %>)</a>

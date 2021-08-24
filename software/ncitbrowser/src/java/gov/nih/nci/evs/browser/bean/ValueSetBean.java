@@ -1464,17 +1464,10 @@ public class ValueSetBean {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
-
-System.out.println("exportValuesToXMLAction ");
-
         String vsd_uri = (String) request.getSession().getAttribute("vsd_uri");
-System.out.println("vsd_uri " + vsd_uri);
-
 	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 	    ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
 		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
-System.out.println("metadata " + metadata);
-
 		Vector u = StringUtils.parseData(metadata);
 		String name = (String) u.elementAt(0);
 		String valueset_uri = (String) u.elementAt(1);
@@ -1487,20 +1480,7 @@ System.out.println("metadata " + metadata);
 			Vector u2 = gov.nih.nci.evs.browser.utils.StringUtils.parseData(supportedsources, ";");
 			supportedsource = (String) u2.elementAt(0);
 		}
-
 		String defaultCodingScheme = (String) u.elementAt(6);
-
-System.out.println("\tname " + name);
-System.out.println("\tvalueset_uri " + valueset_uri);
-System.out.println("\tdescription " + description);
-System.out.println("\tconcept_domain " + concept_domain);
-System.out.println("\tsources " + sources);
-System.out.println("\tsupportedsources " + supportedsources);
-System.out.println("\tsupportedsource " + supportedsource);
-System.out.println("\tdefaultCodingScheme " + defaultCodingScheme);
-
-
-
 		if (!DataUtils.isNCIT(defaultCodingScheme)) {
 			exportToXMLAction();
 			return;
@@ -1508,31 +1488,20 @@ System.out.println("\tdefaultCodingScheme " + defaultCodingScheme);
 		if (defaultCodingScheme.compareTo("ncit") == 0) {
 			defaultCodingScheme = "NCI_Thesaurus";
 		}
-System.out.println("\tdefaultCodingScheme " + defaultCodingScheme);
-
 		boolean withSource = true;
 		if (supportedsource == null || supportedsource.compareTo("null") == 0 || supportedsource.compareTo("NCI") == 0) {
 			withSource = false;
 		}
-System.out.println("\twithSource " + withSource);
-
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		String serviceUrl = RemoteServerUtil.getServiceUrl();
 		//LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices(serviceUrl);
         //ValueSetFormatter test = new ValueSetFormatter(lbSvc, vsd_service);
         String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(defaultCodingScheme, Constants.PRODUCTION);
-
-System.out.println("\tversion " + version);
-
         long ms = System.currentTimeMillis();
 		ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
 		Vector fields = formatter.getDefaultFields(withSource);
 		ValueSet vs = formatter.instantiateValueSet(vsd_uri, version, fields);
 		String xml_str = formatter.object2XMLStream(vs);
-
-System.out.println("\txml_str " + xml_str);
-
-
 		try {
 			HttpServletResponse response = (HttpServletResponse) FacesContext
 					.getCurrentInstance().getExternalContext().getResponse();

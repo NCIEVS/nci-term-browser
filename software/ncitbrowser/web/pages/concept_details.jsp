@@ -66,7 +66,7 @@ String code = null;
 String ns = null;
 String type = null;
 Entity c = null;    
-         
+     
          
     JSPUtils.JSPHeaderInfo prop_info = new JSPUtils.JSPHeaderInfo(request);
     String dictionary = prop_info.dictionary;
@@ -93,10 +93,8 @@ Entity c = null;
       }
     }
 
+
     String cs_name = mappingTab.getCSName(dictionary);
-    
-       
-    
     List namespace_list = null;
     response.setContentType("text/html;charset=utf-8");
     String short_name = cs_name;
@@ -313,7 +311,6 @@ code = HTTPUtils.cleanXSS(code);
               }
             }
 
-
             if (DataUtils.isNCIT(dictionary)) {
               %>
               <%@ include file="/pages/templates/content-header-other.jsp"%>
@@ -328,8 +325,7 @@ code = HTTPUtils.cleanXSS(code);
             String tg_dictionary_0 = dictionary;
             String tg_dictionary = StringUtils.replaceAll(dictionary, " ", "%20");
             
-            
-            
+         
             
             if (c != null) {
               request.getSession().setAttribute("type", type);
@@ -584,7 +580,6 @@ if (cartActionBean != null && cartActionBean.getCount()>0) {
     -->
 
 <%
-        
 
 HashMap def_map = null;
 int other_src_alt_def_count = 0;
@@ -628,7 +623,6 @@ Vector displayed_properties = new Vector();
 Vector presentation_vec = new Vector();
 String concept_id = code;
 
-
 try {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 curr_concept = (Entity) request.getSession().getAttribute("concept");
@@ -652,21 +646,7 @@ curr_concept = (Entity) request.getSession().getAttribute("concept");
     descendantCodes = propertyData.getDescendantCodes();
     
     propertyName2ValueHashMap = propertyData.getPropertyName2ValueHashMap();
-    /*
-    Iterator it = propertyName2ValueHashMap.keySet().iterator();
-    while (it.hasNext()) {
-        String map_key = (String) it.next();
-        Vector map_values = (Vector) propertyName2ValueHashMap.get(map_key);
-        if (map_values != null && map_values.size() > 0) {
-            for (int k=0; k<map_values.size(); k++) {
-                String map_value = (String) map_values.elementAt(k);
-                System.out.println(map_key + " --> " + map_value);
-            }
-        }
-    }
-    */
-  
-    
+
     propertyQualifierHashMap = propertyData.getPropertyQualifierHashMap();
     displayLabel2PropertyNameHashMap = propertyData.getDisplayLabel2PropertyNameHashMap();
 
@@ -708,7 +688,6 @@ if (type.compareTo("properties") == 0 || type.compareTo("all") == 0) {
   
 boolean show_status = propertyData.get_show_status();
 isActive = propertyData.getIsActive();
-
 
 if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != null) || (concept_status != null && concept_status.compareTo("null") != 0 && show_status)) {
 
@@ -773,8 +752,10 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
     }
 
     for (int i=0; i<properties_to_display.size(); i++) {
+    
       String propName = (String) properties_to_display.elementAt(i);
       String propName_label = (String) properties_to_display_label.elementAt(i);
+      
 
       if (propName_label.compareTo("NCI Thesaurus Code") == 0  && propName.compareTo("NCI_THESAURUS_CODE") != 0) {
         //String formalName = mappingTab.getFormalName(dictionary);
@@ -788,8 +769,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
       String url = (String) properties_to_display_url.elementAt(i);
       String linktext = (String) properties_to_display_linktext.elementAt(i);
 
-      //KLO 102611
-      //if (propName.compareTo(ncim_cui_propName) == 0 || propName.compareTo(umls_cui_propName) == 0) {
+
         if (propName.compareTo(ncim_cui_propName) == 0) {
           ncim_cui_propName_label = propName_label;
           ncim_cui_prop_url = url;
@@ -804,6 +784,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
             }
           }
         }
+
 
         String qualifier = "";
 
@@ -862,17 +843,23 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                 if (def_vec.size() > 1) {
                   qualifier = (String) def_vec.elementAt(1);
                 }
+               
+                
 		def_source = propertyData.getDefSource(qualifier);
+		
 		qualifier = def_source;
 
                 if (def_map != null && def_map.containsKey(qualifier)) {
                   String def_source_display_value = (String) def_map.get(qualifier);
+                   
                   value = value_wo_qualifier + " (" + qualifier + ")";
                   propName_label = def_source_display_value + " " + propName_label2;
-
                 } else {
+ 
+ if (qualifier != null) {
                 
                   if (qualifier.indexOf("PDQ") != -1) {
+                  
                     //value = JSPUtils.reformatPDQDefinition(value);
                   } else if (qualifier.compareTo("NCI") != 0) {
 
@@ -880,6 +867,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                     propName_label = qualifier + " " + propName_label2;
 
                   } else if (qualifier.compareTo("NCI") == 0 && propName.compareTo("ALT_DEFINITION") == 0) {
+                 
                     value = value_wo_qualifier;
                     if (other_src_alt_def_count > 0) {
                       propName_label = qualifier + " " + propName_label2;
@@ -888,29 +876,23 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                     }
 
                   } else if (qualifier.compareTo("NCI") == 0 && propName.compareTo("ALT_DEFINITION") != 0) {
+                  
                     value = value_wo_qualifier;
                     propName_label = propName_label2;
 
                   } else {
                     value = value_wo_qualifier;
                   }
+}
                 }
  
- /*
-                if (qualifier.compareToIgnoreCase("NCI") == 0) {
+                if (def_source != null && def_source.compareToIgnoreCase("NCI") == 0) {
                   nci_def_label_value.add(propName_label2 + "|" + value);
                 } else {
                   non_nci_def_label_value.add(propName_label + "|" + value);
                 }
-*/
-
-                if (def_source.compareToIgnoreCase("NCI") == 0) {
-                  nci_def_label_value.add(propName_label2 + "|" + value);
-                } else {
-                  non_nci_def_label_value.add(propName_label + "|" + value);
-                }
+                
               }
-
               if (propName_label.indexOf("textualPresentation") == -1) {
                 if (!is_definition) {
                   other_label_value.add(propName_label + "|" + value);
@@ -923,7 +905,6 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
       %>
 
       <%
-
       for (int i_def = 0; i_def<other_label_value.size(); i_def++) {
         String label_value = (String) other_label_value.elementAt(i_def);
         Vector u = StringUtils.parseData(label_value);
@@ -950,7 +931,6 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
       %>
 
       <%
-      
       for (int i_def = 0; i_def<nci_def_label_value.size(); i_def++) {
         String label_value = (String) nci_def_label_value.elementAt(i_def);
         Vector u = StringUtils.parseData(label_value);
@@ -972,7 +952,6 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
       <% } %>
 
       <%
-
 
       for (int i_def = 0; i_def<non_nci_def_label_value.size(); i_def++) {
         String label_value = (String) non_nci_def_label_value.elementAt(i_def);
@@ -997,7 +976,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
       <% } %>
 
       <%
-      
+   
       for (int i_def = 0; i_def<other_label_value.size(); i_def++) {
         String label_value = (String) other_label_value.elementAt(i_def);
         Vector u = StringUtils.parseData(label_value);
@@ -1049,7 +1028,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
       %>
 
       <%
-     
+
       ncim_metathesaurus_cui_vec = cd.getNCImCodes(curr_concept);
       
       //String ncimURL = new ConceptDetails().getNCImURL();
@@ -1160,6 +1139,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
       <p>
 
         <%
+         
         int n = 0;
         boolean hasExternalSourceCodes = false;
         boolean display_UMLS_CUI = true;
@@ -1216,13 +1196,6 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                   String prop_url = (String) external_source_codes_url.elementAt(i);
                   String prop_linktext = (String) external_source_codes_linktext.elementAt(i);
                   
- System.out.println("DEBUGGING *************************************************");                 
- System.out.println("propName: " + propName);
- System.out.println("propName_label: " + propName_label);
- System.out.println("prop_url: " + prop_url);
- System.out.println("prop_linktext: " + prop_linktext);
-                  
-
                   displayed_properties.add(propName);
                   propertyData.add_displayed_property(propName);
 
@@ -1232,9 +1205,6 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
                     if (value_vec != null && value_vec.size() > 0) {
                       for (int j=0; j<value_vec.size(); j++) {
                         String value = (String) value_vec.elementAt(j);
-                        
-  System.out.println("value: " + value);
-                        
 
                         if (n % 2 == 0) {
                           %>
@@ -1275,6 +1245,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
             </p>
             <p>
               <%
+
               boolean hasOtherProperties = false;
               Vector other_prop_names = propertyData.findOtherPropertyNames();
             
@@ -1343,8 +1314,6 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
             </p>
             <%
             
-            
-            
             //String url = JSPUtils.getBookmarkUrl(request, dictionary, version, concept_id, namespace);
             String url = JSPUtils.getBookmarkUrl(lbSvc, request, dictionary, version, namespace, concept_id);
  
@@ -1365,6 +1334,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
     -->
  
  <%
+ 
  String source_header = metadataUtils.getMetadataValue(dictionary, null, null, "source_header");
  
  String term_type_header = metadataUtils.getMetadataValue(
@@ -1450,6 +1420,7 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
        </tr>
  
        <%
+       
        HashSet hset = new HashSet();
        int n = -1;
        for (int lcv=0; lcv<synonyms.size(); lcv++)

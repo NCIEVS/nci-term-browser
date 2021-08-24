@@ -896,7 +896,7 @@ out.println("	</style>");
 		out.println("</head>");
 
 	}
-
+/*
     public static void main(String[] args) {
         String parent_child_file = args[0];
         String htmlfile = args[1];
@@ -912,9 +912,5 @@ out.println("	</style>");
 		stu.setUrl(url);
 		stu.writeTree2HTML(hmap, url, htmlfile);
 	}
-
+*/
 }
-
-//"<ul class=\"no-bullets\">
-
-//"<ul>"

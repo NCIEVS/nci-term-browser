@@ -424,7 +424,6 @@ public class ValueSetFormatter {
 	 }
 
      public Vector resolve(String scheme, String version, String source, Vector fields, Vector codes, int maxToReturn) {
-
         String defaultCodingScheme = scheme;
 		if (codes == null) return null;
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
@@ -556,7 +555,7 @@ public class ValueSetFormatter {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
 					String src = (String) hmap.get("source");
-					if (form != null && form.compareTo("DN") == 0 && src != null && src.compareTo(source) == 0) {
+					if (form != null && form.compareTo("DN") == 0 && src != null && source != null && src.compareTo(source) == 0) {
 						String term_name = (String) hmap.get("prop_value");
 						return term_name;
 					}
@@ -574,13 +573,13 @@ public class ValueSetFormatter {
 					String src = (String) hmap.get("source");
 					String source_code = (String) hmap.get("source-code");
 					if (fullSynTermName == null) {
-						if (form != null && form.compareTo("PT") == 0 && src != null && src.compareTo(source) == 0) {
+						if (form != null && form.compareTo("PT") == 0 && src != null && source != null && src.compareTo(source) == 0) {
 							String term_name = (String) hmap.get("prop_value");
 							return term_name;
 						}
 					} else {
 						//Prostate Specific Antigen|PT|CDISC|SDTM-LBTEST|null
-						if (form != null && form.compareTo("PT") == 0 && src != null && src.compareTo(source) == 0
+						if (form != null && form.compareTo("PT") == 0 && src != null && source != null && src.compareTo(source) == 0
 						    && source_code != null && source_code.compareTo(fullSynTermName) == 0) {
 							String term_name = (String) hmap.get("prop_value");
 							return term_name;
@@ -596,7 +595,7 @@ public class ValueSetFormatter {
 						HashMap hmap = lineSegment2HashMap(t);
 						String form = (String) hmap.get("form");
 						String src = (String) hmap.get("source");
-						if (form != null && form.compareTo("PT") == 0 && src != null && src.compareTo(source) == 0) {
+						if (form != null && form.compareTo("PT") == 0 && src != null && source != null && src.compareTo(source) == 0) {
 							String term_name = (String) hmap.get("prop_value");
 							return term_name;
 						}
@@ -615,7 +614,7 @@ public class ValueSetFormatter {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
 					String src = (String) hmap.get("source");
-					if (form != null && form.compareTo("PT") == 0 && src != null && src.compareTo(source) == 0) {
+					if (form != null && form.compareTo("PT") == 0 && src != null && source != null && src.compareTo(source) == 0) {
 						String source_code = (String) hmap.get("source_code");
 						buf.append(source_code).append("$");
 					}
@@ -637,7 +636,7 @@ public class ValueSetFormatter {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
 					String src = (String) hmap.get("source");
-					if (form != null && form.compareTo("PT") != 0 && src != null && src.compareTo(source) == 0) {
+					if (form != null && form.compareTo("PT") != 0 && src != null && source != null && src.compareTo(source) == 0) {
 						String term_name = (String) hmap.get("prop_value");
 						buf.append(term_name).append("$");
 					}
@@ -658,7 +657,7 @@ public class ValueSetFormatter {
 					HashMap hmap = lineSegment2HashMap(t);
 					String form = (String) hmap.get("form");
 					String src = (String) hmap.get("source");
-					if (form != null && form.compareTo("PT") != 0 && src != null && src.compareTo(source) == 0) {
+					if (form != null && form.compareTo("PT") != 0 && src != null && source != null && src.compareTo(source) == 0) {
 						String source_code = (String) hmap.get("source-code");
 						buf.append(source_code).append("$");
 					}
@@ -678,7 +677,7 @@ public class ValueSetFormatter {
 				if (t.startsWith("definition")) {
 					HashMap hmap = lineSegment2HashMap(t);
 					String src = (String) hmap.get("source");
-					if (src != null && src.compareTo(source) == 0) {
+					if (src != null && source != null && src.compareTo(source) == 0) {
 						String def = (String) hmap.get("prop_value");
 						buf.append(def).append("$");
 					}
@@ -1095,7 +1094,6 @@ public class ValueSetFormatter {
 		    //codes = csdu.getCodesInCodingScheme(vsd_uri, null);
 		    codes = csdu.getCodesInValueSet(serviceUrl, vsd_uri);
 		}
-
         String fullSynTermName = null;
 		if (source != null && source.compareTo(CDISC) == 0) {
 			String vs_code = getValueSetCode(vsd_uri);
@@ -1133,6 +1131,7 @@ public class ValueSetFormatter {
 		if (uri == null) return null;
 		String valueSetDefinitionRevisionId = null;
 		try {
+			//LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 			ValueSetDefinition vsd = vsd_service.getValueSetDefinition(new URI(uri), valueSetDefinitionRevisionId);
 			return vsd;
 		} catch (Exception ex) {
@@ -1388,16 +1387,68 @@ public class ValueSetFormatter {
 		return e;
 	}
 
+/*
 	public static void main(String[] args) {
-		String serviceUrl = null;
-		LexBIGService lbSvc = null;//RemoteServerUtil.createLexBIGService();
-		LexEVSValueSetDefinitionServices vsd_service = null;//RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+		String serviceUrl = RemoteServerUtil.getServiceURL();
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 
 		ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
 		String vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C67154";
 		vsd_uri = "http://evs.nci.nih.gov/valueset/CDISC/C66731";
+		vsd_uri = "http://evs.nci.nih.gov/valueset/C138189";
 
-/*
+	    vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+	    ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
+		String name = (String) u.elementAt(0);
+		String valueset_uri = (String) u.elementAt(1);
+		String description = (String) u.elementAt(2);
+		String concept_domain = (String) u.elementAt(3);
+		String sources = (String) u.elementAt(4);
+		String supportedsources = (String) u.elementAt(5);
+		String supportedsource = null;
+		if (supportedsources != null) {
+			Vector u2 = gov.nih.nci.evs.browser.utils.StringUtils.parseData(supportedsources, ";");
+			supportedsource = (String) u2.elementAt(0);
+		}
+
+
+		String defaultCodingScheme = (String) u.elementAt(6);
+		String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(defaultCodingScheme, Constants.PRODUCTION);
+		System.out.println("\tname " + name);
+		System.out.println("\tvalueset_uri " + valueset_uri);
+		System.out.println("\tdescription " + description);
+		System.out.println("\tconcept_domain " + concept_domain);
+		System.out.println("\tsources " + sources);
+		System.out.println("\tsupportedsources " + supportedsources);
+		System.out.println("\tsupportedsource " + supportedsource);
+		System.out.println("\tdefaultCodingScheme " + defaultCodingScheme);
+
+		if (!DataUtils.isNCIT(defaultCodingScheme)) {
+			exportToXMLAction();
+			return;
+		}
+		if (defaultCodingScheme.compareTo("ncit") == 0) {
+			defaultCodingScheme = "NCI_Thesaurus";
+		}
+
+		System.out.println("\tdefaultCodingScheme " + defaultCodingScheme);
+		boolean withSource = true;
+		if (supportedsource == null || supportedsource.compareTo("null") == 0 || supportedsource.compareTo("NCI") == 0) {
+			withSource = false;
+		}
+		System.out.println("\twithSource " + withSource);
+		Vector fields = formatter.getDefaultFields(withSource);
+		for (int i=0; i<fields.size(); i++) {
+		String t = (String) fields.elementAt(i);
+		System.out.println(t);
+		}
+
+		ValueSet vs = formatter.instantiateValueSet(vsd_uri, version, fields);
+		String xml_str = formatter.object2XMLStream(vs);
+
 		System.out.println(vsd_uri);
 
 		String scheme = "NCI_Thesaurus";
@@ -1414,8 +1465,7 @@ public class ValueSetFormatter {
 		String source = "CDISC";
 	    String source_pt = formatter.getSourcePT(scheme, version, code, source, fullSynTermName);
 	    System.out.println("source_pt: " + source_pt);
-*/
-/*
+
 	    String metadata = formatter.getValueSetDefinitionMetadata(vsd_uri);
 	    System.out.println(metadata);
 		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(metadata);
@@ -1434,9 +1484,7 @@ public class ValueSetFormatter {
 		System.out.println(sources);
 		System.out.println(supportedsources);
 		System.out.println(defaultCodingScheme);
-*/
 
-/*
 	    String rvs_tbl = formatter.get_rvs_tbl(vsd_uri);
 	    Vector u = new Vector();
 	    u.add("<html>");
@@ -1447,6 +1495,6 @@ public class ValueSetFormatter {
 	    u.add("</body>");
 	    u.add("</html>");
 	    Utils.saveToFile("VS_C66731.html", u);
-*/
 	}
+*/
 }

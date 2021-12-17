@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.Map;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 
 /**
@@ -65,8 +65,7 @@ public class ValueSetDefinitionConfig {
     protected static HashMap valueSetConfigHashMap = null;
     private static String vsd_config_file_dir = null;
     private static String vsd_config_file = null;
-    private static Logger _logger =
-        Logger.getLogger(ValueSetDefinitionConfig.class);
+	private static Logger _logger = LogManager.getLogger(ValueSetDefinitionConfig.class);
 
 /*
     static {

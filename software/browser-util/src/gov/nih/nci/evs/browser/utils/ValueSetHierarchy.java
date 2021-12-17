@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.Arrays;
 import java.util.Map.Entry;
 import java.util.Map;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.json.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;
@@ -112,7 +112,7 @@ import org.LexGrid.versions.*;
 
 public class ValueSetHierarchy {
 	private AbsoluteCodingSchemeVersionReferenceList _csVersionList = null;
-    private Logger _logger = Logger.getLogger(ValueSetHierarchy.class);
+	private Logger _logger = LogManager.getLogger(ValueSetHierarchy.class);
 
     public final LocalNameList _noopList = Constructors.createLocalNameList("_noop_");
     public String SOURCE_SCHEME = Constants.TERMINOLOGY_VALUE_SET_NAME;//"Terminology_Value_Set.owl";

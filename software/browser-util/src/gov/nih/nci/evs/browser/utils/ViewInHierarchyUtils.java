@@ -4,7 +4,7 @@ package gov.nih.nci.evs.browser.utils;
 import gov.nih.nci.evs.browser.common.*;
 import java.io.*;
 import java.util.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.LexGrid.codingSchemes.*;
@@ -90,7 +90,7 @@ import org.LexGrid.naming.*;
 
 public class ViewInHierarchyUtils {
 	public static int MAX_CHILDREN = 5;
-	private static Logger _logger = Logger.getLogger(ViewInHierarchyUtils.class);
+	private static Logger _logger = LogManager.getLogger(ViewInHierarchyUtils.class);
 	private static Random rand = new Random();
 
 

@@ -25,7 +25,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.*;
 import javax.swing.tree.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.LexBIG.caCore.interfaces.*;
 import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.LexGrid.LexBIG.DataModel.Collections.AssociationList;
@@ -54,7 +54,8 @@ public class MappingExporter extends JPanel
     static private final String newline = "\n";
     JTextArea log;
     JFileChooser fc;
-
+
+
 	DefaultHighlighter highlighter;
 	DefaultHighlighter unhighlighter;
 	DefaultHighlighter.DefaultHighlightPainter highlight_painter;
@@ -799,5 +800,6 @@ public class MappingExporter extends JPanel
 			MappingExporter.export_mapping(serviceUrl, mapping_schema, mapping_version, outputfile);
 		}
     }
-}
-
+
+}
+

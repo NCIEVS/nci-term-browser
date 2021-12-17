@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.Arrays;
 import java.util.Map.Entry;
 import java.util.Map;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.json.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;
@@ -110,7 +110,7 @@ import org.LexGrid.versions.*;
 
 
 public class ValueSetDefUtils {
-	private static Logger _logger = Logger.getLogger(ValueSetDefUtils.class);
+	private static Logger _logger = LogManager.getLogger(ValueSetDefUtils.class);
 	private List valueSetDefinitionURIList = null;
 	LexBIGService lbSvc = null;
 	LexEVSValueSetDefinitionServices vsd_service = null;

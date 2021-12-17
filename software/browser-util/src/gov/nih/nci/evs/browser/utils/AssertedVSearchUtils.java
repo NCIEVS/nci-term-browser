@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 import org.apache.commons.codec.language.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.concepts.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
@@ -47,7 +47,7 @@ public class AssertedVSearchUtils {
     public static final String CONTAINS = "contains";
     public static final String LUCENE = "lucene";
 
-    private static Logger _logger = Logger.getLogger(AssertedVSearchUtils.class);
+	private static Logger _logger = LogManager.getLogger(AssertedVSearchUtils.class);
 	private AssertedValueSetParameters params = null;
 	private SourceAssertedValueSetSearchExtension service = null;
 	private LexBIGService lbSvc = null;

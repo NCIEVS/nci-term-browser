@@ -6,7 +6,7 @@ import gov.nih.nci.evs.browser.properties.*;
 import java.io.*;
 import java.util.*;
 import net.sf.ehcache.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.json.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;

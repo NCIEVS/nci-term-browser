@@ -4,7 +4,7 @@ package gov.nih.nci.evs.browser.utils;
 import gov.nih.nci.evs.browser.common.*;
 import java.util.*;
 import javax.faces.model.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Core.*;
@@ -68,7 +68,7 @@ import org.LexGrid.LexBIG.Utility.*;
 
 public class MetadataUtils {
 	private boolean debug = false;
-    private static Logger _logger = Logger.getLogger(MetadataUtils.class);
+	private static Logger _logger = LogManager.getLogger(MetadataUtils.class);
     private static final String CODING_SCHEME_NAME_PROPERTY = "codingScheme";
     LexBIGService lbSvc = null;
     LexBIGServiceConvenienceMethods lbscm = null;

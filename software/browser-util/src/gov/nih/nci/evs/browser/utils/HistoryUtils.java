@@ -3,7 +3,7 @@ package gov.nih.nci.evs.browser.utils;
 
 import java.text.*;
 import java.util.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.concepts.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.NCIHistory.*;
@@ -66,7 +66,7 @@ import org.LexGrid.LexBIG.Utility.*;
 
 
 public class HistoryUtils {
-    private static Logger _logger = Logger.getLogger(HistoryUtils.class);
+	private static Logger _logger = LogManager.getLogger(HistoryUtils.class);
     private static DateFormat _dataFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
     private LexBIGService lbSvc = null;

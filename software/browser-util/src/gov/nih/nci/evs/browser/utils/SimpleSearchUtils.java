@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 import org.apache.commons.codec.language.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.concepts.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
@@ -84,7 +84,7 @@ import org.lexgrid.valuesets.impl.LexEVSValueSetDefinitionServicesImpl;
 
 
 public class SimpleSearchUtils {
-	private static Logger _logger = Logger.getLogger(SimpleSearchUtils.class);
+	private static Logger _logger = LogManager.getLogger(SimpleSearchUtils.class);
 
     public static final int BY_CODE = 1;
     public static final int BY_NAME = 2;

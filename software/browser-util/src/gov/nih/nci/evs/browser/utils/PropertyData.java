@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.Enumeration;
 import java.util.Map.Entry;
 import org.apache.commons.lang.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.lexevs.property.PropertyExtension;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.EntityDescription;
@@ -109,7 +109,7 @@ import org.LexGrid.naming.SupportedProperty;
 public class PropertyData
 {
 	private static boolean owl2_layout = false;
-    private static Logger _logger = Logger.getLogger(PropertyData.class);
+	private static Logger _logger = LogManager.getLogger(PropertyData.class);
     private LexBIGService lbSvc = null;
     private ConceptDetails conceptDetails = null;
     private HistoryUtils histUtils = null;

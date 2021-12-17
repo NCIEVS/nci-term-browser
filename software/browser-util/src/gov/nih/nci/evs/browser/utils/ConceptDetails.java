@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.Enumeration;
 import java.util.Map.Entry;
 import org.apache.commons.lang.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.EntityDescription;
 import org.LexGrid.commonTypes.Property;
@@ -111,7 +111,7 @@ public class ConceptDetails {
 
 	private int _maxReturn = -1;
 
-    private static Logger _logger = Logger.getLogger(ConceptDetails.class);
+	private static Logger _logger = LogManager.getLogger(ConceptDetails.class);
     private LexBIGService lbSvc = null;
     private LexBIGServiceConvenienceMethods lbscm = null;
 

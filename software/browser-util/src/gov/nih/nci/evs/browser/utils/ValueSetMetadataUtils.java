@@ -17,7 +17,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.*;
 import javax.servlet.http.*;
 import javax.servlet.ServletOutputStream;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.Property;
 import org.LexGrid.commonTypes.PropertyQualifier;

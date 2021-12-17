@@ -5,7 +5,7 @@ import gov.nih.nci.evs.browser.common.*;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.Map;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;
 import org.LexGrid.concepts.*;
@@ -79,7 +79,7 @@ import org.LexGrid.naming.*;
 
 
 public class TreeUtils {
-    private static Logger _logger = Logger.getLogger(TreeUtils.class);
+	private static Logger _logger = LogManager.getLogger(TreeUtils.class);
     private static LocalNameList _noopList = new LocalNameList();
     private static String DEFAULT_HIERARCHY_ID = "is_a";
 

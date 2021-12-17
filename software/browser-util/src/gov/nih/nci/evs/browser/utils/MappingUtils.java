@@ -6,7 +6,7 @@ import gov.nih.nci.evs.browser.bean.*;
 import java.sql.*;
 import java.util.*;
 import org.apache.commons.codec.language.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;
 import org.LexGrid.concepts.*;
@@ -89,7 +89,7 @@ import org.LexGrid.custom.relations.*;
 
 
 public class MappingUtils {
-    private static Logger _logger = Logger.getLogger(MappingUtils.class);
+	private static Logger _logger = LogManager.getLogger(MappingUtils.class);
 
 	private String serviceUrl = null;
     private LexBIGService lbSvc = null;

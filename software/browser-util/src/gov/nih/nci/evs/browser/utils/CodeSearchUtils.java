@@ -3,7 +3,7 @@ package gov.nih.nci.evs.browser.utils;
 
 import java.util.*;
 import org.apache.commons.codec.language.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.concepts.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
@@ -70,7 +70,7 @@ import org.LexGrid.naming.*;
 
 
  public class CodeSearchUtils {
-    private static Logger _logger = Logger.getLogger(CodeSearchUtils.class);
+	private static Logger _logger = LogManager.getLogger(CodeSearchUtils.class);
     private static final boolean CASE_SENSITIVE = true;
     private LexBIGService lbSvc = null;
 

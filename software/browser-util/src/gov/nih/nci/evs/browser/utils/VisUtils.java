@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.Enumeration;
 import java.util.Map.Entry;
 import org.apache.commons.lang.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.EntityDescription;
 import org.LexGrid.commonTypes.Property;
@@ -101,7 +101,7 @@ import org.LexGrid.naming.SupportedProperty;
 
 
 public class VisUtils {
-    private static Logger _logger = Logger.getLogger(VisUtils.class);
+	private static Logger _logger = LogManager.getLogger(VisUtils.class);
     private LexBIGService lbSvc = null;
     private LexBIGServiceConvenienceMethods lbscm = null;
 

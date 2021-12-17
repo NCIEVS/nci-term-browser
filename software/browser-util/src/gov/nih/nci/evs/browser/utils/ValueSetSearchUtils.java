@@ -7,7 +7,7 @@ import gov.nih.nci.system.client.ApplicationServiceProvider;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.CodingScheme;
 import org.LexGrid.commonTypes.EntityDescription;
 import org.LexGrid.LexBIG.caCore.interfaces.*;
@@ -107,7 +107,7 @@ import org.lexgrid.valuesets.sourceasserted.impl.AssertedValueSetResolvedConcept
 
 public class ValueSetSearchUtils
 {
-	private static Logger _logger = Logger.getLogger(ValueSetSearchUtils.class);
+	private static Logger _logger = LogManager.getLogger(ValueSetSearchUtils.class);
 
     public static final String SEARCH_BY_NAME_ONLY = "SEARCH_BY_NAME_ONLY";//1;
     public static final String SEARCH_BY_CODE_ONLY = "SEARCH_BY_CODE_ONLY";//2;

@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 import java.util.Map;
 import javax.faces.model.*;
 import org.apache.commons.lang.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.lexevs.dao.database.service.valuesets.LexEVSTreeItem;
 import org.lexevs.dao.database.service.valuesets.ValueSetHierarchyService;
 import org.lexevs.dao.database.service.valuesets.ValueSetHierarchyServiceImpl;
@@ -122,7 +122,7 @@ public class ValueSetTreeUtils {
 	private static String publishName = "Publish_Value_Set";
 	private static String root_code = "C54453";
 
-    private static Logger _logger = Logger.getLogger(ValueSetTreeUtils.class);
+	private static Logger _logger = LogManager.getLogger(ValueSetTreeUtils.class);
 
     private HashMap sourceValueSetTree = null;
     private HashMap terminologyValueSetTree = null;

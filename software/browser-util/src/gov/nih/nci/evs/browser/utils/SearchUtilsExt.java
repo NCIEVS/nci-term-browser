@@ -5,7 +5,7 @@ import gov.nih.nci.evs.browser.bean.*;
 
 import java.util.*;
 import org.apache.commons.codec.language.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.concepts.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
@@ -78,7 +78,7 @@ import org.LexGrid.LexBIG.Utility.Constructors;
 
 
  public class SearchUtilsExt {
-    private static Logger _logger = Logger.getLogger(SearchUtilsExt.class);
+	private static Logger _logger = LogManager.getLogger(SearchUtilsExt.class);
     private static final boolean CASE_SENSITIVE = true;
     private LexBIGService lbSvc = null;
     NodeGraphResolutionExtensionImpl ngr = null;

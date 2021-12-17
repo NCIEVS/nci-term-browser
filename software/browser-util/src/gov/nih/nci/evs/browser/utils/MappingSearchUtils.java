@@ -6,7 +6,7 @@ import gov.nih.nci.evs.browser.common.*;
 import java.sql.*;
 import java.util.*;
 import org.apache.commons.codec.language.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;
 import org.LexGrid.concepts.*;
@@ -92,7 +92,7 @@ public class MappingSearchUtils {
     public static final String SEARCH_BY_CODE_ONLY = "SEARCH_BY_CODE_ONLY";//2;
     public static final String SEARCH_BY_NAME_AND_CODE = "SEARCH_BY_NAME_AND_CODE";//3;
 
-    private static Logger _logger = Logger.getLogger(MappingSearchUtils.class);
+	private static Logger _logger = LogManager.getLogger(MappingSearchUtils.class);
 
     private LexBIGService lbSvc = null;
 

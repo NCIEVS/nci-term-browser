@@ -4,7 +4,7 @@ package gov.nih.nci.evs.browser.utils;
 import java.io.*;
 import java.text.*;
 import java.util.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 
 /**
@@ -59,7 +59,7 @@ import org.apache.log4j.*;
 
 
 public class Utils {
-    private static Logger _logger = Logger.getLogger(Utils.class);
+	private static Logger _logger = LogManager.getLogger(Utils.class);
     public static final String SEPARATOR =
         "----------------------------------------"
             + "----------------------------------------";
@@ -73,7 +73,7 @@ public class Utils {
         int i = fileName.lastIndexOf('.');
         if (i > 0)
             name = fileName.substring(0, i) + "_" + fileName.substring(i + 1);
-        return Logger.getLogger("gov.nih.nci.evs.browser.jsp." + name);
+        return LogManager.getLogger("gov.nih.nci.evs.browser.jsp." + name);
     }
 
     public static class StopWatch {

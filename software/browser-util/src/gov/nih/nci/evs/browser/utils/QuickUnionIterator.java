@@ -3,7 +3,7 @@ package gov.nih.nci.evs.browser.utils;
 
 import java.io.Serializable;
 import java.util.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.Exceptions.*;
@@ -64,7 +64,7 @@ import org.LexGrid.LexBIG.Utility.Iterators.*;
 
 
 public class QuickUnionIterator implements ResolvedConceptReferencesIterator {
-    private static Logger _logger = Logger.getLogger(QuickUnionIterator.class);
+	private static Logger _logger = LogManager.getLogger(QuickUnionIterator.class);
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6285970594380754741L;

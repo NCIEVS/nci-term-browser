@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.codec.language.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.junit.BeforeClass;
 import org.junit.experimental.categories.Category;
 import org.junit.Test;

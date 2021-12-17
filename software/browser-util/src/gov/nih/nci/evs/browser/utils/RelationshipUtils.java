@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 import java.util.Map;
 import javax.faces.model.*;
 import org.apache.commons.lang.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;
 import org.LexGrid.commonTypes.Properties;
@@ -107,7 +107,7 @@ import static gov.nih.nci.evs.browser.common.Constants.*;
 
 
 public class RelationshipUtils {
-    private static Logger _logger = Logger.getLogger(RelationshipUtils.class);
+	private static Logger _logger = LogManager.getLogger(RelationshipUtils.class);
     private LexBIGService lbSvc = null;
     private LexBIGServiceConvenienceMethods lbscm = null;
     private TreeUtils treeUtils = null;

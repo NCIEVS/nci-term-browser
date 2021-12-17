@@ -19,7 +19,7 @@ import java.util.Map;
 import javax.faces.model.*;
 import org.apache.commons.codec.language.*;
 import org.apache.commons.lang.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.lexevs.property.PropertyExtension;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;

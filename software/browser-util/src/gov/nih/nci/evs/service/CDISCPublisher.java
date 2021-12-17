@@ -17,7 +17,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.*;
 import javax.swing.tree.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 public class CDISCPublisher extends JPanel
                              implements ActionListener {
@@ -25,7 +25,8 @@ public class CDISCPublisher extends JPanel
     static String title = "EVS Service - CDISC Publication";
     JTextArea log;
     JFileChooser fc;
-
+
+
 	DefaultHighlighter highlighter;
 	DefaultHighlighter unhighlighter;
 	DefaultHighlighter.DefaultHighlightPainter highlight_painter;
@@ -258,5 +259,6 @@ public class CDISCPublisher extends JPanel
         });
 
     }
-}
-
+
+}
+

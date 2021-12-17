@@ -3,7 +3,7 @@ package gov.nih.nci.evs.browser.utils;
 
 import gov.nih.nci.evs.browser.bean.*;
 import java.util.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.lexevs.dao.database.service.valuesets.LexEVSTreeItem;
 import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.Impl.Extensions.tree.model.LexEvsTreeNode;
@@ -62,7 +62,7 @@ import org.LexGrid.valueSets.ValueSetDefinition;
 
 
 public class SortComparator implements Comparator<Object> {
-    private static Logger _logger = Logger.getLogger(SortComparator.class);
+	private static Logger _logger = LogManager.getLogger(SortComparator.class);
     private static final int SORT_BY_NAME = 1;
     private static final int SORT_BY_CODE = 2;
     private int _sort_option = SORT_BY_NAME;

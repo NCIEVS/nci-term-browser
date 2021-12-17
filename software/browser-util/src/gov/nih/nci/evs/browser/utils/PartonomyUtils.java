@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 import java.util.Map;
 import javax.faces.model.*;
 import org.apache.commons.lang.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.lexevs.property.PropertyExtension;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;
@@ -108,7 +108,7 @@ import static gov.nih.nci.evs.browser.common.Constants.*;
 
 
 public class PartonomyUtils {
-    private static Logger _logger = Logger.getLogger(PartonomyUtils.class);
+	private static Logger _logger = LogManager.getLogger(PartonomyUtils.class);
     private LexBIGService lbSvc = null;
     private LexBIGServiceConvenienceMethods lbscm = null;
 

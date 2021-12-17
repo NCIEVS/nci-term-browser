@@ -21,7 +21,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.*;
 import javax.swing.tree.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.custom.relations.*;
 import org.LexGrid.LexBIG.caCore.interfaces.*;
 import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
@@ -96,7 +96,7 @@ import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
 
 
 public class MappingIteratorBean extends Object {
-    private static Logger _logger = Logger.getLogger(MappingIteratorBean.class);
+	private static Logger _logger = LogManager.getLogger(MappingIteratorBean.class);
     private static int DEFAULT_MAX_RETURN = 100;
     private static int INITIAL_ITERATOR_RESOLUTION = 500;
 

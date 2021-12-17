@@ -11,7 +11,7 @@ import org.LexGrid.LexBIG.Utility.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.naming.*;
 import org.LexGrid.LexBIG.Impl.Extensions.GenericExtensions.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import org.LexGrid.relations.AssociationPredicate;
 import org.LexGrid.relations.Relations;
@@ -60,7 +60,7 @@ import org.LexGrid.relations.Relations;
  */
 
 public class OntologyBean {
-    private static Logger _logger = Logger.getLogger(OntologyBean.class);
+	private static Logger _logger = LogManager.getLogger(OntologyBean.class);
     private static List _rela_list = null;
     private static List _association_name_list = null;
     private static List _property_name_list = null;

@@ -22,7 +22,7 @@ import org.LexGrid.LexBIG.Impl.Extensions.tree.service.*;
 import gov.nih.nci.evs.browser.properties.*;
 import gov.nih.nci.evs.browser.common.*;
 import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
 import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
@@ -80,7 +80,7 @@ import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
  */
 
 public class CacheController {
-    private static Logger _logger = Logger.getLogger(CacheController.class);
+	private static Logger _logger = LogManager.getLogger(CacheController.class);
     public static final String ONTOLOGY_ADMINISTRATORS = "ontology_administrators";
     public static final String ONTOLOGY_FILE = "ontology_file";
     public static final String ONTOLOGY_FILE_ID = "ontology_file_id";

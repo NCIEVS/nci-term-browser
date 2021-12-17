@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import gov.nih.nci.evs.browser.bean.ValueSetConfig;
 import gov.nih.nci.evs.browser.common.*;
@@ -69,8 +69,7 @@ public class ValueSetDefinitionConfig {
     private static String vsd_config_file = null;
     private static HashSet uriHset = null;
     private static HashMap code2URIHashMap = null;
-    private static Logger _logger =
-        Logger.getLogger(ValueSetDefinitionConfig.class);
+	private static Logger _logger = LogManager.getLogger(ValueSetDefinitionConfig.class);
 
     static {
 		long ms = System.currentTimeMillis();

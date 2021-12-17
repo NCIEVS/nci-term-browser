@@ -9,7 +9,7 @@
 <%@ page import="gov.nih.nci.evs.browser.bean.IteratorBean" %>
 <%@ page import="org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference" %>
 <%@ page import="javax.faces.context.FacesContext" %>
-<%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.logging.log4j.*" %>
 
 <!-- Note: This tree is used in concept detail page (see Value Sets link). -->
 
@@ -423,7 +423,7 @@
             <script type="text/javascript" src="<%= request.getContextPath() %>/js/wz_tooltip.js"></script>
             <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_centerwindow.js"></script>
             <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_followscroll.js"></script>
-            <%! private static Logger _logger = Utils.getJspLogger("search_results.jsp"); %>
+            <%! private static Logger _logger = LogManager.getLogger("value_set_hierarchy.jsp"); %>
             <%
             String vsBasePath = request.getContextPath();
             JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);

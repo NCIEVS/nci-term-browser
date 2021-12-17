@@ -53,7 +53,7 @@ import org.LexGrid.valueSets.ValueSetDefinition;
 import org.LexGrid.commonTypes.Source;
 
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping.SearchContext;
 
@@ -127,7 +127,7 @@ import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.ActiveOption;
  *
  */
 public class DataUtils {
-    private static Logger _logger = Logger.getLogger(DataUtils.class);
+	private static Logger _logger = LogManager.getLogger(DataUtils.class);
 
     // ==================================================================================
     // PROD - set to true; for development - set to false for testing to speed up the initialization time

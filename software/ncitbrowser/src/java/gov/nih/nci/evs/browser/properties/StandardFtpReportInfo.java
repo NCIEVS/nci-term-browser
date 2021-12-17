@@ -4,7 +4,7 @@ import gov.nih.nci.evs.browser.utils.*;
 
 import java.util.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -54,8 +54,7 @@ import org.apache.log4j.*;
  */
 
 public class StandardFtpReportInfo {
-    private static Logger _logger = Logger
-        .getLogger(StandardFtpReportInfo.class);
+	private static Logger _logger = LogManager.getLogger(StandardFtpReportInfo.class);
     private String _name = "";
     private String _url = "";
     private Vector<Integer> _ncitColumns = new Vector<Integer>();

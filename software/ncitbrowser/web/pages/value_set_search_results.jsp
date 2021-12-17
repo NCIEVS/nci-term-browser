@@ -9,7 +9,7 @@
 <%@ page import="gov.nih.nci.evs.browser.bean.IteratorBean" %>
 <%@ page import="org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference" %>
 <%@ page import="javax.faces.context.FacesContext" %>
-<%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.logging.log4j.*" %>
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 <%@ page import="org.lexgrid.valuesets.LexEVSValueSetDefinitionServices" %>
 <%@ page import="org.LexGrid.valueSets.ValueSetDefinition" %>
@@ -107,7 +107,7 @@
 
     </script>
 
-    <%! private static Logger _logger = Utils.getJspLogger("value_set_search_results.jsp"); %>
+    <%! private static Logger _logger = LogManager.getLogger("value_set_search_results.jsp"); %>
 
     <form id="view_form" enctype="application/x-www-form-urlencoded;charset=UTF-8">
       <% String VSD_view = (String) request.getSession().getAttribute("view"); %>

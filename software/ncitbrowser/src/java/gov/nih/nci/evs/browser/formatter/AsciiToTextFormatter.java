@@ -5,7 +5,7 @@ import gov.nih.nci.evs.browser.utils.*;
 import java.io.*;
 import java.util.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -56,8 +56,7 @@ import org.apache.log4j.*;
 
 public class AsciiToTextFormatter extends FileFormatterBase implements
         FormatterConstant {
-    private static Logger _logger = Logger
-        .getLogger(AsciiToTextFormatter.class);
+	private static Logger _logger = LogManager.getLogger(AsciiToTextFormatter.class);
 
     public Boolean convert(String textfile, String delimiter) throws Exception {
         return convert2(textfile, "edt", delimiter);

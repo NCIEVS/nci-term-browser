@@ -9,10 +9,10 @@
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 <%@ page import="gov.nih.nci.evs.browser.bean.*" %>
 <%@ page import="gov.nih.nci.evs.browser.common.Constants" %>
-<%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.logging.log4j.*" %>
 <%!
 private static final String CABIG_APPROVED_MSG = "caBIG approved";
-private static Logger _logger = Utils.getJspLogger("multiple_search.jsp");
+private static Logger _logger = LogManager.getLogger("mapping_search.jsp");
 
 private static String getCabigIndicator(boolean display, String basePath) {
   if (! display)

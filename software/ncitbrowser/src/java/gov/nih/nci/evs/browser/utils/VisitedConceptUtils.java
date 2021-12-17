@@ -2,7 +2,7 @@ package gov.nih.nci.evs.browser.utils;
 
 import java.util.*;
 import javax.servlet.http.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import java.io.*;
 
 
@@ -57,7 +57,7 @@ import java.io.*;
  */
 
 public class VisitedConceptUtils {
-    private static Logger _logger = Logger.getLogger(VisitedConceptUtils.class);
+	private static Logger _logger = LogManager.getLogger(VisitedConceptUtils.class);
 
     private static class VisitedConcept implements Serializable {
 		static final long serialVersionUID = 10L;

@@ -22,7 +22,7 @@ import org.LexGrid.LexBIG.DataModel.InterfaceElements.*;
 import org.LexGrid.commonTypes.*;
 
 import org.apache.commons.codec.language.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.LexGrid.relations.Relations;
 
 import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.PropertyType;
@@ -59,7 +59,7 @@ import org.LexGrid.relations.AssociationPredicate;
 
 
 public class MappingTab {
-    private static Logger _logger = Logger.getLogger(MappingTab.class);
+	private static Logger _logger = LogManager.getLogger(MappingTab.class);
 
 	private String serviceUrl = null;
     private LexBIGService lbSvc = null;

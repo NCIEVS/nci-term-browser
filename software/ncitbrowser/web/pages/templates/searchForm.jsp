@@ -1,7 +1,7 @@
 <%@ page import="gov.nih.nci.evs.browser.properties.*" %>
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 <%@ page import="gov.nih.nci.evs.browser.bean.*" %>
-<%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.logging.log4j.*" %>
 <script type="text/javascript">
   function cursor_wait() {
     document.body.style.cursor = 'wait';
@@ -100,7 +100,7 @@ if (!DataUtils.isNull(t) || !DataUtils.isNull(t2)) {
   back_to_search_results_link = true;
 }
 
-Logger logger = Utils.getJspLogger("searchForm.jsp");
+Logger logger = LogManager.getLogger("searchForm.jsp");
 if (!DataUtils.isNull(multiple_search_flag) && multiple_search_flag.compareTo("0") != 0) {
   multiple_search_flag = "1";
 }

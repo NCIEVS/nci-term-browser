@@ -2,7 +2,7 @@ package gov.nih.nci.evs.browser.utils;
 
 import java.util.*;
 import javax.servlet.http.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import gov.nih.nci.evs.browser.bean.*;
 
 /**
@@ -53,7 +53,7 @@ import gov.nih.nci.evs.browser.bean.*;
  */
 
 public class LicenseUtils {
-    private static Logger _logger = Logger.getLogger(LicenseUtils.class);
+	private static Logger _logger = LogManager.getLogger(LicenseUtils.class);
 
     private static LicenseBean getLicenseBean(HttpServletRequest request) {
         LicenseBean licenseBean =

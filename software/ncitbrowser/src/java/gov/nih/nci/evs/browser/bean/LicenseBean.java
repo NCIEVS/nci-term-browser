@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.LexBIGService.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import gov.nih.nci.evs.browser.utils.*;
 import gov.nih.nci.evs.browser.properties.*;
@@ -60,7 +60,7 @@ import gov.nih.nci.evs.browser.properties.*;
  */
 
 public class LicenseBean extends Object {
-    private static Logger _logger = Logger.getLogger(LicenseBean.class);
+	private static Logger _logger = LogManager.getLogger(LicenseBean.class);
     private HashSet _licenseAgreementHashSet = null;
 
     public LicenseBean() {

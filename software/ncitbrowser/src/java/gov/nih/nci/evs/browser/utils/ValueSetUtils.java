@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import gov.nih.nci.evs.browser.common.*;
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -59,7 +59,7 @@ import gov.nih.nci.evs.browser.common.*;
 
 public class ValueSetUtils {
 
-	private static Logger _logger = Logger.getLogger(ValueSetUtils.class);
+	private static Logger _logger = LogManager.getLogger(ValueSetUtils.class);
 	private static Random rand = new Random();
 
     public ValueSetUtils() {

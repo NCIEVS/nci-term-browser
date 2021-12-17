@@ -3,7 +3,7 @@ package gov.nih.nci.evs.browser.formatter;
 import java.io.*;
 import java.net.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -57,8 +57,7 @@ public class UrlAsciiToTextFormatter extends AsciiToTextFormatter implements
 */
 public class UrlAsciiToTextFormatter extends AsciiToTextFormatter {
 
-    private static Logger _logger = Logger
-        .getLogger(UrlAsciiToTextFormatter.class);
+	private static Logger _logger = LogManager.getLogger(UrlAsciiToTextFormatter.class);
 
     protected Boolean convert2(String textfile, String toExt, String delimiter)
             throws Exception {

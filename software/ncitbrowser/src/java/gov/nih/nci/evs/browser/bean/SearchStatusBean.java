@@ -7,7 +7,7 @@ import javax.faces.event.*;
 import javax.faces.model.*;
 import javax.servlet.http.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import gov.nih.nci.evs.browser.utils.*;
 
@@ -69,7 +69,7 @@ import gov.nih.nci.evs.browser.utils.*;
  */
 
 public class SearchStatusBean extends Object {
-    private static Logger _logger = Logger.getLogger(SearchStatusBean.class);
+	private static Logger _logger = LogManager.getLogger(SearchStatusBean.class);
     private String _codingSchemeName = null;
     private String _version = null;
 

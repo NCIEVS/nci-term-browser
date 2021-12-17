@@ -69,7 +69,7 @@ import javax.servlet.http.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * @author EVS Team
@@ -85,7 +85,7 @@ import org.apache.log4j.*;
  */
 
 public final class DataServlet extends HttpServlet {
-    private static Logger _logger = Logger.getLogger(DataServlet.class);
+	private static Logger _logger = LogManager.getLogger(DataServlet.class);
 	public static final String SOURCE = "source";
 	public static final String SOURCE_CODE = "source_code";
 	public static final String SOURCE_CONCEPT_NAME = "source_concept_name";

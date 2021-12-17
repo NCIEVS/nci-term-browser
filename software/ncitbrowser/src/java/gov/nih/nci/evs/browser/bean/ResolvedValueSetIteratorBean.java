@@ -5,7 +5,7 @@ import java.util.*;
 
 import org.LexGrid.LexBIG.Utility.Iterators.*;
 import org.LexGrid.LexBIG.DataModel.Core.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import gov.nih.nci.evs.browser.common.*;
 import gov.nih.nci.evs.browser.properties.*;
@@ -62,7 +62,7 @@ import gov.nih.nci.evs.browser.properties.*;
 
 //public class ResolvedValueSetIteratorBean extends Object implements Serializable {
 public class ResolvedValueSetIteratorBean extends Object {
-    private static Logger _logger = Logger.getLogger(ResolvedValueSetIteratorBean.class);
+	private static Logger _logger = LogManager.getLogger(ResolvedValueSetIteratorBean.class);
     private static int DEFAULT_MAX_RETURN = 100;
     private ListIterator _iterator = null;
     private int _size = 0;

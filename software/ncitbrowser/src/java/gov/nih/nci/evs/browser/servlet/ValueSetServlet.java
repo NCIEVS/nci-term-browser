@@ -8,7 +8,7 @@ import java.net.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import gov.nih.nci.evs.browser.properties.*;
 import static gov.nih.nci.evs.browser.common.Constants.*;
@@ -68,7 +68,7 @@ import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
  */
 
 public final class ValueSetServlet extends HttpServlet {
-    private static Logger _logger = Logger.getLogger(ValueSetServlet.class);
+	private static Logger _logger = LogManager.getLogger(ValueSetServlet.class);
     /**
      * local constants
      */

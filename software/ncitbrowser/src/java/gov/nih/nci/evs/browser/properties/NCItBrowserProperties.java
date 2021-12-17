@@ -1,7 +1,7 @@
 package gov.nih.nci.evs.browser.properties;
 
 import java.util.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import gov.nih.nci.evs.browser.common.*;
 import gov.nih.nci.evs.browser.utils.*;
 import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
@@ -59,8 +59,7 @@ import org.LexGrid.codingSchemes.CodingScheme;
  */
 
 public class NCItBrowserProperties {
-    private static Logger _logger =
-        Logger.getLogger(NCItBrowserProperties.class);
+	private static Logger _logger = LogManager.getLogger(NCItBrowserProperties.class);
     private static List _displayItemList;
     private static List _metadataElementList;
     private static List _defSourceMappingList;

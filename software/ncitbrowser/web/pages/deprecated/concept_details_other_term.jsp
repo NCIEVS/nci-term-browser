@@ -28,7 +28,7 @@
 <%@ page import="org.LexGrid.commonTypes.Property" %>
 <%@ page import="org.LexGrid.commonTypes.PropertyQualifier" %>
 <%@ page import="gov.nih.nci.evs.browser.common.Constants" %>
-<%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.logging.log4j.*" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -49,7 +49,7 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_centerwindow.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_followscroll.js"></script>
 
-    <%! private static Logger _logger = Utils.getJspLogger("concept_details_other_term.jsp"); %>
+    <%! private static Logger _logger = LogManager.getLogger("concept_details_other_term.jsp"); %>
     <f:view>
       <!-- Begin Skip Top Navigation -->
       <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">

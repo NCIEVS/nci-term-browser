@@ -23,7 +23,7 @@
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 <%@ page import="gov.nih.nci.evs.browser.properties.*" %>
 <%@ page import="javax.faces.context.FacesContext" %>
-<%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.logging.log4j.*" %>
 
 <%@ page import="org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.Mapping.SearchContext" %>
 
@@ -46,7 +46,7 @@
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/wz_tooltip.js"></script>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_centerwindow.js"></script>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_followscroll.js"></script>
-    <%! private static Logger _logger = Utils.getJspLogger("mapping-search_results.jsp"); %>
+    <%! private static Logger _logger = LogManager.getLogger("mapping_search_results.jsp"); %>
 
     <f:view>
       <!-- Begin Skip Top Navigation -->

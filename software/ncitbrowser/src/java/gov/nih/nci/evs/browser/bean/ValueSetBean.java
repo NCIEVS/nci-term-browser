@@ -23,7 +23,7 @@ import org.LexGrid.LexBIG.Utility.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.naming.*;
 import org.LexGrid.LexBIG.Impl.Extensions.GenericExtensions.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import javax.faces.event.ValueChangeEvent;
 
 import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
@@ -92,7 +92,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  */
 
 public class ValueSetBean {
-    private static Logger _logger = Logger.getLogger(ValueSetBean.class);
+	private static Logger _logger = LogManager.getLogger(ValueSetBean.class);
     private static List _rela_list = null;
     private static List _association_name_list = null;
     private static List _property_name_list = null;

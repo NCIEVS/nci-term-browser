@@ -3,7 +3,7 @@ package gov.nih.nci.evs.browser.formatter;
 import java.io.*;
 import java.util.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -55,7 +55,7 @@ import org.apache.log4j.*;
 public abstract class FileFormatterBase {
 
 
-    protected static final Logger _logger = Logger.getLogger(FileFormatterBase.class);
+	private static Logger _logger = LogManager.getLogger(FileFormatterBase.class);
 
     public abstract Boolean convert(String textfile, String delimiter)
             throws Exception;

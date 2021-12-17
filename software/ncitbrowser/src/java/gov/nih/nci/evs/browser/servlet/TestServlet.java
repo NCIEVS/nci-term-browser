@@ -70,7 +70,7 @@ import javax.servlet.http.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * @author EVS Team
@@ -86,7 +86,7 @@ import org.apache.log4j.*;
  */
 
 public final class TestServlet extends HttpServlet {
-    private static Logger _logger = Logger.getLogger(TestServlet.class);
+	private static Logger _logger = LogManager.getLogger(TestServlet.class);
 
     /**
      * local constants

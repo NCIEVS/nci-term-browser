@@ -6,7 +6,7 @@ import java.util.Date;
 
 import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
 import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -57,7 +57,7 @@ import org.apache.log4j.Logger;
 
 public class ServerMonitorThread extends Thread {
     @SuppressWarnings("unused")
-    private static Logger _logger = null; //Logger.getLogger(ServerMonitorThread.class);
+	private static Logger _logger = LogManager.getLogger(ServerMonitorThread.class);
     private static String _className = ServerMonitorThread.class.getSimpleName();
     private static ServerMonitorThread _instance = null;
 	private long _interval = 1000 *

@@ -9,7 +9,7 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -54,7 +54,7 @@ import org.apache.log4j.*;
  */
 
 public class JSPUtils {
-    private static Logger _logger = Logger.getLogger(JSPUtils.class);
+	private static Logger _logger = LogManager.getLogger(JSPUtils.class);
     private static final String DEFAULT_DICTIONARY = Constants.NCI_THESAURUS;
 
     private static String _ncitUrl = NCItBrowserProperties.getNCIT_URL();

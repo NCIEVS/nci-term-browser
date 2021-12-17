@@ -32,7 +32,7 @@ import javax.faces.model.SelectItem;
 
 import org.LexGrid.concepts.Entity;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.LexGrid.naming.Mappings;
 import org.LexGrid.naming.SupportedCodingScheme;
 import org.LexGrid.naming.SupportedNamespace;
@@ -73,6 +73,7 @@ import org.LexGrid.concepts.Entity;
 import org.LexGrid.naming.SupportedHierarchy;
 import gov.nih.nci.evs.browser.utils.*;
 
+import org.apache.logging.log4j.*;
 
 /**
  * <!-- LICENSE_TEXT_START -->
@@ -124,7 +125,7 @@ import gov.nih.nci.evs.browser.utils.*;
 public class CartActionBean {
 
     // Local class variables
-    private static Logger _logger = Logger.getLogger(CartActionBean.class);
+	private static Logger _logger = LogManager.getLogger(CartActionBean.class);
     private String _entity = null;
     private String _codingScheme = null;
     private HashMap<String, Concept> _cart = null;

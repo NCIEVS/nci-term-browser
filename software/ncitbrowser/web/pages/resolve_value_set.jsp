@@ -11,7 +11,7 @@
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
 <%@ page import="javax.faces.context.FacesContext" %>
 <%@ page import="org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference" %>
-<%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.logging.log4j.*" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -33,7 +33,7 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_centerwindow.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_followscroll.js"></script>
 
-    <%! private static Logger _logger = Utils.getJspLogger("value_set_search_results.jsp"); %>
+    <%! private static Logger _logger = LogManager.getLogger("resolve_value_set.jsp"); %>
     <f:view>
       <!-- Begin Skip Top Navigation -->
       <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">

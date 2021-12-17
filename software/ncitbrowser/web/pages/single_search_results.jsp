@@ -6,7 +6,7 @@
 <%@ page import="org.LexGrid.concepts.Entity" %>
 <%@ page import="gov.nih.nci.evs.browser.common.Constants" %>
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
-<%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.logging.log4j.*" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -25,7 +25,7 @@
 <script>(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-150112876-1", {"cookieDomain":"auto"});ga("send", "pageview");</script>
   </head>
   <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-    <%! private static Logger _logger = Utils.getJspLogger("single_search_results.jsp"); %>
+    <%! private static Logger _logger = LogManager.getLogger("single_search_results.jsp"); %>
     <f:view>
       <!-- Begin Skip Top Navigation -->
       <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">

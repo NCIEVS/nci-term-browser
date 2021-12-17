@@ -13,7 +13,7 @@
 <%@ page import="org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference" %>
 <%@ page import="org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator" %>
 <%@ page import="org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList" %>
-<%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.logging.log4j.*" %>
 
 <%@ page import="org.LexGrid.valueSets.ValueSetDefinition" %>
 <%@ page import="gov.nih.nci.evs.browser.utils.*" %>
@@ -118,7 +118,7 @@
 
         </script>
 
-        <%!private static Logger _logger = Utils.getJspLogger("value_set_search_results.jsp");%>
+        <%!private static Logger _logger = LogManager.getLogger("download_value_set.jsp");%>
           <f:view>
             <!-- Begin Skip Top Navigation -->
             <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">

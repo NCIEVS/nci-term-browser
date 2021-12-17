@@ -20,7 +20,7 @@ import gov.nih.nci.evs.browser.bean.*;
 import gov.nih.nci.evs.browser.properties.*;
 import gov.nih.nci.evs.browser.common.*;
 import gov.nih.nci.evs.searchlog.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
@@ -87,7 +87,7 @@ import org.json.JSONObject;
  */
 
 public class UserSessionBean extends Object {
-    private static Logger _logger = Logger.getLogger(UserSessionBean.class);
+	private static Logger _logger = LogManager.getLogger(UserSessionBean.class);
 
     private static String _contains_warning_msg =
         "(WARNING: Only a subset of results may appear due to current limits in the terminology server (see Known Issues on the Help page).)";

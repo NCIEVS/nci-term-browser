@@ -15,7 +15,7 @@ import java.net.URI;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import gov.nih.nci.evs.browser.properties.*;
 import static gov.nih.nci.evs.browser.common.Constants.*;
@@ -29,7 +29,7 @@ import org.LexGrid.LexBIG.Utility.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.naming.*;
 import org.LexGrid.LexBIG.Impl.Extensions.GenericExtensions.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import javax.faces.event.ValueChangeEvent;
 
 import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
@@ -129,7 +129,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  */
 
 public final class AjaxServlet extends HttpServlet {
-    private static Logger _logger = Logger.getLogger(AjaxServlet.class);
+	private static Logger _logger = LogManager.getLogger(AjaxServlet.class);
     //CodingSchemeDataUtils csdu = null;
     //ValueSetDefUtils vsdu = null;
     boolean show_released_file_button = false;

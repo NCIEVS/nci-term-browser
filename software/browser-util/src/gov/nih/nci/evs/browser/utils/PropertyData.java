@@ -903,6 +903,8 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 			try {
 				equivalanceClass = new CodingSchemeDataUtils(lbSvc).getEquivalenceExpression(codingScheme, version, code, namespace);
 				if (equivalanceClass != null) {
+					//KLO, 12232021
+					equivalanceClass = equivalanceClass.replace("ncit:", "");
 					display_equiv_expression = true;
 				}
 		    } catch (Exception ex) {

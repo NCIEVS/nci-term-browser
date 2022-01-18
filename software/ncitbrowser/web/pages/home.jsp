@@ -37,6 +37,20 @@ String evs_service_url = DataUtils.getEVSServiceURL();
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_centerwindow.js"></script>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_followscroll.js"></script>
 
+<%
+  String queryString = request.getQueryString();
+%>  
+<%     
+  if (queryString != null && (queryString.indexOf("style") != -1 || queryString.indexOf("alert") != -1)) {
+%>       
+<h2>
+<center>Server Error</center>
+</h2>
+      	<center><b>The server encountered an unexpected condition that prevented it from fulfilling the request.</b></center>
+<%      
+  } else {
+%> 
+
     <%
     Boolean ncit_available = DataUtils.isNCITAvailable();
 
@@ -84,6 +98,10 @@ String evs_service_url = DataUtils.getEVSServiceURL();
         <!-- end Main box -->
       </div>
     </f:view>
+    
+    
+<% } %>       
+    
     <script type="text/javascript">_satellite.pageBottom();</script>
   </body>
 </html>

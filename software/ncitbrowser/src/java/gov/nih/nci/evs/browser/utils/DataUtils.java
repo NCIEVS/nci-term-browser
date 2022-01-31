@@ -131,8 +131,8 @@ public class DataUtils {
 
     // ==================================================================================
     // PROD - set to true; for development - set to false for testing to speed up the initialization time
-    private static boolean initializeValueSetHierarchy = true;
-    public static boolean cache_maps_to = true;
+    private static boolean initializeValueSetHierarchy = false;
+    public static boolean cache_maps_to = false;
 
     // ==================================================================================
 
@@ -156,9 +156,9 @@ public class DataUtils {
     private static HashMap _csnv2codingSchemeNameMap = null;
     private static HashMap _csnv2VersionMap = null;
 
-    private static boolean valueSetHierarchyInitialized = false;
+    private static boolean valueSetHierarchyInitialized = true;
 
-    private static boolean hasNoValueSet = false;
+    private static boolean hasNoValueSet = true;
 
     // ==================================================================================
     // For customized query use

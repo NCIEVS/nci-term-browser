@@ -41,7 +41,7 @@ String evs_service_url = DataUtils.getEVSServiceURL();
   String queryString = request.getQueryString();
 %>  
 <%     
-  if (queryString != null && (queryString.indexOf("style") != -1 || queryString.indexOf("alert") != -1)) {
+  if (queryString != null && (queryString.indexOf("style") != -1 || queryString.indexOf("alert") != -1 || queryString.indexOf("netsparker") != -1)) {
 %>       
 <h2>
 <center>Server Error</center>

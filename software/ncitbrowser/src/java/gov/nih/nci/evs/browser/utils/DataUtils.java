@@ -131,8 +131,8 @@ public class DataUtils {
 
     // ==================================================================================
     // PROD - set to true; for development - set to false for testing to speed up the initialization time
-    private static boolean initializeValueSetHierarchy = false;
-    public static boolean cache_maps_to = false;
+    private static boolean initializeValueSetHierarchy = true;
+    public static boolean cache_maps_to = true;
 
     // ==================================================================================
 
@@ -156,7 +156,7 @@ public class DataUtils {
     private static HashMap _csnv2codingSchemeNameMap = null;
     private static HashMap _csnv2VersionMap = null;
 
-    private static boolean valueSetHierarchyInitialized = true;
+    private static boolean valueSetHierarchyInitialized = false; //KLO 02032022
 
     private static boolean hasNoValueSet = true;
 
@@ -1429,13 +1429,20 @@ if (cache_maps_to) {
 
     private static void initializeValueSetHierarchy() {
 		//if (hasNoValueSet || valueSetHierarchyInitialized) return;
-        System.out.println("DataUtils initializeValueSetHierarchy ...");
-		if (valueSetHierarchyInitialized) return;
+        System.out.println("DataUtils initializeValueSetHierarchy ..." + valueSetHierarchyInitialized);
+		if (valueSetHierarchyInitialized) {
+			System.out.println("DataUtils valueSetHierarchyInitialized. ");
+			return;
+		}
 		long ms = System.currentTimeMillis();
+		System.out.println("DataUtils calling getVSDName2URIHashMap... ");
 		_VSDName2URIHashMap = getVSDName2URIHashMap();
+		System.out.println("DataUtils exiting getVSDName2URIHashMap... ");
 		//Iterator it = _VSDName2URIHashMap.keySet().iterator();
+		System.out.println("_logger ...");
 		_logger.debug("Done getVSDName2URIHashMap ...");
 		_logger.debug("\tInitializing ValueSetHierarchy ...");
+		System.out.println("exiting _logger ...");
 
 		ms = System.currentTimeMillis();
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();

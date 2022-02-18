@@ -347,7 +347,7 @@
        <DisplayItem>
             <propertyName>ClinVar_Variation_ID</propertyName>
             <itemLabel>ClinVar Variation ID</itemLabel>
-            <url>https://ncbi.nlm.nih.gov/clinvar/variation/</url>
+            <url>https://www.ncbi.nlm.nih.gov/clinvar/variation/</url>
             <hyperlinkText>see ClinVar info</hyperlinkText>
             <isExternalCode>true</isExternalCode>
        </DisplayItem>

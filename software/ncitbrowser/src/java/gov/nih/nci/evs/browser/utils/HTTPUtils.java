@@ -921,17 +921,17 @@ public class HTTPUtils {
 		}
 		Object param_obj_3 = request.getParameter("matchText");
 		if (param_obj_3 != null) {
-			String param_3 = HTTPUtils.cleanMatchTextXSS((String) param_obj_3);
+			String param_3 = HTTPUtils.cleanXSS((String) param_obj_3);
 			request.getSession().setAttribute("matchText", param_3);
 		}
 		Object param_obj_4 = request.getParameter("matchText_RVS");
 		if (param_obj_4 != null) {
-			String param_4 = HTTPUtils.cleanMatchTextXSS((String) param_obj_4);
+			String param_4 = HTTPUtils.cleanXSS((String) param_obj_4);
 			request.getSession().setAttribute("matchText_RVS", param_4);
 		}
 		Object param_obj_5 = request.getParameter("matchText_VSD");
 		if (param_obj_5 != null) {
-			String param_5 = HTTPUtils.cleanMatchTextXSS((String) param_obj_5);
+			String param_5 = HTTPUtils.cleanXSS((String) param_obj_5);
 			request.getSession().setAttribute("matchText_VSD", param_5);
 		}
 		Object param_obj_6 = request.getParameter("opt");
@@ -956,7 +956,7 @@ public class HTTPUtils {
 		}
 		Object param_obj_10 = request.getParameter("text");
 		if (param_obj_10 != null) {
-			String param_10 = HTTPUtils.cleanMatchTextXSS((String) param_obj_10);
+			String param_10 = HTTPUtils.cleanXSS((String) param_obj_10);
 			request.getSession().setAttribute("text", param_10);
 		}
 		Object param_obj_11 = request.getParameter("valueset_search_algorithm");

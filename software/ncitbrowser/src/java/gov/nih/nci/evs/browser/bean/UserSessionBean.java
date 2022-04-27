@@ -193,6 +193,23 @@ response.setContentType("text/html;charset=utf-8");
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
+/////////////////////////////////////////////////////////////////////////////////////////
+		String token_session = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+		String token_form = HTTPUtils.cleanXSS((String) request.getParameter(TokenUtils.CSRF_TOKEN));
+
+		if (token_session == null || token_form == null) {
+			request.getSession().setAttribute("error_msg", "Invalid parameter encountered.");
+			return "invalid_parameter";
+		} else if (token_session.compareTo(token_form) != 0) {
+			request.getSession().setAttribute("error_msg", "Invalid parameter encountered.");
+			return "invalid_parameter";
+		} else {
+			System.out.println("CSRF_TOKEN verified.");
+		}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 boolean mapping_search = false;
 String single_mapping_search = HTTPUtils.cleanXSS((String) request.getParameter("single_mapping_search"));
 
@@ -1838,6 +1855,27 @@ response.setContentType("text/html;charset=utf-8");
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+		String token_session = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+		String token_form = HTTPUtils.cleanXSS((String) request.getParameter(TokenUtils.CSRF_TOKEN));
+
+/*
+System.out.println(	"token_session: " + token_session);
+System.out.println(	"token_form: " + token_form);
+
+		if (token_session == null || token_form == null) {
+			request.getSession().setAttribute("error_msg", "Invalid parameter encountered.");
+			return "invalid_parameter";
+		} else if (token_session.compareTo(token_form) != 0) {
+			request.getSession().setAttribute("error_msg", "Invalid parameter encountered.");
+			return "invalid_parameter";
+		} else {
+			System.out.println("CSRF_TOKEN verified.");
+		}
+*/
+/////////////////////////////////////////////////////////////////////////////////////////
 
         request.getSession().removeAttribute("error_msg");
 

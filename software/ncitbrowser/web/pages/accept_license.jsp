@@ -6,6 +6,8 @@
 <%@ page import="org.LexGrid.concepts.Entity" %>
 <%@ page import="gov.nih.nci.evs.browser.utils.DataUtils" %>
 <%@ page import="gov.nih.nci.evs.browser.utils.HTTPUtils" %>
+<%@ page import="gov.nih.nci.evs.browser.utils.TokenPUtils" %>
+
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en" xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -37,6 +39,16 @@
   %>
   <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
     <f:view>
+    
+<%
+	String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+	if (token == null) {
+		token = TokenUtils.generateCSRFToken();
+		request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token);
+
+	}
+%>       
+    
       <!-- Begin Skip Top Navigation -->
       <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">
         skip navigation links</A>
@@ -87,7 +99,9 @@
               <input type="hidden" id="version" name="version" value="<%=version%>" />
               <input type="hidden" id="code" name="code" value="<%=code%>" />
               <input type="hidden" id="matchText" name="code" value="<%=matchText_licensedPage%>" />
+              <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
 
+              
             </h:form>
             <%@ include file="/pages/templates/nciFooter.jsp" %>
           </div>

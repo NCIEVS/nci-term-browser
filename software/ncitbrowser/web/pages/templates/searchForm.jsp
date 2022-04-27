@@ -181,6 +181,16 @@ else if (searchTarget.compareTo("properties") == 0)
 check_p = "checked";
 else
 check_r = "checked";
+
+
+	String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+	if (token == null) {
+		token = TokenUtils.generateCSRFToken();
+		request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token);
+	}
+   
+
+
 %>
 <h:form id="searchTerm" styleClass="search-form" onsubmit="javascript:disableAnchor();" acceptcharset="UTF-8">
   <input aria-label="Match Text" 
@@ -372,6 +382,9 @@ check_r = "checked";
     </tr>
   </table>
   <input type="hidden" name="referer" id="referer" value="<%=x0%>" />
+  
+  <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
+
   <% if (vocab_name != null) { %>
     <input type="hidden" id="vocabulary" name="vocabulary" value="<%=HTTPUtils.cleanXSS(vocab_name)%>" />
     <input type="hidden" id="dictionary" name="dictionary" value="<%=HTTPUtils.cleanXSS(vocab_name)%>" />

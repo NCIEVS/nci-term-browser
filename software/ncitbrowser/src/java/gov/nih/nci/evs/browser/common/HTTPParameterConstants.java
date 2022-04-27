@@ -25,6 +25,7 @@ public class HTTPParameterConstants {
        "content_page",
        "content_title",
        "csn",
+       "CSRF_TOKEN",
        "data_type",
        "dictionary",
        "dir",

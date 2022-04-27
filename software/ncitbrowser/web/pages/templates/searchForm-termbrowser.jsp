@@ -48,6 +48,10 @@ searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbro
   check_s= "checked";
   else
   check_e = "checked";
+  
+
+  
+  
   %>
   <table border="0" cellspacing="0" cellpadding="0" role='presentation'>
     <tr valign="top" align="left">

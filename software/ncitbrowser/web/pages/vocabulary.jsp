@@ -39,6 +39,16 @@ String evs_service_url = DataUtils.getEVSServiceURL();
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_centerwindow.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_followscroll.js"></script>
     <f:view>
+    
+<%
+	String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+	if (token == null) {
+		token = TokenUtils.generateCSRFToken();
+		request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token);
+
+	}
+%>      
+    
       <!-- Begin Skip Top Navigation -->
       <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">
         skip navigation links</A>
@@ -189,6 +199,12 @@ String evs_service_url = DataUtils.getEVSServiceURL();
                 <textarea cols="87" name="license_msg" rows="15" readonly align="left"><%= helper.getLicenseMessages(87) %></textarea>
                 <p><%= helper.getButtonMessage() %></p>
                 <p>
+                
+                
+  <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
+
+                
+                
                   <h:form>
                     <h:commandButton
                         id="accept"
@@ -341,14 +357,7 @@ String evs_service_url = DataUtils.getEVSServiceURL();
 
                               Maps</a>
                           <% } %>
-<!--
-                          <c:choose>
-                            <c:when test="${sessionScope.CartActionBean.count>
-                              0}"><%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-                              <a href="<%= request.getContextPath() %>/pages/cart.jsf" tabindex="0">Cart</a>
-                            </c:when>
-                          </c:choose>
--->
+
 
 <%
 CartActionBean cartbean = (CartActionBean) request.getSession().getAttribute("cartActionBean"); 

@@ -197,6 +197,16 @@ request.getSession().removeAttribute("m");
   request.getSession().setAttribute("active_scheme", "none");
   
   
+  
+  	String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+  	if (token == null) {
+  		token = TokenUtils.generateCSRFToken();
+  		request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token);
+  	}  
+
+  //System.out.println("multiple_search.jsp token: " + token);  	
+
+  
   Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
   if (display_name_vec == null) {
     display_name_vec = DataUtils.getSortedOntologies();
@@ -282,6 +292,10 @@ request.getSession().removeAttribute("m");
   }
   String unsupported_vocabulary_message = (String) request.getSession().getAttribute("unsupported_vocabulary_message");
   %>
+  
+
+  
+  
   <f:view>
     <!-- Begin Skip Top Navigation -->
     <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">
@@ -754,6 +768,8 @@ request.getSession().removeAttribute("m");
   <div class="mainbox-bottom">
     <img src="<%=basePath%>/images/mainbox-bottom.gif" width="945" height="5" alt="Mainbox Bottom" />
   </div>
+
+  <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
 
   </h:form>
 

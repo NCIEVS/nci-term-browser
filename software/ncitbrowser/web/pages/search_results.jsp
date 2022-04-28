@@ -24,7 +24,6 @@
     JSPUtils.JSPHeaderInfo info = new JSPUtils.JSPHeaderInfo(request);
     //KLO, 012714
 String search_results_dictionary = DataUtils.getCSName(info.dictionary);
-System.out.println("search_results_dictionary: " + search_results_dictionary);
 if (search_results_dictionary != null) {
      request.getSession().setAttribute("search_results_dictionary", search_results_dictionary); 
 } else {
@@ -62,6 +61,7 @@ if (search_results_dictionary != null) {
         <div id="main-area_960">
 
           <%
+          
           boolean isMapping = DataUtils.isMapping(search_results_dictionary, null);
           boolean isExtension = DataUtils.isExtension(search_results_dictionary, null);
           String search_results_version = info.version;

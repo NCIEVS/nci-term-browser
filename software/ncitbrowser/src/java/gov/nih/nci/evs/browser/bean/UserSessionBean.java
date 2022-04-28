@@ -198,13 +198,11 @@ response.setContentType("text/html;charset=utf-8");
 		String token_form = HTTPUtils.cleanXSS((String) request.getParameter(TokenUtils.CSRF_TOKEN));
 
 		if (token_session == null || token_form == null) {
-			request.getSession().setAttribute("error_msg", "Invalid parameter encountered.");
+			request.getSession().setAttribute("error_msg", "Invalid request parameter value identified.");
 			return "invalid_parameter";
 		} else if (token_session.compareTo(token_form) != 0) {
-			request.getSession().setAttribute("error_msg", "Invalid parameter encountered.");
+			request.getSession().setAttribute("error_msg", "Invalid request parameter value identified.");
 			return "invalid_parameter";
-		} else {
-			System.out.println("CSRF_TOKEN verified.");
 		}
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -248,7 +246,7 @@ if (single_mapping_search != null && single_mapping_search.compareTo("true") == 
         request.getSession().setAttribute("searchTarget", searchTarget);
         request.getSession().setAttribute("algorithm", matchAlgorithm);
 
-        String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
+        String matchText = HTTPUtils.cleanXSS((String) request.getParameter("matchText"));
 
         if (matchText != null) {
             matchText = matchText.trim();
@@ -969,11 +967,6 @@ System.out.println("No match -- message: " + msg);
     }
 
     public String linkAction() {
-		/*
-        HttpServletRequest request =
-            (HttpServletRequest) FacesContext.getCurrentInstance()
-                .getExternalContext().getRequest();
-        */
         return "";
     }
 
@@ -1155,8 +1148,21 @@ System.out.println("No match -- message: " + msg);
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
-        request.getSession().removeAttribute("search_results_dictionary");
+		String token_session = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+		String token_form = HTTPUtils.cleanXSS((String) request.getParameter(TokenUtils.CSRF_TOKEN));
 
+		if (token_session == null || token_form == null) {
+			request.getSession().setAttribute("error_msg", "Invalid request parameter value identified.");
+			return "invalid_parameter";
+		} else if (token_session.compareTo(token_form) != 0) {
+			request.getSession().setAttribute("error_msg", "Invalid request parameter value identified.");
+			return "invalid_parameter";
+		} else {
+			//System.out.println("CSRF_TOKEN verified.");
+			request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token_form);
+		}
+
+        request.getSession().removeAttribute("search_results_dictionary");
         request.getSession().removeAttribute("error_msg");
 		String selected_vocabularies = HTTPUtils.cleanXSS((String) request.getParameter("selected_vocabularies"));
 
@@ -1176,7 +1182,7 @@ System.out.println("No match -- message: " + msg);
 			}
         }
 
-        String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
+        String matchText = HTTPUtils.cleanXSS((String) request.getParameter("matchText"));
         if (matchText != null) {
             matchText = matchText.trim();
            request.getSession().setAttribute("matchText", matchText);
@@ -1861,20 +1867,16 @@ response.setContentType("text/html;charset=utf-8");
 		String token_session = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
 		String token_form = HTTPUtils.cleanXSS((String) request.getParameter(TokenUtils.CSRF_TOKEN));
 
-/*
-System.out.println(	"token_session: " + token_session);
-System.out.println(	"token_form: " + token_form);
-
 		if (token_session == null || token_form == null) {
-			request.getSession().setAttribute("error_msg", "Invalid parameter encountered.");
+			request.getSession().setAttribute("error_msg", "Invalid request parameter value identified.");
 			return "invalid_parameter";
 		} else if (token_session.compareTo(token_form) != 0) {
-			request.getSession().setAttribute("error_msg", "Invalid parameter encountered.");
+			request.getSession().setAttribute("error_msg", "Invalid request parameter value identified.");
 			return "invalid_parameter";
 		} else {
-			System.out.println("CSRF_TOKEN verified.");
+			//System.out.println("CSRF_TOKEN verified.");
 		}
-*/
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
         request.getSession().removeAttribute("error_msg");
@@ -1969,7 +1971,7 @@ System.out.println(	"token_form: " + token_form);
         request.getSession().setAttribute("searchStatusBean", bean);
 
         String searchTarget = HTTPUtils.cleanXSS((String) request.getParameter("searchTarget"));
-        String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
+        String matchText = HTTPUtils.cleanXSS((String) request.getParameter("matchText"));
 
         if (matchText == null || matchText.length() == 0) {
             String message = "Please enter a search string.";
@@ -2494,7 +2496,7 @@ response.setContentType("text/html;charset=utf-8");
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
-        String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
+        String matchText = HTTPUtils.cleanXSS((String) request.getParameter("matchText"));
         if (matchText != null)
             matchText = matchText.trim();
 
@@ -2553,7 +2555,7 @@ response.setContentType("text/html;charset=utf-8");
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
-        String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
+        String matchText = HTTPUtils.cleanXSS((String) request.getParameter("matchText"));
         if (matchText != null)
             matchText = matchText.trim();
 
@@ -2618,7 +2620,7 @@ response.setContentType("text/html;charset=utf-8");
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
 
-        String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
+        String matchText = HTTPUtils.cleanXSS((String) request.getParameter("matchText"));
         if (matchText != null)
             matchText = matchText.trim();
 

@@ -364,7 +364,7 @@
 
             // Note: Called when the user selects "Search By" fields.
             selectSearchOption = HTTPUtils.cleanXSS((String) request.getParameter("opt"));
-            search_string = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("text"));
+            search_string = HTTPUtils.cleanXSS((String) request.getParameter("text"));
             adv_search_algorithm = HTTPUtils.cleanXSS((String) request.getParameter("algorithm"));
 
             adv_search_source = HTTPUtils.cleanXSS((String) request.getParameter("sab"));
@@ -506,7 +506,10 @@
 
               <tr class="textbody">
                 <td>
+<%
+String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
 
+%>
                   <h:form id="advancedSearchForm" styleClass="search-form" acceptcharset="UTF-8">
 
                     <table role='presentation'>
@@ -975,6 +978,8 @@
                                 id="adv_search_type"
                                 value="<%=HTTPUtils.cleanXSS(adv_search_type)%>"
                             />
+
+  <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
 
                           </h:form>
 

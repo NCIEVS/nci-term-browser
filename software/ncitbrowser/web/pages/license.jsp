@@ -47,6 +47,16 @@
   }
 
   if (scheme != null) scheme = scheme.replaceAll("%20", " ");
+  
+  
+  	String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+  	if (token == null) {
+  		token = TokenUtils.generateCSRFToken();
+  		request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token);
+  	}    
+  
+  
+  
   %>
   <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
   <f:view>
@@ -102,6 +112,7 @@
     <input type="hidden" id="version" name="version" value="<%=version%>" />
     <input type="hidden" id="acceptedLicenses" name="acceptedLicenses" value="<%=delimitedValues%>" />
     <input type="hidden" id="searchTarget" name="searchTarget" value="<%=searchTarget%>" />
+    <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
 
   </h:form>
   <%@ include file="/pages/templates/nciFooter.jsp" %>

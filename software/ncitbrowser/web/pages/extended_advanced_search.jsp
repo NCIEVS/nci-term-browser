@@ -491,6 +491,9 @@
               <tr class="textbody">
                 <td>
 
+<%
+String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+%>
                   <h:form id="advancedSearchForm" styleClass="search-form" acceptcharset="UTF-8">
 
                     <table role='presentation'>
@@ -970,6 +973,8 @@ target&nbsp;
                                 id="adv_search_type"
                                 value="<%=HTTPUtils.cleanXSS(adv_search_type)%>"
                             />
+
+  <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
 
                           </h:form>
 

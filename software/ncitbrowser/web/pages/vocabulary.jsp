@@ -40,15 +40,6 @@ String evs_service_url = DataUtils.getEVSServiceURL();
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_followscroll.js"></script>
     <f:view>
     
-<%
-	String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
-	if (token == null) {
-		token = TokenUtils.generateCSRFToken();
-		request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token);
-
-	}
-%>      
-    
       <!-- Begin Skip Top Navigation -->
       <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">
         skip navigation links</A>
@@ -201,8 +192,6 @@ String evs_service_url = DataUtils.getEVSServiceURL();
                 <p>
                 
                 
-  <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
-
                 
                 
                   <h:form>
@@ -223,6 +212,7 @@ String evs_service_url = DataUtils.getEVSServiceURL();
                     />
                     <input type="hidden" id="dictionary" name="dictionary" value="<%=HTTPUtils.cleanXSS(scheme)%>" />
                     <input type="hidden" id="version" name="version" value="<%=HTTPUtils.cleanXSS(version)%>" />
+
                   </h:form>
                 </p>
                 <%@ include file="/pages/templates/nciFooter.jsp" %>

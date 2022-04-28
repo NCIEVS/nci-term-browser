@@ -153,8 +153,8 @@ public final class TestServlet extends HttpServlet {
 				}
 
 				String scheme = HTTPUtils.cleanXSS((String) request.getParameter("codingscheme"));
-                String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
-                String matchAlgorithm = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchAlgorithm"));
+                String matchText = HTTPUtils.cleanXSS((String) request.getParameter("matchText"));
+                String matchAlgorithm = HTTPUtils.cleanXSS((String) request.getParameter("matchAlgorithm"));
                 System.out.println("TestServlet cs: " + scheme);
                 System.out.println("TestServlet algorithm: " + matchAlgorithm);
 

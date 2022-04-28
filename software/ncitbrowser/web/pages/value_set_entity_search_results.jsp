@@ -327,6 +327,16 @@
       }*/
       %>
 
+
+<%
+	String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+	if (token == null) {
+		token = TokenUtils.generateCSRFToken();
+		request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token);
+
+	}
+%>   
+
       <f:view>
         <!-- Begin Skip Top Navigation -->
         <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">
@@ -488,6 +498,8 @@
                     </table>
                     <input type="hidden" id="nav_type" name="nav_type" value="valuesets" />
                     <input type="hidden" id="view" name="view" value="source" />
+              
+              <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
 
                     <input
                         type="hidden"
@@ -500,6 +512,8 @@
                         name="referer"
                         id="referer"
                         value="<%=x%>">
+
+
 
                   </form>
 

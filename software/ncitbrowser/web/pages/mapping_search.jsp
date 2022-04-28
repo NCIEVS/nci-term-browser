@@ -215,6 +215,13 @@ Integer curr_sort_category = null;
   display_name_vec = DataUtils.sortOntologyInfo(display_name_vec);
 
   String warning_msg = (String) request.getSession().getAttribute("warning");
+  
+   	String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+  	if (token == null) {
+  		token = TokenUtils.generateCSRFToken();
+  		request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token);
+  	}     
+  
   %>
   <f:view>
     <!-- Begin Skip Top Navigation -->
@@ -588,7 +595,7 @@ Integer curr_sort_category = null;
           <img src="<%=basePath%>/images/mainbox-bottom.gif" width="945" height="5" alt="Mainbox Bottom" />
         </div>
         <input type="hidden" id="single_mapping_search" name="single_mapping_search" value="true">
-
+        <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
       </h:form>
 
     </div>

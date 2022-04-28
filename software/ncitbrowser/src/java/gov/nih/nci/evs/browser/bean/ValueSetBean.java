@@ -1020,7 +1020,7 @@ public class ValueSetBean {
 		}
         request.getSession().setAttribute("nav_type", "valuesets");
         request.getSession().setAttribute("vsd_uri", vsd_uri);
-        String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
+        String matchText = HTTPUtils.cleanXSS((String) request.getParameter("matchText"));
         request.getSession().setAttribute("matchText_RVS", matchText);
 
         if (matchText != null)
@@ -1212,7 +1212,7 @@ public class ValueSetBean {
 		//Vector selected_vocabularies = DataUtils.parseData(checked_vocabularies, ",");
         String VSD_view = HTTPUtils.cleanXSS((String) request.getParameter("view"));
         request.getSession().setAttribute("view", VSD_view);
-        String matchText = HTTPUtils.cleanMatchTextXSS((String) request.getParameter("matchText"));
+        String matchText = HTTPUtils.cleanXSS((String) request.getParameter("matchText"));
         if (matchText != null) {
 			matchText = matchText.trim();
 			request.getSession().setAttribute("matchText", matchText);

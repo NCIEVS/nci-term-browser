@@ -85,6 +85,14 @@
         <!-- Main box -->
         <div id="main-area_960">
           <%
+          
+  	String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+  	if (token == null) {
+  		token = TokenUtils.generateCSRFToken();
+  		request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token);
+  	}            
+          
+          
           request.getSession().removeAttribute("error_msg");
           boolean reindex_required = false;
           String ontologiesToSearchOnStr = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("ontologiesToSearchOnStr"));
@@ -266,6 +274,10 @@
               <!-- end search-globalnav_960 -->
             </div>
             <!-- end bannerarea_960 -->
+            
+  <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
+            
+            
           </h:form>
           <!-- end Thesaurus, banner search area -->
           <!-- Quick links bar -->

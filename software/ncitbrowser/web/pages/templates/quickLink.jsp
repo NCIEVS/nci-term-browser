@@ -83,7 +83,7 @@ if (quicklink_dictionary != null) {
           </a>
           <ul>
             <li>
-            <a href="http://evs.nci.nih.gov/" tabindex="0" target="_blank" alt="Enterprise Vocabulary Services">
+            <a href="https://evs.nci.nih.gov/" tabindex="0" target="_blank" alt="Enterprise Vocabulary Services">
               EVS Home</a>
           </li>
           <li>
@@ -123,7 +123,7 @@ if (active_scheme == null) {
 
     <li>
     <a
-        href="http://www.cancer.gov/cancertopics/terminologyresources"
+        href="https://www.cancer.gov/cancertopics/terminologyresources"
         tabindex="0"
         target="_blank"
         alt="NCI Terminology Resources">

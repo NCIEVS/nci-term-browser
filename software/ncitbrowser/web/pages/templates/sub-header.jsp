@@ -19,7 +19,7 @@
     <area
         shape="rect"
         coords="520,0,941,26"
-        href="http://evs.nci.nih.gov/"
+        href="https://evs.nci.nih.gov/"
         target="_blank"
         alt="Enterprise Vocabulary Services"
     />

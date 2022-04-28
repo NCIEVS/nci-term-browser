@@ -53,12 +53,12 @@
 	//Red (Code C48326)
         Vector schemes = new Vector();
         Vector versions = new Vector();
-        schemes.add("http://evs.nci.nih.gov/valueset/FDA/C54453");
+        schemes.add("https://evs.nci.nih.gov/valueset/FDA/C54453");
         versions.add(null);
-        schemes.add("http://evs.nci.nih.gov/valueset/FDA/C102833");
+        schemes.add("https://evs.nci.nih.gov/valueset/FDA/C102833");
         versions.add(null);   
         
-        String rvs_uri = "http://evs.nci.nih.gov/valueset/FDA/C54453";
+        String rvs_uri = "https://evs.nci.nih.gov/valueset/FDA/C54453";
         String matchText = "red"; 
         int searchOption = 2;
         String algorithm = "contains";

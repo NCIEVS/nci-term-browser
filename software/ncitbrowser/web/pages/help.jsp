@@ -132,7 +132,7 @@
 
                       <li>
                     For all EVS resources, services and contacts, see the EVS Web site
-                    <a href="http://evs.nci.nih.gov/" target="_blank">http://evs.nci.nih.gov/</a>.
+                    <a href="https://evs.nci.nih.gov/" target="_blank">https://evs.nci.nih.gov/</a>.
                       </li>
                      </td>
                   </tr>
@@ -279,7 +279,7 @@ always appears at the far right, linking to this Help page.</li></ul></div>
     parent-child hierarchies from very broad top concepts down to the most specific subcategories. All browsing and
     searching in this browser reflects this concept-based view of terminology. For information on other EVS browsers,
     file formats, and computer application access, see the
-    <a href="http://evs.nci.nih.gov/" target="_blank">EVS web site.</a>
+    <a href="https://evs.nci.nih.gov/" target="_blank">EVS web site.</a>
   </p>
 </div>
 

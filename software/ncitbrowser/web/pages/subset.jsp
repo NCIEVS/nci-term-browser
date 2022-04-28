@@ -102,14 +102,14 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
               Most NCIt subsets are federal and international coding standards maintained in active collaboration with
               our FDA, CDISC, and other partners. They are currently distributed largely as tab-delimited data and Excel
               spreadsheet files accessible from the
-              <a href="http://evs.nci.nih.gov/ftp1">EVS FTP</a>
+              <a href="https://evs.nci.nih.gov/ftp1">EVS FTP</a>
               site. Below are five important subset collections currently presented on these Cancer.gov Web pages:
             </p>
             <table width="670px" border="0" role='presentation'>
               <tr>
                 <td>
                   <a
-                      href="http://www.cancer.gov/cancertopics/terminologyresources/CDISC"
+                      href="https://www.cancer.gov/cancertopics/terminologyresources/CDISC"
                       target="_blank"
                       alt="Clinical Data Interchange Standards Consortium (CDISC) Terminology">
                     <img
@@ -123,7 +123,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 </td>
                 <td class="textbody" valign="top">
                   <a
-                      href="http://www.cancer.gov/cancertopics/terminologyresources/CDISC"
+                      href="https://www.cancer.gov/cancertopics/terminologyresources/CDISC"
                       target="_blank"
                       alt="Clinical Data Interchange Standards Consortium (CDISC) Terminology">
 
@@ -138,7 +138,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
               <tr>
                 <td>
                   <a
-                      href="http://www.cancer.gov/cancertopics/terminologyresources/FDA"
+                      href="https://www.cancer.gov/cancertopics/terminologyresources/FDA"
                       target="_blank"
                       alt="U.S. Food and Drug Administration Terminology">
 
@@ -151,7 +151,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 </td>
                 <td class="textbody" valign="top">
                   <a
-                      href="http://www.cancer.gov/cancertopics/terminologyresources/FDA"
+                      href="https://www.cancer.gov/cancertopics/terminologyresources/FDA"
                       target="_blank"
                       alt="U.S. Food and Drug Administration Terminology">
 
@@ -165,7 +165,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
               <tr>
                 <td>
                   <a
-                      href="http://www.cancer.gov/cancertopics/terminologyresources/FMT"
+                      href="https://www.cancer.gov/cancertopics/terminologyresources/FMT"
                       target="_blank"
                       alt="Federal Medication Terminologies">
 
@@ -174,7 +174,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 </td>
                 <td class="textbody" valign="top">
                   <a
-                      href="http://www.cancer.gov/cancertopics/terminologyresources/FMT"
+                      href="https://www.cancer.gov/cancertopics/terminologyresources/FMT"
                       target="_blank"
                       alt="Federal Medication Terminologies">
 
@@ -191,7 +191,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
               <tr>
                 <td>
                   <a
-                      href="http://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/page7"
+                      href="https://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/page7"
                       target="_blank"
                       alt="National Council for Prescription Drug Programs">
 
@@ -204,7 +204,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 </td>
                 <td class="textbody" valign="top">
                   <a
-                      href="http://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/page7"
+                      href="https://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/page7"
                       target="_blank"
                       alt="Federal Medication Terminologies">
 
@@ -226,7 +226,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
 
                   <td>
                     <a
-                        href="http://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/pediatric"
+                        href="https://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/pediatric"
                         target="_blank"
                         alt="National Council for Prescription Drug Programs">
 
@@ -243,7 +243,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 </td>
                 <td class="textbody" valign="top">
                   <a
-                      href="http://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/pediatric"
+                      href="https://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/pediatric"
                       target="_blank"
                       alt="Federal Medication Terminologies">
 

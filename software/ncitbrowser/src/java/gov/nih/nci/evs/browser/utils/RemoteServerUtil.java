@@ -80,7 +80,7 @@ public class RemoteServerUtil {
     }
 
     public static LexBIGService createLexBIGService() {
-        String url = null;//"http://ncias-d488-v.nci.nih.gov:29080/lexevsapi60";
+        String url = null;//"https://ncias-d488-v.nci.nih.gov:29080/lexevsapi60";
 
         //url = "http://localhost:8080/lexevsapi60";
 
@@ -241,7 +241,7 @@ public class RemoteServerUtil {
 
     public static LexBIGService createLexBIGService(
         boolean registerSecurityTokens) {
-        String url = null;//"http://ncias-d177-v.nci.nih.gov:19480/lexevsapi51";
+        String url = null;//"https://ncias-d177-v.nci.nih.gov:19480/lexevsapi51";
         NCItBrowserProperties properties = null;
         try {
             properties = NCItBrowserProperties.getInstance();

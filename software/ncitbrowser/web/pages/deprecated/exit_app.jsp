@@ -33,7 +33,7 @@ String code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
       <div id="popupContainer">
         <!-- nci popup banner -->
         <div class="ncipopupbanner">
-          <a href="http://www.cancer.gov" target="_blank" alt="National Cancer Institute">
+          <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">
             <img
                 src="<%=basePath%>/images/nci-banner-1.gif"
                 width="556"
@@ -42,7 +42,7 @@ String code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
                 alt="National Cancer Institute"
             />
           </a>
-          <a href="http://www.cancer.gov" target="_blank" alt="National Cancer Institute">
+          <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">
             <img
                 src="<%=basePath%>/images/spacer.gif"
                 width="60"
@@ -59,7 +59,7 @@ String code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
           <table class="evsLogoBg" cellspacing="3" cellpadding="0" border="0" width="570px" role='presentation'>
             <tr>
               <td valign="top">
-                <a href="http://evs.nci.nih.gov/" target="_blank" alt="Enterprise Vocabulary Services">
+                <a href="https://evs.nci.nih.gov/" target="_blank" alt="Enterprise Vocabulary Services">
                   <img
                       src="<%=basePath%>/images/evs-popup-logo.gif"
                       width="213"

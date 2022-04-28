@@ -30,7 +30,7 @@
       <div id="popupContainer">
         <!-- nci popup banner -->
         <div class="ncipopupbanner">
-          <a href="http://www.cancer.gov" target="_blank" alt="National Cancer Institute">
+          <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">
             <img
                 src="<%=basePath%>/images/banner-red.png"
                 width="680"
@@ -39,7 +39,7 @@
                 alt="National Cancer Institute"
             />
           </a>
-          <a href="http://www.cancer.gov" target="_blank" alt="National Cancer Institute">
+          <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">
             <img
                 src="<%=basePath%>/images/spacer.gif"
                 width="60"
@@ -55,7 +55,7 @@
           <table class="evsLogoBg" cellspacing="3" cellpadding="0" border="0" width="570px" role='presentation'>
             <tr>
               <td valign="top">
-                <a href="http://evs.nci.nih.gov/" target="_blank" alt="Enterprise Vocabulary Services">
+                <a href="https://evs.nci.nih.gov/" target="_blank" alt="Enterprise Vocabulary Services">
                   <img
                       src="<%=basePath%>/images/evs-popup-logo.gif"
                       width="213"
@@ -142,11 +142,11 @@
                 is built using the National Library of Medicine's UMLS Metathesaurus, use of which is restricted under
                 the UMLS license agreement (see
                 <a
-                    href="http://www.nlm.nih.gov/research/umls/license.html"
+                    href="https://www.nlm.nih.gov/research/umls/license.html"
                     target="_blank"
                     alt="UMLS Metathesaurus License">
 
-                  http://www.nlm.nih.gov/research/umls/license.html</a>).
+                  https://www.nlm.nih.gov/research/umls/license.html</a>).
               </li>
               <li>
               <b>SNOMED CT</b>:
@@ -154,7 +154,7 @@
               in NCI Enterprise Vocabulary Services, but requires licensing for other purposes. Terms of use for SNOMED
               CT are contained in Appendix 2,
               <a
-                  href="http://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/license_agreement_snomed.html"
+                  href="https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/license_agreement_snomed.html"
                   target="_blank"
                   alt="SNOMED CT License">
 
@@ -165,11 +165,11 @@
             The National Library of Medicine makes the UMLS Semantic Network freely available without charge on request,
             subject to the conditions specified at
             <a
-                href="http://semanticnetwork.nlm.nih.gov/TermsAndConditions/"
+                href="https://semanticnetwork.nlm.nih.gov/TermsAndConditions/"
                 target="_blank"
                 alt="UMLS Metathesaurus Terms and Conditions">
 
-              http://semanticnetwork.nlm.nih.gov/TermsAndConditions/</a>.
+              https://semanticnetwork.nlm.nih.gov/TermsAndConditions/</a>.
           </li></ul>
 
       </td></tr></table>

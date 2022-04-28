@@ -113,13 +113,13 @@ boolean isMapping = DataUtils.isMapping(scheme, null);
           <tr valign="top">
             <td width="10px"></td>
             <td width="77px">
-              <a href="http://evs.nci.nih.gov/" target="_blank" alt="EVS">
+              <a href="https://evs.nci.nih.gov/" target="_blank" alt="EVS">
                 <img src="<%=basePath%>/images/EVSTile.gif" width="77px" height="38px" alt="EVS" border="0" />
               </a>
             </td>
             <td width="3px"></td>
             <td class="textbody" align="left" valign="top" width="210px">
-              <a href="http://evs.nci.nih.gov/" target="_blank" alt="EVS">NCI Enterprise Vocabulary Services</a>:
+              <a href="https://evs.nci.nih.gov/" target="_blank" alt="EVS">NCI Enterprise Vocabulary Services</a>:
               Terminology resources and services for NCI and the biomedical community.
             </td>
           </tr>
@@ -159,7 +159,7 @@ boolean isMapping = DataUtils.isMapping(scheme, null);
             <td width="10px"></td>
             <td>
               <a
-                  href="http://www.cancer.gov/cancertopics/terminologyresources/"
+                  href="https://www.cancer.gov/cancertopics/terminologyresources/"
                   target="_blank"
                   alt="NCI Terminology Resources">
 
@@ -169,7 +169,7 @@ boolean isMapping = DataUtils.isMapping(scheme, null);
             <td width="3px"></td>
             <td class="textbody" valign="top">
               <a
-                  href="http://www.cancer.gov/cancertopics/terminologyresources/"
+                  href="https://www.cancer.gov/cancertopics/terminologyresources/"
                   target="_blank"
                   alt="NCI Terminology Resources">
 

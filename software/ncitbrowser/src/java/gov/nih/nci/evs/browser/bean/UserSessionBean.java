@@ -157,9 +157,9 @@ public class UserSessionBean extends Object {
             (HttpServletResponse) FacesContext.getCurrentInstance()
                 .getExternalContext().getResponse();
 
-        String targetURL = null;// "http://nciterms.nci.nih.gov/";
+        String targetURL = null;// "https://nciterms.nci.nih.gov/";
         if (_selectedQuickLink.compareTo("NCI Terminology Browser") == 0) {
-            targetURL = "http://nciterms.nci.nih.gov/";
+            targetURL = "https://nciterms.nci.nih.gov/";
         }
         try {
             response.sendRedirect(response.encodeRedirectURL(targetURL));
@@ -1070,8 +1070,8 @@ System.out.println("No match -- message: " + msg);
             (HttpServletResponse) FacesContext.getCurrentInstance()
                 .getExternalContext().getResponse();
 
-        String targetURL = null;// "http://nciterms.nci.nih.gov/";
-        targetURL = "http://nciterms.nci.nih.gov/";
+        String targetURL = null;// "https://nciterms.nci.nih.gov/";
+        targetURL = "https://nciterms.nci.nih.gov/";
         try {
             response.sendRedirect(response.encodeRedirectURL(targetURL));
         } catch (Exception ex) {

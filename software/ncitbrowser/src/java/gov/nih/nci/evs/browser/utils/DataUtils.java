@@ -381,7 +381,7 @@ System.out.println("Initializing DataUtils.java...");
 			if (_ncitURL == null) {
 				_ncitURL = default_info;
 			}
-			default_info = "http://ncim.nci.nih.gov";
+			default_info = "https://ncim.nci.nih.gov";
 			_ncimURL = properties.getProperty(NCItBrowserProperties.NCIM_URL);
 			if (_ncimURL == null) {
 				_ncimURL = default_info;
@@ -4023,7 +4023,7 @@ if (lbSvc == null) {
         if (_ncimURL != null) {
             return _ncimURL;
         }
-        String default_info = "http://ncim.nci.nih.gov";
+        String default_info = "https://ncim.nci.nih.gov";
         NCItBrowserProperties properties = null;
         try {
             properties = NCItBrowserProperties.getInstance();

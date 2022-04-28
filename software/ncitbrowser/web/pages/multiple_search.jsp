@@ -673,7 +673,7 @@ request.getSession().removeAttribute("m");
             <tr valign="top">
               <td width="10px"></td>
               <td>
-                <a href="http://evs.nci.nih.gov/" target="_blank" alt="EVS">
+                <a href="https://evs.nci.nih.gov/" target="_blank" alt="EVS">
                   <img
                       src="<%= request.getContextPath() %>/images/EVSTile.gif"
                       width="77"
@@ -685,7 +685,7 @@ request.getSession().removeAttribute("m");
               </td>
               <td width="3px"></td>
               <td class="textbody" valign="top">
-                <a href="http://evs.nci.nih.gov/" target="_blank" alt="EVS">NCI Enterprise Vocabulary Services</a>:
+                <a href="https://evs.nci.nih.gov/" target="_blank" alt="EVS">NCI Enterprise Vocabulary Services</a>:
                 Terminology resources and services for NCI and the biomedical community.
               </td>
             </tr>
@@ -725,7 +725,7 @@ request.getSession().removeAttribute("m");
               <td width="10px"></td>
               <td>
                 <a
-                    href="http://www.cancer.gov/cancertopics/terminologyresources/"
+                    href="https://www.cancer.gov/cancertopics/terminologyresources/"
                     target="_blank"
                     alt="NCI Terminology Resources">
 
@@ -739,7 +739,7 @@ request.getSession().removeAttribute("m");
               <td width="3px"></td>
               <td class="textbody" valign="top">
                 <a
-                    href="http://www.cancer.gov/cancertopics/terminologyresources/"
+                    href="https://www.cancer.gov/cancertopics/terminologyresources/"
                     target="_blank"
                     alt="NCI Terminology Resources">
 

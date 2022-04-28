@@ -68,7 +68,7 @@ public interface FormatterConstant {
     public static final String SPL_FILE = DOWNLOAD_DIR
         + "/Structured_Product_Labeling_(SPL)_REPORT__10.06e.txt";
 
-    public static final String FTP_URL = "http://evs.nci.nih.gov/ftp1";
+    public static final String FTP_URL = "https://evs.nci.nih.gov/ftp1";
     public static final String CDISC_SDTM_REPORT_URL = FTP_URL
         + "/CDISC/SDTM/SDTM%20Terminology.txt";
     public static final String CDRH_REPORT_URL = FTP_URL

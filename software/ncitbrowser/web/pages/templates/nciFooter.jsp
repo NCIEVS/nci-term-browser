@@ -3,20 +3,20 @@
 <div class="footer" style="width:920px">
   <ul class="textbody">
     <li>
-    <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">NCI Home</a>
+    <a href="https://www.cancer.gov" target="_blank" rel="noopener" alt="National Cancer Institute">NCI Home</a>
     |</li>
   <li>
   <a href="<%= request.getContextPath() %>/pages/contact_us.jsf?nav_type=terminologies">Contact Us</a>
   |</li>
 <li>
-<a href="https://www.cancer.gov/policies" target="_blank" alt="National Cancer Institute Policies">Policies</a>
+<a href="https://www.cancer.gov/policies" target="_blank" rel="noopener" alt="National Cancer Institute Policies">Policies</a>
 |</li>
 <li>
-<a href="https://www.cancer.gov/policies/page3" target="_blank" alt="National Cancer Institute Accessibility">
+<a href="https://www.cancer.gov/policies/page3" target="_blank" rel="noopener" alt="National Cancer Institute Accessibility">
   Accessibility</a>
 |</li>
 <li>
-<a href="https://www.cancer.gov/policies/page6" target="_blank" alt="National Cancer Institute FOIA">FOIA</a>
+<a href="https://www.cancer.gov/policies/page6" target="_blank" rel="noopener" alt="National Cancer Institute FOIA">FOIA</a>
 |</li>
 <li>
 <a href="https://www.hhs.gov/vulnerability-disclosure-policy/index.html" alt="HHS Vulnerability Disclosure">HHS Vulnerability Disclosure</a>

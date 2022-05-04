@@ -188,7 +188,7 @@ function verifyRecaptcha() {
             <td />
             <td>Web Page:</td>
             <td>
-              <a href="<%=NCICB_URL%>" target="_blank"><%= NCICB_URL %></a>
+              <a href="<%=NCICB_URL%>" target="_blank" rel="noopener"><%= NCICB_URL %></a>
             </td>
           </tr>
         </table>
@@ -206,9 +206,9 @@ function verifyRecaptcha() {
             detailed description of your problem or suggestion.
           </ul>
           For questions related to NCI's Cancer.gov Web site, see the
-          <a href="https://www.cancer.gov/help" target="_blank">Cancer.gov help page</a>.
+          <a href="https://www.cancer.gov/help" target="_blank" rel="noopener">Cancer.gov help page</a>.
           &nbsp; For help and other questions concerning NCI Enterprise Vocabulary Services (EVS), see the
-          <a href="https://evs.nci.nih.gov/" target="_blank">EVS Web site</a>.
+          <a href="https://evs.nci.nih.gov/" target="_blank" rel="noopener">EVS Web site</a>.
         </div>
 
         <p>
@@ -281,7 +281,7 @@ function verifyRecaptcha() {
           <input type="hidden" name="captcha_option" id="captcha_option" value="<%=captcha_option%>">
 
         </h:form>
-        <a href="https://www.cancer.gov/global/web/policies/page2" target="_blank" alt="Privacy Policy">
+        <a href="https://www.cancer.gov/global/web/policies/page2" target="_blank" rel="noopener" alt="Privacy Policy">
           <i>Privacy Policy on E-mail Messages Sent to the NCI Web Site</i>
         </a>
         <%@ include file="/pages/templates/nciFooter.jsp" %>

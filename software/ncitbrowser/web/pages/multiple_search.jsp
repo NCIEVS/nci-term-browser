@@ -554,7 +554,7 @@ request.getSession().removeAttribute("m");
                                         } else if (scheme.compareToIgnoreCase("NCI Metathesaurus") == 0) {
                                           String ncimurl = NCItBrowserProperties.getNCIM_URL();
                                           %>
-                                          <a href="<%=ncimurl%>" target="_blank">
+                                          <a href="<%=ncimurl%>" target="_blank" rel="noopener">
                                             <%= display_label %>
                                             <img
                                                 src="<%= request.getContextPath() %>/images/window-icon.gif"
@@ -673,7 +673,7 @@ request.getSession().removeAttribute("m");
             <tr valign="top">
               <td width="10px"></td>
               <td>
-                <a href="https://evs.nci.nih.gov/" target="_blank" alt="EVS">
+                <a href="https://evs.nci.nih.gov/" target="_blank" rel="noopener" alt="EVS">
                   <img
                       src="<%= request.getContextPath() %>/images/EVSTile.gif"
                       width="77"
@@ -685,14 +685,14 @@ request.getSession().removeAttribute("m");
               </td>
               <td width="3px"></td>
               <td class="textbody" valign="top">
-                <a href="https://evs.nci.nih.gov/" target="_blank" alt="EVS">NCI Enterprise Vocabulary Services</a>:
+                <a href="https://evs.nci.nih.gov/" target="_blank" rel="noopener" alt="EVS">NCI Enterprise Vocabulary Services</a>:
                 Terminology resources and services for NCI and the biomedical community.
               </td>
             </tr>
             <tr valign="top">
               <td width="10px"></td>
               <td>
-                <a href="<%=nci_meta_url%>" target="_blank" alt="NCIm">
+                <a href="<%=nci_meta_url%>" target="_blank" rel="noopener" alt="NCIm">
                   <img
                       src="<%= request.getContextPath() %>/images/NCImTile.gif"
                       width="77"
@@ -704,20 +704,20 @@ request.getSession().removeAttribute("m");
               </td>
               <td width="3px"></td>
               <td class="textbody" valign="top">
-                <a href="<%=nci_meta_url%>" target="_blank" alt="NCIm">NCI Metathesaurus</a>:
+                <a href="<%=nci_meta_url%>" target="_blank" rel="noopener" alt="NCIm">NCI Metathesaurus</a>:
                 Comprehensive database of 6,700,000 terms from over 85 terminologies.
               </td>
             </tr>
             <tr valign="top">
               <td width="10px"></td>
               <td>
-                <a href="<%=ncit_url%>" target="_blank" alt="NCI Thesaurus">
+                <a href="<%=ncit_url%>" target="_blank" rel="noopener" alt="NCI Thesaurus">
                   <img src="<%=basePath%>/images/NCItTile.jpg" width="77" height="38px" alt="NCIt" border="0" />
                 </a>
               </td>
               <td width="3px"></td>
               <td class="textbody" valign="top">
-                <a href="<%=ncit_url%>" target="_blank" alt="NCI Thesaurus">NCI Thesaurus</a>:
+                <a href="<%=ncit_url%>" target="_blank" rel="noopener" alt="NCI Thesaurus">NCI Thesaurus</a>:
                 Reference terminology for NCI, NCI Metathesaurus and NCI informatics infrastructure.
               </td>
             </tr>
@@ -726,7 +726,7 @@ request.getSession().removeAttribute("m");
               <td>
                 <a
                     href="https://www.cancer.gov/cancertopics/terminologyresources/"
-                    target="_blank"
+                    target="_blank" rel="noopener"
                     alt="NCI Terminology Resources">
 
                   <img
@@ -740,7 +740,7 @@ request.getSession().removeAttribute("m");
               <td class="textbody" valign="top">
                 <a
                     href="https://www.cancer.gov/cancertopics/terminologyresources/"
-                    target="_blank"
+                    target="_blank" rel="noopener"
                     alt="NCI Terminology Resources">
 
                   NCI Terminology Resources</a>:

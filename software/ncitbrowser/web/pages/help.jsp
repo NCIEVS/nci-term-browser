@@ -132,7 +132,7 @@
 
                       <li>
                     For all EVS resources, services and contacts, see the EVS Web site
-                    <a href="https://evs.nci.nih.gov/" target="_blank">https://evs.nci.nih.gov/</a>.
+                    <a href="https://evs.nci.nih.gov/" target="_blank" rel="noopener">https://evs.nci.nih.gov/</a>.
                       </li>
                      </td>
                   </tr>
@@ -147,7 +147,7 @@
             data translation and cross-reference. For information on new features and known issues,
             <a
                 href="https://wiki.nci.nih.gov/display/EVS/NCI+Term+Browser+<%=application_version%>+Release+Notes"
-                target="_blank">
+                target="_blank" rel="noopener">
 
               see NCI Term Browser
               <%= application_version %>
@@ -226,7 +226,7 @@
   <b>NCI Term Browser</b>
   icon above the tabs always leads back to the main Terminologies home page. The Term Browser and LexEVS terminology
   server versions are displayed in the browser's home page banner; for more information on LexEVS, see the
-  <a href="https://wiki.nci.nih.gov/display/LexEVS/LexEVS" target="_blank">LexEVS Wiki Pages</a>.
+  <a href="https://wiki.nci.nih.gov/display/LexEVS/LexEVS" target="_blank" rel="noopener">LexEVS Wiki Pages</a>.
 </p>
 
 <p>
@@ -279,7 +279,7 @@ always appears at the far right, linking to this Help page.</li></ul></div>
     parent-child hierarchies from very broad top concepts down to the most specific subcategories. All browsing and
     searching in this browser reflects this concept-based view of terminology. For information on other EVS browsers,
     file formats, and computer application access, see the
-    <a href="https://evs.nci.nih.gov/" target="_blank">EVS web site.</a>
+    <a href="https://evs.nci.nih.gov/" target="_blank" rel="noopener">EVS web site.</a>
   </p>
 </div>
 

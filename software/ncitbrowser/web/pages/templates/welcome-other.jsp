@@ -78,7 +78,7 @@ boolean isMapping = DataUtils.isMapping(scheme, null);
         <% if (source_url_value != null && !isMapping) { %>
           <p>
             Source Home Page:
-            <a href="<%=source_url_value%>" target="_blank"><%= source_url_value %></a>
+            <a href="<%=source_url_value%>" target="_blank" rel="noopener"><%= source_url_value %></a>
           </p>
           <%
         }
@@ -87,7 +87,7 @@ boolean isMapping = DataUtils.isMapping(scheme, null);
           %>
           <p>
             Download:
-            <a href="<%=download_url_value%>" target="_blank"><%= download_url_value %></a>
+            <a href="<%=download_url_value%>" target="_blank" rel="noopener"><%= download_url_value %></a>
           </p>
           <%
         }
@@ -96,7 +96,7 @@ boolean isMapping = DataUtils.isMapping(scheme, null);
           %>
           <p>
             More Information:
-            <a href="<%=cabig_vkc_index_url_value%>" target="_blank"><%= cabig_vkc_index_url_value %></a>
+            <a href="<%=cabig_vkc_index_url_value%>" target="_blank" rel="noopener"><%= cabig_vkc_index_url_value %></a>
           </p>
           <%
         }
@@ -113,26 +113,26 @@ boolean isMapping = DataUtils.isMapping(scheme, null);
           <tr valign="top">
             <td width="10px"></td>
             <td width="77px">
-              <a href="https://evs.nci.nih.gov/" target="_blank" alt="EVS">
+              <a href="https://evs.nci.nih.gov/" target="_blank" rel="noopener" alt="EVS">
                 <img src="<%=basePath%>/images/EVSTile.gif" width="77px" height="38px" alt="EVS" border="0" />
               </a>
             </td>
             <td width="3px"></td>
             <td class="textbody" align="left" valign="top" width="210px">
-              <a href="https://evs.nci.nih.gov/" target="_blank" alt="EVS">NCI Enterprise Vocabulary Services</a>:
+              <a href="https://evs.nci.nih.gov/" target="_blank" rel="noopener" alt="EVS">NCI Enterprise Vocabulary Services</a>:
               Terminology resources and services for NCI and the biomedical community.
             </td>
           </tr>
           <tr valign="top">
             <td width="10px"></td>
             <td>
-              <a href="<%=nci_meta_url%>" target="_blank" alt="NCIm">
+              <a href="<%=nci_meta_url%>" target="_blank" rel="noopener" alt="NCIm">
                 <img src="<%=basePath%>/images/NCImTile.gif" width="77" height="38px" alt="NCIm" border="0" />
               </a>
             </td>
             <td width="3px"></td>
             <td class="textbody" valign="top">
-              <a href="<%=nci_meta_url%>" target="_blank" alt="NCIm">NCI Metathesaurus</a>:
+              <a href="<%=nci_meta_url%>" target="_blank" rel="noopener" alt="NCIm">NCI Metathesaurus</a>:
               Comprehensive database of 6,700,000 terms from over 85 terminologies.
             </td>
           </tr>
@@ -160,7 +160,7 @@ boolean isMapping = DataUtils.isMapping(scheme, null);
             <td>
               <a
                   href="https://www.cancer.gov/cancertopics/terminologyresources/"
-                  target="_blank"
+                  target="_blank" rel="noopener"
                   alt="NCI Terminology Resources">
 
                 <img src="<%=basePath%>/images/Cancer_govTile.gif" alt="NCI Terminology Resources" border="0" />
@@ -170,7 +170,7 @@ boolean isMapping = DataUtils.isMapping(scheme, null);
             <td class="textbody" valign="top">
               <a
                   href="https://www.cancer.gov/cancertopics/terminologyresources/"
-                  target="_blank"
+                  target="_blank" rel="noopener"
                   alt="NCI Terminology Resources">
 
                 NCI Terminology Resources</a>:

@@ -20,7 +20,7 @@
         shape="rect"
         coords="520,0,941,26"
         href="https://evs.nci.nih.gov/"
-        target="_blank"
+        target="_blank" rel="noopener"
         alt="Enterprise Vocabulary Services"
     />
   </map>

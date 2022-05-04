@@ -87,7 +87,7 @@ if (type.compareTo("mapping") == 0 || type.compareTo("all") == 0) {
                     <td class="textbody">
                       <a
                           href="<%= ncim_url %>/ConceptReport.jsp?dictionary=<%=ncim_cs_name%>&type=synonym&code=<%=meta_cui%>"
-                          target="_blank">
+                          target="_blank" rel="noopener">
 
                         <i class="textbody"><%= meta_cui %></i>
                         <img

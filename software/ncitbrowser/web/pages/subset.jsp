@@ -110,7 +110,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 <td>
                   <a
                       href="https://www.cancer.gov/cancertopics/terminologyresources/CDISC"
-                      target="_blank"
+                      target="_blank" rel="noopener"
                       alt="Clinical Data Interchange Standards Consortium (CDISC) Terminology">
                     <img
                         src="<%=basePath%>/images/CDISC_Logo.png"
@@ -124,7 +124,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 <td class="textbody" valign="top">
                   <a
                       href="https://www.cancer.gov/cancertopics/terminologyresources/CDISC"
-                      target="_blank"
+                      target="_blank" rel="noopener"
                       alt="Clinical Data Interchange Standards Consortium (CDISC) Terminology">
 
                     Clinical Data Interchange Standards Consortium Terminology:</a>
@@ -139,7 +139,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 <td>
                   <a
                       href="https://www.cancer.gov/cancertopics/terminologyresources/FDA"
-                      target="_blank"
+                      target="_blank" rel="noopener"
                       alt="U.S. Food and Drug Administration Terminology">
 
                     <img
@@ -152,7 +152,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 <td class="textbody" valign="top">
                   <a
                       href="https://www.cancer.gov/cancertopics/terminologyresources/FDA"
-                      target="_blank"
+                      target="_blank" rel="noopener"
                       alt="U.S. Food and Drug Administration Terminology">
 
                     U.S. Food and Drug Administration Terminology:</a>
@@ -166,7 +166,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 <td>
                   <a
                       href="https://www.cancer.gov/cancertopics/terminologyresources/FMT"
-                      target="_blank"
+                      target="_blank" rel="noopener"
                       alt="Federal Medication Terminologies">
 
                     <img src="<%=basePath%>/images/FMT_Logo.jpg" border="0" alt="Federal Medication Terminologies" />
@@ -175,7 +175,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 <td class="textbody" valign="top">
                   <a
                       href="https://www.cancer.gov/cancertopics/terminologyresources/FMT"
-                      target="_blank"
+                      target="_blank" rel="noopener"
                       alt="Federal Medication Terminologies">
 
                     Federal Medication Terminologies:</a>
@@ -192,7 +192,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 <td>
                   <a
                       href="https://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/page7"
-                      target="_blank"
+                      target="_blank" rel="noopener"
                       alt="National Council for Prescription Drug Programs">
 
                     <img
@@ -205,7 +205,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 <td class="textbody" valign="top">
                   <a
                       href="https://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/page7"
-                      target="_blank"
+                      target="_blank" rel="noopener"
                       alt="Federal Medication Terminologies">
 
                     National Council for Prescription Drug Programs Terminology:</a>
@@ -227,7 +227,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                   <td>
                     <a
                         href="https://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/pediatric"
-                        target="_blank"
+                        target="_blank" rel="noopener"
                         alt="National Council for Prescription Drug Programs">
 
                       <img
@@ -244,7 +244,7 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
                 <td class="textbody" valign="top">
                   <a
                       href="https://www.cancer.gov/cancertopics/cancerlibrary/terminologyresources/pediatric"
-                      target="_blank"
+                      target="_blank" rel="noopener"
                       alt="Federal Medication Terminologies">
 
                     Pediatric Terminology:</a>The

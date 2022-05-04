@@ -436,7 +436,7 @@ if (cartActionBean != null && cartActionBean.getCount()>0) {
                 <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
                 <a
                     href="<%=term_suggestion_application_url%>?dictionary=<%=HTTPUtils.cleanXSS(cd_dictionary)%>&code=<%=HTTPUtils.cleanXSS(code)%>"
-                    target="_blank"
+                    target="_blank" rel="noopener"
                     alt="Term Suggestion">
 
                   Suggest Changes</a>
@@ -1788,7 +1788,7 @@ String code_curr = code;//(String) request.getSession().getAttribute("code");
                         <td class="textbody">
                           <a
                               href="<%= ncim_url %>/ConceptReport.jsp?dictionary=<%=ncim_cs_name%>&type=synonym&code=<%=meta_cui%>"
-                              target="_blank">
+                              target="_blank" rel="noopener">
     
                             <i class="textbody"><%= meta_cui %></i>
                             <img

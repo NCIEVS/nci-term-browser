@@ -503,7 +503,7 @@
                                     <a
                                         title="Download Plugin Microsoft Excel Viewer"
                                         href="https://products.office.com/en-US/excel?legRedir=true&CorrelationId=1229dc2e-5ff3-4e3b-adc8-2b6f59e21be4"
-                                        target="_blank">
+                                        target="_blank" rel="noopener">
 
                                       <img
                                           src="/ncitbrowser/images/link_xls.gif"

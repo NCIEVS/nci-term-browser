@@ -46,7 +46,7 @@
 
 <div style='clear:both;margin-top:-5px;padding:8px;height:32px;color:white;background-color:#C31F40'>
 
-  <a href="https://www.cancer.gov" target="_blank">
+  <a href="https://www.cancer.gov" target="_blank" rel="noopener">
     <img
         src="/ncitbrowser/images/banner-red.png"
         width="955"
@@ -84,7 +84,7 @@
         shape="rect"
         coords="520,0,941,26"
         href="https://evs.nci.nih.gov/"
-        target="_blank"
+        target="_blank" rel="noopener"
         alt="Enterprise Vocabulary Services"
     />
   </map>
@@ -191,11 +191,11 @@
           </a>
           <ul>
             <li>
-            <a href="https://evs.nci.nih.gov/" tabindex="0" target="_blank" alt="Enterprise Vocabulary Services">
+            <a href="https://evs.nci.nih.gov/" tabindex="0" target="_blank" rel="noopener" alt="Enterprise Vocabulary Services">
               EVS Home</a>
           </li>
           <li>
-          <a href="https://ncim.nci.nih.gov/ncimbrowser" tabindex="0" target="_blank" alt="NCI Metathesaurus">NCI Metathesaurus Browser</a>
+          <a href="https://ncim.nci.nih.gov/ncimbrowser" tabindex="0" target="_blank" rel="noopener" alt="NCI Metathesaurus">NCI Metathesaurus Browser</a>
         </li>
 
 
@@ -215,7 +215,7 @@
     <a
         href="https://www.cancer.gov/cancertopics/terminologyresources"
         tabindex="0"
-        target="_blank"
+        target="_blank" rel="noopener"
         alt="NCI Terminology Resources">
 
       NCI Terminology Resources</a>
@@ -224,7 +224,7 @@
     <a
         href="https://ncitermform.nci.nih.gov/ncitermform/?dictionary=NCI%20Thesaurus"
         tabindex="0"
-        target="_blank"
+        target="_blank" rel="noopener"
         alt="Term Suggestion">
 
       Term Suggestion</a>
@@ -348,20 +348,20 @@ for (int i=0; i<graphdb_results.size(); i++) {
 <div class="footer" style="width:920px">
   <ul class="textbody">
     <li>
-    <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">NCI Home</a>
+    <a href="https://www.cancer.gov" target="_blank" rel="noopener" alt="National Cancer Institute">NCI Home</a>
     |</li>
   <li>
   <a href="/ncitbrowser/pages/contact_us.jsf?nav_type=terminologies">Contact Us</a>
   |</li>
 <li>
-<a href="https://www.cancer.gov/policies" target="_blank" alt="National Cancer Institute Policies">Policies</a>
+<a href="https://www.cancer.gov/policies" target="_blank" rel="noopener" alt="National Cancer Institute Policies">Policies</a>
 |</li>
 <li>
-<a href="https://www.cancer.gov/policies/page3" target="_blank" alt="National Cancer Institute Accessibility">
+<a href="https://www.cancer.gov/policies/page3" target="_blank" rel="noopener" alt="National Cancer Institute Accessibility">
   Accessibility</a>
 |</li>
 <li>
-<a href="https://www.cancer.gov/policies/page6" target="_blank" alt="National Cancer Institute FOIA">FOIA</a>
+<a href="https://www.cancer.gov/policies/page6" target="_blank" rel="noopener" alt="National Cancer Institute FOIA">FOIA</a>
 </li></ul>
 <center>
   <a href="https://www.hhs.gov/" alt="U.S. Department of Health and Human Services">

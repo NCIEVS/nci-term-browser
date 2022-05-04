@@ -30,7 +30,7 @@
       <div id="popupContainer">
         <!-- nci popup banner -->
         <div class="ncipopupbanner">
-          <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">
+          <a href="https://www.cancer.gov" target="_blank" rel="noopener" alt="National Cancer Institute">
             <img
                 src="<%=basePath%>/images/banner-red.png"
                 width="680"
@@ -39,7 +39,7 @@
                 alt="National Cancer Institute"
             />
           </a>
-          <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">
+          <a href="https://www.cancer.gov" target="_blank" rel="noopener" alt="National Cancer Institute">
             <img
                 src="<%=basePath%>/images/spacer.gif"
                 width="60"
@@ -55,7 +55,7 @@
           <table class="evsLogoBg" cellspacing="3" cellpadding="0" border="0" width="570px" role='presentation'>
             <tr>
               <td valign="top">
-                <a href="https://evs.nci.nih.gov/" target="_blank" alt="Enterprise Vocabulary Services">
+                <a href="https://evs.nci.nih.gov/" target="_blank" rel="noopener" alt="Enterprise Vocabulary Services">
                   <img
                       src="<%=basePath%>/images/evs-popup-logo.gif"
                       width="213"
@@ -125,7 +125,7 @@
                     <b>ICD-O-3</b>:
                     The World Health Organization allows use of ICD-10 and ICD-O-3 in NCI Enterprise Vocabulary
                     Services, but requires licensing for other purposes (see
-                    <a href="http://www.who.int/classifications/icd/en/" target="_blank" alt="ICD10 License">
+                    <a href="http://www.who.int/classifications/icd/en/" target="_blank" rel="noopener" alt="ICD10 License">
                       http://www.who.int/classifications/icd/en/</a>).
                   </li>
                   <li>
@@ -133,7 +133,7 @@
                   The Medical Dictionary for Regulatory Activities (MedDRA) terminology is licensed for NCI work and may
                   be viewed on NCI browsers. All other uses are prohibited, unless covered by separate subscription to
                   MedDRA from the MedDRA MSSO (see
-                  <a href="http://www.meddramsso.com" target="_blank" alt="MedDRA License">http://www.meddramsso.com</a>)
+                  <a href="http://www.meddramsso.com" target="_blank" rel="noopener" alt="MedDRA License">http://www.meddramsso.com</a>)
                   or contact at http://mssohelp@ngc.com , 877.258.8280, or 12011 Sunset Hills Road Reston Virginia,
                   20190-3285.
                 </li>
@@ -143,7 +143,7 @@
                 the UMLS license agreement (see
                 <a
                     href="https://www.nlm.nih.gov/research/umls/license.html"
-                    target="_blank"
+                    target="_blank" rel="noopener"
                     alt="UMLS Metathesaurus License">
 
                   https://www.nlm.nih.gov/research/umls/license.html</a>).
@@ -155,7 +155,7 @@
               CT are contained in Appendix 2,
               <a
                   href="https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/license_agreement_snomed.html"
-                  target="_blank"
+                  target="_blank" rel="noopener"
                   alt="SNOMED CT License">
 
                 SNOMED CT Affiliate Licence Agreement</a>,
@@ -166,7 +166,7 @@
             subject to the conditions specified at
             <a
                 href="https://semanticnetwork.nlm.nih.gov/TermsAndConditions/"
-                target="_blank"
+                target="_blank" rel="noopener"
                 alt="UMLS Metathesaurus Terms and Conditions">
 
               https://semanticnetwork.nlm.nih.gov/TermsAndConditions/</a>.

@@ -37,7 +37,7 @@
       skip navigation links</A>
 
     <div style='clear:both;margin-top:-5px;padding:8px;height:32px;color:white;background-color:#C31F40'>
-      <a href="https://www.cancer.gov" target="_blank">
+      <a href="https://www.cancer.gov" target="_blank" rel="noopener">
         <img
             src="<%=request.getContextPath()%>/images/banner-red.png"
             width="955"
@@ -48,12 +48,12 @@
       </a>
 
       <!--
-        iv class="ncibanner"> <a href="https://www.cancer.gov" target="_blank"> <img
+        iv class="ncibanner"> <a href="https://www.cancer.gov" target="_blank" rel="noopener"> <img
         src="/ncitbrowser/images/logotype.gif" width="556" height="39" border="0" alt="National Cancer Institute"/> </a>
-        <a href="https://www.cancer.gov" target="_blank"> <img src="/ncitbrowser/images/spacer.gif" width="60"
+        <a href="https://www.cancer.gov" target="_blank" rel="noopener"> <img src="/ncitbrowser/images/spacer.gif" width="60"
         height="39" border="0" alt="National Cancer Institute" class="print-header"/> </a> <a href="https://www.nih.gov"
-        target="_blank"> <img src="/ncitbrowser/images/tagline_nologo.gif" width="219" height="39" border="0" alt="U.S.
-        National Institutes of Health"/> </a> <a href="https://www.cancer.gov" target="_blank"> <img
+        target="_blank" rel="noopener"> <img src="/ncitbrowser/images/tagline_nologo.gif" width="219" height="39" border="0" alt="U.S.
+        National Institutes of Health"/> </a> <a href="https://www.cancer.gov" target="_blank" rel="noopener"> <img
         src="/ncitbrowser/images/cancer-gov.gif" width="125" height="39" border="0" alt="www.cancer.gov"/> </a>
       -->
 
@@ -76,7 +76,7 @@
               shape="rect"
               coords="520,0,941,26"
               href="https://evs.nci.nih.gov/"
-              target="_blank"
+              target="_blank" rel="noopener"
               alt="Enterprise Vocabulary Services"
           />
         </map>
@@ -191,13 +191,13 @@
                       <a
                           href="https://evs.nci.nih.gov/"
                           tabindex="0"
-                          target="_blank"
+                          target="_blank" rel="noopener"
                           alt="Enterprise Vocabulary Services">
 
                         EVS Home</a>
                     </li>
                     <li>
-                    <a href="https://ncim.nci.nih.gov/ncimbrowser" tabindex="0" target="_blank" alt="NCI Metathesaurus">
+                    <a href="https://ncim.nci.nih.gov/ncimbrowser" tabindex="0" target="_blank" rel="noopener" alt="NCI Metathesaurus">
                       NCI Metathesaurus Browser</a>
                   </li>
 
@@ -213,7 +213,7 @@
               <a
                   href="https://www.cancer.gov/cancertopics/terminologyresources"
                   tabindex="0"
-                  target="_blank"
+                  target="_blank" rel="noopener"
                   alt="NCI Terminology Resources">
 
                 NCI Terminology Resources</a>
@@ -233,20 +233,20 @@ request.getSession().removeAttribute("error_msg");
 <div class="footer" style="width:940px">
   <ul class="textbody">
     <li>
-    <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">NCI Home</a>
+    <a href="https://www.cancer.gov" target="_blank" rel="noopener" alt="National Cancer Institute">NCI Home</a>
     |</li>
   <li>
   <a href="/ncitbrowser/pages/contact_us.jsf?nav_type=terminologies">Contact Us</a>
   |</li>
 <li>
-<a href="https://www.cancer.gov/policies" target="_blank" alt="National Cancer Institute Policies">Policies</a>
+<a href="https://www.cancer.gov/policies" target="_blank" rel="noopener" alt="National Cancer Institute Policies">Policies</a>
 |</li>
 <li>
-<a href="https://www.cancer.gov/policies/page3" target="_blank" alt="National Cancer Institute Accessibility">
+<a href="https://www.cancer.gov/policies/page3" target="_blank" rel="noopener" alt="National Cancer Institute Accessibility">
   Accessibility</a>
 |</li>
 <li>
-<a href="https://www.cancer.gov/policies/page6" target="_blank" alt="National Cancer Institute FOIA">FOIA</a>
+<a href="https://www.cancer.gov/policies/page6" target="_blank" rel="noopener" alt="National Cancer Institute FOIA">FOIA</a>
 </li></ul>
 <p class="textbody">
   A Service of the National Cancer Institute
@@ -261,22 +261,22 @@ request.getSession().removeAttribute("error_msg");
   />
 </p>
 <map id="external-footer" name="external-footer">
-  <area shape="rect" coords="0,0,46,34" href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute" />
+  <area shape="rect" coords="0,0,46,34" href="https://www.cancer.gov" target="_blank" rel="noopener" alt="National Cancer Institute" />
   <area
       shape="rect"
       coords="55,1,99,32"
       href="https://www.hhs.gov/"
-      target="_blank"
+      target="_blank" rel="noopener"
       alt="U.S. Health &amp; Human Services"
   />
   <area
       shape="rect"
       coords="103,1,147,31"
       href="https://www.nih.gov/"
-      target="_blank"
+      target="_blank" rel="noopener"
       alt="National Institutes of Health"
   />
-  <area shape="rect" coords="148,1,235,33" href="https://www.usa.gov/" target="_blank" alt="USA.gov" />
+  <area shape="rect" coords="148,1,235,33" href="https://www.usa.gov/" target="_blank" rel="noopener" alt="USA.gov" />
 </map>
 </div>
 

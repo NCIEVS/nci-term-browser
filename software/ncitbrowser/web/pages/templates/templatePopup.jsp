@@ -51,7 +51,7 @@ String display_name = hierarchy_info.display_name;
     <div id="popupContainer">
       <!-- nci popup banner -->
       <div class="ncipopupbanner">
-        <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">
+        <a href="https://www.cancer.gov" target="_blank" rel="noopener" alt="National Cancer Institute">
           <img
               src="<%=basePath%>/images/banner-red.png"
               width="680"
@@ -60,7 +60,7 @@ String display_name = hierarchy_info.display_name;
               alt="National Cancer Institute"
           />
         </a>
-        <a href="https://www.cancer.gov" target="_blank" alt="National Cancer Institute">
+        <a href="https://www.cancer.gov" target="_blank" rel="noopener" alt="National Cancer Institute">
           <img
               src="<%=basePath%>/images/spacer.gif"
               width="60"
@@ -76,7 +76,7 @@ String display_name = hierarchy_info.display_name;
         <table class="evsLogoBg" cellspacing="0" cellpadding="0" border="0" role='presentation'>
           <tr>
             <td valign="top">
-              <a href="https://evs.nci.nih.gov/" target="_blank">
+              <a href="https://evs.nci.nih.gov/" target="_blank" rel="noopener">
                 <img
                     src="<%=basePath%>/images/evs-popup-logo.gif"
                     width="213"

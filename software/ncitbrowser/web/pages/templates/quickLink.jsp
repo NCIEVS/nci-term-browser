@@ -83,11 +83,11 @@ if (quicklink_dictionary != null) {
           </a>
           <ul>
             <li>
-            <a href="https://evs.nci.nih.gov/" tabindex="0" target="_blank" alt="Enterprise Vocabulary Services">
+            <a href="https://evs.nci.nih.gov/" tabindex="0" target="_blank" rel="noopener" alt="Enterprise Vocabulary Services">
               EVS Home</a>
           </li>
           <li>
-          <a href="<%=ncim_url%>" tabindex="0" target="_blank" alt="NCI Metathesaurus">NCI Metathesaurus Browser</a>
+          <a href="<%=ncim_url%>" tabindex="0" target="_blank" rel="noopener" alt="NCI Metathesaurus">NCI Metathesaurus Browser</a>
         </li>
 
         <% if (DataUtils.isNCIT(quicklink_dictionary)) { %>
@@ -125,7 +125,7 @@ if (active_scheme == null) {
     <a
         href="https://www.cancer.gov/cancertopics/terminologyresources"
         tabindex="0"
-        target="_blank"
+        target="_blank" rel="noopener"
         alt="NCI Terminology Resources">
 
       NCI Terminology Resources</a>
@@ -134,7 +134,7 @@ if (active_scheme == null) {
     <a
         href="<%=term_suggestion_application_url2%>?dictionary=<%=dictionary_encoded2%>"
         tabindex="0"
-        target="_blank"
+        target="_blank" rel="noopener"
         alt="Term Suggestion">
 
       Term Suggestion</a>

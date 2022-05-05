@@ -28,7 +28,7 @@ String url = DataUtils.getVisualizationWidgetURL(dictionary, code);
 
       //System.out.println(url);
       %>
-      <iframe title="NCBO visualization widget" src="<%=url%>" width="550" height="550" frameborder="0"></iframe>
+      <iframe title="NCBO visualization widget" src="<%=url%>" sandbox width="550" height="550" frameborder="0"></iframe>
     <% } %>
     <script type="text/javascript">_satellite.pageBottom();</script>
   </body>

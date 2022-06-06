@@ -410,34 +410,14 @@ out.println("	</style>");
 		    pw.println(indentation + "</div>");
 		    pw.flush();
 	    } else {
-			/*
 			String div_id = "DIV_" + checkbox_id;
 			if (CHECKBOX_OPTION) {
-				pw.println("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
-				+ ">"
-				+ "<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
-				+ " " + getTabIndex()
-				+ " " + getCheckBoxStatus(ti._code)
-				+ ">"
-				+ getHyperLink(ti));
-		    } else {
-				pw.println("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
-				+ ">"
-				+ getHyperLink(ti));
-			}
-			*/
-			String div_id = "DIV_" + checkbox_id;
-			if (CHECKBOX_OPTION) {
-				//pw.println("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
-				//+ ">"
 				pw.println("<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
 				+ " " + getTabIndex()
 				+ " " + getCheckBoxStatus(ti._code)
 				+ ">"
 				+ getHyperLink(ti));
 		    } else {
-				//pw.println("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
-				//+ ">"
 				pw.println(getHyperLink(ti));
 			}
 		}
@@ -462,6 +442,7 @@ out.println("	</style>");
 			String div_id = "DIV_" + checkbox_id;
 
 			if (CHECKBOX_OPTION) {
+				//KLO, 06062022
 				v.add("<img src=\"" + basePath + "images/minus.gif\" id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
 					+ getTabIndex()
 					+ ">"
@@ -492,24 +473,8 @@ out.println("	</style>");
 		    //pw.flush();
 	    } else {
 			String div_id = "DIV_" + checkbox_id;
-			/*
 			if (CHECKBOX_OPTION) {
-				v.add("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
-				+ ">"
-				+ "<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
-				+ " " + getTabIndex()
-				+ ">"
-				+ getHyperLink(ti));
-		    } else {
-				v.add("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
-				+ ">"
-				+ getHyperLink(ti));
-			}
-			*/
-			if (CHECKBOX_OPTION) {
-				//v.add("<id=\"" + img_id + "\" alt=\"show_hide\" onclick=\"show_hide('" + div_id + "');\" "
-				//+ ">"
-				v.add("<input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
+				v.add("&nbsp;&nbsp; <input type=\"checkbox\" aria-labelledby=\"" + checkbox_id + "\" id=\"" + checkbox_id + "\" name=\"" + ti._code + "\"  onclick=\"updateCheckbox('" + checkbox_id + "'); return false; \""
 				+ " " + getTabIndex()
 				+ ">"
 				+ getHyperLink(ti));

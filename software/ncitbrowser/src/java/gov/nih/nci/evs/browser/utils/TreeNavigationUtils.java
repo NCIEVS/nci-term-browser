@@ -89,7 +89,7 @@ import org.json.JSONException;
 // Note: Version with the has more (...) nodes feature.
 
 public class TreeNavigationUtils {
-	public static int MAX_CHILDREN = 5;
+	public static final int MAX_CHILDREN = 5;
 	private static Logger _logger = LogManager.getLogger(TreeNavigationUtils.class);
 	private static Random rand = new Random();
 

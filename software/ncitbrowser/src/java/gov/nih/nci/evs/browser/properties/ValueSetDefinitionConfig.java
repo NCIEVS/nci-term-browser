@@ -204,7 +204,7 @@ public class ValueSetDefinitionConfig {
 								reportURI,
 								extractionRule);
 							hmap.put(uri, vsc);
-							String uri_lower = uri.toLowerCase();
+							String uri_lower = uri.toLowerCase(Locale.ENGLISH);
 							hmap.put(uri_lower, vsc);
 						}
 					}
@@ -237,8 +237,8 @@ public class ValueSetDefinitionConfig {
 
 		if (valueSetConfigHashMap.containsKey(uri)) {
 			return (ValueSetConfig) valueSetConfigHashMap.get(uri);
-		} else if (valueSetConfigHashMap.containsKey(uri.toLowerCase())) {
-			return (ValueSetConfig) valueSetConfigHashMap.get(uri.toLowerCase());
+		} else if (valueSetConfigHashMap.containsKey(uri.toLowerCase(Locale.ENGLISH))) {
+			return (ValueSetConfig) valueSetConfigHashMap.get(uri.toLowerCase(Locale.ENGLISH));
 		} else { // backward compatibility
 			int n = uri.indexOf(Constants.VALUE_SET_URI_PREFIX_OLD);
 			if (n != -1) {

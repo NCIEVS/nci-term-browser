@@ -1206,7 +1206,13 @@ if (cache_maps_to) {
                                 //_vocabulariesWithoutTreeAccessHashSet
                                 if (nv.getName().compareTo(Constants.TREE_ACCESS_ALLOWED) == 0 && nv.getContent().compareTo("false") == 0) {
 									_vocabulariesWithoutTreeAccessHashSet.add(formalname);
+									_vocabulariesWithoutTreeAccessHashSet.add(cs.getCodingSchemeName());
+									_vocabulariesWithoutTreeAccessHashSet.add(css_local_name);
+
 									_logger.debug("\t" + "Tree not accessible.");
+
+									//System.out.println(formalname + "Tree not accessible.");
+
 								}
 
 								if (nv.getName().compareTo("version_releaseDate") == 0) {

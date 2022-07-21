@@ -436,7 +436,7 @@ if (!retval) {
 
 
 					if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
-						String t = searchTarget.toLowerCase();
+						String t = searchTarget.toLowerCase(Locale.ENGLISH);
 						if (t == null) return null;
 						if (t.indexOf("code") != -1) {
 							msg = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
@@ -473,7 +473,7 @@ System.out.println("No match -- message: " + msg);
 					if (numberRemaining == 0) {
 						String msg = "No match.";
 						if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
-							String t = searchTarget.toLowerCase();
+							String t = searchTarget.toLowerCase(Locale.ENGLISH);
 							if (t == null) return null;
 							if (t.indexOf("code") != -1) {
 								msg = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
@@ -876,7 +876,7 @@ System.out.println("No match -- message: " + msg);
         //    NCItBrowserProperties.getMinimumSearchStringLength();
 
 		if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
-			String t = searchTarget.toLowerCase();
+			String t = searchTarget.toLowerCase(Locale.ENGLISH);
 			if (t == null) return null;
 			if (t.indexOf("code") != -1) {
 				message = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
@@ -1188,9 +1188,10 @@ System.out.println("No match -- message: " + msg);
            request.getSession().setAttribute("matchText", matchText);
 		}
 
-        String multiple_search_error =
-            (String) request.getSession().getAttribute(
-                "multiple_search_no_match_error");
+        //String multiple_search_error =
+        //    (String) request.getSession().getAttribute(
+        //        "multiple_search_no_match_error");
+
         request.getSession().removeAttribute("multiple_search_no_match_error");
 
         String matchAlgorithm = HTTPUtils.cleanXSS((String) request.getParameter("algorithm"));
@@ -1739,7 +1740,7 @@ request.getSession().setAttribute("code", matchText);
 						(String) DataUtils.get_localName2FormalNameHashMap()
 							.get(coding_scheme);
 
-					String convertJSPString = HTTPUtils.convertJSPString(matchText);
+					//String convertJSPString = HTTPUtils.convertJSPString(matchText);
 					request.setAttribute("dictionary", coding_scheme);
 					request.setAttribute("version", ref_version);
 					request.getSession().setAttribute("code", ref.getConceptCode());
@@ -1805,7 +1806,7 @@ response.setContentType("text/html;charset=utf-8");
 
         String message = Constants.ERROR_NO_MATCH_FOUND;
 		if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
-			String t = searchTarget.toLowerCase();
+			String t = searchTarget.toLowerCase(Locale.ENGLISH);
 			if (t == null) return null;
 			if (t.indexOf("code") != -1) {
 				message = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
@@ -2396,7 +2397,7 @@ if (!retval) {
 				} catch (Exception ex) {
 					String message = "No match found.";
 					if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
-						String t = searchTarget.toLowerCase();
+						String t = searchTarget.toLowerCase(Locale.ENGLISH);
 						if (t == null) return null;
 						if (t.indexOf("code") != -1) {
 							message = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
@@ -2441,7 +2442,7 @@ response.setContentType("text/html;charset=utf-8");
         }
         String message = "No match found.";
 		if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
-			String t = searchTarget.toLowerCase();
+			String t = searchTarget.toLowerCase(Locale.ENGLISH);
 			if (t == null) return null;
 			if (t.indexOf("code") != -1) {
 				message = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;
@@ -2731,7 +2732,7 @@ ontologiesToSearchOnStr = s;
 			 }
 		}
 
-		String t0 = (String) request.getSession().getAttribute("ontologiesToSearchOnStr");
+		//String t0 = (String) request.getSession().getAttribute("ontologiesToSearchOnStr");
     }
 
     public void hideListener(ActionEvent evt) {

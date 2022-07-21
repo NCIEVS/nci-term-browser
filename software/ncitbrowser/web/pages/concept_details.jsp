@@ -344,7 +344,10 @@ code = HTTPUtils.cleanXSS(code);
               Boolean[] isPipeDisplayed = new Boolean[] { Boolean.FALSE };
               boolean tree_access2 = !DataUtils.get_vocabulariesWithoutTreeAccessHashSet().contains(dictionary);
               boolean typeLink_isMapping2 = mappingTab.isMapping(dictionary, null);
+             
+              
               if (tree_access2 && !typeLink_isMapping2) {
+              
                 %>
 
                 <%
@@ -353,22 +356,18 @@ code = HTTPUtils.cleanXSS(code);
                 }
                 %>
       
- <%
- if (DataUtils.isNullOrBlank(ns)) {
- %>
-       
-                            <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/ajax?action=search_hierarchy&ontology_node_id=<%=code%>&ontology_node_ns=<%=ns%>&ontology_display_name=<%=short_name%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
+		 <%
+		 if (DataUtils.isNullOrBlank(ns)) {
+		 %>
 
- 
- <%
- } else {
- %>
-                           <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/pages/hierarchy.jsf?vih=true&code=<%=code%>&ns=<%=ns%>&ontology_display_name=<%=dictionary%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
- <%
- }
- %>
-                  
-                  
+					   <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/ajax?action=search_hierarchy&ontology_node_id=<%=code%>&ontology_node_ns=<%=ns%>&ontology_display_name=<%=short_name%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
+		 <%
+		 } else {
+		 %>
+					   <a href="#" onClick="javascript:window.open('<%=request.getContextPath()%>/pages/hierarchy.jsf?vih=true&code=<%=code%>&ns=<%=ns%>&ontology_display_name=<%=dictionary%>&version=<%=version%>', '_blank','top=100, left=100, height=740, width=680, status=no, menubar=no, resizable=yes, scrollbars=yes, toolbar=no, location=no, directories=no');">
+		 <%
+		 }
+		 %>
                   
                   View in Hierarchy</a>
                 <%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>

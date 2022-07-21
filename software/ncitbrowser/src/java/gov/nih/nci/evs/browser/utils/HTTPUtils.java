@@ -523,7 +523,7 @@ public class HTTPUtils {
 						value = (String) request.getParameter(name);
 						if (!DataUtils.isNullOrBlank(value)) {
 							Vector selected_vocabularies_vec = gov.nih.nci.evs.browser.utils.StringUtils.parseData(name, ",");
-							String nm = name.toLowerCase();
+							String nm = name.toLowerCase(Locale.ENGLISH);
 							if (nm == null) return false;
 							if (nm.compareTo("selected_vocabularies") != 0) {
 								for (int k=0; k<selected_vocabularies_vec.size(); k++) {
@@ -758,7 +758,7 @@ public class HTTPUtils {
 
     public static Boolean containsHazardCharacters(String value) {
 		if (value == null) return Boolean.FALSE;
-		String s = decode(value).toUpperCase();
+		String s = decode(value).toUpperCase(Locale.ENGLISH);
 		s = s.trim();
 
 		//SELECT FROM WHERE
@@ -785,7 +785,7 @@ public class HTTPUtils {
 
 	public static Boolean isSearchFormParameter(String name) {
 		if (name == null) return null;
-		String nm = name.toLowerCase();
+		String nm = name.toLowerCase(Locale.ENGLISH);
 		if (nm == null) return null;
 		if (nm.endsWith("search.x") || nm.endsWith("search.y")) {
 			return Boolean.TRUE;
@@ -796,7 +796,7 @@ public class HTTPUtils {
 
 	public static Boolean isCheckedVocabulariesParameter(String name) {
 		if (name == null) return null;
-		String nm = name.toLowerCase();
+		String nm = name.toLowerCase(Locale.ENGLISH);
 		if (nm == null) return null;
 		if (nm.compareTo("selected_vocabularies") == 0) {
 			return Boolean.TRUE;

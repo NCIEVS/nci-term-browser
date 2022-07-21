@@ -1383,8 +1383,8 @@ if (!DataUtils.isNull(b) && !DataUtils.isNull(n)) {
 
 
     public void formatListener(ActionEvent evt) {
-        FacesContext ctx = FacesContext.getCurrentInstance();
-        String format = (String) ctx.getExternalContext().getRequestParameterMap().get("format");
+        //FacesContext ctx = FacesContext.getCurrentInstance();
+        //String format = (String) ctx.getExternalContext().getRequestParameterMap().get("format");
         //System.out.println("formatListener format: " + format);
     }
 

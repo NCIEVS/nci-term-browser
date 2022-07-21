@@ -169,8 +169,8 @@ public class NCItBrowserProperties {
 
     private static String default_graph_db_url = "https://graphresolve-dev.nci.nih.gov";
 
-    public static String RECAPTCHA_SITE_KEY = "RECAPTCHA_SITE_KEY";
-    public static String RECAPTCHA_SECURITY_KEY = "RECAPTCHA_SECURITY_KEY";
+    public static final String RECAPTCHA_SITE_KEY = "RECAPTCHA_SITE_KEY";
+    public static final String RECAPTCHA_SECURITY_KEY = "RECAPTCHA_SECURITY_KEY";
 
     private static String _recaptcha_site_key = null;
     private static String _recaptcha_security_key = null;

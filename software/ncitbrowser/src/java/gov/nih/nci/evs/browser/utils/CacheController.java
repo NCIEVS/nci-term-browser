@@ -1639,7 +1639,7 @@ public class CacheController {
 		TreeService treeService =
 			TreeServiceFactory.getInstance().getTreeService(lbSvc);
 
-		TreeItem root = new TreeItem("Root", "<Root>");
+		//TreeItem root = new TreeItem("Root", "<Root>");
 		if (code.compareTo("<Root>") == 0) {
 			return null;
 		}

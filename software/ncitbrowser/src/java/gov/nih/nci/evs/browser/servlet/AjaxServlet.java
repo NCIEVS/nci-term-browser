@@ -2405,7 +2405,7 @@ String matchText = HTTPUtils.cleanXSS((String) request.getSession().getAttribute
       public String construct_checked_vocabularies_string() {
 		  StringBuffer buf = new StringBuffer();
 		  LexBIGService lbs = RemoteServerUtil.createLexBIGService();
-		  List<CodingScheme> choices = new ArrayList<CodingScheme>();
+		  //List<CodingScheme> choices = new ArrayList<CodingScheme>();
 		  LexEVSResolvedValueSetService lrvs = new LexEVSResolvedValueSetServiceImpl(lbs);
 		  try {
 			  List<CodingScheme> schemes = lrvs.listAllResolvedValueSets();
@@ -3807,7 +3807,7 @@ out.flush();
         if (DataUtils.isNull(refresh)) {
 			ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
 			String table_content = null;
-			StringBuffer table_content_buf = new StringBuffer();
+			//StringBuffer table_content_buf = new StringBuffer();
 
 			String filename = vsc.getReportURI();
 			String excelfile = ValueSetDefinitionConfig.getValueSetDownloadFilename(vsc);
@@ -4886,7 +4886,7 @@ out.flush();
         CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 
 		String table_content = null;
-		StringBuffer table_content_buf = new StringBuffer();
+		//StringBuffer table_content_buf = new StringBuffer();
 
 		ResolvedValueSetIteratorHolder rvsi = null;
 
@@ -5004,7 +5004,7 @@ out.flush();
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 
 		String table_content = null;
-		StringBuffer table_content_buf = new StringBuffer();
+		//StringBuffer table_content_buf = new StringBuffer();
 		String filename = vsc.getReportURI();
 		String excelfile = ValueSetDefinitionConfig.getValueSetDownloadFilename(vsc);
 		FTPDownload.download(vsc.getReportURI(), excelfile);

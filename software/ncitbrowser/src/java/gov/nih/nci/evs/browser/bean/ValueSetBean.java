@@ -439,12 +439,13 @@ public class ValueSetBean {
 			request.getSession().setAttribute("coding_scheme_ref", coding_scheme_ref);
 			request.getSession().setAttribute("ResolvedConceptReferencesIterator", itr);
 			request.getSession().setAttribute("resolved_vs_key", key);
-
+/*
 			try {
 				int numberRemaining = itr.numberRemaining();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
+*/
 			return "resolved_value_set";
 
 		} catch (Exception ex) {
@@ -1154,7 +1155,7 @@ public class ValueSetBean {
 //           NCItBrowserProperties.getMinimumSearchStringLength();
 
 		if (matchAlgorithm.compareTo(Constants.EXACT_SEARCH_ALGORITHM) == 0) {
-			String t = searchTarget.toLowerCase();
+			String t = searchTarget.toLowerCase(Locale.ENGLISH);
 			if (t == null) return null;
 			if (t.indexOf("code") != -1) {
 				message = Constants.ERROR_NO_MATCH_FOUND_CODE_IS_CASESENSITIVE;

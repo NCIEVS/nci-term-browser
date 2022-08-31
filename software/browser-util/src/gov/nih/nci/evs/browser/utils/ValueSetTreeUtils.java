@@ -25,8 +25,8 @@ import org.LexGrid.commonTypes.Properties;
 import org.LexGrid.commonTypes.Property;
 import org.LexGrid.commonTypes.Source;
 import org.LexGrid.concepts.*;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.LexBIG.DataModel.Core.types.*;
@@ -198,12 +198,12 @@ public class ValueSetTreeUtils {
 */
     public SourceAssertedValueSetHierarchyServicesImpl createSourceAssertedValueSetHierarchyServices() {
 		SourceAssertedValueSetHierarchyServicesImpl service = null;
-		if (this.mode) {
-			service = (SourceAssertedValueSetHierarchyServicesImpl) SourceAssertedValueSetHierarchyServicesImpl.defaultInstance();
-		} else {
-			service = ((LexEVSApplicationService)lbSvc).getLexEVSSourceAssertedValueSetHierarchyServices();
-			service.setLexBIGService(lbSvc);
-		}
+//		if (this.mode) {
+//			service = (SourceAssertedValueSetHierarchyServicesImpl) SourceAssertedValueSetHierarchyServicesImpl.defaultInstance();
+//		} else {
+//			service = ((LexEVSApplicationService)lbSvc).getLexEVSSourceAssertedValueSetHierarchyServices();
+//			service.setLexBIGService(lbSvc);
+//		}
 		return service;
 	}
 

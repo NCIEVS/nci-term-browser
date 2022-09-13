@@ -128,29 +128,32 @@ public class RemoteServerUtil {
     public static LexBIGService createLexBIGService(String serviceUrl,
         String codingScheme, SecurityToken securityToken) {
         try {
-            if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
-                LexBIGService lbSvc = LexBIGServiceImpl.defaultInstance();
-                return lbSvc;
-            }
 
-            LexEVSApplicationService lexevsService =
-                (LexEVSApplicationService) ApplicationServiceProvider
-                    .getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
-
-            Boolean retval = false;
-            retval =
-                lexevsService
-                    .registerSecurityToken(codingScheme, securityToken);
-
-            if (retval.equals(Boolean.TRUE)) {
-                // _logger.debug("Registration of SecurityToken was successful.");
-            } else {
-                _logger.error("WARNING: Registration of SecurityToken failed.");
-            }
-
-            _logger.debug("Connected to " + serviceUrl);
-            //ServerMonitorThread.getInstance().monitor(lexevsService, "createLexBIGService:3");
-            return (LexBIGService) lexevsService;
+            LexBIGService lbSvc = LexBIGServiceImpl.defaultInstance();
+            return lbSvc;
+//            if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
+//                LexBIGService lbSvc = LexBIGServiceImpl.defaultInstance();
+//                return lbSvc;
+//            }
+//
+//            LexEVSApplicationService lexevsService =
+//                (LexEVSApplicationService) ApplicationServiceProvider
+//                    .getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
+//
+//            Boolean retval = false;
+//            retval =
+//                lexevsService
+//                    .registerSecurityToken(codingScheme, securityToken);
+//
+//            if (retval.equals(Boolean.TRUE)) {
+//                // _logger.debug("Registration of SecurityToken was successful.");
+//            } else {
+//                _logger.error("WARNING: Registration of SecurityToken failed.");
+//            }
+//
+//            _logger.debug("Connected to " + serviceUrl);
+//            //ServerMonitorThread.getInstance().monitor(lexevsService, "createLexBIGService:3");
+//            return (LexBIGService) lexevsService;
         } catch (Exception e) {
             _logger.error("Unable to connected to " + serviceUrl);
             e.printStackTrace();
@@ -178,18 +181,18 @@ public class RemoteServerUtil {
         return null;
     }
 
-    public static LexEVSDistributed getLexEVSDistributed(String serviceUrl) {
-		try {
-			LexEVSDistributed distributed =
-				(LexEVSDistributed)
-				ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
-	        //ServerMonitorThread.getInstance().monitor(distributed, "getLexEVSDistributed:2");
-			return distributed;
-		} catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-	}
+//    public static LexEVSDistributed getLexEVSDistributed(String serviceUrl) {
+//		try {
+//			LexEVSDistributed distributed =
+//				(LexEVSDistributed)
+//				ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
+//	        //ServerMonitorThread.getInstance().monitor(distributed, "getLexEVSDistributed:2");
+//			return distributed;
+//		} catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//	}
 
     public static LexEVSValueSetDefinitionServices getLexEVSValueSetDefinitionServices(String serviceUrl) {
 		if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {

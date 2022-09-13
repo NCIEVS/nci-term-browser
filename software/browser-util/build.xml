@@ -1,4 +1,4 @@
-<project name="projectname" default="build" basedir=".">
+<project name="browser-util" default="build" basedir=".">
     <property file="build.properties" />
   
     <property name="resources.dir" value = "./resources" />

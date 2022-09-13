@@ -510,8 +510,7 @@
                     <td class="datacoldark" scope="row"><%= source_namespace %></td>
                     <td class="datacoldark">
                       <a
-
-                          href="<%=request.getContextPath()%>/pages/concept_details.jsf?dictionary=<%=source_scheme%>&version=<%=source_version%>&ns=<%=source_ns%>&code=<%=URLEncoder.encode(source_code,"UTF-8")%>">
+                          href="<%=request.getContextPath()%>/ConceptReport.jsp?dictionary=<%=source_scheme%>&version=<%=source_version%>&ns=<%=source_ns%>&code=<%=URLEncoder.encode(source_code,"UTF-8")%>">
 
                         <%= source_code %>
                       </a>
@@ -529,8 +528,7 @@
                     <td class="datacoldark">
 
                       <a
-
-                          href="<%=request.getContextPath()%>/pages/concept_details.jsf?dictionary=<%=target_scheme%>&version=<%=target_version%>&ns=<%=target_ns%>&code=<%=URLEncoder.encode(target_code,"UTF-8")%>">
+                          href="<%=request.getContextPath()%>/ConceptReport.jsp?dictionary=<%=target_scheme%>&version=<%=target_version%>&ns=<%=target_ns%>&code=<%=URLEncoder.encode(target_code,"UTF-8")%>">
 
                         <%= target_code %>
                       </a>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<project name="build" default="usage" basedir="." xmlns:bda="antlib:gov.nih.nci.bdalite">
+<project name="ncitbrowser" default="usage" basedir="." xmlns:bda="antlib:gov.nih.nci.bdalite">
 
     <description>
         This is the master build file for the project.
@@ -28,6 +28,13 @@
     <property name="project.short.name" value="ncit" />
     <property name="webapp.war.name" value="${project.name}.war" />
     <property name="webapp.prop.file" value="NCItBrowserProperties.xml" />
+    <property name="bda.dist.dir" value="../target/dist"/>
+    <property name="bda.software.dir" value=".."/>
+    <property name="bda.project.dir" value="${bda.software.dir}/${project.name}"/>
+    <property name="bda.src.dir" value="${bda.project.dir}/src"/>
+    <property name="bda.target.dir" value="${bda.software.dir}/target"/>
+    <property name="bda.conf.dir" value="${bda.project.dir}/conf"/>
+
 
     <path id="classpath">
         <fileset dir="../${project.name}/extlib">
@@ -47,6 +54,11 @@
     <property name="exploded.dir" value="${bda.dist.dir}/exploded/${project.name}-webapp" />
 
     <!-- Ant Task definitions -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="../../software/ncitbrowser/extlib/ant-contrib-1.0nci.jar" />
+        </classpath>
+    </taskdef>
     <taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="bda.project.compile.classpath"/>
     <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" classpathref="bda.project.compile.classpath"/>
     <taskdef name="osfamily" classname="net.sf.antcontrib.platform.OsFamily" classpathref="bda.project.compile.classpath"/>
@@ -369,7 +381,7 @@
         <delete dir="${tomcat.server.path}/webapps/${project.name}" quiet="true" />
 
         <copy
-            file="${bda.dist.dir}/exploded/${project.name}-webapp/${webapp.war.name}"
+            file="${bda.dist.dir}/exploded/${project.name}-webapp/${project.name}.war"
             tofile="${tomcat.server.path}/webapps/${webapp.war.name}.bak"
             overwrite="true"
         />

@@ -1452,7 +1452,21 @@ if ((isActive != null && !isActive.equals(Boolean.TRUE)  && concept_status != nu
            if (synonym_data.size() > 4) {
              term_subsource_name = (String) synonym_data.elementAt(4);
            }
- 
+           
+           //KLO, 10/14/2022
+           if (term_type != null && term_type.compareTo("null") == 0) {
+               term_type = "";
+           }
+           if (term_source != null && term_source.compareTo("null") == 0) {
+               term_source = "";
+           }           
+           if (term_source_code != null && term_source_code.compareTo("null") == 0) {
+               term_source_code = "";
+           }           
+           if (term_subsource_name != null && term_subsource_name.compareTo("null") == 0) {
+                term_subsource_name = "";
+           } 
+           
            String rowColor = (n%2 == 0) ? "dataRowDark" : "dataRowLight";
            %>
            <tr class="<%=rowColor%>">

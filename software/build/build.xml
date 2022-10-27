@@ -4,15 +4,14 @@
 
     <description>
         This is the master build file for the project.
-        It should be placed in project/software/. This script wrappers sub projects to build, test and inspect code.
-        These scripts require Java, Ant and SVN to work.
+        It should be placed in project/software/build/. This script wrappers sub projects to build, test and inspect code.
+        These scripts require Java, Ant and Github to work.
     </description>
 
     <!-- Property file names -->
     <property environment="env" />
     <property name="properties.file" value="project.properties" />
     <property name="local.properties.file" value="local.properties" />
-    <property environment="env"/>
 
     <!-- Local property file -->
     <property file="${local.properties.file}" />
@@ -31,7 +30,7 @@
     <property name="bda.dist.dir" value="../target/dist"/>
     <property name="bda.software.dir" value=".."/>
     <property name="bda.project.dir" value="${bda.software.dir}/${project.name}"/>
-    <property name="bda.src.dir" value="${bda.project.dir}/src"/>
+    <property name="bda.src.dir" value="${bda.project.dir}/src/main"/>
     <property name="bda.target.dir" value="${bda.software.dir}/target"/>
     <property name="bda.conf.dir" value="${bda.project.dir}/conf"/>
 
@@ -76,14 +75,15 @@
 
     <!-- This will delete all of the files created by the build process -->
 
-    <target name="clean" depends="-init" description="Remove classes directory for clean build">
+    <target name="clean"  description="Remove classes directory for clean build">
 
         <delete dir="${bda.target.dir}" quiet="true" />
         <delete dir="${webapp.build.dir}" quiet="true" />
 
+
     </target>
 
-    <target name="-init" description="Sets up build are and initalizes variables">
+    <target name="-init" depends="clean"  description="Sets up build are and initalizes variables">
 
         <tstamp>
             <format property="BUILD_DATE" pattern="MMMM-d-yyyy hh:mm aa" locale="en,US"/>
@@ -129,13 +129,13 @@
         </javac>
 
         <!-- Copy internal property files -->
-        <copy todir="${webapp.classes.dir}" includeEmptyDirs="no" overwrite="true">
-            <fileset dir="${bda.src.dir}/java">
-                <patternset>
-                    <include name="**/*.properties"/>
-                </patternset>
-            </fileset>
-        </copy>
+<!--        <copy todir="${webapp.classes.dir}" includeEmptyDirs="no" overwrite="true">-->
+<!--            <fileset dir="${bda.src.dir}/java">-->
+<!--                <patternset>-->
+<!--                    <include name="**/*.properties"/>-->
+<!--                </patternset>-->
+<!--            </fileset>-->
+<!--        </copy>-->
 
     </target>
 

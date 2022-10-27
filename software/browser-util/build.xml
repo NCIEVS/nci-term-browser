@@ -29,6 +29,7 @@
       
     <target name="clean" description="Delete the build directory">
         <delete dir="${build.dir}" />
+        <delete file="browser-util.jar"/>
     </target>
     <target name="init" depends="clean">
         <echo>JAVA_HOME: ${java.home}</echo>

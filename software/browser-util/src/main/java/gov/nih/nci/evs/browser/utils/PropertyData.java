@@ -167,6 +167,10 @@ public class PropertyData
 
 // Constructor
 	public PropertyData(LexBIGService lbSvc, String dictionary, String version) {
+
+
+
+
         this.lbSvc = lbSvc;
         formatter = new RelationshipTabFormatter(lbSvc);
         this.dictionary = dictionary;
@@ -1242,30 +1246,16 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 		if (qualifier_str == null) return null;
 		//if (qualifier_str.indexOf("def-source") == -1) return null;
 		if (qualifier_str.indexOf("source") == -1) return null;
-		Vector u = StringUtils.parseData(qualifier_str, '$');
+		Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(qualifier_str, '$');
 		for (int i=0; i<u.size(); i++) {
 			String t = (String) u.elementAt(i);
 			//if (t.indexOf("def-source") != -1) {
 			if (t.indexOf("source=") != -1) {
-				Vector u2 = StringUtils.parseData(t, '=');
+				Vector u2 = gov.nih.nci.evs.browser.utils.StringUtils.parseData(t, '=');
 				return (String) u2.elementAt(1);
 			}
 		}
 		return null;
 	}
 
-
-/*
-	public static void main(String[] args) {
-		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
-		String scheme = "NCI_Thesaurus";
-		String version = "15.12d";
-		PropertyData pd = new PropertyData(lbSvc, scheme, version);
-		String code = "C17359"; // TP53 Gene (Code C17359)
-		String namespace = scheme;
-		String rel_type = Constants.TYPE_ROLE;
-		String t = pd.generateRelationshipTable(scheme, version, code, namespace, rel_type);
-        System.out.println(t);
-	}
-*/
 }

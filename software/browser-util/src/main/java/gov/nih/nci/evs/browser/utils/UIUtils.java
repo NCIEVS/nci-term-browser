@@ -183,16 +183,16 @@ public class UIUtils {
 
     public void generatePropertyTable(Entity concept) {
 		String prop_PRESENTATION = generatePropertyTable(concept, "PRESENTATION");
-		System.out.println(prop_PRESENTATION);
+		//System.out.println(prop_PRESENTATION);
 
 		String prop_DEFINITION = generatePropertyTable(concept, "DEFINITION");
-		System.out.println(prop_DEFINITION);
+		//System.out.println(prop_DEFINITION);
 
 		String prop_COMMENT = generatePropertyTable(concept, "COMMENT");
-		System.out.println(prop_COMMENT);
+		//System.out.println(prop_COMMENT);
 
 		String prop_GENERIC = generatePropertyTable(concept, "GENERIC");
-		System.out.println(prop_GENERIC);
+		//System.out.println(prop_GENERIC);
 	}
 
 
@@ -231,7 +231,7 @@ public class UIUtils {
 				if (p.getValue() != null) {
 					String value = p.getValue().getContent();
 					//String n_v = name + "|" + value;
-					String n_v = name + "|" + value + "|" + lcv;
+					String n_v = name + "$" + value + "$" + lcv;
 					lcv++;
 					Vector qualifier_vec = new Vector();
 					PropertyQualifier[] qualifiers = p.getPropertyQualifier();
@@ -241,6 +241,7 @@ public class UIUtils {
 							String qualifier_name = q.getPropertyQualifierName();
 							String qualifier_value = q.getValue().getContent();
 							String t = qualifier_name + "|" + qualifier_value;
+
 							qualifier_vec.add(t);
 						}
 						keyVec.add(n_v);
@@ -393,7 +394,8 @@ public class UIUtils {
 		int n = 0;
         for (int i = 0; i < nv_vec.size(); i++) {
             String n_v = (String) nv_vec.elementAt(i);
-            Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v);
+            Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v, '$');
+
             String name = "";
             String value = "";
 
@@ -404,7 +406,6 @@ public class UIUtils {
 			if (w.size() > 1) {
             	value = (String) w.elementAt(1);
 			}
-
             String code = null;
             String namespace = null;
 /*
@@ -420,7 +421,7 @@ public class UIUtils {
 				namespace = (String) w.elementAt(3);
 			}
 
-            Vector qualifiers = (Vector) qualifierHashMap.get(n_v);
+             Vector qualifiers = (Vector) qualifierHashMap.get(n_v);
 
 			 boolean is_maps_to = false;
 
@@ -444,6 +445,9 @@ public class UIUtils {
 				  buf.append("	<tr class=\"dataRowLight\">").append("\n");
 			}
 			if (qualifierColumn == 0) {
+
+
+
                   if (rel_type == null || !rel_type.startsWith("type_inverse")) {
 					  buf.append("<td class=\"dataCellText\" valign=\"top\">").append("\n");
 					  buf.append(Constants.INDENT_HALF + name).append("\n");
@@ -720,8 +724,8 @@ public class UIUtils {
 			String name = p.getPropertyName();
 			if (property_names.contains(name)) {
 				String value = p.getValue().getContent();
-				//String n_v = name + "|" + value;
-				String n_v = name + "|" + value + "|" + lcv;
+				//String n_v = name + "$" + value;
+				String n_v = name + "$" + value + "$" + lcv;
 				lcv++;
 				Vector qualifier_vec = new Vector();
 				PropertyQualifier[] qualifiers = p.getPropertyQualifier();
@@ -838,7 +842,7 @@ public class UIUtils {
 		int n = 0;
         for (int i = 0; i < nv_vec.size(); i++) {
             String n_v = (String) nv_vec.elementAt(i);
-            Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v);
+            Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v, '$');
             String name = "";
             String value = "";
 
@@ -858,10 +862,12 @@ public class UIUtils {
 			}
 */
 
+
 			if (w.size() > 3) {
 				code = (String) w.elementAt(2);
 				namespace = (String) w.elementAt(3);
 			}
+
             Vector qualifiers = (Vector) qualifierHashMap.get(n_v);
 
             /////////////////////////////////////////////////////////////////////////

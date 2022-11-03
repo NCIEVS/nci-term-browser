@@ -394,7 +394,9 @@ public class UIUtils {
 		int n = 0;
         for (int i = 0; i < nv_vec.size(); i++) {
             String n_v = (String) nv_vec.elementAt(i);
-            Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v, '$');
+            //Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v, '$');
+            //KLO, 11032022
+            Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v, '|');
 
             String name = "";
             String value = "";

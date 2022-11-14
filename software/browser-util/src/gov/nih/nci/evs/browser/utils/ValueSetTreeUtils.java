@@ -198,12 +198,12 @@ public class ValueSetTreeUtils {
 */
     public SourceAssertedValueSetHierarchyServicesImpl createSourceAssertedValueSetHierarchyServices() {
 		SourceAssertedValueSetHierarchyServicesImpl service = null;
-//		if (this.mode) {
-//			service = (SourceAssertedValueSetHierarchyServicesImpl) SourceAssertedValueSetHierarchyServicesImpl.defaultInstance();
-//		} else {
-//			service = ((LexEVSApplicationService)lbSvc).getLexEVSSourceAssertedValueSetHierarchyServices();
-//			service.setLexBIGService(lbSvc);
-//		}
+		if (this.mode) {
+			service = (SourceAssertedValueSetHierarchyServicesImpl) SourceAssertedValueSetHierarchyServicesImpl.defaultInstance();
+		} else {
+			service = lbSvc.getLexEVSSourceAssertedValueSetHierarchyServices();
+			service.setLexBIGService(lbSvc);
+		}
 		return service;
 	}
 

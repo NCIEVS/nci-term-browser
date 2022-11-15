@@ -6,7 +6,8 @@
 <%@ page import="org.LexGrid.concepts.Entity" %>
 <%@ page import="gov.nih.nci.evs.browser.utils.DataUtils" %>
 <%@ page import="gov.nih.nci.evs.browser.utils.HTTPUtils" %>
-<%@ page import="gov.nih.nci.evs.browser.utils.TokenPUtils" %>
+
+<%@ page import="gov.nih.nci.evs.browser.utils.TokenUtils" %>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">

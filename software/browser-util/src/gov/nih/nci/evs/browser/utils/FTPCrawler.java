@@ -398,6 +398,10 @@ public class FTPCrawler {
 		if (cs_name != null) {
 			String mapping = uri2Mapping(uri);
 			String displayName = uri2MappingDisplayName(uri);
+			// [NCITERM 900] patch
+			if (displayName == null) {
+				displayName = mapping;
+			}
 		    return cs_name + "|" + mapping + "|" + displayName + "|" + uri;
 		}
 		return null;

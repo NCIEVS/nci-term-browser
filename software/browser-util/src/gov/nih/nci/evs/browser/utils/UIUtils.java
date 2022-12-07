@@ -1144,6 +1144,8 @@ public class UIUtils {
 		//Vector v = FTPDownload.getOtherMappingData();
 		Vector v = FTPCrawler.getOtherMappingData();
 
+		Utils.dumpVector("OtherMappingData", v);
+
 		if (v == null) return null;
 		for (int i=0; i<v.size(); i++) {
 			String line = (String) v.elementAt(i);
@@ -1160,18 +1162,22 @@ public class UIUtils {
 				buf.append(	name + ": " + display_name ).append("\n");
 				buf.append("</a>").append("\n");
 
-if (url.endsWith(".xls")) {
-	  buf.append("&nbsp;&nbsp;");
-      buf.append("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"https://products.office.com/en-US/excel?legRedir=true&CorrelationId=1229dc2e-5ff3-4e3b-adc8-2b6f59e21be4\" target=\"_blank\"><img").append("\n");
-      buf.append("     src=\"/ncitbrowser/images/link_xls.gif\" width=\"16\"").append("\n");
-      buf.append("     height=\"16\" border=\"0\"").append("\n");
-      buf.append("alt=\"Download Plugin Microsoft Excel Viewer\" /></a>").append("\n");
-}
+				if (url.endsWith(".xls")) {
+					  buf.append("&nbsp;&nbsp;");
+					  buf.append("<a title=\"Download Plugin Microsoft Excel Viewer\" href=\"https://products.office.com/en-US/excel?legRedir=true&CorrelationId=1229dc2e-5ff3-4e3b-adc8-2b6f59e21be4\" target=\"_blank\"><img").append("\n");
+					  buf.append("     src=\"/ncitbrowser/images/link_xls.gif\" width=\"16\"").append("\n");
+					  buf.append("     height=\"16\" border=\"0\"").append("\n");
+					  buf.append("alt=\"Download Plugin Microsoft Excel Viewer\" /></a>").append("\n");
+				}
 
 				buf.append("</td>").append("\n");
 				buf.append("<td>&nbsp;</td>").append("\n");
 				buf.append("</tr>").append("\n");
 			}
+		}
+
+		if (target_terminologies != null) {
+			System.out.println("target_terminologies.size(): " + target_terminologies.size());
 		}
 
         if (target_terminologies != null && target_terminologies.size() > 0) {

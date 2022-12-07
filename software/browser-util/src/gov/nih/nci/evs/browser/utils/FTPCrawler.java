@@ -87,12 +87,13 @@ public class FTPCrawler {
 		String root_page_uri = NCIT_MAPPINGS_SITE;
 		Vector w = new Vector();
 		Vector v = run(root_page_uri);
-
 		Utils.saveToFile("link_vec", v);
 		for (int i=0; i<v.size(); i++) {
+			int j = i+1;
 			String uri = (String) v.elementAt(i);
-			//System.out.println(uri);
+			//System.out.println("(" + j + ") " + uri);
 			String data = uri2MappingData(uri);
+			//System.out.println("\t" + data);
 			if (data != null) {
 			    w.add(data);
 			}
@@ -122,32 +123,44 @@ public class FTPCrawler {
 		Vector u = new Vector();
 		for (int i=0; i<v.size(); i++) {
 			String line = (String) v.elementAt(i);
-			if (line.indexOf("\"top\"") != -1) {
-				u.add(line);
-			}
+			u.add(line);
 		}
 
 		String target = "</td><td align=\"right\">";
 		String href_target = "href=";
 		for (int i=0; i<u.size(); i++) {
 			String line = (String) u.elementAt(i);
-			int n = line.indexOf(target);
-			if (n != -1) {
-				String s = line.substring(n + target.length(), line.length());
-				n = s.indexOf(target);
-				if (n != -1) {
-				    s = s.substring(0, n);
-				    s = extractFirstToken(s);
-					int m = line.indexOf(href_target);
-					if (m != -1) {
-						String s2 = line.substring(m+href_target.length()+1,line.length());
-						int m3 = s2.indexOf("\"");
-						s2 = s2.substring(0, m3);
-						hmap.put(s2, s);
-					}
+			String line_trimmed = line.trim();
+			//<a href="NCIt-ChEBI_Mapping.txt">NCIt-ChEBI_Mapping.txt</a>  2022-10-31 18:38   69K
+			if (line_trimmed.startsWith("<a href=")) {
+				int n1 = line_trimmed.indexOf("\"");
+				String s = line_trimmed.substring(n1+1, line_trimmed.length());
+				int n2 = s.indexOf("\">");
+				s = s.substring(0, n2);
+
+				int n3 = line_trimmed.lastIndexOf("</a>");
+				String t = line_trimmed.substring(n3 + "</a>".length(), line_trimmed.length());
+
+				t = t.trim();
+				Vector u2 = StringUtils.parseData(t, ' ');
+				String date = (String) u2.elementAt(0);
+				hmap.put(s, date);
+
+				int n4 = s.lastIndexOf(".");
+				if (n4 != -1) {
+					String s3 = s.substring(0, n4);
+					hmap.put(s3, date);
 				}
+
 			}
 		}
+/*
+		Iterator it = hmap.keySet().iterator();
+		while (it.hasNext()) {
+			String key = (String) it.next();
+			String value = (String) hmap.get(key);
+		}
+*/
         return hmap;
 	}
 
@@ -344,12 +357,16 @@ public class FTPCrawler {
 				target = label.substring(m+1, label.length());
 			}
 		}
+
+		//System.out.println("\tsource: " + source);
+		//System.out.println("\ttarget: " + target);
+
 		try {
 			target = target.replace("_", " ");
 			mapping = source + " to " + target;
 			return mapping;
 		} catch (Exception ex) {
-
+            ex.printStackTrace();
 		}
 		return null;
 	}
@@ -358,7 +375,13 @@ public class FTPCrawler {
 		int n = uri.lastIndexOf("/");
 		String t = uri.substring(n+1, uri.length());
 		String lastUpdated = (String) lastUpdatedHashMap.get(t);
-		if (lastUpdated == null) return null;
+
+		//System.out.println("lastUpdated: " + lastUpdated);
+
+		if (lastUpdated == null) {
+			System.out.println("lastUpdated == null --> DisplayName = null.");
+			return null;
+		}
 		String mapping = uri2Mapping(uri);
 		return mapping + " (" + lastUpdated + ")";
 	}
@@ -394,11 +417,13 @@ public class FTPCrawler {
 	}
 
     public static String uri2MappingData(String uri) {
+		//System.out.println("calling uri2MappingData uri: " + uri);
 		String cs_name = uri2MappingCS(uri);
+		//System.out.println("cs_name: " + cs_name);
 		if (cs_name != null) {
 			String mapping = uri2Mapping(uri);
 			String displayName = uri2MappingDisplayName(uri);
-			// [NCITERM 900] patch
+			//System.out.println("displayName: "+ displayName);
 			if (displayName == null) {
 				displayName = mapping;
 			}
@@ -408,8 +433,26 @@ public class FTPCrawler {
 	}
 
     public static void main (String[] args) {
-		Utils.saveToFile("getOtherMappingData", getOtherMappingData());
-        Utils.dumpVector("getOtherMappingData", getOtherMappingData());
+		Utils.saveToFile("getOtherMappingData.txt", getOtherMappingData());
+        Utils.dumpVector("getOtherMappingData.txt", getOtherMappingData());
     }
 }
 
+/*
+(1) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt_Mapping_Version.txt
+        null
+(2) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-SwissProt_Mapping.txt
+        SwissProt|NCIt to SwissProt Mapping|null|https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-SwissProt_Mapping.txt
+(3) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-HGNC_Mapping.txt
+        HGNC|NCIt to HGNC Mapping|null|https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-HGNC_Mapping.txt
+(4) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-ChEBI_Mapping.txt
+        ChEBI|NCIt to ChEBI Mapping|null|https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/NCIt-ChEBI_Mapping.txt
+(5) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Topography_Mapping.txt
+        ICD-O-3.1|ICD-O-3.1 to NCIt Topography Mapping|null|https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Topography_Mapping.txt
+(6) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Morphology_Mapping.txt
+        ICD-O-3.1|ICD-O-3.1 to NCIt Morphology Mapping|null|https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Morphology_Mapping.txt
+(7) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Axis_Mappings.xls
+        ICD-O-3.1|ICD-O-3.1 to NCIt Axis Mappings|null|https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/ICD-O-3_Mappings/ICD-O-3.1-NCIt_Axis_Mappings.xls
+(8) https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/GO-NCIt_Mapping.txt
+        GO|GO to NCIt Mapping|null|https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Mappings/GO-NCIt_Mapping.txt
+*/

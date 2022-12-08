@@ -308,16 +308,8 @@ public class RemoteServerUtil {
 
 
     public static LexEVSDistributed getLexEVSDistributed(String serviceUrl) {
-		try {
-			LexEVSDistributed distributed =
-				(LexEVSDistributed)
-				ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
-	        if (activate_server_monitor_thread) ServerMonitorThread.getInstance().monitor(distributed, "getLexEVSDistributed:2");
-			return distributed;
-		} catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (activate_server_monitor_thread) ServerMonitorThread.getInstance().monitor(null, "getLexEVSDistributed");
+    	_logger.info("Distributed LexEVS is No Longer Supported");
+    	System.out.println("Distributed LexEVS is No Longer Supported");
         return null;
 	}
 
@@ -351,17 +343,7 @@ public class RemoteServerUtil {
 
 			return LexEVSValueSetDefinitionServicesImpl.defaultInstance();
 		}
-		try {
-			LexEVSDistributed distributed =
-				(LexEVSDistributed)
-				ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
 
-			LexEVSValueSetDefinitionServices vds = distributed.getLexEVSValueSetDefinitionServices();
-			return vds;
-
-		} catch (Exception e) {
-            e.printStackTrace();
-        }
         return null;
 	}
 

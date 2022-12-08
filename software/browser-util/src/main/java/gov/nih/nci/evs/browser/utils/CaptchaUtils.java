@@ -1,4 +1,4 @@
-package gov.nih.nci.evs.browser.bean;
+package gov.nih.nci.evs.browser.utils;
 
 import gov.nih.nci.evs.browser.common.*;
 import javax.servlet.http.*;

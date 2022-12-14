@@ -443,7 +443,7 @@ System.out.println("Initializing DataUtils.java...");
 
         //NCIT_MAPPING_DATA = FTPDownload.extractMappingsFromURL(ncit_mapping_url);
         //NCIT_MAPPING_DATA = FTPDownload.getOtherMappingData();
-        NCIT_MAPPING_DATA = FTPCrawler.getOtherMappingData();
+        NCIT_MAPPING_DATA = FTPCrawlerRunner.getOtherMappingData();
 
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		ncit_maps_to_version = csdu.getVocabularyVersionByTag("NCI_Thesaurus", "PRODUCTION");

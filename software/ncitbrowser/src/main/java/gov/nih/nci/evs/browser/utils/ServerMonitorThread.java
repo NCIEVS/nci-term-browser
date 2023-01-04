@@ -5,7 +5,7 @@ import gov.nih.nci.evs.browser.properties.NCItBrowserProperties;
 import java.util.Date;
 
 import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.apache.logging.log4j.*;
 
 /**
@@ -169,21 +169,21 @@ public class ServerMonitorThread extends Thread {
         }
     }
 
-    public void monitor(LexEVSDistributed service, String msg) {
-        if (! _enabled)
-            return;
-        if (service == null) {
-            setLexEVSRunning(false, msg);
-            return;
-        }
-        try {
-            service.getLastUpdateTime();
-            setLexEVSRunning(true, msg);
-        } catch (Exception e) {
-            error(e);
-            setLexEVSRunning(false, msg);
-        }
-    }
+//    public void monitor(LexEVSDistributed service, String msg) {
+//        if (! _enabled)
+//            return;
+//        if (service == null) {
+//            setLexEVSRunning(false, msg);
+//            return;
+//        }
+//        try {
+//            service.getLastUpdateTime();
+//            setLexEVSRunning(true, msg);
+//        } catch (Exception e) {
+//            error(e);
+//            setLexEVSRunning(false, msg);
+//        }
+//    }
 
     private void error(Exception e) {
         //Note: Trying to solve Kim's problem with this method.

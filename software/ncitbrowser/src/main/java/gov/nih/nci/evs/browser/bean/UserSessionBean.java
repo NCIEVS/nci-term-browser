@@ -22,7 +22,7 @@ import gov.nih.nci.evs.browser.common.*;
 import gov.nih.nci.evs.searchlog.*;
 import org.apache.logging.log4j.*;
 
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
 import org.LexGrid.valueSets.ValueSetDefinition;
 import org.LexGrid.commonTypes.Source;

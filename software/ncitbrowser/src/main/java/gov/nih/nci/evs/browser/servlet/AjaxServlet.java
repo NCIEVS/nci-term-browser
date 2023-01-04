@@ -32,7 +32,7 @@ import org.LexGrid.LexBIG.Impl.Extensions.GenericExtensions.*;
 import org.apache.logging.log4j.*;
 import javax.faces.event.ValueChangeEvent;
 
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
 import org.LexGrid.valueSets.ValueSetDefinition;
 import org.LexGrid.commonTypes.Source;

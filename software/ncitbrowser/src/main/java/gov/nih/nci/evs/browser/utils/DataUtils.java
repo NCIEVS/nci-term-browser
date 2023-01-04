@@ -39,14 +39,14 @@ import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.MappingSortOption;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.MappingSortOptionName;
 import org.LexGrid.LexBIG.Extensions.Generic.MappingExtension.QualifierSortOption;
 import org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 
 //import org.LexGrid.LexBIG.Utility.ServiceUtility;
 import org.LexGrid.LexBIG.Extensions.Generic.SupplementExtension;
 import org.LexGrid.relations.AssociationPredicate;
 
 
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.lexgrid.valuesets.LexEVSValueSetDefinitionServices;
 
 import org.LexGrid.valueSets.ValueSetDefinition;
@@ -62,7 +62,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
 import org.lexevs.property.PropertyExtension;
 
 import org.lexgrid.resolvedvalueset.LexEVSResolvedValueSetService;

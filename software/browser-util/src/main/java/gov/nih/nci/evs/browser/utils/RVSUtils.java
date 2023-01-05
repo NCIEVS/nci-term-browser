@@ -27,8 +27,8 @@ import org.LexGrid.commonTypes.Properties;
 import org.LexGrid.commonTypes.Property;
 import org.LexGrid.commonTypes.PropertyQualifier;
 import org.LexGrid.concepts.*;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.LexGrid.LexBIG.DataModel.Collections.*;
 import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
 import org.LexGrid.LexBIG.DataModel.Core.*;
@@ -133,8 +133,8 @@ public class RVSUtils {
 //		return service;
 //	}
 
-	private LexEVSApplicationService getLexEVSAppService() {
-		LexEVSApplicationService lexevsAppService = null;
+//	private LexEVSApplicationService getLexEVSAppService() {
+//		LexEVSApplicationService lexevsAppService = null;
 //		try{
 //			lexevsAppService = (LexEVSApplicationService)ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
 			//goodToken = new SecurityToken();
@@ -146,10 +146,10 @@ public class RVSUtils {
 //			e.printStackTrace();
 //			//System.exit(-1);
 //		}
-		return lexevsAppService;
+//		return lexevsAppService;
 
 
-	}
+//	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // list resolved value sets

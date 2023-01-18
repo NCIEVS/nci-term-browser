@@ -68,34 +68,34 @@ public class MedDRASecurityTokenTest {
 
         public static LexBIGService createLexBIGService(String serviceUrl,
             String scheme, String version) throws Exception {
-            LexEVSApplicationService lexevsService =
-                (LexEVSApplicationService) ApplicationServiceProvider
-                    .getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
-            lexevsService =
-                registerSecurityToken(lexevsService, scheme, "10382");
-            return (LexBIGService) lexevsService;
+//            LexEVSApplicationService lexevsService =
+//                (LexEVSApplicationService) ApplicationServiceProvider
+//                    .getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
+//            lexevsService =
+//                registerSecurityToken(lexevsService, scheme, "10382");
+//            return (LexBIGService) lexevsService;
         }
 
-        public static LexEVSApplicationService registerSecurityToken(
-            LexEVSApplicationService lexevsService, String codingScheme,
-            String token) {
-            SecurityToken securityToken = new SecurityToken();
-            securityToken.setAccessToken(token);
-            Boolean retval = null;
-            try {
-                retval =
-                    lexevsService.registerSecurityToken(codingScheme,
-                        securityToken);
-                if (retval != null && retval.equals(Boolean.TRUE)) {
-                    // _logger.debug("Registration of SecurityToken was successful.");
-                } else {
-                    _logger
-                        .error("WARNING: Registration of SecurityToken failed.");
-                }
-            } catch (Exception e) {
-                _logger.error("WARNING: Registration of SecurityToken failed.");
-            }
-            return lexevsService;
-        }
-    }
+//        public static LexEVSApplicationService registerSecurityToken(
+//            LexEVSApplicationService lexevsService, String codingScheme,
+//            String token) {
+//            SecurityToken securityToken = new SecurityToken();
+//            securityToken.setAccessToken(token);
+//            Boolean retval = null;
+//            try {
+//                retval =
+//                    lexevsService.registerSecurityToken(codingScheme,
+//                        securityToken);
+//                if (retval != null && retval.equals(Boolean.TRUE)) {
+//                    // _logger.debug("Registration of SecurityToken was successful.");
+//                } else {
+//                    _logger
+//                        .error("WARNING: Registration of SecurityToken failed.");
+//                }
+//            } catch (Exception e) {
+//                _logger.error("WARNING: Registration of SecurityToken failed.");
+//            }
+//            return lexevsService;
+//        }
+//    }
 }

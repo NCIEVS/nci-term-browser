@@ -7,7 +7,7 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 import org.LexGrid.codingSchemes.CodingScheme;
-import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
+//import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;
 import org.LexGrid.LexBIG.DataModel.Collections.CodingSchemeRenderingList;
 import org.LexGrid.LexBIG.DataModel.Collections.ModuleDescriptionList;
 import org.LexGrid.LexBIG.DataModel.Collections.NameAndValueList;

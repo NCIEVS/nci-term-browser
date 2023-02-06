@@ -329,7 +329,7 @@ public class RemoteServerUtil {
 
 
     public static LexEVSValueSetDefinitionServices getLexEVSValueSetDefinitionServices(String serviceUrl) {
-		if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
+		//if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
                 NCItBrowserProperties properties = null;
                 try {
 					NCItBrowserProperties.getInstance();
@@ -343,9 +343,9 @@ public class RemoteServerUtil {
 				}
 
 			return LexEVSValueSetDefinitionServicesImpl.defaultInstance();
-		}
+		//}
 
-        return null;
+       // return null;
 	}
 
 }

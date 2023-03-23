@@ -31,6 +31,14 @@
     String new_algorithm = "I feel lucky";
     %>
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-21QRTJ0WQS"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-21QRTJ0WQS');
+</script>
     <title><%= adv_search_vocabulary %></title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -39,7 +47,6 @@
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/script.js"></script>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/search.js"></script>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/dropdown.js"></script>
-<script>(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-150112876-1", {"cookieDomain":"auto"});ga("send", "pageview");</script>
   </head>
   <body onLoad="document.forms.advancedSearchForm.matchText.focus();">
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/wz_tooltip.js"></script>

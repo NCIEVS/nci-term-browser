@@ -186,18 +186,6 @@ public class DataUtils {
     public static final String TYPE_INVERSE_ROLE = "type_inverse_role";
     public static final String TYPE_INVERSE_ASSOCIATION = "type_inverse_association";
 
-/*
-    public String _ncicbContactURL = null;
-    public String _terminologySubsetDownloadURL = null;
-    public String _term_suggestion_application_url = null;
-    public String _ncitBuildInfo = null;
-    public String _ncitAppVersion = null;
-    public String _ncitAppVersionDisplay = null;
-    public String _ncitAnthillBuildTagBuilt = null;
-    public String _evsServiceURL = null;
-    public String _ncimURL = null;
-*/
-
     public static String _ncicbContactURL = null;
     public static String _terminologySubsetDownloadURL = null;
     public static String _term_suggestion_application_url = null;
@@ -443,7 +431,8 @@ System.out.println("Initializing DataUtils.java...");
 
         //NCIT_MAPPING_DATA = FTPDownload.extractMappingsFromURL(ncit_mapping_url);
         //NCIT_MAPPING_DATA = FTPDownload.getOtherMappingData();
-        NCIT_MAPPING_DATA = FTPCrawlerRunner.getOtherMappingData();
+        //NCIT_MAPPING_DATA = FTPCrawlerRunner.getOtherMappingData();
+        NCIT_MAPPING_DATA = FTPCrawler.getOtherMappingData();
 
 		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
 		ncit_maps_to_version = csdu.getVocabularyVersionByTag("NCI_Thesaurus", "PRODUCTION");

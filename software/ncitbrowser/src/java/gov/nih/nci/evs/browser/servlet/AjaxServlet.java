@@ -5084,6 +5084,27 @@ out.flush();
     public void exportToCSVAction(HttpServletRequest request, HttpServletResponse response) {
         StringBuffer sb = new StringBuffer();
 		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+
+		String heading = "NCIt Concept Code	Source Name	NCIt Preferred Term	NCIt Synonyms	Source Definition	NCIt Definition";
+		Vector fields = StringUtils.parseData(heading, '\t');
+        String serviceUrl = RemoteServerUtil.getServiceUrl();
+        LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+
+		CodingSchemeDataUtils codingSchemeDataUtils = new CodingSchemeDataUtils(lbSvc);
+		String version = codingSchemeDataUtils.getVocabularyVersionByTag(Constants.NCI_THESAURUS, Constants.PRODUCTION);
+		ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
+		Vector vs_data = formatter.export(vsd_uri, version, fields);
+		Vector v = gov.nih.nci.evs.browser.utils.StringUtils.convertDelimited2CSV(vs_data, '|');
+		for (int i=0; i<v.size(); i++) {
+			String line = (String) v.elementAt(i);
+			sb.append(line);
+			if (i<v.size()-1) {
+				sb.append("\r\n");
+			}
+		}
+
+		/*
 		ResolvedValueSetIteratorHolder rvsi = (ResolvedValueSetIteratorHolder) request.getSession().getAttribute("rvsi");
 		if (rvsi != null) {
 			Vector w = rvsi.extractRawDataFromTableContent();
@@ -5100,9 +5121,11 @@ out.flush();
 			    }
 			}
 		}
+		*/
+
 		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
 		vsd_name = vsd_name.replaceAll(" ", "_");
-		vsd_name = vsd_name + ".txt";
+		vsd_name = vsd_name + ".csv";
 
 		response.setContentType("text/csv");
 		response.setHeader("Content-Disposition", "attachment; filename="

@@ -5081,21 +5081,30 @@ out.flush();
 		out.println("                     </table>");
 	}
 
+/*
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService(serviceUrl);
+		AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, lbSvc);
+		String vsd_uri = "http://evs.nci.nih.gov/valueset/C160950";
+		ResolvedConceptReferencesIterator itr = avsu.getValueSetIteratorForURI(vsd_uri);
+*/
+
     public void exportToCSVAction(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("AjaxServlet exportToCSVAction ... " );
         StringBuffer sb = new StringBuffer();
 		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
-
 		String heading = "NCIt Concept Code	Source Name	NCIt Preferred Term	NCIt Synonyms	Source Definition	NCIt Definition";
 		Vector fields = StringUtils.parseData(heading, '\t');
         String serviceUrl = RemoteServerUtil.getServiceUrl();
+        System.out.println("serviceUrl: " + serviceUrl);
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
-
 		CodingSchemeDataUtils codingSchemeDataUtils = new CodingSchemeDataUtils(lbSvc);
 		String version = codingSchemeDataUtils.getVocabularyVersionByTag(Constants.NCI_THESAURUS, Constants.PRODUCTION);
+		System.out.println("version: " + version);
 		ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
 		Vector vs_data = formatter.export(vsd_uri, version, fields);
 		Vector v = gov.nih.nci.evs.browser.utils.StringUtils.convertDelimited2CSV(vs_data, '|');
+		System.out.println("v: " + v.size());
 		for (int i=0; i<v.size(); i++) {
 			String line = (String) v.elementAt(i);
 			sb.append(line);

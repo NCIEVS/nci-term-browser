@@ -1277,6 +1277,13 @@ public class ValueSetFormatter {
 			}
 			if (rcri != null) {
 				try {
+					while (rcri != null && rcri.hasNext()) {
+						ResolvedConceptReference[] refs = rcri.next(500).getResolvedConceptReference();
+						for (ResolvedConceptReference ref : refs) {
+							codes.add(ref.getCode());
+						}
+					}
+					/*
 					while (rcri.hasNext()) {
 						rcri = rcri.scroll(maxToReturn);
 						ResolvedConceptReferenceList rcrl = rcri.getNext();
@@ -1287,6 +1294,8 @@ public class ValueSetFormatter {
 							codes.add(rcr.getCode());
 						}
 					}
+					*/
+
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

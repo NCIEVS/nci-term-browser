@@ -1448,6 +1448,7 @@ public class ValueSetBean {
 		ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
 		Vector vs_data = formatter.export(vsd_uri, version, fields);
 		Vector v = gov.nih.nci.evs.browser.utils.StringUtils.convertDelimited2CSV(vs_data, '|');
+		System.out.println("v: " + v.size());
         StringBuffer sb = new StringBuffer();
         for (int k=0; k<fields.size(); k++) {
 			String field = (String) fields.elementAt(k);
@@ -1462,9 +1463,12 @@ public class ValueSetBean {
 			sb.append(t);
 			sb.append("\n");
 		}
+		int num_records = v.size()-1;
 		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
+
 		vsd_name = vsd_name.replaceAll(" ", "_");
 		vsd_name = "resolved_" + vsd_name + ".csv";
+		System.out.println("ValueSetBean exportValuesToCSV: " + vsd_name + " (num_records: " + num_records + ")");
 
 		HttpServletResponse response = (HttpServletResponse) FacesContext
 				.getCurrentInstance().getExternalContext().getResponse();
@@ -1480,7 +1484,6 @@ public class ValueSetBean {
 			ouputStream.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			sb.append("WARNING: Export to CVS action failed.");
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 	}
@@ -1592,7 +1595,7 @@ public class ValueSetBean {
 			ouputStream.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			sb.append("WARNING: Export to CVS action failed.");
+			//sb.append("WARNING: Export to CVS action failed.");
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 	}

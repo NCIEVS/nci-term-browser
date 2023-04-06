@@ -206,8 +206,8 @@ public class AssertedValueSetUtils {
 
 	public List<CodingScheme> listAllResolvedValueSetsWithNoAssertedScheme() throws Exception {
 		long start = System.currentTimeMillis();
-		LexEVSResolvedValueSetService nullVsService = getLexEVSAppService().getLexEVSResolvedVSService(null);
-		List<CodingScheme> list = nullVsService.listAllResolvedValueSets();
+		//LexEVSResolvedValueSetService service = getLexEVSAppService().getLexEVSResolvedVSService(null);
+		List<CodingScheme> list = service.listAllResolvedValueSets();
 		long end = System.currentTimeMillis();
 		System.out.println("Retrieving " + list.size() + " full scheme value sets: " + (end - start) + " mseconds");
 		return list;
@@ -223,8 +223,8 @@ public class AssertedValueSetUtils {
 
 	public List<CodingScheme> listAllResolvedValueSetsWithMiniSchemeAndNoAssertedScheme() throws Exception {
 		long start = System.currentTimeMillis();
-		LexEVSResolvedValueSetService nullVsService = getLexEVSAppService().getLexEVSResolvedVSService(null);
-		List<CodingScheme> schemes = nullVsService.getMinimalResolvedValueSetSchemes();
+		//LexEVSResolvedValueSetService service = getLexEVSAppService().getLexEVSResolvedVSService(null);
+		List<CodingScheme> schemes = service.getMinimalResolvedValueSetSchemes();
 		long end = System.currentTimeMillis();
 		System.out.println("Retrieving mini scheme value sets: " + (end - start) + " mseconds");
 		return schemes;
@@ -238,9 +238,9 @@ public class AssertedValueSetUtils {
 	}
 
 	public ResolvedConceptReferenceList getValueSetEntitiesWithNoAssertedScheme(String rvs_uri) throws Exception {
-		LexEVSResolvedValueSetService nullVsService = getLexEVSAppService().getLexEVSResolvedVSService(null);
+		//LexEVSResolvedValueSetService service = getLexEVSAppService().getLexEVSResolvedVSService(null);
 		URI uri = new URI(rvs_uri);
-		ResolvedConceptReferenceList refs = nullVsService.getValueSetEntitiesForURI(uri.toString());
+		ResolvedConceptReferenceList refs = service.getValueSetEntitiesForURI(uri.toString());
 		return refs;
 	}
 
@@ -267,16 +267,16 @@ public class AssertedValueSetUtils {
 */
 
 	public ResolvedConceptReferencesIterator getValueSetEntitiesWithNoAssertedSchemeFromIterator(String rvs_uri) throws Exception {
-		LexEVSResolvedValueSetServiceImpl nullVsService = new LexEVSResolvedValueSetServiceImpl();
+		//LexEVSResolvedValueSetServiceImpl service = new LexEVSResolvedValueSetServiceImpl();
 		URI uri = new URI(rvs_uri);
-		ResolvedConceptReferencesIterator refs = nullVsService.getValueSetIteratorForURI(uri.toString());
+		ResolvedConceptReferencesIterator refs = service.getValueSetIteratorForURI(uri.toString());
 		return refs;
 	}
 
 
 	public List<CodingScheme> getResolvedValueSetsforConceptReferenceWithNoAssertedScheme(ConceptReference ref) {
 		if (ref == null) return null;
-		LexEVSResolvedValueSetService nullVsService = getLexEVSAppService().getLexEVSResolvedVSService(null);
+		//LexEVSResolvedValueSetService service = getLexEVSAppService().getLexEVSResolvedVSService(null);
 		//Resolved value set coding scheme
 		/*
 		ConceptReference ref = new ConceptReference();
@@ -284,16 +284,16 @@ public class AssertedValueSetUtils {
 		ref.setCodeNamespace("Automobiles");
 		ref.setCodingSchemeName("Automobiles");
 		*/
-		List<CodingScheme> schemes = nullVsService.getResolvedValueSetsForConceptReference(ref);
+		List<CodingScheme> schemes = service.getResolvedValueSetsForConceptReference(ref);
 		return schemes;
 	}
 /*
 	@Test(expected = RuntimeException.class)
     @Category(RemoveFromDistributedTests.class)
 	public void testGetValueSEtForResolvedValueSetURIWithNoAssertedScheme() throws URISyntaxException {
-		LexEVSResolvedValueSetService nullVsService = LexEVSServiceHolder.instance().getLexEVSAppService().getLexEVSResolvedVSService(null);
+		LexEVSResolvedValueSetService service = LexEVSServiceHolder.instance().getLexEVSAppService().getLexEVSResolvedVSService(null);
 		URI uri = new URI("SRITEST:AUTO:AllDomesticButGM");
-		CodingScheme scheme = nullVsService.getResolvedValueSetForValueSetURI(uri);
+		CodingScheme scheme = service.getResolvedValueSetForValueSetURI(uri);
 		for (Property prop : scheme.getProperties().getPropertyAsReference()) {
 			if (prop.getPropertyName().equals(LexEVSValueSetDefinitionServices.RESOLVED_AGAINST_CODING_SCHEME_VERSION)) {
 				assertTrue(getPropertyQualifierValue(LexEVSValueSetDefinitionServices.CS_NAME, prop).equals(
@@ -304,7 +304,7 @@ public class AssertedValueSetUtils {
 
 		// Expected to have a runtime exception when attempting to resolve as coding scheme
 		URI asVSuri = new URI("http://evs.nci.nih.gov/valueset/FDA/C48323");
-		nullVsService.getResolvedValueSetForValueSetURI(asVSuri);
+		service.getResolvedValueSetForValueSetURI(asVSuri);
 	}
 
 	@Test
@@ -329,8 +329,8 @@ public class AssertedValueSetUtils {
 */
 
 	public List<AbsoluteCodingSchemeVersionReference> getValueSetURIAndVersionForCodeWithNoAssertedSource(String entityCode) throws LBException{
-		LexEVSResolvedValueSetService nullVsService = getLexEVSAppService().getLexEVSResolvedVSService(null);
-		List<AbsoluteCodingSchemeVersionReference> refs = nullVsService.getResolvedValueSetsforEntityCode(entityCode);
+		//LexEVSResolvedValueSetService service = getLexEVSAppService().getLexEVSResolvedVSService(null);
+		List<AbsoluteCodingSchemeVersionReference> refs = service.getResolvedValueSetsforEntityCode(entityCode);
 		return refs;
 	}
 

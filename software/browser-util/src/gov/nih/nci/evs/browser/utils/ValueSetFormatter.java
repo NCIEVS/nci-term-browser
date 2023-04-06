@@ -336,6 +336,16 @@ public class ValueSetFormatter {
         }
         try {
             int iteration = 0;
+
+			while (iterator != null && iterator.hasNext()) {
+				ResolvedConceptReference[] refs = iterator.next(500).getResolvedConceptReference();
+				for (ResolvedConceptReference ref : refs) {
+				    String t = ref.getEntityDescription().getContent() + "|"+ ref.getCode() + "|"+ ref.getCodingSchemeName()
+					+ "|" + ref.getCodeNamespace();
+                    v.add(t);
+				}
+			}
+			/*
             while (iterator.hasNext()) {
                 iteration++;
                 iterator = iterator.scroll(maxToReturn);
@@ -350,6 +360,7 @@ public class ValueSetFormatter {
                     v.add(t);
                 }
             }
+            */
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -482,6 +493,17 @@ public class ValueSetFormatter {
             }
 
             if (iterator == null) return null;
+
+			while (iterator != null && iterator.hasNext()) {
+				ResolvedConceptReference[] refs = iterator.next(500).getResolvedConceptReference();
+				for (ResolvedConceptReference ref : refs) {
+					Entity node = ref.getEntity();
+					String line = csdu.getPropertyValues(node);
+					//C111116|ncit|name$FULL_SYN$Diffusion Weighted MRI$form=SY$source=NCI|name$FULL_SYN$DWI$form=SY$source=CDISC|name$FULL_SYN$Diffusion Weighted Imaging$form=SY$source=CDISC|name$FULL_SYN$Diffusion-Weighted Magnetic Resonance Imaging$form=SY$source=NCI|name$FULL_SYN$Diffusion Weighted Imaging$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$Diffusion Weighted Imaging$form=DN$source=CTRP|name$FULL_SYN$DWI MRI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$DWI-MRI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$DWI$form=SY$subsource-name=caDSR$source=NCI|name$FULL_SYN$Diffusion-Weighted MRI$form=SY$source=NCI|name$FULL_SYN$DIFFUSION WEIGHTED MRI$form=PT$source=CDISC|name$FULL_SYN$Diffusion Weighted Imaging$form=PT$source=NCI|name$FULL_SYN$DW-MRI$form=SY$source=CDISC|name$FULL_SYN$Diffusion-Weighted MR Imaging$form=SY$source=NCI|name$FULL_SYN$MR Diffusion-Weighted Imaging$form=SY$source=NCI
+					w.add(line);
+				}
+			}
+            /*
             while (iterator.hasNext()) {
                 iterator = iterator.scroll(maxToReturn);
                 ResolvedConceptReferenceList rcrl = iterator.getNext();
@@ -499,6 +521,7 @@ public class ValueSetFormatter {
 					}
 				}
 			}
+			*/
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

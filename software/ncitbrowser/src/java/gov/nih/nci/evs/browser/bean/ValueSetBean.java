@@ -41,6 +41,7 @@ import org.LexGrid.LexBIG.LexBIGService.CodedNodeSet.PropertyType;
 import org.LexGrid.concepts.Definition;
 import org.LexGrid.commonTypes.PropertyQualifier;
 import org.LexGrid.commonTypes.Property;
+import org.LexGrid.concepts.Presentation;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
@@ -1464,16 +1465,15 @@ public class ValueSetBean {
 		StringBuffer sb = new StringBuffer();
 		sb.append("NCIt Concept Code,");
 		sb.append("NCIt Preferred Term,");
-		sb.append("Terminology,");
-		sb.append("Version,");
-		sb.append("Namespace,");
+		sb.append("NCIt Synonyms,");
 		sb.append("NCIt Definition");
 		sb.append("\r\n");
-
+        int knt = 0;
         try {
 			while (itr != null && itr.hasNext()) {
 				ResolvedConceptReference[] refs = itr.next(100).getResolvedConceptReference();
 				for (ResolvedConceptReference ref : refs) {
+					knt++;
 					String entityDescription = "<NOT ASSIGNED>";
 					if (ref.getEntityDescription() != null) {
 						entityDescription = ref.getEntityDescription().getContent();
@@ -1481,10 +1481,14 @@ public class ValueSetBean {
 
 					sb.append("\"" + ref.getConceptCode() + "\",");
 					sb.append("\"" + entityDescription + "\",");
+					/*
 					sb.append("\"" + ref.getCodingSchemeName() + "\",");
 					sb.append("\"" + ref.getCodingSchemeVersion() + "\",");
 					sb.append("\"" + ref.getCodeNamespace() + "\",");
-
+					*/
+					String synonyms = getNCISynonyms(ref);
+					if (synonyms == null) synonyms = "";
+					sb.append("\"" + synonyms + "\",");
 					String definition = getNCIDefinition(ref);
 					if (definition == null) definition = "";
 					sb.append("\"" + definition + "\"");
@@ -1494,6 +1498,7 @@ public class ValueSetBean {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		System.out.println("Number of records: " + knt);
 		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
 		vsd_name = vsd_name.replaceAll(" ", "_");
 		vsd_name = "resolved_" + vsd_name + ".csv";
@@ -1762,4 +1767,57 @@ public class ValueSetBean {
 		FacesContext.getCurrentInstance().responseComplete();
 	}
 
+    public String getNCISynonyms(ResolvedConceptReference ref) {
+		if (ref == null) return null;
+		Entity concept = ref.getReferencedEntry();
+		if (concept == null) return null;
+
+		Presentation[] properties = null;
+		properties = concept.getPresentation();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < properties.length; i++) {
+            Presentation p = properties[i];
+            boolean inclusion = false;
+			if (p.getPropertyName().compareTo("FULL_SYN") == 0) {
+				inclusion = true;
+			}
+            if (inclusion) {
+                String term_name = p.getValue().getContent();
+                String term_type = "null";
+                String term_source = "null";
+                String term_source_code = "null";
+                String term_subsource = "null";
+                PropertyQualifier[] qualifiers = p.getPropertyQualifier();
+
+                if (qualifiers != null) {
+                    for (int j = 0; j < qualifiers.length; j++) {
+                        PropertyQualifier q = qualifiers[j];
+                        String qualifier_name = q.getPropertyQualifierName();
+                        String qualifier_value = q.getValue().getContent();
+                        if (qualifier_name.compareTo("source-code") == 0) {
+                            term_source_code = qualifier_value;
+                        }
+                        if (qualifier_name.compareTo("subsource-name") == 0) {
+                            term_subsource = qualifier_value;
+                        }
+                    }
+                }
+                term_type = p.getRepresentationalForm();
+                Source[] sources = p.getSource();
+                if (sources != null && sources.length > 0) {
+                    Source src = sources[0];
+                    term_source = src.getContent();
+                }
+                if (term_type.compareTo("SY") == 0 && term_source.compareTo("NCI") == 0) {
+					sb.append(term_name).append("$");
+				}
+            }
+
+        }
+        String t = sb.toString();
+        if (t.length() > 0) {
+        	t = t.substring(0, t.length()-1);
+		}
+		return t;
+	}
 }

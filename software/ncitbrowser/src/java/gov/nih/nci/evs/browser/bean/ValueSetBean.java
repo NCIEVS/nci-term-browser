@@ -1422,6 +1422,101 @@ public class ValueSetBean {
 	}
 
 
+
+	public void exportValuesToCSVAction() {
+        HttpServletRequest request =
+            (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
+
+		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+		if (vsd_uri == null) {
+		    vsd_uri = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("vsd_uri"));
+		}
+
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		String serviceUrl = RemoteServerUtil.getServiceUrl();
+		AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, lbSvc);
+		ResolvedConceptReferencesIterator iterator2 = null;
+		iterator2 = avsu.getValueSetIteratorForURI(vsd_uri);
+
+		CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
+		CodingSchemeDataUtils csdu = new CodingSchemeDataUtils(lbSvc);
+		String version = csdu.getVocabularyVersionByTag(Constants.NCI_THESAURUS, Constants.PRODUCTION);
+		versionOrTag.setVersion(version);
+		ResolvedConceptReferencesIterator itr = null;
+		try {
+			CodedNodeSet cns = csdu.getNodeSet(Constants.NCI_THESAURUS, versionOrTag);
+			ConceptReferenceList codeList = csdu.iterator2List(iterator2);
+			cns = cns.restrictToCodes(codeList);
+			SortOptionList sortOptions = null;
+			LocalNameList filterOptions = null;
+			LocalNameList propertyNames = null;//new LocalNameList();
+			CodedNodeSet.PropertyType[] propertyTypes = new CodedNodeSet.PropertyType[2];
+			propertyTypes[0] = CodedNodeSet.PropertyType.PRESENTATION;
+			propertyTypes[1] = CodedNodeSet.PropertyType.DEFINITION;
+			boolean resolveObjects = true;
+
+			itr = cns.resolve(sortOptions, filterOptions, propertyNames, propertyTypes, resolveObjects);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+//String heading = "NCIt Concept Code	Source Name	NCIt Preferred Term	NCIt Synonyms	Source Definition	NCIt Definition";
+		StringBuffer sb = new StringBuffer();
+		sb.append("NCIt Concept Code,");
+		sb.append("NCIt Preferred Term,");
+		sb.append("Terminology,");
+		sb.append("Version,");
+		sb.append("Namespace,");
+		sb.append("NCIt Definition");
+		sb.append("\r\n");
+
+        try {
+			while (itr != null && itr.hasNext()) {
+				ResolvedConceptReference[] refs = itr.next(100).getResolvedConceptReference();
+				for (ResolvedConceptReference ref : refs) {
+					String entityDescription = "<NOT ASSIGNED>";
+					if (ref.getEntityDescription() != null) {
+						entityDescription = ref.getEntityDescription().getContent();
+					}
+
+					sb.append("\"" + ref.getConceptCode() + "\",");
+					sb.append("\"" + entityDescription + "\",");
+					sb.append("\"" + ref.getCodingSchemeName() + "\",");
+					sb.append("\"" + ref.getCodingSchemeVersion() + "\",");
+					sb.append("\"" + ref.getCodeNamespace() + "\",");
+
+					String definition = getNCIDefinition(ref);
+					if (definition == null) definition = "";
+					sb.append("\"" + definition + "\"");
+					sb.append("\r\n");
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
+		vsd_name = vsd_name.replaceAll(" ", "_");
+		vsd_name = "resolved_" + vsd_name + ".csv";
+		//System.out.println("ValueSetBean exportValuesToCSV: " + vsd_name + " (num_records: " + num_records + ")");
+
+		HttpServletResponse response = (HttpServletResponse) FacesContext
+				.getCurrentInstance().getExternalContext().getResponse();
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ vsd_name);
+
+		response.setContentLength(sb.length());
+		try {
+			ServletOutputStream ouputStream = response.getOutputStream();
+			ouputStream.write(sb.toString().getBytes("UTF8"), 0, sb.length());
+			ouputStream.flush();
+			ouputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		FacesContext.getCurrentInstance().responseComplete();
+	}
+/*
 	public void exportValuesToCSVAction() {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
@@ -1445,9 +1540,13 @@ public class ValueSetBean {
 			System.out.println("instantiated CodingSchemeDataUtils");
 		}
 		String version = codingSchemeDataUtils.getVocabularyVersionByTag(Constants.NCI_THESAURUS, Constants.PRODUCTION);
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////
 		ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
 		Vector vs_data = formatter.export(vsd_uri, version, fields);
 		Vector v = gov.nih.nci.evs.browser.utils.StringUtils.convertDelimited2CSV(vs_data, '|');
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+
 		System.out.println("v: " + v.size());
         StringBuffer sb = new StringBuffer();
         for (int k=0; k<fields.size(); k++) {
@@ -1487,7 +1586,10 @@ public class ValueSetBean {
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 	}
+*/
 
+
+/*
 	public void exportValuesToCSVAction0() {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
@@ -1498,14 +1600,6 @@ public class ValueSetBean {
 		if (vsd_uri == null) {
 		    vsd_uri = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("vsd_uri"));
 		}
-
-		/*
-		String metadata = DataUtils
-				.getValueSetDefinitionMetadata(DataUtils
-						.findValueSetDefinitionByURI(vsd_uri));
-		*/
-		//String metadata = DataUtils
-		//		.getValueSetDefinitionMetadata(vsd_uri);
 
 	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 	    ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
@@ -1599,6 +1693,7 @@ public class ValueSetBean {
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 	}
+	*/
 
 	public void exportValuesToXMLAction() {
         HttpServletRequest request =

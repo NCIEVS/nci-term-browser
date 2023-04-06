@@ -782,17 +782,80 @@ public class ValueSetBean {
 
 
     public void exportToCSVAction() {
+
+		System.out.println("ValueSetBean exportToCSVAction");
+
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
+
+		String vsd_uri = (String) request.getSession().getAttribute("vsd_uri");
+		if (!DataUtils.isNull(vsd_uri)) {
+
+			ValueSetConfig vsc = ValueSetDefinitionConfig.getValueSetConfig(vsd_uri);
+			String filename = vsc.getReportURI();
+
+			if (filename != null) {
+				filename = filename.trim();
+			}
+			System.out.println("ValueSetBean Released file: " + filename);
+
+			if (!DataUtils.isNull(filename) && filename.length() > 0) {
+				//ResolvedValueSetIteratorHolder rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
+				//request.getSession().setAttribute("rvsi", rvsi);
+				ResolvedValueSetIteratorHolder rvsi = (ResolvedValueSetIteratorHolder) request.getSession().getAttribute("rvsi");
+				Vector rvs_content_vec = rvsi.extractRawDataFromTableContent();
+				StringBuffer sb = new StringBuffer();
+				for (int k=0; k<rvs_content_vec.size(); k++) {
+					String line = (String) rvs_content_vec.elementAt(k);
+					sb.append(line);
+					if (k < rvs_content_vec.size()-1) {
+						sb.append("\r\n");
+					}
+				}
+				String content = sb.toString();
+
+				//vsd_uri = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
+				vsd_uri = vsd_uri.replaceAll(" ", "_");
+				vsd_uri = "resolved_" + vsd_uri + ".csv";
+
+				HttpServletResponse response = (HttpServletResponse) FacesContext
+						.getCurrentInstance().getExternalContext().getResponse();
+				response.setContentType("text/csv");
+				response.setHeader("Content-Disposition", "attachment; filename="
+						+ vsd_uri);
+
+				response.setContentLength(content.length());
+
+				try {
+					ServletOutputStream ouputStream = response.getOutputStream();
+					ouputStream.write(content.getBytes("UTF8"), 0, content.length());
+					ouputStream.flush();
+					ouputStream.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					//sb.append("WARNING: Export to CVS action failed.");
+				}
+				FacesContext.getCurrentInstance().responseComplete();
+				return;
+			}
+		}
+
+
 		String version_selection = (String) HTTPUtils.cleanXSS((String) request.getParameter("version_selection"));
 		String valueSetDefinitionRevisionId = null;
 		AbsoluteCodingSchemeVersionReferenceList csvList = new AbsoluteCodingSchemeVersionReferenceList();
 
         String from_download = HTTPUtils.cleanXSS((String) request.getParameter("from_download"));
-        String vsd_uri = null;
+        //String vsd_uri = null;
         StringBuffer sb = new StringBuffer();
+
+
         if (from_download != null && from_download.compareTo("true") == 0) {
+
+			System.out.println("from_download: TRUE");
+
+			/*
 			vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 			String heading = "NCIt Concept Code	Source Name	NCIt Preferred Term	NCIt Synonyms	Source Definition	NCIt Definition";
 			Vector fields = StringUtils.parseData(heading, '\t');
@@ -812,9 +875,8 @@ public class ValueSetBean {
 					sb.append("\r\n");
 				}
 			}
+			*/
 
-
-			/*
 			vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 			if (vsd_uri == null) {
 				vsd_uri = (String) request.getSession().getAttribute("vsd_uri");
@@ -835,9 +897,11 @@ public class ValueSetBean {
 					}
 				}
 			}
-			*/
 
 		} else {
+
+			System.out.println("from_download: FALSE");
+
 			String scheme_version = null;
 			String[] coding_scheme_ref = (String[]) request.getSession().getAttribute("coding_scheme_ref");
 			vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
@@ -989,7 +1053,7 @@ public class ValueSetBean {
 
 		vsd_uri = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
 		vsd_uri = vsd_uri.replaceAll(" ", "_");
-		vsd_uri = "resolved_" + vsd_uri + ".txt";
+		vsd_uri = "resolved_" + vsd_uri + ".csv";
 
 		HttpServletResponse response = (HttpServletResponse) FacesContext
 				.getCurrentInstance().getExternalContext().getResponse();

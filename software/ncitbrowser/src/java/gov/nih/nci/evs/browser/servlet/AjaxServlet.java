@@ -1330,7 +1330,17 @@ if (display_name_vec == null) {
       println(out, "    YAHOO.util.Event.addListener(window, \"load\", init);");
       println(out, "");
       println(out, "  </script>");
-      println(out, "<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
+      //println(out, "<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
+
+      out.println("<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-21QRTJ0WQS\"></script>");
+      out.println("<script>");
+      out.println("	window.dataLayer = window.dataLayer || [];");
+      out.println("	function gtag(){dataLayer.push(arguments);}");
+      out.println("	gtag('js', new Date());");
+      out.println("	gtag('config', 'G-21QRTJ0WQS');");
+      out.println("</script>");
+
+
       println(out, "</head>");
       println(out, "<body>");
 
@@ -1765,7 +1775,18 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
       out.println("	overflow:auto;");
       out.println("}");
       out.println("</style>");
-      out.println("<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
+      //out.println("<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
+
+
+      out.println("<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-21QRTJ0WQS\"></script>");
+      out.println("<script>");
+      out.println("	window.dataLayer = window.dataLayer || [];");
+      out.println("	function gtag(){dataLayer.push(arguments);}");
+      out.println("	gtag('js', new Date());");
+      out.println("	gtag('config', 'G-21QRTJ0WQS');");
+      out.println("</script>");
+
+
       out.println("</head>");
       out.println("");
 
@@ -2287,6 +2308,7 @@ out.flush();
 					out.println("                  <div class=\"table-scroll\">");
 
 					writeExportForm(out, vsd_uri);
+
 					out.println("<table border=\"0\" width=\"900\" role='presentation'>");
 					out.println("	<tr><td>");
 					out.println("	<div style=\"float:left;width:360px;\">");
@@ -2320,7 +2342,6 @@ out.flush();
       out.println("    <li><a href=\"https://www.cancer.gov/policies/page3\" target=\"_blank\" alt=\"National Cancer Institute Accessibility\">Accessibility</a> |</li>");
       out.println("    <li><a href=\"https://www.cancer.gov/policies/page6\" target=\"_blank\" alt=\"National Cancer Institute FOIA\">FOIA</a></li>");
       out.println("  </ul>");
-
 
       out.println("<center>");
       out.println("<a href=\"https://www.hhs.gov/\" alt=\"U.S. Department of Health and Human Services\">");
@@ -2898,7 +2919,17 @@ if (algorithm.compareToIgnoreCase("contains") == 0) {
 	option_name = "checked";
 	option_code = "";
 }
-      out.println("<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
+//      out.println("<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
+
+      out.println("<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-21QRTJ0WQS\"></script>");
+      out.println("<script>");
+      out.println("	window.dataLayer = window.dataLayer || [];");
+      out.println("	function gtag(){dataLayer.push(arguments);}");
+      out.println("	gtag('js', new Date());");
+      out.println("	gtag('config', 'G-21QRTJ0WQS');");
+      out.println("</script>");
+
+
       out.println("</head>");
       out.println("");
 
@@ -3705,6 +3736,7 @@ out.flush();
         String vsd_uri = selectedvalueset;
 		request.getSession().setAttribute("selectedvalueset", selectedvalueset);
         request.getSession().setAttribute("vsd_uri", vsd_uri);
+
         String[] coding_scheme_ref = null;
         String key = vsd_uri;
 
@@ -3722,7 +3754,6 @@ out.flush();
 			ResolvedConceptReferencesIterator itr = avsu.getValueSetIteratorForURI(vsd_uri);
 
 			IteratorBeanManager iteratorBeanManager = null;
-
 			if (FacesContext.getCurrentInstance() != null &&
 				FacesContext.getCurrentInstance().getExternalContext() != null &&
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap() != null) {
@@ -4571,7 +4602,16 @@ out.flush();
 
       out.println("    }");
       out.println("  </script>");
-      out.println("<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
+      //out.println("<script>(function(i,s,o,g,r,a,m){i[\"GoogleAnalyticsObject\"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,\"script\",\"//www.google-analytics.com/analytics.js\",\"ga\");ga(\"create\", \"UA-150112876-1\", {\"cookieDomain\":\"auto\"});ga(\"send\", \"pageview\");</script>");
+
+
+      out.println("<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-21QRTJ0WQS\"></script>");
+      out.println("<script>");
+      out.println("	window.dataLayer = window.dataLayer || [];");
+      out.println("	function gtag(){dataLayer.push(arguments);}");
+      out.println("	gtag('js', new Date());");
+      out.println("	gtag('config', 'G-21QRTJ0WQS');");
+      out.println("</script>");
 
       out.println("</head>");
       out.println("");
@@ -5081,15 +5121,12 @@ out.flush();
 		out.println("                     </table>");
 	}
 
-/*
-		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService(serviceUrl);
-		AssertedValueSetUtils avsu = new AssertedValueSetUtils(serviceUrl, lbSvc);
-		String vsd_uri = "http://evs.nci.nih.gov/valueset/C160950";
-		ResolvedConceptReferencesIterator itr = avsu.getValueSetIteratorForURI(vsd_uri);
-*/
+
 
     public void exportToCSVAction(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("AjaxServlet exportToCSVAction ... " );
+
+		/*
         StringBuffer sb = new StringBuffer();
 		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 		String heading = "NCIt Concept Code	Source Name	NCIt Preferred Term	NCIt Synonyms	Source Definition	NCIt Definition";
@@ -5112,8 +5149,9 @@ out.flush();
 				sb.append("\r\n");
 			}
 		}
-
-		/*
+		*/
+		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+		StringBuffer sb = new StringBuffer();
 		ResolvedValueSetIteratorHolder rvsi = (ResolvedValueSetIteratorHolder) request.getSession().getAttribute("rvsi");
 		if (rvsi != null) {
 			Vector w = rvsi.extractRawDataFromTableContent();
@@ -5130,7 +5168,6 @@ out.flush();
 			    }
 			}
 		}
-		*/
 
 		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
 		vsd_name = vsd_name.replaceAll(" ", "_");

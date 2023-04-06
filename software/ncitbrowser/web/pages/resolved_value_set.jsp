@@ -95,7 +95,6 @@
 	    LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
 	    ValueSetFormatter formatter = new ValueSetFormatter(serviceUrl, lbSvc, vsd_service);
-            
             String version_selection = (String) request.getSession().getAttribute("version_selection");
             request.getSession().removeAttribute("version_selection");
 

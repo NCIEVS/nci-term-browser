@@ -308,7 +308,7 @@ public class DataUtils {
     }
 
     static {
-		System.out.println("Initializing DataUtils.java...");
+		System.out.println("Initializing DataUtils...");
 
         _terminologySubsetDownloadURL = null;
         _term_suggestion_application_url = null;

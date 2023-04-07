@@ -5151,33 +5151,38 @@ out.flush();
 		}
 		*/
 		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
-
 		System.out.println(vsd_uri);
-
 		StringBuffer sb = new StringBuffer();
 		ResolvedValueSetIteratorHolder rvsi = (ResolvedValueSetIteratorHolder) request.getSession().getAttribute("rvsi");
 		if (rvsi == null) {
-			System.out.println("ResolvedValueSetIteratorHolder is null???");
+			System.out.println("constructResolvedValueSetIteratorHolder...");
+			rvsi = constructResolvedValueSetIteratorHolder(vsd_uri);
+		}
+
+		Vector w = rvsi.extractRawDataFromTableContent();
+		if (w == null) {
+			System.out.println("extractRawDataFromTableContent returns null???");
 		} else {
-			Vector w = rvsi.extractRawDataFromTableContent();
-			if (w == null) {
-				System.out.println("extractRawDataFromTableContent returns null???");
-			} else {
-				try {
-					w = rvsi.tableContent2CSV(w);
-					System.out.println("w: " + w.size());
-					for (int k=0; k<w.size(); k++) {
-						String t = (String) w.elementAt(k);
-						sb.append(t);
-						sb.append("\n");
-					}
-				} catch (Exception ex) {
-					ex.printStackTrace();
-			    }
+			int line_number = 0;
+			String line = null;
+			try {
+				w = rvsi.tableContent2CSV(w);
+				for (int k=0; k<w.size(); k++) {
+					line_number = k;
+					String t = (String) w.elementAt(k);
+					line = t;
+					sb.append(t).append("\n");
+				}
+				System.out.println("w: " + w.size());
+
+			} catch (Exception ex) {
+				System.out.println("failed on line " + line_number + ": " + line);
+				ex.printStackTrace();
 			}
 		}
 
 		String vsd_name = DataUtils.valueSetDefinitionURI2Name(vsd_uri);
+		System.out.println(vsd_name);
 		vsd_name = vsd_name.replaceAll(" ", "_");
 		vsd_name = vsd_name + ".csv";
 
@@ -5190,6 +5195,7 @@ out.flush();
 		try {
 			ServletOutputStream ouputStream = response.getOutputStream();
 			ouputStream.write(sb.toString().getBytes("UTF8"), 0, sb.length());
+			System.out.println("ouputStream.flush");
 			ouputStream.flush();
 			ouputStream.close();
 		} catch (Exception ex) {

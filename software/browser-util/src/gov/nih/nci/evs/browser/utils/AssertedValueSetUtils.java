@@ -79,8 +79,10 @@ public class AssertedValueSetUtils {
 	String serviceUrl = null;
 
     public AssertedValueSetUtils(String serviceUrl, LexBIGService lbSvc) {
-		if (serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
-			serviceUrl = null;
+		if (serviceUrl != null) {
+			if (serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
+			    serviceUrl = null;
+			}
 		}
 		this.serviceUrl = serviceUrl;
 		this.lbSvc = lbSvc;

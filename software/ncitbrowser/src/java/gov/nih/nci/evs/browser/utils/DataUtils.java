@@ -308,9 +308,7 @@ public class DataUtils {
     }
 
     static {
-
-
-System.out.println("Initializing DataUtils.java...");
+		System.out.println("Initializing DataUtils.java...");
 
         _terminologySubsetDownloadURL = null;
         _term_suggestion_application_url = null;
@@ -377,7 +375,9 @@ System.out.println("Initializing DataUtils.java...");
 			default_info = "Local LexEVS";
 			_evsServiceURL =
 				properties.getProperty(NCItBrowserProperties.EVS_SERVICE_URL);
-			if (_evsServiceURL == null) {
+
+			if (_evsServiceURL == null || _evsServiceURL.compareTo("") == 0 || _evsServiceURL.compareToIgnoreCase("null") == 0) {
+			//if (_evsServiceURL == null) {
 				_evsServiceURL = default_info;
 			}
 			_term_suggestion_application_url =

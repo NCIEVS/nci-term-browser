@@ -1423,7 +1423,7 @@ public class ValueSetBean {
 	}
 
 
-
+/*
 	public void exportValuesToCSVAction() {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
@@ -1481,11 +1481,6 @@ public class ValueSetBean {
 
 					sb.append("\"" + ref.getConceptCode() + "\",");
 					sb.append("\"" + entityDescription + "\",");
-					/*
-					sb.append("\"" + ref.getCodingSchemeName() + "\",");
-					sb.append("\"" + ref.getCodingSchemeVersion() + "\",");
-					sb.append("\"" + ref.getCodeNamespace() + "\",");
-					*/
 					String synonyms = getNCISynonyms(ref);
 					if (synonyms == null) synonyms = "";
 					sb.append("\"" + synonyms + "\",");
@@ -1521,7 +1516,276 @@ public class ValueSetBean {
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 	}
-/*
+*/
+
+    public static String getSupportedSource(String vsd_uri) {
+		LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+	    ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+		Vector u = StringUtils.parseData(metadata);
+		String name = (String) u.elementAt(0);
+		String valueset_uri = (String) u.elementAt(1);
+		String description = (String) u.elementAt(2);
+		String concept_domain = (String) u.elementAt(3);
+		String sources = (String) u.elementAt(4);
+		String supportedsources = (String) u.elementAt(5);
+		String supportedsource = null;
+		if (supportedsources != null) {
+			Vector u2 = gov.nih.nci.evs.browser.utils.StringUtils.parseData(supportedsources, ";");
+			supportedsource = (String) u2.elementAt(0);
+		}
+		return supportedsource;
+	}
+
+	public static String convertVSDUri2HeaderConcdptCode(String vsd_uri) {
+		int n = vsd_uri.lastIndexOf("/");
+		return vsd_uri.substring(n+1, vsd_uri.length());
+	}
+
+
+	public void exportValuesToCSVAction2() {
+        HttpServletRequest request =
+            (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
+		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+		if (vsd_uri == null) {
+		    vsd_uri = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("vsd_uri"));
+		}
+        System.out.println("ValueSetBean exportValuesToCSVAction exportValuesToCSVAction vsd_uri: " + vsd_uri);
+
+		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		String serviceUrl = RemoteServerUtil.getServiceUrl();
+        String defaultCodingScheme = Constants.NCI_THESAURUS;
+        String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(defaultCodingScheme, Constants.PRODUCTION);
+        System.out.println("version: " + version);
+        String namespace = "ncit";
+        String code = convertVSDUri2HeaderConcdptCode(vsd_uri);
+        System.out.println("header concept code: " + code);
+        String associationName = "Concept_In_Subset";
+        boolean direction = false;
+        Vector v = null;
+        RelationshipUtils relUtils = new RelationshipUtils(lbSvc);
+        ArrayList A8_list = null;
+        if (relUtils == null) {
+			System.out.println("RelationshipUtils == null???");
+		} else {
+            A8_list = relUtils.getRelationshipData(defaultCodingScheme, version, namespace, code, associationName, direction);
+		}
+        if (A8_list == null) {
+			System.out.println("A8_list == null???");
+		} else {
+            v = list2Vector(A8_list);
+			if (v == null) {
+				System.out.println("list2Vector returns null???");
+			}
+		}
+        ConceptReferenceList codeList = new ConceptReferenceList();
+        for (int i=0; i<v.size(); i++) {
+			String line = (String) v.elementAt(i);
+			Vector u = StringUtils.parseData(line, '|');
+			ConceptReference ref = new ConceptReference();
+			ref.setConceptCode((String) u.elementAt(2));
+			codeList.addConceptReference(ref);
+		}
+		CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
+		versionOrTag.setVersion(version);
+        CodingSchemeDataUtils codingSchemeDataUtils = new CodingSchemeDataUtils(lbSvc);
+        ResolvedConceptReferencesIterator itr = null;
+        try {
+			CodedNodeSet cns = codingSchemeDataUtils.getNodeSet(defaultCodingScheme, versionOrTag);
+			cns = cns.restrictToCodes(codeList);
+			SortOptionList sortOptions = null;
+			LocalNameList filterOptions = null;
+			LocalNameList propertyNames = null;
+			CodedNodeSet.PropertyType[] propertyTypes = new CodedNodeSet.PropertyType[2];
+			propertyTypes[0] = CodedNodeSet.PropertyType.PRESENTATION;
+			propertyTypes[1] = CodedNodeSet.PropertyType.DEFINITION;
+			boolean resolveObjects = true;
+			itr = cns.resolve(sortOptions, filterOptions, propertyNames, propertyTypes, resolveObjects);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		StringBuffer sb = new StringBuffer();
+		sb.append("NCIt Concept Code,");
+		sb.append("NCIt Preferred Term,");
+		sb.append("NCIt Synonyms,");
+		sb.append("NCIt Definition");
+		sb.append("\r\n");
+        int knt = 0;
+        try {
+			while (itr != null && itr.hasNext()) {
+				ResolvedConceptReference[] refs = itr.next(100).getResolvedConceptReference();
+				for (ResolvedConceptReference ref : refs) {
+					knt++;
+					String entityDescription = "<NOT ASSIGNED>";
+					if (ref.getEntityDescription() != null) {
+						entityDescription = ref.getEntityDescription().getContent();
+					}
+					sb.append("\"" + ref.getConceptCode() + "\",");
+					sb.append("\"" + entityDescription + "\",");
+					String synonyms = getNCISynonyms(ref);
+					if (synonyms == null) synonyms = "";
+					sb.append("\"" + synonyms + "\",");
+					String definition = getNCIDefinition(ref);
+					if (definition == null) definition = "";
+					sb.append("\"" + definition + "\"");
+					sb.append("\r\n");
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		int num_records = v.size()-1;
+
+	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+	    ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+		Vector u = StringUtils.parseData(metadata);
+		String vsd_name = (String) u.elementAt(0);
+
+		vsd_name = vsd_name.replaceAll(" ", "_");
+		vsd_name = "resolved_" + vsd_name + ".csv";
+		System.out.println("ValueSetBean exportValuesToCSV: " + vsd_name + " (num_records: " + num_records + ")");
+
+		HttpServletResponse response = (HttpServletResponse) FacesContext
+				.getCurrentInstance().getExternalContext().getResponse();
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ vsd_name);
+
+		response.setContentLength(sb.length());
+		try {
+			ServletOutputStream ouputStream = response.getOutputStream();
+			ouputStream.write(sb.toString().getBytes("UTF8"), 0, sb.length());
+			ouputStream.flush();
+			ouputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		FacesContext.getCurrentInstance().responseComplete();
+	}
+
+	public static Vector list2Vector(List list) {
+		if (list == null) return null;
+		Vector w = new Vector();
+		for (int i=0; i<list.size(); i++) {
+			w.add((String) list.get(i));
+		}
+		return w;
+	}
+
+	public void exportValuesToCSVAction_bak() {
+        HttpServletRequest request =
+            (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
+		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+		if (vsd_uri == null) {
+		    vsd_uri = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("vsd_uri"));
+		}
+        System.out.println("ValueSetBean exportValuesToCSVAction exportValuesToCSVAction vsd_uri: " + vsd_uri);
+
+        LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
+		String serviceUrl = RemoteServerUtil.getServiceUrl();
+        String defaultCodingScheme = "NCI_Thesaurus";
+        String version = new CodingSchemeDataUtils(lbSvc).getVocabularyVersionByTag(defaultCodingScheme, "PRODUCTION");
+        String namespace = "ncit";
+        String code = convertVSDUri2HeaderConcdptCode(vsd_uri);
+        String associationName = "Concept_In_Subset";
+        boolean direction = false;
+
+        ArrayList A8_list = new RelationshipUtils(lbSvc).getRelationshipData(defaultCodingScheme, version, namespace, code, associationName, direction);
+        Vector v = list2Vector(A8_list);
+        System.out.println("list2Vector: " + v.size());
+
+        ConceptReferenceList codeList = new ConceptReferenceList();
+        for (int i=0; i<v.size(); i++) {
+			String line = (String) v.elementAt(i);
+			Vector u = StringUtils.parseData(line, '|');
+			ConceptReference ref = new ConceptReference();
+			ref.setConceptCode((String) u.elementAt(2));
+			codeList.addConceptReference(ref);
+		}
+
+		CodingSchemeVersionOrTag versionOrTag = new CodingSchemeVersionOrTag();
+		versionOrTag.setVersion(version);
+        CodingSchemeDataUtils codingSchemeDataUtils = new CodingSchemeDataUtils(lbSvc);
+        ResolvedConceptReferencesIterator itr = null;
+
+        try {
+			CodedNodeSet cns = codingSchemeDataUtils.getNodeSet(defaultCodingScheme, versionOrTag);
+			cns = cns.restrictToCodes(codeList);
+			SortOptionList sortOptions = null;
+			LocalNameList filterOptions = null;
+			LocalNameList propertyNames = null;
+			CodedNodeSet.PropertyType[] propertyTypes = new CodedNodeSet.PropertyType[2];
+			propertyTypes[0] = CodedNodeSet.PropertyType.PRESENTATION;
+			propertyTypes[1] = CodedNodeSet.PropertyType.DEFINITION;
+			boolean resolveObjects = true;
+			itr = cns.resolve(sortOptions, filterOptions, propertyNames, propertyTypes, resolveObjects);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		StringBuffer sb = new StringBuffer();
+		sb.append("NCIt Concept Code,");
+		sb.append("NCIt Preferred Term,");
+		sb.append("NCIt Synonyms,");
+		sb.append("NCIt Definition");
+		sb.append("\r\n");
+        int knt = 0;
+        try {
+			while (itr != null && itr.hasNext()) {
+				ResolvedConceptReference[] refs = itr.next(100).getResolvedConceptReference();
+				for (ResolvedConceptReference ref : refs) {
+					knt++;
+					String entityDescription = "<NOT ASSIGNED>";
+					if (ref.getEntityDescription() != null) {
+						entityDescription = ref.getEntityDescription().getContent();
+					}
+					sb.append("\"" + ref.getConceptCode() + "\",");
+					sb.append("\"" + entityDescription + "\",");
+					String synonyms = getNCISynonyms(ref);
+					if (synonyms == null) synonyms = "";
+					sb.append("\"" + synonyms + "\",");
+					String definition = getNCIDefinition(ref);
+					if (definition == null) definition = "";
+					sb.append("\"" + definition + "\"");
+					sb.append("\r\n");
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		int num_records = v.size()-1;
+	    LexEVSValueSetDefinitionServices vsd_service = RemoteServerUtil.getLexEVSValueSetDefinitionServices();
+	    ValueSetMetadataUtils vsmdu = new ValueSetMetadataUtils(vsd_service);
+		String metadata = vsmdu.getValueSetDefinitionMetadata(vsd_uri);
+		Vector u = StringUtils.parseData(metadata);
+		String vsd_name = (String) u.elementAt(0);
+		vsd_name = vsd_name.replaceAll(" ", "_");
+		vsd_name = "resolved_" + vsd_name + ".csv";
+		System.out.println("ValueSetBean exportValuesToCSV: " + vsd_name + " (num_records: " + num_records + ")");
+
+		HttpServletResponse response = (HttpServletResponse) FacesContext
+				.getCurrentInstance().getExternalContext().getResponse();
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ vsd_name);
+
+		response.setContentLength(sb.length());
+		try {
+			ServletOutputStream ouputStream = response.getOutputStream();
+			ouputStream.write(sb.toString().getBytes("UTF8"), 0, sb.length());
+			ouputStream.flush();
+			ouputStream.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		FacesContext.getCurrentInstance().responseComplete();
+	}
+
 	public void exportValuesToCSVAction() {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
@@ -1591,8 +1855,6 @@ public class ValueSetBean {
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 	}
-*/
-
 
 /*
 	public void exportValuesToCSVAction0() {

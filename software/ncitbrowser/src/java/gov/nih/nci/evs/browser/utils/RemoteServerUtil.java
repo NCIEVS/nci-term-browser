@@ -80,10 +80,7 @@ public class RemoteServerUtil {
     }
 
     public static LexBIGService createLexBIGService() {
-        String url = null;//"https://ncias-d488-v.nci.nih.gov:29080/lexevsapi60";
-
-        //url = "http://localhost:8080/lexevsapi60";
-
+        String url = null;
         NCItBrowserProperties properties = null;
         try {
             properties = NCItBrowserProperties.getInstance();
@@ -96,17 +93,15 @@ public class RemoteServerUtil {
             ex.printStackTrace();
         }
         if (activate_server_monitor_thread) ServerMonitorThread.getInstance().monitor(null, "createLexBIGService");
-        return null;// createLexBIGService(url);
+        return null;
     }
 
     public static LexBIGService createLexBIGService(String serviceUrl) {
         try {
             NCItBrowserProperties properties = null;
-
             if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
 				try {
 					properties = NCItBrowserProperties.getInstance();
-
 					String lg_config_file =
 						properties
 							.getProperty(NCItBrowserProperties.LG_CONFIG_FILE);
@@ -233,6 +228,10 @@ public class RemoteServerUtil {
         try {
             NCItBrowserProperties properties = NCItBrowserProperties.getInstance();
             url = properties.getProperty(NCItBrowserProperties.EVS_SERVICE_URL);
+            if (url == null || url.compareTo("") == 0 || url.compareToIgnoreCase("null") == 0) {
+				url = null;
+			}
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -241,7 +240,7 @@ public class RemoteServerUtil {
 
     public static LexBIGService createLexBIGService(
         boolean registerSecurityTokens) {
-        String url = null;//"https://ncias-d177-v.nci.nih.gov:19480/lexevsapi51";
+        String url = null;
         NCItBrowserProperties properties = null;
         try {
             properties = NCItBrowserProperties.getInstance();
@@ -292,7 +291,7 @@ public class RemoteServerUtil {
 
 
     public static LexEVSDistributed getLexEVSDistributed() {
-		String url = null;//"http://ncias-d499-v:29780/lexevsapi61";
+		String url = null;
 		NCItBrowserProperties properties = null;
 		try {
             properties = NCItBrowserProperties.getInstance();
@@ -333,20 +332,19 @@ public class RemoteServerUtil {
         return null;
 	}
 
-
     public static LexEVSValueSetDefinitionServices getLexEVSValueSetDefinitionServices(String serviceUrl) {
 		if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
-                NCItBrowserProperties properties = null;
-                try {
-					NCItBrowserProperties.getInstance();
-					String lg_config_file =
-						properties
-							.getProperty(NCItBrowserProperties.LG_CONFIG_FILE);
-					System.setProperty(NCItBrowserProperties.LG_CONFIG_FILE,
-						lg_config_file);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+			NCItBrowserProperties properties = null;
+			try {
+				NCItBrowserProperties.getInstance();
+				String lg_config_file =
+					properties
+						.getProperty(NCItBrowserProperties.LG_CONFIG_FILE);
+				System.setProperty(NCItBrowserProperties.LG_CONFIG_FILE,
+					lg_config_file);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 
 			return LexEVSValueSetDefinitionServicesImpl.defaultInstance();
 		}

@@ -79,7 +79,7 @@ public class AssertedValueSetUtils {
 	String serviceUrl = null;
 
     public AssertedValueSetUtils(String serviceUrl, LexBIGService lbSvc) {
-		if (serviceUrl != null && serviceUrl.compareToIgnoreCase("null") == 0) {
+		if (serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
 			serviceUrl = null;
 		}
 		this.serviceUrl = serviceUrl;
@@ -185,8 +185,9 @@ public class AssertedValueSetUtils {
 		.build();
 
 		// KLO, 04162018
-		if (serviceUrl == null) {
-		    service = new LexEVSResolvedValueSetServiceImpl();// LexEVSServiceHolder.instance().getLexEVSAppService().getLexEVSResolvedVSService(params);
+		//if (serviceUrl == null) {
+		if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
+			service = new LexEVSResolvedValueSetServiceImpl();// LexEVSServiceHolder.instance().getLexEVSAppService().getLexEVSResolvedVSService(params);
 	    } else {
 		    service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
 	    }

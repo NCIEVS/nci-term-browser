@@ -5151,13 +5151,21 @@ out.flush();
 		}
 		*/
 		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+
+		System.out.println(vsd_uri);
+
 		StringBuffer sb = new StringBuffer();
 		ResolvedValueSetIteratorHolder rvsi = (ResolvedValueSetIteratorHolder) request.getSession().getAttribute("rvsi");
-		if (rvsi != null) {
+		if (rvsi == null) {
+			System.out.println("ResolvedValueSetIteratorHolder is null???");
+		} else {
 			Vector w = rvsi.extractRawDataFromTableContent();
-			if (w != null) {
+			if (w == null) {
+				System.out.println("extractRawDataFromTableContent returns null???");
+			} else {
 				try {
 					w = rvsi.tableContent2CSV(w);
+					System.out.println("w: " + w.size());
 					for (int k=0; k<w.size(); k++) {
 						String t = (String) w.elementAt(k);
 						sb.append(t);
@@ -5186,7 +5194,6 @@ out.flush();
 			ouputStream.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			//sb.append("WARNING: Export to CVS action failed.");
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 	}

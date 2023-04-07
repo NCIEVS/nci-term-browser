@@ -1543,7 +1543,7 @@ public class ValueSetBean {
 	}
 
 
-	public void exportValuesToCSVAction2() {
+	public void exportValuesToCSVAction3() {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
@@ -1551,7 +1551,7 @@ public class ValueSetBean {
 		if (vsd_uri == null) {
 		    vsd_uri = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("vsd_uri"));
 		}
-        System.out.println("ValueSetBean exportValuesToCSVAction exportValuesToCSVAction vsd_uri: " + vsd_uri);
+        //System.out.println("ValueSetBean exportValuesToCSVAction exportValuesToCSVAction vsd_uri: " + vsd_uri);
 
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		String serviceUrl = RemoteServerUtil.getServiceUrl();
@@ -1675,7 +1675,7 @@ public class ValueSetBean {
 		return w;
 	}
 
-	public void exportValuesToCSVAction_bak() {
+	public void exportValuesToCSVAction() {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();
@@ -1683,7 +1683,7 @@ public class ValueSetBean {
 		if (vsd_uri == null) {
 		    vsd_uri = HTTPUtils.cleanXSS((String) request.getSession().getAttribute("vsd_uri"));
 		}
-        System.out.println("ValueSetBean exportValuesToCSVAction exportValuesToCSVAction vsd_uri: " + vsd_uri);
+        //System.out.println("ValueSetBean exportValuesToCSVAction exportValuesToCSVAction vsd_uri: " + vsd_uri);
 
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
 		String serviceUrl = RemoteServerUtil.getServiceUrl();
@@ -1696,7 +1696,7 @@ public class ValueSetBean {
 
         ArrayList A8_list = new RelationshipUtils(lbSvc).getRelationshipData(defaultCodingScheme, version, namespace, code, associationName, direction);
         Vector v = list2Vector(A8_list);
-        System.out.println("list2Vector: " + v.size());
+        System.out.println("value set size: " + v.size());
 
         ConceptReferenceList codeList = new ConceptReferenceList();
         for (int i=0; i<v.size(); i++) {
@@ -1786,7 +1786,7 @@ public class ValueSetBean {
 		FacesContext.getCurrentInstance().responseComplete();
 	}
 
-	public void exportValuesToCSVAction() {
+	public void exportValuesToCSVAction2() {
         HttpServletRequest request =
             (HttpServletRequest) FacesContext.getCurrentInstance()
                 .getExternalContext().getRequest();

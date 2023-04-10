@@ -4931,7 +4931,7 @@ out.flush();
 		ResolvedValueSetIteratorHolder rvsi = null;
 
 		String filename = vsc.getReportURI();
-		String excelfile = ValueSetDefinitionConfig.getValueSetDownloadFilename(vsc);
+		String excelfile = filename;//ValueSetDefinitionConfig.getValueSetDownloadFilename(vsc);
 		FTPDownload.download(vsc.getReportURI(), excelfile);
 
 		Vector u = ValueSetDefinitionConfig.interpretExtractionRule(vsc.getExtractionRule());

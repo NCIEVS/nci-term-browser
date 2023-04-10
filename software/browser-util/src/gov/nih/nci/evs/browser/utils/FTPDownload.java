@@ -197,6 +197,7 @@ public class FTPDownload {
 				  int bytesRead;
 				  while ((bytesRead = is.read(buffer)) != -1) {
 				      output.write(buffer, 0, bytesRead);
+				      output.flush();
 				  }
 			  } finally {
 				  output.close();
@@ -229,6 +230,7 @@ public class FTPDownload {
 				 dis = new DataInputStream(new BufferedInputStream(is));
 				 while ((s = dis.readLine()) != null) {
 					pw.println(s);
+					pw.flush();
 				 }
 			 }
 		 }

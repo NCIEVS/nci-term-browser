@@ -436,6 +436,7 @@
             <isExternalCode>false</isExternalCode>
        </DisplayItem>
 
+<!--
        <DisplayItem>
             <propertyName>NCI Thesaurus Code</propertyName>
             <itemLabel>caDSR metadata</itemLabel>
@@ -443,6 +444,16 @@
             <hyperlinkText>Search for linked caDSR metadata</hyperlinkText>
             <isExternalCode>false</isExternalCode>
        </DisplayItem>
+-->
+
+       <DisplayItem>
+            <propertyName>NCI Thesaurus Code</propertyName>
+            <itemLabel>caDSR metadata</itemLabel>
+            <url>@cadsr.browser.url@</url>
+            <hyperlinkText>Search for linked caDSR metadata</hyperlinkText>
+            <isExternalCode>false</isExternalCode>
+       </DisplayItem>
+
        
 <!-- DUO properties -->
        <DisplayItem>

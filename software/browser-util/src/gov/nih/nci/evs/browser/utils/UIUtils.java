@@ -701,7 +701,7 @@ public class UIUtils {
         return generatePropertyTable(concept, property_names, description, qualifierColumn);
 	}
 
-
+//KLO
     public String generatePropertyTable(Entity concept, Vector property_names, String description, int qualifierColumn) {
 		if (concept == null) return null;
 		if (property_names == null) return null;
@@ -728,6 +728,10 @@ public class UIUtils {
 				String value = p.getValue().getContent();
 				//String n_v = name + "$" + value;
 				String n_v = name + "$" + value + "$" + lcv;
+
+				System.out.println("n_v: " + n_v);
+
+
 				lcv++;
 				Vector qualifier_vec = new Vector();
 				PropertyQualifier[] qualifiers = p.getPropertyQualifier();
@@ -737,14 +741,21 @@ public class UIUtils {
 					String qualifier_name = q.getPropertyQualifierName();
 					String qualifier_value = q.getValue().getContent();
 					String t = qualifier_name + "|" + qualifier_value;
+
+					System.out.println("t: " + t);
+
 					qualifier_vec.add(t);
 				}
+
+				//Utils.dumpVector("qualifier_vec", qualifier_vec);
 				keyVec.add(n_v);
 				qualifier_vec = new SortUtils().quickSort(qualifier_vec);
 				qualifierHashMap.put(n_v, qualifier_vec);
 			}
 		}
 		keyVec = new SortUtils().quickSort(keyVec);
+
+		//Utils.dumpVector("keyVec", keyVec);
 
 	    HTMLTableSpec spec = new HTMLTableSpec(
 			 description,
@@ -844,31 +855,46 @@ public class UIUtils {
 		int n = 0;
         for (int i = 0; i < nv_vec.size(); i++) {
             String n_v = (String) nv_vec.elementAt(i);
+
+            //System.out.println("UIUtils n_v: " + n_v);
+
             Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v, '$');
+
+            //Utils.dumpVector(n_v, w);
+
             String name = "";
             String value = "";
+            String lcv_str = "";
+            String code = null;
+            String namespace = null;
 
+            name = (String) w.elementAt(0);
+            lcv_str = (String) w.elementAt(w.size()-1);
+            StringBuffer b = new StringBuffer();
+            for (int k=1; k<w.size()-1; k++) {
+				b.append((String) w.elementAt(k)).append("$");
+			}
+			value = b.toString();
+			value = value.substring(0, value.length()-1);
+
+/*
             if (w.size() > 0) {
             	name = (String) w.elementAt(0);
+
+            	System.out.println("name: " + name);
 			}
 
 			if (w.size() > 1) {
             	value = (String) w.elementAt(1);
 			}
-
             String code = null;
             String namespace = null;
-/*
-            if (w.size() > 2) {
-				code = (String) w.elementAt(2);
-			}
-*/
-
 
 			if (w.size() > 3) {
 				code = (String) w.elementAt(2);
 				namespace = (String) w.elementAt(3);
 			}
+*/
 
             Vector qualifiers = (Vector) qualifierHashMap.get(n_v);
 
@@ -1144,7 +1170,7 @@ public class UIUtils {
 		//Vector v = FTPDownload.getOtherMappingData();
 		Vector v = FTPCrawler.getOtherMappingData();
 
-		Utils.dumpVector("OtherMappingData", v);
+		//Utils.dumpVector("OtherMappingData", v);
 
 		if (v == null) return null;
 		for (int i=0; i<v.size(); i++) {

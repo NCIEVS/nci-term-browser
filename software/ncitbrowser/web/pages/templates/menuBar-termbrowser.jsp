@@ -61,17 +61,8 @@ int globalNavHeight = JSPUtils.parseInt(
       <% } %>
 
       <% if (hasValueSet) { %> |
-        <!--
-          <a href="<%= request.getContextPath()
-          %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(_dictionaryName)%>&version=<%=HTTPUtils.cleanXSS(_menubar_tb_version)%>"
-          tabindex="0">Value Sets</a>
-        -->
-
-        <a
-            href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=HTTPUtils.cleanXSS(_dictionaryName)%>&version=<%=HTTPUtils.cleanXSS(_menubar_tb_version)%>"
-            tabindex="0">
-
-          Value Sets</a>
+<a href="<%= request.getContextPath() %>/ajax?action=create_src_vs_tree&nav_type=valuesets" tabindex="0">
+  Value Sets</a>
 
       <% } %>
 

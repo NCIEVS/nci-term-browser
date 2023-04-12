@@ -98,10 +98,7 @@ if (showMenuItems) {
 
 <% if (hasValueSet) { %><%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
 
-<a
-    href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=menubar_dictionary%>&version=<%=menubar_version%>"
-    tabindex="0">
-
+<a href="<%= request.getContextPath() %>/ajax?action=create_src_vs_tree&nav_type=valuesets" tabindex="0">
   Value Sets</a>
 
 <% } %>

@@ -334,15 +334,9 @@ String evs_service_url = DataUtils.getEVSServiceURL();
                           <% } %>
 
                           <% if (hasValueSet) { %><%= JSPUtils.getPipeSeparator(isPipeDisplayed) %>
-                            <!--
-                              <a href="<%= request.getContextPath()
-                              %>/pages/value_set_hierarchy.jsf?dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>"
-                              tabindex="0">Value Sets</a>
-                            -->
                             <a
-                                href="<%= request.getContextPath() %>/ajax?action=create_cs_vs_tree&dictionary=<%=HTTPUtils.cleanXSS(menubar_scheme)%>&version=<%=HTTPUtils.cleanXSS(menubar_version)%>"
+                                href="<%= request.getContextPath() %>/ajax?action=create_src_vs_tree&nav_type=valuesets"
                                 tabindex="0">
-
                               Value Sets</a>
 
                           <% } %>

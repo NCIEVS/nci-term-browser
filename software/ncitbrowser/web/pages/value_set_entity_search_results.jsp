@@ -258,6 +258,8 @@
 
     //====================================================================================================
     String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
+    
+    System.out.println("value_set_entity_search_results.jsp...");
 
     String searchform_requestContextPath = request.getContextPath();
     searchform_requestContextPath = searchform_requestContextPath.replace("//ncitbrowser//ncitbrowser", "//ncitbrowser");

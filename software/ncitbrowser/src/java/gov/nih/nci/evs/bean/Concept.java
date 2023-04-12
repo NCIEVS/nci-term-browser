@@ -21,6 +21,7 @@ public class Concept
 	private String version;
 	private String nameSpace;
 	private String uri;
+	private boolean selected;
 
 // Default constructor
 	public Concept() {
@@ -41,57 +42,66 @@ public class Concept
 		this.version = version;
 		this.nameSpace = nameSpace;
 		this.uri = uri;
+		this.selected = false;
 	}
 
 // Set methods
-	public void setCode(String code) { 
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	public void setCode(String code) {
 		this.code = code;
 	}
 
-	public void setLabel(String label) { 
+	public void setLabel(String label) {
 		this.label = label;
 	}
 
-	public void setCodingScheme(String codingScheme) { 
+	public void setCodingScheme(String codingScheme) {
 		this.codingScheme = codingScheme;
 	}
 
-	public void setVersion(String version) { 
+	public void setVersion(String version) {
 		this.version = version;
 	}
 
-	public void setNameSpace(String nameSpace) { 
+	public void setNameSpace(String nameSpace) {
 		this.nameSpace = nameSpace;
 	}
 
-	public void setUri(String uri) { 
+	public void setUri(String uri) {
 		this.uri = uri;
 	}
 
 
 // Get methods
-	public String getCode() { 
+	public String getCode() {
 		return this.code;
 	}
 
-	public String getLabel() { 
+	public String getLabel() {
 		return this.label;
 	}
 
-	public String getCodingScheme() { 
+	public String getCodingScheme() {
 		return this.codingScheme;
 	}
 
-	public String getVersion() { 
+	public String getVersion() {
 		return this.version;
 	}
 
-	public String getNameSpace() { 
+	public String getNameSpace() {
 		return this.nameSpace;
 	}
 
-	public String getUri() { 
+	public String getUri() {
 		return this.uri;
+	}
+
+	public boolean getSelected() {
+		return this.selected;
 	}
 
 	public String toXML() {

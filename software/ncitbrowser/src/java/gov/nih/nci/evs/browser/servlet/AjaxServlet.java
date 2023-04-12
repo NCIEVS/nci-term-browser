@@ -2508,8 +2508,6 @@ String matchText = HTTPUtils.cleanXSS((String) request.getSession().getAttribute
 	  }
 
       public void search_value_set(HttpServletRequest request, HttpServletResponse response) {
-
-
         String selectValueSetSearchOption = HTTPUtils.cleanXSS((String) request.getParameter("selectValueSetSearchOption"));
 		request.getSession().setAttribute("selectValueSetSearchOption", selectValueSetSearchOption);
 
@@ -2521,7 +2519,6 @@ String matchText = HTTPUtils.cleanXSS((String) request.getSession().getAttribute
 		String view_str = HTTPUtils.cleanXSS((String) request.getParameter("view"));
 		String vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("vsd_uri"));
 		String root_vsd_uri = HTTPUtils.cleanXSS((String) request.getParameter("root_vsd_uri"));
-
 		int view = Constants.STANDARD_VIEW;
 		boolean isInteger = DataUtils.isInteger(view_str);
 		if (isInteger) {
@@ -2531,7 +2528,6 @@ String matchText = HTTPUtils.cleanXSS((String) request.getSession().getAttribute
 		if (vsd_uri != null && root_vsd_uri == null) {
 			root_vsd_uri = vsd_uri;
 		}
-
 		String msg = null;
 
         String checked_vocabularies = get_checked_vocabularies(request);
@@ -2556,8 +2552,6 @@ request.getSession().setAttribute("checked_vocabularies", checked_vocabularies);
             if (matchText.indexOf("\"") != -1) {
                 matchText = matchText.replace("\"", " ");
 			}
-
-
         request.getSession().setAttribute("matchText", matchText);
 		String ontology_display_name = HTTPUtils.cleanXSS((String) request.getParameter("ontology_display_name"));
 		String ontology_version = HTTPUtils.cleanXSS((String) request.getParameter("ontology_version"));

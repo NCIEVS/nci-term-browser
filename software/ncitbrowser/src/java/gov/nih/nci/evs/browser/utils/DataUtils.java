@@ -131,8 +131,8 @@ public class DataUtils {
 
     // ==================================================================================
     // PROD - set to true; for development - set to false for testing to speed up the initialization time
-    private static boolean initializeValueSetHierarchy = false;
-    public static boolean cache_maps_to = false;
+    private static boolean initializeValueSetHierarchy = true;
+    public static boolean cache_maps_to = true;
 
     // ==================================================================================
 
@@ -1437,10 +1437,10 @@ if (cache_maps_to) {
 		_VSDName2URIHashMap = getVSDName2URIHashMap();
 		System.out.println("DataUtils exiting getVSDName2URIHashMap... ");
 		//Iterator it = _VSDName2URIHashMap.keySet().iterator();
-		System.out.println("_logger ...");
+		//System.out.println("_logger ...");
 		_logger.debug("Done getVSDName2URIHashMap ...");
 		_logger.debug("\tInitializing ValueSetHierarchy ...");
-		System.out.println("exiting _logger ...");
+		//System.out.println("exiting _logger ...");
 
 		ms = System.currentTimeMillis();
         LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();

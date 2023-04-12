@@ -89,10 +89,20 @@
     
 Vector display_name_vec = (Vector) request.getSession().getAttribute("display_name_vec");
 String warning_msg = (String) request.getSession().getAttribute("warning");
-
-
     
 %>
+
+
+<%
+	String token = (String) request.getSession().getAttribute(TokenUtils.CSRF_TOKEN);
+	if (token == null) {
+		token = TokenUtils.generateCSRFToken();
+		request.getSession().setAttribute(TokenUtils.CSRF_TOKEN, token);
+
+	}
+%>   
+
+
 <f:view>
   <!-- Begin Skip Top Navigation -->
     <a href="#evs-content" class="hideLink" accesskey="1" title="Skip repetitive navigation links">skip navigation links</A>
@@ -466,6 +476,8 @@ if (mapping_scheme_and_version.compareTo("") == 0 && mapping_cs_knt == 1) {
     <input type="hidden" id="single_mapping_search" name="single_mapping_search" value="true">
     <input type="hidden" id="dictionary" name="dictionary" value="<%=cs_dictionary%>">
     <input type="hidden" id="version" name="version" value="<%=cs_version%>">
+    
+    <input type="hidden" name="<%=TokenUtils.CSRF_TOKEN%>" id="<%=TokenUtils.CSRF_TOKEN%>" value="<%=token%>" />
 
 
 </h:form>

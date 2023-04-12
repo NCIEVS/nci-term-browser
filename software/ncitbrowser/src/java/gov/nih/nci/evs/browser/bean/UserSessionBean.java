@@ -206,14 +206,11 @@ response.setContentType("text/html;charset=utf-8");
 		}
 /////////////////////////////////////////////////////////////////////////////////////////
 
-
-
 boolean mapping_search = false;
 String single_mapping_search = HTTPUtils.cleanXSS((String) request.getParameter("single_mapping_search"));
 
 if (single_mapping_search != null && single_mapping_search.compareTo("true") == 0) {
 	mapping_search = true;
-
     request.getSession().setAttribute("nav_type", "terminologis");
 	String cs_dictionary = HTTPUtils.cleanXSS((String) request.getParameter("dictionary"));
 	String cs_version = HTTPUtils.cleanXSS((String) request.getParameter("version"));
@@ -267,7 +264,6 @@ if (single_mapping_search != null && single_mapping_search.compareTo("true") == 
             return "message";
         }
 
-
 //[NCITERM-613] Remove the minimum 3-character search string length restriction on all name searches.
         //if (matchText != null && matchText.length() < 3
 //        if (matchText.length() < 3
@@ -290,7 +286,6 @@ if (single_mapping_search != null && single_mapping_search.compareTo("true") == 
         String version = null;
 
 		String scheme_and_version = HTTPUtils.cleanXSS((String) request.getParameter("scheme_and_version"));
-
 		if (scheme_and_version != null) {
 			Vector cs_version_vec = DataUtils.parseData(scheme_and_version, "$");
 			scheme = (String) cs_version_vec.elementAt(0);
@@ -349,10 +344,8 @@ if (scheme != null) {
 	    request.setAttribute("version", version);
 
 		boolean isMapping = DataUtils.isMapping(scheme, version);
-
         _logger.debug("UserSessionBean scheme: " + scheme);
         _logger.debug("searchAction version: " + version);
-
 
 
 
@@ -507,7 +500,6 @@ System.out.println("No match -- message: " + msg);
 						return "message";
 					}
 				}
-
 				MappingIteratorBean mappingIteratorBean = new MappingIteratorBean(
 				iterator,
 				numberRemaining, // number remaining

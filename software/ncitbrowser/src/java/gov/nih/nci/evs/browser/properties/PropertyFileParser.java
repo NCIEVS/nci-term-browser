@@ -99,9 +99,10 @@ public class PropertyFileParser {
     }
 
     public void run() {
+		System.out.println("Parsing " + _xmlfile);
         parseXmlFile(_xmlfile);
         parseDocument();
-        // printData();
+        System.out.println("Done parsing " + _xmlfile);
     }
 
     public List getDisplayItemList() {

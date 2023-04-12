@@ -193,7 +193,9 @@ public class NCItBrowserProperties {
     static {
 		try {
 			_browserProperties = new NCItBrowserProperties();
+			System.out.println("Loading properties...");
 			loadProperties();
+			System.out.println("Completed loading properties...");
 
 			_debugOn = Boolean.parseBoolean(getProperty(DEBUG_ON));
 
@@ -581,8 +583,9 @@ public class NCItBrowserProperties {
             System.getProperty("gov.nih.nci.evs.browser.NCItBrowserProperties");
         _logger.info("NCItBrowserProperties File Location= " + propertyFile);
         PropertyFileParser parser = new PropertyFileParser(propertyFile);
+        System.out.println("Parsing properties ...");
         parser.run();
-
+        System.out.println("Completed parsing properties ...");
         _displayItemList = parser.getDisplayItemList();
         _metadataElementList = parser.getMetadataElementList();
         _defSourceMappingList = parser.getDefSourceMappingList();

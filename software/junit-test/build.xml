@@ -1,9 +1,8 @@
-<project name="projectname" default="build" basedir=".">
+<project name="junit-test" default="build" basedir=".">
     <property file="build.properties" />
   
     <property name="resources.dir" value = "./resources" />
     <property name="test.dir" value = "${resources.dir}/Test.properties" />
-    <property name="test.xml" value = "${resources.dir}/Test.xml" />
     <property name="test.reports" value="reports" />
     <property name="conf.dir" value="conf" />
  
@@ -31,6 +30,8 @@
       
     <target name="clean" description="Delete the build directory">
         <delete dir="${build.dir}" />
+        <delete file="browser-junit-test.jar" quiet="true" />
+        <delete file="browser-util.jar" quiet="true" />
     </target>
     <target name="init" depends="clean">
         <echo>JAVA_HOME: ${java.home}</echo>
@@ -68,7 +69,7 @@
         </jar>
     </target>
   
-  <target name="build" depends="jar,clean"
+  <target name="build" depends="jar"
       description="Build jar file" />
  
   <target name="javadoc" depends="init"
@@ -89,7 +90,7 @@
       <mkdir dir="${test.reports}" />
       <junit printsummary="yes" fork="no">
           <sysproperty key="test.property" value="${test.dir}" />
-    	  <sysproperty key="test.xml" value="${test.xml}" />
+
 	  <classpath refid="classpath2" />
 	  <formatter type="xml"/>
 	  <test name="gov.nih.nci.evs.testUtil.AllTermBrowserUnitTests" todir="${test.reports}"/>  	

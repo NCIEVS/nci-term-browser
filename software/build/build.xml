@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<project name="build" default="usage" basedir="." xmlns:bda="antlib:gov.nih.nci.bdalite">
+<project name="ncitbrowser" default="usage" basedir="." xmlns:bda="antlib:gov.nih.nci.bdalite">
 
     <description>
         This is the master build file for the project.
-        It should be placed in project/software/. This script wrappers sub projects to build, test and inspect code.
-        These scripts require Java, Ant and SVN to work.
+        It should be placed in project/software/build/. This script wrappers sub projects to build, test and inspect code.
+        These scripts require Java, Ant and Github to work.
     </description>
 
     <!-- Property file names -->
     <property environment="env" />
     <property name="properties.file" value="project.properties" />
     <property name="local.properties.file" value="local.properties" />
-    <property environment="env"/>
 
     <!-- Local property file -->
     <property file="${local.properties.file}" />
@@ -28,6 +27,13 @@
     <property name="project.short.name" value="ncit" />
     <property name="webapp.war.name" value="${project.name}.war" />
     <property name="webapp.prop.file" value="NCItBrowserProperties.xml" />
+    <property name="bda.dist.dir" value="../target/dist"/>
+    <property name="bda.software.dir" value=".."/>
+    <property name="bda.project.dir" value="${bda.software.dir}/${project.name}"/>
+    <property name="bda.src.dir" value="${bda.project.dir}/src/main"/>
+    <property name="bda.target.dir" value="${bda.software.dir}/target"/>
+    <property name="bda.conf.dir" value="${bda.project.dir}/conf"/>
+
 
     <path id="classpath">
         <fileset dir="../${project.name}/extlib">
@@ -47,6 +53,11 @@
     <property name="exploded.dir" value="${bda.dist.dir}/exploded/${project.name}-webapp" />
 
     <!-- Ant Task definitions -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="../../software/ncitbrowser/extlib/ant-contrib-1.0nci.jar" />
+        </classpath>
+    </taskdef>
     <taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="bda.project.compile.classpath"/>
     <taskdef name="if" classname="net.sf.antcontrib.logic.IfTask" classpathref="bda.project.compile.classpath"/>
     <taskdef name="osfamily" classname="net.sf.antcontrib.platform.OsFamily" classpathref="bda.project.compile.classpath"/>
@@ -64,14 +75,15 @@
 
     <!-- This will delete all of the files created by the build process -->
 
-    <target name="clean" depends="-init" description="Remove classes directory for clean build">
+    <target name="clean"  description="Remove classes directory for clean build">
 
         <delete dir="${bda.target.dir}" quiet="true" />
         <delete dir="${webapp.build.dir}" quiet="true" />
 
+
     </target>
 
-    <target name="-init" description="Sets up build are and initalizes variables">
+    <target name="-init" depends="clean"  description="Sets up build are and initalizes variables">
 
         <tstamp>
             <format property="BUILD_DATE" pattern="MMMM-d-yyyy hh:mm aa" locale="en,US"/>
@@ -117,13 +129,13 @@
         </javac>
 
         <!-- Copy internal property files -->
-        <copy todir="${webapp.classes.dir}" includeEmptyDirs="no" overwrite="true">
-            <fileset dir="${bda.src.dir}/java">
-                <patternset>
-                    <include name="**/*.properties"/>
-                </patternset>
-            </fileset>
-        </copy>
+<!--        <copy todir="${webapp.classes.dir}" includeEmptyDirs="no" overwrite="true">-->
+<!--            <fileset dir="${bda.src.dir}/java">-->
+<!--                <patternset>-->
+<!--                    <include name="**/*.properties"/>-->
+<!--                </patternset>-->
+<!--            </fileset>-->
+<!--        </copy>-->
 
     </target>
 
@@ -370,7 +382,7 @@
         <delete dir="${tomcat.server.path}/webapps/${project.name}" quiet="true" />
 
         <copy
-            file="${bda.dist.dir}/exploded/${project.name}-webapp/${webapp.war.name}"
+            file="${bda.dist.dir}/exploded/${project.name}-webapp/${project.name}.war"
             tofile="${tomcat.server.path}/webapps/${webapp.war.name}.bak"
             overwrite="true"
         />

@@ -1,4 +1,4 @@
-<project name="projectname" default="build" basedir=".">
+<project name="browser-util" default="build" basedir=".">
     <property file="build.properties" />
   
     <property name="resources.dir" value = "./resources" />
@@ -29,6 +29,7 @@
       
     <target name="clean" description="Delete the build directory">
         <delete dir="${build.dir}" />
+        <delete file="browser-util.jar"/>
     </target>
     <target name="init" depends="clean">
         <echo>JAVA_HOME: ${java.home}</echo>
@@ -37,7 +38,7 @@
   
     <target name="compile" depends="init"
         description="Compile source code">
-        <javac srcdir="${src.dir}" destdir="${build.dir}" >
+        <javac srcdir="${src.dir}" destdir="${build.dir}" debug="true">
             <classpath refid="classpath" />
             <include name="**/*.java" />
         </javac>

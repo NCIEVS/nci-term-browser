@@ -12,7 +12,7 @@
 <%@ page import="javax.faces.context.FacesContext" %>
 <%@ page import="org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference" %>
 <%@ page import="org.LexGrid.LexBIG.Utility.Iterators.ResolvedConceptReferencesIterator" %>
-<%@ pageimport="org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList " %>
+<%@ page import="org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList" %>
 <%@ page import="org.apache.logging.log4j.*" %>
 
 <%@ page import="org.LexGrid.LexBIG.LexBIGService.LexBIGService" %>

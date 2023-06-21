@@ -20,7 +20,7 @@ L-->
             </constructor-arg>
       </bean>
       
-      <bean id="EvsInterceptor" class="gov.nih.nci.system.client.proxy.EVSApplicationServiceProxy" singleton="false">
+      <bean id="EvsInterceptor" class="gov.nih.nci.system.client.proxy.EVSApplicationServiceProxy" scope="singleton">
             <property name="proxyFactory">
                   <bean class="gov.nih.nci.system.client.proxy.EVSProxyHelperImpl"/>
             </property>
@@ -39,7 +39,7 @@ L-->
 			</property>
       </bean>     
       
-       <bean id="AppService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean" singleton="false">
+       <bean id="AppService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean" scope="singleton">
             <property name="serviceUrl" value="http://lexevsapi.nci.nih.gov:80/lexevsapi42/http/applicationService"/>
             <property name="serviceInterface" value="gov.nih.nci.system.applicationservice.EVSApplicationService"/>
             <property name="httpInvokerRequestExecutor">

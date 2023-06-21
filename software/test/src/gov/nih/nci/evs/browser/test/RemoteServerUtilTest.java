@@ -86,18 +86,18 @@ public static LexBIGService createLexBIGService(String serviceUrl)
             _logger.debug("LexBIGService(remote): " + serviceUrl);
         }
         */
-        LexEVSApplicationService lexevsService = (LexEVSApplicationService)ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
+//        LexEVSApplicationService lexevsService = (LexEVSApplicationService)ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
         //lexevsService = registerAllSecurityTokens(lexevsService);
-String token = "10382";
-        lexevsService = registerSecurityToken(lexevsService, "MedDRA (Medical Dictionary for Regulatory Activities Terminology)",
-                        token);
-
-        return (LexBIGService) lexevsService;
-    }
-    catch (Exception e)
-    {
-        e.printStackTrace();
-    }
+//String token = "10382";
+//        lexevsService = registerSecurityToken(lexevsService, "MedDRA (Medical Dictionary for Regulatory Activities Terminology)",
+//                        token);
+//
+//        return (LexBIGService) lexevsService;
+//    }
+//    catch (Exception e)
+//    {
+//        e.printStackTrace();
+//    }
     return null;
 }
 
@@ -115,23 +115,23 @@ public static LexEVSApplicationService registerAllSecurityTokens(LexEVSApplicati
 */
 
 //KLO 100709
-public static LexEVSApplicationService registerSecurityToken(LexEVSApplicationService lexevsService, String codingScheme, String token) {
-    SecurityToken securityToken = new SecurityToken();
-    securityToken.setAccessToken(token);
-    Boolean retval = null;
-    try {
-        retval = lexevsService.registerSecurityToken(codingScheme, securityToken);
-        if(retval != null && retval.equals(Boolean.TRUE))   {
-            _logger.debug("Registration of SecurityToken was successful.");
-        }
-        else {
-            _logger.warn("WARNING: Registration of SecurityToken failed.");
-        }
-    } catch (Exception e) {
-        _logger.error("WARNING: Registration of SecurityToken failed.");
-    }
-    return lexevsService;
-}
+//public static LexEVSApplicationService registerSecurityToken(LexEVSApplicationService lexevsService, String codingScheme, String token) {
+//    SecurityToken securityToken = new SecurityToken();
+//    securityToken.setAccessToken(token);
+//    Boolean retval = null;
+//    try {
+//        retval = lexevsService.registerSecurityToken(codingScheme, securityToken);
+//        if(retval != null && retval.equals(Boolean.TRUE))   {
+//            _logger.debug("Registration of SecurityToken was successful.");
+//        }
+//        else {
+//            _logger.warn("WARNING: Registration of SecurityToken failed.");
+//        }
+//    } catch (Exception e) {
+//        _logger.error("WARNING: Registration of SecurityToken failed.");
+//    }
+//    return lexevsService;
+//}
 
 
 //KLO 100709
@@ -151,10 +151,10 @@ public static LexBIGService createLexBIGService(String serviceUrl, String coding
             return lbSvc;
         }
 
-        LexEVSApplicationService lexevsService = (LexEVSApplicationService)ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
+ //       LexEVSApplicationService lexevsService = (LexEVSApplicationService)ApplicationServiceProvider.getApplicationServiceFromUrl(serviceUrl, "EvsServiceInfo");
 
-        Boolean retval = false;
-        retval = lexevsService.registerSecurityToken(codingScheme, securityToken);
+//       Boolean retval = false;
+//        retval = lexevsService.registerSecurityToken(codingScheme, securityToken);
 
         if(retval.equals(Boolean.TRUE)) {
             //_logger.debug("Registration of SecurityToken was successful.");

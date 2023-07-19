@@ -189,20 +189,12 @@ public class AssertedValueSetUtils {
 		.build();
 
 		// KLO, 04162018
-<<<<<<< HEAD:software/browser-util/src/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
-		//if (serviceUrl == null) {
-		if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
-			service = new LexEVSResolvedValueSetServiceImpl();// LexEVSServiceHolder.instance().getLexEVSAppService().getLexEVSResolvedVSService(params);
-	    } else {
-		    service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
-	    }
-=======
+
 //		if (serviceUrl == null) {
 		    service = new LexEVSResolvedValueSetServiceImpl();// LexEVSServiceHolder.instance().getLexEVSAppService().getLexEVSResolvedVSService(params);
 //	    } else {
 //		    service = (LexEVSResolvedValueSetServiceImpl) getLexEVSAppService().getLexEVSResolvedVSService(params);
 //	    }
->>>>>>> 2022-07-29-v2.19-branch:software/browser-util/src/main/java/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
 		service.initParams(params);
 		return service;
 	}
@@ -217,16 +209,7 @@ public class AssertedValueSetUtils {
 		return list;
 	}
 
-<<<<<<< HEAD:software/browser-util/src/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
-	public List<CodingScheme> listAllResolvedValueSetsWithNoAssertedScheme() throws Exception {
-		long start = System.currentTimeMillis();
-		//LexEVSResolvedValueSetService service = getLexEVSAppService().getLexEVSResolvedVSService(null);
-		List<CodingScheme> list = service.listAllResolvedValueSets();
-		long end = System.currentTimeMillis();
-		System.out.println("Retrieving " + list.size() + " full scheme value sets: " + (end - start) + " mseconds");
-		return list;
-	}
-=======
+
 //	public List<CodingScheme> listAllResolvedValueSetsWithNoAssertedScheme() throws Exception {
 //		long start = System.currentTimeMillis();
 //		LexEVSResolvedValueSetService nullVsService = getLexEVSAppService().getLexEVSResolvedVSService(null);
@@ -235,7 +218,6 @@ public class AssertedValueSetUtils {
 //		System.out.println("Retrieving " + list.size() + " full scheme value sets: " + (end - start) + " mseconds");
 //		return list;
 //	}
->>>>>>> 2022-07-29-v2.19-branch:software/browser-util/src/main/java/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
 
 	public List<CodingScheme> listAllResolvedValueSetsWithMiniScheme() throws Exception {
 		long start = System.currentTimeMillis();
@@ -245,16 +227,7 @@ public class AssertedValueSetUtils {
 		return list;
 	}
 
-<<<<<<< HEAD:software/browser-util/src/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
-	public List<CodingScheme> listAllResolvedValueSetsWithMiniSchemeAndNoAssertedScheme() throws Exception {
-		long start = System.currentTimeMillis();
-		//LexEVSResolvedValueSetService service = getLexEVSAppService().getLexEVSResolvedVSService(null);
-		List<CodingScheme> schemes = service.getMinimalResolvedValueSetSchemes();
-		long end = System.currentTimeMillis();
-		System.out.println("Retrieving mini scheme value sets: " + (end - start) + " mseconds");
-		return schemes;
-	}
-=======
+
 //	public List<CodingScheme> listAllResolvedValueSetsWithMiniSchemeAndNoAssertedScheme() throws Exception {
 //		long start = System.currentTimeMillis();
 //		LexEVSResolvedValueSetService nullVsService = getLexEVSAppService().getLexEVSResolvedVSService(null);
@@ -263,7 +236,6 @@ public class AssertedValueSetUtils {
 //		System.out.println("Retrieving mini scheme value sets: " + (end - start) + " mseconds");
 //		return schemes;
 //	}
->>>>>>> 2022-07-29-v2.19-branch:software/browser-util/src/main/java/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public CodingScheme getResolvedValueSetForValueSetURI(String rvs_uri) throws Exception {
@@ -272,21 +244,13 @@ public class AssertedValueSetUtils {
 		return ref;
 	}
 
-<<<<<<< HEAD:software/browser-util/src/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
-	public ResolvedConceptReferenceList getValueSetEntitiesWithNoAssertedScheme(String rvs_uri) throws Exception {
-		//LexEVSResolvedValueSetService service = getLexEVSAppService().getLexEVSResolvedVSService(null);
-		URI uri = new URI(rvs_uri);
-		ResolvedConceptReferenceList refs = service.getValueSetEntitiesForURI(uri.toString());
-		return refs;
-	}
-=======
+
 //	public ResolvedConceptReferenceList getValueSetEntitiesWithNoAssertedScheme(String rvs_uri) throws Exception {
 //		LexEVSResolvedValueSetService nullVsService = getLexEVSAppService().getLexEVSResolvedVSService(null);
 //		URI uri = new URI(rvs_uri);
 //		ResolvedConceptReferenceList refs = nullVsService.getValueSetEntitiesForURI(uri.toString());
 //		return refs;
 //	}
->>>>>>> 2022-07-29-v2.19-branch:software/browser-util/src/main/java/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
 
 /*
 	@Test
@@ -318,21 +282,7 @@ public class AssertedValueSetUtils {
 	}
 
 
-<<<<<<< HEAD:software/browser-util/src/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
-	public List<CodingScheme> getResolvedValueSetsforConceptReferenceWithNoAssertedScheme(ConceptReference ref) {
-		if (ref == null) return null;
-		//LexEVSResolvedValueSetService service = getLexEVSAppService().getLexEVSResolvedVSService(null);
-		//Resolved value set coding scheme
-		/*
-		ConceptReference ref = new ConceptReference();
-		ref.setCode("005");
-		ref.setCodeNamespace("Automobiles");
-		ref.setCodingSchemeName("Automobiles");
-		*/
-		List<CodingScheme> schemes = service.getResolvedValueSetsForConceptReference(ref);
-		return schemes;
-	}
-=======
+
 //	public List<CodingScheme> getResolvedValueSetsforConceptReferenceWithNoAssertedScheme(ConceptReference ref) {
 //		if (ref == null) return null;
 //		LexEVSResolvedValueSetService nullVsService = getLexEVSAppService().getLexEVSResolvedVSService(null);
@@ -346,7 +296,7 @@ public class AssertedValueSetUtils {
 //		List<CodingScheme> schemes = nullVsService.getResolvedValueSetsForConceptReference(ref);
 //		return schemes;
 //	}
->>>>>>> 2022-07-29-v2.19-branch:software/browser-util/src/main/java/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
+
 /*
 	@Test(expected = RuntimeException.class)
     @Category(RemoveFromDistributedTests.class)
@@ -388,19 +338,13 @@ public class AssertedValueSetUtils {
 	}
 */
 
-<<<<<<< HEAD:software/browser-util/src/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
-	public List<AbsoluteCodingSchemeVersionReference> getValueSetURIAndVersionForCodeWithNoAssertedSource(String entityCode) throws LBException{
-		//LexEVSResolvedValueSetService service = getLexEVSAppService().getLexEVSResolvedVSService(null);
-		List<AbsoluteCodingSchemeVersionReference> refs = service.getResolvedValueSetsforEntityCode(entityCode);
-		return refs;
-	}
-=======
+
+
 //	public List<AbsoluteCodingSchemeVersionReference> getValueSetURIAndVersionForCodeWithNoAssertedSource(String entityCode) throws LBException{
 //		LexEVSResolvedValueSetService nullVsService = getLexEVSAppService().getLexEVSResolvedVSService(null);
 //		List<AbsoluteCodingSchemeVersionReference> refs = nullVsService.getResolvedValueSetsforEntityCode(entityCode);
 //		return refs;
 //	}
->>>>>>> 2022-07-29-v2.19-branch:software/browser-util/src/main/java/gov/nih/nci/evs/browser/utils/AssertedValueSetUtils.java
 
 	public List<CodingScheme> getResolvedValueSetsforConceptReference(ConceptReference ref) {
 		List<CodingScheme> schemes = service.getResolvedValueSetsForConceptReference(ref);

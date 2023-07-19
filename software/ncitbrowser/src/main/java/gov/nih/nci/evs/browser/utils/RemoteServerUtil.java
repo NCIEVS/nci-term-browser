@@ -91,25 +91,20 @@ public class RemoteServerUtil {
             // _logger.error("\t-- trying to connect to " + url + " instead.");
             ex.printStackTrace();
         }
-<<<<<<< HEAD:software/ncitbrowser/src/java/gov/nih/nci/evs/browser/utils/RemoteServerUtil.java
-        if (activate_server_monitor_thread) ServerMonitorThread.getInstance().monitor(null, "createLexBIGService");
-        return null;
-=======
+
         return null;
         //if (activate_server_monitor_thread) ServerMonitorThread.getInstance().monitor(null, "createLexBIGService");
         //return null;// createLexBIGService(url);
->>>>>>> 2022-07-29-v2.19-branch:software/ncitbrowser/src/main/java/gov/nih/nci/evs/browser/utils/RemoteServerUtil.java
+
     }
 
     public static LexBIGService createLexBIGService(String serviceUrl) {
 //        try {
             NCItBrowserProperties properties = null;
-<<<<<<< HEAD:software/ncitbrowser/src/java/gov/nih/nci/evs/browser/utils/RemoteServerUtil.java
-            if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
-=======
+
 
 //            if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
->>>>>>> 2022-07-29-v2.19-branch:software/ncitbrowser/src/main/java/gov/nih/nci/evs/browser/utils/RemoteServerUtil.java
+
 				try {
 					properties = NCItBrowserProperties.getInstance();
 					String lg_config_file =
@@ -302,21 +297,6 @@ public class RemoteServerUtil {
 
 
 
-<<<<<<< HEAD:software/ncitbrowser/src/java/gov/nih/nci/evs/browser/utils/RemoteServerUtil.java
-    public static LexEVSDistributed getLexEVSDistributed() {
-		String url = null;
-		NCItBrowserProperties properties = null;
-		try {
-            properties = NCItBrowserProperties.getInstance();
-            url = properties.getProperty(NCItBrowserProperties.EVS_SERVICE_URL);
-            return getLexEVSDistributed(url);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        if (activate_server_monitor_thread) ServerMonitorThread.getInstance().monitor(null, "getLexEVSDistributed");
-        return null;
-	}
-=======
 //    public static LexEVSDistributed getLexEVSDistributed() {
 //		String url = null;//"http://ncias-d499-v:29780/lexevsapi61";
 //		NCItBrowserProperties properties = null;
@@ -330,7 +310,6 @@ public class RemoteServerUtil {
 //        if (activate_server_monitor_thread) ServerMonitorThread.getInstance().monitor(null, "getLexEVSDistributed");
 //        return null;
 //	}
->>>>>>> 2022-07-29-v2.19-branch:software/ncitbrowser/src/main/java/gov/nih/nci/evs/browser/utils/RemoteServerUtil.java
 
 
 //    public static LexEVSDistributed getLexEVSDistributed(String serviceUrl) {
@@ -353,20 +332,7 @@ public class RemoteServerUtil {
 	}
 
     public static LexEVSValueSetDefinitionServices getLexEVSValueSetDefinitionServices(String serviceUrl) {
-<<<<<<< HEAD:software/ncitbrowser/src/java/gov/nih/nci/evs/browser/utils/RemoteServerUtil.java
-		if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
-			NCItBrowserProperties properties = null;
-			try {
-				NCItBrowserProperties.getInstance();
-				String lg_config_file =
-					properties
-						.getProperty(NCItBrowserProperties.LG_CONFIG_FILE);
-				System.setProperty(NCItBrowserProperties.LG_CONFIG_FILE,
-					lg_config_file);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-=======
+
 		//if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
                 NCItBrowserProperties properties = null;
                 try {
@@ -379,7 +345,6 @@ public class RemoteServerUtil {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
->>>>>>> 2022-07-29-v2.19-branch:software/ncitbrowser/src/main/java/gov/nih/nci/evs/browser/utils/RemoteServerUtil.java
 
 			return LexEVSValueSetDefinitionServicesImpl.defaultInstance();
 		//}

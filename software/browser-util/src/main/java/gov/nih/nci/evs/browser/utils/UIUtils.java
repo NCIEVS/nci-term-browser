@@ -365,6 +365,7 @@ public class UIUtils {
 		HashMap qualifierHashMap = spec.getQualifierHashMap();
 		if (qualifierHashMap == null) return null;
 		Vector nv_vec = spec.getKeyVec();
+		/*
 		if (nv_vec == null) {
 			nv_vec = new Vector();
 			Iterator entries = qualifierHashMap.entrySet().iterator();
@@ -376,6 +377,9 @@ public class UIUtils {
 			}
 			nv_vec = new SortUtils().quickSort(nv_vec);
 		}
+		*/
+		nv_vec = new SortUtils().quickSort(nv_vec);
+
 		String description = spec.getDescription();
 		if (description != null) {
 			buf.append(description).append("\n");
@@ -415,14 +419,26 @@ public class UIUtils {
             String value = "";
 
             if (w.size() > 0) {
-            	name = (String) w.elementAt(0);
+            	name = (String) w.elementAt(0); // 0
 			}
 
 			if (w.size() > 1) {
-            	value = (String) w.elementAt(1);
+            	value = (String) w.elementAt(1);  // 1
 			}
-            String code = null;
-            String namespace = null;
+            String code = null; //2
+            String codingSchemeName = null; //3
+            String namespace = null; //4
+
+/*
+													String s =
+														relaValue + "|" + pt + "|"
+															+ ac.getConceptCode() + "|"
+															+ ac.getCodingSchemeName() + "|"
+															+ ac.getCodeNamespace();
+*/
+
+
+
 /*
             if (w.size() > 2) {
 				code = (String) w.elementAt(2);
@@ -431,9 +447,10 @@ public class UIUtils {
 				namespace = (String) w.elementAt(3);
 			}
 */
-			if (w.size() > 3) {
+			if (w.size() > 4) {
 				code = (String) w.elementAt(2);
-				namespace = (String) w.elementAt(3);
+				codingSchemeName = (String) w.elementAt(3);
+				namespace = (String) w.elementAt(4);
 			}
 
              Vector qualifiers = (Vector) qualifierHashMap.get(n_v);
@@ -580,6 +597,13 @@ public class UIUtils {
 					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + value + "</td>").append("\n");
 				}
 			}
+
+
+			//debug
+			buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + n_v + "</td>").append("\n");
+
+
+
 			buf.append("	</tr>").append("\n");
 		}
 		buf.append("</table>").append("\n");

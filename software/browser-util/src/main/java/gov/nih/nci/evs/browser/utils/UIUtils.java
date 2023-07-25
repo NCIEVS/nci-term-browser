@@ -290,6 +290,8 @@ public class UIUtils {
 				String codingScheme = null;
 				String namespace = null;
 				String qualifiers = null;
+
+				/*
 				if (u.size() > 4) {
 					code = (String) u.elementAt(2);
 					codingScheme = (String) u.elementAt(3);
@@ -298,6 +300,16 @@ public class UIUtils {
 				if (u.size() > 5) {
 					qualifiers = (String) u.elementAt(5);
 				}
+				*/
+//KLO
+				if (u.size() > 3) {
+					code = (String) u.elementAt(2);
+					namespace = (String) u.elementAt(3);
+				}
+				if (u.size() > 4) {
+					qualifiers = (String) u.elementAt(4);
+				}
+
 				if (qualifiers != null) {
 					String key = name + "|" + value + "|" + code + "|" + namespace;
 					keyVec.add(key);
@@ -448,9 +460,6 @@ public class UIUtils {
 				  buf.append("	<tr class=\"dataRowLight\">").append("\n");
 			}
 			if (qualifierColumn == 0) {
-
-
-
                   if (rel_type == null || !rel_type.startsWith("type_inverse")) {
 					  buf.append("<td class=\"dataCellText\" valign=\"top\">").append("\n");
 					  buf.append(Constants.INDENT_HALF + name).append("\n");

@@ -95,7 +95,6 @@ public class RemoteServerUtil {
         return null;
         //if (activate_server_monitor_thread) ServerMonitorThread.getInstance().monitor(null, "createLexBIGService");
         //return null;// createLexBIGService(url);
-
     }
 
     public static LexBIGService createLexBIGService(String serviceUrl) {

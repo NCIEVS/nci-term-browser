@@ -91,6 +91,7 @@ public class RemoteServerUtil {
             // _logger.error("\t-- trying to connect to " + url + " instead.");
             ex.printStackTrace();
         }
+
         return null;
         //if (activate_server_monitor_thread) ServerMonitorThread.getInstance().monitor(null, "createLexBIGService");
         //return null;// createLexBIGService(url);
@@ -100,7 +101,9 @@ public class RemoteServerUtil {
 //        try {
             NCItBrowserProperties properties = null;
 
+
 //            if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
+
 				try {
 					properties = NCItBrowserProperties.getInstance();
 					String lg_config_file =
@@ -328,6 +331,7 @@ public class RemoteServerUtil {
 	}
 
     public static LexEVSValueSetDefinitionServices getLexEVSValueSetDefinitionServices(String serviceUrl) {
+
 		//if (serviceUrl == null || serviceUrl.compareTo("") == 0 || serviceUrl.compareToIgnoreCase("null") == 0) {
                 NCItBrowserProperties properties = null;
                 try {

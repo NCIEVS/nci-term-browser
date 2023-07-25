@@ -282,7 +282,8 @@ public class UIUtils {
 		if (list != null && list.size() > 0) {
 		    for (int i=0; i<list.size(); i++) {
 				String line = (String) list.get(i);
-				Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line);
+				//Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line);
+				Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line, '|');
 				String name = (String) u.elementAt(0);
 				String value = (String) u.elementAt(1);
 				String code = null;
@@ -481,7 +482,8 @@ public class UIUtils {
 					buf.append("			 </td></tr>").append("\n");
 					for (int j = 0; j < qualifiers.size(); j++) {
 						String q = (String) qualifiers.elementAt(j);
-						Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q);
+						//// KLO
+						Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q, '|');
 
 						String qualifier_name = "";
 						String qualifier_value = "";
@@ -531,7 +533,8 @@ public class UIUtils {
 					buf.append("			 </td></tr>").append("\n");
 					for (int j = 0; j < qualifiers.size(); j++) {
 						String q = (String) qualifiers.elementAt(j);
-						Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q);
+						//KLO
+						Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q, '|');
 
 						String qualifier_name = "";
 						String qualifier_value = "";

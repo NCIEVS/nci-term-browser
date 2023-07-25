@@ -482,7 +482,7 @@ public class UIUtils {
 					buf.append("			 </td></tr>").append("\n");
 					for (int j = 0; j < qualifiers.size(); j++) {
 						String q = (String) qualifiers.elementAt(j);
-						//// KLO
+						// KLO
 						Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(q, '|');
 
 						String qualifier_name = "";

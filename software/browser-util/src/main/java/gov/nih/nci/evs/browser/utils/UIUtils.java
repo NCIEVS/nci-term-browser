@@ -284,6 +284,9 @@ public class UIUtils {
 				String line = (String) list.get(i);
 				//Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line);
 				Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line, '|');
+
+				//Utils.dumpVector(line, u);
+
 				String name = (String) u.elementAt(0);
 				String value = (String) u.elementAt(1);
 				String code = null;
@@ -291,7 +294,6 @@ public class UIUtils {
 				String namespace = null;
 				String qualifiers = null;
 
-				/*
 				if (u.size() > 4) {
 					code = (String) u.elementAt(2);
 					codingScheme = (String) u.elementAt(3);
@@ -300,8 +302,8 @@ public class UIUtils {
 				if (u.size() > 5) {
 					qualifiers = (String) u.elementAt(5);
 				}
-				*/
-//KLO
+
+/*
 				if (u.size() > 3) {
 					code = (String) u.elementAt(2);
 					namespace = (String) u.elementAt(3);
@@ -309,9 +311,9 @@ public class UIUtils {
 				if (u.size() > 4) {
 					qualifiers = (String) u.elementAt(4);
 				}
-
+*/
 				if (qualifiers != null) {
-					String key = name + "|" + value + "|" + code + "|" + namespace;
+					String key = name + "|" + value + "|" + code + "|" + codingScheme + "|" + namespace;
 					keyVec.add(key);
 					Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(qualifiers, "$");
 					Vector w2 = new Vector();
@@ -322,12 +324,14 @@ public class UIUtils {
 					}
 					qualifierHashMap.put(key, w2);
 				} else {
-					String key = name + "|" + value + "|" + code + "|" + namespace;
+					String key = name + "|" + value + "|" + code + "|" + codingScheme + "|" + namespace;
 					keyVec.add(key);
 					qualifierHashMap.put(key, new Vector());
 				}
 			}
 	    }
+
+	    //Utils.dumpVector("keyVec", keyVec);
 
 	    return new HTMLTableSpec(
 		    description,
@@ -361,6 +365,7 @@ public class UIUtils {
 
     public String generateHTMLTable(HTMLTableSpec spec, String codingScheme, String version, String rel_type) {
 		if (spec == null) return null;
+
 		StringBuffer buf = new StringBuffer();
 		HashMap qualifierHashMap = spec.getQualifierHashMap();
 		if (qualifierHashMap == null) return null;
@@ -379,6 +384,7 @@ public class UIUtils {
 		}
 		*/
 		nv_vec = new SortUtils().quickSort(nv_vec);
+		//Utils.dumpVector("nv_vec", nv_vec);
 
 		String description = spec.getDescription();
 		if (description != null) {
@@ -411,9 +417,12 @@ public class UIUtils {
 		int n = 0;
         for (int i = 0; i < nv_vec.size(); i++) {
             String n_v = (String) nv_vec.elementAt(i);
+
             //Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v, '$');
             //KLO, 11032022
             Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v, '|');
+
+            //Utils.dumpVector(n_v, w);
 
             String name = "";
             String value = "";
@@ -454,6 +463,9 @@ public class UIUtils {
 			}
 
              Vector qualifiers = (Vector) qualifierHashMap.get(n_v);
+if (qualifiers != null) {
+//Utils.dumpVector("qualifiers", qualifiers);
+}
 
 			 boolean is_maps_to = false;
 
@@ -597,12 +609,6 @@ public class UIUtils {
 					buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + value + "</td>").append("\n");
 				}
 			}
-
-
-			//debug
-			buf.append("	  <td class=\"dataCellText\" scope=\"row\" valign=\"top\">" + n_v + "</td>").append("\n");
-
-
 
 			buf.append("	</tr>").append("\n");
 		}
@@ -764,10 +770,6 @@ public class UIUtils {
 				String value = p.getValue().getContent();
 				//String n_v = name + "$" + value;
 				String n_v = name + "$" + value + "$" + lcv;
-
-				System.out.println("n_v: " + n_v);
-
-
 				lcv++;
 				Vector qualifier_vec = new Vector();
 				PropertyQualifier[] qualifiers = p.getPropertyQualifier();
@@ -777,9 +779,6 @@ public class UIUtils {
 					String qualifier_name = q.getPropertyQualifierName();
 					String qualifier_value = q.getValue().getContent();
 					String t = qualifier_name + "|" + qualifier_value;
-
-					System.out.println("t: " + t);
-
 					qualifier_vec.add(t);
 				}
 
@@ -891,9 +890,6 @@ public class UIUtils {
 		int n = 0;
         for (int i = 0; i < nv_vec.size(); i++) {
             String n_v = (String) nv_vec.elementAt(i);
-
-            //System.out.println("UIUtils n_v: " + n_v);
-
             Vector w = gov.nih.nci.evs.browser.utils.StringUtils.parseData(n_v, '$');
 
             //Utils.dumpVector(n_v, w);

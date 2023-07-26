@@ -1,6 +1,5 @@
 package gov.nih.nci.evs.browser.utils;
 
-
 import gov.nih.nci.evs.browser.bean.MappingData;
 import gov.nih.nci.evs.browser.common.Constants;
 import gov.nih.nci.evs.browser.properties.*;

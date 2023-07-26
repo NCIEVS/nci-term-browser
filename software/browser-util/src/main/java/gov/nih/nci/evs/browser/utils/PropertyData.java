@@ -325,6 +325,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 				properties_to_display_linktext.add(null);
 		    }
 		}
+		if (displayItemList != null) {
 		for (int i=0; i<displayItemList.size(); i++) {
 			DisplayItem displayItem = (DisplayItem) displayItemList.get(i);
 			if (displayItem == null) return;
@@ -352,6 +353,7 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 				external_source_codes_linktext.add(displayItem.getHyperlinkText());
 			}
 		}
+	    }
 
 		if (codingScheme.compareTo(Constants.NCIT_CS_NAME) == 0 || codingScheme.compareTo(Constants.NCI_METATHESAURUS) == 0) {
 			descendantCodes = histUtils.getDescendantCodes(codingScheme, null, null, curr_concept.getEntityCode());
@@ -902,6 +904,10 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 //[NCITERM-746] Update of the Relationships Display.
     public String generateRelationshipTable(String codingScheme, String version, String code, String namespace, String rel_type, boolean display_qualifiers) {
         boolean display_equiv_expression = false;
+
+
+System.out.println("*** In PropertyData generateRelationshipTable ...");
+
         String equivalanceClass = null;
         if (isNCIT(codingScheme) && rel_type.compareTo(Constants.TYPE_ROLE) == 0) {
 			try {
@@ -965,13 +971,32 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 			buf.append("<p></p>");
 			return buf.toString();
 		}
+
+		System.out.println("*** exiting generateRelationshipTable ...redirecting... ");
+
 		return generateRelationshipTable(codingScheme, version, code, namespace, rel_type, display_qualifiers, null);
 	}
 
+
+
+   public static void dumpData(String label, ArrayList list) {
+	   if (list == null) return;
+	   System.out.println(label);
+	   for (int i=0; i<list.size(); i++) {
+		   String t = (String) list.get(i);
+		   System.out.println(t);
+	   }
+   }
+
+
     public String generateRelationshipTable(String codingScheme, String version, String code, String namespace, String rel_type,
         boolean display_qualifiers, ArrayList list) {
+
+		System.out.println("*** redirect to generateRelationshipTable ...redirect " + rel_type);
+
+        HashMap hmap = null;
         if (list == null) {
-			HashMap hmap = null;
+
 			if (relationshipHashMap != null) {
 				hmap = relationshipHashMap;
 			} else {
@@ -988,7 +1013,25 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 			isEmpty = true;
 		}
         String description = uiUtils.getRelationshipTableLabel(defaultLabel, rel_type, isEmpty);
+
+ 		System.out.println("*** generateRelationshipTable ...description " + description);
+
+
         if (isEmpty) return description;
+
+ ArrayList superconcepts = (ArrayList) hmap.get(Constants.TYPE_SUPERCONCEPT);
+ ArrayList subconcepts = (ArrayList) hmap.get(Constants.TYPE_SUBCONCEPT);
+ ArrayList roles = (ArrayList) hmap.get(Constants.TYPE_ROLE);
+ ArrayList associations = (ArrayList) hmap.get(Constants.TYPE_ASSOCIATION);
+ ArrayList inverse_roles = (ArrayList) hmap.get(Constants.TYPE_INVERSE_ROLE);
+ ArrayList inverse_associations = (ArrayList) hmap.get(Constants.TYPE_INVERSE_ASSOCIATION);
+
+ dumpData("*** " + Constants.TYPE_SUPERCONCEPT, superconcepts);
+ dumpData("*** " + Constants.TYPE_SUPERCONCEPT, subconcepts);
+ dumpData("*** " + Constants.TYPE_ROLE, roles);
+ dumpData("*** " + Constants.TYPE_ASSOCIATION, associations);
+ dumpData("*** " + Constants.TYPE_INVERSE_ROLE, inverse_roles);
+ dumpData("*** " + Constants.TYPE_INVERSE_ASSOCIATION, inverse_associations);
 
 		String firstColumnHeading = null;
 		String secondColumnHeading = null;
@@ -1031,7 +1074,10 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
 				qualifierColumn,
 				list);
 
+			System.out.println("*** get spec from uiUtils.relationshipList2HTMLTableSpec ");
+            System.out.println("*** calling generateHTMLTable " + rel_type);
 			return uiUtils.generateHTMLTable(spec, codingScheme, version, rel_type);
+
 		} catch (Exception ex) {
 			System.out.println("Exception: UIUtils.relationshipList2HTMLTableSpec");
 		}

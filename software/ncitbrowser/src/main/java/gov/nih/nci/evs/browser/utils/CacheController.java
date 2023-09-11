@@ -1,9 +1,14 @@
 package gov.nih.nci.evs.browser.utils;
 
+import java.time.Duration;
 import java.util.*;
+import java.util.stream.Collectors;
 
-import net.sf.ehcache.*;
-
+import org.ehcache.*;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.config.builders.ExpiryPolicyBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.LexGrid.LexBIG.DataModel.Core.*;
 import org.LexGrid.commonTypes.*;
 import org.LexGrid.concepts.*;
@@ -96,37 +101,63 @@ public class CacheController {
     public static final String CHILDREN_NODES = "children_nodes";
 
     public static final String ONTOLOGY_NODE_NS = "ontology_node_ns";
+    
+  //  public static final String TREE_CACHE_NAME = "treeCache";
+    public static final String TREE_CACHE_NAME = "treeCache";
+    public static final String ROOT_CACHE_NAME = "rootCache";
 
     private static CacheController _instance = null;
     private static CacheManager _cacheManager = null;
-    private static Cache _cache = null;
+  //  private static Cache<String, TreeItem> _TreeCache = null;
+    private static Cache<String, JSONArray> treeCache = null;
+    private static Cache<String, String> rootCache = null;
 
 
     static {
-		String cacheName = "treeCache";
-		_cacheManager = getCacheManager();
-        if (!_cacheManager.cacheExists(cacheName)) {
-            _cacheManager.addCache(cacheName);
-			_logger.debug("cache added");
+    	_cacheManager = getCacheManager();
+//		String cacheName = "treeCache";
+//		_cacheManager = getCacheManager();
+//        if (!_cacheManager.cacheExists(cacheName)) {
+//            _cacheManager.addCache(cacheName);
+//			_logger.debug("cache added");
+//        }
+//        _TreeCache = _cacheManager.getCache(TREE_CACHE_NAME, String.class, TreeItem.class);
+ //       if(_TreeCache == null) {_cacheManager.createCache(TREE_CACHE_NAME, getTreeItemCacheConfiguration());}
+       treeCache = _cacheManager.getCache(TREE_CACHE_NAME, String.class, JSONArray.class);
+        if(treeCache == null) {_cacheManager.createCache(TREE_CACHE_NAME, getTreeCacheConfiguration());}
+        rootCache = _cacheManager.getCache(ROOT_CACHE_NAME, String.class, String.class);
+        if(rootCache == null) {_cacheManager.createCache(ROOT_CACHE_NAME, getRootCacheConfiguration());}
+    }
+
+    
+
+    private CacheController(String cacheName) {
+        if (cacheName.equals(ROOT_CACHE_NAME)) {
+        	if( _cacheManager.getCache(cacheName, String.class, String.class) == null) {
+           rootCache = _cacheManager.createCache(cacheName, getRootCacheConfiguration());
+            _logger.debug("root cache added");}
         }
-        _cache = _cacheManager.getCache(cacheName);
+        else if (cacheName.equals(TREE_CACHE_NAME)) {
+        	if( _cacheManager.getCache(cacheName, String.class, JSONArray.class) == null) {
+        		treeCache = _cacheManager.createCache(cacheName, getTreeCacheConfiguration());
+        }
+        }
     }
 
 
-    public CacheController(String cacheName) {
-        if (!_cacheManager.cacheExists(cacheName)) {
-            _cacheManager.addCache(cacheName);
-        }
-
-        _logger.debug("cache added");
-        _cache = _cacheManager.getCache(cacheName);
-    }
-
-
-    public static CacheController getInstance() {
+    public static CacheController getRootInstance() {
         synchronized (CacheController.class) {
             if (_instance == null) {
-                _instance = new CacheController("treeCache");
+                _instance = new CacheController(ROOT_CACHE_NAME);
+            }
+        }
+        return _instance;
+    }
+    
+    public static CacheController getTreeInstance() {
+        synchronized (CacheController.class) {
+            if (_instance == null) {
+                _instance = new CacheController(TREE_CACHE_NAME);
             }
         }
         return _instance;
@@ -139,25 +170,59 @@ public class CacheController {
 
 
     private static CacheManager getCacheManager() {
+    	try {
         if (_cacheManager != null)
             return _cacheManager;
-        try {
-            NCItBrowserProperties properties =
-                NCItBrowserProperties.getInstance();
-            String ehcache_xml_pathname =
-                properties
-                    .getProperty(NCItBrowserProperties.EHCACHE_XML_PATHNAME);
-            _cacheManager = new CacheManager(ehcache_xml_pathname);
-            return _cacheManager;
+		_cacheManager = CacheManagerBuilder
+				.newCacheManagerBuilder()
+				.build();
+		_cacheManager.init();
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return null;
     }
+    
+	
+	public static CacheConfigurationBuilder<String, JSONArray> getTreeCacheConfiguration() {
+		
+			
+			return CacheConfigurationBuilder
+					.newCacheConfigurationBuilder(String.class, JSONArray.class, 
+							ResourcePoolsBuilder
+							.heap(10000))
+					.withExpiry(
+							ExpiryPolicyBuilder
+							.timeToLiveExpiration(
+									Duration
+									.ofSeconds(7200)));
+		}
+	
+	public static CacheConfigurationBuilder<String, String> getRootCacheConfiguration() {
+		
+		
+		return CacheConfigurationBuilder
+				.newCacheConfigurationBuilder(String.class, String.class, 
+						ResourcePoolsBuilder
+						.heap(10000))
+				.withExpiry(
+						ExpiryPolicyBuilder
+						.timeToLiveExpiration(
+								Duration
+								.ofSeconds(7200)));
+	}
 
     public String[] getCacheNames() {
-        return getCacheManager().getCacheNames();
+    	int size = getCacheManager()
+        		.getRuntimeConfiguration()
+        		.getCacheConfigurations().keySet().size();
+        return getCacheManager()
+        		.getRuntimeConfiguration()
+        		.getCacheConfigurations()
+        		.keySet().stream()
+        		.collect(Collectors.toList())
+        		.toArray(new String[size]);
     }
 
 /*
@@ -166,16 +231,20 @@ public class CacheController {
         // cache.flush();
     }
 */
-    public boolean containsKey(Object key) {
-        return _cache.isKeyInCache(key);
+    public boolean containsTreeKey(Object key) {
+        return treeCache.containsKey((String)key);
+    }
+    
+    public boolean containsRootKey(Object key) {
+        return rootCache.containsKey((String)key);
     }
 
-    public boolean containsValue(Object value) {
-        return _cache.isValueInCache(value);
-    }
+//    public boolean containsTreeValue(Object value) {
+//        return treeCache.isValueInCache(value);
+//    }
 
-    public boolean isEmpty() {
-        return _cache.getSize() > 0;
+    public boolean isTreeCacheEmpty() {
+        return treeCache.getAll(new HashSet<String>()).isEmpty();
     }
 
     public JSONArray getSubconcepts(String scheme, String version, String code) {
@@ -333,12 +402,12 @@ public class CacheController {
 
         String key = scheme + "$" + version + "$" + code + "$" + ns;
         if (fromCache) {
-            Element element = _cache.get(key);
-            if (element != null) {
-				if (element.getValue() instanceof JSONArray) {
-                	nodeArray = (JSONArray) element.getValue();
-				}
-            }
+            nodeArray = treeCache.get(key);
+//            if (element != null) {
+//				if (element.getValue() instanceof JSONArray) {
+//                	nodeArray = (JSONArray) element.getValue();
+//				}
+//            }
         }
         //KLO, 090215
         if (nodeArray == null) {
@@ -351,8 +420,8 @@ public class CacheController {
 
 				if (fromCache) {
 					try {
-						Element element = new Element(key, nodeArray);
-						_cache.put(element);
+						//Element element = new Element(key, nodeArray);
+						treeCache.put(key, nodeArray);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
@@ -385,10 +454,7 @@ public class CacheController {
         String key = scheme + "$" + version + "subvsd$" + code;
         JSONArray nodeArray = null;
         if (fromCache) {
-            Element element = _cache.get(key);
-            if (element != null) {
-                nodeArray = (JSONArray) element.getValue();
-            }
+            nodeArray = treeCache.get(key);
         }
         if (nodeArray == null) {
             _logger.debug("Not in cache -- calling getSubValueSets ");
@@ -398,8 +464,7 @@ public class CacheController {
 
             if (nodeArray != null && fromCache) {
                 try {
-                    Element element = new Element(key, nodeArray);
-                    _cache.put(element);
+                    treeCache.put(key, nodeArray);
                 } catch (Exception ex) {
 
                 }
@@ -416,10 +481,7 @@ public class CacheController {
         boolean fromCache = true;
         JSONArray nodeArray = null;
         if (fromCache) {
-            Element element = _cache.get(key);
-            if (element != null) {
-                nodeArray = (JSONArray) element.getValue();
-            }
+            nodeArray = treeCache.get(key);
         }
         if (nodeArray == null) {
             _logger.debug("Not in cache -- calling getSubValueSets ");
@@ -428,8 +490,7 @@ public class CacheController {
 
             if (nodeArray != null && fromCache) {
 				try {
-					Element element = new Element(key, nodeArray);
-					_cache.put(element);
+					treeCache.put(key, nodeArray);
 				} catch (Exception ex) {
 
 				}
@@ -447,10 +508,7 @@ public class CacheController {
         String key = "sub_vsd$" + code;
         JSONArray nodeArray = null;
         if (fromCache) {
-            Element element = _cache.get(key);
-            if (element != null) {
-                nodeArray = (JSONArray) element.getValue();
-            }
+            nodeArray = treeCache.get(key);
         }
         if (nodeArray == null) {
             _logger.debug("Not in cache -- calling getSubValueSets ");
@@ -459,8 +517,7 @@ public class CacheController {
 
             if (nodeArray != null && fromCache) {
                 try {
-                    Element element = new Element(key, nodeArray);
-                    _cache.put(element);
+                    treeCache.put(key, nodeArray);
                 } catch (Exception ex) {
 
                 }
@@ -491,10 +548,7 @@ public class CacheController {
         }
 
         if (fromCache) {
-            Element element = _cache.get(key);
-            if (element != null) {
-                nodesArray = (JSONArray) element.getValue();
-            }
+            nodesArray = treeCache.get(key);
         }
 
         if (nodesArray == null) {
@@ -539,8 +593,7 @@ public class CacheController {
                 //nodeArray = list2JSONArray(scheme, list);
 
                 if (fromCache) {
-                    Element element = new Element(key, nodesArray);
-                    _cache.put(element);
+                    treeCache.put(key, nodesArray);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -559,10 +612,7 @@ public class CacheController {
         JSONArray nodesArray = null;
 
         if (fromCache) {
-            Element element = _cache.get(key);
-            if (element != null) {
-                nodesArray = (JSONArray) element.getValue();
-            }
+            nodesArray = treeCache.get(key);
         }
 
         if (nodesArray == null) {
@@ -602,8 +652,7 @@ public class CacheController {
                 //nodeArray = list2JSONArray(scheme, list);
 
                 if (fromCache) {
-                    Element element = new Element(key, nodesArray);
-                    _cache.put(element);
+                    treeCache.put(key, nodesArray);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -628,10 +677,7 @@ public class CacheController {
         JSONArray nodesArray = null;
 
         if (fromCache) {
-            Element element = _cache.get(key);
-            if (element != null) {
-                nodesArray = (JSONArray) element.getValue();
-            }
+            nodesArray = treeCache.get(key);
         }
 
         if (nodesArray == null) {
@@ -676,8 +722,7 @@ public class CacheController {
                 }
 
                 if (fromCache) {
-                    Element element = new Element(key, nodesArray);
-                    _cache.put(element);
+                    treeCache.put(key, nodesArray);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -722,12 +767,7 @@ public class CacheController {
         }
 
         if (fromCache) {
-            Element element = _cache.get(key);
-            if (element != null) {
-                // _logger.debug("getRootConcepts fromCache element != null returning list"
-                // );
-                nodeArray = (JSONArray) element.getValue();
-            }
+            nodeArray = treeCache.get(key);
         }
 
         if (nodeArray == null) {
@@ -740,8 +780,7 @@ public class CacheController {
                 nodeArray = list2JSONArray(scheme, list);
 
                 if (fromCache) {
-                    Element element = new Element(key, nodeArray);
-                    _cache.put(element);
+                    treeCache.put(key, nodeArray);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -896,10 +935,8 @@ public class CacheController {
 
         String key = "expand_src_vs_tree$" + node_id;
         JSONArray nodesArray = null;
-        Element element = _cache.get(key);
-        if (element != null) {
-            nodesArray = (JSONArray) element.getValue();
-        }
+        nodesArray = treeCache.get(key);
+
 
         if (nodesArray == null) {
             _logger.debug("Not in cache -- calling expand_src_vs_tree_exclude_src_nodes " + node_id);
@@ -909,8 +946,8 @@ public class CacheController {
 				HashMap hmap = DataUtils.getValueSetHierarchy().expand_src_vs_tree_exclude_src_nodes(node_id);
 
 				nodesArray = hashMap2JSONArray(hmap);
-                element = new Element(key, nodesArray);
-                _cache.put(element);
+
+                treeCache.put(key, nodesArray);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -961,17 +998,14 @@ public class CacheController {
         List list = null;// new ArrayList();
         String key = scheme + "$" + version + "$" + code + "$path";
         JSONArray nodeArray = null;
-        Element element = _cache.get(key);
-        if (element != null) {
-            nodeArray = (JSONArray) element.getValue();
-        }
+        nodeArray = treeCache.get(key);
+
 
         if (nodeArray == null) {
             _logger.debug("Not in cache -- calling getHierarchyRoots ");
             try {
                 nodeArray = getPathsToRoots(scheme, version, code, true);
-                element = new Element(key, nodeArray);
-                _cache.put(element);
+                treeCache.put(key, nodeArray);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -1273,7 +1307,7 @@ public class CacheController {
 	    if (versionOrTag != null && versionOrTag.getVersion() != null) version = versionOrTag.getVersion();
 
 
-        if (!CacheController.getInstance().containsKey(getSubConceptKey(
+        if (!CacheController.getRootInstance().containsRootKey(getSubConceptKey(
             codingScheme, version, code))) {
             _logger.debug("SubConcepts Not Found In Cache.");
             TreeService treeService =
@@ -1288,11 +1322,10 @@ public class CacheController {
             String json =
                 treeService.getJsonConverter().buildChildrenNodes(node);
 
-            _cache.put(new Element(getSubConceptKey(codingScheme, version, code), json));
+            rootCache.put(getSubConceptKey(codingScheme, version, code), json);
             return json;
         }
-        return (String) _cache.get(getSubConceptKey(codingScheme, version, code))
-            .getObjectValue();
+        return (String) rootCache.get(getSubConceptKey(codingScheme, version, code));
     }
 
 /*
@@ -1306,8 +1339,8 @@ public class CacheController {
 
     public static String getTree(String codingScheme,
         CodingSchemeVersionOrTag versionOrTag, String code, String namespace) {
-        if (!CacheController.getInstance()
-            .containsKey(getTreeKey(codingScheme, code))) {
+        if (!CacheController.getRootInstance()
+            .containsRootKey(getTreeKey(codingScheme, code))) {
             _logger.debug("Tree Not Found In Cache.");
 
             TreeService treeService =
@@ -1325,11 +1358,10 @@ public class CacheController {
                 treeService.getJsonConverter().buildJsonPathFromRootTree(
                     tree.getCurrentFocus());
 
-            _cache.put(new Element(getTreeKey(tree, versionOrTag.getVersion()), json));
+            rootCache.put(getTreeKey(tree, versionOrTag.getVersion()), json);
             return json;
         }
-        return (String) _cache.get(getTreeKey(codingScheme, versionOrTag.getVersion(), code))
-            .getObjectValue();
+        return (String) rootCache.get(getTreeKey(codingScheme, versionOrTag.getVersion(), code));
     }
 
 
@@ -1346,8 +1378,8 @@ public class CacheController {
         String codingSchemeVersion = ref.getCodingSchemeVersion();
         String code = ref.getCode();
 
-        if (!CacheController.getInstance()
-            .containsKey(getTreeKey(codingScheme, code))) {
+        if (!CacheController.getRootInstance()
+            .containsRootKey(getTreeKey(codingScheme, code))) {
             _logger.debug("Tree Not Found In Cache.");
             TreeService treeService =
                 TreeServiceFactory.getInstance().getTreeService(
@@ -1368,7 +1400,7 @@ public class CacheController {
            String treeKey = getTreeKey(tree, codingSchemeVersion);
            //if (treeKey == null) return;
 
-           _cache.put(new Element(treeKey, json));
+           rootCache.put(treeKey, json);
         }
     }
 /*
@@ -1452,9 +1484,8 @@ public class CacheController {
         */
 
         if (fromCache) {
-            Element element = _cache.get(key);
-            if (element != null) {
-                nodeArray = (JSONArray) element.getValue();
+            nodeArray = treeCache.get(key);
+            if (nodeArray != null) {
                 _logger.debug("Retrieved source value set tree from cache.");
                 return nodeArray;
             }
@@ -1472,8 +1503,7 @@ public class CacheController {
 
 		if (nodeArray != null && fromCache) {
 			try {
-				Element element = new Element(key, nodeArray);
-				_cache.put(element);
+				treeCache.put(key, nodeArray);
 			} catch (Exception ex) {
                 ex.printStackTrace();
 			}
@@ -1495,9 +1525,8 @@ public class CacheController {
         }
 
         if (fromCache) {
-            Element element = _cache.get(key);
-            if (element != null) {
-                nodeArray = (JSONArray) element.getValue();
+            nodeArray = treeCache.get(key);
+            if (nodeArray != null) {
                 _logger.debug("Retrieved terminology value set tree from cache.");
                 return nodeArray;
             }
@@ -1514,8 +1543,7 @@ public class CacheController {
 
 		if (nodeArray != null && fromCache) {
 			try {
-				Element element = new Element(key, nodeArray);
-				_cache.put(element);
+				treeCache.put(key, nodeArray);
 			} catch (Exception ex) {
                 ex.printStackTrace();
 			}
@@ -1546,9 +1574,9 @@ public class CacheController {
 
     public String getRootJSONString(String codingScheme, String version) {
 		String key = codingScheme + "$" + version + "$root";
-		Element element = _cache.get(key);
-		if (element != null) {
-			return (String) element.getValue();
+		String value = rootCache.get(key);
+		if (value != null) {
+			return value;
 		}
 
 		long ms = System.currentTimeMillis();
@@ -1595,8 +1623,7 @@ public class CacheController {
 		//json = "{\"root_nodes\":" + json + "}";
 
 		try {
-			element = new Element(key, json);
-			_cache.put(element);
+			rootCache.put(key, json);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -1619,9 +1646,9 @@ public class CacheController {
     public JSONArray getSubconceptJSONArray(String codingScheme, String version, String code, String ns) {
 
         String key = codingScheme + "$" + version + "$" + code + "$" + ns;
-		Element element = _cache.get(key);
-		if (element != null) {
-			JSONArray jsonArray = (JSONArray) element.getValue();
+        JSONArray jsonArray = null;
+		jsonArray = treeCache.get(key);
+		if (jsonArray != null) {
 			return jsonArray;
 		}
 
@@ -1693,10 +1720,9 @@ public class CacheController {
     public String getSubconceptJSONString(String codingScheme, String version, String code, String ns) {
 
         String key = codingScheme + "$" + version + "$" + code + "$" + ns;
-		Element element = _cache.get(key);
-		if (element != null) {
-			String json = (String) element.getValue();
-			return json;
+		String value = rootCache.get(key);
+		if (value != null) {
+			return value;
 		}
 
 		long ms = System.currentTimeMillis();
@@ -1746,8 +1772,7 @@ public class CacheController {
 		String json = JSON2TreeItem.treeItem2Json(root);
 
 		try {
-			element = new Element(key, json);
-			_cache.put(element);
+			rootCache.put(key, json);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

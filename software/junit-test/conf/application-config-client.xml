@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-      <bean id="EvsServiceInfo" class="java.util.HashMap" scope="singleton">
+      <bean id="EvsServiceInfo" class="java.util.HashMap" singleton="true">
             <constructor-arg>
                   <map>
                         <entry key="APPLICATION_SERVICE_BEAN" value-ref="LexEVSApplicationService"/>
@@ -12,7 +12,7 @@
             </constructor-arg>
       </bean>
       
-      <bean id="LexEVSInterceptor" class="org.LexGrid.LexBIG.caCore.client.proxy.LexEVSApplicationServiceProxy" scope="singleton">
+      <bean id="LexEVSInterceptor" class="org.LexGrid.LexBIG.caCore.client.proxy.LexEVSApplicationServiceProxy" singleton="true">
             <property name="proxyFactory">
                   <ref bean="DistributedProxyHelper"/>
             </property>
@@ -37,7 +37,7 @@
 			</property>
       </bean>     
       
-       <bean id="AppService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean" scope="singleton">
+       <bean id="AppService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean" singleton="true">
             <property name="serviceUrl" value="http://lexevsapi62.nci.nih.gov/lexevsapi62/http/applicationService"/>
             <property name="serviceInterface" value="org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService"/>
             <property name="httpInvokerRequestExecutor">

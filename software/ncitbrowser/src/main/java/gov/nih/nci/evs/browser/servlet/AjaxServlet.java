@@ -489,7 +489,7 @@ if (display_name_vec == null) {
 
 
                     nodesArray =
-                        CacheController.getInstance().getSubconcepts(
+                        CacheController.getTreeInstance().getSubconcepts(
                             ontology_display_name, ontology_version, node_id, ns);
 
                     if (nodesArray != null) {

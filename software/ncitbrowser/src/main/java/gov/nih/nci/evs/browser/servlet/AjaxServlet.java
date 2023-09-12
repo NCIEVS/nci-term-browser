@@ -544,7 +544,7 @@ if (display_name_vec == null) {
 				JSONObject json = new JSONObject();
 				JSONArray nodesArray = null;// new JSONArray();
 				try {
-					nodesArray = new JSONArray(CacheController.getInstance().getRootJSONString(ontology_display_name, ontology_version));
+					nodesArray = new JSONArray(CacheController.getRootInstance().getRootJSONString(ontology_display_name, ontology_version));
 					if (nodesArray != null) {
 						json.put("root_nodes", nodesArray);
 					}
@@ -567,7 +567,7 @@ if (display_name_vec == null) {
             try {
 				String codingSchemeVersion = null;
                 nodesArray =
-                    CacheController.getInstance().getRootValueSets(
+                    CacheController.getTreeInstance().getRootValueSets(
                         ontology_display_name, codingSchemeVersion);
                 if (nodesArray != null) {
                     json.put("root_nodes", nodesArray);
@@ -591,7 +591,7 @@ if (display_name_vec == null) {
                 try {
 
                     nodesArray =
-                        CacheController.getInstance().getSubValueSets(
+                        CacheController.getTreeInstance().getSubValueSets(
                             ontology_display_name, ontology_version, node_id);
 
 
@@ -616,7 +616,7 @@ if (display_name_vec == null) {
 
                 try {
                     nodesArray =
-                        CacheController.getInstance().getSourceValueSetTree(
+                        CacheController.getTreeInstance().getSourceValueSetTree(
                             ontology_display_name, ontology_version, true);
                     if (nodesArray != null) {
                         json.put("root_nodes", nodesArray);
@@ -638,7 +638,7 @@ if (display_name_vec == null) {
 
                 try {
                     nodesArray =
-                        CacheController.getInstance().getCodingSchemeValueSetTree(
+                        CacheController.getTreeInstance().getCodingSchemeValueSetTree(
                             ontology_display_name, ontology_version, true);
                     if (nodesArray != null) {
                         json.put("root_nodes", nodesArray);
@@ -662,7 +662,7 @@ if (display_name_vec == null) {
 				//HashMap getRootValueSets(String codingSchemeURN)
 				String codingSchemeVersion = null;
                 nodesArray =
-                    CacheController.getInstance().getRootValueSets(true);
+                    CacheController.getTreeInstance().getRootValueSets(true);
 
                 if (nodesArray != null) {
                     json.put("root_nodes", nodesArray);
@@ -693,7 +693,7 @@ if (display_name_vec == null) {
 				if (vsd == null) {
 				   try {
 					   //
-					    nodesArray = CacheController.getInstance().getRootValueSets(node_id, null);
+					    nodesArray = CacheController.getTreeInstance().getRootValueSets(node_id, null);
 						//nodesArray = CacheController.getInstance().getRootValueSets(node_id, null); //find roots (by source)
 
 						if (nodesArray != null) {
@@ -705,7 +705,7 @@ if (display_name_vec == null) {
 			    } else {
 					try {
 						nodesArray =
-							CacheController.getInstance().getSubValueSets(
+							CacheController.getTreeInstance().getSubValueSets(
 								node_id, null, vsd_uri);
 
 						if (nodesArray != null) {
@@ -734,7 +734,7 @@ if (display_name_vec == null) {
 				String codingSchemeVersion = null;
                 nodesArray =
                     //CacheController.getInstance().getRootValueSets(true, true);
-                    CacheController.getInstance().build_src_vs_tree();
+                    CacheController.getTreeInstance().build_src_vs_tree();
 
                 if (nodesArray != null) {
                     json.put("root_nodes", nodesArray);
@@ -760,7 +760,7 @@ if (display_name_vec == null) {
                 response.setHeader("Cache-Control", "no-cache");
                 JSONObject json = new JSONObject();
                 JSONArray nodesArray = null;
-				nodesArray = CacheController.getInstance().expand_src_vs_tree(node_id);
+				nodesArray = CacheController.getTreeInstance().expand_src_vs_tree(node_id);
 
                 try {
                     if (nodesArray != null) {

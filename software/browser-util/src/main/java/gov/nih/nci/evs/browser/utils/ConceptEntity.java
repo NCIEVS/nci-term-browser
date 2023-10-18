@@ -15,6 +15,7 @@ import org.json.*;
 import org.LexGrid.codingSchemes.*;
 import org.LexGrid.commonTypes.*;
 import org.LexGrid.commonTypes.Source;
+import org.LexGrid.commonTypes.Property;
 import org.LexGrid.concepts.*;
 //import org.LexGrid.LexBIG.caCore.interfaces.LexEVSApplicationService;
 //import org.LexGrid.LexBIG.caCore.interfaces.LexEVSDistributed;

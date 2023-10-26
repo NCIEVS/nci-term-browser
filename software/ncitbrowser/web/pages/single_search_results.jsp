@@ -23,6 +23,7 @@
 	gtag('js', new Date());
 	gtag('config', 'G-21QRTJ0WQS');
 </script>
+    <script src="https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js"></script>
     <title>NCI Thesaurus</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -32,6 +33,9 @@
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/dropdown.js"></script>
   </head>
   <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+  <header class="flex-grow-0">
+	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+  </header>
     <%! private static Logger _logger = LogManager.getLogger("single_search_results.jsp"); %>
     <f:view>
       <!-- Begin Skip Top Navigation -->

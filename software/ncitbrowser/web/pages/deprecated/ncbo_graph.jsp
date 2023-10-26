@@ -26,11 +26,15 @@ String id = HTTPUtils.cleanXSS((String) request.getParameter("id"));
 	gtag('js', new Date());
 	gtag('config', 'G-21QRTJ0WQS');
 </script>
+    <script src="https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js"></script>
     <title>BioPortal Ontology Visualization</title>
     <script src="<%= request.getContextPath() %>/js/flexoviz.js" language="javascript" type="text/javascript"></script>
   </head>
 
   <body scroll="no" style="margin:0px;overflow:hidden;">
+  <header class="flex-grow-0">
+	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+  </header>
 
     <script language="JavaScript" type="text/javascript">
     <!--

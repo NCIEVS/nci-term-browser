@@ -18,6 +18,9 @@ String code = HTTPUtils.cleanXSS((String) request.getParameter("code"));
   </script>
 
   <body>
+  <header class="flex-grow-0">
+	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+  </header>
 
     <script language="JavaScript" type="text/javascript">
     <!--

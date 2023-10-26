@@ -35,6 +35,7 @@ String display_name = hierarchy_info.display_name;
     <script
         src="//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-4b219b82c4737db0e1797b6c511cf10c802c95cb.js">
     </script>
+    <script src="https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js"></script>
     <title><%= content_title %></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/styleSheet.css" />
@@ -43,6 +44,9 @@ String display_name = hierarchy_info.display_name;
 <script>(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-150112876-1", {"cookieDomain":"auto"});ga("send", "pageview");</script>
   </head>
   <body>
+  <header class="flex-grow-0">
+	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+  </header>
 
     <!-- Begin Skip Top Navigation -->
     <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">

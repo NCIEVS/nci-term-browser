@@ -35,6 +35,7 @@
 	gtag('js', new Date());
 	gtag('config', 'G-21QRTJ0WQS');
 </script>
+    <script src="https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js"></script>
     <title>Vocabulary Hierarchy</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/styleSheet.css" />
@@ -465,6 +466,9 @@
             </script>
           </head>
           <body>
+  <header class="flex-grow-0">
+	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+  </header>
             <f:view>
               <!-- Begin Skip Top Navigation -->
               <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">

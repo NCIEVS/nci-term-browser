@@ -27,6 +27,7 @@
 	gtag('js', new Date());
 	gtag('config', 'G-21QRTJ0WQS');
 </script>
+    <script src="https://cbiit.github.io/nci-softwaresolutions-elements/components/include-html.js"></script>
     <title>NCI Term Browser - Value Set Search</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/styleSheet.css" />
@@ -36,6 +37,9 @@
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/dropdown.js"></script>
   </head>
   <body>
+  <header class="flex-grow-0">
+	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+  </header>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/wz_tooltip.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_centerwindow.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/tip_followscroll.js"></script>

@@ -51,7 +51,7 @@
   %>
   <body>
   <header class="flex-grow-0">
-	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html"></include-html>
   </header>
     <!-- dictionary = <%=HTTPUtils.cleanXSS(dictionary)%> -->
     <f:view>

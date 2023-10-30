@@ -38,7 +38,7 @@ String evs_service_url = DataUtils.getEVSServiceURL();
   </head>
   <body onLoad="document.forms.searchTerm.matchText.focus();">
   <header class="flex-grow-0">
-	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown-test.html"></include-html>
+	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html"></include-html>
   </header>
     <!--
       uild info: <%=ncit_build_info%> Version info: <%=application_version%> Tag: <%=anthill_build_tag_built%> LexEVS

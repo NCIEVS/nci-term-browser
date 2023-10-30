@@ -1246,7 +1246,6 @@
       <navigation-case>
          <description>add_to_cart</description>
          <from-action>#{CartActionBean.addToCartAction}</from-action>
-         <to-view-id>/pages/concept_details.jsp</to-view-id>
       </navigation-case>
 
       <navigation-case>

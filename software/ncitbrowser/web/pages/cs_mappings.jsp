@@ -68,7 +68,9 @@
 <!--
 <body onload="checkVisited();">
   <header class="flex-grow-0">
+	<div style='text-align: left'>
 	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html"></include-html>
+	</div>
   </header>
 -->
 <body onLoad="document.forms.searchTerm.matchText.focus();">

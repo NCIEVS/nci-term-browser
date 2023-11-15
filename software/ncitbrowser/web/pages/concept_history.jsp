@@ -36,7 +36,9 @@
   </head>
   <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
   <header class="flex-grow-0">
+	<div style='text-align: left'>
 	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html"></include-html>
+	</div>
   </header>
     <%
     LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
@@ -163,6 +165,7 @@
                 <tr>
                   <%
                   for (int i=0; i<headers.size(); ++i) {
+	<div style='text-align: left'>
                     Object header = headers.elementAt(i);
                     %>
                     <th class="dataTableHeader" scope="col" align="left"><%= header %></th>

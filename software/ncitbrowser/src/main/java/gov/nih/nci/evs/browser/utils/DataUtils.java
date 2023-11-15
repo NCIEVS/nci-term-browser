@@ -7573,7 +7573,6 @@ if (lbSvc == null) {
 		return hmap;
 	}
 
-
     public static void main(String[] args) {
         String scheme = "NCI Thesaurus";
         String version = null;

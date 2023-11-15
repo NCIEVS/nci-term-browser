@@ -78,7 +78,9 @@
   </head>
   <body onLoad="document.forms.valueSetSearchForm.matchText.focus();">
   <header class="flex-grow-0">
+	<div style='text-align: left'>
 	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html"></include-html>
+	</div>
   </header>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/wz_tooltip.js"></script>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/tip_centerwindow.js"></script>

@@ -24,7 +24,9 @@ if (content_page != null && content_page.indexOf("WEB-INF") != -1) {
 </head>
   <body>
   <header class="flex-grow-0">
+	<div style='text-align: left'>
 	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html"></include-html>
+	</div>
   </header>
 	<center><b><%=message%></b></center>
 <script type="text/javascript">_satellite.pageBottom();</script>

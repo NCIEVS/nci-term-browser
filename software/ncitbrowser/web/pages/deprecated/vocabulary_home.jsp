@@ -42,7 +42,9 @@ String evs_service_url = new DataUtils().getEVSServiceURL();
   </head>
   <body onLoad="document.forms.searchTerm.matchText.focus();">
   <header class="flex-grow-0">
+	<div style='text-align: left'>
 	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html"></include-html>
+	</div>
   </header>
     <f:view>
       <!-- Begin Skip Top Navigation -->

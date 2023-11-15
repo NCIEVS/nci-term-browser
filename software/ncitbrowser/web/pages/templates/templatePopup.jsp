@@ -45,7 +45,9 @@ String display_name = hierarchy_info.display_name;
   </head>
   <body>
   <header class="flex-grow-0">
+	<div style='text-align: left'>
 	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html"></include-html>
+	</div>
   </header>
 
     <!-- Begin Skip Top Navigation -->

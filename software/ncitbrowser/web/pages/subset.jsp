@@ -68,7 +68,9 @@ String tab_valuesets_link = request.getContextPath() + "/ajax?action=create_cs_v
   </head>
   <body onLoad="document.forms.searchTerm.matchText.focus();">
   <header class="flex-grow-0">
+	<div style='text-align: left'>
 	<include-html src="https://cbiit.github.io/nci-softwaresolutions-elements/banners/government-shutdown.html"></include-html>
+	</div>
   </header>
     <f:view>
       <!-- Begin Skip Top Navigation -->

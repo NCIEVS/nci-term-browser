@@ -4058,6 +4058,16 @@ out.flush();
 
 	}
 
+
+	public static String unescapeCommaCharacters(String s) {
+		boolean cont = true;
+		while (s.indexOf(",,") != -1) {
+			s = s.replace(",,", ",");
+		}
+		return s;
+	}
+
+
 	public static String escapeCommaCharacters(String s) {
 		if (s == null) return null;
 		StringBuffer buf = new StringBuffer();
@@ -4089,6 +4099,7 @@ out.flush();
 		String targetCodeNamespace = null;
 		String description = null;
 		String associationName = null;
+		int count = 0;
 
         ResolvedConceptReferencesIterator _iterator = DataUtils.getMappingDataIterator(mapping_schema, mapping_version);
 		int numRemaining = 0;
@@ -4195,10 +4206,10 @@ out.flush();
 								targetCodingScheme,
 								targetCodingSchemeVesion,
 								targetCodeNamespace);
-
+                            count++;
 							sb = new StringBuffer();
 							sb.append("\"" + mappingData.getSourceCode() + "\",");
-							sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
+							sb.append("\"" + unescapeCommaCharacters(mappingData.getSourceName()) + "\",");
 							sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
 							sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
 							sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
@@ -4208,13 +4219,13 @@ out.flush();
 							sb.append("\"" + mappingData.getScore() + "\",");
 
 							sb.append("\"" + mappingData.getTargetCode() + "\",");
-							sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
+							sb.append("\"" + unescapeCommaCharacters(mappingData.getTargetName()) + "\",");
 							sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
 							sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
 							sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
 							sb.append("\r\n");
-							ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
-							ouputStream.flush();
+							//ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+							//ouputStream.flush();
 						}
 					}
 				}
@@ -4249,7 +4260,7 @@ out.flush();
 									}
 								}
 							}
-
+                            count++;
 							MappingData mappingData = new MappingData(
 								sourceCode,
 								sourceName,
@@ -4268,7 +4279,7 @@ out.flush();
 
 							sb = new StringBuffer();
 							sb.append("\"" + mappingData.getSourceCode() + "\",");
-							sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
+							sb.append("\"" + unescapeCommaCharacters(mappingData.getSourceName()) + "\",");
 							sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
 							sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
 							sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
@@ -4278,13 +4289,13 @@ out.flush();
 							sb.append("\"" + mappingData.getScore() + "\",");
 
 							sb.append("\"" + mappingData.getTargetCode() + "\",");
-							sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
+							sb.append("\"" + unescapeCommaCharacters(mappingData.getTargetName()) + "\",");
 							sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
 							sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
 							sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
 							sb.append("\r\n");
-							ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
-							ouputStream.flush();
+							//ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+							//ouputStream.flush();
 						}
 					}
 				}
@@ -4296,6 +4307,13 @@ out.flush();
 
 		//response.setContentLength(sb.length());
 		try {
+			for (int j=0; j<count++; j++) {
+				sb.append(" ");
+			}
+			outputstream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+			outputstream.flush();
+			outputstream.close();
+
 			//ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
 			//ouputStream.flush();
 			ouputStream.close();

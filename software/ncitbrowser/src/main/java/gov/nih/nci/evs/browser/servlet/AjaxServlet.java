@@ -4123,9 +4123,9 @@ out.flush();
 
 
         StringBuffer sb = new StringBuffer();
-        try {
-			ouputStream = response.getOutputStream();
+        ouputStream = response.getOutputStream();
 
+        try {
 			sb.append("Source Code,");
 			sb.append("Source Name,");
 			sb.append("Source Coding Scheme,");

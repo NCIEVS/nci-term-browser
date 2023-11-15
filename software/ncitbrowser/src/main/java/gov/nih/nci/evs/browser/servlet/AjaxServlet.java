@@ -4058,16 +4058,6 @@ out.flush();
 
 	}
 
-
-	public static String unescapeCommaCharacters(String s) {
-		boolean cont = true;
-		while (s.indexOf(",,") != -1) {
-			s = s.replace(",,", ",");
-		}
-		return s;
-	}
-
-
 	public static String escapeCommaCharacters(String s) {
 		if (s == null) return null;
 		StringBuffer buf = new StringBuffer();
@@ -4099,7 +4089,6 @@ out.flush();
 		String targetCodeNamespace = null;
 		String description = null;
 		String associationName = null;
-		int count = 0;
 
         ResolvedConceptReferencesIterator _iterator = DataUtils.getMappingDataIterator(mapping_schema, mapping_version);
 		int numRemaining = 0;
@@ -4123,9 +4112,9 @@ out.flush();
 
 
         StringBuffer sb = new StringBuffer();
-        ouputStream = response.getOutputStream();
-
         try {
+			ouputStream = response.getOutputStream();
+
 			sb.append("Source Code,");
 			sb.append("Source Name,");
 			sb.append("Source Coding Scheme,");
@@ -4206,10 +4195,10 @@ out.flush();
 								targetCodingScheme,
 								targetCodingSchemeVesion,
 								targetCodeNamespace);
-                            count++;
+
 							sb = new StringBuffer();
 							sb.append("\"" + mappingData.getSourceCode() + "\",");
-							sb.append("\"" + unescapeCommaCharacters(mappingData.getSourceName()) + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
 							sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
 							sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
 							sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
@@ -4219,13 +4208,13 @@ out.flush();
 							sb.append("\"" + mappingData.getScore() + "\",");
 
 							sb.append("\"" + mappingData.getTargetCode() + "\",");
-							sb.append("\"" + unescapeCommaCharacters(mappingData.getTargetName()) + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
 							sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
 							sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
 							sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
 							sb.append("\r\n");
-							//ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
-							//ouputStream.flush();
+							ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+							ouputStream.flush();
 						}
 					}
 				}
@@ -4260,7 +4249,7 @@ out.flush();
 									}
 								}
 							}
-                            count++;
+
 							MappingData mappingData = new MappingData(
 								sourceCode,
 								sourceName,
@@ -4279,7 +4268,7 @@ out.flush();
 
 							sb = new StringBuffer();
 							sb.append("\"" + mappingData.getSourceCode() + "\",");
-							sb.append("\"" + unescapeCommaCharacters(mappingData.getSourceName()) + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
 							sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
 							sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
 							sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
@@ -4289,13 +4278,13 @@ out.flush();
 							sb.append("\"" + mappingData.getScore() + "\",");
 
 							sb.append("\"" + mappingData.getTargetCode() + "\",");
-							sb.append("\"" + unescapeCommaCharacters(mappingData.getTargetName()) + "\",");
+							sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
 							sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
 							sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
 							sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
 							sb.append("\r\n");
-							//ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
-							//ouputStream.flush();
+							ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+							ouputStream.flush();
 						}
 					}
 				}
@@ -4307,13 +4296,6 @@ out.flush();
 
 		//response.setContentLength(sb.length());
 		try {
-			for (int j=0; j<count++; j++) {
-				sb.append(" ");
-			}
-			outputstream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
-			outputstream.flush();
-			outputstream.close();
-
 			//ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
 			//ouputStream.flush();
 			ouputStream.close();
@@ -5377,6 +5359,13 @@ out.flush();
 		FacesContext.getCurrentInstance().responseComplete();
 	}
 
+	public static String unescapeCommaCharacters(String s) {
+		boolean cont = true;
+		while (s.indexOf(",,") != -1) {
+			s = s.replace(",,", ",");
+		}
+		return s;
+	}
 
     public void export_mapping_data(HttpServletRequest request, HttpServletResponse response) {
 		LexBIGService lbSvc = RemoteServerUtil.createLexBIGService();
@@ -5398,7 +5387,7 @@ out.flush();
 		String associationName = null;
 
         java.util.List<MappingData> list = new MappingUtils(lbSvc).getMappingData(mapping_schema, mapping_version);
-		ServletOutputStream ouputStream = null;
+		ServletOutputStream outputstream = null;
 
 		String filename = mapping_schema + "_" + mapping_version;
 		filename = filename.replaceAll(" ", "_");
@@ -5408,10 +5397,14 @@ out.flush();
 		response.setHeader("Content-Disposition", "attachment; filename="
 				+ filename);
 
+        try {
+			outputstream = response.getOutputStream();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
         StringBuffer sb = new StringBuffer();
         try {
-			ouputStream = response.getOutputStream();
-
 			sb.append("Source Code,");
 			sb.append("Source Name,");
 			sb.append("Source Coding Scheme,");
@@ -5428,14 +5421,13 @@ out.flush();
 			sb.append("Target Coding Scheme Version,");
 			sb.append("Target Coding Scheme Namespace");
 			sb.append("\r\n");
-			ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
-
+			outputstream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+			outputstream.flush();
+            sb = new StringBuffer();
 			for (int i=0; i<list.size(); i++) {
-				sb = new StringBuffer();
 				MappingData mappingData = (MappingData) list.get(i);
-				sb = new StringBuffer();
 				sb.append("\"" + mappingData.getSourceCode() + "\",");
-				sb.append("\"" + escapeCommaCharacters(mappingData.getSourceName()) + "\",");
+				sb.append("\"" + unescapeCommaCharacters(mappingData.getSourceName()) + "\",");
 				sb.append("\"" + mappingData.getSourceCodingScheme() + "\",");
 				sb.append("\"" + mappingData.getSourceCodingSchemeVersion() + "\",");
 				sb.append("\"" + mappingData.getSourceCodeNamespace() + "\",");
@@ -5445,21 +5437,20 @@ out.flush();
 				sb.append("\"" + mappingData.getScore() + "\",");
 
 				sb.append("\"" + mappingData.getTargetCode() + "\",");
-				sb.append("\"" + escapeCommaCharacters(mappingData.getTargetName()) + "\",");
+				sb.append("\"" + unescapeCommaCharacters(mappingData.getTargetName()) + "\",");
 				sb.append("\"" + mappingData.getTargetCodingScheme() + "\",");
 				sb.append("\"" + mappingData.getTargetCodingSchemeVersion() + "\",");
 				sb.append("\"" + mappingData.getTargetCodeNamespace() + "\"");
 				sb.append("\r\n");
-				ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
-				ouputStream.flush();
+				//ouputStream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+				//ouputStream.flush();
 			}
-		} catch (Exception ex)	{
-			sb.append("WARNING: Export to CVS action failed.");
-			ex.printStackTrace();
-		}
-
-		try {
-			ouputStream.close();
+			for (int j=0; j<list.size(); j++) {
+				sb.append(" ");
+			}
+			outputstream.write(sb.toString().getBytes("UTF-8"), 0, sb.length());
+			outputstream.flush();
+			outputstream.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

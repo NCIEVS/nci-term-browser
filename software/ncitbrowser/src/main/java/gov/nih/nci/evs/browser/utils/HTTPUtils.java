@@ -521,6 +521,14 @@ public class HTTPUtils {
 					Boolean checkedVocabularies = isCheckedVocabulariesParameter(name);
 					if (checkedVocabularies != null && checkedVocabularies.equals(Boolean.TRUE)) {
 						value = (String) request.getParameter(name);
+						//KLO, 12082023
+						if (value.indexOf("eval(") != -1) {
+							String error_msg = createErrorMessage(2, name);
+							request.getSession().setAttribute("error_msg", error_msg);
+							System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
+							return false;
+						}
+
 						if (!DataUtils.isNullOrBlank(value)) {
 							Vector selected_vocabularies_vec = gov.nih.nci.evs.browser.utils.StringUtils.parseData(name, ",");
 							String nm = name.toLowerCase(Locale.ENGLISH);
@@ -543,6 +551,14 @@ public class HTTPUtils {
 
 					if (name.compareTo("nav_type") == 0) {
 						value = (String) request.getParameter(name);
+
+						if (value.indexOf("eval(") != -1) {
+							String error_msg = createErrorMessage(2, name);
+							request.getSession().setAttribute("error_msg", error_msg);
+							System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
+							return false;
+						}
+
 						String[] types = Constants.NAV_TYPE_VALUES;
 						if (!Arrays.asList(types).contains(value)) {
 							String error_msg = createErrorMessage(2, name);
@@ -554,6 +570,13 @@ public class HTTPUtils {
 
 					if (name.compareTo("value_set_home") == 0) {
 						value = (String) request.getParameter(name);
+
+						if (value.indexOf("eval(") != -1) {
+							String error_msg = createErrorMessage(2, name);
+							request.getSession().setAttribute("error_msg", error_msg);
+							System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
+							return false;
+						}
 						String[] types = Constants.TRUE_OR_FALSE;
 						if (!Arrays.asList(types).contains(value)) {
 							String error_msg = createErrorMessage(2, name);
@@ -565,6 +588,13 @@ public class HTTPUtils {
 
 					if (name.compareTo("view") == 0) {
 						value = (String) request.getParameter(name);
+						if (value.indexOf("eval(") != -1) {
+							String error_msg = createErrorMessage(2, name);
+							request.getSession().setAttribute("error_msg", error_msg);
+							System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
+							return false;
+						}
+
 						if (value != null) {
 							boolean isInteger = gov.nih.nci.evs.browser.utils.StringUtils.isInteger(value);
 							if (!isInteger) {
@@ -597,6 +627,13 @@ public class HTTPUtils {
 					// 09182015
 					if (issearchFormParameter != null && issearchFormParameter.equals(Boolean.TRUE)) {
 						value = (String) request.getParameter(name);
+						if (value.indexOf("eval(") != -1) {
+							String error_msg = createErrorMessage(2, name);
+							request.getSession().setAttribute("error_msg", error_msg);
+							System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
+							return false;
+						}
+
 						if (value != null) {
 							boolean isInteger = gov.nih.nci.evs.browser.utils.StringUtils.isInteger(value);
 							if (!isInteger) {
@@ -621,6 +658,14 @@ public class HTTPUtils {
 								return false;
 							}
 							value = (String) request.getParameter(name);
+
+							if (value.indexOf("eval(") != -1) {
+								String error_msg = createErrorMessage(2, name);
+								request.getSession().setAttribute("error_msg", error_msg);
+								System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
+								return false;
+							}
+
 							Boolean bool_obj = containsHazardCharacters(value);
 							// Cross-Site Scripting:
 							if (bool_obj != null && bool_obj.equals(Boolean.TRUE)) {

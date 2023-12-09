@@ -525,7 +525,7 @@ public class HTTPUtils {
 						if (value.indexOf("eval(") != -1) {
 							String error_msg = createErrorMessage(2, name);
 							request.getSession().setAttribute("error_msg", error_msg);
-							System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
+							System.out.println("WARNING: Invalid value of the parameter " + name + ": " + value);
 							return false;
 						}
 
@@ -555,7 +555,7 @@ public class HTTPUtils {
 						if (value.indexOf("eval(") != -1) {
 							String error_msg = createErrorMessage(2, name);
 							request.getSession().setAttribute("error_msg", error_msg);
-							System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
+							System.out.println("WARNING: Invalid value of the parameter " + name + ": " + value);
 							return false;
 						}
 
@@ -574,7 +574,7 @@ public class HTTPUtils {
 						if (value.indexOf("eval(") != -1) {
 							String error_msg = createErrorMessage(2, name);
 							request.getSession().setAttribute("error_msg", error_msg);
-							System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
+							System.out.println("WARNING: Invalid value of the parameter " + name + ": " + value);
 							return false;
 						}
 						String[] types = Constants.TRUE_OR_FALSE;
@@ -591,7 +591,7 @@ public class HTTPUtils {
 						if (value.indexOf("eval(") != -1) {
 							String error_msg = createErrorMessage(2, name);
 							request.getSession().setAttribute("error_msg", error_msg);
-							System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
+							System.out.println("WARNING: Invalid value of the parameter " + name + ": " + value);
 							return false;
 						}
 
@@ -623,17 +623,19 @@ public class HTTPUtils {
 						}
 					}
 	*/
+
+					value = (String) request.getParameter(name);
+					if (value != null && value.indexOf("eval(") != -1) {
+						String error_msg = createErrorMessage(2, name);
+						request.getSession().setAttribute("error_msg", error_msg);
+						System.out.println("WARNING: Invalid value of the parameter " + name + ": " + value);
+						return false;
+					}
+
 					Boolean issearchFormParameter = isSearchFormParameter(name);
 					// 09182015
 					if (issearchFormParameter != null && issearchFormParameter.equals(Boolean.TRUE)) {
 						value = (String) request.getParameter(name);
-						if (value.indexOf("eval(") != -1) {
-							String error_msg = createErrorMessage(2, name);
-							request.getSession().setAttribute("error_msg", error_msg);
-							System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
-							return false;
-						}
-
 						if (value != null) {
 							boolean isInteger = gov.nih.nci.evs.browser.utils.StringUtils.isInteger(value);
 							if (!isInteger) {
@@ -658,14 +660,6 @@ public class HTTPUtils {
 								return false;
 							}
 							value = (String) request.getParameter(name);
-
-							if (value.indexOf("eval(") != -1) {
-								String error_msg = createErrorMessage(2, name);
-								request.getSession().setAttribute("error_msg", error_msg);
-								System.out.println("WARNING: Unknown value of the parameter " + name + ": " + value);
-								return false;
-							}
-
 							Boolean bool_obj = containsHazardCharacters(value);
 							// Cross-Site Scripting:
 							if (bool_obj != null && bool_obj.equals(Boolean.TRUE)) {

@@ -15,7 +15,7 @@ public class ValueSet
 {
 
 // Variable declaration
-	private List<Concept> concepts;
+	private List<ConceptInVS> concepts;
 
 // Default constructor
 	public ValueSet() {
@@ -23,19 +23,19 @@ public class ValueSet
 
 // Constructor
 	public ValueSet(
-		List<Concept> concepts) {
+		List<ConceptInVS> concepts) {
 
 		this.concepts = concepts;
 	}
 
 // Set methods
-	public void setConcepts(List<Concept> concepts) { 
+	public void setConcepts(List<ConceptInVS> concepts) {
 		this.concepts = concepts;
 	}
 
 
 // Get methods
-	public List<Concept> getConcepts() { 
+	public List<ConceptInVS> getConcepts() {
 		return this.concepts;
 	}
 

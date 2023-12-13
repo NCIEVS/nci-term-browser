@@ -905,9 +905,6 @@ displayLabel2PropertyNameHashMap = addToHashMap(displayLabel2PropertyNameHashMap
     public String generateRelationshipTable(String codingScheme, String version, String code, String namespace, String rel_type, boolean display_qualifiers) {
         boolean display_equiv_expression = false;
 
-
-System.out.println("*** In PropertyData generateRelationshipTable ...");
-
         String equivalanceClass = null;
         if (isNCIT(codingScheme) && rel_type.compareTo(Constants.TYPE_ROLE) == 0) {
 			try {
@@ -972,8 +969,6 @@ System.out.println("*** In PropertyData generateRelationshipTable ...");
 			return buf.toString();
 		}
 
-		System.out.println("*** exiting generateRelationshipTable ...redirecting... ");
-
 		return generateRelationshipTable(codingScheme, version, code, namespace, rel_type, display_qualifiers, null);
 	}
 
@@ -991,9 +986,6 @@ System.out.println("*** In PropertyData generateRelationshipTable ...");
 
     public String generateRelationshipTable(String codingScheme, String version, String code, String namespace, String rel_type,
         boolean display_qualifiers, ArrayList list) {
-
-		System.out.println("*** redirect to generateRelationshipTable ...redirect " + rel_type);
-
         HashMap hmap = null;
         if (list == null) {
 
@@ -1014,9 +1006,6 @@ System.out.println("*** In PropertyData generateRelationshipTable ...");
 		}
         String description = uiUtils.getRelationshipTableLabel(defaultLabel, rel_type, isEmpty);
 
- 		System.out.println("*** generateRelationshipTable ...description " + description);
-
-
         if (isEmpty) return description;
 
  ArrayList superconcepts = (ArrayList) hmap.get(Constants.TYPE_SUPERCONCEPT);
@@ -1025,13 +1014,6 @@ System.out.println("*** In PropertyData generateRelationshipTable ...");
  ArrayList associations = (ArrayList) hmap.get(Constants.TYPE_ASSOCIATION);
  ArrayList inverse_roles = (ArrayList) hmap.get(Constants.TYPE_INVERSE_ROLE);
  ArrayList inverse_associations = (ArrayList) hmap.get(Constants.TYPE_INVERSE_ASSOCIATION);
-
- dumpData("*** " + Constants.TYPE_SUPERCONCEPT, superconcepts);
- dumpData("*** " + Constants.TYPE_SUPERCONCEPT, subconcepts);
- dumpData("*** " + Constants.TYPE_ROLE, roles);
- dumpData("*** " + Constants.TYPE_ASSOCIATION, associations);
- dumpData("*** " + Constants.TYPE_INVERSE_ROLE, inverse_roles);
- dumpData("*** " + Constants.TYPE_INVERSE_ASSOCIATION, inverse_associations);
 
 		String firstColumnHeading = null;
 		String secondColumnHeading = null;
@@ -1074,8 +1056,6 @@ System.out.println("*** In PropertyData generateRelationshipTable ...");
 				qualifierColumn,
 				list);
 
-			System.out.println("*** get spec from uiUtils.relationshipList2HTMLTableSpec ");
-            System.out.println("*** calling generateHTMLTable " + rel_type);
 			return uiUtils.generateHTMLTable(spec, codingScheme, version, rel_type);
 
 		} catch (Exception ex) {

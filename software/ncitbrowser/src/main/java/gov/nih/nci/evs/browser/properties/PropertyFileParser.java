@@ -3,7 +3,9 @@ package gov.nih.nci.evs.browser.properties;
 import java.io.*;
 import java.util.*;
 
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.logging.log4j.*;
 import org.w3c.dom.*;

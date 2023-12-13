@@ -143,6 +143,7 @@ public class ServerMonitorThread extends Thread {
         return _message;
     }
 
+/*
     private void updateMessage(boolean isRunning) {
         if (isRunning) {
             _message = "";
@@ -151,6 +152,25 @@ public class ServerMonitorThread extends Thread {
 
         _message = "*** The server is temporarily not available, as of "
             + new Date() + ". ***";
+	}
+*/
+
+    private static String updateMessage(boolean isRunning) {
+		String _message = null;
+        if (isRunning) {
+            _message = "";
+            return _message;
+        }
+
+//        _message = "*** The server is temporarily not available, as of "
+//            + new Date() + ". ***";
+
+          _message = "*** The server is temporarily not available, as of "
+            + new Date() + ". ("
+            + "<a href=\"https://evsexplore.semantics.cancer.gov/\">EVS Explore browser</a>"
+            + " is available for your searching needs.) ***";
+
+        return _message;
 	}
 
     public void monitor(LexBIGService service, String msg) {

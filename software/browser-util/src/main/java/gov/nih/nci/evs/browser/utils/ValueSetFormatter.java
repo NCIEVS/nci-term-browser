@@ -1267,6 +1267,9 @@ public class ValueSetFormatter {
 	public String object2XMLStream(ValueSet vs) {
 		XStream xstream_xml = new XStream(new DomDriver());
 		String xml = XML_DECLARATION + "\n" + xstream_xml.toXML(vs);
+		if (!xml.endsWith(">")) {
+			xml = xml + ">";
+		}
 		return xml;
 	}
 

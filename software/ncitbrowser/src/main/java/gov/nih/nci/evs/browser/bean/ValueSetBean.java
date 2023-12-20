@@ -2015,11 +2015,13 @@ public class ValueSetBean {
 
 		    response.setHeader("Content-Disposition", "attachment; filename="
 					+ vsd_name);
-            //testing
-			response.setContentLength(xml_str.length()+100);
+
+			response.setContentLength(xml_str.length());
 
 			ServletOutputStream ouputStream = response.getOutputStream();
-			ouputStream.write(xml_str.getBytes("UTF8"), 0, xml_str.length());
+			byte[] b = xml_str.getBytes("UTF-8");
+			//ouputStream.write(xml_str.getBytes("UTF8"), 0, xml_str.length());
+			ouputStream.write(xml_str.getBytes("UTF8"), 0, b.length());
 			ouputStream.flush();
 			ouputStream.close();
 

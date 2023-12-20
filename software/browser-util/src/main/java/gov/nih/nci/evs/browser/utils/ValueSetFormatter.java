@@ -1267,12 +1267,15 @@ public class ValueSetFormatter {
 	public String object2XMLStream(ValueSet vs) {
 		XStream xstream_xml = new XStream(new DomDriver());
 		String xml = XML_DECLARATION + "\n" + xstream_xml.toXML(vs);
+		/*
+		xml = xml.trim();
 		if (!xml.endsWith(">")) {
 			int n = xml.lastIndexOf("</gov.nih.nci.evs");
 			if (n != -1) {
 				xml = xml.substring(0, n) + "</gov.nih.nci.evs.browser.bean.ValueSet>";
 			}
 		}
+		*/
 		return xml;
 	}
 

@@ -2021,7 +2021,7 @@ public class ValueSetBean {
 			ServletOutputStream ouputStream = response.getOutputStream();
 			byte[] b = xml_str.getBytes("UTF-8");
 			//ouputStream.write(xml_str.getBytes("UTF8"), 0, xml_str.length());
-			ouputStream.write(xml_str.getBytes("UTF8"), 0, b.length());
+			ouputStream.write(xml_str.getBytes("UTF8"), 0, b.length);
 			ouputStream.flush();
 			ouputStream.close();
 

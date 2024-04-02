@@ -1232,7 +1232,7 @@ public class ValueSetFormatter {
 		for (int i=1; i<vs_data.size(); i++) {
 			String line = (String) vs_data.elementAt(i);
 			Vector u = gov.nih.nci.evs.browser.utils.StringUtils.parseData(line, '|');
-			gov.nih.nci.evs.browser.bean.Concept c = new gov.nih.nci.evs.browser.bean.Concept();
+			ConceptInVS c = new gov.nih.nci.evs.browser.bean.ConceptInVS();
 			if (c == null) return null;
 			for (int j=0; j<var_vec.size(); j++) {
 				String var = (String) var_vec.elementAt(j);

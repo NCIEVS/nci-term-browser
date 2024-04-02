@@ -1,15 +1,10 @@
 package gov.nih.nci.evs.browser.bean;
 
-import java.io.*;
-import java.util.*;
-import java.net.*;
-
-import com.google.gson.*;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.google.gson.JsonParser;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class Concept
 {
@@ -116,7 +111,6 @@ public class Concept
 	}
 
 	public String toJson() {
-		JsonParser parser = new JsonParser();
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(this);
 	}

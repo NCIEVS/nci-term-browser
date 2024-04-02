@@ -521,6 +521,14 @@ public class HTTPUtils {
 					Boolean checkedVocabularies = isCheckedVocabulariesParameter(name);
 					if (checkedVocabularies != null && checkedVocabularies.equals(Boolean.TRUE)) {
 						value = (String) request.getParameter(name);
+						//KLO, 12082023
+						if (value.indexOf("eval(") != -1) {
+							String error_msg = createErrorMessage(2, name);
+							request.getSession().setAttribute("error_msg", error_msg);
+							System.out.println("WARNING: Invalid value of the parameter " + name + ": " + value);
+							return false;
+						}
+
 						if (!DataUtils.isNullOrBlank(value)) {
 							Vector selected_vocabularies_vec = gov.nih.nci.evs.browser.utils.StringUtils.parseData(name, ",");
 							String nm = name.toLowerCase(Locale.ENGLISH);

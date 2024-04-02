@@ -1,21 +1,18 @@
 package gov.nih.nci.evs.browser.bean;
 
-import java.io.*;
-import java.util.*;
-import java.net.*;
+import java.util.ArrayList;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.google.gson.JsonParser;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class ValueSet
 {
 
 // Variable declaration
-	private List<Concept> concepts;
+	private ArrayList<ConceptInVS> concepts;
 
 // Default constructor
 	public ValueSet() {
@@ -23,19 +20,19 @@ public class ValueSet
 
 // Constructor
 	public ValueSet(
-		List<Concept> concepts) {
+		ArrayList<ConceptInVS> concepts) {
 
 		this.concepts = concepts;
 	}
 
 // Set methods
-	public void setConcepts(List<Concept> concepts) { 
+	public void setConcepts(ArrayList<ConceptInVS> concepts) {
 		this.concepts = concepts;
 	}
 
 
 // Get methods
-	public List<Concept> getConcepts() { 
+	public ArrayList<ConceptInVS> getConcepts() {
 		return this.concepts;
 	}
 

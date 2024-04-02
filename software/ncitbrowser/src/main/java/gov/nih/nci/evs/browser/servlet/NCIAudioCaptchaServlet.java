@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import nl.captcha.audio.AudioCaptcha;
 
-
 /**
  * Generates a new {@link AudioCaptcha} and writes the audio to the response.
  *
@@ -19,22 +18,21 @@ import nl.captcha.audio.AudioCaptcha;
  */
 public class NCIAudioCaptchaServlet extends AudioCaptchaServlet {
 
-    private static final long serialVersionUID = 4690256047223360040L;
+	private static final long serialVersionUID = 4690256047223360040L;
 
-    @Override protected void doGet(HttpServletRequest req,
-            HttpServletResponse resp) throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        AudioCaptcha ac = new AudioCaptcha.Builder()
-            .addAnswer()
-            //.addNoise()
-            .build();
+		AudioCaptcha ac = new AudioCaptcha.Builder().addAnswer()
+				// .addNoise()
+				.build();
 
-        req.getSession().setAttribute(AudioCaptcha.NAME, ac);
-        CaptchaServletUtil.writeAudio(resp, ac.getChallenge());
-    }
+		req.getSession().setAttribute(AudioCaptcha.NAME, ac);
+		CaptchaServletUtil.writeAudio(resp, ac.getChallenge());
+	}
 
-    @Override protected void doPost(HttpServletRequest req,
-            HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
-    }
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
 }

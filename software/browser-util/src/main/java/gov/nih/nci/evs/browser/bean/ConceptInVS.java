@@ -57,7 +57,7 @@ import java.util.*;
  */
 
 
-public class Concept
+public class ConceptInVS
 {
 // Variable declaration
 	private String ncitCode; //*
@@ -69,11 +69,11 @@ public class Concept
 	private ArrayList sourceDefinitions;
 
 // Default constructor
-	public Concept() {
+	public ConceptInVS() {
 	}
 
 // Constructor
-	public Concept(
+	public ConceptInVS(
 		String ncitCode,
 		String sourcePreferredTerm,
 		String ncitPreferredTerm,
@@ -89,7 +89,7 @@ public class Concept
 		this.sourceDefinitions = null;
 	}
 
-	public Concept(
+	public ConceptInVS(
 		String ncitCode,
 		String ncitPreferredTerm,
 		String sourcePreferredTerm,

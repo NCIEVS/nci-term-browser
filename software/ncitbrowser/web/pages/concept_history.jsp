@@ -163,12 +163,12 @@
               </table>
               <table width="580px" cellpadding="3" cellspacing="0" border="0" role='presentation'>
                 <tr>
-                  <%
-                  for (int i=0; i<headers.size(); ++i) {
-	<div style='text-align: left'>
-                    Object header = headers.elementAt(i);
-                    %>
+                  
+                  <% for (int i=0; i<headers.size(); ++i) { %>
+	               <!-- <div style='text-align: left'> -->
+                   <% Object header = headers.elementAt(i); %> 
                     <th class="dataTableHeader" scope="col" align="left"><%= header %></th>
+                    <!-- </div> -->
                   <% } %>
                 </tr>
                 <%

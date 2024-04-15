@@ -996,7 +996,7 @@ production version of the terminology and other available versions.
   <li>
   <b>Released File</b>
   Displays the content of a value set as it appears in the file published at the NCI EVS
-  <a href="ftp://ftp1.nci.nih.gov/pub/cacore/EVS/">download site</a>.
+  <a href="https://evs.nci.nih.gov/ftp1/">download site</a>.
   <br/>
   There are two options for exporting all of the values from the displayed set:
   <br/>

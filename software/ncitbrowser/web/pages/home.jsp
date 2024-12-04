@@ -87,6 +87,8 @@ String evs_service_url = DataUtils.getEVSServiceURL();
       <a href="#evs-content" class="skip-main" accesskey="1" title="Skip repetitive navigation links">
         skip navigation links</A>
       <!-- End Skip Top Navigation -->
+
+	<%@ include file="/pages/templates/deprecation.jsp" %>
       
       <%@ include file="/pages/templates/header.jsp" %>
       <div class="center-page_960">

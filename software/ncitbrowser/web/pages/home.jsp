@@ -88,7 +88,7 @@ String evs_service_url = DataUtils.getEVSServiceURL();
         skip navigation links</A>
       <!-- End Skip Top Navigation -->
 
-	<%@ include file="/pages/templates/deprecation.jsp" %>
+	<%-- <%@ include file="/pages/templates/deprecation.jsp" %> --%>
       
       <%@ include file="/pages/templates/header.jsp" %>
       <div class="center-page_960">

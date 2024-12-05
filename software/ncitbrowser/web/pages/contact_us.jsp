@@ -211,12 +211,12 @@ function verifyRecaptcha() {
           Telephone support is available Monday to Friday, 8 am - 8 pm Eastern Time, excluding government holidays. You
           may leave a message, send an email, or submit a support request via the Web at any time. Please include:
           <ul>
-            <li></li>Your
-            contact information;
-            <li></li>Reference
-            to the Term Suggestions Application; and
-            <li></li>A
-            detailed description of your problem or suggestion.
+            <li>Your
+            contact information;</li>
+            <li>Reference
+            to the Term Suggestions Application; and</li>
+            <li>A
+            detailed description of your problem or suggestion.</li>
           </ul>
           For questions related to NCI's Cancer.gov Web site, see the
           <a href="https://www.cancer.gov/help" target="_blank" rel="noopener">Cancer.gov help page</a>.
@@ -224,7 +224,7 @@ function verifyRecaptcha() {
           <a href="https://evs.nci.nih.gov/" target="_blank" rel="noopener">EVS Web site</a>.
         </div>
 
-        <p>
+ <%--        <p>
           <b>Online Form</b>
         </p>
         <p class="textbody">To use this web form, please fill in every box below and then click on 'Submit'.</p>
@@ -293,7 +293,7 @@ function verifyRecaptcha() {
           <input type="hidden" name="alt_captcha_option" id="alt_captcha_option" value="<%=alt_captcha_option%>">
           <input type="hidden" name="captcha_option" id="captcha_option" value="<%=captcha_option%>">
 
-        </h:form>
+        </h:form> --%>
         <a href="https://www.cancer.gov/global/web/policies/page2" target="_blank" rel="noopener" alt="Privacy Policy">
           <i>Privacy Policy on E-mail Messages Sent to the NCI Web Site</i>
         </a>

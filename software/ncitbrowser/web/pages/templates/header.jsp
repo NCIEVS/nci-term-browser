@@ -1,12 +1,18 @@
-<% String basePath = request.getContextPath(); %>
+<%-- <% String basePath = request.getContextPath(); %> --%>
 <!-- nci banner<div class="ncibanner"> -->
-<div style='clear:both;margin-top:-5px;padding:8px;height:32px;color:white;background-color:#C31F40'>
+<% String basePath = request.getContextPath(); %>
+<div style='height:auto;width:auto;margin: 0 auto;position: relative;padding: 17px;font-size:17px;color:black;background-color:#DAF6FF;'>
+<p>Please be aware EVS is migrating to a new suite of tools from the legacy LexEVS based terminology services at the end of 2024.
+We encourage users to search and access EVS terminology via our new EVS Explore browser at:  
+<a href="https://evsexplore.semantics.cancer.gov/evsexplore/welcome">EVS Explore</a>
+</div>
+<div style='clear:both;height:35px;color:white;background-color:#C31F40'>
 
   <a href="https://www.cancer.gov" target="_blank" rel="noopener">
     <img
         src="<%=request.getContextPath()%>/images/banner-red.png"
         width="955"
-        height="39"
+        height="35"
         border="0"
         alt="National Cancer Institute"
     />

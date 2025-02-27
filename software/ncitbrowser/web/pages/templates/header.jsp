@@ -4,7 +4,8 @@
 <div style='height:auto;width:auto;margin: 0 auto;position: relative;padding: 17px;font-size:17px;color:black;background-color:#DAF6FF;'>
 <p>Please be aware that EVS will be retiring legacy LexEVS-based terminology services and migrating to a new suite of tools at the end of 2024. 
 We encourage users to search and access EVS terminology via our new EVS Explore at  
-<a href="https://evsexplore.semantics.cancer.gov">https://evsexplore.semantics.cancer.gov</a>
+<a href="https://evsexplore.semantics.cancer.gov">https://evsexplore.semantics.cancer.gov</a> </p>
+<p> The EVS website hosts biomedical terminologies that NCI does not own or control. Some of these sources may contain gender-related terminology that does not comply with Executive Order 14168.</p>
 </div>
 <div style='clear:both;height:35px;color:white;background-color:#C31F40'>
 
